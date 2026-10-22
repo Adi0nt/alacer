@@ -17,7 +17,7 @@ public final class VideoSettingsCatalog {
 		return choice("render."+key,Category.PERFORMANCE,title,help,1,effect,"Off","On");
 	}
 	public static final List<VideoSetting> ALL = List.of(
-		choice("graphics",Category.GRAPHICS,"Graphics","Base quality for features set to Follow Graphics. Leaves and weather can be controlled separately in Details.",1,Effect.REBUILD,"Fast","Fancy"),
+		choice("graphics",Category.GRAPHICS,"Graphics","Base quality for features set to Follow Graphics. Leaves, weather, rain splashes and the vignette can be controlled separately in Details.",1,Effect.REBUILD,"Fast","Fancy"),
 		slider("distance",Category.GRAPHICS,"Render distance","How far terrain is drawn. Higher values use more memory and increase terrain build and draw work.",2,16,1,12,Effect.REBUILD),
 		choice("lighting",Category.GRAPHICS,"Smooth lighting","Minecraft's smooth-lighting quality. Enable Minimum or Maximum to use Lighting style and AO strength; Off bypasses both controls.",2,Effect.REBUILD,"Off","Minimum","Maximum"),
 		choice("quality.lightingStyle",Category.GRAPHICS,"Lighting style","Vanilla preserves the original corner shading. Soft gently lifts ambient-occlusion midtones for less harsh block corners. Requires Smooth lighting. Applying rebuilds terrain.",0,Effect.REBUILD,"Vanilla","Soft"),
@@ -28,6 +28,11 @@ public final class VideoSettingsCatalog {
 		slider("mipmaps",Category.GRAPHICS,"Mipmap levels","Reduces shimmering on distant textures. Applying this setting reloads textures.",0,4,1,4,Effect.RESOURCES),
 		choice("quality.leaves",Category.DETAILS,"Leaves","Fast uses opaque leaves. Fancy uses cutout leaves. Follow Graphics uses the base Graphics setting. Applying rebuilds terrain.",0,Effect.REBUILD,"Follow Graphics","Fast","Fancy"),
 		choice("quality.weather",Category.DETAILS,"Weather","Controls rain and snow drawing distance independently of Graphics. Off hides rain and snow geometry; rain sounds and splash particles remain.",0,Effect.IMMEDIATE,"Follow Graphics","Fast","Fancy","Off"),
+		choice("quality.rainSplashes",Category.DETAILS,"Rain splashes","Fast spawns about a quarter as many rain splash and smoke particles as Fancy. Off spawns none. Rain sounds remain; the Particles setting still applies.",0,Effect.IMMEDIATE,"Follow Graphics","Fast","Fancy","Off"),
+		choice("quality.vignette",Category.DETAILS,"Vignette","The darkened screen edges that appear when you stand in dark places such as caves. Off skips this full-screen overlay, which also hides the red world-border warning tint, as Fast Graphics does.",0,Effect.IMMEDIATE,"Follow Graphics","Off","On"),
+		choice("quality.stars",Category.DETAILS,"Stars","Draws stars in the night sky. Off leaves the sky color, sun, moon and clouds unchanged.",1,Effect.IMMEDIATE,"Off","On"),
+		choice("quality.enchantGlint",Category.DETAILS,"Enchantment glint","The moving shimmer on enchanted items, potions and armor, including in inventories. Off skips the extra glint passes.",1,Effect.IMMEDIATE,"Off","On"),
+		choice("quality.droppedItems",Category.DETAILS,"Dropped items","Fancy draws up to five copies of a dropped stack, depending on its size. Fast draws one copy per stack.",1,Effect.IMMEDIATE,"Fast","Fancy"),
 		choice("shadows",Category.DETAILS,"Entity shadows","Draws ground shadows beneath entities. Does not change terrain lighting.",1,Effect.IMMEDIATE,"Off","On"),
 		choice("bobbing",Category.DETAILS,"View bobbing","Adds the familiar camera movement when walking.",1,Effect.IMMEDIATE,"Off","On"),
 		choice("alternatives",Category.DETAILS,"Alternate block models","Allows resource packs to vary a block's appearance. Applying rebuilds terrain.",1,Effect.REBUILD,"Off","On"),

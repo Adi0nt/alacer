@@ -112,8 +112,14 @@ Keys (rebindable under Controls → Alacer):
 
 Open **Options -> Video Settings** for categorized controls, global search,
 contextual help and staged Apply/Cancel. The menu uses Minecraft's native widgets
-and formatting colors. Details adds independent Fast/Fancy leaves and weather;
-both default to following Graphics. Existing optimization defaults stay unchanged.
+and formatting colors. Minecraft 1.8.9's single Graphics option is split into
+per-feature Details controls: leaves, weather, rain splashes and the vignette
+each default to **Follow Graphics**, so the base Graphics option keeps today's
+behaviour until a feature is overridden. Details also adds Stars (Off/On),
+Enchantment glint (Off/On) and Dropped items (Fast/Fancy); each defaults to
+vanilla's appearance. New choices are saved to `config/alacer.properties` as
+`quality.*` options, are recorded in profile and benchmark exports, and use their
+defaults during benchmark launches. Existing optimization defaults stay unchanged.
 See [the settings guide and validation](docs/VIDEO_SETTINGS.md).
 
 ## Configuration

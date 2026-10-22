@@ -1,0 +1,97 @@
+{
+  "date": "2026-10-22",
+  "scope": "Split of Minecraft 1.8.9 Graphics into per-feature Details controls plus Stars, Enchantment glint and Dropped items; not a benchmark series or default change",
+  "environment": {
+    "machine": "Linux cloud container (not the reference Windows machine)",
+    "java": "Eclipse Temurin 25.0.5+8",
+    "display": "Xvfb 1280x720x24",
+    "opengl": "Mesa 25.2.8 llvmpipe (LLVM 20.1.2), OpenGL 4.5 compatibility, software rendering",
+    "cpu_threads": 4
+  },
+  "base_commit": "0af7982",
+  "build_command": "gradlew clean build --offline --console=plain (JAVA_HOME=Temurin 25.0.5+8)",
+  "tests": {
+    "tests": 110,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  "main_classes": 175,
+  "classfile_versions": [
+    69
+  ],
+  "shipping_jar_sha256": "b7d61b60f5032c2c9a6c65e59afc30ffe429c05982a893d8a1060c7ccbe48397",
+  "client_command": "gradlew runClient --offline -Pwindow=1280x720 -Palacer.visualCheck=true -Palacer.visualCheck.mode=<mode> (harness temporarily in src; see VisualCheck.java)",
+  "attempts": [
+    {
+      "label": "initial runClient",
+      "outcome": "LWJGL 2 'No display mode extension is available': the container lacked the xrandr binary; x11-xserver-utils installed; log not retained"
+    },
+    {
+      "label": "full, first attempt",
+      "outcome": "stopped: unfocused Xvfb window opened the pause menu and paused the integrated server; harness then disabled pauseOnUnfocus; log overwritten"
+    },
+    {
+      "label": "full",
+      "log": "client-full.log",
+      "results": "results-full.txt",
+      "outcome": "visual checks and rain-splash census passed; timings valid for rain splashes, vignette and leaves; dropped-item and glint timings invalid (items despawned after setNeverDespawn's 5-minute delay)"
+    },
+    {
+      "label": "readback",
+      "log": "client-readback.log",
+      "results": "results-readback.txt",
+      "outcome": "fresh JVM read back saved non-default values; defaults restored through Apply"
+    },
+    {
+      "label": "rerun",
+      "log": "client-rerun.log",
+      "results": "results-rerun.txt",
+      "outcome": "dropped-item and glint timings with fresh never-despawn grids; entity counts stable; night vignette shots show no vignette outdoors (vanilla behaviour)"
+    },
+    {
+      "label": "vignette",
+      "log": "client-vignette.log",
+      "results": "results-vignette.txt",
+      "outcome": "vignette darkens corners in shade with On and Follow Graphics (Fancy), not with Off or Follow Graphics (Fast)"
+    },
+    {
+      "label": "smoke, shipping build",
+      "log": "client-smoke-shipping-build.log",
+      "outcome": "title screen reached with harness removed; no mixin or injection errors; stopped by a 150 s timeout"
+    }
+  ],
+  "not_benchmark": "Frame times are indicative single-session ABBA blocks under software rendering; Java 8 archives, benchmark runners and optimization defaults are unchanged",
+  "redactions": "Container proxy settings removed from JAVA_TOOL_OPTIONS and jvm.args in the logs",
+  "evidence_sha256": {
+    "VisualCheck.java": "65cacfea4e05a12f7fca8e291d1813a2e8778829ba2be66b80ecf3754bc6316c",
+    "build-test.log": "d323e3a706bfe4530c7959f655bb87e97fc75902bf4d56ab543c5a109a30add3",
+    "client-full.log": "4c7d678b6609a8a014221228302d57f015980be585675e1aea02a7d90c6a7ea0",
+    "client-readback.log": "1c65e83837d8980b786f04d8d169ee700a0045cc365cb2e1e63f9872865e4c88",
+    "client-rerun.log": "fc3d91618496b72599e6e4d2c1abdfef9cc57e74c5b8fb7b694d827f8e4d070a",
+    "client-smoke-shipping-build.log": "e6bf811c1206d9d8a561623dbc83864ec0c05d60d61c62d9eecc5efe7cae0a7c",
+    "client-vignette.log": "8a57a1b312c19a9de8c605545997516018fd2fa25d4ead31a9182314f65177e4",
+    "dropped-items-fast-vs-fancy.png": "2bd49c31bec8afe38bafcf800e4b8bee06ad08f1881710a708834632cadc4eb5",
+    "enchantment-glint-off-vs-on.png": "02a0778f3ed4fc2f9d9b21ef09f18b933972c80bc0dedf0a082a6795a7f2d13d",
+    "menu-details-after-relaunch.png": "747c30836674a9ca30cf019a3396470452ccac1cb8e98fd31f5920bc8580d0b3",
+    "menu-details.png": "61d9dedc002fa2a92afae3eb110303729c25e539d70dc7eab9c818e79c544874",
+    "rain-splashes-fancy-fast-off.png": "14c8158b6f663dc401d1f8962fe4232ac5c3d34dae62e9e122be122576a9adf3",
+    "results-full.txt": "6a12f6e19c34d26a7349ec25a7d127fd5e974c326aab661b797abb95c170ee04",
+    "results-readback.txt": "ecdd6a0e6324d1fecdd31e3b77f78306632601e7926db4f36f313eff9620383e",
+    "results-rerun.txt": "6123cdde110b4fd1ccdca0d813fa6a0904ae10dbccec9da733a263d2ade29094",
+    "results-vignette.txt": "e088677014ea5bc2fc113982157820b495ce1cf7ea1bff86fc1910ca2f2394c0",
+    "stars-off-vs-on.png": "e5bcdf0948f3363d7361aac1125610ea80d0ee8ca0472a36c9d675ec282f05e5",
+    "vignette-off-vs-on-in-shade.png": "26faa2884fb6961838755c779998d5749ea65c3f966da010404a9230de83b774"
+  },
+  "source_sha256": {
+    "src/main/java/net/adiont/alacer/config/AlacerConfig.java": "d02374a2bc69c623020a5e33750e55ed61bc677f9aaa507d940074424f63f05f",
+    "src/main/java/net/adiont/alacer/settings/VideoSettingsCatalog.java": "2b30fd965e0df6ee927e12f40e453b58de9b65c293022e224f76862ec01a0510",
+    "src/main/java/net/adiont/alacer/mixin/RainSplashQualityMixin.java": "8311b2f72070a3c0d57ce46cb37efe2bcc3bb6917d7ebbdf29a0735d004a8214",
+    "src/main/java/net/adiont/alacer/mixin/VignetteQualityMixin.java": "9d08963df9afe4afb74adfb4727c8677ac05456b4e17b9c6048633b9e93ceaf2",
+    "src/main/java/net/adiont/alacer/mixin/StarsQualityMixin.java": "9677b0098e3223f393c5c305975489d72820b0796b238f5ccd78f2bcdb4b21c1",
+    "src/main/java/net/adiont/alacer/mixin/EnchantGlintQualityMixin.java": "bf27feb6e45a8a7d1b8edfa3a2618623e991ad476053806a4ff21c3a963f6b35",
+    "src/main/java/net/adiont/alacer/mixin/ArmorGlintQualityMixin.java": "6f50ab597694b960381f38e1e6a4941bf77d935ca16afa3855bb0c4652f820fd",
+    "src/main/java/net/adiont/alacer/mixin/DroppedItemsQualityMixin.java": "734ec5f845ecea358c662206182bca356cbc3232cc8d48573f028717505772e7",
+    "src/main/resources/alacer.mixins.json": "afab51cb275ea403fe9b1d782c33228320cbfcec8723e868362f72df51f783dc"
+  }
+}

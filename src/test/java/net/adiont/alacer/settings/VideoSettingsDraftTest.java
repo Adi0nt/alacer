@@ -47,4 +47,24 @@ class VideoSettingsDraftTest {
 		assertFalse(keys.contains("render.reuseParticleLight"));
 		assertEquals(VideoSetting.Effect.RESTART,VideoSettingsCatalog.byKey("render.fastParticleVertices").effect());
 	}
+	@Test void graphicsSplitsFollowGraphicsAndNewDetailChoicesKeepVanillaDefaults() {
+		for (String key : new String[] {"quality.leaves","quality.weather","quality.rainSplashes","quality.vignette"}) {
+			VideoSetting s = VideoSettingsCatalog.byKey(key);
+			assertEquals("Follow Graphics",s.valueLabel(s.defaultValue()),key);
+			assertEquals(VideoSetting.Category.DETAILS,s.category(),key);
+		}
+		assertEquals("Off",VideoSettingsCatalog.byKey("quality.rainSplashes").valueLabel(3));
+		assertEquals("Off",VideoSettingsCatalog.byKey("quality.vignette").valueLabel(1));
+		assertEquals("On",VideoSettingsCatalog.byKey("quality.vignette").valueLabel(2));
+		assertEquals("On",VideoSettingsCatalog.byKey("quality.stars").valueLabel(VideoSettingsCatalog.byKey("quality.stars").defaultValue()));
+		assertEquals("On",VideoSettingsCatalog.byKey("quality.enchantGlint").valueLabel(VideoSettingsCatalog.byKey("quality.enchantGlint").defaultValue()));
+		assertEquals("Fancy",VideoSettingsCatalog.byKey("quality.droppedItems").valueLabel(VideoSettingsCatalog.byKey("quality.droppedItems").defaultValue()));
+		for (String key : new String[] {"quality.rainSplashes","quality.vignette","quality.stars","quality.enchantGlint","quality.droppedItems"}) {
+			assertEquals(VideoSetting.Effect.IMMEDIATE,VideoSettingsCatalog.byKey(key).effect(),key);
+		}
+		VideoSettingsDraft draft = new VideoSettingsDraft(Map.of());
+		assertTrue(draft.changes().isEmpty());
+		assertTrue(draft.matching(VideoSetting.Category.GRAPHICS,"glint").stream().anyMatch(s -> s.key().equals("quality.enchantGlint")));
+		assertTrue(draft.matching(VideoSetting.Category.GRAPHICS,"world-border").stream().anyMatch(s -> s.key().equals("quality.vignette")));
+	}
 }
