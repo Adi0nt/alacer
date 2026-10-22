@@ -135,6 +135,24 @@ class AlacerConfigTest {
 		assertFalse(config.verifyReuseParticleBoxes);
 		assertFalse(config.scalarParticleEntityQuery);
 		assertFalse(config.verifyScalarParticleEntityQuery);
+		assertFalse(config.fastCameraSectionFaces);
+		assertFalse(config.verifyCameraSectionFaces);
+	}
+
+	@Test
+	void cameraSectionFacesIsAnUnmeasuredExperiment() throws IOException {
+		AlacerConfig config = AlacerConfig.load(this.dir.resolve("faces.properties"), LOGGER);
+		assertEquals("false", config.describe().get("render.fastCameraSectionFaces"));
+		assertEquals("false", config.describe().get("render.fastCameraSectionFaces.verify"));
+		config.setToggle("render.fastCameraSectionFaces", true);
+		assertTrue(config.fastCameraSectionFaces);
+		// Not part of the shipped-defaults preset: B keeps it off.
+		config.setToggle("render.defaults", true);
+		assertFalse(config.fastCameraSectionFaces);
+		config.setToggle("render.fastCameraSectionFaces", true);
+		config.setToggle("render.defaults", false);
+		assertFalse(config.fastCameraSectionFaces);
+		assertThrows(IllegalArgumentException.class, () -> config.setToggle("render.fastCameraSectionFaces.verify", true));
 	}
 
 	@Test
@@ -228,6 +246,7 @@ class AlacerConfigTest {
 		config.fastParticleMovement = true;
 		config.reuseParticleBoxes = true;
 		config.scalarParticleEntityQuery = true;
+		config.fastCameraSectionFaces = true;
 		for (boolean enabled : new boolean[]{false, true, false, true}) {
 			config.setToggle("render.defaults", enabled);
 			for (java.util.Map.Entry<String, String> option : config.describe().entrySet()) {

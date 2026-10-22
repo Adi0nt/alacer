@@ -25,6 +25,7 @@ net.adiont.alacer
 ├── render/
 │   ├── ChunkVisibility     Allocation-free chunk visibility search (optimization 1)
 │   ├── ChunkFrustum        Exact one-corner-per-plane chunk predicate (session 12)
+│   ├── SectionFaces        Allocation-free camera-section flood fill with pocket reuse (session 28, unmeasured, off)
 │   ├── ChunkPipelineTimings Opt-in build, queue, scheduling and upload attribution (session 13)
 │   ├── EntityRendering     renderEntities phase timing and world-chunk lookup cache (optimization 2)
 │   ├── EntityDrawDetails   Optional per-class draw-stage times and call counts

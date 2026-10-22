@@ -62,6 +62,10 @@ public final class AlacerConfig {
 	public volatile boolean fastChunkFrustum;
 	/** Also run vanilla's frustum test for every box, use its answer and log differences. Debug only. */
 	public volatile boolean verifyChunkFrustum;
+	/** Experimental allocation-free camera-section flood fill that reuses its answer within one pocket. Runtime-toggleable. */
+	public volatile boolean fastCameraSectionFaces;
+	/** Also run vanilla's camera-section flood fill, use its answer and log differences. Debug only. */
+	public volatile boolean verifyCameraSectionFaces;
 	/** Reuse each render chunk's world-chunk reference in the entity loop. Runtime-toggleable. */
 	public volatile boolean fastEntityChunkLookup;
 	/** Compare every cached entity-loop chunk lookup with vanilla's lookup. Debug only. */
@@ -170,6 +174,10 @@ public final class AlacerConfig {
 			"Experimental: test chunk boxes at one corner per frustum plane (same decisions as vanilla). No dependable measured performance gain; off by default.");
 		this.verifyChunkFrustum = bool(file, system, "render.fastChunkFrustum.verify", false,
 			"Debug: also run vanilla's frustum test for every chunk box, use its answer and log any difference.");
+		this.fastCameraSectionFaces = bool(file, system, "render.fastCameraSectionFaces", false,
+			"Experimental: in Alacer's chunk search, find the camera section's open faces with an allocation-free flood fill, and reuse the answer while the camera stays in the same connected pocket of an unchanged section (same faces as vanilla). Not yet measured; off by default.");
+		this.verifyCameraSectionFaces = bool(file, system, "render.fastCameraSectionFaces.verify", false,
+			"Debug: also run vanilla's camera-section flood fill for every answer, use its result and log any difference. Use with the Alacer chunk search enabled.");
 		this.fastEntityChunkLookup = bool(file, system, "render.fastEntityChunkLookup", true,
 			"Reuse each render chunk's world-chunk reference when gathering entities instead of a hash lookup per chunk per frame.");
 		this.verifyEntityChunkLookup = bool(file, system, "render.fastEntityChunkLookup.verify", false,
@@ -286,6 +294,7 @@ public final class AlacerConfig {
 			case "render.defaults":
 				this.fastChunkVisibility = value;
 				this.fastChunkFrustum = false;
+				this.fastCameraSectionFaces = false;
 				this.fastEntityChunkLookup = value;
 				this.throttleGlErrorChecks = value;
 				this.avoidMatrixReads = value;
@@ -307,6 +316,9 @@ public final class AlacerConfig {
 				break;
 			case "render.fastChunkFrustum":
 				this.fastChunkFrustum = value;
+				break;
+			case "render.fastCameraSectionFaces":
+				this.fastCameraSectionFaces = value;
 				break;
 			case "render.fastEntityChunkLookup":
 				this.fastEntityChunkLookup = value;
@@ -415,6 +427,8 @@ public final class AlacerConfig {
 		values.put("render.fastChunkVisibility.verify", String.valueOf(this.verifyChunkVisibility));
 		values.put("render.fastChunkFrustum", String.valueOf(this.fastChunkFrustum));
 		values.put("render.fastChunkFrustum.verify", String.valueOf(this.verifyChunkFrustum));
+		values.put("render.fastCameraSectionFaces", String.valueOf(this.fastCameraSectionFaces));
+		values.put("render.fastCameraSectionFaces.verify", String.valueOf(this.verifyCameraSectionFaces));
 		values.put("render.fastEntityChunkLookup", String.valueOf(this.fastEntityChunkLookup));
 		values.put("render.fastEntityChunkLookup.verify", String.valueOf(this.verifyEntityChunkLookup));
 		values.put("render.throttleGlErrorChecks", String.valueOf(this.throttleGlErrorChecks));
