@@ -23,6 +23,14 @@ now accepts zero-count periodic summaries and finds screenshots by `alacer-<labe
 are repeated as `alloc28g-verify-d200-1-r2` and `alloc28g-shot-absent-1-r2`. Launch list, metrics and pass conditions
 are unchanged. The amended runner and `gates.py` (label references only) are frozen again in `freeze-gates-2.json`.
 
+## Amendment 2 (after the startup group, before any accepted in-process launch)
+
+`alloc28g-ab-1` completed but was rejected because the benchmark exports the toggle as
+`render.reuseShadowPositions (a=false, b=true)` and the check expected the bare key. The attempt is kept; the check
+now compares the key before ` (`, and the launch is repeated as `alloc28g-ab-1-r2` (still A1/B1/B2/A2). The startup
+group ran under the amendment 1 freeze, which this change does not affect. Launch list, metrics and pass conditions
+are unchanged; frozen again in `freeze-gates-3.json`.
+
 ## Launches (serial, fresh copied worlds, 854x480, 2 GiB, view distance 12, display lists, no JFR)
 
 Every launch passes all options explicitly, as the attribution did, plus `render.reuseShadowPositions` and its
@@ -33,7 +41,7 @@ Every launch passes all options explicitly, as the attribution did, plus `render
 | verify | `alloc28g-verify-d200-1-r2`, `alloc28g-verify-d200-2` | d200 | on + `.verify`, time scale 10 |
 | verify | `alloc28g-verify-walk` | d200 + `benchmark.shadowDiagnostic=true` (mobs walk; cells under shadows cycle through glowstone, slab, air) | on + `.verify`, time scale 4 |
 | screens | `alloc28g-shot-absent-1-r2`, `alloc28g-shot-on`, `alloc28g-shot-absent-2` | d200, `benchmark.screenshots=true` | absent / on / absent, time scale 1 |
-| ab | `alloc28g-ab-1` .. `-4` | d200, `benchmark.toggle=render.reuseShadowPositions` | `toggleReverse` false, true, false, true (A1/B1/B2/A2, B1/A1/A2/B2); both paths warmed; time scale 2 |
+| ab | `alloc28g-ab-1-r2`, `alloc28g-ab-2` .. `-4` | d200, `benchmark.toggle=render.reuseShadowPositions` | `toggleReverse` false, true, false, true (A1/B1/B2/A2, B1/A1/A2/B2); both paths warmed; time scale 2 |
 | startup | `alloc28g-st-d200-<n>-<side>`, n = 1..4 | d200 | pairs in order absent/on, on/absent, absent/on, on/absent; time scale 2 |
 | startup | `alloc28g-st-d0-<n>-<side>`, `alloc28g-st-terrain-<n>-<side>`, n = 1..2 | d0, terrain (non-selecting) | absent/on, on/absent; time scale 2 |
 

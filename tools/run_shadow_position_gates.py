@@ -21,8 +21,8 @@ import run_allocation_selection as base
 ROOT = base.ROOT
 ARCHIVE = base.ARCHIVE
 BENCH = base.BENCH
-# Amendment 1 (gates.md) re-froze the runner; freeze-gates.json records the first freeze.
-FREEZE = ARCHIVE / 'freeze-gates-2.json'
+# Amendments 1 and 2 (gates.md) re-froze the runner; freeze-gates.json and -2 record the earlier freezes.
+FREEZE = ARCHIVE / 'freeze-gates-3.json'
 FROZEN_PATHS = base.FROZEN_PATHS + ('tools/run_shadow_position_gates.py',
                                     'docs/benchmarks/2026-10-22-allocation-selection/gates.md',
                                     'docs/benchmarks/2026-10-22-allocation-selection/gates.py',
@@ -45,7 +45,7 @@ def jobs():
             ('screens', 'alloc28g-shot-on', 'd200', {'on': True, 'scale': '1', 'screenshots': True}),
             ('screens', 'alloc28g-shot-absent-2', 'd200', {'on': False, 'scale': '1', 'screenshots': True})]
     for n, reverse in enumerate((False, True, False, True), 1):
-        out.append(('ab', f'alloc28g-ab-{n}', 'd200', {'on': False, 'scale': '2', 'toggle': True, 'reverse': reverse}))
+        out.append(('ab', f'alloc28g-ab-{n}' + ('-r2' if n == 1 else ''), 'd200', {'on': False, 'scale': '2', 'toggle': True, 'reverse': reverse}))
     for scene, pairs in (('d200', 4), ('d0', 2), ('terrain', 2)):
         for n in range(1, pairs + 1):
             sides = ('absent', 'on') if n % 2 == 1 else ('on', 'absent')
@@ -177,7 +177,8 @@ def run(group, label, scene, spec, jdk, init):
         'scenario': e['benchmark.backendScenario'] == base.SCENES[scene]['props']['benchmark.backendScenario']
                     and e['benchmark.particles'] == 'false',
         'allocation': e['profiler.allocationAvailable'] == 'true',
-        'toggle': e['benchmark.toggle'] == (OPTION if spec.get('toggle') else '')
+        # The benchmark exports a toggle as '<key> (a=false, b=true)'.
+        'toggle': (e['benchmark.toggle'].split(' (')[0] == OPTION if spec.get('toggle') else e['benchmark.toggle'] == '')
                   and e['benchmark.toggleReverse'] == ('true' if spec.get('reverse') else 'false'),
         'renderer': e['gl.renderer'].startswith('llvmpipe'),
     }

@@ -111,7 +111,7 @@ def main(out_path):
 
     ab = {}
     for n in range(1, 5):
-        r = record(f'alloc28g-ab-{n}')
+        r = record(f'alloc28g-ab-{n}' + ('-r2' if n == 1 else ''))
         per = {}
         for phase in ('static', 'pan'):
             a = metrics(r['source'], (f'{phase}-a1', f'{phase}-a2'))
