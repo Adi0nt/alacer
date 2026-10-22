@@ -28,8 +28,10 @@ answered stay optimization 6's ("shadow queries beyond optimization 6" stay clos
 
 **Named candidate: `shadow.offset_pos`**, minimum qualifying share 15.5%. Not named: `entity_light.pos` (qualifies
 only in d200 pan), `name_check.strip`, `pick.block_trace`. The flood-fill sets are event-driven and not ranked here:
-4.8 MB/s in fly at this frame rate (`Direction.values()` copies 3.0 MB/s), about 4.3 KB of allocation per
-`getOpenChunkFaces` call; their size per frame on a GPU machine depends on its frame rate and needs measuring there.
+4.8 MB/s in fly (`Direction.values()` copies 3.0 MB/s). The camera flies at 20 blocks/s and optimization 1's cache
+misses once per block entered, so that is roughly 200-240 KB per `getOpenChunkFaces` call (fly allocated about 200 KB
+per frame here, at about one block per frame). Per frame on a GPU machine it depends on that machine's frame rate and
+needs measuring there.
 
 Large aggregates outside the named sets, not selectable: `setup_render` is 20-47 KB per frame even with a still camera
 (63% of d0 static frame-path allocation). Its top sites are `BlockModelRenderer.tesselateWithAmbientOcclusion`
