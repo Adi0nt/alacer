@@ -13,6 +13,8 @@
   baselines; do not change optimization defaults automatically from old results.
 - Separate build/unit-test evidence from real client rendering, correctness,
   profiling and benchmark evidence. Report limitations and noisy/regressing metrics.
-- Preserve unrelated work. Do not commit, push or publish without explicit permission.
+- Preserve unrelated work. Agents may commit and push finished, verified work to their
+  assigned working branch without asking. Do not push to other branches, rewrite shared
+  history, open pull requests or publish releases without explicit permission.
 - When interacting with Cloudflare, use the cf CLI unless the project has a
   Wrangler configuration file.
