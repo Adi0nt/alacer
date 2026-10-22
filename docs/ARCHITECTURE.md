@@ -21,6 +21,8 @@ net.adiont.alacer
 ├── benchmark/
 │   ├── BenchmarkRunner     Scripted camera paths in a fresh copy of a fixed-seed world; optional
 │   │                       mob/chest population or particle scenario; optional in-process A/B segments
+│   ├── StabilityOptions    Opt-in reference phases, phase lengths, repeat segments, toggle blocks (session 31)
+│   ├── ProcessorSampler    Client thread's logical processor per frame via the Java 25 FFM API (session 31)
 │   └── ParticleProbes      Verification-only particles for the removal diagnostic (session 16)
 ├── render/
 │   ├── ChunkVisibility     Allocation-free chunk visibility search (optimization 1)
@@ -1334,6 +1336,30 @@ allocation) should:
   pair costs 4.2, 7.7 or 3.2 min. Sixteen pairs each in d0, d200 and terrain take about 4.3 h, or about 6.0 h with
   near and high, plus the 1.6 h pilot and any repeated pairs. Split this over several unattended sittings, each
   starting with a reference-phase check.
+
+**Done in session 31 (infrastructure; nothing measured on the reference machine yet).** The proposal above is now
+tooling, with its protocol written before any scored launch: the [A/A pilot archive](benchmarks/2026-10-22-aa-pilot/README.md)
+holds the proposed frozen protocol (`protocol.json` and README), and `tools/aa_pilot.py` runs it in separate stages
+(plan, smoke, freeze, calibrate, pilot, optional overhead, evaluate). Both sides of every pair are the same build and
+settings; only the label differs, and the runner checks options, launcher command lines, phase configurations,
+environment, hashes and back-to-back timing before accepting a pair. `tools/aa_monitor.py` samples background and
+client CPU, effective clocks per core class, the foreground executable (no window contents), power plan, affinity,
+memory and nvidia-smi GPU state once per second, with an explicit availability status per source and its own CPU cost.
+`BenchmarkRunner` gained opt-in, default-off `StabilityOptions`: identical reference phases before and after the
+scored phases, literal phase lengths (60 s still phases), in-process repeat segments, short ABBA toggle blocks,
+per-frame client-thread processor sampling (`ProcessorSampler`, Java 25 FFM), mob pose evidence, and `freezeMobs`.
+The last was needed: the "0 mob" world holds about 90-100 generated animals with AI, and in a container smoke they
+turned by up to 148 degrees within a still phase. Predeclared rules reject a launch, and with it its whole pair, on
+reference-phase deviation from an independent calibration (+/-5% frame mean; CPU bands from calibration), background
+CPU, foreground, power-plan, affinity, efficiency-core placement, GPU-backend or configuration changes, missing critical
+telemetry or a moving scene; rejected pairs are repeated whole under `-r2`/`-r3` labels and an interrupted series
+resumes without reusing or completing an unfinished pair. `tools/aa_report.py` reports per scene and phase (never
+assuming a shared variance) the robust spread, outliers, time structure, environmental correlations, intervals, MDE80
+and pairs needed for 1/2/5%, and a three-part verdict: the 3% gate, power for 2% at 16 pairs, and validity. 130 Java and
+80 Python tests pass; container launches tested the tooling only (software GL). Remaining, on the reference machine:
+run `tools\aa_pilot_windows.bat check`, then `prepare` (the first real test of every Windows probe and of the P-core
+policy; amend before the freeze if either fails), then `run` unattended (about 3.8 h), and write the results. No
+candidate series should be frozen before that pilot's verdict.
 
 **Frame-time mechanisms already in the archives: none qualifies.** The visibility search is still the largest
 frame-time component: about 60% of client-thread Java samples and 18-29% of frame time whenever the camera moves, and

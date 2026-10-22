@@ -1,0 +1,33 @@
+{
+ "series": "aa31c4",
+ "archive": "build/aa31c4-container-series",
+ "purpose": "TOOLING TEST ONLY: exercises every stage of tools/aa_pilot.py in a Linux container with Mesa llvmpipe (software GL, about 20 FPS). Short phases; its numbers judge nothing and are never evidence about the reference machine.",
+ "java_home": {"windows": null, "linux": null},
+ "expect": {"java_runtime_prefix": "25.", "java_vendor": "Eclipse Adoptium", "renderer_contains": "llvmpipe"},
+ "launch": {"window": "854x480", "xmx": "2G", "vbo": "false", "time_scale": "0.25", "time_scale_flight": "0.25", "timeout_s": 900},
+ "stability": {"reference": 3, "reference_post": true, "processor_sampling": true, "mob_pose_check": true, "freeze_mobs": true},
+ "scenes": {
+  "d0": {"phase_seconds": {"static": 6}, "repeat_segments": 4, "repeat_segment_seconds": 2, "judged": ["static", "pan", "fly"]},
+  "d200": {"judged": ["static", "pan", "fly"]},
+  "terrain": {"judged": ["steady", "pan", "sort", "fly"]},
+  "near": {"judged": ["still", "fresh-flight"]},
+  "high": {"judged": ["still", "fresh-flight"]}
+ },
+ "calibration": {"scenes": ["d0"], "launches_per_scene": 2, "max_attempts": 2, "min_valid_per_scene": 2,
+                 "max_reference_spread": 0.5},
+ "pilot": {"pairs": {"d0": 2}, "order": ["ab", "ba", "ba", "ab"], "interleave_scenes": true,
+           "max_attempts_per_pair": 2, "max_pair_gap_s": 420},
+ "monitor": {"interval_s": 1.0, "top_n": 8, "gpu": true, "gpu_sources": [], "pre_launch_quiet_s": 3,
+             "quiet_wait_max_s": 20, "critical_sources": ["cpu", "client_affinity", "processor_sampling"],
+             "expected_power_plan": null},
+ "affinity": {"policy": "none"},
+ "limits": {"reference_frame_mean_band": 0.5, "reference_cpu_band_k": 3.0, "reference_cpu_band_min": 0.2,
+            "reference_cpu_band_max": 0.5, "background_cores_mean": 1.0, "background_cores_peak": 2.5,
+            "foreground_client_min": 0.95, "monitor_min_coverage": 0.6, "e_core_share_max": null,
+            "mob_move_blocks_max": 0.25, "memory_available_mb_min": 512, "frequency_flag": 0.10,
+            "unattributed_cores_flag": 1.0},
+ "gate": {"metric": "frame_mean_ms", "max_robust_spread_pct": 3.0, "min_accepted_pairs": 2,
+          "scene_phases": {"d0": ["static", "pan", "fly"]}},
+ "power": {"planned_pairs_per_scene": 16, "targets_pct": [1, 2, 5], "decision_target_pct": 2.0},
+ "validity": {"max_rejected_pair_fraction": 0.25, "trend_p": 0.01, "env_correlation_p": 0.01}
+}
