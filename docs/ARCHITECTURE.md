@@ -25,7 +25,7 @@ net.adiont.alacer
 ├── render/
 │   ├── ChunkVisibility     Allocation-free chunk visibility search (optimization 1)
 │   ├── ChunkFrustum        Exact one-corner-per-plane chunk predicate (session 12)
-│   ├── SectionFaces        Allocation-free camera-section flood fill with pocket reuse (session 28, unmeasured, off)
+│   ├── SectionFaces        Allocation-free camera-section flood fill with pocket reuse (session 28b, unmeasured, off)
 │   ├── ChunkPipelineTimings Opt-in build, queue, scheduling and upload attribution (session 13)
 │   ├── EntityRendering     renderEntities phase timing and world-chunk lookup cache (optimization 2)
 │   ├── EntityDrawDetails   Optional per-class draw-stage times and call counts
@@ -1045,7 +1045,10 @@ remains is mostly `getLightLevel`'s own work and its `isChunkLoaded` entry. **Of
 off by `render.defaults`, retained with its hooks absent unless requested. See BENCHMARKS session 22
 and the [session 22 archive](benchmarks/2026-10-20-particle-light-reuse/README.md).
 
-## Session 28: camera-section open faces (verified, unmeasured, off by default)
+## Session 28b: camera-section open faces (verified, unmeasured, off by default)
+
+Developed in a parallel session from `main` (branch `claude/vibrant-bardeen-9adcot`) at the same time as the
+allocation-selection session 28 below, and merged onto this line afterwards; "28b" keeps the two apart.
 
 **Evidence.** Session 26's allocation samples put vanilla's camera-section flood fill
 (`getOpenChunkFaces`, reached through optimization 1's per-block cache) at 16.6-21.1% of fly-phase
@@ -1249,8 +1252,10 @@ that rescues nothing. **Off by default and outside `render.defaults`.** The open
 
 ### Next session (29): recommended order
 
-Session 28 (above) implemented and verified the camera-section open-faces candidate from item 1's
-allocation list; it is off and unmeasured. Its flight comparison is the next measurement.
+Session 28b (above, a parallel session) implemented and verified the camera-section open-faces candidate (the flood
+fill in item 1's allocation list); it is off and unmeasured. After the merge onto this line, container launches of every
+series scene compared 18,133 answers with vanilla, 0 mismatched (correctness only). Its separate-launch reference series is prepared as
+session 30 (item 1b below).
 
 Sessions 26-27 found no qualifying candidate under their separate frozen rules. Do not select a chunk scheduling,
 upload budget, list replacement or backend change from these aggregate costs. Revisit upload only with a design
@@ -1271,6 +1276,14 @@ frame rate made the allocation target unresolvable; it needs real hardware, not 
    **Prepared, not frozen or run:** the series, its Windows runner and evaluator are in the
    [session 29 archive](benchmarks/2026-10-22-shadow-positions-reference/README.md) (tick-free allocation target,
    `benchmark.screenshotEndPose` captures).
+
+1b. **Measure or close `render.fastCameraSectionFaces` on the reference hardware (session 30).** Separate launches
+   only (the option works only when the camera enters another block): four alternating off/on pairs in each of d0,
+   d200, terrain and session 27's near/high fresh flights, plus verify and fixed-pose screenshot launches. Gates were
+   written from the mechanism before measuring: the visibility search's own section (`terrain_setup`) must fall in the
+   moving phases, a frame-level benefit (mean, slow-1% or p99) is required, still phases must be unchanged, and nothing
+   may regress. **Prepared, not frozen or run:** the series, Windows runner and evaluator are in the
+   [session 30 archive](benchmarks/2026-10-22-section-faces-reference/README.md).
 
 2. **Parked: particle movement block re-reads through a client world-mutation epoch.** Session 26 confirmed that
    particle ticks do not matter in ordinary scenes (at most 0.1% of client samples and 0.4-1.7% of slow-1% samples in
