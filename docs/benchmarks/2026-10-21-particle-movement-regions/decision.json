@@ -1,0 +1,114 @@
+{
+  "session": 25,
+  "selection": "no movement replacement eligible; none implemented",
+  "single_regions_meeting_share_thresholds": {
+    "gather": {
+      "median_share_percent": 44.23292265971182,
+      "min_share_percent": 42.54545454545455,
+      "max_share_percent": 47.943722943722946,
+      "meets_share_thresholds": true
+    },
+    "all_block_state_reads": {
+      "median_share_percent": 24.43945240553875,
+      "min_share_percent": 22.125813449023862,
+      "max_share_percent": 40.26517794836008,
+      "meets_share_thresholds": true
+    },
+    "all_chunk_map_frames": {
+      "median_share_percent": 27.961135518756336,
+      "min_share_percent": 23.7012987012987,
+      "max_share_percent": 29.067245119305856,
+      "meets_share_thresholds": true
+    }
+  },
+  "why_singles_do_not_qualify": {
+    "gather": "a mix of column checks, block reads, addCollisions callbacks and the entity query; no single exact transformation removes it",
+    "all_block_state_reads": "first reads of each cell are required; only lookups or re-reads are removable",
+    "all_chunk_map_frames": "includes inlined bimorphic chunk-source code attributed to constant-true client checks",
+    "gather.block_read+column_check": "stable 21.8-24.4% combined, but neither part is removable as a whole"
+  },
+  "transformation_sets": {
+    "fire_scan_answered_from_block_collision_scan": {
+      "per_launch_phase_percent": [
+        8.73,
+        11.93,
+        12.91,
+        9.23,
+        11.9,
+        12.0,
+        12.28,
+        9.59
+      ],
+      "median_percent": 11.917673794029543,
+      "min_percent": 8.726003490401396,
+      "meets_share_thresholds": false,
+      "exactness": "needs proof that onEntityCollision callbacks and isInWaterOrRain changed no world state or shape; skipping the containsFireSource call also hides particle calls from other mods' injections"
+    },
+    "post_gather_rereads_via_world_mutation_epoch": {
+      "per_launch_phase_percent": [
+        19.72,
+        19.09,
+        21.09,
+        19.61,
+        19.7,
+        21.07,
+        20.02,
+        17.99
+      ],
+      "median_percent": 19.708868792638427,
+      "min_percent": 17.992565055762082,
+      "meets_share_thresholds": false,
+      "exactness": "block-under, block-collision and fire cells lie inside the gather cells (except the second block-under read), but reuse crosses addCollisions, checkFallDamage, beforeCollision and onEntityCollision callbacks; exact only with an epoch covering every client world mutation path"
+    },
+    "chunk_lookup_reuse_for_block_reads (session 17 territory)": {
+      "per_launch_phase_percent": [
+        8.2,
+        6.83,
+        7.27,
+        8.19,
+        18.94,
+        19.89,
+        8.63,
+        7.58
+      ],
+      "median_percent": 8.195800648562475,
+      "min_percent": 6.83297180043384,
+      "meets_share_thresholds": false,
+      "exactness": "exact with the checked chunk-reference cache, but this is session 17's failed experiment; the protocol forbids rebranding it"
+    },
+    "client_area_and_column_checks_answered_as_range_tests": {
+      "per_launch_phase_percent": [
+        19.55,
+        19.96,
+        21.64,
+        19.61,
+        1.52,
+        1.19,
+        19.47,
+        20.82
+      ],
+      "median_percent": 19.577045477877014,
+      "min_percent": 1.1863224005582693,
+      "meets_share_thresholds": false,
+      "exactness": "exact on ClientChunkCache (hasChunk is constant true); attribution is compilation-dependent: in mr25-jfr-2-r1 column_check fell to 0.7-0.8% while gather.block_read rose by about 11 points"
+    },
+    "entity_query": {
+      "per_launch_phase_percent": [
+        8.55,
+        11.06,
+        6.91,
+        8.19,
+        11.58,
+        11.79,
+        7.74,
+        7.66
+      ],
+      "median_percent": 8.370320718370502,
+      "min_percent": 6.909090909090908,
+      "meets_share_thresholds": false,
+      "exactness": "getEntities returned zero entities in every census move, but the query (and its injections) must still run; session 19 already scalarized its bounds and failed"
+    }
+  },
+  "existing_movement_experiments_remain_disabled": true,
+  "defaults_changed": false
+}

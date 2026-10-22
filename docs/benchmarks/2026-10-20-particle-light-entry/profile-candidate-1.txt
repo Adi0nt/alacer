@@ -1,0 +1,48 @@
+static: frames 11141 mean 0.898 ms; particles pass 0.604 ms; alloc/frame 40259 B; rendered 3310
+pan: frames 12237 mean 1.226 ms; particles pass 0.654 ms; alloc/frame 57509 B; rendered 3316
+
+[static] client samples 603; particle pass 419 (69.5%)
+    particle render self                           129  30.8% of pass
+    light query                                    113  27.0% of pass
+    other:ParticleManager.render                    73  17.4% of pass
+    vertex writes                                   52  12.4% of pass
+    light (getLightLevel self)                      39   9.3% of pass
+    draw                                            12   2.9% of pass
+    light entry (isChunkLoaded)                      1   0.2% of pass
+  leaf frames:
+    Particle.render                                                 92  22.0%
+    ParticleLight.brightness                                        84  20.0%
+    ParticleManager.render                                          73  17.4%
+    Buffer.checkIndex                                               48  11.5%
+    WorldChunk.getLight                                             29   6.9%
+    Entity.redirect$zzg001$alacer$lightColor                        26   6.2%
+    BlockParticle.render                                            18   4.3%
+    Tesselator.end                                                  11   2.6%
+    Entity.getLightLevel                                            11   2.6%
+    SmokeParticle.render                                            10   2.4%
+    RedstoneParticle.render                                          5   1.2%
+    BufferBuilder.grow                                               4   1.0%
+  pass alloc sampled MB:
+
+[pan] client samples 939; particle pass 471 (50.2%)
+    light query                                    149  31.6% of pass
+    particle render self                           134  28.5% of pass
+    vertex writes                                   71  15.1% of pass
+    other:ParticleManager.render                    70  14.9% of pass
+    light (getLightLevel self)                      40   8.5% of pass
+    draw                                             6   1.3% of pass
+    light entry (isChunkLoaded)                      1   0.2% of pass
+  leaf frames:
+    ParticleLight.brightness                                        91  19.3%
+    Particle.render                                                 89  18.9%
+    ParticleManager.render                                          70  14.9%
+    Buffer.checkIndex                                               69  14.6%
+    ParticleLight.fastLightColor                                    29   6.2%
+    WorldChunk.getLight                                             27   5.7%
+    Entity.redirect$zzg001$alacer$lightColor                        27   5.7%
+    BlockParticle.render                                            21   4.5%
+    SmokeParticle.render                                            11   2.3%
+    Entity.getLightLevel                                            10   2.1%
+    FlameParticle.render                                             7   1.5%
+    RedstoneParticle.render                                          6   1.3%
+  pass alloc sampled MB:

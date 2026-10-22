@@ -1,0 +1,85 @@
+diff --git a/src/main/java/net/adiont/alacer/render/ParticleLight.java b/src/main/java/net/adiont/alacer/render/ParticleLight.java
+--- a/src/main/java/net/adiont/alacer/render/ParticleLight.java
++++ b/src/main/java/net/adiont/alacer/render/ParticleLight.java
+@@ -78,8 +78,11 @@
+ 			return world.getLightColor(pos, blockLight);
+ 		}
+ 		if (ParticleLightReuse.HOOKED && ParticleLightReuse.answers(world)) {
+-			// Per-pass reuse (session 22); it verifies and returns vanilla's answer itself when asked to.
+-			return ParticleLightReuse.lightColor(world, pos, pos.getX(), pos.getY(), pos.getZ(), blockLight);
++			// Keep the original position confined to the separately selected verification path.
++			if (ParticleLightReuse.verifying()) {
++				return ParticleLightReuse.lightColorVerified(world, pos, pos.getX(), pos.getY(), pos.getZ(), blockLight);
++			}
++			return ParticleLightReuse.lightColor(world, pos.getX(), pos.getY(), pos.getZ(), blockLight);
+ 		}
+ 		int color = fastLightColor(world, pos.getX(), pos.getY(), pos.getZ(), blockLight);
+ 		if (config.verifyFastParticleLight) {
+diff --git a/src/main/java/net/adiont/alacer/render/ParticleLightReuse.java b/src/main/java/net/adiont/alacer/render/ParticleLightReuse.java
+--- a/src/main/java/net/adiont/alacer/render/ParticleLightReuse.java
++++ b/src/main/java/net/adiont/alacer/render/ParticleLightReuse.java
+@@ -90,8 +90,13 @@
+ 		return queryWorld == world && queryWorld != null;
+ 	}
+ 
+-	/** {@code World.getLightColor(pos, blockLight)} through the pass's table. */
+-	static int lightColor(World world, BlockPos pos, int x, int y, int z, int blockLight) {
++	/** Verification state saved at pass start; callers must first check {@link #answers}. */
++	static boolean verifying() {
++		return verifying;
++	}
++
++	/** Scalar-only reuse boundary: table lookup and minimum-light composition, without verification. */
++	static int lightColor(World world, int x, int y, int z, int blockLight) {
+ 		int slot = TABLE.find(x, y, z);
+ 		int sky;
+ 		int block;
+@@ -114,25 +119,30 @@
+ 			block = blockLight;
+ 		}
+ 		int color = sky << 20 | block << 4;
+-		if (verifying) {
+-			int expected = world.getLightColor(pos, blockLight);
+-			verified++;
+-			if (hit) {
+-				verifiedHits++;
+-			}
+-			if (color != expected) {
+-				mismatches++;
+-				if (mismatches <= 10) {
+-					Alacer.LOGGER.warn("Particle light reuse mismatch at {} ({}): {} vs vanilla {}", pos, hit ? "reused" : "computed",
+-						Integer.toHexString(color), Integer.toHexString(expected));
+-				}
+-			}
+-			if (verified % SUMMARY_EVERY == 0) {
+-				Alacer.LOGGER.info("Particle light reuse verification: {}", verificationSummary());
+-			}
+-			return expected;
+-		}
+ 		return color;
++	}
++
++	/** Separate object boundary; vanilla verification always uses the caller's original position. */
++	static int lightColorVerified(World world, BlockPos pos, int x, int y, int z, int blockLight) {
++		long hitsBefore = hits;
++		int color = lightColor(world, x, y, z, blockLight);
++		boolean hit = hits != hitsBefore;
++		int expected = world.getLightColor(pos, blockLight);
++		verified++;
++		if (hit) {
++			verifiedHits++;
++		}
++		if (color != expected) {
++			mismatches++;
++			if (mismatches <= 10) {
++				Alacer.LOGGER.warn("Particle light reuse mismatch at {} ({}): {} vs vanilla {}", pos, hit ? "reused" : "computed",
++					Integer.toHexString(color), Integer.toHexString(expected));
++			}
++		}
++		if (verified % SUMMARY_EVERY == 0) {
++			Alacer.LOGGER.info("Particle light reuse verification: {}", verificationSummary());
++		}
++		return expected;
+ 	}
+ 
+ 	public static String verificationSummary() {

@@ -1,0 +1,87 @@
+{
+  "session": 24,
+  "selection": "no movement replacement justified",
+  "moves_observed": 4443672,
+  "actual_step_queries": 0,
+  "existing_movement_experiments_remain_disabled": true,
+  "startup_equivalence_established": false,
+  "equivalence_warnings": [
+    {
+      "phase": "static",
+      "median_paired_delta_percent": {
+        "frame_ms": 1.204475991085724,
+        "frame_p95_ms": 3.3655243826555825,
+        "frame_p99_ms": 2.5163706962192167,
+        "frame_max_ms": -10.504418149485245,
+        "particle_pass_ms": 0.290751042066828,
+        "particle_draw_ms": -1.1519867000629347,
+        "particle_pass_excluding_draw_ms": 0.43007101756445953,
+        "render_ms": 0.986301074196605,
+        "swap_ms": 2.134369235939748,
+        "tick_frame_ms": 0.0700226051701558,
+        "tick_frame_p95_ms": -0.6920369993671793,
+        "tick_frame_p99_ms": -15.861812976953154,
+        "tick_frame_max_ms": -33.92781946293606,
+        "non_tick_frame_ms": 1.233201024718844,
+        "non_tick_frame_p95_ms": 1.8512594037080277,
+        "non_tick_frame_p99_ms": 3.2362587739510174,
+        "particle_tick_ms": 0.18500716624317848,
+        "particles_rendered": -0.21530665186507703,
+        "alloc_bytes_per_frame": 30.794648597236495,
+        "alloc_bytes_per_second": 28.90210414769968,
+        "client_cpu_ms_per_frame": 0.4886232038410876,
+        "process_cpu_ms_per_frame": 1.1827174002751961,
+        "tick_frame_alloc_bytes": 8.024800997821323,
+        "ordinary_alloc_bytes": 647.109417190355
+      },
+      "exceeded": {
+        "alloc_bytes_per_frame": 30.794648597236495
+      },
+      "drift_flagged_pairs": []
+    },
+    {
+      "phase": "pan",
+      "median_paired_delta_percent": {
+        "frame_ms": 5.947852367167989,
+        "frame_p95_ms": 7.413573972684461,
+        "frame_p99_ms": 10.711443617669225,
+        "frame_max_ms": 39.866525838058685,
+        "particle_pass_ms": 3.5515846710496675,
+        "particle_draw_ms": 2.7582003963467825,
+        "particle_pass_excluding_draw_ms": 3.623169062914439,
+        "render_ms": 5.317485469257644,
+        "swap_ms": 9.260694631751432,
+        "tick_frame_ms": 1.9895837179181752,
+        "tick_frame_p95_ms": 10.958414217129398,
+        "tick_frame_p99_ms": 18.20039701781313,
+        "tick_frame_max_ms": 31.31126664691596,
+        "non_tick_frame_ms": 6.005129250209568,
+        "non_tick_frame_p95_ms": 12.233479323036672,
+        "non_tick_frame_p99_ms": 16.588495966097803,
+        "particle_tick_ms": 4.320880248191939,
+        "particles_rendered": -0.10220667134739347,
+        "alloc_bytes_per_frame": 18.173558076360695,
+        "alloc_bytes_per_second": 11.303912655155536,
+        "client_cpu_ms_per_frame": 6.346210265967345,
+        "process_cpu_ms_per_frame": 3.1506347420065355,
+        "tick_frame_alloc_bytes": 8.148211429874086,
+        "ordinary_alloc_bytes": 27.866478849673406
+      },
+      "exceeded": {
+        "frame_ms": 5.947852367167989,
+        "non_tick_frame_ms": 6.005129250209568,
+        "client_cpu_ms_per_frame": 6.346210265967345,
+        "alloc_bytes_per_frame": 18.173558076360695,
+        "frame_p95_ms": 7.413573972684461,
+        "frame_p99_ms": 10.711443617669225,
+        "non_tick_frame_p95_ms": 12.233479323036672,
+        "non_tick_frame_p99_ms": 16.588495966097803,
+        "tick_frame_p99_ms": 18.20039701781313
+      },
+      "drift_flagged_pairs": [
+        1
+      ]
+    }
+  ],
+  "next_region": "block gathering and callbacks/fire scans, retaining intermediate shape publications and all original ordering"
+}

@@ -1,0 +1,75 @@
+
+> Configure project :
+Fabric Loom: 1.18.4
+Project directory 'C:\Users\CodyJ\OneDrive\Documents\GitLab\adiont\aevum\alacer' is located in OneDrive. This is known to cause issues and slower performance. Consider moving the project to a different location.
+Ploceus: 1.18.1
+
+> Task :dependencies
+
+------------------------------------------------------------
+Root project 'alacer'
+------------------------------------------------------------
+
+runtimeClasspath - Runtime classpath of source set 'main'.
++--- org.ow2.asm:asm:9.11
++--- org.ow2.asm:asm-analysis:9.11
++--- org.ow2.asm:asm-commons:9.11
++--- org.ow2.asm:asm-tree:9.11
++--- org.ow2.asm:asm-util:9.11
++--- net.fabricmc:sponge-mixin:0.17.5+mixin.0.8.7
++--- io.github.llamalad7:mixinextras-fabric:0.5.5
++--- net.fabricmc:dev-launch-injector:0.2.1+build.8
++--- net.fabricmc:fabric-log4j-util:1.0.2
++--- org.slf4j:slf4j-api:2.0.17
++--- org.apache.logging.log4j:log4j-slf4j2-impl:2.19.0
++--- org.apache.logging.log4j:log4j-api:2.19.0
++--- org.apache.logging.log4j:log4j-core:2.19.0
++--- it.unimi.dsi:fastutil:8.5.9
++--- com.google.code.gson:gson:2.10
++--- net.ornithemc:log4j-patch:1.0.0
++--- net.sf.jopt-simple:jopt-simple:5.0.4
++--- com.mojang:netty:1.8.8
++--- oshi-project:oshi-core:1.1
++--- net.java.dev.jna:jna:3.4.0
++--- net.java.dev.jna:platform:3.4.0
++--- com.ibm.icu:icu4j-core-mojang:51.2
++--- net.sf.jopt-simple:jopt-simple:4.6 -> 5.0.4
++--- com.paulscode:codecjorbis:20101023
++--- com.paulscode:codecwav:20101023
++--- com.paulscode:libraryjavasound:20101123
++--- com.paulscode:librarylwjglopenal:20100824
++--- com.paulscode:soundsystem:20120107
++--- io.netty:netty-all:4.0.23.Final
++--- com.google.guava:guava:17.0
++--- org.apache.commons:commons-lang3:3.3.2
++--- commons-io:commons-io:2.4
++--- commons-codec:commons-codec:1.9
++--- net.java.jinput:jinput:2.0.5
++--- net.java.jutils:jutils:1.0.0
++--- com.google.code.gson:gson:2.2.4 -> 2.10
++--- com.mojang:authlib:1.5.21
++--- org.apache.commons:commons-compress:1.8.1
++--- org.apache.httpcomponents:httpclient:4.3.3
++--- commons-logging:commons-logging:1.1.3
++--- org.apache.httpcomponents:httpcore:4.3.2
++--- org.apache.logging.log4j:log4j-api:2.0-beta9 -> 2.19.0
++--- org.apache.logging.log4j:log4j-core:2.0-beta9 -> 2.19.0
++--- org.lwjgl.lwjgl:lwjgl:2.9.4+legacyfabric.15
++--- org.lwjgl.lwjgl:lwjgl_util:2.9.4+legacyfabric.15
++--- tv.twitch:twitch:6.5
++--- net.minecraft:minecraft-merged-9173d2371f:1.8.9-loom.mappings.1_8_9.layered+hash.1480139456-v2
++--- net.fabricmc:fabric-loader:0.20.0
++--- org.quiltmc.parsers:json:0.2.1
++--- org.jetbrains:annotations:24.0.1
++--- remapped.net.ornithemc.osl-gen2:core-973dafc1:0.11.0+mc14w27a-mc1.14.4
++--- remapped.net.ornithemc.osl-gen2:entrypoints-973dafc1:0.6.1+mc13w16a-mc1.14.4
++--- remapped.net.ornithemc.osl-gen2:lifecycle-events-973dafc1:0.6.1+mc13w36a-mc19w07a
+\--- remapped.net.ornithemc.osl-gen2:keybinds-973dafc1:0.3.0+mc13w36a-mc17w15a
+
+(*) - Indicates repeated occurrences of a transitive dependency subtree. Gradle expands transitive dependency subtrees only once per project; repeat occurrences only display the root of the subtree, followed by this annotation.
+
+A web-based, searchable dependency report is available by adding the --scan option.
+
+BUILD SUCCESSFUL in 1s
+1 actionable task: 1 executed
+Consider enabling configuration cache to speed up this build: https://docs.gradle.org/9.7.1/userguide/configuration_cache_enabling.html

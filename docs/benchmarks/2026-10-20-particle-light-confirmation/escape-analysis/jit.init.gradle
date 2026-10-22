@@ -1,0 +1,9 @@
+allprojects {
+    afterEvaluate {
+        tasks.matching { it.name == 'runClient' }.configureEach {
+            if (project.hasProperty('escapeLog')) {
+                jvmArgs '-XX:+UnlockDiagnosticVMOptions', '-XX:+LogCompilation', "-XX:LogFile=${project.property('escapeLog')}.jit.xml"
+            }
+        }
+    }
+}

@@ -1,0 +1,153 @@
+{
+  "build": {
+    "command": "JAVA_HOME=C:/Program Files/Eclipse Adoptium/jdk-25.0.4.101-hotspot gradlew.bat build --console=plain; gradlew.bat test --rerun --console=plain",
+    "result": "BUILD SUCCESSFUL (both)",
+    "tests": 86,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0,
+    "main_classes_by_classfile_major": {
+      "69": 147
+    },
+    "src_changed_this_session": false
+  },
+  "freeze": {
+    "manifest_frozen_at": "2026-10-21T16:40:10-0700",
+    "source_snapshot": {
+      "path": "docs\\benchmarks\\2026-10-21-whole-client-attribution\\sources-4167e8295a7171d9.zip",
+      "sha256": "230c9433e6b12d6ac1d2ccfe64d26facee93c97e14be1c11b9b283d15cd07526"
+    },
+    "tracked_files": 149
+  },
+  "runtime_jar": {
+    "path": "C:\\Users\\CodyJ\\OneDrive\\Documents\\GitLab\\adiont\\aevum\\alacer\\.gradle\\loom-cache\\minecraftMaven\\net\\minecraft\\minecraft-merged-9173d2371f\\1.8.9-loom.mappings.1_8_9.layered+hash.1480139456-v2\\minecraft-merged-9173d2371f-1.8.9-loom.mappings.1_8_9.layered+hash.1480139456-v2.jar",
+    "sha256": "13656e140b2fd48fb02dc1149e0ca94e4d1d68a5995ad8faaf1c65c88d48bd9f",
+    "lines_json_regenerated_after_launches_identical": true
+  },
+  "jfr_settings": {
+    "path": "docs/benchmarks/2026-10-21-particle-movement-regions/movement-1ms.jfc",
+    "sha256": "8026abfa2feb99d38817adb39d47af3737a29d2643fc0fa707d7a543b6fac2c7"
+  },
+  "shared_config_sha256": "694ff84d8e5672cd7a2ec0ee1b5a3e4eadbe09552d5d65eef93e16f61ceacd31",
+  "attempts": {
+    "wc26-d0-r1": {
+      "scene": "d0",
+      "smoke": false,
+      "status": "passed",
+      "exit_code": 0,
+      "launcher": "C:\\Program Files\\Eclipse Adoptium\\jdk-25.0.4.101-hotspot\\bin\\java.exe",
+      "elapsed_seconds": 212.3
+    },
+    "wc26-d0-r2": {
+      "scene": "d0",
+      "smoke": false,
+      "status": "passed",
+      "exit_code": 0,
+      "launcher": "C:\\Program Files\\Eclipse Adoptium\\jdk-25.0.4.101-hotspot\\bin\\java.exe",
+      "elapsed_seconds": 213.3
+    },
+    "wc26-d200-r1": {
+      "scene": "d200",
+      "smoke": false,
+      "status": "passed",
+      "exit_code": 0,
+      "launcher": "C:\\Program Files\\Eclipse Adoptium\\jdk-25.0.4.101-hotspot\\bin\\java.exe",
+      "elapsed_seconds": 212.5
+    },
+    "wc26-d200-r2": {
+      "scene": "d200",
+      "smoke": false,
+      "status": "passed",
+      "exit_code": 0,
+      "launcher": "C:\\Program Files\\Eclipse Adoptium\\jdk-25.0.4.101-hotspot\\bin\\java.exe",
+      "elapsed_seconds": 214.3
+    },
+    "wc26-particles-r1": {
+      "scene": "particles",
+      "smoke": false,
+      "status": "passed",
+      "exit_code": 0,
+      "launcher": "C:\\Program Files\\Eclipse Adoptium\\jdk-25.0.4.101-hotspot\\bin\\java.exe",
+      "elapsed_seconds": 132.4
+    },
+    "wc26-particles-r2": {
+      "scene": "particles",
+      "smoke": false,
+      "status": "passed",
+      "exit_code": 0,
+      "launcher": "C:\\Program Files\\Eclipse Adoptium\\jdk-25.0.4.101-hotspot\\bin\\java.exe",
+      "elapsed_seconds": 131.4
+    },
+    "wc26-smoke-d200": {
+      "scene": "d200",
+      "smoke": true,
+      "status": "passed-smoke",
+      "exit_code": 0,
+      "launcher": "C:\\Program Files\\Eclipse Adoptium\\jdk-25.0.4.101-hotspot\\bin\\java.exe",
+      "elapsed_seconds": 47.4
+    },
+    "wc26-smoke-terrain-2": {
+      "scene": "terrain",
+      "smoke": true,
+      "status": "passed-smoke",
+      "exit_code": 0,
+      "launcher": "C:\\Program Files\\Eclipse Adoptium\\jdk-25.0.4.101-hotspot\\bin\\java.exe",
+      "elapsed_seconds": 68.2
+    },
+    "wc26-smoke-terrain": {
+      "scene": "terrain",
+      "smoke": true,
+      "status": "exited",
+      "exit_code": 0,
+      "launcher": "C:\\Program Files\\Eclipse Adoptium\\jdk-25.0.4.101-hotspot\\bin\\java.exe",
+      "elapsed_seconds": 69.2,
+      "note": "client exited 0; runner rejected it after the launch because analyze.py was edited during it (sources changed). Pre-freeze smoke, retained, not evidence."
+    },
+    "wc26-terrain-r1": {
+      "scene": "terrain",
+      "smoke": false,
+      "status": "passed",
+      "exit_code": 0,
+      "launcher": "C:\\Program Files\\Eclipse Adoptium\\jdk-25.0.4.101-hotspot\\bin\\java.exe",
+      "elapsed_seconds": 413.4
+    },
+    "wc26-terrain-r2": {
+      "scene": "terrain",
+      "smoke": false,
+      "status": "passed",
+      "exit_code": 0,
+      "launcher": "C:\\Program Files\\Eclipse Adoptium\\jdk-25.0.4.101-hotspot\\bin\\java.exe",
+      "elapsed_seconds": 412.7
+    }
+  },
+  "measured_launches_passed": 8,
+  "client_launch_totals": {
+    "before_session": 50,
+    "this_session": 11,
+    "after_session": 61,
+    "rejected_attempts_this_session": [
+      "wc26-smoke-terrain"
+    ]
+  },
+  "stream_keys_sha256": {
+    "wc26-d0-r1.stream-keys.json.gz": "6eac405b89adff58fac8b43f541ac5e67bd96962560eb955850501fcfe33749c",
+    "wc26-d0-r2.stream-keys.json.gz": "9f15479c0c95700009431b51c67ec0ea1f51de0965afa015b93fe228ad7c74ae",
+    "wc26-d200-r1.stream-keys.json.gz": "18197bc8b0ed2297ad6d134a6724932c0060ecf6fac83a9e91203c5bb95d9165",
+    "wc26-d200-r2.stream-keys.json.gz": "f7379b9921e22dc6d47d407c17c4667b49845ad9bfd6260411270229b69cb488",
+    "wc26-particles-r1.stream-keys.json.gz": "68a9fa0a9baf9b684144bee957258700cb6c3328bd4808912adac04b7afb7f67",
+    "wc26-particles-r2.stream-keys.json.gz": "79ad729a98ddb191922a72665593a6eacd88881d0d0b18e396b3addd8a6062ae",
+    "wc26-terrain-r1.stream-keys.json.gz": "ad17088e25cf78327e43c4031da83f74b9170e1584fa69a99f8aa51edb505085",
+    "wc26-terrain-r2.stream-keys.json.gz": "3de38def1db0bb88571aec9b928d4a854417aed2c1a535342dd8e00401d14c52"
+  },
+  "jfr_sha256": {
+    "wc26-d0-r1": "5f2ae81243eb1dc71d0a9cff44513fd5ed833845c8d124cfdac1916fa244ce9b",
+    "wc26-d0-r2": "7d1b0b61e67447545e802f1b8622c59ccc169d7b168c805c54537faa15260969",
+    "wc26-d200-r1": "94ed7fe5201c423556d6896502d76814064d095d69352f5656aae70e35e67226",
+    "wc26-d200-r2": "3678842d6a054789eee983695222f9e5ac41664bcfc044e880f150ce26afed4f",
+    "wc26-particles-r1": "d2bbbf5c5cd326e0d83711dcdc73cdef9aec8ea816f72f298e2c0df8f6872ee0",
+    "wc26-particles-r2": "4c9729a60501a4cdbe5d1ba465f6daa9bce1d562a08267160a21114fd3c1cfd2",
+    "wc26-terrain-r1": "af1b0c46da03732aa283e47882eb9b08b49608823dd2be219065dc14bede1ebe",
+    "wc26-terrain-r2": "996f99c3bdabc42d2885993d2b98c7059c16de6f25204a773b5dfcdc3d9d99ac"
+  },
+  "boundaries": "Build/unit tests validate compilation and pure logic only; live evidence is hooks-absent JFR attribution (samples, not times) plus the ordinary profiler CSVs, one machine, two launches per scene. No optimization was measured or changed."
+}

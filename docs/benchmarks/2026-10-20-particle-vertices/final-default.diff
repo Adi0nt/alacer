@@ -1,0 +1,97 @@
+--- a/src/main/java/net/adiont/alacer/config/AlacerConfig.java	2026-10-20 20:22:10.207472200 -0700
++++ b/src/main/java/net/adiont/alacer/config/AlacerConfig.java	2026-10-20 20:22:27.830448600 -0700
+@@ -26,7 +26,7 @@
+ 
+ 	private static final String SYSTEM_PREFIX = "alacer.";
+ 	/** Default of {@code render.fastParticleVertices}; the mixin plugin applies its hooks by the same default. */
+-	static final boolean FAST_PARTICLE_VERTICES = false;
++	static final boolean FAST_PARTICLE_VERTICES = true;
+ 
+ 	/** Collect frame/tick/memory measurements. */
+ 	public final boolean profilerEnabled;
+@@ -174,7 +174,7 @@
+ 		this.verifyFastParticleRemoval = bool(file, system, "render.fastParticleRemoval.verify", false,
+ 			"Debug: also run vanilla's dead-particle removal, use its result and log any difference.");
+ 		this.fastParticleVertices = bool(file, system, "render.fastParticleVertices", FAST_PARTICLE_VERTICES,
+-			"Write each particle vertex's position, texture, color and light bytes directly at their fixed offsets instead of through BufferBuilder's per-element format lookups (same bytes). Its hooks are installed only when on at startup.");
++			"Write each particle vertex's position, texture, color and light bytes directly at their fixed offsets instead of through BufferBuilder's per-element format lookups (same bytes). Its hooks are installed only when on at startup (or verified, or benchmark-toggled).");
+ 		this.verifyFastParticleVertices = bool(file, system, "render.fastParticleVertices.verify", false,
+ 			"Debug: let vanilla write particle vertices, compare the direct writes' bytes with them and log any difference.");
+ 		this.fastParticleMovement = bool(file, system, "render.fastParticleMovement", false,
+@@ -255,7 +255,7 @@
+ 				this.fastEntityShadows = value;
+ 				this.fastParticleLight = value;
+ 				this.fastParticleRemoval = value;
+-				this.fastParticleVertices = false;
++				this.fastParticleVertices = value;
+ 				this.fastParticleMovement = false;
+ 				this.reuseParticleBoxes = false;
+ 				this.scalarParticleEntityQuery = false;
+--- a/src/main/java/net/adiont/alacer/config/AlacerMixinPlugin.java	2026-10-20 20:22:10.220148400 -0700
++++ b/src/main/java/net/adiont/alacer/config/AlacerMixinPlugin.java	2026-10-20 20:22:27.830948500 -0700
+@@ -67,7 +67,8 @@
+ 	static boolean particleVerticesEnabled(Properties file) {
+ 		return flag(file, "render.fastParticleVertices", AlacerConfig.FAST_PARTICLE_VERTICES)
+ 			|| flag(file, "render.fastParticleVertices.verify", false)
+-			|| "render.fastParticleVertices".equals(System.getProperty("alacer.benchmark.toggle", "").trim());
++			|| "render.fastParticleVertices".equals(System.getProperty("alacer.benchmark.toggle", "").trim())
++			|| "render.defaults".equals(System.getProperty("alacer.benchmark.toggle", "").trim());
+ 	}
+ 
+ 	static boolean particleEntityQueryEnabled(Properties file) {
+--- build/pv20-predefault/AlacerConfigTest.java	2026-10-20 20:22:10.236755700 -0700
++++ src/test/java/net/adiont/alacer/config/AlacerConfigTest.java	2026-10-20 20:22:27.831448700 -0700
+@@ -27,6 +27,7 @@
+ 	void clearOverrides() {
+ 		System.clearProperty("alacer.render.fastChunkVisibility");
+ 		System.clearProperty("alacer.render.fastParticleRemoval");
++		System.clearProperty("alacer.render.fastParticleVertices");
+ 		System.clearProperty("alacer.benchmark");
+ 	}
+ 
+@@ -40,6 +41,7 @@
+ 		AlacerConfig config = AlacerConfig.load(file, LOGGER);
+ 		assertTrue(config.fastParticleLight);
+ 		assertTrue(config.fastParticleRemoval);
++		assertTrue(config.fastParticleVertices);
+ 		assertTrue(config.profilerEnabled);
+ 		assertFalse(config.profilerParticleDetail);
+ 		System.setProperty("alacer.render.fastParticleRemoval", "false");
+@@ -122,6 +124,8 @@
+ 		assertFalse(config.verifyFastParticleLight);
+ 		assertTrue(config.fastParticleRemoval);
+ 		assertFalse(config.verifyFastParticleRemoval);
++		assertTrue(config.fastParticleVertices);
++		assertFalse(config.verifyFastParticleVertices);
+ 		assertFalse(config.reuseParticleBoxes);
+ 		assertFalse(config.verifyReuseParticleBoxes);
+ 		assertFalse(config.scalarParticleEntityQuery);
+@@ -161,6 +165,9 @@
+ 		assertThrows(IllegalArgumentException.class, () -> config.setToggle("benchmark.disableParticles", true));
+ 		config.setToggle("render.fastParticleRemoval", false);
+ 		assertFalse(config.fastParticleRemoval);
++		config.setToggle("render.fastParticleVertices", false);
++		assertFalse(config.fastParticleVertices);
++		assertThrows(IllegalArgumentException.class, () -> config.setToggle("render.fastParticleVertices.verify", true));
+ 		config.setToggle("render.fastParticleMovement", true);
+ 		config.setToggle("render.scalarParticleEntityQuery", true);
+ 		assertTrue(config.scalarParticleEntityQuery);
+@@ -180,6 +187,18 @@
+ 	}
+ 
+ 	@Test
++	void particleVerticesAreOnByDefaultAndInThePreset() throws IOException {
++		AlacerConfig config = AlacerConfig.load(this.dir.resolve("vertices.properties"), LOGGER);
++		assertTrue(config.fastParticleVertices);
++		config.setToggle("render.defaults", false);
++		assertFalse(config.fastParticleVertices);
++		config.setToggle("render.defaults", true);
++		assertTrue(config.fastParticleVertices);
++		System.setProperty("alacer.render.fastParticleVertices", "false");
++		assertFalse(AlacerConfig.load(this.dir.resolve("vertices.properties"), LOGGER).fastParticleVertices);
++	}
++
++	@Test
+ 	void benchmarkPresetMatchesShippedDefaultsAndDisablesEveryRenderOptimization() throws IOException {
+ 		AlacerConfig defaults = AlacerConfig.load(this.dir.resolve("defaults.properties"), LOGGER);
+ 		AlacerConfig config = AlacerConfig.load(this.dir.resolve("comparison.properties"), LOGGER);

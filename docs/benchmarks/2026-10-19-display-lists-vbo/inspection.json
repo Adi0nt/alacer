@@ -1,0 +1,18 @@
+{
+  "method": "javap -c -p of mapped Minecraft 1.8.9 classes plus existing session 13 decompiled source inspection",
+  "sha256": {
+    "C:\\Users\\CodyJ\\.gradle\\caches\\fabric-loom\\minecraftMaven\\net\\minecraft\\minecraft-merged-calamus-gen2-intermediary-v2\\1.8.9-loom.mappings.1_8_9.layered+hash.1480139456-v2\\minecraft-merged-calamus-gen2-intermediary-v2-1.8.9-loom.mappings.1_8_9.layered+hash.1480139456-v2.jar": "85dc63fe4112bf8119ecdacc3c25daaf76617a0f743d7b758a8ad3b78268ff9c",
+    "build\\s14-glass-bytecode.txt": "51feaa3d0f905c83e14a5cd43bfccd9444126c731ec7bd07ab29cc3499e8d5d0",
+    "build\\s14-backend-bytecode.txt": "1bccc691bb223ab8ab2e6ab8e1f65f5ee401bee26d41b92a75de228945159b7a",
+    "build\\s14-minecraft-bytecode.txt": "d69b70cc3e8a57e12fe4dc5c8b8135de921e868be5ccdea24b2228bb2e7ca84b",
+    "build\\pipeline-source\\WorldRenderer.java": "0e27161d85843b3916c47b379c6f0340a25fd9b1f988a6584118f7676ca3dae1",
+    "build\\pipeline-source\\ChunkRenderDispatcher.java": "72b83ddf209bcf39d0e87f3c986d93880d703652dca9fb5091d21829312b43b3"
+  },
+  "findings": [
+    "GlassBlock.getRenderLayer returns CUTOUT; StainedGlassBlock.getRenderLayer returns TRANSLUCENT.",
+    "WorldRenderer.setWorld -> reload chooses active GLX backend, releases/recreates chunk storage, switches chunk factories/lists and rebuilds sky when backend changes.",
+    "Both backends iterate chunks in supplied order. Display lists capture geometry during upload; VBOs bind each layer buffer and set per-buffer attribute pointers before drawing.",
+    "Translucent layer schedules up to 15 resort tasks when camera displacement squared exceeds 1; worker sorting and uploads are asynchronous.",
+    "Minecraft.stop only clears running, so the current runGame call can still tick/render; final harness restores prior VBO with vanilla reload after export."
+  ]
+}

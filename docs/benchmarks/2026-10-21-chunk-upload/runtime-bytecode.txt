@@ -1,0 +1,2545 @@
+Compiled from "ChunkRenderDispatcher.java"
+public class net.minecraft.client.render.world.ChunkRenderDispatcher {
+  private static final org.apache.logging.log4j.Logger LOGGER;
+
+  private static final java.util.concurrent.ThreadFactory CHUNK_BATCHER_FACTORY;
+
+  private final java.util.List<net.minecraft.client.render.world.ChunkRenderWorker> workers;
+
+  private final java.util.concurrent.BlockingQueue<net.minecraft.client.render.world.ChunkCompileTask> pendingTasks;
+
+  private final java.util.concurrent.BlockingQueue<net.minecraft.client.render.world.ChunkBufferBuilders> availableBuffers;
+
+  private final net.minecraft.client.render.vertex.BufferUploader bufferUploader;
+
+  private final net.minecraft.client.render.vertex.VertexBufferUploader vertexBufferUploader;
+
+  private final java.util.Queue<com.google.common.util.concurrent.ListenableFutureTask<?>> pendingUploads;
+
+  private final net.minecraft.client.render.world.ChunkRenderWorker localWorker;
+
+  public net.minecraft.client.render.world.ChunkRenderDispatcher();
+    Code:
+         0: aload_0
+         1: invokespecial #40                 // Method java/lang/Object."<init>":()V
+         4: aload_0
+         5: invokestatic  #46                 // Method com/google/common/collect/Lists.newArrayList:()Ljava/util/ArrayList;
+         8: putfield      #48                 // Field workers:Ljava/util/List;
+        11: aload_0
+        12: bipush        100
+        14: invokestatic  #54                 // Method com/google/common/collect/Queues.newArrayBlockingQueue:(I)Ljava/util/concurrent/ArrayBlockingQueue;
+        17: putfield      #56                 // Field pendingTasks:Ljava/util/concurrent/BlockingQueue;
+        20: aload_0
+        21: iconst_5
+        22: invokestatic  #54                 // Method com/google/common/collect/Queues.newArrayBlockingQueue:(I)Ljava/util/concurrent/ArrayBlockingQueue;
+        25: putfield      #58                 // Field availableBuffers:Ljava/util/concurrent/BlockingQueue;
+        28: aload_0
+        29: new           #60                 // class net/minecraft/client/render/vertex/BufferUploader
+        32: dup
+        33: invokespecial #61                 // Method net/minecraft/client/render/vertex/BufferUploader."<init>":()V
+        36: putfield      #63                 // Field bufferUploader:Lnet/minecraft/client/render/vertex/BufferUploader;
+        39: aload_0
+        40: new           #65                 // class net/minecraft/client/render/vertex/VertexBufferUploader
+        43: dup
+        44: invokespecial #66                 // Method net/minecraft/client/render/vertex/VertexBufferUploader."<init>":()V
+        47: putfield      #68                 // Field vertexBufferUploader:Lnet/minecraft/client/render/vertex/VertexBufferUploader;
+        50: aload_0
+        51: invokestatic  #72                 // Method com/google/common/collect/Queues.newArrayDeque:()Ljava/util/ArrayDeque;
+        54: putfield      #74                 // Field pendingUploads:Ljava/util/Queue;
+        57: iconst_0
+        58: istore_1
+        59: iload_1
+        60: iconst_2
+        61: if_icmpge     104
+        64: new           #76                 // class net/minecraft/client/render/world/ChunkRenderWorker
+        67: dup
+        68: aload_0
+        69: invokespecial #79                 // Method net/minecraft/client/render/world/ChunkRenderWorker."<init>":(Lnet/minecraft/client/render/world/ChunkRenderDispatcher;)V
+        72: astore_2
+        73: getstatic     #81                 // Field CHUNK_BATCHER_FACTORY:Ljava/util/concurrent/ThreadFactory;
+        76: aload_2
+        77: invokeinterface #87,  2           // InterfaceMethod java/util/concurrent/ThreadFactory.newThread:(Ljava/lang/Runnable;)Ljava/lang/Thread;
+        82: astore_3
+        83: aload_3
+        84: invokevirtual #92                 // Method java/lang/Thread.start:()V
+        87: aload_0
+        88: getfield      #48                 // Field workers:Ljava/util/List;
+        91: aload_2
+        92: invokeinterface #98,  2           // InterfaceMethod java/util/List.add:(Ljava/lang/Object;)Z
+        97: pop
+        98: iinc          1, 1
+       101: goto          59
+       104: iconst_0
+       105: istore_1
+       106: iload_1
+       107: iconst_5
+       108: if_icmpge     134
+       111: aload_0
+       112: getfield      #58                 // Field availableBuffers:Ljava/util/concurrent/BlockingQueue;
+       115: new           #100                // class net/minecraft/client/render/world/ChunkBufferBuilders
+       118: dup
+       119: invokespecial #101                // Method net/minecraft/client/render/world/ChunkBufferBuilders."<init>":()V
+       122: invokeinterface #104,  2          // InterfaceMethod java/util/concurrent/BlockingQueue.add:(Ljava/lang/Object;)Z
+       127: pop
+       128: iinc          1, 1
+       131: goto          106
+       134: aload_0
+       135: new           #76                 // class net/minecraft/client/render/world/ChunkRenderWorker
+       138: dup
+       139: aload_0
+       140: new           #100                // class net/minecraft/client/render/world/ChunkBufferBuilders
+       143: dup
+       144: invokespecial #101                // Method net/minecraft/client/render/world/ChunkBufferBuilders."<init>":()V
+       147: invokespecial #107                // Method net/minecraft/client/render/world/ChunkRenderWorker."<init>":(Lnet/minecraft/client/render/world/ChunkRenderDispatcher;Lnet/minecraft/client/render/world/ChunkBufferBuilders;)V
+       150: putfield      #109                // Field localWorker:Lnet/minecraft/client/render/world/ChunkRenderWorker;
+       153: return
+      LineNumberTable:
+        line 39: 0
+        line 31: 4
+        line 32: 11
+        line 33: 20
+        line 34: 28
+        line 35: 39
+        line 36: 50
+        line 40: 57
+        line 41: 64
+        line 42: 73
+        line 43: 83
+        line 44: 87
+        line 40: 98
+        line 46: 104
+        line 47: 111
+        line 46: 128
+        line 50: 134
+        line 51: 153
+      LocalVariableTable:
+        Start  Length  Slot  Name   Signature
+            0     154     0  this   Lnet/minecraft/client/render/world/ChunkRenderDispatcher;
+           59      45     1     i   I
+           73      25     2 chunkRenderWorker   Lnet/minecraft/client/render/world/ChunkRenderWorker;
+           83      15     3 thread   Ljava/lang/Thread;
+          106      28     1     i   I
+
+  public java.lang.String getChunkDebugInfo();
+    Code:
+         0: ldc           #120                // String pC: %03d, pU: %1d, aB: %1d
+         2: iconst_3
+         3: anewarray     #4                  // class java/lang/Object
+         6: dup
+         7: iconst_0
+         8: aload_0
+         9: getfield      #56                 // Field pendingTasks:Ljava/util/concurrent/BlockingQueue;
+        12: invokeinterface #124,  1          // InterfaceMethod java/util/concurrent/BlockingQueue.size:()I
+        17: invokestatic  #130                // Method java/lang/Integer.valueOf:(I)Ljava/lang/Integer;
+        20: aastore
+        21: dup
+        22: iconst_1
+        23: aload_0
+        24: getfield      #74                 // Field pendingUploads:Ljava/util/Queue;
+        27: invokeinterface #133,  1          // InterfaceMethod java/util/Queue.size:()I
+        32: invokestatic  #130                // Method java/lang/Integer.valueOf:(I)Ljava/lang/Integer;
+        35: aastore
+        36: dup
+        37: iconst_2
+        38: aload_0
+        39: getfield      #58                 // Field availableBuffers:Ljava/util/concurrent/BlockingQueue;
+        42: invokeinterface #124,  1          // InterfaceMethod java/util/concurrent/BlockingQueue.size:()I
+        47: invokestatic  #130                // Method java/lang/Integer.valueOf:(I)Ljava/lang/Integer;
+        50: aastore
+        51: invokestatic  #139                // Method java/lang/String.format:(Ljava/lang/String;[Ljava/lang/Object;)Ljava/lang/String;
+        54: areturn
+      LineNumberTable:
+        line 54: 0
+      LocalVariableTable:
+        Start  Length  Slot  Name   Signature
+            0      55     0  this   Lnet/minecraft/client/render/world/ChunkRenderDispatcher;
+
+  public boolean runTasksUntil(long);
+    Code:
+         0: iconst_0
+         1: istore_3
+         2: iconst_0
+         3: istore        4
+         5: aload_0
+         6: getfield      #74                 // Field pendingUploads:Ljava/util/Queue;
+         9: dup
+        10: astore        5
+        12: monitorenter
+        13: aload_0
+        14: getfield      #74                 // Field pendingUploads:Ljava/util/Queue;
+        17: invokeinterface #146,  1          // InterfaceMethod java/util/Queue.isEmpty:()Z
+        22: ifne          45
+        25: aload_0
+        26: getfield      #74                 // Field pendingUploads:Ljava/util/Queue;
+        29: invokeinterface #150,  1          // InterfaceMethod java/util/Queue.poll:()Ljava/lang/Object;
+        34: checkcast     #152                // class com/google/common/util/concurrent/ListenableFutureTask
+        37: invokevirtual #155                // Method com/google/common/util/concurrent/ListenableFutureTask.run:()V
+        40: iconst_1
+        41: istore        4
+        43: iconst_1
+        44: istore_3
+        45: aload         5
+        47: monitorexit
+        48: goto          59
+        51: astore        6
+        53: aload         5
+        55: monitorexit
+        56: aload         6
+        58: athrow
+        59: lload_1
+        60: lconst_0
+        61: lcmp
+        62: ifeq          93
+        65: iload         4
+        67: ifne          73
+        70: goto          93
+        73: lload_1
+        74: invokestatic  #163                // Method java/lang/System.nanoTime:()J
+        77: lsub
+        78: lstore        5
+        80: lload         5
+        82: lconst_0
+        83: lcmp
+        84: ifge          90
+        87: goto          93
+        90: goto          2
+        93: iload_3
+        94: ireturn
+      Exception table:
+         from    to  target type
+            13    48    51   any
+            51    56    51   any
+      LineNumberTable:
+        line 58: 0
+        line 61: 2
+        line 75: 5
+        line 76: 13
+        line 77: 25
+        line 78: 40
+        line 79: 43
+        line 81: 45
+        line 83: 59
+        line 84: 70
+        line 87: 73
+        line 88: 80
+        line 89: 87
+        line 91: 90
+        line 93: 93
+      LocalVariableTable:
+        Start  Length  Slot  Name   Signature
+            0      95     0  this   Lnet/minecraft/client/render/world/ChunkRenderDispatcher;
+            0      95     1  time   J
+            2      93     3    bl   Z
+            5      85     4   bl2   Z
+           80      10     5     l   J
+
+  public boolean rebuildAsync(net.minecraft.client.render.world.RenderChunk);
+    Code:
+         0: aload_1
+         1: invokevirtual #177                // Method net/minecraft/client/render/world/RenderChunk.getTaskLock:()Ljava/util/concurrent/locks/ReentrantLock;
+         4: invokevirtual #182                // Method java/util/concurrent/locks/ReentrantLock.lock:()V
+         7: aload_1
+         8: invokevirtual #186                // Method net/minecraft/client/render/world/RenderChunk.startCompile:()Lnet/minecraft/client/render/world/ChunkCompileTask;
+        11: astore_2
+        12: aload_2
+        13: new           #15                 // class net/minecraft/client/render/world/ChunkRenderDispatcher$77264440
+        16: dup
+        17: aload_0
+        18: aload_2
+        19: invokespecial #189                // Method net/minecraft/client/render/world/ChunkRenderDispatcher$77264440."<init>":(Lnet/minecraft/client/render/world/ChunkRenderDispatcher;Lnet/minecraft/client/render/world/ChunkCompileTask;)V
+        22: invokevirtual #195                // Method net/minecraft/client/render/world/ChunkCompileTask.registerCancelListener:(Ljava/lang/Runnable;)V
+        25: aload_0
+        26: getfield      #56                 // Field pendingTasks:Ljava/util/concurrent/BlockingQueue;
+        29: aload_2
+        30: invokeinterface #198,  2          // InterfaceMethod java/util/concurrent/BlockingQueue.offer:(Ljava/lang/Object;)Z
+        35: istore_3
+        36: iload_3
+        37: ifne          44
+        40: aload_2
+        41: invokevirtual #201                // Method net/minecraft/client/render/world/ChunkCompileTask.cancel:()V
+        44: iload_3
+        45: istore        4
+        47: aload_1
+        48: invokevirtual #177                // Method net/minecraft/client/render/world/RenderChunk.getTaskLock:()Ljava/util/concurrent/locks/ReentrantLock;
+        51: invokevirtual #204                // Method java/util/concurrent/locks/ReentrantLock.unlock:()V
+        54: iload         4
+        56: ireturn
+        57: astore        5
+        59: aload_1
+        60: invokevirtual #177                // Method net/minecraft/client/render/world/RenderChunk.getTaskLock:()Ljava/util/concurrent/locks/ReentrantLock;
+        63: invokevirtual #204                // Method java/util/concurrent/locks/ReentrantLock.unlock:()V
+        66: aload         5
+        68: athrow
+      Exception table:
+         from    to  target type
+             7    47    57   any
+            57    59    57   any
+      LineNumberTable:
+        line 97: 0
+        line 99: 7
+        line 100: 12
+        line 106: 25
+        line 107: 36
+        line 108: 40
+        line 110: 44
+        line 112: 47
+      LocalVariableTable:
+        Start  Length  Slot  Name   Signature
+            0      69     0  this   Lnet/minecraft/client/render/world/ChunkRenderDispatcher;
+            0      69     1 chunk   Lnet/minecraft/client/render/world/RenderChunk;
+           12      45     2 chunkCompileTask   Lnet/minecraft/client/render/world/ChunkCompileTask;
+           36      21     3    bl   Z
+
+  public boolean rebuildSync(net.minecraft.client.render.world.RenderChunk);
+    Code:
+         0: aload_1
+         1: invokevirtual #177                // Method net/minecraft/client/render/world/RenderChunk.getTaskLock:()Ljava/util/concurrent/locks/ReentrantLock;
+         4: invokevirtual #182                // Method java/util/concurrent/locks/ReentrantLock.lock:()V
+         7: aload_1
+         8: invokevirtual #186                // Method net/minecraft/client/render/world/RenderChunk.startCompile:()Lnet/minecraft/client/render/world/ChunkCompileTask;
+        11: astore_2
+        12: aload_0
+        13: getfield      #109                // Field localWorker:Lnet/minecraft/client/render/world/ChunkRenderWorker;
+        16: aload_2
+        17: invokevirtual #214                // Method net/minecraft/client/render/world/ChunkRenderWorker.runTask:(Lnet/minecraft/client/render/world/ChunkCompileTask;)V
+        20: goto          24
+        23: astore_3
+        24: iconst_1
+        25: istore_3
+        26: aload_1
+        27: invokevirtual #177                // Method net/minecraft/client/render/world/RenderChunk.getTaskLock:()Ljava/util/concurrent/locks/ReentrantLock;
+        30: invokevirtual #204                // Method java/util/concurrent/locks/ReentrantLock.unlock:()V
+        33: iload_3
+        34: ireturn
+        35: astore        4
+        37: aload_1
+        38: invokevirtual #177                // Method net/minecraft/client/render/world/RenderChunk.getTaskLock:()Ljava/util/concurrent/locks/ReentrantLock;
+        41: invokevirtual #204                // Method java/util/concurrent/locks/ReentrantLock.unlock:()V
+        44: aload         4
+        46: athrow
+      Exception table:
+         from    to  target type
+            12    20    23   Class java/lang/InterruptedException
+             7    26    35   any
+            35    37    35   any
+      LineNumberTable:
+        line 117: 0
+        line 119: 7
+        line 121: 12
+        line 123: 20
+        line 122: 23
+        line 124: 24
+        line 126: 26
+      LocalVariableTable:
+        Start  Length  Slot  Name   Signature
+            0      47     0  this   Lnet/minecraft/client/render/world/ChunkRenderDispatcher;
+            0      47     1 chunk   Lnet/minecraft/client/render/world/RenderChunk;
+           12      23     2 chunkCompileTask   Lnet/minecraft/client/render/world/ChunkCompileTask;
+
+  public void runTasks();
+    Code:
+         0: aload_0
+         1: invokevirtual #218                // Method clear:()V
+         4: aload_0
+         5: lconst_0
+         6: invokevirtual #220                // Method runTasksUntil:(J)Z
+         9: ifeq          15
+        12: goto          4
+        15: invokestatic  #46                 // Method com/google/common/collect/Lists.newArrayList:()Ljava/util/ArrayList;
+        18: astore_1
+        19: aload_1
+        20: invokeinterface #223,  1          // InterfaceMethod java/util/List.size:()I
+        25: iconst_5
+        26: if_icmpeq     47
+        29: aload_1
+        30: aload_0
+        31: invokevirtual #227                // Method takeBuffer:()Lnet/minecraft/client/render/world/ChunkBufferBuilders;
+        34: invokeinterface #98,  2           // InterfaceMethod java/util/List.add:(Ljava/lang/Object;)Z
+        39: pop
+        40: goto          19
+        43: astore_2
+        44: goto          19
+        47: aload_0
+        48: getfield      #58                 // Field availableBuffers:Ljava/util/concurrent/BlockingQueue;
+        51: aload_1
+        52: invokeinterface #231,  2          // InterfaceMethod java/util/concurrent/BlockingQueue.addAll:(Ljava/util/Collection;)Z
+        57: pop
+        58: return
+      Exception table:
+         from    to  target type
+            29    40    43   Class java/lang/InterruptedException
+      LineNumberTable:
+        line 131: 0
+        line 133: 4
+        line 137: 15
+        line 138: 19
+        line 140: 29
+        line 142: 40
+        line 141: 43
+        line 142: 44
+        line 145: 47
+        line 146: 58
+      LocalVariableTable:
+        Start  Length  Slot  Name   Signature
+            0      59     0  this   Lnet/minecraft/client/render/world/ChunkRenderDispatcher;
+           19      40     1  list   Ljava/util/List;
+
+  public void releaseBuffer(net.minecraft.client.render.world.ChunkBufferBuilders);
+    Code:
+         0: aload_0
+         1: getfield      #58                 // Field availableBuffers:Ljava/util/concurrent/BlockingQueue;
+         4: aload_1
+         5: invokeinterface #104,  2          // InterfaceMethod java/util/concurrent/BlockingQueue.add:(Ljava/lang/Object;)Z
+        10: pop
+        11: return
+      LineNumberTable:
+        line 149: 0
+        line 150: 11
+      LocalVariableTable:
+        Start  Length  Slot  Name   Signature
+            0      12     0  this   Lnet/minecraft/client/render/world/ChunkRenderDispatcher;
+            0      12     1 buffer   Lnet/minecraft/client/render/world/ChunkBufferBuilders;
+
+  public net.minecraft.client.render.world.ChunkBufferBuilders takeBuffer() throws java.lang.InterruptedException;
+    Code:
+         0: aload_0
+         1: getfield      #58                 // Field availableBuffers:Ljava/util/concurrent/BlockingQueue;
+         4: invokeinterface #240,  1          // InterfaceMethod java/util/concurrent/BlockingQueue.take:()Ljava/lang/Object;
+         9: checkcast     #100                // class net/minecraft/client/render/world/ChunkBufferBuilders
+        12: areturn
+      LineNumberTable:
+        line 153: 0
+      LocalVariableTable:
+        Start  Length  Slot  Name   Signature
+            0      13     0  this   Lnet/minecraft/client/render/world/ChunkRenderDispatcher;
+
+  public net.minecraft.client.render.world.ChunkCompileTask takeTask() throws java.lang.InterruptedException;
+    Code:
+         0: aload_0
+         1: getfield      #56                 // Field pendingTasks:Ljava/util/concurrent/BlockingQueue;
+         4: invokeinterface #240,  1          // InterfaceMethod java/util/concurrent/BlockingQueue.take:()Ljava/lang/Object;
+         9: checkcast     #191                // class net/minecraft/client/render/world/ChunkCompileTask
+        12: areturn
+      LineNumberTable:
+        line 157: 0
+      LocalVariableTable:
+        Start  Length  Slot  Name   Signature
+            0      13     0  this   Lnet/minecraft/client/render/world/ChunkRenderDispatcher;
+
+  public boolean resortTransparency(net.minecraft.client.render.world.RenderChunk);
+    Code:
+         0: aload_1
+         1: invokevirtual #177                // Method net/minecraft/client/render/world/RenderChunk.getTaskLock:()Ljava/util/concurrent/locks/ReentrantLock;
+         4: invokevirtual #182                // Method java/util/concurrent/locks/ReentrantLock.lock:()V
+         7: aload_1
+         8: invokevirtual #245                // Method net/minecraft/client/render/world/RenderChunk.startResortTransparency:()Lnet/minecraft/client/render/world/ChunkCompileTask;
+        11: astore_2
+        12: aload_2
+        13: ifnull        49
+        16: aload_2
+        17: new           #13                 // class net/minecraft/client/render/world/ChunkRenderDispatcher$38889476
+        20: dup
+        21: aload_0
+        22: aload_2
+        23: invokespecial #246                // Method net/minecraft/client/render/world/ChunkRenderDispatcher$38889476."<init>":(Lnet/minecraft/client/render/world/ChunkRenderDispatcher;Lnet/minecraft/client/render/world/ChunkCompileTask;)V
+        26: invokevirtual #195                // Method net/minecraft/client/render/world/ChunkCompileTask.registerCancelListener:(Ljava/lang/Runnable;)V
+        29: aload_0
+        30: getfield      #56                 // Field pendingTasks:Ljava/util/concurrent/BlockingQueue;
+        33: aload_2
+        34: invokeinterface #198,  2          // InterfaceMethod java/util/concurrent/BlockingQueue.offer:(Ljava/lang/Object;)Z
+        39: istore_3
+        40: aload_1
+        41: invokevirtual #177                // Method net/minecraft/client/render/world/RenderChunk.getTaskLock:()Ljava/util/concurrent/locks/ReentrantLock;
+        44: invokevirtual #204                // Method java/util/concurrent/locks/ReentrantLock.unlock:()V
+        47: iload_3
+        48: ireturn
+        49: iconst_1
+        50: istore_3
+        51: aload_1
+        52: invokevirtual #177                // Method net/minecraft/client/render/world/RenderChunk.getTaskLock:()Ljava/util/concurrent/locks/ReentrantLock;
+        55: invokevirtual #204                // Method java/util/concurrent/locks/ReentrantLock.unlock:()V
+        58: iload_3
+        59: ireturn
+        60: astore        4
+        62: aload_1
+        63: invokevirtual #177                // Method net/minecraft/client/render/world/RenderChunk.getTaskLock:()Ljava/util/concurrent/locks/ReentrantLock;
+        66: invokevirtual #204                // Method java/util/concurrent/locks/ReentrantLock.unlock:()V
+        69: aload         4
+        71: athrow
+      Exception table:
+         from    to  target type
+             7    40    60   any
+            49    51    60   any
+            60    62    60   any
+      LineNumberTable:
+        line 161: 0
+        line 163: 7
+        line 164: 12
+        line 165: 16
+        line 171: 29
+        line 175: 40
+        line 173: 49
+        line 175: 51
+      LocalVariableTable:
+        Start  Length  Slot  Name   Signature
+            0      72     0  this   Lnet/minecraft/client/render/world/ChunkRenderDispatcher;
+            0      72     1 chunk   Lnet/minecraft/client/render/world/RenderChunk;
+           12      48     2 chunkCompileTask   Lnet/minecraft/client/render/world/ChunkCompileTask;
+
+  public com.google.common.util.concurrent.ListenableFuture<java.lang.Object> upload(net.minecraft.client.render.block.BlockLayer, net.minecraft.client.render.vertex.BufferBuilder, net.minecraft.client.render.world.RenderChunk, net.minecraft.client.render.world.CompiledChunk);
+    Code:
+         0: invokestatic  #258                // Method net/minecraft/client/Minecraft.getInstance:()Lnet/minecraft/client/Minecraft;
+         3: invokevirtual #261                // Method net/minecraft/client/Minecraft.isOnSameThread:()Z
+         6: ifeq          59
+         9: invokestatic  #266                // Method net/minecraft/client/render/platform/GLX.useVbo:()Z
+        12: ifeq          31
+        15: aload_0
+        16: aload_2
+        17: aload_3
+        18: aload_1
+        19: invokevirtual #271                // Method net/minecraft/client/render/block/BlockLayer.ordinal:()I
+        22: invokevirtual #275                // Method net/minecraft/client/render/world/RenderChunk.getBuffer:(I)Lnet/minecraft/client/render/vertex/VertexBuffer;
+        25: invokespecial #279                // Method uploadBuffer:(Lnet/minecraft/client/render/vertex/BufferBuilder;Lnet/minecraft/client/render/vertex/VertexBuffer;)V
+        28: goto          47
+        31: aload_0
+        32: aload_2
+        33: aload_3
+        34: checkcast     #281                // class net/minecraft/client/render/world/GlListRenderChunk
+        37: aload_1
+        38: aload         4
+        40: invokevirtual #285                // Method net/minecraft/client/render/world/GlListRenderChunk.getGlList:(Lnet/minecraft/client/render/block/BlockLayer;Lnet/minecraft/client/render/world/CompiledChunk;)I
+        43: aload_3
+        44: invokespecial #289                // Method uploadGlList:(Lnet/minecraft/client/render/vertex/BufferBuilder;ILnet/minecraft/client/render/world/RenderChunk;)V
+        47: aload_2
+        48: dconst_0
+        49: dconst_0
+        50: dconst_0
+        51: invokevirtual #295                // Method net/minecraft/client/render/vertex/BufferBuilder.offset:(DDD)V
+        54: aconst_null
+        55: invokestatic  #301                // Method com/google/common/util/concurrent/Futures.immediateFuture:(Ljava/lang/Object;)Lcom/google/common/util/concurrent/ListenableFuture;
+        58: areturn
+        59: new           #11                 // class net/minecraft/client/render/world/ChunkRenderDispatcher$18371494
+        62: dup
+        63: aload_0
+        64: aload_1
+        65: aload_2
+        66: aload_3
+        67: aload         4
+        69: invokespecial #306                // Method net/minecraft/client/render/world/ChunkRenderDispatcher$18371494."<init>":(Lnet/minecraft/client/render/world/ChunkRenderDispatcher;Lnet/minecraft/client/render/block/BlockLayer;Lnet/minecraft/client/render/vertex/BufferBuilder;Lnet/minecraft/client/render/world/RenderChunk;Lnet/minecraft/client/render/world/CompiledChunk;)V
+        72: aconst_null
+        73: invokestatic  #310                // Method com/google/common/util/concurrent/ListenableFutureTask.create:(Ljava/lang/Runnable;Ljava/lang/Object;)Lcom/google/common/util/concurrent/ListenableFutureTask;
+        76: astore        5
+        78: aload_0
+        79: getfield      #74                 // Field pendingUploads:Ljava/util/Queue;
+        82: dup
+        83: astore        6
+        85: monitorenter
+        86: aload_0
+        87: getfield      #74                 // Field pendingUploads:Ljava/util/Queue;
+        90: aload         5
+        92: invokeinterface #311,  2          // InterfaceMethod java/util/Queue.add:(Ljava/lang/Object;)Z
+        97: pop
+        98: aload         6
+       100: monitorexit
+       101: goto          112
+       104: astore        7
+       106: aload         6
+       108: monitorexit
+       109: aload         7
+       111: athrow
+       112: aload         5
+       114: areturn
+      Exception table:
+         from    to  target type
+            86   101   104   any
+           104   109   104   any
+      LineNumberTable:
+        line 196: 0
+        line 197: 9
+        line 198: 15
+        line 200: 31
+        line 202: 47
+        line 203: 54
+        line 205: 59
+        line 212: 78
+        line 213: 86
+        line 214: 98
+        line 215: 112
+      LocalVariableTable:
+        Start  Length  Slot  Name   Signature
+            0     115     0  this   Lnet/minecraft/client/render/world/ChunkRenderDispatcher;
+            0     115     1 layer   Lnet/minecraft/client/render/block/BlockLayer;
+            0     115     2 bufferBuilder   Lnet/minecraft/client/render/vertex/BufferBuilder;
+            0     115     3 chunk   Lnet/minecraft/client/render/world/RenderChunk;
+            0     115     4 compiled   Lnet/minecraft/client/render/world/CompiledChunk;
+           78      37     5 listenableFutureTask   Lcom/google/common/util/concurrent/ListenableFutureTask;
+
+  private void uploadGlList(net.minecraft.client.render.vertex.BufferBuilder, int, net.minecraft.client.render.world.RenderChunk);
+    Code:
+         0: iload_2
+         1: sipush        4864
+         4: invokestatic  #323                // Method org/lwjgl/opengl/GL11.glNewList:(II)V
+         7: invokestatic  #328                // Method net/minecraft/client/render/platform/GlStateManager.pushMatrix:()V
+        10: aload_3
+        11: invokevirtual #331                // Method net/minecraft/client/render/world/RenderChunk.glMultMatrix:()V
+        14: aload_0
+        15: getfield      #63                 // Field bufferUploader:Lnet/minecraft/client/render/vertex/BufferUploader;
+        18: aload_1
+        19: invokevirtual #335                // Method net/minecraft/client/render/vertex/BufferUploader.end:(Lnet/minecraft/client/render/vertex/BufferBuilder;)V
+        22: invokestatic  #338                // Method net/minecraft/client/render/platform/GlStateManager.popMatrix:()V
+        25: invokestatic  #341                // Method org/lwjgl/opengl/GL11.glEndList:()V
+        28: return
+      LineNumberTable:
+        line 220: 0
+        line 222: 7
+        line 223: 10
+        line 224: 14
+        line 225: 22
+        line 227: 25
+        line 228: 28
+      LocalVariableTable:
+        Start  Length  Slot  Name   Signature
+            0      29     0  this   Lnet/minecraft/client/render/world/ChunkRenderDispatcher;
+            0      29     1 bufferBuilder   Lnet/minecraft/client/render/vertex/BufferBuilder;
+            0      29     2  list   I
+            0      29     3 chunk   Lnet/minecraft/client/render/world/RenderChunk;
+
+  private void uploadBuffer(net.minecraft.client.render.vertex.BufferBuilder, net.minecraft.client.render.vertex.VertexBuffer);
+    Code:
+         0: aload_0
+         1: getfield      #68                 // Field vertexBufferUploader:Lnet/minecraft/client/render/vertex/VertexBufferUploader;
+         4: aload_2
+         5: invokevirtual #345                // Method net/minecraft/client/render/vertex/VertexBufferUploader.setBuffer:(Lnet/minecraft/client/render/vertex/VertexBuffer;)V
+         8: aload_0
+         9: getfield      #68                 // Field vertexBufferUploader:Lnet/minecraft/client/render/vertex/VertexBufferUploader;
+        12: aload_1
+        13: invokevirtual #346                // Method net/minecraft/client/render/vertex/VertexBufferUploader.end:(Lnet/minecraft/client/render/vertex/BufferBuilder;)V
+        16: return
+      LineNumberTable:
+        line 231: 0
+        line 232: 8
+        line 233: 16
+      LocalVariableTable:
+        Start  Length  Slot  Name   Signature
+            0      17     0  this   Lnet/minecraft/client/render/world/ChunkRenderDispatcher;
+            0      17     1 bufferBuilder   Lnet/minecraft/client/render/vertex/BufferBuilder;
+            0      17     2 buffer   Lnet/minecraft/client/render/vertex/VertexBuffer;
+
+  public void clear();
+    Code:
+         0: aload_0
+         1: getfield      #56                 // Field pendingTasks:Ljava/util/concurrent/BlockingQueue;
+         4: invokeinterface #348,  1          // InterfaceMethod java/util/concurrent/BlockingQueue.isEmpty:()Z
+         9: ifne          36
+        12: aload_0
+        13: getfield      #56                 // Field pendingTasks:Ljava/util/concurrent/BlockingQueue;
+        16: invokeinterface #349,  1          // InterfaceMethod java/util/concurrent/BlockingQueue.poll:()Ljava/lang/Object;
+        21: checkcast     #191                // class net/minecraft/client/render/world/ChunkCompileTask
+        24: astore_1
+        25: aload_1
+        26: ifnull        33
+        29: aload_1
+        30: invokevirtual #201                // Method net/minecraft/client/render/world/ChunkCompileTask.cancel:()V
+        33: goto          0
+        36: return
+      LineNumberTable:
+        line 236: 0
+        line 237: 12
+        line 238: 25
+        line 239: 29
+        line 241: 33
+        line 242: 36
+      LocalVariableTable:
+        Start  Length  Slot  Name   Signature
+            0      37     0  this   Lnet/minecraft/client/render/world/ChunkRenderDispatcher;
+           25       8     1 chunkCompileTask   Lnet/minecraft/client/render/world/ChunkCompileTask;
+
+  static java.util.concurrent.BlockingQueue m_14613296(net.minecraft.client.render.world.ChunkRenderDispatcher);
+    Code:
+         0: aload_0
+         1: getfield      #56                 // Field pendingTasks:Ljava/util/concurrent/BlockingQueue;
+         4: areturn
+      LineNumberTable:
+        line 25: 0
+      LocalVariableTable:
+        Start  Length  Slot  Name   Signature
+            0       5     0 chunkRenderDispatcher   Lnet/minecraft/client/render/world/ChunkRenderDispatcher;
+
+  static {};
+    Code:
+         0: invokestatic  #359                // Method org/apache/logging/log4j/LogManager.getLogger:()Lorg/apache/logging/log4j/Logger;
+         3: putstatic     #361                // Field LOGGER:Lorg/apache/logging/log4j/Logger;
+         6: new           #363                // class com/google/common/util/concurrent/ThreadFactoryBuilder
+         9: dup
+        10: invokespecial #364                // Method com/google/common/util/concurrent/ThreadFactoryBuilder."<init>":()V
+        13: ldc_w         #366                // String Chunk Batcher %d
+        16: invokevirtual #370                // Method com/google/common/util/concurrent/ThreadFactoryBuilder.setNameFormat:(Ljava/lang/String;)Lcom/google/common/util/concurrent/ThreadFactoryBuilder;
+        19: iconst_1
+        20: invokevirtual #374                // Method com/google/common/util/concurrent/ThreadFactoryBuilder.setDaemon:(Z)Lcom/google/common/util/concurrent/ThreadFactoryBuilder;
+        23: invokevirtual #378                // Method com/google/common/util/concurrent/ThreadFactoryBuilder.build:()Ljava/util/concurrent/ThreadFactory;
+        26: putstatic     #81                 // Field CHUNK_BATCHER_FACTORY:Ljava/util/concurrent/ThreadFactory;
+        29: return
+      LineNumberTable:
+        line 26: 0
+        line 27: 6
+}
+Compiled from "ChunkRenderWorker.java"
+public class net.minecraft.client.render.world.ChunkRenderWorker implements java.lang.Runnable {
+  private static final org.apache.logging.log4j.Logger LOGGER;
+
+  private final net.minecraft.client.render.world.ChunkRenderDispatcher dispatcher;
+
+  private final net.minecraft.client.render.world.ChunkBufferBuilders fixedBuffers;
+
+  public net.minecraft.client.render.world.ChunkRenderWorker(net.minecraft.client.render.world.ChunkRenderDispatcher);
+    Code:
+         0: aload_0
+         1: aload_1
+         2: aconst_null
+         3: invokespecial #34                 // Method "<init>":(Lnet/minecraft/client/render/world/ChunkRenderDispatcher;Lnet/minecraft/client/render/world/ChunkBufferBuilders;)V
+         6: return
+      LineNumberTable:
+        line 26: 0
+        line 27: 6
+      LocalVariableTable:
+        Start  Length  Slot  Name   Signature
+            0       7     0  this   Lnet/minecraft/client/render/world/ChunkRenderWorker;
+            0       7     1 dispatcher   Lnet/minecraft/client/render/world/ChunkRenderDispatcher;
+
+  public net.minecraft.client.render.world.ChunkRenderWorker(net.minecraft.client.render.world.ChunkRenderDispatcher, net.minecraft.client.render.world.ChunkBufferBuilders);
+    Code:
+         0: aload_0
+         1: invokespecial #39                 // Method java/lang/Object."<init>":()V
+         4: aload_0
+         5: aload_1
+         6: putfield      #41                 // Field dispatcher:Lnet/minecraft/client/render/world/ChunkRenderDispatcher;
+         9: aload_0
+        10: aload_2
+        11: putfield      #43                 // Field fixedBuffers:Lnet/minecraft/client/render/world/ChunkBufferBuilders;
+        14: return
+      LineNumberTable:
+        line 29: 0
+        line 30: 4
+        line 31: 9
+        line 32: 14
+      LocalVariableTable:
+        Start  Length  Slot  Name   Signature
+            0      15     0  this   Lnet/minecraft/client/render/world/ChunkRenderWorker;
+            0      15     1 dispatcher   Lnet/minecraft/client/render/world/ChunkRenderDispatcher;
+            0      15     2 fixedBuffers   Lnet/minecraft/client/render/world/ChunkBufferBuilders;
+
+  public void run();
+    Code:
+         0: aload_0
+         1: aload_0
+         2: getfield      #41                 // Field dispatcher:Lnet/minecraft/client/render/world/ChunkRenderDispatcher;
+         5: invokevirtual #54                 // Method net/minecraft/client/render/world/ChunkRenderDispatcher.takeTask:()Lnet/minecraft/client/render/world/ChunkCompileTask;
+         8: invokevirtual #58                 // Method runTask:(Lnet/minecraft/client/render/world/ChunkCompileTask;)V
+        11: goto          0
+        14: astore_1
+        15: getstatic     #60                 // Field LOGGER:Lorg/apache/logging/log4j/Logger;
+        18: ldc           #62                 // String Stopping due to interrupt
+        20: invokeinterface #68,  2           // InterfaceMethod org/apache/logging/log4j/Logger.debug:(Ljava/lang/String;)V
+        25: return
+        26: astore_1
+        27: aload_1
+        28: ldc           #70                 // String Batching chunks
+        30: invokestatic  #76                 // Method net/minecraft/util/crash/CrashReport.of:(Ljava/lang/Throwable;Ljava/lang/String;)Lnet/minecraft/util/crash/CrashReport;
+        33: astore_2
+        34: invokestatic  #82                 // Method net/minecraft/client/Minecraft.getInstance:()Lnet/minecraft/client/Minecraft;
+        37: invokestatic  #82                 // Method net/minecraft/client/Minecraft.getInstance:()Lnet/minecraft/client/Minecraft;
+        40: aload_2
+        41: invokevirtual #86                 // Method net/minecraft/client/Minecraft.populateCrashReport:(Lnet/minecraft/util/crash/CrashReport;)Lnet/minecraft/util/crash/CrashReport;
+        44: invokevirtual #90                 // Method net/minecraft/client/Minecraft.integratedServerCrashed:(Lnet/minecraft/util/crash/CrashReport;)V
+        47: return
+      Exception table:
+         from    to  target type
+             0    11    14   Class java/lang/InterruptedException
+             0    11    26   Class java/lang/Throwable
+      LineNumberTable:
+        line 38: 0
+        line 46: 11
+        line 39: 14
+        line 40: 15
+        line 41: 25
+        line 42: 26
+        line 43: 27
+        line 44: 34
+        line 45: 47
+      LocalVariableTable:
+        Start  Length  Slot  Name   Signature
+            0      48     0  this   Lnet/minecraft/client/render/world/ChunkRenderWorker;
+           15      11     1 interruptedException   Ljava/lang/InterruptedException;
+           27      21     1 throwable   Ljava/lang/Throwable;
+           34      14     2 crashReport   Lnet/minecraft/util/crash/CrashReport;
+
+  protected void runTask(net.minecraft.client.render.world.ChunkCompileTask) throws java.lang.InterruptedException;
+    Code:
+         0: aload_1
+         1: invokevirtual #101                // Method net/minecraft/client/render/world/ChunkCompileTask.getLock:()Ljava/util/concurrent/locks/ReentrantLock;
+         4: invokevirtual #106                // Method java/util/concurrent/locks/ReentrantLock.lock:()V
+         7: aload_1
+         8: invokevirtual #110                // Method net/minecraft/client/render/world/ChunkCompileTask.getStatus:()Lnet/minecraft/client/render/world/ChunkCompileTask$Status;
+        11: getstatic     #114                // Field net/minecraft/client/render/world/ChunkCompileTask$Status.PENDING:Lnet/minecraft/client/render/world/ChunkCompileTask$Status;
+        14: if_acmpeq     67
+        17: aload_1
+        18: invokevirtual #118                // Method net/minecraft/client/render/world/ChunkCompileTask.isCancelled:()Z
+        21: ifne          59
+        24: getstatic     #60                 // Field LOGGER:Lorg/apache/logging/log4j/Logger;
+        27: new           #120                // class java/lang/StringBuilder
+        30: dup
+        31: invokespecial #121                // Method java/lang/StringBuilder."<init>":()V
+        34: ldc           #123                // String Chunk render task was
+        36: invokevirtual #127                // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+        39: aload_1
+        40: invokevirtual #110                // Method net/minecraft/client/render/world/ChunkCompileTask.getStatus:()Lnet/minecraft/client/render/world/ChunkCompileTask$Status;
+        43: invokevirtual #130                // Method java/lang/StringBuilder.append:(Ljava/lang/Object;)Ljava/lang/StringBuilder;
+        46: ldc           #132                // String  when I expected it to be pending; ignoring task
+        48: invokevirtual #127                // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+        51: invokevirtual #136                // Method java/lang/StringBuilder.toString:()Ljava/lang/String;
+        54: invokeinterface #139,  2          // InterfaceMethod org/apache/logging/log4j/Logger.warn:(Ljava/lang/String;)V
+        59: aload_1
+        60: invokevirtual #101                // Method net/minecraft/client/render/world/ChunkCompileTask.getLock:()Ljava/util/concurrent/locks/ReentrantLock;
+        63: invokevirtual #142                // Method java/util/concurrent/locks/ReentrantLock.unlock:()V
+        66: return
+        67: aload_1
+        68: getstatic     #145                // Field net/minecraft/client/render/world/ChunkCompileTask$Status.COMPILING:Lnet/minecraft/client/render/world/ChunkCompileTask$Status;
+        71: invokevirtual #149                // Method net/minecraft/client/render/world/ChunkCompileTask.setStatus:(Lnet/minecraft/client/render/world/ChunkCompileTask$Status;)V
+        74: aload_1
+        75: invokevirtual #101                // Method net/minecraft/client/render/world/ChunkCompileTask.getLock:()Ljava/util/concurrent/locks/ReentrantLock;
+        78: invokevirtual #142                // Method java/util/concurrent/locks/ReentrantLock.unlock:()V
+        81: goto          94
+        84: astore_2
+        85: aload_1
+        86: invokevirtual #101                // Method net/minecraft/client/render/world/ChunkCompileTask.getLock:()Ljava/util/concurrent/locks/ReentrantLock;
+        89: invokevirtual #142                // Method java/util/concurrent/locks/ReentrantLock.unlock:()V
+        92: aload_2
+        93: athrow
+        94: invokestatic  #82                 // Method net/minecraft/client/Minecraft.getInstance:()Lnet/minecraft/client/Minecraft;
+        97: invokevirtual #153                // Method net/minecraft/client/Minecraft.getCamera:()Lnet/minecraft/entity/Entity;
+       100: astore_2
+       101: aload_2
+       102: ifnonnull     110
+       105: aload_1
+       106: invokevirtual #156                // Method net/minecraft/client/render/world/ChunkCompileTask.cancel:()V
+       109: return
+       110: aload_1
+       111: aload_0
+       112: invokespecial #162                // Method takeBuffers:()Lnet/minecraft/client/render/world/ChunkBufferBuilders;
+       115: invokevirtual #166                // Method net/minecraft/client/render/world/ChunkCompileTask.setBuffers:(Lnet/minecraft/client/render/world/ChunkBufferBuilders;)V
+       118: aload_2
+       119: getfield      #170                // Field net/minecraft/entity/Entity.x:D
+       122: d2f
+       123: fstore_3
+       124: aload_2
+       125: getfield      #173                // Field net/minecraft/entity/Entity.y:D
+       128: d2f
+       129: aload_2
+       130: invokevirtual #177                // Method net/minecraft/entity/Entity.getEyeHeight:()F
+       133: fadd
+       134: fstore        4
+       136: aload_2
+       137: getfield      #180                // Field net/minecraft/entity/Entity.z:D
+       140: d2f
+       141: fstore        5
+       143: aload_1
+       144: invokevirtual #184                // Method net/minecraft/client/render/world/ChunkCompileTask.getType:()Lnet/minecraft/client/render/world/ChunkCompileTask$Type;
+       147: astore        6
+       149: aload         6
+       151: getstatic     #188                // Field net/minecraft/client/render/world/ChunkCompileTask$Type.REBUILD_CHUNK:Lnet/minecraft/client/render/world/ChunkCompileTask$Type;
+       154: if_acmpne     173
+       157: aload_1
+       158: invokevirtual #192                // Method net/minecraft/client/render/world/ChunkCompileTask.getChunk:()Lnet/minecraft/client/render/world/RenderChunk;
+       161: fload_3
+       162: fload         4
+       164: fload         5
+       166: aload_1
+       167: invokevirtual #198                // Method net/minecraft/client/render/world/RenderChunk.compile:(FFFLnet/minecraft/client/render/world/ChunkCompileTask;)V
+       170: goto          194
+       173: aload         6
+       175: getstatic     #201                // Field net/minecraft/client/render/world/ChunkCompileTask$Type.RESORT_TRANSPARENCY:Lnet/minecraft/client/render/world/ChunkCompileTask$Type;
+       178: if_acmpne     194
+       181: aload_1
+       182: invokevirtual #192                // Method net/minecraft/client/render/world/ChunkCompileTask.getChunk:()Lnet/minecraft/client/render/world/RenderChunk;
+       185: fload_3
+       186: fload         4
+       188: fload         5
+       190: aload_1
+       191: invokevirtual #204                // Method net/minecraft/client/render/world/RenderChunk.rebuildTranslucent:(FFFLnet/minecraft/client/render/world/ChunkCompileTask;)V
+       194: aload_1
+       195: invokevirtual #101                // Method net/minecraft/client/render/world/ChunkCompileTask.getLock:()Ljava/util/concurrent/locks/ReentrantLock;
+       198: invokevirtual #106                // Method java/util/concurrent/locks/ReentrantLock.lock:()V
+       201: aload_1
+       202: invokevirtual #110                // Method net/minecraft/client/render/world/ChunkCompileTask.getStatus:()Lnet/minecraft/client/render/world/ChunkCompileTask$Status;
+       205: getstatic     #145                // Field net/minecraft/client/render/world/ChunkCompileTask$Status.COMPILING:Lnet/minecraft/client/render/world/ChunkCompileTask$Status;
+       208: if_acmpeq     266
+       211: aload_1
+       212: invokevirtual #118                // Method net/minecraft/client/render/world/ChunkCompileTask.isCancelled:()Z
+       215: ifne          253
+       218: getstatic     #60                 // Field LOGGER:Lorg/apache/logging/log4j/Logger;
+       221: new           #120                // class java/lang/StringBuilder
+       224: dup
+       225: invokespecial #121                // Method java/lang/StringBuilder."<init>":()V
+       228: ldc           #123                // String Chunk render task was
+       230: invokevirtual #127                // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+       233: aload_1
+       234: invokevirtual #110                // Method net/minecraft/client/render/world/ChunkCompileTask.getStatus:()Lnet/minecraft/client/render/world/ChunkCompileTask$Status;
+       237: invokevirtual #130                // Method java/lang/StringBuilder.append:(Ljava/lang/Object;)Ljava/lang/StringBuilder;
+       240: ldc           #206                // String  when I expected it to be compiling; aborting task
+       242: invokevirtual #127                // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+       245: invokevirtual #136                // Method java/lang/StringBuilder.toString:()Ljava/lang/String;
+       248: invokeinterface #139,  2          // InterfaceMethod org/apache/logging/log4j/Logger.warn:(Ljava/lang/String;)V
+       253: aload_0
+       254: aload_1
+       255: invokespecial #209                // Method releaseBuffer:(Lnet/minecraft/client/render/world/ChunkCompileTask;)V
+       258: aload_1
+       259: invokevirtual #101                // Method net/minecraft/client/render/world/ChunkCompileTask.getLock:()Ljava/util/concurrent/locks/ReentrantLock;
+       262: invokevirtual #142                // Method java/util/concurrent/locks/ReentrantLock.unlock:()V
+       265: return
+       266: aload_1
+       267: getstatic     #212                // Field net/minecraft/client/render/world/ChunkCompileTask$Status.UPLOADING:Lnet/minecraft/client/render/world/ChunkCompileTask$Status;
+       270: invokevirtual #149                // Method net/minecraft/client/render/world/ChunkCompileTask.setStatus:(Lnet/minecraft/client/render/world/ChunkCompileTask$Status;)V
+       273: aload_1
+       274: invokevirtual #101                // Method net/minecraft/client/render/world/ChunkCompileTask.getLock:()Ljava/util/concurrent/locks/ReentrantLock;
+       277: invokevirtual #142                // Method java/util/concurrent/locks/ReentrantLock.unlock:()V
+       280: goto          295
+       283: astore        7
+       285: aload_1
+       286: invokevirtual #101                // Method net/minecraft/client/render/world/ChunkCompileTask.getLock:()Ljava/util/concurrent/locks/ReentrantLock;
+       289: invokevirtual #142                // Method java/util/concurrent/locks/ReentrantLock.unlock:()V
+       292: aload         7
+       294: athrow
+       295: aload_1
+       296: invokevirtual #216                // Method net/minecraft/client/render/world/ChunkCompileTask.getCompiledChunk:()Lnet/minecraft/client/render/world/CompiledChunk;
+       299: astore        7
+       301: invokestatic  #222                // Method com/google/common/collect/Lists.newArrayList:()Ljava/util/ArrayList;
+       304: astore        8
+       306: aload         6
+       308: getstatic     #188                // Field net/minecraft/client/render/world/ChunkCompileTask$Type.REBUILD_CHUNK:Lnet/minecraft/client/render/world/ChunkCompileTask$Type;
+       311: if_acmpne     392
+       314: invokestatic  #228                // Method net/minecraft/client/render/block/BlockLayer.values:()[Lnet/minecraft/client/render/block/BlockLayer;
+       317: astore        9
+       319: aload         9
+       321: arraylength
+       322: istore        10
+       324: iconst_0
+       325: istore        11
+       327: iload         11
+       329: iload         10
+       331: if_icmpge     389
+       334: aload         9
+       336: iload         11
+       338: aaload
+       339: astore        12
+       341: aload         7
+       343: aload         12
+       345: invokevirtual #238                // Method net/minecraft/client/render/world/CompiledChunk.hasLayer:(Lnet/minecraft/client/render/block/BlockLayer;)Z
+       348: ifeq          383
+       351: aload         8
+       353: aload_0
+       354: getfield      #41                 // Field dispatcher:Lnet/minecraft/client/render/world/ChunkRenderDispatcher;
+       357: aload         12
+       359: aload_1
+       360: invokevirtual #241                // Method net/minecraft/client/render/world/ChunkCompileTask.getBuffers:()Lnet/minecraft/client/render/world/ChunkBufferBuilders;
+       363: aload         12
+       365: invokevirtual #247                // Method net/minecraft/client/render/world/ChunkBufferBuilders.get:(Lnet/minecraft/client/render/block/BlockLayer;)Lnet/minecraft/client/render/vertex/BufferBuilder;
+       368: aload_1
+       369: invokevirtual #192                // Method net/minecraft/client/render/world/ChunkCompileTask.getChunk:()Lnet/minecraft/client/render/world/RenderChunk;
+       372: aload         7
+       374: invokevirtual #251                // Method net/minecraft/client/render/world/ChunkRenderDispatcher.upload:(Lnet/minecraft/client/render/block/BlockLayer;Lnet/minecraft/client/render/vertex/BufferBuilder;Lnet/minecraft/client/render/world/RenderChunk;Lnet/minecraft/client/render/world/CompiledChunk;)Lcom/google/common/util/concurrent/ListenableFuture;
+       377: invokeinterface #257,  2          // InterfaceMethod java/util/List.add:(Ljava/lang/Object;)Z
+       382: pop
+       383: iinc          11, 1
+       386: goto          327
+       389: goto          434
+       392: aload         6
+       394: getstatic     #201                // Field net/minecraft/client/render/world/ChunkCompileTask$Type.RESORT_TRANSPARENCY:Lnet/minecraft/client/render/world/ChunkCompileTask$Type;
+       397: if_acmpne     434
+       400: aload         8
+       402: aload_0
+       403: getfield      #41                 // Field dispatcher:Lnet/minecraft/client/render/world/ChunkRenderDispatcher;
+       406: getstatic     #261                // Field net/minecraft/client/render/block/BlockLayer.TRANSLUCENT:Lnet/minecraft/client/render/block/BlockLayer;
+       409: aload_1
+       410: invokevirtual #241                // Method net/minecraft/client/render/world/ChunkCompileTask.getBuffers:()Lnet/minecraft/client/render/world/ChunkBufferBuilders;
+       413: getstatic     #261                // Field net/minecraft/client/render/block/BlockLayer.TRANSLUCENT:Lnet/minecraft/client/render/block/BlockLayer;
+       416: invokevirtual #247                // Method net/minecraft/client/render/world/ChunkBufferBuilders.get:(Lnet/minecraft/client/render/block/BlockLayer;)Lnet/minecraft/client/render/vertex/BufferBuilder;
+       419: aload_1
+       420: invokevirtual #192                // Method net/minecraft/client/render/world/ChunkCompileTask.getChunk:()Lnet/minecraft/client/render/world/RenderChunk;
+       423: aload         7
+       425: invokevirtual #251                // Method net/minecraft/client/render/world/ChunkRenderDispatcher.upload:(Lnet/minecraft/client/render/block/BlockLayer;Lnet/minecraft/client/render/vertex/BufferBuilder;Lnet/minecraft/client/render/world/RenderChunk;Lnet/minecraft/client/render/world/CompiledChunk;)Lcom/google/common/util/concurrent/ListenableFuture;
+       428: invokeinterface #257,  2          // InterfaceMethod java/util/List.add:(Ljava/lang/Object;)Z
+       433: pop
+       434: aload         8
+       436: invokestatic  #267                // Method com/google/common/util/concurrent/Futures.allAsList:(Ljava/lang/Iterable;)Lcom/google/common/util/concurrent/ListenableFuture;
+       439: astore        9
+       441: aload_1
+       442: new           #15                 // class net/minecraft/client/render/world/ChunkRenderWorker$49095351
+       445: dup
+       446: aload_0
+       447: aload         9
+       449: invokespecial #270                // Method net/minecraft/client/render/world/ChunkRenderWorker$49095351."<init>":(Lnet/minecraft/client/render/world/ChunkRenderWorker;Lcom/google/common/util/concurrent/ListenableFuture;)V
+       452: invokevirtual #274                // Method net/minecraft/client/render/world/ChunkCompileTask.registerCancelListener:(Ljava/lang/Runnable;)V
+       455: aload         9
+       457: new           #13                 // class net/minecraft/client/render/world/ChunkRenderWorker$65190257
+       460: dup
+       461: aload_0
+       462: aload_1
+       463: aload         7
+       465: invokespecial #277                // Method net/minecraft/client/render/world/ChunkRenderWorker$65190257."<init>":(Lnet/minecraft/client/render/world/ChunkRenderWorker;Lnet/minecraft/client/render/world/ChunkCompileTask;Lnet/minecraft/client/render/world/CompiledChunk;)V
+       468: invokestatic  #281                // Method com/google/common/util/concurrent/Futures.addCallback:(Lcom/google/common/util/concurrent/ListenableFuture;Lcom/google/common/util/concurrent/FutureCallback;)V
+       471: return
+      Exception table:
+         from    to  target type
+             7    59    84   any
+            67    74    84   any
+            84    85    84   any
+           201   258   283   any
+           266   273   283   any
+           283   285   283   any
+      LineNumberTable:
+        line 51: 0
+        line 53: 7
+        line 54: 17
+        line 55: 24
+        line 61: 59
+        line 59: 67
+        line 61: 74
+        line 62: 81
+        line 61: 84
+        line 64: 94
+        line 65: 101
+        line 66: 105
+        line 67: 109
+        line 70: 110
+        line 72: 118
+        line 73: 124
+        line 74: 136
+        line 76: 143
+        line 77: 149
+        line 78: 157
+        line 79: 173
+        line 80: 181
+        line 83: 194
+        line 85: 201
+        line 86: 211
+        line 87: 218
+        line 89: 253
+        line 95: 258
+        line 93: 266
+        line 95: 273
+        line 96: 280
+        line 95: 283
+        line 98: 295
+        line 99: 301
+        line 101: 306
+        line 102: 314
+        line 103: 341
+        line 104: 351
+        line 102: 383
+        line 107: 392
+        line 108: 400
+        line 111: 434
+        line 112: 441
+        line 119: 455
+        line 148: 471
+      LocalVariableTable:
+        Start  Length  Slot  Name   Signature
+            0     472     0  this   Lnet/minecraft/client/render/world/ChunkRenderWorker;
+            0     472     1  task   Lnet/minecraft/client/render/world/ChunkCompileTask;
+          101     371     2 entity   Lnet/minecraft/entity/Entity;
+          124     348     3     f   F
+          136     336     4     g   F
+          143     329     5     h   F
+          149     323     6  type   Lnet/minecraft/client/render/world/ChunkCompileTask$Type;
+          301     171     7 compiledChunk   Lnet/minecraft/client/render/world/CompiledChunk;
+          306     166     8  list   Ljava/util/List;
+          319      70     9 blockLayers   [Lnet/minecraft/client/render/block/BlockLayer;
+          324      65    10     i   I
+          327      62    11     j   I
+          341      42    12 blockLayer   Lnet/minecraft/client/render/block/BlockLayer;
+          441      31     9 listenableFuture   Lcom/google/common/util/concurrent/ListenableFuture;
+
+  private net.minecraft.client.render.world.ChunkBufferBuilders takeBuffers() throws java.lang.InterruptedException;
+    Code:
+         0: aload_0
+         1: getfield      #43                 // Field fixedBuffers:Lnet/minecraft/client/render/world/ChunkBufferBuilders;
+         4: ifnull        14
+         7: aload_0
+         8: getfield      #43                 // Field fixedBuffers:Lnet/minecraft/client/render/world/ChunkBufferBuilders;
+        11: goto          21
+        14: aload_0
+        15: getfield      #41                 // Field dispatcher:Lnet/minecraft/client/render/world/ChunkRenderDispatcher;
+        18: invokevirtual #305                // Method net/minecraft/client/render/world/ChunkRenderDispatcher.takeBuffer:()Lnet/minecraft/client/render/world/ChunkBufferBuilders;
+        21: areturn
+      LineNumberTable:
+        line 151: 0
+      LocalVariableTable:
+        Start  Length  Slot  Name   Signature
+            0      22     0  this   Lnet/minecraft/client/render/world/ChunkRenderWorker;
+
+  private void releaseBuffer(net.minecraft.client.render.world.ChunkCompileTask);
+    Code:
+         0: aload_0
+         1: getfield      #43                 // Field fixedBuffers:Lnet/minecraft/client/render/world/ChunkBufferBuilders;
+         4: ifnonnull     18
+         7: aload_0
+         8: getfield      #41                 // Field dispatcher:Lnet/minecraft/client/render/world/ChunkRenderDispatcher;
+        11: aload_1
+        12: invokevirtual #241                // Method net/minecraft/client/render/world/ChunkCompileTask.getBuffers:()Lnet/minecraft/client/render/world/ChunkBufferBuilders;
+        15: invokevirtual #307                // Method net/minecraft/client/render/world/ChunkRenderDispatcher.releaseBuffer:(Lnet/minecraft/client/render/world/ChunkBufferBuilders;)V
+        18: return
+      LineNumberTable:
+        line 155: 0
+        line 156: 7
+        line 158: 18
+      LocalVariableTable:
+        Start  Length  Slot  Name   Signature
+            0      19     0  this   Lnet/minecraft/client/render/world/ChunkRenderWorker;
+            0      19     1  task   Lnet/minecraft/client/render/world/ChunkCompileTask;
+
+  static void m_94139703(net.minecraft.client.render.world.ChunkRenderWorker, net.minecraft.client.render.world.ChunkCompileTask);
+    Code:
+         0: aload_0
+         1: aload_1
+         2: invokespecial #209                // Method releaseBuffer:(Lnet/minecraft/client/render/world/ChunkCompileTask;)V
+         5: return
+      LineNumberTable:
+        line 19: 0
+      LocalVariableTable:
+        Start  Length  Slot  Name   Signature
+            0       6     0 chunkRenderWorker   Lnet/minecraft/client/render/world/ChunkRenderWorker;
+            0       6     1 chunkCompileTask   Lnet/minecraft/client/render/world/ChunkCompileTask;
+
+  static org.apache.logging.log4j.Logger m_64421844();
+    Code:
+         0: getstatic     #60                 // Field LOGGER:Lorg/apache/logging/log4j/Logger;
+         3: areturn
+      LineNumberTable:
+        line 19: 0
+
+  static {};
+    Code:
+         0: invokestatic  #319                // Method org/apache/logging/log4j/LogManager.getLogger:()Lorg/apache/logging/log4j/Logger;
+         3: putstatic     #60                 // Field LOGGER:Lorg/apache/logging/log4j/Logger;
+         6: return
+      LineNumberTable:
+        line 20: 0
+}
+Compiled from "ChunkCompileTask.java"
+public class net.minecraft.client.render.world.ChunkCompileTask {
+  private final net.minecraft.client.render.world.RenderChunk chunk;
+
+  private final java.util.concurrent.locks.ReentrantLock lock;
+
+  private final java.util.List<java.lang.Runnable> cancelListeners;
+
+  private final net.minecraft.client.render.world.ChunkCompileTask$Type type;
+
+  private net.minecraft.client.render.world.ChunkBufferBuilders buffers;
+
+  private net.minecraft.client.render.world.CompiledChunk compiled;
+
+  private net.minecraft.client.render.world.ChunkCompileTask$Status status;
+
+  private boolean cancelled;
+
+  public net.minecraft.client.render.world.ChunkCompileTask(net.minecraft.client.render.world.RenderChunk, net.minecraft.client.render.world.ChunkCompileTask$Type);
+    Code:
+         0: aload_0
+         1: invokespecial #37                 // Method java/lang/Object."<init>":()V
+         4: aload_0
+         5: new           #39                 // class java/util/concurrent/locks/ReentrantLock
+         8: dup
+         9: invokespecial #40                 // Method java/util/concurrent/locks/ReentrantLock."<init>":()V
+        12: putfield      #42                 // Field lock:Ljava/util/concurrent/locks/ReentrantLock;
+        15: aload_0
+        16: invokestatic  #48                 // Method com/google/common/collect/Lists.newArrayList:()Ljava/util/ArrayList;
+        19: putfield      #50                 // Field cancelListeners:Ljava/util/List;
+        22: aload_0
+        23: getstatic     #53                 // Field net/minecraft/client/render/world/ChunkCompileTask$Status.PENDING:Lnet/minecraft/client/render/world/ChunkCompileTask$Status;
+        26: putfield      #55                 // Field status:Lnet/minecraft/client/render/world/ChunkCompileTask$Status;
+        29: aload_0
+        30: aload_1
+        31: putfield      #57                 // Field chunk:Lnet/minecraft/client/render/world/RenderChunk;
+        34: aload_0
+        35: aload_2
+        36: putfield      #59                 // Field type:Lnet/minecraft/client/render/world/ChunkCompileTask$Type;
+        39: return
+      LineNumberTable:
+        line 19: 0
+        line 11: 4
+        line 12: 15
+        line 16: 22
+        line 20: 29
+        line 21: 34
+        line 22: 39
+      LocalVariableTable:
+        Start  Length  Slot  Name   Signature
+            0      40     0  this   Lnet/minecraft/client/render/world/ChunkCompileTask;
+            0      40     1 chunk   Lnet/minecraft/client/render/world/RenderChunk;
+            0      40     2  type   Lnet/minecraft/client/render/world/ChunkCompileTask$Type;
+
+  public net.minecraft.client.render.world.ChunkCompileTask$Status getStatus();
+    Code:
+         0: aload_0
+         1: getfield      #55                 // Field status:Lnet/minecraft/client/render/world/ChunkCompileTask$Status;
+         4: areturn
+      LineNumberTable:
+        line 25: 0
+      LocalVariableTable:
+        Start  Length  Slot  Name   Signature
+            0       5     0  this   Lnet/minecraft/client/render/world/ChunkCompileTask;
+
+  public net.minecraft.client.render.world.RenderChunk getChunk();
+    Code:
+         0: aload_0
+         1: getfield      #57                 // Field chunk:Lnet/minecraft/client/render/world/RenderChunk;
+         4: areturn
+      LineNumberTable:
+        line 29: 0
+      LocalVariableTable:
+        Start  Length  Slot  Name   Signature
+            0       5     0  this   Lnet/minecraft/client/render/world/ChunkCompileTask;
+
+  public net.minecraft.client.render.world.CompiledChunk getCompiledChunk();
+    Code:
+         0: aload_0
+         1: getfield      #69                 // Field compiled:Lnet/minecraft/client/render/world/CompiledChunk;
+         4: areturn
+      LineNumberTable:
+        line 33: 0
+      LocalVariableTable:
+        Start  Length  Slot  Name   Signature
+            0       5     0  this   Lnet/minecraft/client/render/world/ChunkCompileTask;
+
+  public void setCompiledChunk(net.minecraft.client.render.world.CompiledChunk);
+    Code:
+         0: aload_0
+         1: aload_1
+         2: putfield      #69                 // Field compiled:Lnet/minecraft/client/render/world/CompiledChunk;
+         5: return
+      LineNumberTable:
+        line 37: 0
+        line 38: 5
+      LocalVariableTable:
+        Start  Length  Slot  Name   Signature
+            0       6     0  this   Lnet/minecraft/client/render/world/ChunkCompileTask;
+            0       6     1 compiled   Lnet/minecraft/client/render/world/CompiledChunk;
+
+  public net.minecraft.client.render.world.ChunkBufferBuilders getBuffers();
+    Code:
+         0: aload_0
+         1: getfield      #75                 // Field buffers:Lnet/minecraft/client/render/world/ChunkBufferBuilders;
+         4: areturn
+      LineNumberTable:
+        line 41: 0
+      LocalVariableTable:
+        Start  Length  Slot  Name   Signature
+            0       5     0  this   Lnet/minecraft/client/render/world/ChunkCompileTask;
+
+  public void setBuffers(net.minecraft.client.render.world.ChunkBufferBuilders);
+    Code:
+         0: aload_0
+         1: aload_1
+         2: putfield      #75                 // Field buffers:Lnet/minecraft/client/render/world/ChunkBufferBuilders;
+         5: return
+      LineNumberTable:
+        line 45: 0
+        line 46: 5
+      LocalVariableTable:
+        Start  Length  Slot  Name   Signature
+            0       6     0  this   Lnet/minecraft/client/render/world/ChunkCompileTask;
+            0       6     1 buffers   Lnet/minecraft/client/render/world/ChunkBufferBuilders;
+
+  public void setStatus(net.minecraft.client.render.world.ChunkCompileTask$Status);
+    Code:
+         0: aload_0
+         1: getfield      #42                 // Field lock:Ljava/util/concurrent/locks/ReentrantLock;
+         4: invokevirtual #81                 // Method java/util/concurrent/locks/ReentrantLock.lock:()V
+         7: aload_0
+         8: aload_1
+         9: putfield      #55                 // Field status:Lnet/minecraft/client/render/world/ChunkCompileTask$Status;
+        12: aload_0
+        13: getfield      #42                 // Field lock:Ljava/util/concurrent/locks/ReentrantLock;
+        16: invokevirtual #84                 // Method java/util/concurrent/locks/ReentrantLock.unlock:()V
+        19: goto          32
+        22: astore_2
+        23: aload_0
+        24: getfield      #42                 // Field lock:Ljava/util/concurrent/locks/ReentrantLock;
+        27: invokevirtual #84                 // Method java/util/concurrent/locks/ReentrantLock.unlock:()V
+        30: aload_2
+        31: athrow
+        32: return
+      Exception table:
+         from    to  target type
+             7    12    22   any
+            22    23    22   any
+      LineNumberTable:
+        line 49: 0
+        line 51: 7
+        line 53: 12
+        line 54: 19
+        line 53: 22
+        line 55: 32
+      LocalVariableTable:
+        Start  Length  Slot  Name   Signature
+            0      33     0  this   Lnet/minecraft/client/render/world/ChunkCompileTask;
+            0      33     1 status   Lnet/minecraft/client/render/world/ChunkCompileTask$Status;
+
+  public void cancel();
+    Code:
+         0: aload_0
+         1: getfield      #42                 // Field lock:Ljava/util/concurrent/locks/ReentrantLock;
+         4: invokevirtual #81                 // Method java/util/concurrent/locks/ReentrantLock.lock:()V
+         7: aload_0
+         8: getfield      #59                 // Field type:Lnet/minecraft/client/render/world/ChunkCompileTask$Type;
+        11: getstatic     #90                 // Field net/minecraft/client/render/world/ChunkCompileTask$Type.REBUILD_CHUNK:Lnet/minecraft/client/render/world/ChunkCompileTask$Type;
+        14: if_acmpne     35
+        17: aload_0
+        18: getfield      #55                 // Field status:Lnet/minecraft/client/render/world/ChunkCompileTask$Status;
+        21: getstatic     #93                 // Field net/minecraft/client/render/world/ChunkCompileTask$Status.DONE:Lnet/minecraft/client/render/world/ChunkCompileTask$Status;
+        24: if_acmpeq     35
+        27: aload_0
+        28: getfield      #57                 // Field chunk:Lnet/minecraft/client/render/world/RenderChunk;
+        31: iconst_1
+        32: invokevirtual #99                 // Method net/minecraft/client/render/world/RenderChunk.setDirty:(Z)V
+        35: aload_0
+        36: iconst_1
+        37: putfield      #101                // Field cancelled:Z
+        40: aload_0
+        41: getstatic     #93                 // Field net/minecraft/client/render/world/ChunkCompileTask$Status.DONE:Lnet/minecraft/client/render/world/ChunkCompileTask$Status;
+        44: putfield      #55                 // Field status:Lnet/minecraft/client/render/world/ChunkCompileTask$Status;
+        47: aload_0
+        48: getfield      #50                 // Field cancelListeners:Ljava/util/List;
+        51: invokeinterface #107,  1          // InterfaceMethod java/util/List.iterator:()Ljava/util/Iterator;
+        56: astore_1
+        57: aload_1
+        58: invokeinterface #113,  1          // InterfaceMethod java/util/Iterator.hasNext:()Z
+        63: ifeq          85
+        66: aload_1
+        67: invokeinterface #117,  1          // InterfaceMethod java/util/Iterator.next:()Ljava/lang/Object;
+        72: checkcast     #119                // class java/lang/Runnable
+        75: astore_2
+        76: aload_2
+        77: invokeinterface #122,  1          // InterfaceMethod java/lang/Runnable.run:()V
+        82: goto          57
+        85: aload_0
+        86: getfield      #42                 // Field lock:Ljava/util/concurrent/locks/ReentrantLock;
+        89: invokevirtual #84                 // Method java/util/concurrent/locks/ReentrantLock.unlock:()V
+        92: goto          105
+        95: astore_3
+        96: aload_0
+        97: getfield      #42                 // Field lock:Ljava/util/concurrent/locks/ReentrantLock;
+       100: invokevirtual #84                 // Method java/util/concurrent/locks/ReentrantLock.unlock:()V
+       103: aload_3
+       104: athrow
+       105: return
+      Exception table:
+         from    to  target type
+             7    85    95   any
+            95    96    95   any
+      LineNumberTable:
+        line 58: 0
+        line 60: 7
+        line 61: 27
+        line 64: 35
+        line 65: 40
+        line 66: 47
+        line 67: 76
+        line 68: 82
+        line 70: 85
+        line 71: 92
+        line 70: 95
+        line 72: 105
+      LocalVariableTable:
+        Start  Length  Slot  Name   Signature
+            0     106     0  this   Lnet/minecraft/client/render/world/ChunkCompileTask;
+           57      28     1 iterator   Ljava/util/Iterator;
+           76       6     2 runnable   Ljava/lang/Runnable;
+
+  public void registerCancelListener(java.lang.Runnable);
+    Code:
+         0: aload_0
+         1: getfield      #42                 // Field lock:Ljava/util/concurrent/locks/ReentrantLock;
+         4: invokevirtual #81                 // Method java/util/concurrent/locks/ReentrantLock.lock:()V
+         7: aload_0
+         8: getfield      #50                 // Field cancelListeners:Ljava/util/List;
+        11: aload_1
+        12: invokeinterface #132,  2          // InterfaceMethod java/util/List.add:(Ljava/lang/Object;)Z
+        17: pop
+        18: aload_0
+        19: getfield      #101                // Field cancelled:Z
+        22: ifeq          31
+        25: aload_1
+        26: invokeinterface #122,  1          // InterfaceMethod java/lang/Runnable.run:()V
+        31: aload_0
+        32: getfield      #42                 // Field lock:Ljava/util/concurrent/locks/ReentrantLock;
+        35: invokevirtual #84                 // Method java/util/concurrent/locks/ReentrantLock.unlock:()V
+        38: goto          51
+        41: astore_2
+        42: aload_0
+        43: getfield      #42                 // Field lock:Ljava/util/concurrent/locks/ReentrantLock;
+        46: invokevirtual #84                 // Method java/util/concurrent/locks/ReentrantLock.unlock:()V
+        49: aload_2
+        50: athrow
+        51: return
+      Exception table:
+         from    to  target type
+             7    31    41   any
+            41    42    41   any
+      LineNumberTable:
+        line 75: 0
+        line 77: 7
+        line 78: 18
+        line 79: 25
+        line 82: 31
+        line 83: 38
+        line 82: 41
+        line 84: 51
+      LocalVariableTable:
+        Start  Length  Slot  Name   Signature
+            0      52     0  this   Lnet/minecraft/client/render/world/ChunkCompileTask;
+            0      52     1 listener   Ljava/lang/Runnable;
+
+  public java.util.concurrent.locks.ReentrantLock getLock();
+    Code:
+         0: aload_0
+         1: getfield      #42                 // Field lock:Ljava/util/concurrent/locks/ReentrantLock;
+         4: areturn
+      LineNumberTable:
+        line 87: 0
+      LocalVariableTable:
+        Start  Length  Slot  Name   Signature
+            0       5     0  this   Lnet/minecraft/client/render/world/ChunkCompileTask;
+
+  public net.minecraft.client.render.world.ChunkCompileTask$Type getType();
+    Code:
+         0: aload_0
+         1: getfield      #59                 // Field type:Lnet/minecraft/client/render/world/ChunkCompileTask$Type;
+         4: areturn
+      LineNumberTable:
+        line 91: 0
+      LocalVariableTable:
+        Start  Length  Slot  Name   Signature
+            0       5     0  this   Lnet/minecraft/client/render/world/ChunkCompileTask;
+
+  public boolean isCancelled();
+    Code:
+         0: aload_0
+         1: getfield      #101                // Field cancelled:Z
+         4: ireturn
+      LineNumberTable:
+        line 95: 0
+      LocalVariableTable:
+        Start  Length  Slot  Name   Signature
+            0       5     0  this   Lnet/minecraft/client/render/world/ChunkCompileTask;
+}
+Compiled from "RenderChunk.java"
+public class net.minecraft.client.render.world.RenderChunk {
+  private net.minecraft.world.World world;
+
+  private final net.minecraft.client.render.world.WorldRenderer renderer;
+
+  public static int updateCounter;
+
+  private net.minecraft.util.math.BlockPos origin;
+
+  public net.minecraft.client.render.world.CompiledChunk compiled;
+
+  private final java.util.concurrent.locks.ReentrantLock taskLock;
+
+  private final java.util.concurrent.locks.ReentrantLock compileLock;
+
+  private net.minecraft.client.render.world.ChunkCompileTask pendingTask;
+
+  private final java.util.Set<net.minecraft.block.entity.BlockEntity> globalBlockEntities;
+
+  private final int index;
+
+  private final java.nio.FloatBuffer matrix;
+
+  private final net.minecraft.client.render.vertex.VertexBuffer[] buffers;
+
+  public net.minecraft.util.math.Box bounds;
+
+  private int lastFrame;
+
+  private boolean dirty;
+
+  private java.util.EnumMap<net.minecraft.util.math.Direction, net.minecraft.util.math.BlockPos> relativeOrigins;
+
+  public net.minecraft.client.render.world.RenderChunk(net.minecraft.world.World, net.minecraft.client.render.world.WorldRenderer, net.minecraft.util.math.BlockPos, int);
+    Code:
+         0: aload_0
+         1: invokespecial #64                 // Method java/lang/Object."<init>":()V
+         4: aload_0
+         5: getstatic     #69                 // Field net/minecraft/client/render/world/CompiledChunk.UNCOMPILED:Lnet/minecraft/client/render/world/CompiledChunk;
+         8: putfield      #71                 // Field compiled:Lnet/minecraft/client/render/world/CompiledChunk;
+        11: aload_0
+        12: new           #73                 // class java/util/concurrent/locks/ReentrantLock
+        15: dup
+        16: invokespecial #74                 // Method java/util/concurrent/locks/ReentrantLock."<init>":()V
+        19: putfield      #76                 // Field taskLock:Ljava/util/concurrent/locks/ReentrantLock;
+        22: aload_0
+        23: new           #73                 // class java/util/concurrent/locks/ReentrantLock
+        26: dup
+        27: invokespecial #74                 // Method java/util/concurrent/locks/ReentrantLock."<init>":()V
+        30: putfield      #78                 // Field compileLock:Ljava/util/concurrent/locks/ReentrantLock;
+        33: aload_0
+        34: aconst_null
+        35: putfield      #80                 // Field pendingTask:Lnet/minecraft/client/render/world/ChunkCompileTask;
+        38: aload_0
+        39: invokestatic  #86                 // Method com/google/common/collect/Sets.newHashSet:()Ljava/util/HashSet;
+        42: putfield      #88                 // Field globalBlockEntities:Ljava/util/Set;
+        45: aload_0
+        46: bipush        16
+        48: invokestatic  #94                 // Method net/minecraft/client/render/platform/MemoryTracker.createFloatBuffer:(I)Ljava/nio/FloatBuffer;
+        51: putfield      #96                 // Field matrix:Ljava/nio/FloatBuffer;
+        54: aload_0
+        55: invokestatic  #102                // Method net/minecraft/client/render/block/BlockLayer.values:()[Lnet/minecraft/client/render/block/BlockLayer;
+        58: arraylength
+        59: anewarray     #104                // class net/minecraft/client/render/vertex/VertexBuffer
+        62: putfield      #106                // Field buffers:[Lnet/minecraft/client/render/vertex/VertexBuffer;
+        65: aload_0
+        66: iconst_m1
+        67: putfield      #108                // Field lastFrame:I
+        70: aload_0
+        71: iconst_1
+        72: putfield      #110                // Field dirty:Z
+        75: aload_0
+        76: ldc           #112                // class net/minecraft/util/math/Direction
+        78: invokestatic  #118                // Method com/google/common/collect/Maps.newEnumMap:(Ljava/lang/Class;)Ljava/util/EnumMap;
+        81: putfield      #120                // Field relativeOrigins:Ljava/util/EnumMap;
+        84: aload_0
+        85: aload_1
+        86: putfield      #122                // Field world:Lnet/minecraft/world/World;
+        89: aload_0
+        90: aload_2
+        91: putfield      #124                // Field renderer:Lnet/minecraft/client/render/world/WorldRenderer;
+        94: aload_0
+        95: iload         4
+        97: putfield      #126                // Field index:I
+       100: aload_3
+       101: aload_0
+       102: invokevirtual #130                // Method getOrigin:()Lnet/minecraft/util/math/BlockPos;
+       105: invokevirtual #134                // Method net/minecraft/util/math/BlockPos.equals:(Ljava/lang/Object;)Z
+       108: ifne          116
+       111: aload_0
+       112: aload_3
+       113: invokevirtual #138                // Method setOrigin:(Lnet/minecraft/util/math/BlockPos;)V
+       116: invokestatic  #144                // Method net/minecraft/client/render/platform/GLX.useVbo:()Z
+       119: ifeq          157
+       122: iconst_0
+       123: istore        5
+       125: iload         5
+       127: invokestatic  #102                // Method net/minecraft/client/render/block/BlockLayer.values:()[Lnet/minecraft/client/render/block/BlockLayer;
+       130: arraylength
+       131: if_icmpge     157
+       134: aload_0
+       135: getfield      #106                // Field buffers:[Lnet/minecraft/client/render/vertex/VertexBuffer;
+       138: iload         5
+       140: new           #104                // class net/minecraft/client/render/vertex/VertexBuffer
+       143: dup
+       144: getstatic     #150                // Field net/minecraft/client/render/vertex/DefaultVertexFormat.BLOCK:Lnet/minecraft/client/render/vertex/VertexFormat;
+       147: invokespecial #153                // Method net/minecraft/client/render/vertex/VertexBuffer."<init>":(Lnet/minecraft/client/render/vertex/VertexFormat;)V
+       150: aastore
+       151: iinc          5, 1
+       154: goto          125
+       157: return
+      LineNumberTable:
+        line 64: 0
+        line 47: 4
+        line 48: 11
+        line 49: 22
+        line 50: 33
+        line 51: 38
+        line 55: 45
+        line 56: 54
+        line 60: 65
+        line 61: 70
+        line 62: 75
+        line 65: 84
+        line 66: 89
+        line 67: 94
+        line 69: 100
+        line 70: 111
+        line 73: 116
+        line 74: 122
+        line 75: 134
+        line 74: 151
+        line 78: 157
+      LocalVariableTable:
+        Start  Length  Slot  Name   Signature
+            0     158     0  this   Lnet/minecraft/client/render/world/RenderChunk;
+            0     158     1 world   Lnet/minecraft/world/World;
+            0     158     2 renderer   Lnet/minecraft/client/render/world/WorldRenderer;
+            0     158     3   pos   Lnet/minecraft/util/math/BlockPos;
+            0     158     4 index   I
+          125      32     5     i   I
+
+  public boolean setFrame(int);
+    Code:
+         0: aload_0
+         1: getfield      #108                // Field lastFrame:I
+         4: iload_1
+         5: if_icmpne     10
+         8: iconst_0
+         9: ireturn
+        10: aload_0
+        11: iload_1
+        12: putfield      #108                // Field lastFrame:I
+        15: iconst_1
+        16: ireturn
+      LineNumberTable:
+        line 81: 0
+        line 82: 8
+        line 84: 10
+        line 85: 15
+      LocalVariableTable:
+        Start  Length  Slot  Name   Signature
+            0      17     0  this   Lnet/minecraft/client/render/world/RenderChunk;
+            0      17     1 frame   I
+
+  public net.minecraft.client.render.vertex.VertexBuffer getBuffer(int);
+    Code:
+         0: aload_0
+         1: getfield      #106                // Field buffers:[Lnet/minecraft/client/render/vertex/VertexBuffer;
+         4: iload_1
+         5: aaload
+         6: areturn
+      LineNumberTable:
+        line 89: 0
+      LocalVariableTable:
+        Start  Length  Slot  Name   Signature
+            0       7     0  this   Lnet/minecraft/client/render/world/RenderChunk;
+            0       7     1 layer   I
+
+  public void setOrigin(net.minecraft.util.math.BlockPos);
+    Code:
+         0: aload_0
+         1: invokevirtual #165                // Method reset:()V
+         4: aload_0
+         5: aload_1
+         6: putfield      #167                // Field origin:Lnet/minecraft/util/math/BlockPos;
+         9: aload_0
+        10: new           #169                // class net/minecraft/util/math/Box
+        13: dup
+        14: aload_1
+        15: aload_1
+        16: bipush        16
+        18: bipush        16
+        20: bipush        16
+        22: invokevirtual #173                // Method net/minecraft/util/math/BlockPos.add:(III)Lnet/minecraft/util/math/BlockPos;
+        25: invokespecial #176                // Method net/minecraft/util/math/Box."<init>":(Lnet/minecraft/util/math/BlockPos;Lnet/minecraft/util/math/BlockPos;)V
+        28: putfield      #178                // Field bounds:Lnet/minecraft/util/math/Box;
+        31: invokestatic  #181                // Method net/minecraft/util/math/Direction.values:()[Lnet/minecraft/util/math/Direction;
+        34: astore_2
+        35: aload_2
+        36: arraylength
+        37: istore_3
+        38: iconst_0
+        39: istore        4
+        41: iload         4
+        43: iload_3
+        44: if_icmpge     77
+        47: aload_2
+        48: iload         4
+        50: aaload
+        51: astore        5
+        53: aload_0
+        54: getfield      #120                // Field relativeOrigins:Ljava/util/EnumMap;
+        57: aload         5
+        59: aload_1
+        60: aload         5
+        62: bipush        16
+        64: invokevirtual #187                // Method net/minecraft/util/math/BlockPos.offset:(Lnet/minecraft/util/math/Direction;I)Lnet/minecraft/util/math/BlockPos;
+        67: invokevirtual #193                // Method java/util/EnumMap.put:(Ljava/lang/Enum;Ljava/lang/Object;)Ljava/lang/Object;
+        70: pop
+        71: iinc          4, 1
+        74: goto          41
+        77: aload_0
+        78: invokespecial #196                // Method glTransform:()V
+        81: return
+      LineNumberTable:
+        line 93: 0
+        line 94: 4
+        line 95: 9
+        line 97: 31
+        line 98: 53
+        line 97: 71
+        line 101: 77
+        line 102: 81
+      LocalVariableTable:
+        Start  Length  Slot  Name   Signature
+            0      82     0  this   Lnet/minecraft/client/render/world/RenderChunk;
+            0      82     1 origin   Lnet/minecraft/util/math/BlockPos;
+           35      42     2 directions   [Lnet/minecraft/util/math/Direction;
+           38      39     3     i   I
+           41      36     4     j   I
+           53      18     5 direction   Lnet/minecraft/util/math/Direction;
+
+  public void rebuildTranslucent(float, float, float, net.minecraft.client.render.world.ChunkCompileTask);
+    Code:
+         0: aload         4
+         2: invokevirtual #210                // Method net/minecraft/client/render/world/ChunkCompileTask.getCompiledChunk:()Lnet/minecraft/client/render/world/CompiledChunk;
+         5: astore        5
+         7: aload         5
+         9: invokevirtual #214                // Method net/minecraft/client/render/world/CompiledChunk.getTransparencyState:()Lnet/minecraft/client/render/vertex/BufferBuilder$State;
+        12: ifnull        26
+        15: aload         5
+        17: getstatic     #218                // Field net/minecraft/client/render/block/BlockLayer.TRANSLUCENT:Lnet/minecraft/client/render/block/BlockLayer;
+        20: invokevirtual #222                // Method net/minecraft/client/render/world/CompiledChunk.hasBlock:(Lnet/minecraft/client/render/block/BlockLayer;)Z
+        23: ifeq          27
+        26: return
+        27: aload_0
+        28: aload         4
+        30: invokevirtual #226                // Method net/minecraft/client/render/world/ChunkCompileTask.getBuffers:()Lnet/minecraft/client/render/world/ChunkBufferBuilders;
+        33: getstatic     #218                // Field net/minecraft/client/render/block/BlockLayer.TRANSLUCENT:Lnet/minecraft/client/render/block/BlockLayer;
+        36: invokevirtual #232                // Method net/minecraft/client/render/world/ChunkBufferBuilders.get:(Lnet/minecraft/client/render/block/BlockLayer;)Lnet/minecraft/client/render/vertex/BufferBuilder;
+        39: aload_0
+        40: getfield      #167                // Field origin:Lnet/minecraft/util/math/BlockPos;
+        43: invokespecial #236                // Method beginLayer:(Lnet/minecraft/client/render/vertex/BufferBuilder;Lnet/minecraft/util/math/BlockPos;)V
+        46: aload         4
+        48: invokevirtual #226                // Method net/minecraft/client/render/world/ChunkCompileTask.getBuffers:()Lnet/minecraft/client/render/world/ChunkBufferBuilders;
+        51: getstatic     #218                // Field net/minecraft/client/render/block/BlockLayer.TRANSLUCENT:Lnet/minecraft/client/render/block/BlockLayer;
+        54: invokevirtual #232                // Method net/minecraft/client/render/world/ChunkBufferBuilders.get:(Lnet/minecraft/client/render/block/BlockLayer;)Lnet/minecraft/client/render/vertex/BufferBuilder;
+        57: aload         5
+        59: invokevirtual #214                // Method net/minecraft/client/render/world/CompiledChunk.getTransparencyState:()Lnet/minecraft/client/render/vertex/BufferBuilder$State;
+        62: invokevirtual #240                // Method net/minecraft/client/render/vertex/BufferBuilder.setState:(Lnet/minecraft/client/render/vertex/BufferBuilder$State;)V
+        65: aload_0
+        66: getstatic     #218                // Field net/minecraft/client/render/block/BlockLayer.TRANSLUCENT:Lnet/minecraft/client/render/block/BlockLayer;
+        69: fload_1
+        70: fload_2
+        71: fload_3
+        72: aload         4
+        74: invokevirtual #226                // Method net/minecraft/client/render/world/ChunkCompileTask.getBuffers:()Lnet/minecraft/client/render/world/ChunkBufferBuilders;
+        77: getstatic     #218                // Field net/minecraft/client/render/block/BlockLayer.TRANSLUCENT:Lnet/minecraft/client/render/block/BlockLayer;
+        80: invokevirtual #232                // Method net/minecraft/client/render/world/ChunkBufferBuilders.get:(Lnet/minecraft/client/render/block/BlockLayer;)Lnet/minecraft/client/render/vertex/BufferBuilder;
+        83: aload         5
+        85: invokespecial #244                // Method endLayer:(Lnet/minecraft/client/render/block/BlockLayer;FFFLnet/minecraft/client/render/vertex/BufferBuilder;Lnet/minecraft/client/render/world/CompiledChunk;)V
+        88: return
+      LineNumberTable:
+        line 105: 0
+        line 106: 7
+        line 107: 26
+        line 110: 27
+        line 112: 46
+        line 114: 65
+        line 115: 88
+      LocalVariableTable:
+        Start  Length  Slot  Name   Signature
+            0      89     0  this   Lnet/minecraft/client/render/world/RenderChunk;
+            0      89     1 cameraX   F
+            0      89     2 cameraY   F
+            0      89     3 cameraZ   F
+            0      89     4  task   Lnet/minecraft/client/render/world/ChunkCompileTask;
+            7      82     5 compiledChunk   Lnet/minecraft/client/render/world/CompiledChunk;
+
+  public void compile(float, float, float, net.minecraft.client.render.world.ChunkCompileTask);
+    Code:
+         0: new           #66                 // class net/minecraft/client/render/world/CompiledChunk
+         3: dup
+         4: invokespecial #248                // Method net/minecraft/client/render/world/CompiledChunk."<init>":()V
+         7: astore        5
+         9: iconst_1
+        10: istore        6
+        12: aload_0
+        13: getfield      #167                // Field origin:Lnet/minecraft/util/math/BlockPos;
+        16: astore        7
+        18: aload         7
+        20: bipush        15
+        22: bipush        15
+        24: bipush        15
+        26: invokevirtual #173                // Method net/minecraft/util/math/BlockPos.add:(III)Lnet/minecraft/util/math/BlockPos;
+        29: astore        8
+        31: aload         4
+        33: invokevirtual #252                // Method net/minecraft/client/render/world/ChunkCompileTask.getLock:()Ljava/util/concurrent/locks/ReentrantLock;
+        36: invokevirtual #255                // Method java/util/concurrent/locks/ReentrantLock.lock:()V
+        39: aload         4
+        41: invokevirtual #259                // Method net/minecraft/client/render/world/ChunkCompileTask.getStatus:()Lnet/minecraft/client/render/world/ChunkCompileTask$Status;
+        44: getstatic     #263                // Field net/minecraft/client/render/world/ChunkCompileTask$Status.COMPILING:Lnet/minecraft/client/render/world/ChunkCompileTask$Status;
+        47: if_acmpeq     59
+        50: aload         4
+        52: invokevirtual #252                // Method net/minecraft/client/render/world/ChunkCompileTask.getLock:()Ljava/util/concurrent/locks/ReentrantLock;
+        55: invokevirtual #266                // Method java/util/concurrent/locks/ReentrantLock.unlock:()V
+        58: return
+        59: new           #268                // class net/minecraft/client/render/world/RenderChunkRegion
+        62: dup
+        63: aload_0
+        64: getfield      #122                // Field world:Lnet/minecraft/world/World;
+        67: aload         7
+        69: iconst_m1
+        70: iconst_m1
+        71: iconst_m1
+        72: invokevirtual #173                // Method net/minecraft/util/math/BlockPos.add:(III)Lnet/minecraft/util/math/BlockPos;
+        75: aload         8
+        77: iconst_1
+        78: iconst_1
+        79: iconst_1
+        80: invokevirtual #173                // Method net/minecraft/util/math/BlockPos.add:(III)Lnet/minecraft/util/math/BlockPos;
+        83: iconst_1
+        84: invokespecial #271                // Method net/minecraft/client/render/world/RenderChunkRegion."<init>":(Lnet/minecraft/world/World;Lnet/minecraft/util/math/BlockPos;Lnet/minecraft/util/math/BlockPos;I)V
+        87: astore        9
+        89: aload         4
+        91: aload         5
+        93: invokevirtual #275                // Method net/minecraft/client/render/world/ChunkCompileTask.setCompiledChunk:(Lnet/minecraft/client/render/world/CompiledChunk;)V
+        96: aload         4
+        98: invokevirtual #252                // Method net/minecraft/client/render/world/ChunkCompileTask.getLock:()Ljava/util/concurrent/locks/ReentrantLock;
+       101: invokevirtual #266                // Method java/util/concurrent/locks/ReentrantLock.unlock:()V
+       104: goto          120
+       107: astore        10
+       109: aload         4
+       111: invokevirtual #252                // Method net/minecraft/client/render/world/ChunkCompileTask.getLock:()Ljava/util/concurrent/locks/ReentrantLock;
+       114: invokevirtual #266                // Method java/util/concurrent/locks/ReentrantLock.unlock:()V
+       117: aload         10
+       119: athrow
+       120: new           #279                // class net/minecraft/client/render/world/ChunkOcclusionGraph
+       123: dup
+       124: invokespecial #280                // Method net/minecraft/client/render/world/ChunkOcclusionGraph."<init>":()V
+       127: astore        10
+       129: invokestatic  #86                 // Method com/google/common/collect/Sets.newHashSet:()Ljava/util/HashSet;
+       132: astore        11
+       134: aload         9
+       136: invokeinterface #285,  1          // InterfaceMethod net/minecraft/world/WorldView.isEmpty:()Z
+       141: ifne          476
+       144: getstatic     #287                // Field updateCounter:I
+       147: iconst_1
+       148: iadd
+       149: putstatic     #287                // Field updateCounter:I
+       152: invokestatic  #102                // Method net/minecraft/client/render/block/BlockLayer.values:()[Lnet/minecraft/client/render/block/BlockLayer;
+       155: arraylength
+       156: newarray       boolean
+       158: astore        12
+       160: invokestatic  #293                // Method net/minecraft/client/Minecraft.getInstance:()Lnet/minecraft/client/Minecraft;
+       163: invokevirtual #297                // Method net/minecraft/client/Minecraft.getBlockRenderDispatcher:()Lnet/minecraft/client/render/block/BlockRenderDispatcher;
+       166: astore        13
+       168: aload         7
+       170: aload         8
+       172: invokestatic  #301                // Method net/minecraft/util/math/BlockPos.iterateRegionMutable:(Lnet/minecraft/util/math/BlockPos;Lnet/minecraft/util/math/BlockPos;)Ljava/lang/Iterable;
+       175: invokeinterface #307,  1          // InterfaceMethod java/lang/Iterable.iterator:()Ljava/util/Iterator;
+       180: astore        14
+       182: aload         14
+       184: invokeinterface #318,  1          // InterfaceMethod java/util/Iterator.hasNext:()Z
+       189: ifeq          394
+       192: aload         14
+       194: invokeinterface #322,  1          // InterfaceMethod java/util/Iterator.next:()Ljava/lang/Object;
+       199: checkcast     #11                 // class net/minecraft/util/math/BlockPos$Mutable
+       202: astore        15
+       204: aload         9
+       206: aload         15
+       208: invokeinterface #326,  2          // InterfaceMethod net/minecraft/world/WorldView.getBlockState:(Lnet/minecraft/util/math/BlockPos;)Lnet/minecraft/block/state/BlockState;
+       213: astore        16
+       215: aload         16
+       217: invokeinterface #332,  1          // InterfaceMethod net/minecraft/block/state/BlockState.getBlock:()Lnet/minecraft/block/Block;
+       222: astore        17
+       224: aload         17
+       226: invokevirtual #337                // Method net/minecraft/block/Block.isSolidRender:()Z
+       229: ifeq          239
+       232: aload         10
+       234: aload         15
+       236: invokevirtual #340                // Method net/minecraft/client/render/world/ChunkOcclusionGraph.close:(Lnet/minecraft/util/math/BlockPos;)V
+       239: aload         17
+       241: invokevirtual #343                // Method net/minecraft/block/Block.hasBlockEntity:()Z
+       244: ifeq          310
+       247: aload         9
+       249: new           #13                 // class net/minecraft/util/math/BlockPos
+       252: dup
+       253: aload         15
+       255: invokespecial #346                // Method net/minecraft/util/math/BlockPos."<init>":(Lnet/minecraft/util/math/Vec3i;)V
+       258: invokeinterface #350,  2          // InterfaceMethod net/minecraft/world/WorldView.getBlockEntity:(Lnet/minecraft/util/math/BlockPos;)Lnet/minecraft/block/entity/BlockEntity;
+       263: astore        18
+       265: getstatic     #356                // Field net/minecraft/client/render/block/entity/BlockEntityRenderDispatcher.INSTANCE:Lnet/minecraft/client/render/block/entity/BlockEntityRenderDispatcher;
+       268: aload         18
+       270: invokevirtual #360                // Method net/minecraft/client/render/block/entity/BlockEntityRenderDispatcher.getRenderer:(Lnet/minecraft/block/entity/BlockEntity;)Lnet/minecraft/client/render/block/entity/BlockEntityRenderer;
+       273: astore        19
+       275: aload         18
+       277: ifnull        310
+       280: aload         19
+       282: ifnull        310
+       285: aload         5
+       287: aload         18
+       289: invokevirtual #364                // Method net/minecraft/client/render/world/CompiledChunk.addRenderableBlockEntity:(Lnet/minecraft/block/entity/BlockEntity;)V
+       292: aload         19
+       294: invokevirtual #369                // Method net/minecraft/client/render/block/entity/BlockEntityRenderer.shouldRenderOffScreen:()Z
+       297: ifeq          310
+       300: aload         11
+       302: aload         18
+       304: invokeinterface #373,  2          // InterfaceMethod java/util/Set.add:(Ljava/lang/Object;)Z
+       309: pop
+       310: aload         17
+       312: invokevirtual #377                // Method net/minecraft/block/Block.getRenderLayer:()Lnet/minecraft/client/render/block/BlockLayer;
+       315: astore        18
+       317: aload         18
+       319: invokevirtual #381                // Method net/minecraft/client/render/block/BlockLayer.ordinal:()I
+       322: istore        19
+       324: aload         17
+       326: invokevirtual #384                // Method net/minecraft/block/Block.getRenderType:()I
+       329: iconst_m1
+       330: if_icmpeq     391
+       333: aload         4
+       335: invokevirtual #226                // Method net/minecraft/client/render/world/ChunkCompileTask.getBuffers:()Lnet/minecraft/client/render/world/ChunkBufferBuilders;
+       338: iload         19
+       340: invokevirtual #387                // Method net/minecraft/client/render/world/ChunkBufferBuilders.get:(I)Lnet/minecraft/client/render/vertex/BufferBuilder;
+       343: astore        20
+       345: aload         5
+       347: aload         18
+       349: invokevirtual #390                // Method net/minecraft/client/render/world/CompiledChunk.hasLayer:(Lnet/minecraft/client/render/block/BlockLayer;)Z
+       352: ifne          370
+       355: aload         5
+       357: aload         18
+       359: invokevirtual #394                // Method net/minecraft/client/render/world/CompiledChunk.setLayer:(Lnet/minecraft/client/render/block/BlockLayer;)V
+       362: aload_0
+       363: aload         20
+       365: aload         7
+       367: invokespecial #236                // Method beginLayer:(Lnet/minecraft/client/render/vertex/BufferBuilder;Lnet/minecraft/util/math/BlockPos;)V
+       370: aload         12
+       372: iload         19
+       374: dup2
+       375: baload
+       376: aload         13
+       378: aload         16
+       380: aload         15
+       382: aload         9
+       384: aload         20
+       386: invokevirtual #398                // Method net/minecraft/client/render/block/BlockRenderDispatcher.render:(Lnet/minecraft/block/state/BlockState;Lnet/minecraft/util/math/BlockPos;Lnet/minecraft/world/WorldView;Lnet/minecraft/client/render/vertex/BufferBuilder;)Z
+       389: ior
+       390: bastore
+       391: goto          182
+       394: invokestatic  #102                // Method net/minecraft/client/render/block/BlockLayer.values:()[Lnet/minecraft/client/render/block/BlockLayer;
+       397: astore        14
+       399: aload         14
+       401: arraylength
+       402: istore        15
+       404: iconst_0
+       405: istore        16
+       407: iload         16
+       409: iload         15
+       411: if_icmpge     476
+       414: aload         14
+       416: iload         16
+       418: aaload
+       419: astore        17
+       421: aload         12
+       423: aload         17
+       425: invokevirtual #381                // Method net/minecraft/client/render/block/BlockLayer.ordinal:()I
+       428: baload
+       429: ifeq          439
+       432: aload         5
+       434: aload         17
+       436: invokevirtual #403                // Method net/minecraft/client/render/world/CompiledChunk.setBlock:(Lnet/minecraft/client/render/block/BlockLayer;)V
+       439: aload         5
+       441: aload         17
+       443: invokevirtual #390                // Method net/minecraft/client/render/world/CompiledChunk.hasLayer:(Lnet/minecraft/client/render/block/BlockLayer;)Z
+       446: ifeq          470
+       449: aload_0
+       450: aload         17
+       452: fload_1
+       453: fload_2
+       454: fload_3
+       455: aload         4
+       457: invokevirtual #226                // Method net/minecraft/client/render/world/ChunkCompileTask.getBuffers:()Lnet/minecraft/client/render/world/ChunkBufferBuilders;
+       460: aload         17
+       462: invokevirtual #232                // Method net/minecraft/client/render/world/ChunkBufferBuilders.get:(Lnet/minecraft/client/render/block/BlockLayer;)Lnet/minecraft/client/render/vertex/BufferBuilder;
+       465: aload         5
+       467: invokespecial #244                // Method endLayer:(Lnet/minecraft/client/render/block/BlockLayer;FFFLnet/minecraft/client/render/vertex/BufferBuilder;Lnet/minecraft/client/render/world/CompiledChunk;)V
+       470: iinc          16, 1
+       473: goto          407
+       476: aload         5
+       478: aload         10
+       480: invokevirtual #407                // Method net/minecraft/client/render/world/ChunkOcclusionGraph.resolve:()Lnet/minecraft/client/render/world/OcclusionData;
+       483: invokevirtual #411                // Method net/minecraft/client/render/world/CompiledChunk.setOcclusionData:(Lnet/minecraft/client/render/world/OcclusionData;)V
+       486: aload_0
+       487: getfield      #76                 // Field taskLock:Ljava/util/concurrent/locks/ReentrantLock;
+       490: invokevirtual #255                // Method java/util/concurrent/locks/ReentrantLock.lock:()V
+       493: aload         11
+       495: invokestatic  #414                // Method com/google/common/collect/Sets.newHashSet:(Ljava/lang/Iterable;)Ljava/util/HashSet;
+       498: astore        12
+       500: aload_0
+       501: getfield      #88                 // Field globalBlockEntities:Ljava/util/Set;
+       504: invokestatic  #414                // Method com/google/common/collect/Sets.newHashSet:(Ljava/lang/Iterable;)Ljava/util/HashSet;
+       507: astore        13
+       509: aload         12
+       511: aload_0
+       512: getfield      #88                 // Field globalBlockEntities:Ljava/util/Set;
+       515: invokeinterface #418,  2          // InterfaceMethod java/util/Set.removeAll:(Ljava/util/Collection;)Z
+       520: pop
+       521: aload         13
+       523: aload         11
+       525: invokeinterface #418,  2          // InterfaceMethod java/util/Set.removeAll:(Ljava/util/Collection;)Z
+       530: pop
+       531: aload_0
+       532: getfield      #88                 // Field globalBlockEntities:Ljava/util/Set;
+       535: invokeinterface #421,  1          // InterfaceMethod java/util/Set.clear:()V
+       540: aload_0
+       541: getfield      #88                 // Field globalBlockEntities:Ljava/util/Set;
+       544: aload         11
+       546: invokeinterface #424,  2          // InterfaceMethod java/util/Set.addAll:(Ljava/util/Collection;)Z
+       551: pop
+       552: aload_0
+       553: getfield      #124                // Field renderer:Lnet/minecraft/client/render/world/WorldRenderer;
+       556: aload         13
+       558: aload         12
+       560: invokevirtual #430                // Method net/minecraft/client/render/world/WorldRenderer.updateGlobalBlockEntities:(Ljava/util/Collection;Ljava/util/Collection;)V
+       563: aload_0
+       564: getfield      #76                 // Field taskLock:Ljava/util/concurrent/locks/ReentrantLock;
+       567: invokevirtual #266                // Method java/util/concurrent/locks/ReentrantLock.unlock:()V
+       570: goto          585
+       573: astore        21
+       575: aload_0
+       576: getfield      #76                 // Field taskLock:Ljava/util/concurrent/locks/ReentrantLock;
+       579: invokevirtual #266                // Method java/util/concurrent/locks/ReentrantLock.unlock:()V
+       582: aload         21
+       584: athrow
+       585: return
+      Exception table:
+         from    to  target type
+            39    50   107   any
+            59    96   107   any
+           107   109   107   any
+           493   563   573   any
+           573   575   573   any
+      LineNumberTable:
+        line 118: 0
+        line 119: 9
+        line 121: 12
+        line 122: 18
+        line 125: 31
+        line 127: 39
+        line 134: 50
+        line 131: 59
+        line 132: 89
+        line 134: 96
+        line 135: 104
+        line 134: 107
+        line 137: 120
+        line 138: 129
+        line 139: 134
+        line 140: 144
+        line 142: 152
+        line 144: 160
+        line 145: 168
+        line 146: 204
+        line 147: 215
+        line 148: 224
+        line 149: 232
+        line 152: 239
+        line 156: 247
+        line 157: 265
+        line 158: 275
+        line 159: 285
+        line 160: 292
+        line 161: 300
+        line 166: 310
+        line 167: 317
+        line 169: 324
+        line 170: 333
+        line 171: 345
+        line 172: 355
+        line 173: 362
+        line 176: 370
+        line 178: 391
+        line 180: 394
+        line 181: 421
+        line 182: 432
+        line 185: 439
+        line 186: 449
+        line 180: 470
+        line 191: 476
+        line 193: 486
+        line 195: 493
+        line 196: 500
+        line 197: 509
+        line 198: 521
+        line 199: 531
+        line 200: 540
+        line 201: 552
+        line 203: 563
+        line 204: 570
+        line 203: 573
+        line 205: 585
+      LocalVariableTable:
+        Start  Length  Slot  Name   Signature
+            0     586     0  this   Lnet/minecraft/client/render/world/RenderChunk;
+            0     586     1 cameraX   F
+            0     586     2 cameraY   F
+            0     586     3 cameraZ   F
+            0     586     4  task   Lnet/minecraft/client/render/world/ChunkCompileTask;
+            9     577     5 compiledChunk   Lnet/minecraft/client/render/world/CompiledChunk;
+           12     574     6     i   I
+           18     568     7 blockPos   Lnet/minecraft/util/math/BlockPos;
+           31     555     8 blockPos2   Lnet/minecraft/util/math/BlockPos;
+           89      18     9 worldView   Lnet/minecraft/world/WorldView;
+          120     466     9 worldView   Lnet/minecraft/world/WorldView;
+          129     457    10 chunkOcclusionGraph   Lnet/minecraft/client/render/world/ChunkOcclusionGraph;
+          134     452    11   set   Ljava/util/Set;
+          160     316    12   bls   [Z
+          168     308    13 blockRenderDispatcher   Lnet/minecraft/client/render/block/BlockRenderDispatcher;
+          182     212    14 iterator   Ljava/util/Iterator;
+          204     187    15 mutable   Lnet/minecraft/util/math/BlockPos$Mutable;
+          215     176    16 blockState   Lnet/minecraft/block/state/BlockState;
+          224     167    17 block   Lnet/minecraft/block/Block;
+          265      45    18 blockEntity   Lnet/minecraft/block/entity/BlockEntity;
+          275      35    19 blockEntityRenderer   Lnet/minecraft/client/render/block/entity/BlockEntityRenderer;
+          317      74    18 blockLayer   Lnet/minecraft/client/render/block/BlockLayer;
+          324      67    19     j   I
+          345      46    20 bufferBuilder   Lnet/minecraft/client/render/vertex/BufferBuilder;
+          399      77    14 blockLayers   [Lnet/minecraft/client/render/block/BlockLayer;
+          404      72    15     k   I
+          407      69    16     l   I
+          421      49    17 blockLayer2   Lnet/minecraft/client/render/block/BlockLayer;
+          500      63    12  set2   Ljava/util/Set;
+          509      54    13  set3   Ljava/util/Set;
+
+  protected void cancelCompile();
+    Code:
+         0: aload_0
+         1: getfield      #76                 // Field taskLock:Ljava/util/concurrent/locks/ReentrantLock;
+         4: invokevirtual #255                // Method java/util/concurrent/locks/ReentrantLock.lock:()V
+         7: aload_0
+         8: getfield      #80                 // Field pendingTask:Lnet/minecraft/client/render/world/ChunkCompileTask;
+        11: ifnull        39
+        14: aload_0
+        15: getfield      #80                 // Field pendingTask:Lnet/minecraft/client/render/world/ChunkCompileTask;
+        18: invokevirtual #259                // Method net/minecraft/client/render/world/ChunkCompileTask.getStatus:()Lnet/minecraft/client/render/world/ChunkCompileTask$Status;
+        21: getstatic     #465                // Field net/minecraft/client/render/world/ChunkCompileTask$Status.DONE:Lnet/minecraft/client/render/world/ChunkCompileTask$Status;
+        24: if_acmpeq     39
+        27: aload_0
+        28: getfield      #80                 // Field pendingTask:Lnet/minecraft/client/render/world/ChunkCompileTask;
+        31: invokevirtual #468                // Method net/minecraft/client/render/world/ChunkCompileTask.cancel:()V
+        34: aload_0
+        35: aconst_null
+        36: putfield      #80                 // Field pendingTask:Lnet/minecraft/client/render/world/ChunkCompileTask;
+        39: aload_0
+        40: getfield      #76                 // Field taskLock:Ljava/util/concurrent/locks/ReentrantLock;
+        43: invokevirtual #266                // Method java/util/concurrent/locks/ReentrantLock.unlock:()V
+        46: goto          59
+        49: astore_1
+        50: aload_0
+        51: getfield      #76                 // Field taskLock:Ljava/util/concurrent/locks/ReentrantLock;
+        54: invokevirtual #266                // Method java/util/concurrent/locks/ReentrantLock.unlock:()V
+        57: aload_1
+        58: athrow
+        59: return
+      Exception table:
+         from    to  target type
+             7    39    49   any
+            49    50    49   any
+      LineNumberTable:
+        line 208: 0
+        line 210: 7
+        line 211: 27
+        line 212: 34
+        line 215: 39
+        line 216: 46
+        line 215: 49
+        line 217: 59
+      LocalVariableTable:
+        Start  Length  Slot  Name   Signature
+            0      60     0  this   Lnet/minecraft/client/render/world/RenderChunk;
+
+  public java.util.concurrent.locks.ReentrantLock getTaskLock();
+    Code:
+         0: aload_0
+         1: getfield      #76                 // Field taskLock:Ljava/util/concurrent/locks/ReentrantLock;
+         4: areturn
+      LineNumberTable:
+        line 220: 0
+      LocalVariableTable:
+        Start  Length  Slot  Name   Signature
+            0       5     0  this   Lnet/minecraft/client/render/world/RenderChunk;
+
+  public net.minecraft.client.render.world.ChunkCompileTask startCompile();
+    Code:
+         0: aload_0
+         1: getfield      #76                 // Field taskLock:Ljava/util/concurrent/locks/ReentrantLock;
+         4: invokevirtual #255                // Method java/util/concurrent/locks/ReentrantLock.lock:()V
+         7: aload_0
+         8: invokevirtual #473                // Method cancelCompile:()V
+        11: aload_0
+        12: new           #23                 // class net/minecraft/client/render/world/ChunkCompileTask
+        15: dup
+        16: aload_0
+        17: getstatic     #477                // Field net/minecraft/client/render/world/ChunkCompileTask$Type.REBUILD_CHUNK:Lnet/minecraft/client/render/world/ChunkCompileTask$Type;
+        20: invokespecial #480                // Method net/minecraft/client/render/world/ChunkCompileTask."<init>":(Lnet/minecraft/client/render/world/RenderChunk;Lnet/minecraft/client/render/world/ChunkCompileTask$Type;)V
+        23: putfield      #80                 // Field pendingTask:Lnet/minecraft/client/render/world/ChunkCompileTask;
+        26: aload_0
+        27: getfield      #80                 // Field pendingTask:Lnet/minecraft/client/render/world/ChunkCompileTask;
+        30: astore_1
+        31: aload_0
+        32: getfield      #76                 // Field taskLock:Ljava/util/concurrent/locks/ReentrantLock;
+        35: invokevirtual #266                // Method java/util/concurrent/locks/ReentrantLock.unlock:()V
+        38: aload_1
+        39: areturn
+        40: astore_2
+        41: aload_0
+        42: getfield      #76                 // Field taskLock:Ljava/util/concurrent/locks/ReentrantLock;
+        45: invokevirtual #266                // Method java/util/concurrent/locks/ReentrantLock.unlock:()V
+        48: aload_2
+        49: athrow
+      Exception table:
+         from    to  target type
+             7    31    40   any
+            40    41    40   any
+      LineNumberTable:
+        line 224: 0
+        line 226: 7
+        line 227: 11
+        line 228: 26
+        line 230: 31
+      LocalVariableTable:
+        Start  Length  Slot  Name   Signature
+            0      50     0  this   Lnet/minecraft/client/render/world/RenderChunk;
+
+  public net.minecraft.client.render.world.ChunkCompileTask startResortTransparency();
+    Code:
+         0: aload_0
+         1: getfield      #76                 // Field taskLock:Ljava/util/concurrent/locks/ReentrantLock;
+         4: invokevirtual #255                // Method java/util/concurrent/locks/ReentrantLock.lock:()V
+         7: aload_0
+         8: getfield      #80                 // Field pendingTask:Lnet/minecraft/client/render/world/ChunkCompileTask;
+        11: ifnull        38
+        14: aload_0
+        15: getfield      #80                 // Field pendingTask:Lnet/minecraft/client/render/world/ChunkCompileTask;
+        18: invokevirtual #259                // Method net/minecraft/client/render/world/ChunkCompileTask.getStatus:()Lnet/minecraft/client/render/world/ChunkCompileTask$Status;
+        21: getstatic     #484                // Field net/minecraft/client/render/world/ChunkCompileTask$Status.PENDING:Lnet/minecraft/client/render/world/ChunkCompileTask$Status;
+        24: if_acmpne     38
+        27: aconst_null
+        28: astore_1
+        29: aload_0
+        30: getfield      #76                 // Field taskLock:Ljava/util/concurrent/locks/ReentrantLock;
+        33: invokevirtual #266                // Method java/util/concurrent/locks/ReentrantLock.unlock:()V
+        36: aload_1
+        37: areturn
+        38: aload_0
+        39: getfield      #80                 // Field pendingTask:Lnet/minecraft/client/render/world/ChunkCompileTask;
+        42: ifnull        70
+        45: aload_0
+        46: getfield      #80                 // Field pendingTask:Lnet/minecraft/client/render/world/ChunkCompileTask;
+        49: invokevirtual #259                // Method net/minecraft/client/render/world/ChunkCompileTask.getStatus:()Lnet/minecraft/client/render/world/ChunkCompileTask$Status;
+        52: getstatic     #465                // Field net/minecraft/client/render/world/ChunkCompileTask$Status.DONE:Lnet/minecraft/client/render/world/ChunkCompileTask$Status;
+        55: if_acmpeq     70
+        58: aload_0
+        59: getfield      #80                 // Field pendingTask:Lnet/minecraft/client/render/world/ChunkCompileTask;
+        62: invokevirtual #468                // Method net/minecraft/client/render/world/ChunkCompileTask.cancel:()V
+        65: aload_0
+        66: aconst_null
+        67: putfield      #80                 // Field pendingTask:Lnet/minecraft/client/render/world/ChunkCompileTask;
+        70: aload_0
+        71: new           #23                 // class net/minecraft/client/render/world/ChunkCompileTask
+        74: dup
+        75: aload_0
+        76: getstatic     #487                // Field net/minecraft/client/render/world/ChunkCompileTask$Type.RESORT_TRANSPARENCY:Lnet/minecraft/client/render/world/ChunkCompileTask$Type;
+        79: invokespecial #480                // Method net/minecraft/client/render/world/ChunkCompileTask."<init>":(Lnet/minecraft/client/render/world/RenderChunk;Lnet/minecraft/client/render/world/ChunkCompileTask$Type;)V
+        82: putfield      #80                 // Field pendingTask:Lnet/minecraft/client/render/world/ChunkCompileTask;
+        85: aload_0
+        86: getfield      #80                 // Field pendingTask:Lnet/minecraft/client/render/world/ChunkCompileTask;
+        89: aload_0
+        90: getfield      #71                 // Field compiled:Lnet/minecraft/client/render/world/CompiledChunk;
+        93: invokevirtual #275                // Method net/minecraft/client/render/world/ChunkCompileTask.setCompiledChunk:(Lnet/minecraft/client/render/world/CompiledChunk;)V
+        96: aload_0
+        97: getfield      #80                 // Field pendingTask:Lnet/minecraft/client/render/world/ChunkCompileTask;
+       100: astore_1
+       101: aload_0
+       102: getfield      #76                 // Field taskLock:Ljava/util/concurrent/locks/ReentrantLock;
+       105: invokevirtual #266                // Method java/util/concurrent/locks/ReentrantLock.unlock:()V
+       108: aload_1
+       109: areturn
+       110: astore_2
+       111: aload_0
+       112: getfield      #76                 // Field taskLock:Ljava/util/concurrent/locks/ReentrantLock;
+       115: invokevirtual #266                // Method java/util/concurrent/locks/ReentrantLock.unlock:()V
+       118: aload_2
+       119: athrow
+      Exception table:
+         from    to  target type
+             7    29   110   any
+            38   101   110   any
+           110   111   110   any
+      LineNumberTable:
+        line 236: 0
+        line 238: 7
+        line 239: 27
+        line 248: 29
+        line 240: 38
+        line 241: 58
+        line 242: 65
+        line 244: 70
+        line 245: 85
+        line 246: 96
+        line 248: 101
+      LocalVariableTable:
+        Start  Length  Slot  Name   Signature
+            0     120     0  this   Lnet/minecraft/client/render/world/RenderChunk;
+
+  private void beginLayer(net.minecraft.client.render.vertex.BufferBuilder, net.minecraft.util.math.BlockPos);
+    Code:
+         0: aload_1
+         1: bipush        7
+         3: getstatic     #150                // Field net/minecraft/client/render/vertex/DefaultVertexFormat.BLOCK:Lnet/minecraft/client/render/vertex/VertexFormat;
+         6: invokevirtual #491                // Method net/minecraft/client/render/vertex/BufferBuilder.begin:(ILnet/minecraft/client/render/vertex/VertexFormat;)V
+         9: aload_1
+        10: aload_2
+        11: invokevirtual #494                // Method net/minecraft/util/math/BlockPos.getX:()I
+        14: ineg
+        15: i2d
+        16: aload_2
+        17: invokevirtual #497                // Method net/minecraft/util/math/BlockPos.getY:()I
+        20: ineg
+        21: i2d
+        22: aload_2
+        23: invokevirtual #500                // Method net/minecraft/util/math/BlockPos.getZ:()I
+        26: ineg
+        27: i2d
+        28: invokevirtual #503                // Method net/minecraft/client/render/vertex/BufferBuilder.offset:(DDD)V
+        31: return
+      LineNumberTable:
+        line 253: 0
+        line 254: 9
+        line 255: 31
+      LocalVariableTable:
+        Start  Length  Slot  Name   Signature
+            0      32     0  this   Lnet/minecraft/client/render/world/RenderChunk;
+            0      32     1 bufferBuilder   Lnet/minecraft/client/render/vertex/BufferBuilder;
+            0      32     2 offset   Lnet/minecraft/util/math/BlockPos;
+
+  private void endLayer(net.minecraft.client.render.block.BlockLayer, float, float, float, net.minecraft.client.render.vertex.BufferBuilder, net.minecraft.client.render.world.CompiledChunk);
+    Code:
+         0: aload_1
+         1: getstatic     #218                // Field net/minecraft/client/render/block/BlockLayer.TRANSLUCENT:Lnet/minecraft/client/render/block/BlockLayer;
+         4: if_acmpne     35
+         7: aload         6
+         9: aload_1
+        10: invokevirtual #222                // Method net/minecraft/client/render/world/CompiledChunk.hasBlock:(Lnet/minecraft/client/render/block/BlockLayer;)Z
+        13: ifne          35
+        16: aload         5
+        18: fload_2
+        19: fload_3
+        20: fload         4
+        22: invokevirtual #507                // Method net/minecraft/client/render/vertex/BufferBuilder.sortQuads:(FFF)V
+        25: aload         6
+        27: aload         5
+        29: invokevirtual #510                // Method net/minecraft/client/render/vertex/BufferBuilder.getState:()Lnet/minecraft/client/render/vertex/BufferBuilder$State;
+        32: invokevirtual #513                // Method net/minecraft/client/render/world/CompiledChunk.setTransparencyState:(Lnet/minecraft/client/render/vertex/BufferBuilder$State;)V
+        35: aload         5
+        37: invokevirtual #516                // Method net/minecraft/client/render/vertex/BufferBuilder.end:()V
+        40: return
+      LineNumberTable:
+        line 258: 0
+        line 259: 16
+        line 261: 25
+        line 263: 35
+        line 264: 40
+      LocalVariableTable:
+        Start  Length  Slot  Name   Signature
+            0      41     0  this   Lnet/minecraft/client/render/world/RenderChunk;
+            0      41     1 layer   Lnet/minecraft/client/render/block/BlockLayer;
+            0      41     2 cameraX   F
+            0      41     3 cameraY   F
+            0      41     4 cameraZ   F
+            0      41     5 bufferBuilder   Lnet/minecraft/client/render/vertex/BufferBuilder;
+            0      41     6 compiled   Lnet/minecraft/client/render/world/CompiledChunk;
+
+  private void glTransform();
+    Code:
+         0: invokestatic  #521                // Method net/minecraft/client/render/platform/GlStateManager.pushMatrix:()V
+         3: invokestatic  #524                // Method net/minecraft/client/render/platform/GlStateManager.loadIdentity:()V
+         6: ldc_w         #525                // float 1.000001f
+         9: fstore_1
+        10: ldc_w         #526                // float -8.0f
+        13: ldc_w         #526                // float -8.0f
+        16: ldc_w         #526                // float -8.0f
+        19: invokestatic  #529                // Method net/minecraft/client/render/platform/GlStateManager.translatef:(FFF)V
+        22: fload_1
+        23: fload_1
+        24: fload_1
+        25: invokestatic  #532                // Method net/minecraft/client/render/platform/GlStateManager.scalef:(FFF)V
+        28: ldc_w         #533                // float 8.0f
+        31: ldc_w         #533                // float 8.0f
+        34: ldc_w         #533                // float 8.0f
+        37: invokestatic  #529                // Method net/minecraft/client/render/platform/GlStateManager.translatef:(FFF)V
+        40: sipush        2982
+        43: aload_0
+        44: getfield      #96                 // Field matrix:Ljava/nio/FloatBuffer;
+        47: invokestatic  #537                // Method net/minecraft/client/render/platform/GlStateManager.getFloat:(ILjava/nio/FloatBuffer;)V
+        50: invokestatic  #540                // Method net/minecraft/client/render/platform/GlStateManager.popMatrix:()V
+        53: return
+      LineNumberTable:
+        line 267: 0
+        line 268: 3
+        line 269: 6
+        line 270: 10
+        line 271: 22
+        line 272: 28
+        line 273: 40
+        line 274: 50
+        line 275: 53
+      LocalVariableTable:
+        Start  Length  Slot  Name   Signature
+            0      54     0  this   Lnet/minecraft/client/render/world/RenderChunk;
+           10      44     1     f   F
+
+  public void glMultMatrix();
+    Code:
+         0: aload_0
+         1: getfield      #96                 // Field matrix:Ljava/nio/FloatBuffer;
+         4: invokestatic  #546                // Method net/minecraft/client/render/platform/GlStateManager.multMatrix:(Ljava/nio/FloatBuffer;)V
+         7: return
+      LineNumberTable:
+        line 278: 0
+        line 279: 7
+      LocalVariableTable:
+        Start  Length  Slot  Name   Signature
+            0       8     0  this   Lnet/minecraft/client/render/world/RenderChunk;
+
+  public net.minecraft.client.render.world.CompiledChunk getCompiledChunk();
+    Code:
+         0: aload_0
+         1: getfield      #71                 // Field compiled:Lnet/minecraft/client/render/world/CompiledChunk;
+         4: areturn
+      LineNumberTable:
+        line 282: 0
+      LocalVariableTable:
+        Start  Length  Slot  Name   Signature
+            0       5     0  this   Lnet/minecraft/client/render/world/RenderChunk;
+
+  public void setCompiledChunk(net.minecraft.client.render.world.CompiledChunk);
+    Code:
+         0: aload_0
+         1: getfield      #78                 // Field compileLock:Ljava/util/concurrent/locks/ReentrantLock;
+         4: invokevirtual #255                // Method java/util/concurrent/locks/ReentrantLock.lock:()V
+         7: aload_0
+         8: aload_1
+         9: putfield      #71                 // Field compiled:Lnet/minecraft/client/render/world/CompiledChunk;
+        12: aload_0
+        13: getfield      #78                 // Field compileLock:Ljava/util/concurrent/locks/ReentrantLock;
+        16: invokevirtual #266                // Method java/util/concurrent/locks/ReentrantLock.unlock:()V
+        19: goto          32
+        22: astore_2
+        23: aload_0
+        24: getfield      #78                 // Field compileLock:Ljava/util/concurrent/locks/ReentrantLock;
+        27: invokevirtual #266                // Method java/util/concurrent/locks/ReentrantLock.unlock:()V
+        30: aload_2
+        31: athrow
+        32: return
+      Exception table:
+         from    to  target type
+             7    12    22   any
+            22    23    22   any
+      LineNumberTable:
+        line 286: 0
+        line 288: 7
+        line 290: 12
+        line 291: 19
+        line 290: 22
+        line 292: 32
+      LocalVariableTable:
+        Start  Length  Slot  Name   Signature
+            0      33     0  this   Lnet/minecraft/client/render/world/RenderChunk;
+            0      33     1 compiled   Lnet/minecraft/client/render/world/CompiledChunk;
+
+  public void reset();
+    Code:
+         0: aload_0
+         1: invokevirtual #473                // Method cancelCompile:()V
+         4: aload_0
+         5: getstatic     #69                 // Field net/minecraft/client/render/world/CompiledChunk.UNCOMPILED:Lnet/minecraft/client/render/world/CompiledChunk;
+         8: putfield      #71                 // Field compiled:Lnet/minecraft/client/render/world/CompiledChunk;
+        11: return
+      LineNumberTable:
+        line 295: 0
+        line 296: 4
+        line 297: 11
+      LocalVariableTable:
+        Start  Length  Slot  Name   Signature
+            0      12     0  this   Lnet/minecraft/client/render/world/RenderChunk;
+
+  public void delete();
+    Code:
+         0: aload_0
+         1: invokevirtual #165                // Method reset:()V
+         4: aload_0
+         5: aconst_null
+         6: putfield      #122                // Field world:Lnet/minecraft/world/World;
+         9: iconst_0
+        10: istore_1
+        11: iload_1
+        12: invokestatic  #102                // Method net/minecraft/client/render/block/BlockLayer.values:()[Lnet/minecraft/client/render/block/BlockLayer;
+        15: arraylength
+        16: if_icmpge     43
+        19: aload_0
+        20: getfield      #106                // Field buffers:[Lnet/minecraft/client/render/vertex/VertexBuffer;
+        23: iload_1
+        24: aaload
+        25: ifnull        37
+        28: aload_0
+        29: getfield      #106                // Field buffers:[Lnet/minecraft/client/render/vertex/VertexBuffer;
+        32: iload_1
+        33: aaload
+        34: invokevirtual #549                // Method net/minecraft/client/render/vertex/VertexBuffer.delete:()V
+        37: iinc          1, 1
+        40: goto          11
+        43: return
+      LineNumberTable:
+        line 300: 0
+        line 301: 4
+        line 302: 9
+        line 303: 19
+        line 304: 28
+        line 302: 37
+        line 307: 43
+      LocalVariableTable:
+        Start  Length  Slot  Name   Signature
+            0      44     0  this   Lnet/minecraft/client/render/world/RenderChunk;
+           11      32     1     i   I
+
+  public net.minecraft.util.math.BlockPos getOrigin();
+    Code:
+         0: aload_0
+         1: getfield      #167                // Field origin:Lnet/minecraft/util/math/BlockPos;
+         4: areturn
+      LineNumberTable:
+        line 314: 0
+      LocalVariableTable:
+        Start  Length  Slot  Name   Signature
+            0       5     0  this   Lnet/minecraft/client/render/world/RenderChunk;
+
+  public void setDirty(boolean);
+    Code:
+         0: aload_0
+         1: iload_1
+         2: putfield      #110                // Field dirty:Z
+         5: return
+      LineNumberTable:
+        line 322: 0
+        line 323: 5
+      LocalVariableTable:
+        Start  Length  Slot  Name   Signature
+            0       6     0  this   Lnet/minecraft/client/render/world/RenderChunk;
+            0       6     1 dirty   Z
+
+  public boolean isDirty();
+    Code:
+         0: aload_0
+         1: getfield      #110                // Field dirty:Z
+         4: ireturn
+      LineNumberTable:
+        line 326: 0
+      LocalVariableTable:
+        Start  Length  Slot  Name   Signature
+            0       5     0  this   Lnet/minecraft/client/render/world/RenderChunk;
+
+  public net.minecraft.util.math.BlockPos getRelativeOrigin(net.minecraft.util.math.Direction);
+    Code:
+         0: aload_0
+         1: getfield      #120                // Field relativeOrigins:Ljava/util/EnumMap;
+         4: aload_1
+         5: invokevirtual #558                // Method java/util/EnumMap.get:(Ljava/lang/Object;)Ljava/lang/Object;
+         8: checkcast     #13                 // class net/minecraft/util/math/BlockPos
+        11: areturn
+      LineNumberTable:
+        line 330: 0
+      LocalVariableTable:
+        Start  Length  Slot  Name   Signature
+            0      12     0  this   Lnet/minecraft/client/render/world/RenderChunk;
+            0      12     1   dir   Lnet/minecraft/util/math/Direction;
+}

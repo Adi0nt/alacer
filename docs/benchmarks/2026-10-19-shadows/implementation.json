@@ -1,0 +1,42 @@
+{
+  "source_sha256": {
+    "src/main/java/net/adiont/alacer/render/EntityShadows.java": "383ce26b100a6723f525e4162332a56f86a516b875fc87df11f97aef3ab83d0e",
+    "src/main/java/net/adiont/alacer/mixin/EntityShadowMixin.java": "7dbc20e94a708e520dafb376b2123b63e9cfc492999f3159a9ac035e9883484d",
+    "src/main/java/net/adiont/alacer/mixin/EntityShadowTimingMixin.java": "bd8d8c08f00ba7bf9edf9ff71512288303b589f2ebb8a7b043e15d67e3104789",
+    "src/main/java/net/adiont/alacer/config/AlacerConfig.java": "b342ca19e845d632d4c7bba2b8cf912c94a038b15a48875ee044c8d15c34cd1a",
+    "src/main/java/net/adiont/alacer/config/AlacerMixinPlugin.java": "0f9704027eefb0482fbfdb7ed2125911c811b9a198dcf29f8ce8982c98ca30ee",
+    "src/main/java/net/adiont/alacer/benchmark/BenchmarkRunner.java": "8097a25dacdafc7ecbabe7d3353a3dc4ef7566c4f400e2864fc8725b5117fa9a",
+    "src/main/java/net/adiont/alacer/render/EntityRendering.java": "3523436672dc929820cd7c823bf40265418d202f27abd3fd15f0fc117180bbd8",
+    "src/main/java/net/adiont/alacer/mixin/WorldRendererMixin.java": "f20f7530d72c08aa0671083bf704b41bfa969199bd3a5c4b01c4d3b46c069944",
+    "src/main/java/net/adiont/alacer/profiler/FrameProfiler.java": "907ad1b4c84645d58c6687d0e8d3ee113e7227d095b9a2d08e7210b45a484680",
+    "src/main/java/net/adiont/alacer/Alacer.java": "c3cf6c392f3018ae1f0c101c995a9b7ded993dd8527b0988d34ec6ea0e5684ce",
+    "src/main/resources/alacer.mixins.json": "813154bce39eddcf8168ef086b9d503e63dac8dcd2eb07a15541503babf60734"
+  },
+  "note": "Captured at 22:04 before the first final launch (sh-attr-200-r1); source is frozen through every sh-* launch. The shd-* pilot used @WrapOperation for the three shadow queries (pilot_source_sha256 for the optimization pilot, pilot_attribution_source_sha256 for the attribution pilot, which also lacked the verification-only benchmark.shadowDiagnostic flag).",
+  "pilot_source_sha256": {
+    "src/main/java/net/adiont/alacer/render/EntityShadows.java": "c4c9a41448106418bd0842bc80ed41eb36ac38984492ee149f1b834f195d574a",
+    "src/main/java/net/adiont/alacer/mixin/EntityShadowMixin.java": "ee9e0d68797aa1d89216b8a9d8a0cbeb527a10110a402b1ee4601aae595adbf1",
+    "src/main/java/net/adiont/alacer/mixin/EntityShadowTimingMixin.java": "bd8d8c08f00ba7bf9edf9ff71512288303b589f2ebb8a7b043e15d67e3104789",
+    "src/main/java/net/adiont/alacer/config/AlacerConfig.java": "b342ca19e845d632d4c7bba2b8cf912c94a038b15a48875ee044c8d15c34cd1a",
+    "src/main/java/net/adiont/alacer/config/AlacerMixinPlugin.java": "0f9704027eefb0482fbfdb7ed2125911c811b9a198dcf29f8ce8982c98ca30ee",
+    "src/main/java/net/adiont/alacer/benchmark/BenchmarkRunner.java": "8097a25dacdafc7ecbabe7d3353a3dc4ef7566c4f400e2864fc8725b5117fa9a",
+    "src/main/java/net/adiont/alacer/render/EntityRendering.java": "3523436672dc929820cd7c823bf40265418d202f27abd3fd15f0fc117180bbd8",
+    "src/main/java/net/adiont/alacer/mixin/WorldRendererMixin.java": "f20f7530d72c08aa0671083bf704b41bfa969199bd3a5c4b01c4d3b46c069944",
+    "src/main/java/net/adiont/alacer/profiler/FrameProfiler.java": "907ad1b4c84645d58c6687d0e8d3ee113e7227d095b9a2d08e7210b45a484680",
+    "src/main/java/net/adiont/alacer/Alacer.java": "c3cf6c392f3018ae1f0c101c995a9b7ded993dd8527b0988d34ec6ea0e5684ce",
+    "src/main/resources/alacer.mixins.json": "813154bce39eddcf8168ef086b9d503e63dac8dcd2eb07a15541503babf60734"
+  },
+  "pilot_attribution_source_sha256": {
+    "src/main/java/net/adiont/alacer/render/EntityShadows.java": "c4c9a41448106418bd0842bc80ed41eb36ac38984492ee149f1b834f195d574a",
+    "src/main/java/net/adiont/alacer/mixin/EntityShadowMixin.java": "ee9e0d68797aa1d89216b8a9d8a0cbeb527a10110a402b1ee4601aae595adbf1",
+    "src/main/java/net/adiont/alacer/mixin/EntityShadowTimingMixin.java": "bd8d8c08f00ba7bf9edf9ff71512288303b589f2ebb8a7b043e15d67e3104789",
+    "src/main/java/net/adiont/alacer/config/AlacerConfig.java": "b342ca19e845d632d4c7bba2b8cf912c94a038b15a48875ee044c8d15c34cd1a",
+    "src/main/java/net/adiont/alacer/config/AlacerMixinPlugin.java": "0f9704027eefb0482fbfdb7ed2125911c811b9a198dcf29f8ce8982c98ca30ee",
+    "src/main/java/net/adiont/alacer/benchmark/BenchmarkRunner.java": "de8025aa938d40355effd8b8ceaeee8e3a72f79b33242a651156d9b5f5a40748",
+    "src/main/java/net/adiont/alacer/render/EntityRendering.java": "3523436672dc929820cd7c823bf40265418d202f27abd3fd15f0fc117180bbd8",
+    "src/main/java/net/adiont/alacer/mixin/WorldRendererMixin.java": "f20f7530d72c08aa0671083bf704b41bfa969199bd3a5c4b01c4d3b46c069944",
+    "src/main/java/net/adiont/alacer/profiler/FrameProfiler.java": "907ad1b4c84645d58c6687d0e8d3ee113e7227d095b9a2d08e7210b45a484680",
+    "src/main/java/net/adiont/alacer/Alacer.java": "c3cf6c392f3018ae1f0c101c995a9b7ded993dd8527b0988d34ec6ea0e5684ce",
+    "src/main/resources/alacer.mixins.json": "813154bce39eddcf8168ef086b9d503e63dac8dcd2eb07a15541503babf60734"
+  }
+}

@@ -1,0 +1,64 @@
+static: frames 10779 mean 0.928 ms; particles pass 0.631 ms; alloc/frame 191830 B; rendered 5129
+pan: frames 10263 mean 1.462 ms; particles pass 0.779 ms; alloc/frame 233823 B; rendered 5131
+
+[static] client samples 640; particle pass 456 (71.2%)
+    particle render self                           179  39.3% of pass
+    other:ParticleManager.render                    88  19.3% of pass
+    vertex writes                                   52  11.4% of pass
+    light (getLightLevel self)                      47  10.3% of pass
+    light reuse table                               34   7.5% of pass
+    light entry (isChunkLoaded)                     26   5.7% of pass
+    draw                                            19   4.2% of pass
+    light query                                     11   2.4% of pass
+  leaf frames:
+    Particle.render                                                124  27.2%
+    ParticleManager.render                                          88  19.3%
+    Buffer.checkIndex                                               43   9.4%
+    Entity.getLightLevel                                            30   6.6%
+    BlockParticle.render                                            29   6.4%
+    ParticleLightReuse$Table.find                                   26   5.7%
+    Long2ObjectHashMap.getNode                                      26   5.7%
+    Tesselator.end                                                  17   3.7%
+    BlockParticle.getLightLevel                                     16   3.5%
+    SmokeParticle.render                                            10   2.2%
+    RedstoneParticle.render                                         10   2.2%
+    BufferBuilder.grow                                               9   2.0%
+  getNode: 15 Long2ObjectHashMap.getNode[Inlined] <- Long2ObjectHashMap.contains[Inlined] <- ServerChunkCache.hasChunk[Inlined] <- World.isChunkLoadedAt[Inlined] <- World.isChunkLoaded[Inlined] <- World.isChunkLoaded[Inlined] <- Entity.getLightLevel[JIT compiled]
+  getNode: 11 Long2ObjectHashMap.getNode[Inlined] <- Long2ObjectHashMap.contains[Inlined] <- ServerChunkCache.hasChunk[Inlined] <- World.isChunkLoadedAt[Inlined] <- World.isChunkLoaded[Inlined] <- World.isChunkLoaded[Inlined] <- BlockParticle.getLightLevel[Inlined]
+  pass alloc sampled MB:
+      322.84 BlockPos <- Entity.getLightLevel <- Particle.render <- SmokeParticle.render
+      282.91 BlockPos <- Entity.getLightLevel <- Particle.render <- RedstoneParticle.render
+      242.52 BlockPos <- Entity.getLightLevel <- BlockParticle.getLightLevel <- BlockParticle.render
+      232.16 BlockPos <- Entity.getLightLevel <- FlameParticle.getLightLevel <- Particle.render
+      136.37 BlockPos <- Entity.getLightLevel <- Particle.render <- ParticleManager.render
+
+[pan] client samples 989; particle pass 520 (52.6%)
+    particle render self                           184  35.4% of pass
+    other:ParticleManager.render                   117  22.5% of pass
+    light (getLightLevel self)                      65  12.5% of pass
+    vertex writes                                   56  10.8% of pass
+    light reuse table                               30   5.8% of pass
+    light query                                     26   5.0% of pass
+    light entry (isChunkLoaded)                     24   4.6% of pass
+    draw                                            18   3.5% of pass
+  leaf frames:
+    Particle.render                                                133  25.6%
+    ParticleManager.render                                         117  22.5%
+    Buffer.checkIndex                                               45   8.7%
+    Entity.getLightLevel                                            39   7.5%
+    ParticleLightReuse$Table.find                                   29   5.6%
+    BlockParticle.getLightLevel                                     26   5.0%
+    Long2ObjectHashMap.getNode                                      24   4.6%
+    BlockParticle.render                                            17   3.3%
+    Tesselator.end                                                  15   2.9%
+    ParticleLight.brightness                                        14   2.7%
+    RedstoneParticle.render                                         12   2.3%
+    FlameParticle.render                                            12   2.3%
+  getNode: 21 Long2ObjectHashMap.getNode[Inlined] <- Long2ObjectHashMap.contains[Inlined] <- ServerChunkCache.hasChunk[Inlined] <- World.isChunkLoadedAt[Inlined] <- World.isChunkLoaded[Inlined] <- World.isChunkLoaded[Inlined] <- Entity.getLightLevel[JIT compiled]
+  getNode: 3 Long2ObjectHashMap.getNode[Inlined] <- Long2ObjectHashMap.contains[Inlined] <- ServerChunkCache.hasChunk[Inlined] <- World.isChunkLoadedAt[Inlined] <- World.isChunkLoaded[Inlined] <- World.isChunkLoaded[Inlined] <- BlockParticle.getLightLevel[Inlined]
+  pass alloc sampled MB:
+      339.36 BlockPos <- Entity.getLightLevel <- Particle.render <- SmokeParticle.render
+      315.70 BlockPos <- Entity.getLightLevel <- BlockParticle.getLightLevel <- BlockParticle.render
+      289.74 BlockPos <- Entity.getLightLevel <- Particle.render <- RedstoneParticle.render
+      214.29 BlockPos <- Entity.getLightLevel <- FlameParticle.getLightLevel <- Particle.render
+      128.74 BlockPos <- Entity.getLightLevel <- Particle.render <- ParticleManager.render

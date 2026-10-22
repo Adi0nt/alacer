@@ -1,0 +1,64 @@
+static: frames 9621 mean 1.039 ms; particles pass 0.718 ms; tick frames 199 particle_tick/tick frame 1.579 ms; rendered 3326
+pan: frames 10009 mean 1.499 ms; particles pass 0.834 ms; tick frames 300 particle_tick/tick frame 1.500 ms; rendered 3325
+
+[static] client samples 716
+  render pass                     529  73.9%
+  tick                             20   2.8%
+    Entity.move (tick)             18   2.5%
+  render-pass breakdown:
+    light                                                          167  31.6% of pass
+    BufferBuilder/VertexFormat                                     155  29.3% of pass
+    BufferBuilder/BufferBuilder                                    126  23.8% of pass
+    render-self:ParticleManager.render                              47   8.9% of pass
+    render-self:Particle.render                                     13   2.5% of pass
+    render-self:RedstoneParticle.render                              8   1.5% of pass
+    render-self:SmokeParticle.render                                 7   1.3% of pass
+    render-self:FlameParticle.render                                 3   0.6% of pass
+    draw                                                             3   0.6% of pass
+  render-pass leaf frames:
+    Objects.checkIndex                                             155  29.3%
+    BufferBuilder.nextElement                                      108  20.4%
+    ParticleLight.brightness                                        72  13.6%
+    ParticleManager.render                                          47   8.9%
+    Long2ObjectHashMap.getNode                                      37   7.0%
+    WorldChunk.getLight                                             29   5.5%
+    Entity.getLightLevel                                            17   3.2%
+    BufferBuilder.color                                             15   2.8%
+    Particle.render                                                 13   2.5%
+    BlockParticle.getLightLevel                                     12   2.3%
+    RedstoneParticle.render                                          8   1.5%
+    SmokeParticle.render                                             7   1.3%
+    FlameParticle.render                                             3   0.6%
+    BufferBuilder.grow                                               3   0.6%
+  render-pass alloc sampled MB: {}
+
+[pan] client samples 1105
+  render pass                     602  54.5%
+  tick                             44   4.0%
+    Entity.move (tick)             40   3.6%
+  render-pass breakdown:
+    BufferBuilder/VertexFormat                                     170  28.2% of pass
+    light                                                          165  27.4% of pass
+    BufferBuilder/BufferBuilder                                    146  24.3% of pass
+    render-self:ParticleManager.render                              69  11.5% of pass
+    render-self:Particle.render                                     15   2.5% of pass
+    render-self:RedstoneParticle.render                             14   2.3% of pass
+    render-self:SmokeParticle.render                                13   2.2% of pass
+    render-self:FlameParticle.render                                 7   1.2% of pass
+    render-self:BlockParticle.render                                 3   0.5% of pass
+  render-pass leaf frames:
+    Objects.checkIndex                                             170  28.2%
+    BufferBuilder.nextElement                                      126  20.9%
+    ParticleManager.render                                          69  11.5%
+    ParticleLight.brightness                                        67  11.1%
+    Long2ObjectHashMap.getNode                                      39   6.5%
+    WorldChunk.getLight                                             27   4.5%
+    BufferBuilder.color                                             17   2.8%
+    Particle.render                                                 15   2.5%
+    Entity.getLightLevel                                            14   2.3%
+    RedstoneParticle.render                                         14   2.3%
+    SmokeParticle.render                                            13   2.2%
+    BlockParticle.getLightLevel                                      9   1.5%
+    FlameParticle.render                                             7   1.2%
+    ParticleLight.fastLightColor                                     6   1.0%
+  render-pass alloc sampled MB: {'net/minecraft/util/math/BlockPos <- Entity.getLightLevel': 835.36}

@@ -1,0 +1,56 @@
+{
+  "fr-verify-boxes": {
+    "source": "run\\alacer\\benchmarks\\20261019-230623-fr-verify-boxes-vis_on-ecl_on-ent200",
+    "frames": {
+      "static": 3962,
+      "pan": 3997,
+      "fly": 6488
+    },
+    "log": "build/fr-verify-boxes.log",
+    "boxes_compared": 17668936,
+    "mismatches": 0,
+    "fallback": 0
+  },
+  "fr-verify-traversal": {
+    "source": "run\\alacer\\benchmarks\\20261019-230759-fr-verify-traversal-vis_on-ecl_on-ent200",
+    "frames": {
+      "static": 4437,
+      "pan": 3592,
+      "fly": 5909
+    },
+    "log": "build/fr-verify-traversal.log",
+    "searches_at_last_periodic_log": 11000,
+    "stable_mismatches": 0,
+    "changed_inputs_at_last_log": 9,
+    "changed_input_differences_at_last_log": 5,
+    "replay": {
+      "static": {
+        "vanilla_ms_per_frame": 0.0,
+        "planes_ms_per_frame": 0.0,
+        "tests_per_frame": 1.4965
+      },
+      "pan": {
+        "vanilla_ms_per_frame": 0.0423,
+        "planes_ms_per_frame": 0.0412,
+        "tests_per_frame": 1300.3207
+      },
+      "fly": {
+        "vanilla_ms_per_frame": 0.0391,
+        "planes_ms_per_frame": 0.036,
+        "tests_per_frame": 1107.7177
+      }
+    }
+  },
+  "fr-final-defaults-smoke": {
+    "phases": 12,
+    "preset_verified": true,
+    "performance_evidence": false,
+    "time_scale": 0.1
+  },
+  "final_build": {
+    "tests": 39,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  }
+}

@@ -1,0 +1,647 @@
+--- a/src/main/java/net/adiont/alacer/Alacer.java
++++ b/src/main/java/net/adiont/alacer/Alacer.java
+@@ -109,6 +109,7 @@
+ 		ParticleLight.init();
+ 		net.adiont.alacer.render.ParticleMovement.init();
+ 		net.adiont.alacer.render.ParticleBoxes.init();
++		net.adiont.alacer.render.ParticleEntityQuery.init();
+ 		ParticleRemoval.init();
+ 		MinecraftClientEvents.READY.register(minecraft -> LOGGER.info("Environment: {}", describeEnvironment()));
+ 	}
+--- a/src/main/java/net/adiont/alacer/benchmark/BenchmarkRunner.java
++++ b/src/main/java/net/adiont/alacer/benchmark/BenchmarkRunner.java
+@@ -364,6 +364,7 @@
+ 			|| "render.fastParticleRemoval".equals(key)
+ 			|| "render.fastParticleMovement".equals(key)
+ 			|| "render.reuseParticleBoxes".equals(key)
++			|| "render.scalarParticleEntityQuery".equals(key)
+ 			|| DISABLE_SHADOWS.equals(key) || DISABLE_PARTICLES.equals(key);
+ 	}
+ 
+@@ -513,6 +514,12 @@
+ 
+ 	/** Emitter points around the anchor, on the copied world's terrain; computed once. */
+ 	private void placeParticleEmitters() {
++		if (Boolean.getBoolean("alacer.benchmark.particleEntityQueryDiagnostic")) {
++			if (!Alacer.get().config().scalarParticleEntityQuery || !Alacer.get().config().verifyScalarParticleEntityQuery) {
++				throw new IllegalArgumentException("particleEntityQueryDiagnostic requires scalar query and verification");
++			}
++			ParticleEntityQueryChecks.run(this.minecraft.world, this.anchorX, this.groundY, this.anchorZ);
++		}
+ 		if (Boolean.getBoolean("alacer.benchmark.particleBoxDiagnostic")) {
+ 			if (!Alacer.get().config().reuseParticleBoxes || !Alacer.get().config().verifyReuseParticleBoxes) {
+ 				throw new IllegalArgumentException("particleBoxDiagnostic requires reuseParticleBoxes and its verification");
+@@ -1056,6 +1063,7 @@
+ 		Alacer.LOGGER.info("Particle light queries final: {}", net.adiont.alacer.render.ParticleLight.verificationSummary());
+ 		Alacer.LOGGER.info("Particle removal final: {}", net.adiont.alacer.render.ParticleRemoval.verificationSummary());
+ 		Alacer.LOGGER.info("Particle movement final: {}", net.adiont.alacer.render.ParticleMovement.verificationSummary());
++		Alacer.LOGGER.info("Particle entity query final: {}", net.adiont.alacer.render.ParticleEntityQuery.verificationSummary());
+ 		Alacer.LOGGER.info("Particle boxes final: {}", net.adiont.alacer.render.ParticleBoxes.verificationSummary());
+ 		if (this.particleDiagnostic) {
+ 			Alacer.LOGGER.info("Benchmark: particle diagnostic toggled {} cells {} times", PARTICLE_EMITTERS, this.particleToggles);
+--- a/src/main/java/net/adiont/alacer/benchmark/ParticleEntityQueryChecks.java
++++ b/src/main/java/net/adiont/alacer/benchmark/ParticleEntityQueryChecks.java
+@@ -0,0 +1,279 @@
++package net.adiont.alacer.benchmark;
++
++import java.lang.reflect.Field;
++import java.lang.reflect.Modifier;
++import java.util.ArrayList;
++import java.util.List;
++import java.util.Random;
++
++import net.adiont.alacer.Alacer;
++import net.adiont.alacer.config.AlacerConfig;
++import net.adiont.alacer.render.ParticleBoxes;
++import net.adiont.alacer.render.ParticleEntityQuery;
++import net.minecraft.block.Block;
++import net.minecraft.block.Blocks;
++import net.minecraft.block.state.BlockState;
++import net.minecraft.client.entity.particle.Particle;
++import net.minecraft.entity.Entity;
++import net.minecraft.entity.vehicle.BoatEntity;
++import net.minecraft.util.math.BlockPos;
++import net.minecraft.util.math.Box;
++import net.minecraft.world.World;
++import net.minecraft.world.border.WorldBorder;
++
++/** Intrusive synchronous diagnostics in the disposable benchmark world, before emission. */
++final class ParticleEntityQueryChecks {
++	private ParticleEntityQueryChecks() { }
++
++	static void run(World world, double x, double y, double z) {
++		AlacerConfig config = Alacer.get().config();
++		boolean original = config.scalarParticleEntityQuery, verify = config.verifyScalarParticleEntityQuery;
++		WorldBorder border = world.getWorldBorder();
++		double bx = border.getCenterX(), bz = border.getCenterZ(), size = border.getLerpSize();
++		if (border.getLerpTime() != 0) { throw new IllegalStateException("Box probes require a stationary initial border"); }
++		int direct = 0, pairs = 0, boatHits = 0;
++		List<BlockPos> cells = new ArrayList<>();
++		List<BlockState> states = new ArrayList<>();
++		BoatEntity boat = null;
++		try {
++			config.scalarParticleEntityQuery = true;
++			Probe probe = new Probe(world, x, y, z);
++			double[] values = {0.0, -0.0, Double.MIN_VALUE, -Double.MIN_VALUE, Double.MAX_VALUE,
++				-Double.MAX_VALUE, Double.POSITIVE_INFINITY, Double.NEGATIVE_INFINITY,
++				Double.longBitsToDouble(0x7ff8000000000019L), -30000000, -16.25, -1, 1, 16.25, 30000000};
++			for (double a : values) {
++				for (double b : values) {
++					Box box = new Box(a, b, -2, b, a, 2);
++					Box grown = ParticleEntityQuery.grow(world, probe, box, 0.25, 0.25, 0.25);
++					boolean eligible = ParticleEntityQuery.eligible(probe, box);
++					check((grown == box) == eligible, "growth decision");
++					if (!eligible) { check(ParticleBoxes.same(grown, box.grown(0.25, 0.25, 0.25)), "unsafe growth fallback"); }
++					direct++;
++				}
++			}
++			Box inverted = new Box(new BlockPos(2, 3, 4), new BlockPos(-2, -3, -4));
++			check(ParticleEntityQuery.grow(world, probe, inverted, .25, .25, .25) != inverted, "inverted fallback");
++			Box subclass = new Box(1, 2, 3, 4, 5, 6) {
++				@Override public Box grown(double dx, double dy, double dz) { return new Box(10, 20, 30, 40, 50, 60); }
++			};
++			check(ParticleBoxes.same(ParticleEntityQuery.grow(world, probe, subclass, .25, .25, .25), subclass.grown(.25, .25, .25)), "subclass dispatch");
++			Box safe = new Box(1, 2, 3, 4, 5, 6);
++			check(ParticleEntityQuery.grow(world, probe, safe, .25, .25, .25) == safe, "safe scalar identity");
++			check(ParticleEntityQuery.grow(world, probe, safe, .125, .25, .25) != safe, "other growth fallback");
++			Box[] otherThread = new Box[1];
++			Thread thread = new Thread(() -> otherThread[0] = ParticleEntityQuery.grow(world, probe, safe, .25, .25, .25));
++			thread.start(); thread.join();
++			check(otherThread[0] != null && otherThread[0] != safe && ParticleBoxes.same(otherThread[0], safe.grown(.25, .25, .25)), "thread fallback");
++			BoatEntity nonParticle = new BoatEntity(world);
++			check(ParticleEntityQuery.grow(world, nonParticle, safe, .25, .25, .25) != safe, "non-particle fallback");
++			direct += 6;
++			java.lang.reflect.Method predicate = ParticleEntityQuery.class.getDeclaredMethod("intersects", Box.class,
++				double.class, double.class, double.class, double.class, double.class, double.class, Box.class);
++			predicate.setAccessible(true);
++			Random predicateRandom = new Random(190019);
++			for (int trial = 0; trial < 10000; trial++) {
++				double a = trial < values.length ? values[trial] : Double.longBitsToDouble(predicateRandom.nextLong());
++				double b = trial < values.length ? values[values.length - 1 - trial] : Double.longBitsToDouble(predicateRandom.nextLong());
++				Box entityBounds = trial % 3 == 0 ? new Box(new BlockPos(2, 3, 4), new BlockPos(-2, -3, -4)) : new Box(a, b, -2, b, a, 2);
++				Box query = new Box(-.25, -.25, -.25, .25, .25, .25);
++				boolean answer = (Boolean) predicate.invoke(null, entityBounds, query.minX, query.minY, query.minZ, query.maxX, query.maxY, query.maxZ, query);
++				check(answer == entityBounds.intersects(query), "direct scalar predicate"); direct++;
++			}
++			Box virtualShape = new Box(1, 2, 3, 4, 5, 6) {
++				@Override public boolean intersects(Box other) { return other.minX == -0.25 && other.maxX == 0.25; }
++			};
++			check((Boolean) predicate.invoke(null, virtualShape, -.25, -.25, -.25, .25, .25, .25, new Box(-.25, -.25, -.25, .25, .25, .25)), "shape virtual dispatch"); direct++;
++			// Ordered queries at loaded/unloaded, chunk, height and hard-coordinate edges.
++			for (double px : new double[]{x, -16.25, -16, -0.0, 0.0, 15.75, 16, 4096.5, -30000000, 30000000}) {
++				for (double py : new double[]{-16.25, -0.0, 0.0, y, 255.75, 256, 1024}) {
++					Box box = new Box(px, py, px, px + .2, py + .2, px + .2);
++					Box grown = ParticleEntityQuery.grow(world, probe, box, .25, .25, .25);
++					List<Entity> actual = ParticleEntityQuery.entities(world, probe, grown, box);
++					List<Entity> expected = world.getEntities(probe, box.grown(.25, .25, .25));
++					check(actual.size() == expected.size(), "direct list size");
++					for (int i = 0; i < actual.size(); i++) { check(actual.get(i) == expected.get(i), "direct list order"); }
++					direct++;
++				}
++			}
++
++			// Install a tiny isolated floor, slab, wall and cobweb above terrain in loaded chunks.
++			int sx = (int) Math.floor(x) + 3, sy = 120, sz = (int) Math.floor(z) + 3;
++			for (int ox = -2; ox <= 2; ox++) {
++				for (int oz = -2; oz <= 2; oz++) {
++					for (int oy = 0; oy <= 3; oy++) {
++						BlockPos pos = new BlockPos(sx + ox, sy + oy, sz + oz);
++						cells.add(pos); states.add(world.getBlockState(pos));
++						Block block = oy == 0 ? Blocks.STONE : Blocks.AIR;
++						if (oy == 1 && ox == 1 && oz == 0) { block = Blocks.STONE_SLAB; }
++						if (oy <= 2 && ox == -1 && oz == 0) { block = Blocks.STONE; }
++						if (oy == 1 && ox == 0 && oz == 1) { block = Blocks.WEB; }
++						world.setBlockState(pos, block.defaultState(), 2);
++					}
++				}
++			}
++			// Copy and compare every nonstatic primitive Entity/Particle field, including private
++			// fire/fall/cobweb/border state. Trace intermediate shape assignments and callback order.
++			List<Field> fields = new ArrayList<>();
++			for (Class<?> type = Particle.class; type != Object.class; type = type.getSuperclass()) {
++				for (Field field : type.getDeclaredFields()) {
++					if (field.getType().isPrimitive() && !Modifier.isStatic(field.getModifiers()) && !Modifier.isFinal(field.getModifiers())) {
++						field.setAccessible(true); fields.add(field);
++					}
++				}
++			}
++			direct += entityFixtures(world, sx + .5, sy + 2, sz + .5);
++			Random random = new Random(190019);
++			for (int scenario = 0; scenario < 6; scenario++) {
++				if (scenario == 1) { border.setCenter(sx + 0.5, sz + 0.5); border.setSize(4); }
++				if (scenario == 2) { border.setCenter(sx + 1.5, sz - 0.5); border.setSize(8); }
++				if (scenario == 3) {
++					border.setCenter(bx, bz); border.setSize(size);
++					boat = new BoatEntity(world, sx + 0.5, sy + 1, sz + 0.5);
++					check(world.addEntity(boat), "boat insertion");
++				}
++				for (int trial = 0; trial < 120; trial++) {
++					double px = scenario == 4 ? -16.05 : scenario == 5 ? 4096.5 : sx + 0.5 + (trial % 5 - 2) * 0.25;
++					double py = scenario >= 4 ? (trial % 2 == 0 ? -1 : 256) : sy + 1 + (trial % 4) * 0.2;
++					double pz = scenario == 4 ? -16.05 : scenario == 5 ? 4096.5 : sz + 0.5;
++					Probe a = new Probe(world, px, py, pz), b = new Probe(world, px, py, pz);
++					a.noClip = trial % 11 == 0; a.stepHeight = trial % 3 == 0 ? 0.6F : 0;
++					a.onGround = trial % 2 == 0; a.cobweb(trial % 7 == 0);
++					a.setOutsideWorldBorder(trial % 2 == 0);
++					a.velocityX = 0.3; a.velocityY = -0.2; a.velocityZ = -0.3;
++					for (Field field : fields) { field.set(b, field.get(a)); }
++					b.setShape(a.getShape());
++					a.resetTrace(); b.resetTrace();
++					if (scenario == 3 && trial == 0) {
++						Box boatBounds = boat.getShape();
++						Probe collisionProbe = new Probe(world, px, py, pz);
++						check(world.getCollisions(collisionProbe, collisionProbe.getShape()).stream().anyMatch(box -> box == boatBounds), "boat collision present");
++						boatHits++;
++					}
++					for (int step = 0; step < 8; step++) {
++						double dx = step % 4 == 0 ? 0.0 : step % 4 == 1 ? -0.0 : (random.nextDouble() - 0.5) * 0.8;
++						double dy = step % 3 == 0 ? -0.0 : step % 3 == 1 ? -0.4 : 0.25;
++						double dz = step % 2 == 0 ? 0.0 : (random.nextDouble() - 0.5) * 0.8;
++						config.scalarParticleEntityQuery = false; a.move(dx, dy, dz);
++						config.scalarParticleEntityQuery = true; b.move(dx, dy, dz);
++						check(ParticleBoxes.same(a.getShape(), b.getShape()), "movement shape");
++						for (Field field : fields) {
++							Object av = field.get(a), bv = field.get(b);
++							boolean equal = av instanceof Double ad ? Double.doubleToRawLongBits(ad) == Double.doubleToRawLongBits((Double) bv)
++								: av instanceof Float af ? Float.floatToRawIntBits(af) == Float.floatToRawIntBits((Float) bv) : av.equals(bv);
++							check(equal, "movement field " + field.getName() + " scenario=" + scenario + " trial=" + trial + " step=" + step + ": " + av + " vs " + bv);
++						}
++						check(a.trace.equals(b.trace), "callback/intermediate shape order");
++						pairs++;
++					}
++				}
++				if (scenario == 3) { world.removeEntityNow(boat); boat = null; }
++			}
++		} catch (ReflectiveOperationException | InterruptedException ex) {
++			throw new IllegalStateException("Particle entity query diagnostic failed", ex);
++		} finally {
++			if (boat != null) { world.removeEntityNow(boat); }
++			for (int i = cells.size() - 1; i >= 0; i--) { world.setBlockState(cells.get(i), states.get(i), 2); }
++			border.setCenter(bx, bz); border.setSize(size);
++			config.scalarParticleEntityQuery = original; config.verifyScalarParticleEntityQuery = verify;
++		}
++		Alacer.LOGGER.info("Particle entity query probes: {} direct checks, {} movement pairs matched, {} boat collision checks", direct, pairs, boatHits);
++	}
++
++	/** Positive multi-entity results, duplicate parts, exclude ordering and virtual shape calls. */
++	private static int entityFixtures(World world, double x, double y, double z) {
++		AlacerConfig config = Alacer.get().config();
++		boolean verify = config.verifyScalarParticleEntityQuery;
++		List<String> calls = new ArrayList<>();
++		RecordingBoat first = new RecordingBoat(world, x, y, z, "first", calls);
++		RecordingBoat second = new RecordingBoat(world, x + .1, y, z, "second", calls);
++		Probe exclude = new Probe(world, x, y, z), part = new Probe(world, x, y, z);
++		first.parts = new Entity[]{part, exclude, part};
++		Box[] seenQuery = new Box[1];
++		first.setShape(recordingShape(first.getShape(), calls, seenQuery));
++		second.setShape(recordingShape(second.getShape(), calls, seenQuery));
++
++		try {
++			check(world.addEntity(first), "parts fixture insertion");
++			check(world.addEntity(second), "shape fixture insertion");
++			check(world.addEntity(exclude), "exclude fixture insertion");
++			config.verifyScalarParticleEntityQuery = false;
++			for (int i = 0; i < 4; i++) {
++				Box query = new Box(x - .2 + i * .05, y - .2, z - .2, x + .2, y + .2, z + .2);
++				config.scalarParticleEntityQuery = true;
++				Box grown = ParticleEntityQuery.grow(world, exclude, query, .25, .25, .25);
++				check(grown == query, "fixture scalar enabled");
++				// The identity carries the decision across even a toggle at the adjacent boundary.
++				config.scalarParticleEntityQuery = false;
++				calls.clear(); seenQuery[0] = null;
++				List<Entity> actual = ParticleEntityQuery.entities(world, exclude, grown, query);
++				List<String> actualCalls = new ArrayList<>(calls);
++				calls.clear(); seenQuery[0] = null;
++				List<Entity> expected = world.getEntities(exclude, query.grown(.25, .25, .25));
++				check(actualCalls.equals(calls), "entity/parts/virtual shape callback order");
++				check(actual.size() == expected.size() && actual.size() == 4, "positive duplicate-part list size");
++				for (int j = 0; j < actual.size(); j++) { check(actual.get(j) == expected.get(j), "positive identity/order"); }
++				check(actual.get(0) == first && actual.get(1) == part && actual.get(2) == part && actual.get(3) == second,
++					"expected insertion/parts order");
++			}
++		} finally {
++			world.removeEntityNow(exclude); world.removeEntityNow(second); world.removeEntityNow(first);
++			config.verifyScalarParticleEntityQuery = verify; config.scalarParticleEntityQuery = true;
++		}
++		return 4;
++	}
++
++	private static Box recordingShape(Box base, List<String> calls, Box[] seen) {
++		return new Box(base.minX, base.minY, base.minZ, base.maxX, base.maxY, base.maxZ) {
++			@Override public boolean intersects(Box other) {
++				if (seen[0] == null) { seen[0] = other; }
++				else { check(seen[0] == other, "shared query Box identity across virtual fallbacks"); }
++				calls.add("virtual:" + Double.doubleToRawLongBits(other.minX) + ":" + Double.doubleToRawLongBits(other.maxY));
++				return super.intersects(other);
++			}
++		};
++	}
++
++	private static final class RecordingBoat extends BoatEntity {
++		private final String name;
++		private final List<String> calls;
++		private Entity[] parts;
++		RecordingBoat(World world, double x, double y, double z, String name, List<String> calls) {
++			super(world, x, y, z); this.name = name; this.calls = calls;
++		}
++		@Override public Box getShape() {
++			if (this.calls != null) { this.calls.add("shape:" + this.name); }
++			return super.getShape();
++		}
++		@Override public Entity[] getParts() {
++			if (this.calls != null) { this.calls.add("parts:" + this.name); }
++			return this.parts;
++		}
++	}
++
++	private static void check(boolean passed, String what) {
++		if (!passed) { throw new IllegalStateException("Particle entity query mismatch: " + what); }
++	}
++
++	private static final class Probe extends Particle {
++		private final List<String> trace = new ArrayList<>();
++		Probe(World world, double x, double y, double z) { super(world, x, y, z); }
++		void cobweb(boolean value) { this.inCobweb = value; }
++		void resetTrace() { this.random.setSeed(19); this.trace.clear(); }
++		@Override public void setShape(Box box) {
++			if (this.trace != null) {
++				this.trace.add("shape:" + Long.toHexString(Double.doubleToRawLongBits(box.minX)) + ":"
++					+ Long.toHexString(Double.doubleToRawLongBits(box.minY)) + ":" + Long.toHexString(Double.doubleToRawLongBits(box.minZ)) + ":"
++					+ Long.toHexString(Double.doubleToRawLongBits(box.maxX)) + ":" + Long.toHexString(Double.doubleToRawLongBits(box.maxY)) + ":"
++					+ Long.toHexString(Double.doubleToRawLongBits(box.maxZ)));
++			}
++			super.setShape(box);
++		}
++		@Override protected void checkFallDamage(double dy, boolean grounded, Block block, BlockPos pos) {
++			this.trace.add("fall:" + Long.toHexString(Double.doubleToRawLongBits(dy)) + ":" + grounded + ":" + block + ":" + pos);
++			super.checkFallDamage(dy, grounded, block, pos);
++		}
++		@Override protected void checkBlockCollisions() {
++			this.trace.add("blocks:begin"); super.checkBlockCollisions(); this.trace.add("blocks:end");
++		}
++	}
++}
+--- a/src/main/java/net/adiont/alacer/config/AlacerConfig.java
++++ b/src/main/java/net/adiont/alacer/config/AlacerConfig.java
+@@ -94,6 +94,10 @@
+ 	public volatile boolean reuseParticleBoxes;
+ 	/** Compare every eligible Box operation with vanilla, returning the candidate value. */
+ 	public volatile boolean verifyReuseParticleBoxes;
++	/** Experimental scalar nearby-entity query bounds; independent from movement/Box reuse. */
++	public volatile boolean scalarParticleEntityQuery;
++	/** Compare scalar bounds and ordered entity lists, returning the candidate. */
++	public volatile boolean verifyScalarParticleEntityQuery;
+ 
+ 	/** Batch vanilla model-part face draws inside an alternate display list. Runtime-toggleable. */
+ 	public volatile boolean batchModelLists;
+@@ -171,6 +175,10 @@
+ 			"Experimental: reuse immutable zero-offset particle movement boxes with bit-exact safe coordinates. Off by default.");
+ 		this.verifyReuseParticleBoxes = bool(file, system, "render.reuseParticleBoxes.verify", false,
+ 			"Debug: compare particle movement Box coordinates against vanilla using raw double bits.");
++		this.scalarParticleEntityQuery = bool(file, system, "render.scalarParticleEntityQuery", false,
++			"Experimental: scalar particle collision nearby-entity query bounds. Off by default.");
++		this.verifyScalarParticleEntityQuery = bool(file, system, "render.scalarParticleEntityQuery.verify", false,
++			"Debug: compare scalar bounds and ordered entity query results with vanilla.");
+ 		this.batchModelLists = bool(file, system, "render.batchModelLists", false,
+ 			"Combine vanilla model-part face uploads in an alternate display list; experimental, off by default.");
+ 		this.verifyBatchModelLists = bool(file, system, "render.batchModelLists.verify", false,
+@@ -239,6 +247,7 @@
+ 				this.fastParticleRemoval = value;
+ 				this.fastParticleMovement = false;
+ 				this.reuseParticleBoxes = false;
++				this.scalarParticleEntityQuery = false;
+ 				this.skipZeroTranslates = false;
+ 				this.batchModelLists = false;
+ 				break;
+@@ -277,6 +286,9 @@
+ 				break;
+ 			case "render.fastParticleMovement":
+ 				this.fastParticleMovement = value;
++				break;
++			case "render.scalarParticleEntityQuery":
++				this.scalarParticleEntityQuery = value;
+ 				break;
+ 			case "render.reuseParticleBoxes":
+ 				this.reuseParticleBoxes = value;
+@@ -321,6 +333,8 @@
+ 		values.put("render.fastParticleRemoval.verify", String.valueOf(this.verifyFastParticleRemoval));
+ 		values.put("render.fastParticleMovement", String.valueOf(this.fastParticleMovement));
+ 		values.put("render.fastParticleMovement.verify", String.valueOf(this.verifyFastParticleMovement));
++		values.put("render.scalarParticleEntityQuery", String.valueOf(this.scalarParticleEntityQuery));
++		values.put("render.scalarParticleEntityQuery.verify", String.valueOf(this.verifyScalarParticleEntityQuery));
+ 		values.put("render.reuseParticleBoxes", String.valueOf(this.reuseParticleBoxes));
+ 		values.put("render.reuseParticleBoxes.verify", String.valueOf(this.verifyReuseParticleBoxes));
+ 		values.put("render.batchModelLists", String.valueOf(this.batchModelLists));
+--- a/src/main/java/net/adiont/alacer/config/AlacerMixinPlugin.java
++++ b/src/main/java/net/adiont/alacer/config/AlacerMixinPlugin.java
+@@ -38,6 +38,7 @@
+ 	private boolean particleDetail;
+ 	private boolean particleMovement;
+ 	private boolean particleBoxes;
++	private boolean particleEntityQuery;
+ 
+ 	@Override
+ 	public void onLoad(String mixinPackage) {
+@@ -58,6 +59,12 @@
+ 		this.particleDetail = particleDetailEnabled(file);
+ 		this.particleMovement = particleMovementEnabled(file);
+ 		this.particleBoxes = particleBoxesEnabled(file);
++		this.particleEntityQuery = particleEntityQueryEnabled(file);
++	}
++
++	static boolean particleEntityQueryEnabled(Properties file) {
++		return flag(file, "render.scalarParticleEntityQuery", false) || flag(file, "render.scalarParticleEntityQuery.verify", false)
++			|| "render.scalarParticleEntityQuery".equals(System.getProperty("alacer.benchmark.toggle", "").trim());
+ 	}
+ 
+ 	static boolean particleBoxesEnabled(Properties file) {
+@@ -105,6 +112,7 @@
+ 	@Override
+ 	public boolean shouldApplyMixin(String targetClassName, String mixinClassName) {
+ 		String name = mixinClassName.substring(mixinClassName.lastIndexOf('.') + 1);
++		if (name.equals("ParticleEntityQueryMixin")) { return this.particleEntityQuery; }
+ 		if (name.equals("EntityParticleBoxMixin")) { return this.particleBoxes; }
+ 		if (name.equals("EntityParticleMovementMixin") || name.equals("ParticleCollisionMixin")) {
+ 			return this.particleMovement;
+--- a/src/main/java/net/adiont/alacer/mixin/ParticleEntityQueryMixin.java
++++ b/src/main/java/net/adiont/alacer/mixin/ParticleEntityQueryMixin.java
+@@ -0,0 +1,28 @@
++package net.adiont.alacer.mixin;
++
++import java.util.List;
++import org.spongepowered.asm.mixin.Mixin;
++import org.spongepowered.asm.mixin.gen.Invoker;
++import org.spongepowered.asm.mixin.injection.At;
++import org.spongepowered.asm.mixin.injection.Redirect;
++import net.adiont.alacer.render.ParticleEntityQuery;
++import net.minecraft.entity.Entity;
++import net.minecraft.util.math.Box;
++import net.minecraft.world.World;
++
++/** Two adjacent call sites; the original input identity carries the scalar-query decision. */
++@Mixin(World.class)
++public abstract class ParticleEntityQueryMixin implements ParticleEntityQuery.LoadedCheck {
++	@Override @Invoker("isChunkLoadedAt")
++	public abstract boolean alacer$isQueryChunkLoaded(int x, int z, boolean allowEmpty);
++
++	@Redirect(method = "getCollisions", at = @At(value = "INVOKE", target = "Lnet/minecraft/util/math/Box;grown(DDD)Lnet/minecraft/util/math/Box;"))
++	private Box alacer$grow(Box box, double dx, double dy, double dz, Entity entity, Box shape) {
++		return ParticleEntityQuery.grow((World) (Object) this, entity, box, dx, dy, dz);
++	}
++
++	@Redirect(method = "getCollisions", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/World;getEntities(Lnet/minecraft/entity/Entity;Lnet/minecraft/util/math/Box;)Ljava/util/List;"))
++	private List<Entity> alacer$query(World world, Entity entity, Box bounds, Entity caller, Box shape) {
++		return ParticleEntityQuery.entities(world, entity, bounds, shape);
++	}
++}
+--- a/src/main/java/net/adiont/alacer/render/ParticleEntityQuery.java
++++ b/src/main/java/net/adiont/alacer/render/ParticleEntityQuery.java
+@@ -0,0 +1,135 @@
++package net.adiont.alacer.render;
++
++import java.util.ArrayList;
++import java.util.List;
++
++import net.adiont.alacer.Alacer;
++import net.minecraft.client.entity.particle.Particle;
++import net.minecraft.client.world.ClientWorld;
++import net.minecraft.entity.Entity;
++import net.minecraft.entity.EntityFilter;
++import net.minecraft.util.TypeInstanceMultiMap;
++import net.minecraft.util.math.Box;
++import net.minecraft.util.math.MathHelper;
++import net.minecraft.world.World;
++import net.minecraft.world.chunk.WorldChunk;
++
++/** Disabled experiment: scalar bounds for just getCollisions' nearby-entity query. */
++public final class ParticleEntityQuery {
++
++	/** Implemented by the startup-gated World mixin; calls the original virtual loaded check. */
++	public interface LoadedCheck { boolean alacer$isQueryChunkLoaded(int x, int z, boolean allowEmpty); }
++
++	private static Thread owner;
++	private static long compared, mismatches, scalarQueries, chunkFallbacks, shapeFallbacks;
++	private ParticleEntityQuery() { }
++	public static void init() { owner = Thread.currentThread(); }
++
++	public static boolean eligible(Entity entity, Box box) {
++		return Alacer.get().config().scalarParticleEntityQuery && entity instanceof Particle
++			&& entity.world.getClass() == ClientWorld.class && Thread.currentThread() == owner
++			&& box.getClass() == Box.class && safe(box);
++	}
++
++	private static boolean safe(Box box) {
++		return bounded(box.minX, box.maxX) && bounded(box.minY, box.maxY) && bounded(box.minZ, box.maxZ);
++	}
++
++	private static boolean bounded(double min, double max) {
++		// Also excludes NaN/infinity; growing by .25 cannot overflow inside these bounds.
++		return min >= -30000000 && max <= 30000000 && min <= max;
++	}
++
++	/** Only the following redirect consumes the returned identity; no Box is mutated. */
++	public static Box grow(World world, Entity entity, Box box, double dx, double dy, double dz) {
++		return dx == 0.25 && dy == 0.25 && dz == 0.25 && eligible(entity, box) && world == entity.world ? box : box.grown(dx, dy, dz);
++	}
++
++	/** Identity records the preceding pure grown call's decision, even if the toggle changes. */
++	public static List<Entity> entities(World world, Entity exclude, Box bounds, Box original) {
++		if (bounds != original || bounds.getClass() != Box.class) { return world.getEntities(exclude, bounds); }
++		return scalar(world, exclude, original);
++	}
++
++	private static List<Entity> scalar(World world, Entity exclude, Box box) {
++		double x1 = box.minX - 0.25, y1 = box.minY - 0.25, z1 = box.minZ - 0.25;
++		double x2 = box.maxX + 0.25, y2 = box.maxY + 0.25, z2 = box.maxZ + 0.25;
++		double minX = Math.min(x1, x2), minY = Math.min(y1, y2), minZ = Math.min(z1, z2);
++		double maxX = Math.max(x1, x2), maxY = Math.max(y1, y2), maxZ = Math.max(z1, z2);
++		List<Entity> result = new ArrayList<>();
++		// Vanilla shares one immutable grown Box across every virtual query call. Materialize
++		// it only on demand, but preserve that same identity for all fallbacks in this query.
++		Box virtualBounds = null;
++		int firstX = MathHelper.floor((minX - 2.0) / 16.0), lastX = MathHelper.floor((maxX + 2.0) / 16.0);
++		int firstZ = MathHelper.floor((minZ - 2.0) / 16.0), lastZ = MathHelper.floor((maxZ + 2.0) / 16.0);
++		for (int x = firstX; x <= lastX; x++) {
++			for (int z = firstZ; z <= lastZ; z++) {
++				if (!((LoadedCheck) world).alacer$isQueryChunkLoaded(x, z, true)) { continue; }
++				WorldChunk chunk = world.getChunkAt(x, z);
++				if (chunk.getClass() != WorldChunk.class) {
++					if (virtualBounds == null) { virtualBounds = new Box(minX, minY, minZ, maxX, maxY, maxZ); }
++					chunk.getEntities(exclude, virtualBounds, result, EntityFilter.NOT_SPECTATOR);
++					if (Alacer.get().config().verifyScalarParticleEntityQuery) { chunkFallbacks++; }
++					continue;
++				}
++				TypeInstanceMultiMap<Entity>[] sections = chunk.getEntities();
++				int firstY = MathHelper.clamp(MathHelper.floor((minY - 2.0) / 16.0), 0, sections.length - 1);
++				int lastY = MathHelper.clamp(MathHelper.floor((maxY + 2.0) / 16.0), 0, sections.length - 1);
++				for (int y = firstY; y <= lastY; y++) {
++					if (sections[y].isEmpty()) { continue; }
++					for (Entity entity : sections[y]) {
++						// Keep getShape/intersects before exclude, and getParts inside the outer hit.
++						Box entityShape = entity.getShape();
++						if (entityShape.getClass() != Box.class && virtualBounds == null) {
++							virtualBounds = new Box(minX, minY, minZ, maxX, maxY, maxZ);
++						}
++						if (intersects(entityShape, minX, minY, minZ, maxX, maxY, maxZ, virtualBounds) && entity != exclude) {
++							if (EntityFilter.NOT_SPECTATOR.apply(entity)) { result.add(entity); }
++							Entity[] parts = entity.getParts();
++							if (parts != null) {
++								for (Entity part : parts) {
++									if (part == exclude) { continue; }
++									Box partShape = part.getShape();
++									if (partShape.getClass() != Box.class && virtualBounds == null) {
++										virtualBounds = new Box(minX, minY, minZ, maxX, maxY, maxZ);
++									}
++									if (intersects(partShape, minX, minY, minZ, maxX, maxY, maxZ, virtualBounds)
++										&& EntityFilter.NOT_SPECTATOR.apply(part)) { result.add(part); }
++								}
++							}
++						}
++					}
++				}
++			}
++		}
++		if (Alacer.get().config().verifyScalarParticleEntityQuery) {
++			scalarQueries++;
++			Box expectedBounds = box.grown(0.25, 0.25, 0.25);
++			check(ParticleBoxes.same(new Box(minX, minY, minZ, maxX, maxY, maxZ), expectedBounds), "bounds");
++			List<Entity> expected = world.getEntities(exclude, expectedBounds);
++			check(result.size() == expected.size(), "list size");
++			for (int i = 0; i < result.size(); i++) { check(result.get(i) == expected.get(i), "list identity/order"); }
++			compared++;
++		}
++		return result;
++	}
++
++	private static boolean intersects(Box box, double minX, double minY, double minZ, double maxX, double maxY, double maxZ, Box virtualBounds) {
++		if (box.getClass() != Box.class) {
++			if (Alacer.get().config().verifyScalarParticleEntityQuery) { shapeFallbacks++; }
++			return box.intersects(virtualBounds);
++		}
++		// Receiver/argument orientation and short-circuit order match Box.intersects exactly.
++		if (maxX <= box.minX || minX >= box.maxX) { return false; }
++		return maxY <= box.minY || minY >= box.maxY ? false : !(maxZ <= box.minZ) && !(minZ >= box.maxZ);
++	}
++
++	private static void check(boolean matches, String what) {
++		if (!matches) { mismatches++; throw new IllegalStateException("Particle entity query mismatch: " + what); }
++	}
++
++	public static String verificationSummary() {
++		return compared + " compared, " + mismatches + " mismatched, " + scalarQueries + " scalar queries, "
++			+ chunkFallbacks + " chunk fallbacks, " + shapeFallbacks + " shape fallbacks";
++	}
++}
+--- a/src/main/resources/alacer.mixins.json
++++ b/src/main/resources/alacer.mixins.json
+@@ -47,6 +47,7 @@
+     "ParticleDetailMixin",
+     "ParticleRemovalMixin",
+     "ParticleCollisionMixin",
++    "ParticleEntityQueryMixin",
+     "RenderChunkMixin",
+     "RenderChunkStorageAccessor",
+     "WorldRendererAccessor",
+--- a/src/test/java/net/adiont/alacer/config/AlacerConfigTest.java
++++ b/src/test/java/net/adiont/alacer/config/AlacerConfigTest.java
+@@ -124,6 +124,8 @@
+ 		assertFalse(config.verifyFastParticleRemoval);
+ 		assertFalse(config.reuseParticleBoxes);
+ 		assertFalse(config.verifyReuseParticleBoxes);
++		assertFalse(config.scalarParticleEntityQuery);
++		assertFalse(config.verifyScalarParticleEntityQuery);
+ 	}
+ 
+ 	@Test
+@@ -160,6 +162,9 @@
+ 		config.setToggle("render.fastParticleRemoval", false);
+ 		assertFalse(config.fastParticleRemoval);
+ 		config.setToggle("render.fastParticleMovement", true);
++		config.setToggle("render.scalarParticleEntityQuery", true);
++		assertTrue(config.scalarParticleEntityQuery);
++		assertThrows(IllegalArgumentException.class, () -> config.setToggle("render.scalarParticleEntityQuery.verify", true));
+ 		config.setToggle("render.reuseParticleBoxes", true);
+ 		assertTrue(config.reuseParticleBoxes);
+ 		assertThrows(IllegalArgumentException.class, () -> config.setToggle("render.reuseParticleBoxes.verify", true));
+@@ -182,6 +187,7 @@
+ 		config.skipZeroTranslates = true;
+ 		config.fastParticleMovement = true;
+ 		config.reuseParticleBoxes = true;
++		config.scalarParticleEntityQuery = true;
+ 		for (boolean enabled : new boolean[]{false, true, false, true}) {
+ 			config.setToggle("render.defaults", enabled);
+ 			for (java.util.Map.Entry<String, String> option : config.describe().entrySet()) {
+--- a/src/test/java/net/adiont/alacer/config/AlacerMixinPluginTest.java
++++ b/src/test/java/net/adiont/alacer/config/AlacerMixinPluginTest.java
+@@ -8,6 +8,31 @@
+ import org.junit.jupiter.api.Test;
+ 
+ class AlacerMixinPluginTest {
++
++	@Test
++	void scalarEntityQueryStartupIsIndependentAndBenchmarkIgnoresFile() throws Exception {
++		Properties file = new Properties();
++		assertFalse(AlacerMixinPlugin.particleEntityQueryEnabled(file));
++		file.setProperty("render.scalarParticleEntityQuery.verify", "true");
++		assertTrue(AlacerMixinPlugin.particleEntityQueryEnabled(file));
++		try {
++			System.setProperty("alacer.benchmark", "true");
++			assertFalse(AlacerMixinPlugin.particleEntityQueryEnabled(file));
++			System.setProperty("alacer.benchmark.toggle", " render.scalarParticleEntityQuery ");
++			assertTrue(AlacerMixinPlugin.particleEntityQueryEnabled(file));
++			assertFalse(AlacerMixinPlugin.particleBoxesEnabled(file));
++			assertFalse(AlacerMixinPlugin.particleMovementEnabled(file));
++		} finally {
++			System.clearProperty("alacer.benchmark"); System.clearProperty("alacer.benchmark.toggle");
++		}
++		AlacerMixinPlugin plugin = new AlacerMixinPlugin();
++		assertFalse(plugin.shouldApplyMixin("unused", "net.adiont.alacer.mixin.ParticleEntityQueryMixin"));
++		java.lang.reflect.Field field = AlacerMixinPlugin.class.getDeclaredField("particleEntityQuery");
++		field.setAccessible(true); field.setBoolean(plugin, true);
++		assertTrue(plugin.shouldApplyMixin("unused", "net.adiont.alacer.mixin.ParticleEntityQueryMixin"));
++		assertFalse(plugin.shouldApplyMixin("unused", "net.adiont.alacer.mixin.EntityParticleBoxMixin"));
++		assertFalse(plugin.shouldApplyMixin("unused", "net.adiont.alacer.mixin.ParticleCollisionMixin"));
++	}
+ 
+ 	@Test
+ 	void boxExperimentIsSeparateAndStartupGated() {

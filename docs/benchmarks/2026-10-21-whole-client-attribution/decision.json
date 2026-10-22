@@ -1,0 +1,807 @@
+{
+  "rule": "protocol.md selection rule: share (10% in two counted scenes incl. a non-reference one, or 20% in one non-reference scene; counted = every combination >= 5% and >= 300 samples, not driver-bound), CSV corroboration, exact removable set, not closed",
+  "regions_and_aggregates_meeting_share_or_tail_rule": {
+    "agg:entities_all": {
+      "scenes_at_10": [
+        "d0",
+        "d200",
+        "terrain",
+        "particles"
+      ],
+      "scenes_at_20": [
+        "d200"
+      ],
+      "tail_scenes_at_20": [
+        "d0",
+        "d200",
+        "terrain"
+      ],
+      "meets_share_or_tail_rule": true,
+      "csv_group": null,
+      "csv_disagreement_scenes": []
+    },
+    "agg:render_pass": {
+      "scenes_at_10": [
+        "d0",
+        "d200",
+        "terrain",
+        "particles"
+      ],
+      "scenes_at_20": [
+        "d0",
+        "d200",
+        "terrain"
+      ],
+      "tail_scenes_at_20": [
+        "d0",
+        "d200",
+        "terrain"
+      ],
+      "meets_share_or_tail_rule": true,
+      "csv_group": null,
+      "csv_disagreement_scenes": []
+    },
+    "agg:terrain_all": {
+      "scenes_at_10": [
+        "d0",
+        "d200",
+        "terrain",
+        "particles"
+      ],
+      "scenes_at_20": [
+        "d0",
+        "d200",
+        "terrain"
+      ],
+      "tail_scenes_at_20": [
+        "d0",
+        "d200",
+        "terrain"
+      ],
+      "meets_share_or_tail_rule": true,
+      "csv_group": null,
+      "csv_disagreement_scenes": []
+    },
+    "agg:terrain_layers": {
+      "scenes_at_10": [
+        "d0",
+        "d200",
+        "terrain"
+      ],
+      "scenes_at_20": [],
+      "tail_scenes_at_20": [],
+      "meets_share_or_tail_rule": true,
+      "csv_group": null,
+      "csv_disagreement_scenes": []
+    },
+    "agg:tick": {
+      "scenes_at_10": [],
+      "scenes_at_20": [],
+      "tail_scenes_at_20": [
+        "d200"
+      ],
+      "meets_share_or_tail_rule": true,
+      "csv_group": null,
+      "csv_disagreement_scenes": []
+    },
+    "agg:world_render": {
+      "scenes_at_10": [
+        "d0",
+        "d200",
+        "terrain",
+        "particles"
+      ],
+      "scenes_at_20": [
+        "d0",
+        "d200",
+        "terrain"
+      ],
+      "tail_scenes_at_20": [
+        "d0",
+        "d200",
+        "terrain"
+      ],
+      "meets_share_or_tail_rule": true,
+      "csv_group": null,
+      "csv_disagreement_scenes": []
+    },
+    "entities.loop.global": {
+      "scenes_at_10": [
+        "d200",
+        "terrain"
+      ],
+      "scenes_at_20": [],
+      "tail_scenes_at_20": [],
+      "meets_share_or_tail_rule": true,
+      "csv_group": "entities.global",
+      "csv_disagreement_scenes": [
+        "d0",
+        "d200",
+        "particles",
+        "terrain"
+      ]
+    },
+    "terrain_setup": {
+      "scenes_at_10": [
+        "d0",
+        "terrain"
+      ],
+      "scenes_at_20": [
+        "d0",
+        "terrain"
+      ],
+      "tail_scenes_at_20": [
+        "d0",
+        "d200",
+        "terrain"
+      ],
+      "meets_share_or_tail_rule": true,
+      "csv_group": "terrain_setup",
+      "csv_disagreement_scenes": []
+    }
+  },
+  "sets": {
+    "visibility_search_whole": {
+      "per_launch_phase_percent": {
+        "wc26-d0-r1/static": 0.2,
+        "wc26-d0-r1/pan": 55.7,
+        "wc26-d0-r1/fly": 52.78,
+        "wc26-d0-r2/static": 0.3,
+        "wc26-d0-r2/pan": 56.87,
+        "wc26-d0-r2/fly": 52.5,
+        "wc26-d200-r1/static": 0.06,
+        "wc26-d200-r1/pan": 38.07,
+        "wc26-d200-r1/fly": 53.38,
+        "wc26-d200-r2/static": 0.13,
+        "wc26-d200-r2/pan": 38.96,
+        "wc26-d200-r2/fly": 52.57,
+        "wc26-particles-r1/static": 0.18,
+        "wc26-particles-r1/pan": 25.55,
+        "wc26-particles-r2/static": 0.03,
+        "wc26-particles-r2/pan": 24.97,
+        "wc26-terrain-r1/steady": 0.21,
+        "wc26-terrain-r1/pan": 55.35,
+        "wc26-terrain-r1/sort": 55.21,
+        "wc26-terrain-r1/fly": 52.16,
+        "wc26-terrain-r2/steady": 0.12,
+        "wc26-terrain-r2/pan": 56.51,
+        "wc26-terrain-r2/sort": 58.0,
+        "wc26-terrain-r2/fly": 53.37
+      },
+      "per_scene": {
+        "d0": {
+          "median_percent": 52.640752950703124,
+          "min_percent": 0.1998546511627907,
+          "max_percent": 56.8737908273586,
+          "min_samples": 11,
+          "counted": false
+        },
+        "d200": {
+          "median_percent": 38.51846276378237,
+          "min_percent": 0.06077549532028686,
+          "max_percent": 53.38417540514776,
+          "min_samples": 5,
+          "counted": false
+        },
+        "terrain": {
+          "median_percent": 54.293973700828715,
+          "min_percent": 0.11906786868515054,
+          "max_percent": 58.0009553379508,
+          "min_samples": 7,
+          "counted": false
+        },
+        "particles": {
+          "median_percent": 12.572826653126354,
+          "min_percent": 0.0315000315000315,
+          "max_percent": 25.54994111165989,
+          "min_samples": 5,
+          "counted": false
+        }
+      },
+      "scenes_at_10": [],
+      "scenes_at_20": [],
+      "slow99": {
+        "d0": {
+          "pooled_slow99_share_percent": 33.25769854132901,
+          "pooled_samples": 1026
+        },
+        "d200": {
+          "pooled_slow99_share_percent": 25.193325193325194,
+          "pooled_samples": 619
+        },
+        "terrain": {
+          "pooled_slow99_share_percent": 37.639474336722046,
+          "pooled_samples": 1518
+        }
+      },
+      "tail_scenes_at_20": [
+        "d0",
+        "d200",
+        "terrain"
+      ],
+      "meets_share_rule": true,
+      "csv_disagreement_in_counted_scenes": [],
+      "eligible": false,
+      "exactness": "optimization 1 already replaces the search and runs it only when the view changed, as vanilla does; its list depends on camera position, frustum and every visited chunk's compiled occlusion data, so no exact transformation removes the per-chunk work (incremental or less frequent searches change the result)",
+      "exact": false,
+      "closed": null
+    },
+    "render_chunk_set_frame": {
+      "per_launch_phase_percent": {
+        "wc26-d0-r1/static": 0.0,
+        "wc26-d0-r1/pan": 10.34,
+        "wc26-d0-r1/fly": 9.14,
+        "wc26-d0-r2/static": 0.02,
+        "wc26-d0-r2/pan": 10.74,
+        "wc26-d0-r2/fly": 8.92,
+        "wc26-d200-r1/static": 0.0,
+        "wc26-d200-r1/pan": 7.77,
+        "wc26-d200-r1/fly": 9.71,
+        "wc26-d200-r2/static": 0.0,
+        "wc26-d200-r2/pan": 8.03,
+        "wc26-d200-r2/fly": 9.28,
+        "wc26-particles-r1/static": 0.01,
+        "wc26-particles-r1/pan": 4.84,
+        "wc26-particles-r2/static": 0.0,
+        "wc26-particles-r2/pan": 4.71,
+        "wc26-terrain-r1/steady": 0.02,
+        "wc26-terrain-r1/pan": 11.06,
+        "wc26-terrain-r1/sort": 10.55,
+        "wc26-terrain-r1/fly": 8.44,
+        "wc26-terrain-r2/steady": 0.02,
+        "wc26-terrain-r2/pan": 10.97,
+        "wc26-terrain-r2/sort": 10.78,
+        "wc26-terrain-r2/fly": 9.01
+      },
+      "per_scene": {
+        "d0": {
+          "median_percent": 9.030138189350323,
+          "min_percent": 0.0,
+          "max_percent": 10.743143279845226,
+          "min_samples": 0,
+          "counted": false
+        },
+        "d200": {
+          "median_percent": 7.898622044141443,
+          "min_percent": 0.0,
+          "max_percent": 9.706723490158694,
+          "min_samples": 0,
+          "counted": false
+        },
+        "terrain": {
+          "median_percent": 9.782661500055319,
+          "min_percent": 0.017009695526450076,
+          "max_percent": 11.06484235574063,
+          "min_samples": 1,
+          "counted": false
+        },
+        "particles": {
+          "median_percent": 2.3587511221108635,
+          "min_percent": 0.0,
+          "max_percent": 4.844040879905779,
+          "min_samples": 0,
+          "counted": false
+        }
+      },
+      "scenes_at_10": [],
+      "scenes_at_20": [],
+      "slow99": {
+        "d0": {
+          "pooled_slow99_share_percent": 6.774716369529984,
+          "pooled_samples": 209
+        },
+        "d200": {
+          "pooled_slow99_share_percent": 4.924704924704924,
+          "pooled_samples": 121
+        },
+        "terrain": {
+          "pooled_slow99_share_percent": 6.992313414331763,
+          "pooled_samples": 282
+        }
+      },
+      "tail_scenes_at_20": [],
+      "meets_share_rule": false,
+      "csv_disagreement_in_counted_scenes": [],
+      "eligible": false,
+      "exactness": "RenderChunk.frame is read only by setFrame inside vanilla's own search, which optimization 1 skips, so skipping the stamp keeps vanilla's outputs; but it drops a vanilla state write other code may read, and setFrame is the first touch of each RenderChunk, whose cache miss would move to the following getCompiledChunk/bounds reads (sessions 21 and 25): its samples need not disappear",
+      "exact": false,
+      "closed": null
+    },
+    "visibility_set_and_frustum_lookups": {
+      "per_launch_phase_percent": {
+        "wc26-d0-r1/static": 0.0,
+        "wc26-d0-r1/pan": 13.97,
+        "wc26-d0-r1/fly": 14.3,
+        "wc26-d0-r2/static": 0.0,
+        "wc26-d0-r2/pan": 14.44,
+        "wc26-d0-r2/fly": 13.92,
+        "wc26-d200-r1/static": 0.01,
+        "wc26-d200-r1/pan": 9.04,
+        "wc26-d200-r1/fly": 14.14,
+        "wc26-d200-r2/static": 0.01,
+        "wc26-d200-r2/pan": 9.28,
+        "wc26-d200-r2/fly": 14.12,
+        "wc26-particles-r1/static": 0.03,
+        "wc26-particles-r1/pan": 6.49,
+        "wc26-particles-r2/static": 0.0,
+        "wc26-particles-r2/pan": 6.4,
+        "wc26-terrain-r1/steady": 0.0,
+        "wc26-terrain-r1/pan": 13.21,
+        "wc26-terrain-r1/sort": 13.96,
+        "wc26-terrain-r1/fly": 14.17,
+        "wc26-terrain-r2/steady": 0.0,
+        "wc26-terrain-r2/pan": 13.46,
+        "wc26-terrain-r2/sort": 15.39,
+        "wc26-terrain-r2/fly": 14.31
+      },
+      "per_scene": {
+        "d0": {
+          "median_percent": 13.94276613991297,
+          "min_percent": 0.0,
+          "max_percent": 14.436098782292023,
+          "min_samples": 0,
+          "counted": false
+        },
+        "d200": {
+          "median_percent": 9.16035677282289,
+          "min_percent": 0.012155099064057371,
+          "max_percent": 14.13671283575394,
+          "min_samples": 1,
+          "counted": false
+        },
+        "terrain": {
+          "median_percent": 13.711961998762767,
+          "min_percent": 0.0,
+          "max_percent": 15.386911870074039,
+          "min_samples": 0,
+          "counted": false
+        },
+        "particles": {
+          "median_percent": 3.215839080213753,
+          "min_percent": 0.0,
+          "max_percent": 6.48911515519927,
+          "min_samples": 0,
+          "counted": false
+        }
+      },
+      "scenes_at_10": [],
+      "scenes_at_20": [],
+      "slow99": {
+        "d0": {
+          "pooled_slow99_share_percent": 7.941653160453809,
+          "pooled_samples": 245
+        },
+        "d200": {
+          "pooled_slow99_share_percent": 5.575905575905576,
+          "pooled_samples": 137
+        },
+        "terrain": {
+          "pooled_slow99_share_percent": 9.075130176047606,
+          "pooled_samples": 366
+        }
+      },
+      "tail_scenes_at_20": [],
+      "meets_share_rule": false,
+      "csv_disagreement_in_counted_scenes": [],
+      "eligible": false,
+      "exactness": "both are required reads per visited chunk face; a flat cache of occlusion bits needs the same per-visit reference check, and the frustum test is session 12's closed territory",
+      "exact": false,
+      "closed": "frustum predicate (session 12)"
+    },
+    "terrain_layer_chunk_filter": {
+      "per_launch_phase_percent": {
+        "wc26-d0-r1/static": 18.53,
+        "wc26-d0-r1/pan": 6.95,
+        "wc26-d0-r1/fly": 7.02,
+        "wc26-d0-r2/static": 16.87,
+        "wc26-d0-r2/pan": 6.58,
+        "wc26-d0-r2/fly": 6.46,
+        "wc26-d200-r1/static": 7.97,
+        "wc26-d200-r1/pan": 4.63,
+        "wc26-d200-r1/fly": 7.35,
+        "wc26-d200-r2/static": 8.4,
+        "wc26-d200-r2/pan": 4.49,
+        "wc26-d200-r2/fly": 7.24,
+        "wc26-particles-r1/static": 5.98,
+        "wc26-particles-r1/pan": 3.68,
+        "wc26-particles-r2/static": 5.71,
+        "wc26-particles-r2/pan": 3.82,
+        "wc26-terrain-r1/steady": 15.89,
+        "wc26-terrain-r1/pan": 6.49,
+        "wc26-terrain-r1/sort": 7.41,
+        "wc26-terrain-r1/fly": 7.14,
+        "wc26-terrain-r2/steady": 15.65,
+        "wc26-terrain-r2/pan": 5.99,
+        "wc26-terrain-r2/sort": 6.57,
+        "wc26-terrain-r2/fly": 6.85
+      },
+      "per_scene": {
+        "d0": {
+          "median_percent": 6.987455333304673,
+          "min_percent": 6.456077907953928,
+          "max_percent": 18.531976744186046,
+          "min_samples": 1020,
+          "counted": true
+        },
+        "d200": {
+          "median_percent": 7.293384109329756,
+          "min_percent": 4.494589276930644,
+          "max_percent": 8.39633903700756,
+          "min_samples": 633,
+          "counted": false
+        },
+        "terrain": {
+          "median_percent": 6.993747949995552,
+          "min_percent": 5.986285290665348,
+          "max_percent": 15.886871508379889,
+          "min_samples": 910,
+          "counted": true
+        },
+        "particles": {
+          "median_percent": 4.765550656454241,
+          "min_percent": 3.6814710687283916,
+          "max_percent": 5.983531564501372,
+          "min_samples": 906,
+          "counted": false
+        }
+      },
+      "scenes_at_10": [],
+      "scenes_at_20": [],
+      "slow99": {
+        "d0": {
+          "pooled_slow99_share_percent": 7.9092382495948135,
+          "pooled_samples": 244
+        },
+        "d200": {
+          "pooled_slow99_share_percent": 6.064306064306065,
+          "pooled_samples": 149
+        },
+        "terrain": {
+          "pooled_slow99_share_percent": 6.5955864121001735,
+          "pooled_samples": 266
+        }
+      },
+      "tail_scenes_at_20": [],
+      "meets_share_rule": false,
+      "csv_disagreement_in_counted_scenes": [],
+      "eligible": false,
+      "exactness": "per-layer lists could be reused across frames only while neither the visible list nor any compiled chunk changed; compiled data is replaced by builder threads and uploads between searches, so detecting it needs the same per-chunk, per-layer reads",
+      "exact": false,
+      "closed": null
+    },
+    "entity_draws": {
+      "per_launch_phase_percent": {
+        "wc26-d0-r1/static": 0.0,
+        "wc26-d0-r1/pan": 0.84,
+        "wc26-d0-r1/fly": 1.81,
+        "wc26-d0-r2/static": 0.0,
+        "wc26-d0-r2/pan": 0.57,
+        "wc26-d0-r2/fly": 1.65,
+        "wc26-d200-r1/static": 37.32,
+        "wc26-d200-r1/pan": 26.19,
+        "wc26-d200-r1/fly": 1.59,
+        "wc26-d200-r2/static": 41.64,
+        "wc26-d200-r2/pan": 24.92,
+        "wc26-d200-r2/fly": 1.65,
+        "wc26-particles-r1/static": 0.0,
+        "wc26-particles-r1/pan": 0.37,
+        "wc26-particles-r2/static": 0.0,
+        "wc26-particles-r2/pan": 0.4,
+        "wc26-terrain-r1/steady": 3.98,
+        "wc26-terrain-r1/pan": 1.08,
+        "wc26-terrain-r1/sort": 1.21,
+        "wc26-terrain-r1/fly": 1.91,
+        "wc26-terrain-r2/steady": 3.15,
+        "wc26-terrain-r2/pan": 1.11,
+        "wc26-terrain-r2/sort": 0.71,
+        "wc26-terrain-r2/fly": 1.58
+      },
+      "per_scene": {
+        "d0": {
+          "median_percent": 0.7030299420628553,
+          "min_percent": 0.0,
+          "max_percent": 1.8133304291004138,
+          "min_samples": 0,
+          "counted": false
+        },
+        "d200": {
+          "median_percent": 25.552831150664133,
+          "min_percent": 1.5925531318342399,
+          "max_percent": 41.63682185966309,
+          "min_samples": 284,
+          "counted": false
+        },
+        "terrain": {
+          "median_percent": 1.3953481266856809,
+          "min_percent": 0.7105326009075711,
+          "max_percent": 3.9804469273743015,
+          "min_samples": 119,
+          "counted": false
+        },
+        "particles": {
+          "median_percent": 0.18426351582386688,
+          "min_percent": 0.0,
+          "max_percent": 0.39747132528296175,
+          "min_samples": 0,
+          "counted": false
+        }
+      },
+      "scenes_at_10": [],
+      "scenes_at_20": [],
+      "slow99": {
+        "d0": {
+          "pooled_slow99_share_percent": 2.4959481361426255,
+          "pooled_samples": 77
+        },
+        "d200": {
+          "pooled_slow99_share_percent": 9.36100936100936,
+          "pooled_samples": 230
+        },
+        "terrain": {
+          "pooled_slow99_share_percent": 1.9588395735184727,
+          "pooled_samples": 79
+        }
+      },
+      "tail_scenes_at_20": [],
+      "meets_share_rule": false,
+      "csv_disagreement_in_counted_scenes": [],
+      "eligible": false,
+      "exactness": "spread over every entity renderer, model part, layer and shadow; no single exact change, and its thin parts are closed",
+      "exact": false,
+      "closed": "model lists (9), zero translations, shadows beyond optimization 6 (11)"
+    },
+    "render_entities_attractor": {
+      "per_launch_phase_percent": {
+        "wc26-d0-r1/static": 31.96,
+        "wc26-d0-r1/pan": 16.85,
+        "wc26-d0-r1/fly": 14.08,
+        "wc26-d0-r2/static": 32.47,
+        "wc26-d0-r2/pan": 16.11,
+        "wc26-d0-r2/fly": 14.73,
+        "wc26-d200-r1/static": 23.39,
+        "wc26-d200-r1/pan": 14.59,
+        "wc26-d200-r1/fly": 14.28,
+        "wc26-d200-r2/static": 20.02,
+        "wc26-d200-r2/pan": 15.12,
+        "wc26-d200-r2/fly": 14.34,
+        "wc26-particles-r1/static": 11.09,
+        "wc26-particles-r1/pan": 8.78,
+        "wc26-particles-r2/static": 10.27,
+        "wc26-particles-r2/pan": 8.19,
+        "wc26-terrain-r1/steady": 35.61,
+        "wc26-terrain-r1/pan": 16.15,
+        "wc26-terrain-r1/sort": 16.41,
+        "wc26-terrain-r1/fly": 14.77,
+        "wc26-terrain-r2/steady": 37.23,
+        "wc26-terrain-r2/pan": 16.72,
+        "wc26-terrain-r2/sort": 15.66,
+        "wc26-terrain-r2/fly": 14.41
+      },
+      "per_scene": {
+        "d0": {
+          "median_percent": 16.482572491922248,
+          "min_percent": 14.08189936832934,
+          "max_percent": 32.467959250739405,
+          "min_samples": 1759,
+          "counted": true
+        },
+        "d200": {
+          "median_percent": 14.852642719153451,
+          "min_percent": 14.276902372006953,
+          "max_percent": 23.386410599246386,
+          "min_samples": 1509,
+          "counted": true
+        },
+        "terrain": {
+          "median_percent": 16.280619125468892,
+          "min_percent": 14.414366121683194,
+          "max_percent": 37.234223507399214,
+          "min_samples": 2040,
+          "counted": true
+        },
+        "particles": {
+          "median_percent": 9.522636284537429,
+          "min_percent": 8.187909300829011,
+          "max_percent": 11.088746569075937,
+          "min_samples": 1630,
+          "counted": true
+        }
+      },
+      "scenes_at_10": [
+        "d0",
+        "d200",
+        "terrain"
+      ],
+      "scenes_at_20": [],
+      "slow99": {
+        "d0": {
+          "pooled_slow99_share_percent": 14.943273905996758,
+          "pooled_samples": 461
+        },
+        "d200": {
+          "pooled_slow99_share_percent": 11.029711029711029,
+          "pooled_samples": 271
+        },
+        "terrain": {
+          "pooled_slow99_share_percent": 17.703942474584675,
+          "pooled_samples": 714
+        }
+      },
+      "tail_scenes_at_20": [],
+      "meets_share_rule": true,
+      "csv_disagreement_in_counted_scenes": [
+        "d0",
+        "d200",
+        "terrain"
+      ],
+      "eligible": false,
+      "exactness": "unexplained: one cheap leaf (HashMap.getNode under shouldRenderEntityOutlines, or Lighting.turnOn) at the first Java code after native GL calls, while the ordinary profiler times the global phase at 0.000 ms; the samples moved between the two lines across launches",
+      "exact": false,
+      "closed": null
+    },
+    "client_entity_ticks": {
+      "per_launch_phase_percent": {
+        "wc26-d0-r1/static": 0.47,
+        "wc26-d0-r1/pan": 0.22,
+        "wc26-d0-r1/fly": 0.59,
+        "wc26-d0-r2/static": 0.43,
+        "wc26-d0-r2/pan": 0.27,
+        "wc26-d0-r2/fly": 0.66,
+        "wc26-d200-r1/static": 2.14,
+        "wc26-d200-r1/pan": 1.22,
+        "wc26-d200-r1/fly": 0.54,
+        "wc26-d200-r2/static": 2.0,
+        "wc26-d200-r2/pan": 1.23,
+        "wc26-d200-r2/fly": 0.7,
+        "wc26-particles-r1/static": 0.13,
+        "wc26-particles-r1/pan": 0.19,
+        "wc26-particles-r2/static": 0.13,
+        "wc26-particles-r2/pan": 0.19,
+        "wc26-terrain-r1/steady": 0.68,
+        "wc26-terrain-r1/pan": 0.31,
+        "wc26-terrain-r1/sort": 0.3,
+        "wc26-terrain-r1/fly": 0.54,
+        "wc26-terrain-r2/steady": 0.54,
+        "wc26-terrain-r2/pan": 0.3,
+        "wc26-terrain-r2/sort": 0.25,
+        "wc26-terrain-r2/fly": 0.61
+      },
+      "per_scene": {
+        "d0": {
+          "median_percent": 0.4497968555357702,
+          "min_percent": 0.21936154245800382,
+          "max_percent": 0.6574719462158287,
+          "min_samples": 26,
+          "counted": false
+        },
+        "d200": {
+          "median_percent": 1.2268774525633381,
+          "min_percent": 0.5439354006616947,
+          "max_percent": 2.1392974352740977,
+          "min_samples": 97,
+          "counted": false
+        },
+        "terrain": {
+          "median_percent": 0.4259220790787126,
+          "min_percent": 0.2507762120850251,
+          "max_percent": 0.6808659217877095,
+          "min_samples": 32,
+          "counted": false
+        },
+        "particles": {
+          "median_percent": 0.159231635999236,
+          "min_percent": 0.1280878316559927,
+          "max_percent": 0.19305750085172427,
+          "min_samples": 21,
+          "counted": false
+        }
+      },
+      "scenes_at_10": [],
+      "scenes_at_20": [],
+      "slow99": {
+        "d0": {
+          "pooled_slow99_share_percent": 3.46839546191248,
+          "pooled_samples": 107
+        },
+        "d200": {
+          "pooled_slow99_share_percent": 14.326414326414326,
+          "pooled_samples": 352
+        },
+        "terrain": {
+          "pooled_slow99_share_percent": 3.992065459955368,
+          "pooled_samples": 161
+        }
+      },
+      "tail_scenes_at_20": [],
+      "meets_share_rule": false,
+      "csv_disagreement_in_counted_scenes": [],
+      "eligible": false,
+      "exactness": "vanilla entity ticks of the placed NoAI mobs (movement, data trackers, chunk tracking); required game logic with no removable subset in the counts",
+      "exact": false,
+      "closed": null
+    },
+    "random_display_ticks": {
+      "per_launch_phase_percent": {
+        "wc26-d0-r1/static": 1.16,
+        "wc26-d0-r1/pan": 0.64,
+        "wc26-d0-r1/fly": 0.52,
+        "wc26-d0-r2/static": 1.07,
+        "wc26-d0-r2/pan": 0.67,
+        "wc26-d0-r2/fly": 0.54,
+        "wc26-d200-r1/static": 0.98,
+        "wc26-d200-r1/pan": 0.59,
+        "wc26-d200-r1/fly": 0.5,
+        "wc26-d200-r2/static": 0.8,
+        "wc26-d200-r2/pan": 0.49,
+        "wc26-d200-r2/fly": 0.44,
+        "wc26-particles-r1/static": 0.41,
+        "wc26-particles-r1/pan": 0.43,
+        "wc26-particles-r2/static": 0.47,
+        "wc26-particles-r2/pan": 0.37,
+        "wc26-terrain-r1/steady": 1.24,
+        "wc26-terrain-r1/pan": 0.7,
+        "wc26-terrain-r1/sort": 0.6,
+        "wc26-terrain-r1/fly": 0.54,
+        "wc26-terrain-r2/steady": 1.02,
+        "wc26-terrain-r2/pan": 0.56,
+        "wc26-terrain-r2/sort": 0.63,
+        "wc26-terrain-r2/fly": 0.59
+      },
+      "per_scene": {
+        "d0": {
+          "median_percent": 0.6561065329272477,
+          "min_percent": 0.5227619255064256,
+          "max_percent": 1.1627906976744187,
+          "min_samples": 64,
+          "counted": false
+        },
+        "d200": {
+          "median_percent": 0.5443335806313648,
+          "min_percent": 0.4384978637283562,
+          "max_percent": 0.9845630241886472,
+          "min_samples": 60,
+          "counted": false
+        },
+        "terrain": {
+          "median_percent": 0.6143613656733453,
+          "min_percent": 0.542504479394784,
+          "max_percent": 1.2395251396648044,
+          "min_samples": 60,
+          "counted": false
+        },
+        "particles": {
+          "median_percent": 0.4239374205615126,
+          "min_percent": 0.3671877957375932,
+          "max_percent": 0.4662004662004662,
+          "min_samples": 68,
+          "counted": false
+        }
+      },
+      "scenes_at_10": [],
+      "scenes_at_20": [],
+      "slow99": {
+        "d0": {
+          "pooled_slow99_share_percent": 5.413290113452188,
+          "pooled_samples": 167
+        },
+        "d200": {
+          "pooled_slow99_share_percent": 5.575905575905576,
+          "pooled_samples": 137
+        },
+        "terrain": {
+          "pooled_slow99_share_percent": 4.711133151500124,
+          "pooled_samples": 190
+        }
+      },
+      "tail_scenes_at_20": [],
+      "meets_share_rule": false,
+      "csv_disagreement_in_counted_scenes": [],
+      "eligible": false,
+      "exactness": "vanilla samples random nearby blocks through the world RNG; the reads and RNG calls are the work and their order is observable",
+      "exact": false,
+      "closed": null
+    }
+  },
+  "eligible_sets": [],
+  "named_candidate": null
+}

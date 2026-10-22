@@ -1,0 +1,19 @@
+{
+  "label": "mr25-smoke-regions",
+  "kind": "regions",
+  "status": "exited",
+  "purpose": "pre-freeze smoke only (time scale 0.3, scale 1); not evidence, not analyzed for selection",
+  "command_note": "gradlew runClient run by hand before the runner and manifest existed; same explicit options as the runner kind, timeScale 0.3",
+  "log": "build/mr25-smoke-regions.log",
+  "log_sha256": "227af0f4845f11dd6b10314e8dd6f35704fe2060f1b4bba35ac063c0669891a6",
+  "benchmark_folder": "run/alacer/benchmarks/20261021-005827-mr25-smoke-regions-vis_on-ecl_on-ent0",
+  "files_sha256": {
+    "pan.csv": "bc98b99b675b24f33c61022e456d9c65a7d7d579bd35b02fd683e254c159b0d1",
+    "pan.json": "194625b236eace0e4995802b7b381661aaab482a5a40e4d68b456314802b0d63",
+    "particle-movement-census.json": "7d4e4565ca55963e168d2dc87f28b995a825645fe267f51819b846e9443ae592",
+    "static.csv": "05aad8a2c03cf826eaa681a4c4d61a8d67e42093ee5d5554bbaf20c731936393",
+    "static.json": "e15c49e40423b11ea2b6080a4b2d6938bb0ee78157c69898dfc594091f11473d",
+    "summary.json": "ecbb1b2568a3559a65bf0fb0bfcc9cb3a1658cc91e340a5c04d33300380357cb"
+  },
+  "finding": "hooks applied; zero region order anomalies; all census invariants held"
+}

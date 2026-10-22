@@ -1,0 +1,1712 @@
+{
+  "description": "Intrusive JFR attribution, not performance selection. Frame alignment uses a wall-clock anchor; alignment assumes no wall-clock jump during the run. Native and execution stack samples are not a CPU-time decomposition.",
+  "clock_uncertainty_ms": 1.0036,
+  "jfr_sha256": "614888ce0ae366009942772cac18dcbdc97c1c27f737b9defbe9bbd3bf8a1365",
+  "phases": {
+    "static": {
+      "start_wall_ms_estimate": 1792478722011.6047,
+      "end_wall_ms_estimate": 1792478732011.7578,
+      "gc_pauses": [],
+      "gc_pause_total_ms": 0,
+      "worst_frames": [
+        {
+          "start_ns": 33854457100,
+          "frame_ms": 14.9331,
+          "estimated_gc_overlap_ms": 0,
+          "conservative_gc_overlap_ms": 0,
+          "vm_intervals": [
+            {
+              "type": "jdk.SafepointBegin",
+              "start_ms": 1792478722315.136,
+              "end_ms": 1792478722327.3477,
+              "duration_ms": 12.211599999999999,
+              "operation": null,
+              "safepoint_id": 677,
+              "overlap_ms": 11.890625
+            }
+          ],
+          "chunk_upload_ms": 0.0005,
+          "chunk_gl_list_ms": 0.0
+        },
+        {
+          "start_ns": 42233243200,
+          "frame_ms": 7.7957,
+          "estimated_gc_overlap_ms": 0,
+          "conservative_gc_overlap_ms": 0,
+          "vm_intervals": [],
+          "chunk_upload_ms": 0.0019,
+          "chunk_gl_list_ms": 0.0
+        },
+        {
+          "start_ns": 42186023400,
+          "frame_ms": 7.266,
+          "estimated_gc_overlap_ms": 0,
+          "conservative_gc_overlap_ms": 0,
+          "vm_intervals": [],
+          "chunk_upload_ms": 0.0018,
+          "chunk_gl_list_ms": 0.0
+        },
+        {
+          "start_ns": 42892414700,
+          "frame_ms": 5.4972,
+          "estimated_gc_overlap_ms": 0,
+          "conservative_gc_overlap_ms": 0,
+          "vm_intervals": [],
+          "chunk_upload_ms": 0.0015,
+          "chunk_gl_list_ms": 0.0
+        },
+        {
+          "start_ns": 42900807600,
+          "frame_ms": 5.3623,
+          "estimated_gc_overlap_ms": 0,
+          "conservative_gc_overlap_ms": 0,
+          "vm_intervals": [],
+          "chunk_upload_ms": 0.0016,
+          "chunk_gl_list_ms": 0.0
+        },
+        {
+          "start_ns": 42859368300,
+          "frame_ms": 5.2285,
+          "estimated_gc_overlap_ms": 0,
+          "conservative_gc_overlap_ms": 0,
+          "vm_intervals": [],
+          "chunk_upload_ms": 0.0014,
+          "chunk_gl_list_ms": 0.0
+        },
+        {
+          "start_ns": 43023860500,
+          "frame_ms": 4.9693,
+          "estimated_gc_overlap_ms": 0,
+          "conservative_gc_overlap_ms": 0,
+          "vm_intervals": [],
+          "chunk_upload_ms": 0.0008,
+          "chunk_gl_list_ms": 0.0
+        },
+        {
+          "start_ns": 35025787100,
+          "frame_ms": 4.8381,
+          "estimated_gc_overlap_ms": 0,
+          "conservative_gc_overlap_ms": 0,
+          "vm_intervals": [],
+          "chunk_upload_ms": 0.0012,
+          "chunk_gl_list_ms": 0.0
+        },
+        {
+          "start_ns": 35847173600,
+          "frame_ms": 4.634,
+          "estimated_gc_overlap_ms": 0,
+          "conservative_gc_overlap_ms": 0,
+          "vm_intervals": [],
+          "chunk_upload_ms": 0.0012,
+          "chunk_gl_list_ms": 0.0
+        },
+        {
+          "start_ns": 42883770400,
+          "frame_ms": 4.5165,
+          "estimated_gc_overlap_ms": 0,
+          "conservative_gc_overlap_ms": 0,
+          "vm_intervals": [],
+          "chunk_upload_ms": 0.0006,
+          "chunk_gl_list_ms": 0.0
+        },
+        {
+          "start_ns": 42909630300,
+          "frame_ms": 4.2384,
+          "estimated_gc_overlap_ms": 0,
+          "conservative_gc_overlap_ms": 0,
+          "vm_intervals": [],
+          "chunk_upload_ms": 0.0014,
+          "chunk_gl_list_ms": 0.0
+        },
+        {
+          "start_ns": 35909637200,
+          "frame_ms": 4.2032,
+          "estimated_gc_overlap_ms": 0,
+          "conservative_gc_overlap_ms": 0,
+          "vm_intervals": [],
+          "chunk_upload_ms": 0.0012,
+          "chunk_gl_list_ms": 0.0
+        },
+        {
+          "start_ns": 42199536100,
+          "frame_ms": 4.2001,
+          "estimated_gc_overlap_ms": 0,
+          "conservative_gc_overlap_ms": 0,
+          "vm_intervals": [],
+          "chunk_upload_ms": 0.0016,
+          "chunk_gl_list_ms": 0.0
+        },
+        {
+          "start_ns": 43127138400,
+          "frame_ms": 4.1767,
+          "estimated_gc_overlap_ms": 0,
+          "conservative_gc_overlap_ms": 0,
+          "vm_intervals": [],
+          "chunk_upload_ms": 0.0006,
+          "chunk_gl_list_ms": 0.0
+        },
+        {
+          "start_ns": 42888286900,
+          "frame_ms": 4.1278,
+          "estimated_gc_overlap_ms": 0,
+          "conservative_gc_overlap_ms": 0,
+          "vm_intervals": [],
+          "chunk_upload_ms": 0.002,
+          "chunk_gl_list_ms": 0.0
+        },
+        {
+          "start_ns": 42721309500,
+          "frame_ms": 3.8784,
+          "estimated_gc_overlap_ms": 0,
+          "conservative_gc_overlap_ms": 0,
+          "vm_intervals": [],
+          "chunk_upload_ms": 0.0023,
+          "chunk_gl_list_ms": 0.0
+        },
+        {
+          "start_ns": 34929734400,
+          "frame_ms": 3.8567,
+          "estimated_gc_overlap_ms": 0,
+          "conservative_gc_overlap_ms": 0,
+          "vm_intervals": [],
+          "chunk_upload_ms": 0.0009,
+          "chunk_gl_list_ms": 0.0
+        },
+        {
+          "start_ns": 35696313000,
+          "frame_ms": 3.8044,
+          "estimated_gc_overlap_ms": 0,
+          "conservative_gc_overlap_ms": 0,
+          "vm_intervals": [],
+          "chunk_upload_ms": 0.001,
+          "chunk_gl_list_ms": 0.0
+        },
+        {
+          "start_ns": 42247442200,
+          "frame_ms": 3.7961,
+          "estimated_gc_overlap_ms": 0,
+          "conservative_gc_overlap_ms": 0,
+          "vm_intervals": [],
+          "chunk_upload_ms": 0.0022,
+          "chunk_gl_list_ms": 0.0
+        },
+        {
+          "start_ns": 42923226400,
+          "frame_ms": 3.768,
+          "estimated_gc_overlap_ms": 0,
+          "conservative_gc_overlap_ms": 0,
+          "vm_intervals": [],
+          "chunk_upload_ms": 0.0011,
+          "chunk_gl_list_ms": 0.0
+        }
+      ],
+      "client_stack_samples": [
+        {
+          "samples": 55,
+          "stack": [
+            "org/lwjgl/opengl/WindowsContextImplementation.nSwapBuffers",
+            "org/lwjgl/opengl/WindowsContextImplementation.swapBuffers",
+            "org/lwjgl/opengl/ContextGL.swapBuffers",
+            "org/lwjgl/opengl/DrawableGL.swapBuffers",
+            "org/lwjgl/opengl/Display.swapBuffers"
+          ]
+        },
+        {
+          "samples": 33,
+          "stack": [
+            "net/minecraft/client/render/world/WorldRenderer.renderEntities",
+            "net/minecraft/client/render/GameRenderer.render",
+            "net/minecraft/client/render/GameRenderer.renderWorld",
+            "net/minecraft/client/render/GameRenderer.render",
+            "net/minecraft/client/Minecraft.runGame"
+          ]
+        },
+        {
+          "samples": 11,
+          "stack": [
+            "net/adiont/alacer/render/EntityRendering.cachedLookup",
+            "net/adiont/alacer/render/EntityRendering.lookup",
+            "net/minecraft/client/render/world/WorldRenderer.wrapOperation$zzp000$alacer$chunkLookup",
+            "net/minecraft/client/render/world/WorldRenderer.wrapOperation$zzp000$alacer$chunkLookup$mixinextras$bridge$88",
+            "net/minecraft/client/render/world/WorldRenderer.renderEntities"
+          ]
+        },
+        {
+          "samples": 3,
+          "stack": [
+            "net/minecraft/client/render/world/WorldRenderer.render",
+            "net/minecraft/client/render/GameRenderer.render",
+            "net/minecraft/client/render/GameRenderer.renderWorld",
+            "net/minecraft/client/render/GameRenderer.render",
+            "net/minecraft/client/Minecraft.runGame"
+          ]
+        },
+        {
+          "samples": 2,
+          "stack": [
+            "org/lwjgl/opengl/GL11.nglCallList",
+            "org/lwjgl/opengl/GL11.glCallList",
+            "net/minecraft/client/render/world/GlListRenderChunkList.render",
+            "net/minecraft/client/render/world/WorldRenderer.renderLastChunks",
+            "net/minecraft/client/render/world/WorldRenderer.render"
+          ]
+        },
+        {
+          "samples": 2,
+          "stack": [
+            "net/minecraft/client/render/world/WorldRenderer.setupRender",
+            "net/minecraft/client/render/GameRenderer.render",
+            "net/minecraft/client/render/GameRenderer.renderWorld",
+            "net/minecraft/client/render/GameRenderer.render",
+            "net/minecraft/client/Minecraft.runGame"
+          ]
+        },
+        {
+          "samples": 2,
+          "stack": [
+            "net/minecraft/client/world/ClientWorld.doRandomDisplayTicks",
+            "net/minecraft/client/Minecraft.tick",
+            "net/minecraft/client/Minecraft.runGame",
+            "net/minecraft/client/Minecraft.run",
+            "net/minecraft/client/main/Main.main"
+          ]
+        },
+        {
+          "samples": 2,
+          "stack": [
+            "net/minecraft/util/Long2ObjectHashMap.get",
+            "net/minecraft/client/world/chunk/ClientChunkCache.getChunk",
+            "net/minecraft/world/World.getChunkAt",
+            "net/minecraft/world/World.getChunk",
+            "net/minecraft/world/World.getBlockState"
+          ]
+        },
+        {
+          "samples": 1,
+          "stack": [
+            "net/minecraft/world/chunk/WorldChunk.getBlockState",
+            "net/minecraft/world/World.getBlockState",
+            "net/minecraft/client/world/ClientWorld.doRandomDisplayTicks",
+            "net/minecraft/client/Minecraft.tick",
+            "net/minecraft/client/Minecraft.runGame"
+          ]
+        },
+        {
+          "samples": 1,
+          "stack": [
+            "java/util/HashMap.getNode",
+            "java/util/HashMap.containsKey",
+            "java/util/HashSet.contains",
+            "net/minecraft/client/render/world/WorldRenderer.setupRender",
+            "net/minecraft/client/render/GameRenderer.render"
+          ]
+        },
+        {
+          "samples": 1,
+          "stack": [
+            "org/lwjgl/opengl/GL11.glLight",
+            "net/minecraft/client/render/platform/Lighting.turnOn",
+            "net/minecraft/client/render/world/WorldRenderer.renderEntities",
+            "net/minecraft/client/render/GameRenderer.render",
+            "net/minecraft/client/render/GameRenderer.renderWorld"
+          ]
+        },
+        {
+          "samples": 1,
+          "stack": [
+            "net/minecraft/util/math/ChunkPos.equals",
+            "java/util/HashMap.getNode",
+            "java/util/HashMap.containsKey",
+            "java/util/HashSet.contains",
+            "net/minecraft/client/world/ClientWorld.tickChunks"
+          ]
+        },
+        {
+          "samples": 1,
+          "stack": [
+            "org/lwjgl/opengl/GL11.nglClear",
+            "org/lwjgl/opengl/GL11.glClear",
+            "net/minecraft/client/render/platform/GlStateManager.clear",
+            "net/minecraft/client/render/GameRenderer.render",
+            "net/minecraft/client/render/GameRenderer.renderWorld"
+          ]
+        }
+      ],
+      "monitor_events": []
+    },
+    "pan": {
+      "start_wall_ms_estimate": 1792478735019.788,
+      "end_wall_ms_estimate": 1792478750020.1548,
+      "gc_pauses": [
+        {
+          "start_ms": 1792478736433.1528,
+          "end_ms": 1792478736447.7864,
+          "duration_ms": 14.6336,
+          "gc_id": 23
+        },
+        {
+          "start_ms": 1792478737582.314,
+          "end_ms": 1792478737598.7004,
+          "duration_ms": 16.3864,
+          "gc_id": 24
+        },
+        {
+          "start_ms": 1792478739315.26,
+          "end_ms": 1792478739330.3208,
+          "duration_ms": 15.0609,
+          "gc_id": 25
+        },
+        {
+          "start_ms": 1792478749930.362,
+          "end_ms": 1792478749942.7632,
+          "duration_ms": 12.4012,
+          "gc_id": 26
+        }
+      ],
+      "gc_pause_total_ms": 58.482099999999996,
+      "worst_frames": [
+        {
+          "start_ns": 50773269700,
+          "frame_ms": 97.0314,
+          "estimated_gc_overlap_ms": 15.060791015625,
+          "conservative_gc_overlap_ms": 15.03759765625,
+          "vm_intervals": [
+            {
+              "type": "jdk.SafepointBegin",
+              "start_ms": 1792478739236.4048,
+              "end_ms": 1792478739315.2546,
+              "duration_ms": 78.8499,
+              "operation": null,
+              "safepoint_id": 723,
+              "overlap_ms": 78.849853515625
+            },
+            {
+              "type": "jdk.ExecuteVMOperation",
+              "start_ms": 1792478739315.256,
+              "end_ms": 1792478739330.328,
+              "duration_ms": 15.0717,
+              "operation": "ParallelGCFailedAllocation",
+              "safepoint_id": 723,
+              "overlap_ms": 15.07177734375
+            }
+          ],
+          "chunk_upload_ms": 0.1915,
+          "chunk_gl_list_ms": 0.1665
+        },
+        {
+          "start_ns": 49118983100,
+          "frame_ms": 21.1673,
+          "estimated_gc_overlap_ms": 16.386474609375,
+          "conservative_gc_overlap_ms": 16.386474609375,
+          "vm_intervals": [
+            {
+              "type": "jdk.SafepointBegin",
+              "start_ms": 1792478737582.188,
+              "end_ms": 1792478737582.3103,
+              "duration_ms": 0.12229999999999999,
+              "operation": null,
+              "safepoint_id": 719,
+              "overlap_ms": 0.122314453125
+            },
+            {
+              "type": "jdk.ExecuteVMOperation",
+              "start_ms": 1792478737582.311,
+              "end_ms": 1792478737598.706,
+              "duration_ms": 16.3951,
+              "operation": "ParallelGCFailedAllocation",
+              "safepoint_id": 719,
+              "overlap_ms": 16.39501953125
+            }
+          ],
+          "chunk_upload_ms": 0.3714,
+          "chunk_gl_list_ms": 0.3068
+        },
+        {
+          "start_ns": 47971217300,
+          "frame_ms": 19.4677,
+          "estimated_gc_overlap_ms": 14.633544921875,
+          "conservative_gc_overlap_ms": 14.5654296875,
+          "vm_intervals": [
+            {
+              "type": "jdk.SafepointBegin",
+              "start_ms": 1792478736433.02,
+              "end_ms": 1792478736433.1501,
+              "duration_ms": 0.13019999999999998,
+              "operation": null,
+              "safepoint_id": 713,
+              "overlap_ms": 0.130126953125
+            },
+            {
+              "type": "jdk.ExecuteVMOperation",
+              "start_ms": 1792478736433.1519,
+              "end_ms": 1792478736447.7935,
+              "duration_ms": 14.641599999999999,
+              "operation": "ParallelGCFailedAllocation",
+              "safepoint_id": 713,
+              "overlap_ms": 14.6416015625
+            },
+            {
+              "type": "jdk.SafepointBegin",
+              "start_ms": 1792478736447.9822,
+              "end_ms": 1792478736448.0903,
+              "duration_ms": 0.1082,
+              "operation": null,
+              "safepoint_id": 715,
+              "overlap_ms": 0.108154296875
+            },
+            {
+              "type": "jdk.ExecuteVMOperation",
+              "start_ms": 1792478736448.091,
+              "end_ms": 1792478736448.1072,
+              "duration_ms": 0.016,
+              "operation": "RevokeBias",
+              "safepoint_id": 715,
+              "overlap_ms": 0.01611328125
+            }
+          ],
+          "chunk_upload_ms": 0.2901,
+          "chunk_gl_list_ms": 0.2615
+        },
+        {
+          "start_ns": 61469610100,
+          "frame_ms": 15.2193,
+          "estimated_gc_overlap_ms": 12.153076171875,
+          "conservative_gc_overlap_ms": 11.1494140625,
+          "vm_intervals": [
+            {
+              "type": "jdk.ExecuteVMOperation",
+              "start_ms": 1792478749930.359,
+              "end_ms": 1792478749942.7693,
+              "duration_ms": 12.410300000000001,
+              "operation": "ParallelGCFailedAllocation",
+              "safepoint_id": 741,
+              "overlap_ms": 12.1591796875
+            }
+          ],
+          "chunk_upload_ms": 0.0018,
+          "chunk_gl_list_ms": 0.0
+        },
+        {
+          "start_ns": 48260091100,
+          "frame_ms": 12.8652,
+          "estimated_gc_overlap_ms": 0,
+          "conservative_gc_overlap_ms": 0,
+          "vm_intervals": [],
+          "chunk_upload_ms": 0.1253,
+          "chunk_gl_list_ms": 0.0938
+        },
+        {
+          "start_ns": 49434558700,
+          "frame_ms": 11.1286,
+          "estimated_gc_overlap_ms": 0,
+          "conservative_gc_overlap_ms": 0,
+          "vm_intervals": [],
+          "chunk_upload_ms": 0.2283,
+          "chunk_gl_list_ms": 0.2148
+        },
+        {
+          "start_ns": 49305930400,
+          "frame_ms": 10.082,
+          "estimated_gc_overlap_ms": 0,
+          "conservative_gc_overlap_ms": 0,
+          "vm_intervals": [],
+          "chunk_upload_ms": 1.6555,
+          "chunk_gl_list_ms": 1.6284
+        },
+        {
+          "start_ns": 47256070000,
+          "frame_ms": 9.8228,
+          "estimated_gc_overlap_ms": 0,
+          "conservative_gc_overlap_ms": 0,
+          "vm_intervals": [],
+          "chunk_upload_ms": 0.4438,
+          "chunk_gl_list_ms": 0.4177
+        },
+        {
+          "start_ns": 48947352200,
+          "frame_ms": 7.9373,
+          "estimated_gc_overlap_ms": 0,
+          "conservative_gc_overlap_ms": 0,
+          "vm_intervals": [],
+          "chunk_upload_ms": 2.6925,
+          "chunk_gl_list_ms": 2.6431
+        },
+        {
+          "start_ns": 47457594900,
+          "frame_ms": 7.6052,
+          "estimated_gc_overlap_ms": 0,
+          "conservative_gc_overlap_ms": 0,
+          "vm_intervals": [],
+          "chunk_upload_ms": 0.5649,
+          "chunk_gl_list_ms": 0.1196
+        },
+        {
+          "start_ns": 48971945800,
+          "frame_ms": 7.5228,
+          "estimated_gc_overlap_ms": 0,
+          "conservative_gc_overlap_ms": 0,
+          "vm_intervals": [],
+          "chunk_upload_ms": 0.1001,
+          "chunk_gl_list_ms": 0.2002
+        },
+        {
+          "start_ns": 47522009300,
+          "frame_ms": 7.4238,
+          "estimated_gc_overlap_ms": 0,
+          "conservative_gc_overlap_ms": 0,
+          "vm_intervals": [],
+          "chunk_upload_ms": 0.05,
+          "chunk_gl_list_ms": 0.5254
+        },
+        {
+          "start_ns": 47410122600,
+          "frame_ms": 7.413,
+          "estimated_gc_overlap_ms": 0,
+          "conservative_gc_overlap_ms": 0,
+          "vm_intervals": [],
+          "chunk_upload_ms": 0.0892,
+          "chunk_gl_list_ms": 0.0465
+        },
+        {
+          "start_ns": 47514678900,
+          "frame_ms": 7.3304,
+          "estimated_gc_overlap_ms": 0,
+          "conservative_gc_overlap_ms": 0,
+          "vm_intervals": [],
+          "chunk_upload_ms": 0.1336,
+          "chunk_gl_list_ms": 0.3978
+        },
+        {
+          "start_ns": 48328983500,
+          "frame_ms": 7.0672,
+          "estimated_gc_overlap_ms": 0,
+          "conservative_gc_overlap_ms": 0,
+          "vm_intervals": [],
+          "chunk_upload_ms": 1.091,
+          "chunk_gl_list_ms": 1.0593
+        },
+        {
+          "start_ns": 48998316100,
+          "frame_ms": 7.0625,
+          "estimated_gc_overlap_ms": 0,
+          "conservative_gc_overlap_ms": 0,
+          "vm_intervals": [],
+          "chunk_upload_ms": 2.3785,
+          "chunk_gl_list_ms": 2.352
+        },
+        {
+          "start_ns": 47507666000,
+          "frame_ms": 7.0129,
+          "estimated_gc_overlap_ms": 0,
+          "conservative_gc_overlap_ms": 0,
+          "vm_intervals": [],
+          "chunk_upload_ms": 0.3133,
+          "chunk_gl_list_ms": 0.2909
+        },
+        {
+          "start_ns": 49721927000,
+          "frame_ms": 6.8815,
+          "estimated_gc_overlap_ms": 0,
+          "conservative_gc_overlap_ms": 0,
+          "vm_intervals": [],
+          "chunk_upload_ms": 0.3277,
+          "chunk_gl_list_ms": 0.3046
+        },
+        {
+          "start_ns": 47756467600,
+          "frame_ms": 6.8797,
+          "estimated_gc_overlap_ms": 0,
+          "conservative_gc_overlap_ms": 0,
+          "vm_intervals": [],
+          "chunk_upload_ms": 1.4099,
+          "chunk_gl_list_ms": 1.3863
+        },
+        {
+          "start_ns": 47450777400,
+          "frame_ms": 6.8175,
+          "estimated_gc_overlap_ms": 0,
+          "conservative_gc_overlap_ms": 0,
+          "vm_intervals": [],
+          "chunk_upload_ms": 0.8107,
+          "chunk_gl_list_ms": 0.774
+        }
+      ],
+      "client_stack_samples": [
+        {
+          "samples": 265,
+          "stack": [
+            "net/adiont/alacer/render/ChunkVisibility.inFrustum",
+            "net/adiont/alacer/render/ChunkVisibility.search",
+            "net/adiont/alacer/render/ChunkVisibility.beforeVanillaSearch",
+            "net/minecraft/client/render/world/WorldRenderer.handler$zbk000$alacer$visibilitySearch",
+            "net/minecraft/client/render/world/WorldRenderer.setupRender"
+          ]
+        },
+        {
+          "samples": 72,
+          "stack": [
+            "net/minecraft/client/render/world/WorldRenderer.renderEntities",
+            "net/minecraft/client/render/GameRenderer.render",
+            "net/minecraft/client/render/GameRenderer.renderWorld",
+            "net/minecraft/client/render/GameRenderer.render",
+            "net/minecraft/client/Minecraft.runGame"
+          ]
+        },
+        {
+          "samples": 58,
+          "stack": [
+            "org/lwjgl/opengl/WindowsContextImplementation.nSwapBuffers",
+            "org/lwjgl/opengl/WindowsContextImplementation.swapBuffers",
+            "org/lwjgl/opengl/ContextGL.swapBuffers",
+            "org/lwjgl/opengl/DrawableGL.swapBuffers",
+            "org/lwjgl/opengl/Display.swapBuffers"
+          ]
+        },
+        {
+          "samples": 17,
+          "stack": [
+            "net/minecraft/client/render/world/WorldRenderer.setupRender",
+            "net/minecraft/client/render/GameRenderer.render",
+            "net/minecraft/client/render/GameRenderer.renderWorld",
+            "net/minecraft/client/render/GameRenderer.render",
+            "net/minecraft/client/Minecraft.runGame"
+          ]
+        },
+        {
+          "samples": 11,
+          "stack": [
+            "net/minecraft/client/render/world/WorldRenderer.render",
+            "net/minecraft/client/render/GameRenderer.render",
+            "net/minecraft/client/render/GameRenderer.renderWorld",
+            "net/minecraft/client/render/GameRenderer.render",
+            "net/minecraft/client/Minecraft.runGame"
+          ]
+        },
+        {
+          "samples": 7,
+          "stack": [
+            "java/util/HashMap.getNode",
+            "java/util/HashMap.containsKey",
+            "java/util/HashSet.contains",
+            "net/minecraft/client/render/world/WorldRenderer.setupRender",
+            "net/minecraft/client/render/GameRenderer.render"
+          ]
+        },
+        {
+          "samples": 6,
+          "stack": [
+            "org/lwjgl/opengl/GL11.nglEndList",
+            "org/lwjgl/opengl/GL11.glEndList",
+            "net/minecraft/client/render/world/ChunkRenderDispatcher.uploadGlList",
+            "net/minecraft/client/render/world/ChunkRenderDispatcher.upload",
+            "net/minecraft/client/render/world/ChunkRenderDispatcher$18371494.run"
+          ]
+        },
+        {
+          "samples": 6,
+          "stack": [
+            "net/minecraft/util/TypeInstanceMultiMap.size",
+            "java/util/AbstractCollection.isEmpty",
+            "net/minecraft/client/render/world/WorldRenderer.renderEntities",
+            "net/minecraft/client/render/GameRenderer.render",
+            "net/minecraft/client/render/GameRenderer.renderWorld"
+          ]
+        },
+        {
+          "samples": 5,
+          "stack": [
+            "net/adiont/alacer/render/EntityRendering.cachedLookup",
+            "net/adiont/alacer/render/EntityRendering.lookup",
+            "net/minecraft/client/render/world/WorldRenderer.wrapOperation$zzp000$alacer$chunkLookup",
+            "net/minecraft/client/render/world/WorldRenderer.wrapOperation$zzp000$alacer$chunkLookup$mixinextras$bridge$88",
+            "net/minecraft/client/render/world/WorldRenderer.renderEntities"
+          ]
+        },
+        {
+          "samples": 4,
+          "stack": [
+            "org/lwjgl/opengl/GL11.nglCallList",
+            "org/lwjgl/opengl/GL11.glCallList",
+            "net/minecraft/client/render/world/GlListRenderChunkList.render",
+            "net/minecraft/client/render/world/WorldRenderer.renderLastChunks",
+            "net/minecraft/client/render/world/WorldRenderer.render"
+          ]
+        },
+        {
+          "samples": 2,
+          "stack": [
+            "net/minecraft/util/Long2ObjectHashMap.hash",
+            "net/minecraft/util/Long2ObjectHashMap.get",
+            "net/minecraft/server/world/chunk/ServerChunkCache.getChunk",
+            "net/minecraft/world/World.getChunkAt",
+            "net/minecraft/world/World.getChunk"
+          ]
+        },
+        {
+          "samples": 2,
+          "stack": [
+            "net/minecraft/world/World.isChunkLoadedAt",
+            "net/minecraft/world/World.isAreaLoaded",
+            "net/minecraft/world/World.isAreaLoaded",
+            "net/minecraft/world/World.isAreaLoaded",
+            "net/minecraft/world/chunk/WorldChunk.populateLight"
+          ]
+        },
+        {
+          "samples": 2,
+          "stack": [
+            "net/minecraft/client/world/ClientWorld.doRandomDisplayTicks",
+            "net/minecraft/client/Minecraft.tick",
+            "net/minecraft/client/Minecraft.runGame",
+            "net/minecraft/client/Minecraft.run",
+            "net/minecraft/client/main/Main.main"
+          ]
+        },
+        {
+          "samples": 1,
+          "stack": [
+            "java/util/concurrent/locks/AbstractQueuedSynchronizer.acquire",
+            "java/util/concurrent/locks/ReentrantLock$NonfairSync.lock",
+            "java/util/concurrent/locks/ReentrantLock.lock",
+            "java/util/concurrent/ArrayBlockingQueue.poll",
+            "net/minecraft/client/render/world/ChunkRenderDispatcher.clear"
+          ]
+        },
+        {
+          "samples": 1,
+          "stack": [
+            "net/minecraft/util/Long2ObjectHashMap.getNode",
+            "net/minecraft/util/Long2ObjectHashMap.contains",
+            "net/minecraft/server/world/chunk/ServerChunkCache.hasChunk",
+            "net/minecraft/world/World.isChunkLoadedAt",
+            "net/minecraft/world/World.isChunkLoaded"
+          ]
+        },
+        {
+          "samples": 1,
+          "stack": [
+            "net/minecraft/util/Long2ObjectHashMap.get",
+            "net/minecraft/server/world/chunk/ServerChunkCache.getChunk",
+            "net/minecraft/world/World.getChunkAt",
+            "net/minecraft/world/World.getChunk",
+            "net/minecraft/client/render/world/WorldRenderer.mixinextras$bridge$getChunk$102"
+          ]
+        },
+        {
+          "samples": 1,
+          "stack": [
+            "org/lwjgl/opengl/GL30.nglBindFramebuffer",
+            "org/lwjgl/opengl/GL30.glBindFramebuffer",
+            "net/minecraft/client/render/platform/GLX.bindFramebuffer",
+            "net/minecraft/client/render/pipeline/RenderTarget.unbindWrite",
+            "net/minecraft/client/Minecraft.runGame"
+          ]
+        },
+        {
+          "samples": 1,
+          "stack": [
+            "org/lwjgl/opengl/GL11.nglDrawArrays",
+            "org/lwjgl/opengl/GL11.glDrawArrays",
+            "net/minecraft/client/render/vertex/BufferUploader.end",
+            "net/minecraft/client/render/world/ChunkRenderDispatcher.uploadGlList",
+            "net/minecraft/client/render/world/ChunkRenderDispatcher.upload"
+          ]
+        },
+        {
+          "samples": 1,
+          "stack": [
+            "org/lwjgl/opengl/GL11.glLight",
+            "net/minecraft/client/render/platform/Lighting.turnOn",
+            "net/minecraft/client/render/world/WorldRenderer.renderEntities",
+            "net/minecraft/client/render/GameRenderer.render",
+            "net/minecraft/client/render/GameRenderer.renderWorld"
+          ]
+        },
+        {
+          "samples": 1,
+          "stack": [
+            "java/util/ArrayList.batchRemove",
+            "java/util/ArrayList.removeAll",
+            "net/minecraft/client/ParticleManager.tickParticles",
+            "net/minecraft/client/ParticleManager.tickParticles",
+            "net/minecraft/client/ParticleManager.tick"
+          ]
+        }
+      ],
+      "monitor_events": []
+    },
+    "fly": {
+      "start_wall_ms_estimate": 1792478753027.2114,
+      "end_wall_ms_estimate": 1792478773032.1943,
+      "gc_pauses": [
+        {
+          "start_ms": 1792478754333.2468,
+          "end_ms": 1792478754348.3623,
+          "duration_ms": 15.1155,
+          "gc_id": 27
+        },
+        {
+          "start_ms": 1792478755386.119,
+          "end_ms": 1792478755402.8015,
+          "duration_ms": 16.6827,
+          "gc_id": 28
+        },
+        {
+          "start_ms": 1792478756743.836,
+          "end_ms": 1792478756761.425,
+          "duration_ms": 17.589000000000002,
+          "gc_id": 29
+        },
+        {
+          "start_ms": 1792478757612.594,
+          "end_ms": 1792478757630.4407,
+          "duration_ms": 17.846799999999998,
+          "gc_id": 30
+        },
+        {
+          "start_ms": 1792478758427.8801,
+          "end_ms": 1792478758445.6592,
+          "duration_ms": 17.7791,
+          "gc_id": 31
+        },
+        {
+          "start_ms": 1792478759332.0762,
+          "end_ms": 1792478759351.4246,
+          "duration_ms": 19.3485,
+          "gc_id": 32
+        },
+        {
+          "start_ms": 1792478759967.705,
+          "end_ms": 1792478759983.9329,
+          "duration_ms": 16.227800000000002,
+          "gc_id": 33
+        },
+        {
+          "start_ms": 1792478760733.28,
+          "end_ms": 1792478760744.793,
+          "duration_ms": 11.5129,
+          "gc_id": 34
+        },
+        {
+          "start_ms": 1792478761611.205,
+          "end_ms": 1792478761626.1663,
+          "duration_ms": 14.9613,
+          "gc_id": 35
+        },
+        {
+          "start_ms": 1792478762439.23,
+          "end_ms": 1792478762450.671,
+          "duration_ms": 11.4408,
+          "gc_id": 36
+        },
+        {
+          "start_ms": 1792478763463.272,
+          "end_ms": 1792478763476.6182,
+          "duration_ms": 13.3463,
+          "gc_id": 37
+        },
+        {
+          "start_ms": 1792478764686.888,
+          "end_ms": 1792478764701.8,
+          "duration_ms": 14.911999999999999,
+          "gc_id": 38
+        },
+        {
+          "start_ms": 1792478765965.08,
+          "end_ms": 1792478765981.253,
+          "duration_ms": 16.172800000000002,
+          "gc_id": 39
+        },
+        {
+          "start_ms": 1792478766947.274,
+          "end_ms": 1792478766963.1738,
+          "duration_ms": 15.899900000000002,
+          "gc_id": 40
+        },
+        {
+          "start_ms": 1792478768138.419,
+          "end_ms": 1792478768153.3066,
+          "duration_ms": 14.8878,
+          "gc_id": 41
+        },
+        {
+          "start_ms": 1792478769103.211,
+          "end_ms": 1792478769120.7354,
+          "duration_ms": 17.5245,
+          "gc_id": 42
+        },
+        {
+          "start_ms": 1792478770426.9832,
+          "end_ms": 1792478770439.9011,
+          "duration_ms": 12.918000000000001,
+          "gc_id": 43
+        },
+        {
+          "start_ms": 1792478770439.9058,
+          "end_ms": 1792478770565.993,
+          "duration_ms": 126.08720000000001,
+          "gc_id": 44
+        },
+        {
+          "start_ms": 1792478771489.8591,
+          "end_ms": 1792478771492.5452,
+          "duration_ms": 2.6860999999999997,
+          "gc_id": 45
+        },
+        {
+          "start_ms": 1792478772445.374,
+          "end_ms": 1792478772449.268,
+          "duration_ms": 3.8941000000000003,
+          "gc_id": 46
+        }
+      ],
+      "gc_pause_total_ms": 396.8331,
+      "worst_frames": [
+        {
+          "start_ns": 70711330700,
+          "frame_ms": 181.2953,
+          "estimated_gc_overlap_ms": 19.348388671875,
+          "conservative_gc_overlap_ms": 19.348388671875,
+          "vm_intervals": [
+            {
+              "type": "jdk.SafepointBegin",
+              "start_ms": 1792478759173.934,
+              "end_ms": 1792478759332.07,
+              "duration_ms": 158.1359,
+              "operation": null,
+              "safepoint_id": 769,
+              "overlap_ms": 158.135986328125
+            },
+            {
+              "type": "jdk.ExecuteVMOperation",
+              "start_ms": 1792478759332.072,
+              "end_ms": 1792478759351.4302,
+              "duration_ms": 19.3582,
+              "operation": "ParallelGCFailedAllocation",
+              "safepoint_id": 769,
+              "overlap_ms": 19.358154296875
+            }
+          ],
+          "chunk_upload_ms": 0.0967,
+          "chunk_gl_list_ms": 0.0233
+        },
+        {
+          "start_ns": 81962826700,
+          "frame_ms": 144.0746,
+          "estimated_gc_overlap_ms": 139.005126953125,
+          "conservative_gc_overlap_ms": 139.005126953125,
+          "vm_intervals": [
+            {
+              "type": "jdk.SafepointBegin",
+              "start_ms": 1792478770426.858,
+              "end_ms": 1792478770426.9795,
+              "duration_ms": 0.1216,
+              "operation": null,
+              "safepoint_id": 801,
+              "overlap_ms": 0.12158203125
+            },
+            {
+              "type": "jdk.ExecuteVMOperation",
+              "start_ms": 1792478770426.981,
+              "end_ms": 1792478770566.0015,
+              "duration_ms": 139.0205,
+              "operation": "ParallelGCFailedAllocation",
+              "safepoint_id": 801,
+              "overlap_ms": 139.0205078125
+            }
+          ],
+          "chunk_upload_ms": 1.0291,
+          "chunk_gl_list_ms": 1.0202
+        },
+        {
+          "start_ns": 65813007600,
+          "frame_ms": 78.3034,
+          "estimated_gc_overlap_ms": 15.115478515625,
+          "conservative_gc_overlap_ms": 15.115478515625,
+          "vm_intervals": [
+            {
+              "type": "jdk.SafepointBegin",
+              "start_ms": 1792478754274.094,
+              "end_ms": 1792478754333.2427,
+              "duration_ms": 59.1487,
+              "operation": null,
+              "safepoint_id": 753,
+              "overlap_ms": 59.148681640625
+            },
+            {
+              "type": "jdk.ExecuteVMOperation",
+              "start_ms": 1792478754333.243,
+              "end_ms": 1792478754348.3694,
+              "duration_ms": 15.1264,
+              "operation": "ParallelGCFailedAllocation",
+              "safepoint_id": 753,
+              "overlap_ms": 15.12646484375
+            },
+            {
+              "type": "jdk.SafepointBegin",
+              "start_ms": 1792478754348.567,
+              "end_ms": 1792478754348.6995,
+              "duration_ms": 0.1326,
+              "operation": null,
+              "safepoint_id": 755,
+              "overlap_ms": 0.132568359375
+            },
+            {
+              "type": "jdk.ExecuteVMOperation",
+              "start_ms": 1792478754348.7,
+              "end_ms": 1792478754348.7163,
+              "duration_ms": 0.0163,
+              "operation": "RevokeBias",
+              "safepoint_id": 755,
+              "overlap_ms": 0.016357421875
+            }
+          ],
+          "chunk_upload_ms": 0.3685,
+          "chunk_gl_list_ms": 0.356
+        },
+        {
+          "start_ns": 69149871400,
+          "frame_ms": 21.8727,
+          "estimated_gc_overlap_ms": 17.8466796875,
+          "conservative_gc_overlap_ms": 17.8466796875,
+          "vm_intervals": [
+            {
+              "type": "jdk.SafepointBegin",
+              "start_ms": 1792478757612.498,
+              "end_ms": 1792478757612.5903,
+              "duration_ms": 0.0922,
+              "operation": null,
+              "safepoint_id": 765,
+              "overlap_ms": 0.09228515625
+            },
+            {
+              "type": "jdk.ExecuteVMOperation",
+              "start_ms": 1792478757612.592,
+              "end_ms": 1792478757630.448,
+              "duration_ms": 17.855900000000002,
+              "operation": "ParallelGCFailedAllocation",
+              "safepoint_id": 765,
+              "overlap_ms": 17.85595703125
+            }
+          ],
+          "chunk_upload_ms": 0.2901,
+          "chunk_gl_list_ms": 0.1739
+        },
+        {
+          "start_ns": 80641191600,
+          "frame_ms": 21.7776,
+          "estimated_gc_overlap_ms": 17.5244140625,
+          "conservative_gc_overlap_ms": 17.5244140625,
+          "vm_intervals": [
+            {
+              "type": "jdk.SafepointBegin",
+              "start_ms": 1792478769103.052,
+              "end_ms": 1792478769103.2063,
+              "duration_ms": 0.1544,
+              "operation": null,
+              "safepoint_id": 797,
+              "overlap_ms": 0.154296875
+            },
+            {
+              "type": "jdk.ExecuteVMOperation",
+              "start_ms": 1792478769103.207,
+              "end_ms": 1792478769120.7412,
+              "duration_ms": 17.5342,
+              "operation": "ParallelGCFailedAllocation",
+              "safepoint_id": 797,
+              "overlap_ms": 17.5341796875
+            }
+          ],
+          "chunk_upload_ms": 0.2354,
+          "chunk_gl_list_ms": 0.1356
+        },
+        {
+          "start_ns": 69966224600,
+          "frame_ms": 21.4359,
+          "estimated_gc_overlap_ms": 17.779052734375,
+          "conservative_gc_overlap_ms": 17.430908203125,
+          "vm_intervals": [
+            {
+              "type": "jdk.SafepointBegin",
+              "start_ms": 1792478758427.754,
+              "end_ms": 1792478758427.8752,
+              "duration_ms": 0.1214,
+              "operation": null,
+              "safepoint_id": 767,
+              "overlap_ms": 0.121337890625
+            },
+            {
+              "type": "jdk.ExecuteVMOperation",
+              "start_ms": 1792478758427.877,
+              "end_ms": 1792478758445.6658,
+              "duration_ms": 17.788800000000002,
+              "operation": "ParallelGCFailedAllocation",
+              "safepoint_id": 767,
+              "overlap_ms": 17.788818359375
+            }
+          ],
+          "chunk_upload_ms": 18.6265,
+          "chunk_gl_list_ms": 0.3706
+        },
+        {
+          "start_ns": 68280982100,
+          "frame_ms": 21.1692,
+          "estimated_gc_overlap_ms": 17.589111328125,
+          "conservative_gc_overlap_ms": 17.589111328125,
+          "vm_intervals": [
+            {
+              "type": "jdk.SafepointBegin",
+              "start_ms": 1792478756743.689,
+              "end_ms": 1792478756743.8323,
+              "duration_ms": 0.14329999999999998,
+              "operation": null,
+              "safepoint_id": 763,
+              "overlap_ms": 0.143310546875
+            },
+            {
+              "type": "jdk.ExecuteVMOperation",
+              "start_ms": 1792478756743.834,
+              "end_ms": 1792478756761.4307,
+              "duration_ms": 17.596799999999998,
+              "operation": "ParallelGCFailedAllocation",
+              "safepoint_id": 763,
+              "overlap_ms": 17.5966796875
+            }
+          ],
+          "chunk_upload_ms": 0.338,
+          "chunk_gl_list_ms": 0.3023
+        },
+        {
+          "start_ns": 77501353300,
+          "frame_ms": 20.7753,
+          "estimated_gc_overlap_ms": 16.1728515625,
+          "conservative_gc_overlap_ms": 16.1728515625,
+          "vm_intervals": [
+            {
+              "type": "jdk.SafepointBegin",
+              "start_ms": 1792478765964.8582,
+              "end_ms": 1792478765965.0737,
+              "duration_ms": 0.2156,
+              "operation": null,
+              "safepoint_id": 789,
+              "overlap_ms": 0.215576171875
+            },
+            {
+              "type": "jdk.ExecuteVMOperation",
+              "start_ms": 1792478765965.076,
+              "end_ms": 1792478765981.2656,
+              "duration_ms": 16.1896,
+              "operation": "ParallelGCFailedAllocation",
+              "safepoint_id": 789,
+              "overlap_ms": 16.189697265625
+            }
+          ],
+          "chunk_upload_ms": 0.1979,
+          "chunk_gl_list_ms": 0.1096
+        },
+        {
+          "start_ns": 66924339000,
+          "frame_ms": 20.3644,
+          "estimated_gc_overlap_ms": 16.6826171875,
+          "conservative_gc_overlap_ms": 16.458740234375,
+          "vm_intervals": [
+            {
+              "type": "jdk.SafepointBegin",
+              "start_ms": 1792478755386.008,
+              "end_ms": 1792478755386.1157,
+              "duration_ms": 0.1077,
+              "operation": null,
+              "safepoint_id": 759,
+              "overlap_ms": 0.107666015625
+            },
+            {
+              "type": "jdk.ExecuteVMOperation",
+              "start_ms": 1792478755386.117,
+              "end_ms": 1792478755402.808,
+              "duration_ms": 16.6912,
+              "operation": "ParallelGCFailedAllocation",
+              "safepoint_id": 759,
+              "overlap_ms": 16.691162109375
+            }
+          ],
+          "chunk_upload_ms": 0.0253,
+          "chunk_gl_list_ms": 0.0
+        },
+        {
+          "start_ns": 83970878400,
+          "frame_ms": 20.0269,
+          "estimated_gc_overlap_ms": 3.89404296875,
+          "conservative_gc_overlap_ms": 3.89404296875,
+          "vm_intervals": [
+            {
+              "type": "jdk.SafepointBegin",
+              "start_ms": 1792478772433.2012,
+              "end_ms": 1792478772445.3682,
+              "duration_ms": 12.1671,
+              "operation": null,
+              "safepoint_id": 807,
+              "overlap_ms": 12.1669921875
+            },
+            {
+              "type": "jdk.ExecuteVMOperation",
+              "start_ms": 1792478772445.369,
+              "end_ms": 1792478772449.2737,
+              "duration_ms": 3.9049,
+              "operation": "ParallelGCFailedAllocation",
+              "safepoint_id": 807,
+              "overlap_ms": 3.90478515625
+            }
+          ],
+          "chunk_upload_ms": 0.0843,
+          "chunk_gl_list_ms": 0.0
+        },
+        {
+          "start_ns": 78486497600,
+          "frame_ms": 19.9149,
+          "estimated_gc_overlap_ms": 15.67626953125,
+          "conservative_gc_overlap_ms": 14.672607421875,
+          "vm_intervals": [
+            {
+              "type": "jdk.ExecuteVMOperation",
+              "start_ms": 1792478766947.27,
+              "end_ms": 1792478766963.1802,
+              "duration_ms": 15.9102,
+              "operation": "ParallelGCFailedAllocation",
+              "safepoint_id": 791,
+              "overlap_ms": 15.6826171875
+            }
+          ],
+          "chunk_upload_ms": 0.0658,
+          "chunk_gl_list_ms": 0.0417
+        },
+        {
+          "start_ns": 79673212500,
+          "frame_ms": 19.8947,
+          "estimated_gc_overlap_ms": 14.8876953125,
+          "conservative_gc_overlap_ms": 14.6845703125,
+          "vm_intervals": [
+            {
+              "type": "jdk.SafepointBegin",
+              "start_ms": 1792478768138.29,
+              "end_ms": 1792478768138.4155,
+              "duration_ms": 0.1255,
+              "operation": null,
+              "safepoint_id": 795,
+              "overlap_ms": 0.12548828125
+            },
+            {
+              "type": "jdk.ExecuteVMOperation",
+              "start_ms": 1792478768138.417,
+              "end_ms": 1792478768153.314,
+              "duration_ms": 14.896899999999999,
+              "operation": "ParallelGCFailedAllocation",
+              "safepoint_id": 795,
+              "overlap_ms": 14.89697265625
+            }
+          ],
+          "chunk_upload_ms": 0.3602,
+          "chunk_gl_list_ms": 0.2926
+        },
+        {
+          "start_ns": 71505150900,
+          "frame_ms": 19.8841,
+          "estimated_gc_overlap_ms": 16.227783203125,
+          "conservative_gc_overlap_ms": 16.227783203125,
+          "vm_intervals": [
+            {
+              "type": "jdk.SafepointBegin",
+              "start_ms": 1792478759967.603,
+              "end_ms": 1792478759967.7017,
+              "duration_ms": 0.0987,
+              "operation": null,
+              "safepoint_id": 771,
+              "overlap_ms": 0.0986328125
+            },
+            {
+              "type": "jdk.ExecuteVMOperation",
+              "start_ms": 1792478759967.7031,
+              "end_ms": 1792478759983.9426,
+              "duration_ms": 16.2394,
+              "operation": "ParallelGCFailedAllocation",
+              "safepoint_id": 771,
+              "overlap_ms": 16.239501953125
+            }
+          ],
+          "chunk_upload_ms": 0.0871,
+          "chunk_gl_list_ms": 0.056
+        },
+        {
+          "start_ns": 76223916500,
+          "frame_ms": 19.7799,
+          "estimated_gc_overlap_ms": 14.912109375,
+          "conservative_gc_overlap_ms": 14.912109375,
+          "vm_intervals": [
+            {
+              "type": "jdk.SafepointBegin",
+              "start_ms": 1792478764686.677,
+              "end_ms": 1792478764686.8835,
+              "duration_ms": 0.20650000000000002,
+              "operation": null,
+              "safepoint_id": 785,
+              "overlap_ms": 0.20654296875
+            },
+            {
+              "type": "jdk.ExecuteVMOperation",
+              "start_ms": 1792478764686.885,
+              "end_ms": 1792478764701.8066,
+              "duration_ms": 14.9217,
+              "operation": "ParallelGCFailedAllocation",
+              "safepoint_id": 785,
+              "overlap_ms": 14.921630859375
+            }
+          ],
+          "chunk_upload_ms": 0.0903,
+          "chunk_gl_list_ms": 0.0
+        },
+        {
+          "start_ns": 73148090700,
+          "frame_ms": 18.6209,
+          "estimated_gc_overlap_ms": 14.961181640625,
+          "conservative_gc_overlap_ms": 14.961181640625,
+          "vm_intervals": [
+            {
+              "type": "jdk.SafepointBegin",
+              "start_ms": 1792478761611.0,
+              "end_ms": 1792478761611.2002,
+              "duration_ms": 0.2001,
+              "operation": null,
+              "safepoint_id": 775,
+              "overlap_ms": 0.2001953125
+            },
+            {
+              "type": "jdk.ExecuteVMOperation",
+              "start_ms": 1792478761611.202,
+              "end_ms": 1792478761626.1733,
+              "duration_ms": 14.9715,
+              "operation": "ParallelGCFailedAllocation",
+              "safepoint_id": 775,
+              "overlap_ms": 14.971435546875
+            }
+          ],
+          "chunk_upload_ms": 0.118,
+          "chunk_gl_list_ms": 0.0
+        },
+        {
+          "start_ns": 75001043000,
+          "frame_ms": 18.2442,
+          "estimated_gc_overlap_ms": 13.34619140625,
+          "conservative_gc_overlap_ms": 13.34619140625,
+          "vm_intervals": [
+            {
+              "type": "jdk.SafepointBegin",
+              "start_ms": 1792478763463.14,
+              "end_ms": 1792478763463.2678,
+              "duration_ms": 0.128,
+              "operation": null,
+              "safepoint_id": 781,
+              "overlap_ms": 0.1279296875
+            },
+            {
+              "type": "jdk.ExecuteVMOperation",
+              "start_ms": 1792478763463.269,
+              "end_ms": 1792478763476.6235,
+              "duration_ms": 13.3546,
+              "operation": "ParallelGCFailedAllocation",
+              "safepoint_id": 781,
+              "overlap_ms": 13.3544921875
+            }
+          ],
+          "chunk_upload_ms": 0.339,
+          "chunk_gl_list_ms": 0.2547
+        },
+        {
+          "start_ns": 72270633600,
+          "frame_ms": 15.1766,
+          "estimated_gc_overlap_ms": 11.512939453125,
+          "conservative_gc_overlap_ms": 11.512939453125,
+          "vm_intervals": [
+            {
+              "type": "jdk.SafepointBegin",
+              "start_ms": 1792478760733.1382,
+              "end_ms": 1792478760733.2769,
+              "duration_ms": 0.1386,
+              "operation": null,
+              "safepoint_id": 773,
+              "overlap_ms": 0.138671875
+            },
+            {
+              "type": "jdk.ExecuteVMOperation",
+              "start_ms": 1792478760733.278,
+              "end_ms": 1792478760744.8003,
+              "duration_ms": 11.5223,
+              "operation": "ParallelGCFailedAllocation",
+              "safepoint_id": 773,
+              "overlap_ms": 11.522216796875
+            }
+          ],
+          "chunk_upload_ms": 0.3371,
+          "chunk_gl_list_ms": 0.3091
+        },
+        {
+          "start_ns": 73976862500,
+          "frame_ms": 15.13,
+          "estimated_gc_overlap_ms": 11.44091796875,
+          "conservative_gc_overlap_ms": 11.44091796875,
+          "vm_intervals": [
+            {
+              "type": "jdk.SafepointBegin",
+              "start_ms": 1792478762439.127,
+              "end_ms": 1792478762439.227,
+              "duration_ms": 0.1002,
+              "operation": null,
+              "safepoint_id": 777,
+              "overlap_ms": 0.10009765625
+            },
+            {
+              "type": "jdk.ExecuteVMOperation",
+              "start_ms": 1792478762439.228,
+              "end_ms": 1792478762450.6775,
+              "duration_ms": 11.4494,
+              "operation": "ParallelGCFailedAllocation",
+              "safepoint_id": 777,
+              "overlap_ms": 11.449462890625
+            }
+          ],
+          "chunk_upload_ms": 0.3374,
+          "chunk_gl_list_ms": 0.3117
+        },
+        {
+          "start_ns": 66886022800,
+          "frame_ms": 14.2239,
+          "estimated_gc_overlap_ms": 0,
+          "conservative_gc_overlap_ms": 0,
+          "vm_intervals": [
+            {
+              "type": "jdk.SafepointBegin",
+              "start_ms": 1792478755348.316,
+              "end_ms": 1792478755359.224,
+              "duration_ms": 10.908100000000001,
+              "operation": null,
+              "safepoint_id": 757,
+              "overlap_ms": 10.908203125
+            }
+          ],
+          "chunk_upload_ms": 0.3784,
+          "chunk_gl_list_ms": 0.3554
+        },
+        {
+          "start_ns": 78233041600,
+          "frame_ms": 11.8679,
+          "estimated_gc_overlap_ms": 0,
+          "conservative_gc_overlap_ms": 0,
+          "vm_intervals": [],
+          "chunk_upload_ms": 2.1866,
+          "chunk_gl_list_ms": 2.1594
+        }
+      ],
+      "client_stack_samples": [
+        {
+          "samples": 261,
+          "stack": [
+            "net/adiont/alacer/render/ChunkVisibility.inFrustum",
+            "net/adiont/alacer/render/ChunkVisibility.search",
+            "net/adiont/alacer/render/ChunkVisibility.beforeVanillaSearch",
+            "net/minecraft/client/render/world/WorldRenderer.handler$zbk000$alacer$visibilitySearch",
+            "net/minecraft/client/render/world/WorldRenderer.setupRender"
+          ]
+        },
+        {
+          "samples": 89,
+          "stack": [
+            "net/minecraft/client/render/world/WorldRenderer.renderEntities",
+            "net/minecraft/client/render/GameRenderer.render",
+            "net/minecraft/client/render/GameRenderer.renderWorld",
+            "net/minecraft/client/render/GameRenderer.render",
+            "net/minecraft/client/Minecraft.runGame"
+          ]
+        },
+        {
+          "samples": 70,
+          "stack": [
+            "org/lwjgl/opengl/WindowsContextImplementation.nSwapBuffers",
+            "org/lwjgl/opengl/WindowsContextImplementation.swapBuffers",
+            "org/lwjgl/opengl/ContextGL.swapBuffers",
+            "org/lwjgl/opengl/DrawableGL.swapBuffers",
+            "org/lwjgl/opengl/Display.swapBuffers"
+          ]
+        },
+        {
+          "samples": 21,
+          "stack": [
+            "net/minecraft/client/render/world/WorldRenderer.setupRender",
+            "net/minecraft/client/render/GameRenderer.render",
+            "net/minecraft/client/render/GameRenderer.renderWorld",
+            "net/minecraft/client/render/GameRenderer.render",
+            "net/minecraft/client/Minecraft.runGame"
+          ]
+        },
+        {
+          "samples": 19,
+          "stack": [
+            "org/lwjgl/opengl/GL11.nglEndList",
+            "org/lwjgl/opengl/GL11.glEndList",
+            "net/minecraft/client/render/world/ChunkRenderDispatcher.uploadGlList",
+            "net/minecraft/client/render/world/ChunkRenderDispatcher.upload",
+            "net/minecraft/client/render/world/ChunkRenderDispatcher$18371494.run"
+          ]
+        },
+        {
+          "samples": 14,
+          "stack": [
+            "net/minecraft/client/render/world/WorldRenderer.render",
+            "net/minecraft/client/render/GameRenderer.render",
+            "net/minecraft/client/render/GameRenderer.renderWorld",
+            "net/minecraft/client/render/GameRenderer.render",
+            "net/minecraft/client/Minecraft.runGame"
+          ]
+        },
+        {
+          "samples": 13,
+          "stack": [
+            "java/util/HashMap.getNode",
+            "java/util/HashMap.containsKey",
+            "java/util/HashSet.contains",
+            "net/minecraft/client/render/world/WorldRenderer.setupRender",
+            "net/minecraft/client/render/GameRenderer.render"
+          ]
+        },
+        {
+          "samples": 9,
+          "stack": [
+            "org/lwjgl/opengl/GL11.nglDrawArrays",
+            "org/lwjgl/opengl/GL11.glDrawArrays",
+            "net/minecraft/client/render/vertex/BufferUploader.end",
+            "net/minecraft/client/render/world/ChunkRenderDispatcher.uploadGlList",
+            "net/minecraft/client/render/world/ChunkRenderDispatcher.upload"
+          ]
+        },
+        {
+          "samples": 5,
+          "stack": [
+            "net/adiont/alacer/render/EntityRendering.cachedLookup",
+            "net/adiont/alacer/render/EntityRendering.lookup",
+            "net/minecraft/client/render/world/WorldRenderer.wrapOperation$zzp000$alacer$chunkLookup",
+            "net/minecraft/client/render/world/WorldRenderer.wrapOperation$zzp000$alacer$chunkLookup$mixinextras$bridge$88",
+            "net/minecraft/client/render/world/WorldRenderer.renderEntities"
+          ]
+        },
+        {
+          "samples": 4,
+          "stack": [
+            "net/minecraft/client/world/ClientWorld.doRandomDisplayTicks",
+            "net/minecraft/client/Minecraft.tick",
+            "net/minecraft/client/Minecraft.runGame",
+            "net/minecraft/client/Minecraft.run",
+            "net/minecraft/client/main/Main.main"
+          ]
+        },
+        {
+          "samples": 3,
+          "stack": [
+            "net/minecraft/client/render/world/RenderChunkStorage.updateCameraPos",
+            "net/minecraft/client/render/world/WorldRenderer.setupRender",
+            "net/minecraft/client/render/GameRenderer.render",
+            "net/minecraft/client/render/GameRenderer.renderWorld",
+            "net/minecraft/client/render/GameRenderer.render"
+          ]
+        },
+        {
+          "samples": 3,
+          "stack": [
+            "net/minecraft/world/chunk/WorldChunkSection.getBlockState",
+            "net/minecraft/world/chunk/WorldChunkSection.getBlock",
+            "net/minecraft/world/chunk/WorldChunkSection.validateBlockCounters",
+            "net/minecraft/world/chunk/WorldChunk.update",
+            "net/minecraft/client/network/handler/ClientPlayNetworkHandler.handleWorldChunks"
+          ]
+        },
+        {
+          "samples": 3,
+          "stack": [
+            "net/minecraft/util/Long2ObjectHashMap.get",
+            "net/minecraft/client/world/chunk/ClientChunkCache.getChunk",
+            "net/minecraft/world/World.getChunkAt",
+            "net/minecraft/world/World.getChunk",
+            "net/minecraft/world/World.getBlockState"
+          ]
+        },
+        {
+          "samples": 2,
+          "stack": [
+            "org/lwjgl/opengl/GL11.nglCallList",
+            "org/lwjgl/opengl/GL11.glCallList",
+            "net/minecraft/client/render/world/GlListRenderChunkList.render",
+            "net/minecraft/client/render/world/WorldRenderer.renderLastChunks",
+            "net/minecraft/client/render/world/WorldRenderer.render"
+          ]
+        },
+        {
+          "samples": 2,
+          "stack": [
+            "net/minecraft/util/Long2ObjectHashMap.hash",
+            "net/minecraft/util/Long2ObjectHashMap.get",
+            "net/minecraft/server/world/chunk/ServerChunkCache.getChunk",
+            "net/minecraft/world/World.getChunkAt",
+            "net/minecraft/world/World.getChunk"
+          ]
+        },
+        {
+          "samples": 2,
+          "stack": [
+            "net/minecraft/client/render/world/ChunkRenderDispatcher.runTasksUntil",
+            "net/minecraft/client/render/world/WorldRenderer.compileChunksUntil",
+            "net/minecraft/client/render/GameRenderer.render",
+            "net/minecraft/client/render/GameRenderer.renderWorld",
+            "net/minecraft/client/render/GameRenderer.render"
+          ]
+        },
+        {
+          "samples": 2,
+          "stack": [
+            "java/util/BitSet.expandTo",
+            "java/util/BitSet.set",
+            "java/util/BitSet.set",
+            "net/minecraft/client/render/world/ChunkOcclusionGraph.getFaces",
+            "net/minecraft/client/render/world/ChunkOcclusionGraph.getFaces"
+          ]
+        },
+        {
+          "samples": 2,
+          "stack": [
+            "net/minecraft/world/World.isChunkLoadedAt",
+            "net/minecraft/world/World.isAreaLoaded",
+            "net/minecraft/world/World.isAreaLoaded",
+            "net/minecraft/world/World.isAreaLoaded",
+            "net/minecraft/world/chunk/WorldChunk.populateLight"
+          ]
+        },
+        {
+          "samples": 1,
+          "stack": [
+            "net/minecraft/client/render/FrustumData.discriminant",
+            "net/minecraft/client/render/FrustumData.contains",
+            "net/minecraft/client/render/FrustumCuller.isVisible",
+            "net/minecraft/client/render/FrustumCuller.isVisible",
+            "net/minecraft/client/render/entity/EntityRenderer.shouldRender"
+          ]
+        },
+        {
+          "samples": 1,
+          "stack": [
+            "java/util/concurrent/locks/AbstractQueuedSynchronizer.release",
+            "java/util/concurrent/locks/ReentrantLock.unlock",
+            "java/util/concurrent/ArrayBlockingQueue.size",
+            "java/util/AbstractCollection.isEmpty",
+            "net/minecraft/client/render/world/ChunkRenderDispatcher.clear"
+          ]
+        }
+      ],
+      "monitor_events": []
+    }
+  }
+}

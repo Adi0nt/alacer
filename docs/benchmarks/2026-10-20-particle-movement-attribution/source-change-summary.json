@@ -1,0 +1,21 @@
+{
+  "changed_since_session23_freeze": [
+    "src\\main\\java\\net\\adiont\\alacer\\benchmark\\BenchmarkRunner.java",
+    "src\\main\\java\\net\\adiont\\alacer\\config\\AlacerMixinPlugin.java",
+    "src\\main\\java\\net\\adiont\\alacer\\render\\ParticleDrawDiagnostics.java",
+    "src\\main\\resources\\alacer.mixins.json",
+    "src\\test\\java\\net\\adiont\\alacer\\config\\AlacerMixinPluginTest.java"
+  ],
+  "added_since_session23_freeze": [
+    "src\\main\\java\\net\\adiont\\alacer\\mixin\\EntityParticleMovementCensusMixin.java",
+    "src\\main\\java\\net\\adiont\\alacer\\mixin\\WorldParticleMovementCensusMixin.java",
+    "src\\main\\java\\net\\adiont\\alacer\\render\\ParticleMovementCensus.java",
+    "src\\main\\java\\net\\adiont\\alacer\\render\\ThreadCycles.java",
+    "tools/run_particle_movement_attribution.py",
+    "docs/benchmarks/2026-10-20-particle-movement-attribution/protocol.md",
+    "docs/benchmarks/2026-10-20-particle-movement-attribution/analyze.py",
+    "docs/benchmarks/2026-10-20-particle-light-confirmation/stream_jfr.py",
+    "docs/benchmarks/2026-10-20-particle-light-confirmation/JfrPassAttribution.java"
+  ],
+  "note": "Compared actual current bytes, including earlier tooling omitted from the later manifest. Product configuration and NaN writer/verifier sources remain unchanged."
+}

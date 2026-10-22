@@ -1,0 +1,28 @@
+{
+  "jdk": "C:/Program Files/Eclipse Adoptium/jdk-25.0.4.101-hotspot",
+  "mapped_vanilla_source_jar": ".gradle\\loom-cache\\minecraftMaven\\net\\minecraft\\minecraft-merged-5d0b48031a\\1.8.9-loom.mappings.1_8_9.layered+hash.1480139456-v2\\minecraft-merged-5d0b48031a-1.8.9-loom.mappings.1_8_9.layered+hash.1480139456-v2-sources.jar",
+  "mapped_vanilla_source_sha256": "9a8846594ccc8ac1b4f0913caecd5dd8fcbdbc256dc9784d89b8eec0d06ff78b",
+  "read_classes": [
+    "net/minecraft/util/math/Box.java",
+    "net/minecraft/entity/Entity.java",
+    "net/minecraft/world/World.java",
+    "net/minecraft/client/entity/particle/Particle.java",
+    "net/minecraft/entity/vehicle/BoatEntity.java",
+    "net/minecraft/client/world/ClientWorld.java"
+  ],
+  "prior_recording": "run/pm-profile-1.jfr",
+  "prior_recording_sha256": "6b5876a1c7326872e68c520d1ff2e9ff2c0bfbe90602ce562c03cfff20331313",
+  "prior_recording_source_snapshot_available": false,
+  "decode_command": [
+    "C:/Program Files/Eclipse Adoptium/jdk-25.0.4.101-hotspot/bin/jfr.exe",
+    "print",
+    "--json",
+    "--stack-depth",
+    "64",
+    "--events",
+    "jdk.ObjectAllocationSample,jdk.ExecutionSample",
+    "run/pm-profile-1.jfr"
+  ],
+  "filter": "client main thread, allocation stacks containing ParticleManager.tickParticle; full recording only",
+  "no_third_party_performance_mod_source_used": true
+}

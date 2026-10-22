@@ -1,0 +1,15 @@
+{
+  "throughput_frame_cpu_gate_all_phases": true,
+  "summary_tail_gate_all_phases": true,
+  "full_responsiveness_gate": "Not cleared as an unqualified recommendation: queue-start latency regresses >10% at different task rates; exact visible-update latency is unavailable.",
+  "diagnostic_fly_queue_start_change_percent": [
+    21.503717975527124,
+    23.14042143412751
+  ],
+  "median_diagnostic_fly_queue_start_change_percent": 22.322069704827317,
+  "fly_maximum_worse_for_vbo_pairs": 4,
+  "allocation_rate": "Client bytes/frame improve, client bytes/second regress in every phase. No allocation-rate optimization claimed.",
+  "setting_result": "Vanilla VBO is a measured throughput preference for this machine/scenario, with tail/allocation/responsiveness tradeoffs. No universal smoothness claim.",
+  "production_algorithm_default_or_backend_forcing_change_selected": false,
+  "next_renderer_scenario": "Particles, independently designed; Java 25 game runtime/profile investigation remains separate and unverified."
+}

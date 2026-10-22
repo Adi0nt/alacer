@@ -1,0 +1,50 @@
+package net.adiont.alacer.settings;
+
+import static org.junit.jupiter.api.Assertions.*;
+import java.util.HashSet;
+import java.util.LinkedHashMap;
+import java.util.Map;
+import org.junit.jupiter.api.Test;
+
+class VideoSettingsDraftTest {
+	@Test void editsAreDetachedAndOnlySuccessfulApplyAcceptsThem() {
+		Map<String,Integer> live = new LinkedHashMap<>(Map.of("clouds",2,"distance",12));
+		VideoSettingsDraft draft = new VideoSettingsDraft(live);
+		VideoSetting clouds = VideoSettingsCatalog.byKey("clouds");
+		draft.cycle(clouds,1);
+		assertEquals(0,draft.value(clouds));
+		assertEquals(2,live.get("clouds"));
+		assertEquals(Map.of("clouds",0),draft.changes());
+		draft.accept(); assertTrue(draft.changes().isEmpty());
+		draft.cycle(clouds,-1); assertEquals(2,draft.value(clouds));
+		assertEquals(Map.of("clouds",2),draft.changes());
+	}
+	@Test void categoryResetDoesNotChangeOtherPagesOrLockedSettings() {
+		VideoSettingsDraft draft = new VideoSettingsDraft(Map.of("quality.leaves",1,"quality.weather",3,"clouds",0));
+		draft.reset(VideoSetting.Category.DETAILS,s -> !s.key().equals("quality.weather"));
+		assertEquals(0,draft.value(VideoSettingsCatalog.byKey("quality.leaves")));
+		assertEquals(3,draft.value(VideoSettingsCatalog.byKey("quality.weather")));
+		assertEquals(0,draft.value(VideoSettingsCatalog.byKey("clouds")));
+		assertEquals(Map.of("quality.leaves",0),draft.changes());
+	}
+	@Test void searchIsCaseInsensitiveGlobalAndDoesNotLoseEdits() {
+		VideoSettingsDraft draft = new VideoSettingsDraft(Map.of());
+		draft.set(VideoSettingsCatalog.byKey("clouds"),0);
+		assertTrue(draft.matching(VideoSetting.Category.DISPLAY,"  LEAVES ").stream().anyMatch(s -> s.key().equals("quality.leaves")));
+		assertTrue(draft.matching(VideoSetting.Category.DISPLAY,"").stream().allMatch(s -> s.category()==VideoSetting.Category.DISPLAY));
+		assertTrue(draft.matching(VideoSetting.Category.GRAPHICS,"nonexistentsetting").isEmpty());
+		assertEquals(Map.of("clouds",0),draft.changes());
+	}
+	@Test void catalogHasValidDefaultsUniqueKeysAndNoExperimentsOrDiagnosticControls() {
+		HashSet<String> keys = new HashSet<>();
+		for (VideoSetting s : VideoSettingsCatalog.ALL) {
+			assertTrue(keys.add(s.key()),s.key()); assertEquals(s.defaultValue(),s.normalize(s.defaultValue()));
+			assertEquals(s.minimum(),s.normalize(-10000)); assertEquals(s.maximum(),s.normalize(10000));
+			assertFalse(s.key().contains("verify")); assertFalse(s.key().startsWith("profiler."));
+			if (s.key().startsWith("render.")) { assertEquals(1,s.defaultValue()); }
+		}
+		assertEquals(9,keys.stream().filter(k -> k.startsWith("render.")).count());
+		assertFalse(keys.contains("render.reuseParticleLight"));
+		assertEquals(VideoSetting.Effect.RESTART,VideoSettingsCatalog.byKey("render.fastParticleVertices").effect());
+	}
+}

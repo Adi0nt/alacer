@@ -1,0 +1,44 @@
+{
+  "schema_version": 1,
+  "purpose": "separate thread-cycle attribution staging; not frozen light evidence",
+  "state": "staged_only_unbuilt_unrun",
+  "java_release": 25,
+  "integration_prerequisite": "Main confirms frozen light profiles complete before copying or building anything",
+  "original_diagnostics_path": "src/main/java/net/adiont/alacer/render/ParticleDrawDiagnostics.java",
+  "original_diagnostics_sha256": "f4ed135d586c2d23e73e79f0249e262463b19433b555354a37b97c1ad6b101c8",
+  "original_diagnostics_lines": 293,
+  "validation": {
+    "static_review_only": true,
+    "compiled": false,
+    "smoke_run": false,
+    "client_run": false,
+    "static_checks": [
+      "original source still matches recorded SHA-256",
+      "all existing JSON field names preserved",
+      "GL initialization/context/poll/deletion method bodies unchanged",
+      "new native helper creation gated by diagnostics and cycle property"
+    ]
+  },
+  "property": "alacer.profiler.particleThreadCycles",
+  "default": false,
+  "required_existing_gates": [
+    "alacer.profiler.particleDrawDiagnostics=true",
+    "alacer.benchmark=true",
+    "alacer.profiler.enabled=true"
+  ],
+  "units": "raw_cycles; never converted to ns or elapsed time",
+  "files_sha256": {
+    "ParticleDrawDiagnostics.java": "0a72ef5648ad7d7eb7fa39a43febd80a0c30c97a8103f1910df78229c04e7c15",
+    "README.md": "c0050b296878b9225a1f27ccb25e0737603a780d4b05acf59ebf806dc6436946",
+    "ThreadCycles.java": "be55450b9a174970de9383660b549e1073b2633c8ad0444cf2d68307e542dad1",
+    "ThreadCyclesSmoke.java": "f3766d31c00c01045cfe315b6864039926f118717d45a3cd2d92d01967e8f77e"
+  },
+  "future_attribution_manifest_required": [
+    "unique run id and output directory outside frozen runs",
+    "Java 25 executable/version and exact client JVM arguments",
+    "integrated source hashes and built artifact hash",
+    "all benchmark/render/diagnostic gates and scenario/world identity",
+    "OS/CPU identity and cycle supported/available/status",
+    "separate smoke/build/client evidence and control/diagnostic labels"
+  ]
+}

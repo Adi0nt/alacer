@@ -1,0 +1,142 @@
+{
+  "test_command": ".\\gradlew.bat test build --console=plain",
+  "executed_build_log": "build/s14-final-build.log",
+  "executed_build_log_sha256": "296cb158153ee889a271489d3b8371b292945baa00dcc50b8d2dd3652c5e476e",
+  "final_up_to_date_build_log": "build/s14-verified-build.log",
+  "final_build_log_sha256": "b8a1e9af0a3721ebc773a198b7c3f2ddc89172300b976f6c00ed1b4bf67fb571",
+  "runtime_boundary": "Tests/Gradle on configured JDK 25; actual game launches on Temurin 8u492; Java 25 game untested.",
+  "test_totals": {
+    "tests": 47,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  "test_suites": {
+    "TEST-net.adiont.alacer.benchmark.BackendScenarioTest.xml": {
+      "tests": 3,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    "TEST-net.adiont.alacer.config.AlacerConfigTest.xml": {
+      "tests": 7,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    "TEST-net.adiont.alacer.config.AlacerMixinPluginTest.xml": {
+      "tests": 5,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    "TEST-net.adiont.alacer.profiler.ConcurrentTimingsTest.xml": {
+      "tests": 1,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    "TEST-net.adiont.alacer.profiler.DirtyQueueAgeTest.xml": {
+      "tests": 2,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    "TEST-net.adiont.alacer.profiler.FrameProfilerTest.xml": {
+      "tests": 4,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    "TEST-net.adiont.alacer.profiler.JsonWriterTest.xml": {
+      "tests": 2,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    "TEST-net.adiont.alacer.profiler.MetricRingTest.xml": {
+      "tests": 4,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    "TEST-net.adiont.alacer.profiler.SeriesStatsTest.xml": {
+      "tests": 7,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    "TEST-net.adiont.alacer.render.ChunkFrustumTest.xml": {
+      "tests": 5,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    "TEST-net.adiont.alacer.render.MatrixTrackerTest.xml": {
+      "tests": 7,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    }
+  },
+  "artifacts": {
+    "build/libs/alacer-0.1.0+mc1.8.9.jar": {
+      "sha256": "27fad3ef669e74912d0f804dcf2d97388fd8190695d9988942c4bdef63034157",
+      "project_class_major_versions": [
+        52
+      ]
+    }
+  },
+  "protected_historical_files_unchanged": 40,
+  "base_world_files_unchanged": 34,
+  "user_options_and_mod_config_byte_identical_to_initial": true,
+  "visually_inspected_images": {
+    "run/screenshots/alacer-bvs-dl-detail2-vis_on-ecl_on-ent0-steady.png": {
+      "sha256": "e3a8cc45b5dda0f700ed6ba3766cb85a9f6d5b8dfcc72aed8004500fb8d2da14",
+      "size": [
+        1920,
+        1080
+      ]
+    },
+    "run/screenshots/alacer-bvs-dl-detail2-vis_on-ecl_on-ent0-sort.png": {
+      "sha256": "09b4d39d62cddb2bec8231479f3f8863df177f61b2905c081f1d5f9230a9c3aa",
+      "size": [
+        1920,
+        1080
+      ]
+    },
+    "run/screenshots/alacer-bvs-dl-detail2-vis_on-ecl_on-ent0-fly.png": {
+      "sha256": "732fe450938e8dedc0b9724dab72320d7657ddd3c0f265ece808d569626255a2",
+      "size": [
+        1920,
+        1080
+      ]
+    },
+    "run/screenshots/alacer-bvs-vbo-detail2-vis_on-ecl_on-ent0-steady.png": {
+      "sha256": "a9f8fddf44198c4299842ee7d78122522cfc02d65089364869d83d33efa5f70e",
+      "size": [
+        1920,
+        1080
+      ]
+    },
+    "run/screenshots/alacer-bvs-vbo-detail2-vis_on-ecl_on-ent0-sort.png": {
+      "sha256": "35cc4cf53bdfe11a34892df6243bade6c32e0cfa0244bbc3e1b8b63c86611e0c",
+      "size": [
+        1920,
+        1080
+      ]
+    },
+    "run/screenshots/alacer-bvs-vbo-detail2-vis_on-ecl_on-ent0-fly.png": {
+      "sha256": "95c3779602a1e8287e5f35c9f1e5cc29f38ec4e9a1f99ff894af18b528df8f5f",
+      "size": [
+        1920,
+        1080
+      ]
+    }
+  },
+  "visual_finding": "Steady, sort and fly endpoints viewed in both backends; no obvious geometry/foliage/water/cloud/transparency defect in those views. White glass is a limited ordering oracle; no pixel identity or arbitrary-mod certification.",
+  "full_launch_validation_logs": {
+    "build/s14-final-validation.log": "5883970970d7ff217d3a2b92e9af281d203e1391acb07d6c2845fae28d6709b2",
+    "build/s14-gc-validation.log": "1b8c751261f652d6fb1fa1e4406578c4a2177850514539003ebc7601d9c095b3"
+  }
+}

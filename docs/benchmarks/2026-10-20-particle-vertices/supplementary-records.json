@@ -1,0 +1,137 @@
+{
+  "pv20-jfr-1": {
+    "note": "baseline JFR, pre-change source sources-35f26964345f80d8 (shipped defaults, detail off)",
+    "source": "run\\alacer\\benchmarks\\20261020-192440-pv20-jfr-1-vis_on-ecl_on-ent0",
+    "files_sha256": {
+      "pan.csv": "8e7d8cc91204ce9ded8d46fda7828b6e29d900429389062394e6d80badfa3b1a",
+      "pan.json": "d79d6ff0920da511350d71cc9dcc339c2f08cbc4166b8256cc5cc7e098cea2f3",
+      "static.csv": "7112f84426d820b7a848afef29456f430a293db53472ddae484be31999c79924",
+      "static.json": "5418a7ccad5915a11e96d8a6c6e352b1fc4393539050271db086a89eea4a52f9",
+      "summary.json": "b3e3fc48d48f3364b489eb6e09c0c971258538e747ee8ad8b7e3d299581f1cd0"
+    },
+    "log": "build/pv20-jfr-1.log",
+    "log_sha256": "7178fded2e82e7299cf4b4978b560adc3c2a9e33d7a4523bbf3d0f83d9a8c18a",
+    "jfr": "run\\pv20-jfr-1.jfr",
+    "jfr_sha256": "4cb38d1e98faf2224b854f4292ac4ec667e8027033639e9f3953d6de4c571851"
+  },
+  "pv20-jfr-2": {
+    "note": "baseline JFR, pre-change source, scale 2",
+    "source": "run\\alacer\\benchmarks\\20261020-192539-pv20-jfr-2-vis_on-ecl_on-ent0",
+    "files_sha256": {
+      "pan.csv": "8a217b43b8b396239bd2f11d808665874de0c751b67c3fbfd6089bceb53da431",
+      "pan.json": "5d534e4c78805c2e6940c08971fc6312ef11e78c4d4930ccc1c136baea904179",
+      "static.csv": "dba1a5ad2f6ec44bed58b71522b9a98062eb351eab9020d1528e675f8c85713d",
+      "static.json": "37d7c8edfe91def8b2d337193f0a7bb8161ac70d9bc4788fac195d6acf02c6c3",
+      "summary.json": "7d7e7d56e07f2651ac9e20728701c880bbd98c95396299e62e6d839e4ad2738c"
+    },
+    "log": "build/pv20-jfr-2.log",
+    "log_sha256": "573f5323de53448e40e0235608bcf7ac83ec33d7d899dd38848afbe5e600d0b1",
+    "jfr": "run\\pv20-jfr-2.jfr",
+    "jfr_sha256": "2ab918a501220423aa5dba727d5764ecc0d7c5cd4e8afe09c0cd69b5d28db72a"
+  },
+  "pv20-pilot-verify": {
+    "note": "pre-freeze pilot verification, scale 1 (supplementary)",
+    "source": "run\\alacer\\benchmarks\\20261020-193556-pv20-pilot-verify-vis_on-ecl_on-ent0",
+    "files_sha256": {
+      "pan.csv": "8195344987ff85f57d0ee2b898de35238f6b67ecc0f8fcc73cf7558f06ff403b",
+      "pan.json": "db0777bc2444e4dc53dd7e0ad138a516b10253eadc4a18874f720cec0c77ac0f",
+      "static.csv": "e156adc625102aa9268e724f00fc9b78efba3c696de594b4a970d6ba0b29ab98",
+      "static.json": "9e44ff7773f4d0e76075d7cf3e438b58449123e73744102a3c9c640b05576530",
+      "summary.json": "56accda5095c9b3887485b58e656f10a36626e8352ed6015dea9feb655d5446b"
+    },
+    "log": "build/pv20-pilot-verify.log",
+    "log_sha256": "174eddd40402cc03f0c83d86427a0b51cb9148f8c266289943662f0c8c92d1b6"
+  },
+  "pv20-pilot-ab": {
+    "note": "pre-freeze pilot A/B, scale 1 (not selection evidence)",
+    "source": "run\\alacer\\benchmarks\\20261020-193833-pv20-pilot-ab-vis_on-ecl_on-ent0-ab",
+    "files_sha256": {
+      "pan-a1.csv": "19ad9a85f4e1a96f094f5d41acccded5b301283b8f62ec3b226c5392410f6db4",
+      "pan-a1.json": "bafe136391003e155dc2ccfbb7c564fd8a09ff0a3492f4a5a1348ed9d703580f",
+      "pan-a2.csv": "507e378e70c430a2399a2b74d8128c988e285d5172bb155bc474c96b4421bd96",
+      "pan-a2.json": "153c2b1818cc3cf19d37e56a47a7d66107e4f028715f06208ed73b9c36dd906d",
+      "pan-b1.csv": "80e7a218934ed513fd510fe3290bf9ceb57133852160214f84356dec282b9d7e",
+      "pan-b1.json": "1060d5048389ab5a6c989d34fd00135e53d9291675971432cce97ea4b30d8ef9",
+      "pan-b2.csv": "4f9fc224411166378b17fee3f86dcc3f5160f529a0e7d955c25f5c7f617e756b",
+      "pan-b2.json": "06604a7a8b73e4fe74611980bf574169332073a5e0ad8bcdd54c6886794ec27c",
+      "static-a1.csv": "bccb8fee3dc129aafc3bd38249457dea4c09277d74bdb8cf089f45ef4cdd7b9d",
+      "static-a1.json": "ed7e5401e1166a399e12216c8929b46b53ecb45323295ff74037169671006639",
+      "static-a2.csv": "c662110c4165c5c8cfaf88e15397394bd0dd23c094f4c052d3a430220d27ed5c",
+      "static-a2.json": "652060b9b6a975b1aa9023b8c55f9b470c5a85511471b137ada2a8f9c7e4b720",
+      "static-b1.csv": "c89f9e0d2b386e4f280bd6cc3f1e73cf122c9c752ede9897e4787c8144f52986",
+      "static-b1.json": "a712d5c16093b115d14e0fe3f267ad649b4f9879cd5507e75eb7c9bd1e1fda8d",
+      "static-b2.csv": "b47847a033af44ed7ad46ea1d83e31351ca23b2ffc3b65b61a6e560c074e9cc8",
+      "static-b2.json": "47fc45906521fe056e9b2112f6da3793e286b545582873fdda240000eb233129",
+      "summary.json": "f50aa5da91fbb9a1e902959d06debba30cef04bd3c75e9a7361e354b99bae6a5",
+      "warmup-pan-a.csv": "61f0c6957f879512e840cf2a3e4fff6d815008f30010b0bccfa4b3f7a3134de9",
+      "warmup-pan-a.json": "43370b59ae67d60746d0d6197b4ab8e031660159629774ed0411ef69a21d1dda",
+      "warmup-pan-b.csv": "7c1b8b106d1b903f73bcc2bf4cf84cc2fb5c1eadbf1472a62781fb1a5985a844",
+      "warmup-pan-b.json": "a9ff688f2dcd3c8c07417317b52d9a2a62d7f14bfba253c67c072d382019d4af",
+      "warmup-static-a.csv": "eb09bff2db922e7e3c4e91f3b98e6e3fc8fafb77365ce6524940c88e2a83c39c",
+      "warmup-static-a.json": "fd2d00b1a93e396d24b34de70a067dbbc78a0ef62d926d39c637e58324d80331",
+      "warmup-static-b.csv": "9d92dd544959f4d75acd6d29eb55e936b7eaf79d1090f2c73a2e906456f075bb",
+      "warmup-static-b.json": "0edcbbd781a13ed864f710803f2ff48d840932d58548425f1ec64bf674356895"
+    },
+    "log": "build/pv20-pilot-ab.log",
+    "log_sha256": "791ed83b904ca9b10bd2c207f431be8d061e80fe700b92cc5f201eb0a38824cd"
+  },
+  "pv20-postdefault-smoke": {
+    "note": "post-default smoke, default on; ran while JFR parsing competed (disturbed, not evidence)",
+    "source": "run\\alacer\\benchmarks\\20261020-202338-pv20-postdefault-smoke-vis_on-ecl_on-ent0",
+    "files_sha256": {
+      "pan.csv": "d7576f113d6047a3601663b15f248731b688c711100e96a88f6ce5d1a9c5a16d",
+      "pan.json": "4fa9fe8a19dff1dcbe339b4a6e6675fd8bde00f21bc849ce27a73b9bbb5b2029",
+      "static.csv": "e1432fdfdb50b95ed031c8a0ca46964a31adad50484f98cbbe627641c99812e5",
+      "static.json": "8a138f4ca30a02afc5d5a6ce5438bfbff5d7df6be81c509072ff216ae955e369",
+      "summary.json": "f7533ccf0298680e79bb797fb4cced485d002144e3e9044795959c0e62a34541"
+    },
+    "log": "build/pv20-postdefault-smoke.log",
+    "log_sha256": "f632a0607eef79285a769e9dfb687c1c530ba408fa6d086a1f74c9fbb452e516"
+  },
+  "pv20-postdefault-defaults": {
+    "note": "post-default render.defaults A/B (nine optimizations), partly concurrent with JFR parsing; smoke only",
+    "source": "run\\alacer\\benchmarks\\20261020-202616-pv20-postdefault-defaults-vis_on-ecl_on-ent0-ab",
+    "files_sha256": {
+      "pan-a1.csv": "b5953130f44bc3ef2c1304fecd323c1aac6ac810e43432cd9540b08b50052493",
+      "pan-a1.json": "fe4afee9d78e92306f4e93d3f30c9b1f10fcac8a6d04d5e437644b0fd2c45543",
+      "pan-a2.csv": "ac32202422f7fa199a127dea0e3a195034a32fea80fee63974e9e02a44feee7e",
+      "pan-a2.json": "ee66d86c6f152c4e4a9edf2300e608aa44e30c19e3983cd83bcda8cf02daf0f3",
+      "pan-b1.csv": "57dd6ab74b985499f2a9af28762b3ca86c319994158a9bb681dad54a065da660",
+      "pan-b1.json": "d82a94c2bfa257aa85aa19a75b8e83d66d5c1b1b5f565b152c2dae27e40d18f5",
+      "pan-b2.csv": "6fb338997e4f2bdae8de3d0b81566a856b98a922eb3e37b95c6efa2cf112e643",
+      "pan-b2.json": "6fe48117dab5bb3d9b0858aa95196ed90e6c3b4453d12ddf15e9e151ce668e9a",
+      "static-a1.csv": "7db44abc2d8b633f1952466b49ea23eed319168a77985db7872a7c1c27496333",
+      "static-a1.json": "69a8dfca8e53e54dd0fd7c8dd74fab39741040543a3830a2b93fe95b0bee9438",
+      "static-a2.csv": "ced0139fdd688a9dc2cfde48f1d2ffdff62e814c81b8a78ddcf685b90f1ba186",
+      "static-a2.json": "767c4ac114e4ff5fe7dc2db26ef811b17f9f620d857c505f407a3387d638bbaa",
+      "static-b1.csv": "7f7f9b553bf8c8301db1d1524dbc619e5f7899e8d2ef05f58674c34f4d0056af",
+      "static-b1.json": "2bdbf1f62af53cc525de2b5c5a8f6ec207c38d11146e4197f8d512218656c326",
+      "static-b2.csv": "e8c2c9804b0957da7f85bbe02ae7599dcb93b0079dfee8eb4f72cdc59df7e048",
+      "static-b2.json": "a58b06830989dd55acda9cf37410031eeac6de701c68361e81904fab2dc345d5",
+      "summary.json": "0480cac17e8998f385333999d5c1e29d7255a2abb03a94638bf8a75700efa744",
+      "warmup-pan-a.csv": "dd2720de96fa1663782ed6b18c0486c4b2079c4b36b53d41ee683141b79981cf",
+      "warmup-pan-a.json": "d2191835484356ee76a3a49b64287bbb61b9ce734a6b305ba37cfd03531cf50e",
+      "warmup-pan-b.csv": "ccf8fd44e89e25b6b26f7c5d47393a195b00363115d0bdfde249a973a794fccd",
+      "warmup-pan-b.json": "bee8b5d201cf8754b4453fd6d1d3bbd005c2cbc2ea6a61231c2c4224e40b0d4e",
+      "warmup-static-a.csv": "d54c65776163ec6297dd542ee16b25923e2ada622a54ff1529da86dfd9881f88",
+      "warmup-static-a.json": "d8f613857a8d91663a8de276719c6560f97a7fb13633e935f983fb5d76fb0315",
+      "warmup-static-b.csv": "16eb2a0c44dc96e73d80d85bb7b94c6ca07215c8f6d12b62359ed00dae8562c7",
+      "warmup-static-b.json": "55fbcbf9fe3c50b4032f4cb884dddf9c39ff9ed5180d78819903d58f5db92c0f"
+    },
+    "log": "build/pv20-postdefault-defaults.log",
+    "log_sha256": "63f70a30287eda3ff41f7d8ef376674aa5cd3afc12f4dc9ddf5f230b8cb66ec5"
+  },
+  "pv20-postdefault-smoke2": {
+    "note": "post-default smoke without contention, default on",
+    "source": "run\\alacer\\benchmarks\\20261020-202920-pv20-postdefault-smoke2-vis_on-ecl_on-ent0",
+    "files_sha256": {
+      "pan.csv": "1dd342a5a0b97eec03d4dbf6c17196d54dbf23139fbcad0393db98b8b548c81a",
+      "pan.json": "c7e8690c147df975696ee8d72efa92b5b4e741728c505bdc53f586b70bc5087d",
+      "static.csv": "43e152da0524f1c033e05d4b4ef652ef65713ab0248ec727f76a1ba9aeab9042",
+      "static.json": "13ad0e3a49f79bafe81324f553e6f62b3e78740437d61acb060035d2e694cdb4",
+      "summary.json": "ea2ed4a1d0b78bbfa73d19f3556f38133f00e89c4ff68e056470b694318f767e"
+    },
+    "log": "build/pv20-postdefault-smoke2.log",
+    "log_sha256": "1f3bbffc183b1d96a4ffa488a37de4ee8f77c8ceec98950d96eeb8e5ac04c633"
+  }
+}

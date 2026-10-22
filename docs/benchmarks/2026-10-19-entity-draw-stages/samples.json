@@ -1,0 +1,26 @@
+{
+  "counts": {
+    "jdk.NativeMethodSample": {
+      "model": 16,
+      "shadow": 1
+    },
+    "jdk.ExecutionSample": {
+      "shadow": 1,
+      "other": 2,
+      "model": 1
+    }
+  },
+  "leaves": {
+    "org.lwjgl.opengl.GL11.nglCallList": 15,
+    "org.lwjgl.opengl.GL11.nglTranslatef": 1,
+    "net.minecraft.util.Long2ObjectHashMap.get": 3,
+    "java.util.HashMap.getNode": 1,
+    "org.lwjgl.opengl.GL11.nglVertexPointer": 1
+  },
+  "all_events": 6106,
+  "scope": "whole launch, including warmup; samples too sparse for reliable timing/rank estimates",
+  "periods": {
+    "jdk.ExecutionSample": "10ms",
+    "jdk.NativeMethodSample": "20ms"
+  }
+}

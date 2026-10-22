@@ -1,0 +1,71 @@
+{
+  "scope": "client main thread; CSV phase windows; unlit ParticleManager.render stack",
+  "allocation_note": "JFR sampled weights are estimates, not exact allocated bytes. No samples is not proof of elimination.",
+  "phases": {
+    "static": {
+      "window_start_epoch_ns": 1792564932881008300,
+      "window_end_epoch_ns": 1792564942883382000,
+      "client_execution_samples": 387,
+      "pass_execution_samples": 222,
+      "pass_allocation_samples": 0,
+      "pass_allocation_sampled_weight": 0,
+      "particle_tick_execution_samples": 32,
+      "particle_move_execution_samples": 29,
+      "particle_gather_execution_samples": 15,
+      "particle_entity_query_execution_samples": 3,
+      "particle_tick_allocation_samples": 704,
+      "particle_tick_allocation_sampled_weight": 387316632,
+      "objects_sampled_weight": {},
+      "sites_sampled_weight": {},
+      "particle_box_sites_sampled_weight": {
+        "net.minecraft.util.math.Box.expanded <- net.minecraft.entity.Entity.move:486": 35668824,
+        "net.minecraft.util.math.Box.moved <- net.minecraft.entity.Entity.move:493": 31227352,
+        "net.minecraft.util.math.Box.moved <- net.minecraft.entity.Entity.move:408": 12500888,
+        "net.minecraft.util.math.Box.moved <- net.minecraft.entity.Entity.move:501": 39735104,
+        "net.minecraft.util.math.Box.moved <- net.minecraft.entity.Entity.move:507": 42095304,
+        "net.minecraft.util.math.Box.contract <- net.minecraft.entity.Entity.move:684": 40000912,
+        "net.minecraft.util.math.Box.grown <- net.minecraft.world.World.getCollisions:974": 34516920
+      }
+    },
+    "pan": {
+      "window_start_epoch_ns": 1792564947895433100,
+      "window_end_epoch_ns": 1792564962898184800,
+      "client_execution_samples": 658,
+      "pass_execution_samples": 287,
+      "pass_allocation_samples": 773,
+      "pass_allocation_sampled_weight": 499485760,
+      "particle_tick_execution_samples": 27,
+      "particle_move_execution_samples": 25,
+      "particle_gather_execution_samples": 12,
+      "particle_entity_query_execution_samples": 0,
+      "particle_tick_allocation_samples": 890,
+      "particle_tick_allocation_sampled_weight": 514917160,
+      "objects_sampled_weight": {
+        "net.minecraft.util.math.BlockPos": 499485760
+      },
+      "sites_sampled_weight": {
+        "net.minecraft.entity.Entity.getLightLevel <- net.minecraft.client.entity.particle.Particle.render <- net.minecraft.client.entity.particle.RedstoneParticle.render <- net.minecraft.client.ParticleManager.render": 131416520,
+        "net.minecraft.entity.Entity.getLightLevel <- net.minecraft.client.entity.particle.Particle.render <- net.minecraft.client.entity.particle.SmokeParticle.render <- net.minecraft.client.ParticleManager.render": 115847832,
+        "net.minecraft.entity.Entity.getLightLevel <- net.minecraft.client.entity.particle.Particle.render <- net.minecraft.client.ParticleManager.render <- net.minecraft.client.render.GameRenderer.render": 83832504,
+        "net.minecraft.entity.Entity.getLightLevel <- net.minecraft.client.entity.particle.FlameParticle.getLightLevel <- net.minecraft.client.entity.particle.Particle.render <- net.minecraft.client.entity.particle.FlameParticle.render": 78808392,
+        "net.minecraft.entity.Entity.getLightLevel <- net.minecraft.client.entity.particle.BlockParticle.getLightLevel <- net.minecraft.client.entity.particle.BlockParticle.render <- net.minecraft.client.ParticleManager.render": 89580512
+      },
+      "particle_box_sites_sampled_weight": {
+        "net.minecraft.util.math.Box.moved <- net.minecraft.entity.Entity.move:493": 43751072,
+        "net.minecraft.util.math.Box.moved <- net.minecraft.entity.Entity.move:501": 43202712,
+        "net.minecraft.util.math.Box.contract <- net.minecraft.entity.Entity.move:684": 56115328,
+        "net.minecraft.util.math.Box.moved <- net.minecraft.entity.Entity.move:408": 14076496,
+        "net.minecraft.util.math.Box.expanded <- net.minecraft.entity.Entity.move:486": 49649704,
+        "net.minecraft.util.math.Box.grown <- net.minecraft.world.World.getCollisions:974": 40644424,
+        "net.minecraft.util.math.Box.moved <- net.minecraft.entity.Entity.move:507": 55586944
+      }
+    }
+  },
+  "record": "C:\\Users\\CodyJ\\OneDrive\\Documents\\GitLab\\adiont\\aevum\\alacer\\docs\\benchmarks\\2026-10-20-particle-light-confirmation\\runs\\lc23-profile-on-1-r2.record.json",
+  "jfr_sha256": "084bcddcbdbc0d599eef035de3b05c4dfb205455cb57f46c6e4dfd5c3fa01a5a",
+  "source_snapshot": {
+    "path": "docs\\benchmarks\\2026-10-20-particle-light-confirmation\\sources-4f41475c30ed8fef.zip",
+    "sha256": "d4d62a2cb809eb9cc22425b320738d2bcde81328c13671cddc8547ef2cc86dfb"
+  },
+  "epoch_uncertainty_ns": "1002200"
+}

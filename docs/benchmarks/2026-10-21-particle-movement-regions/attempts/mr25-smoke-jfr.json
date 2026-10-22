@@ -1,0 +1,20 @@
+{
+  "label": "mr25-smoke-jfr",
+  "kind": "jfr",
+  "status": "exited",
+  "purpose": "pre-freeze smoke only (time scale 0.3, scale 1); not evidence, not analyzed for selection",
+  "command_note": "gradlew runClient run by hand before the runner and manifest existed; same explicit options as the runner kind, timeScale 0.3",
+  "log": "build/mr25-smoke-jfr.log",
+  "log_sha256": "b5f955b8f13e76e147666617cc982742c783ca904fba2de17ef63504f953aa67",
+  "benchmark_folder": "run/alacer/benchmarks/20261021-005944-mr25-smoke-jfr-vis_on-ecl_on-ent0",
+  "files_sha256": {
+    "pan.csv": "9f4dce0395dd207e91b84d42b8e9daaa84a2e94e586449b8bfc831ae0c1ae8a8",
+    "pan.json": "41e2704c8ab2692c22927642435efd08ef002dea66dad11508d8caf7c1031ebe",
+    "static.csv": "50872191c04cbf2e94d5b42ad3c8d96c5fdeb044728382cef279330a361eadcb",
+    "static.json": "02d7cd9218e532d5405dc402d6a6cf7c73d96339b53f78ed4e02d1e2d70c54ab",
+    "summary.json": "27f229ddd6ea1bbe22910b1de6375c31e30e04b83bf5f8aa1276f24e6c65f51b"
+  },
+  "finding": "JFR settings and DebugNonSafepoints flags reached the JVM; runtime jar line numbers differ from the sources jar, so line_table.py was added before the freeze",
+  "jfr": "run/mr25-smoke-jfr.jfr",
+  "jfr_sha256": "f6ede09262e1baff1d616a7a35cf187eef6b36d9c2bfb570841d347d38d87895"
+}

@@ -1,0 +1,102 @@
+## jdk.ExecutionSample on the client thread (main): 2337 samples
+
+Inclusive (stack contains):
+  ParticleManager.render (unlit pass)             55.8%
+  ParticleManager.renderLit                        0.3%
+    Entity.getLightLevel                          18.9%
+    BlockParticle.getLightLevel                    5.5%
+    World.getLightColor                            0.1%
+    BufferBuilder (any method)                    20.5%
+    Tesselator.end                                 0.3%
+  ParticleManager.tick                             6.6%
+    ParticleManager.tickParticle                   6.6%
+    Entity.move                                    5.0%
+    World.getCollisions                            2.6%
+    World.getEntities                              0.7%
+    ArrayList.removeAll/batchRemove                0.0%
+    Entity.equals                                  0.0%
+  ParticleManager.add                              0.5%
+  Entity.<init> (particle construction)            0.6%
+  BenchmarkRunner.emitParticles                    0.6%
+  WorldRenderer.renderEntities                    10.1%
+  Minecraft.tick                                   8.9%
+  GameRenderer.render                             82.7%
+
+Top self frames:
+  java/util/Objects.checkIndex                                             10.6%
+  net/minecraft/client/render/world/WorldRenderer.renderEntities            9.3%
+  net/minecraft/client/render/vertex/BufferBuilder.nextElement              8.6%
+  net/minecraft/client/ParticleManager.render                               6.4%
+  net/minecraft/client/render/world/WorldRenderer$RenderChunkInfo.<init>    5.6%
+  net/minecraft/util/Long2ObjectHashMap.getNode                             5.5%
+  net/minecraft/client/entity/particle/Particle.render                      5.4%
+  net/minecraft/entity/Entity.getLightLevel                                 5.3%
+  net/adiont/alacer/render/ParticleLight.brightness                         5.2%
+  net/minecraft/client/render/world/WorldRenderer.renderLastChunks          3.0%
+  net/minecraft/util/Long2ObjectHashMap.get                                 2.7%
+  java/util/HashMap.getNode                                                 2.7%
+  net/minecraft/entity/Entity.redirect$zzg001$alacer$lightColor             1.8%
+  net/minecraft/world/chunk/WorldChunk.getLight                             1.6%
+  net/adiont/alacer/render/ChunkVisibility.search                           1.1%
+  net/adiont/alacer/render/ParticleLight.lightColor                         0.9%
+  net/minecraft/entity/Entity.move                                          0.9%
+  net/minecraft/client/render/vertex/BufferBuilder.color                    0.9%
+  net/minecraft/client/render/FrustumData.contains                          0.8%
+  net/minecraft/client/entity/particle/RedstoneParticle.render              0.8%
+  net/minecraft/client/entity/particle/SmokeParticle.render                 0.7%
+  net/minecraft/client/render/vertex/BufferBuilder.grow                     0.5%
+  net/minecraft/client/entity/particle/FlameParticle.render                 0.4%
+  net/minecraft/client/entity/particle/BlockParticle.redirect$zza000$alacer$lightColor    0.4%
+  net/minecraft/client/ParticleManager.tickParticles                        0.4%
+
+## jdk.ObjectAllocationSample on the client thread (main): 6738 samples, 4362.9 MiB sampled weight
+
+Inclusive (stack contains):
+  ParticleManager.render (unlit pass)             29.1%
+  ParticleManager.renderLit                        0.4%
+    Entity.getLightLevel                          28.7%
+    BlockParticle.getLightLevel                    5.8%
+    World.getLightColor                            0.0%
+    BufferBuilder (any method)                     0.0%
+    Tesselator.end                                 0.0%
+  ParticleManager.tick                            31.1%
+    ParticleManager.tickParticle                  31.1%
+    Entity.move                                   31.1%
+    World.getCollisions                           11.6%
+    World.getEntities                              2.6%
+    ArrayList.removeAll/batchRemove                0.0%
+    Entity.equals                                  0.0%
+  ParticleManager.add                              4.5%
+  Entity.<init> (particle construction)            3.0%
+  BenchmarkRunner.emitParticles                    4.6%
+  WorldRenderer.renderEntities                     0.9%
+  Minecraft.tick                                  36.3%
+  GameRenderer.render                             38.4%
+
+Top self frames:
+  net/minecraft/entity/Entity.getLightLevel                                28.7%
+  net/minecraft/util/math/Box.moved                                        10.1%
+  net/minecraft/client/render/texture/TextureUtil.upload                    5.4%
+  net/minecraft/util/math/Box.grown                                         3.3%
+  net/minecraft/util/math/Box.expanded                                      3.2%
+  net/minecraft/util/math/Box.contract                                      3.0%
+  net/fabricmc/loader/impl/launch/knot/KnotClassDelegate.getRawClassByteArray    2.8%
+  net/minecraft/world/World.getCollisions                                   2.2%
+  com/google/common/collect/Lists.newArrayList                              2.2%
+  net/minecraft/client/render/world/RenderChunk.setOrigin                   2.2%
+  net/minecraft/block/Block.getCollisionShape                               2.1%
+  java/util/HashMap$EntrySet.iterator                                       1.9%
+  net/minecraft/entity/Entity.checkBlockCollisions                          1.7%
+  java/util/ArrayList.iterator                                              1.4%
+  net/minecraft/entity/Entity.move                                          1.4%
+  java/util/HashMap.newNode                                                 1.3%
+  java/util/Arrays.copyOf                                                   1.2%
+  net/minecraft/world/chunk/ChunkNibbleStorage.<init>                       1.1%
+  net/adiont/alacer/benchmark/BenchmarkRunner.startRecording                1.1%
+  com/google/gson/stream/JsonReader.<init>                                  1.1%
+  java/lang/AbstractStringBuilder.<init>                                    1.0%
+  javax/imageio/stream/ImageInputStreamImpl.<init>                          1.0%
+  java/util/Arrays.copyOfRange                                              0.9%
+  org/objectweb/asm/SymbolTable.addConstantUtf8Reference                    0.9%
+  net/minecraft/entity/Entity.setPosition                                   0.7%
+

@@ -1,0 +1,129 @@
+{
+  "test_command": ".\\gradlew.bat test build --console=plain",
+  "build_log": "build/cp-frozen-build.log",
+  "build_log_sha256": "3b547e0b5557b6da07f746e29be15f22685040289ee9136e52aec43f38549338",
+  "unit_test_runtime": "Gradle JDK 25; game code compiled --release 8",
+  "test_totals": {
+    "tests": 44,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  "test_suites": {
+    "TEST-net.adiont.alacer.config.AlacerConfigTest.xml": {
+      "tests": 7,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    "TEST-net.adiont.alacer.config.AlacerMixinPluginTest.xml": {
+      "tests": 5,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    "TEST-net.adiont.alacer.profiler.ConcurrentTimingsTest.xml": {
+      "tests": 1,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    "TEST-net.adiont.alacer.profiler.DirtyQueueAgeTest.xml": {
+      "tests": 2,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    "TEST-net.adiont.alacer.profiler.FrameProfilerTest.xml": {
+      "tests": 4,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    "TEST-net.adiont.alacer.profiler.JsonWriterTest.xml": {
+      "tests": 2,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    "TEST-net.adiont.alacer.profiler.MetricRingTest.xml": {
+      "tests": 4,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    "TEST-net.adiont.alacer.profiler.SeriesStatsTest.xml": {
+      "tests": 7,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    "TEST-net.adiont.alacer.render.ChunkFrustumTest.xml": {
+      "tests": 5,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    "TEST-net.adiont.alacer.render.MatrixTrackerTest.xml": {
+      "tests": 7,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    }
+  },
+  "client_runtime": "Temurin 1.8.0_492",
+  "full_duration_client_launches": 8,
+  "raw_analysis": "python docs/benchmarks/2026-10-19-chunk-pipeline/analyze.py",
+  "jfr_analysis": "python docs/benchmarks/2026-10-19-chunk-pipeline/analyze_jfr.py",
+  "source_manifest_matches": true,
+  "base_world_unchanged": true,
+  "changed_existing_sources": [
+    "src/test/java/net/adiont/alacer/config/AlacerConfigTest.java",
+    "src/test/java/net/adiont/alacer/config/AlacerMixinPluginTest.java",
+    "src/main/java/net/adiont/alacer/Alacer.java",
+    "src/main/java/net/adiont/alacer/benchmark/BenchmarkRunner.java",
+    "src/main/java/net/adiont/alacer/config/AlacerConfig.java",
+    "src/main/java/net/adiont/alacer/config/AlacerMixinPlugin.java",
+    "src/main/java/net/adiont/alacer/mixin/ChunkRenderDispatcherAccessor.java",
+    "src/main/java/net/adiont/alacer/profiler/FrameProfiler.java",
+    "src/main/resources/alacer.mixins.json"
+  ],
+  "added_sources": [
+    "src/test/java/net/adiont/alacer/profiler/ConcurrentTimingsTest.java",
+    "src/test/java/net/adiont/alacer/profiler/DirtyQueueAgeTest.java",
+    "src/main/java/net/adiont/alacer/mixin/ChunkBuildTimingMixin.java",
+    "src/main/java/net/adiont/alacer/mixin/ChunkDispatcherTimingMixin.java",
+    "src/main/java/net/adiont/alacer/mixin/ChunkTaskTimingMixin.java",
+    "src/main/java/net/adiont/alacer/profiler/ConcurrentTimings.java",
+    "src/main/java/net/adiont/alacer/profiler/DirtyQueueAge.java",
+    "src/main/java/net/adiont/alacer/render/ChunkDirtyAge.java",
+    "src/main/java/net/adiont/alacer/render/ChunkPipelineTimings.java"
+  ],
+  "visual_inspection": {
+    "inspected_phases": [
+      "static",
+      "fly"
+    ],
+    "result": "Terrain, foliage, water and clouds visible without obvious missing geometry/corruption in two screenshots; limited snapshot inspection, no framebuffer identity or mod compatibility claim.",
+    "screenshots": {
+      "run/screenshots/alacer-cp-detail-jfr-r5-vis_on-ecl_on-ent0-fly.png": "ed1f566dbfe3fe3797c49e9dc08e23b0c391b1e23ec178ad5664332f04bf0b55",
+      "run/screenshots/alacer-cp-detail-jfr-r5-vis_on-ecl_on-ent0-pan.png": "9259a0b0c4ccef19896697300c5e12f351267fdb871253c7099dea51e8c2e822",
+      "run/screenshots/alacer-cp-detail-jfr-r5-vis_on-ecl_on-ent0-static.png": "57d43c7ad929bce1d1822b9f747e1ed375546af82d55edad2f9fb5002987a1d6"
+    }
+  },
+  "built_jars": {
+    "build/libs/alacer-0.1.0+mc1.8.9-sources.jar": "69b8d2773ae6fdcb9a077816964fbbbb1a070ab7faa343c7a655e1ff7f3f2ece",
+    "build/libs/alacer-0.1.0+mc1.8.9.jar": "849b4aa6a406c30b2fa1efb0abbc4f1cdb25195970207473443d01060c250e83"
+  },
+  "git_status": "## No commits yet on master\n?? .editorconfig\n?? .gitattributes\n?? .gitignore\n?? README.md\n?? THIRD_PARTY.md\n?? build.gradle\n?? docs/\n?? gradle.properties\n?? gradle/\n?? gradlew\n?? gradlew.bat\n?? settings.gradle\n?? src/\n?? tools/\n",
+  "HEAD_exists": false,
+  "commit_push_tag_release": false,
+  "selection": "No production pipeline change selected; no FPS gain claimed; six previous defaults on and three experiments off.",
+  "limits": [
+    "one world, one machine/settings profile, zero added mobs",
+    "diagnostics and JFR intrusive; no overhead A/B estimate",
+    "per-frame completion totals, not per-task latency percentile histograms",
+    "sampled dirty ages are lower bounds, not invalidation-to-visible latency",
+    "no ground-edit, continuous light-update, VBO performance, arbitrary-mod or worker CPU/allocation validation"
+  ]
+}

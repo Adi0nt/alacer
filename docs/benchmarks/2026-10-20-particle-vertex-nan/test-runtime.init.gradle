@@ -1,0 +1,10 @@
+import groovy.json.JsonOutput
+allprojects {
+    tasks.withType(Test).configureEach {
+        if (project.hasProperty('particleEdgeJvmArgs')) jvmArgs project.property('particleEdgeJvmArgs').split(',').toList()
+        doFirst {
+            file("build/particle-vertex-nan-repro").mkdirs()
+            file("build/particle-vertex-nan-repro/test-runtime.json").text = JsonOutput.toJson([classpath: classpath.asPath, java: javaLauncher.get().executablePath.asFile.absolutePath])
+        }
+    }
+}

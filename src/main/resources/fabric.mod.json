@@ -1,0 +1,26 @@
+{
+  "schemaVersion": 1,
+  "id": "alacer",
+  "version": "${version}",
+  "name": "Alacer",
+  "description": "Client-side performance improvements for Minecraft 1.8.9.",
+  "authors": [],
+  "environment": "client",
+  "entrypoints": {
+    "client-init": [
+      "net.adiont.alacer.Alacer"
+    ]
+  },
+  "accessWidener": "alacer.accesswidener",
+  "mixins": [
+    "alacer.mixins.json"
+  ],
+  "depends": {
+    "fabricloader": ">=0.20.0",
+    "java": ">=25",
+    "minecraft": "1.8.9",
+    "osl-entrypoints": ">=0.6.0",
+    "osl-lifecycle-events": ">=0.6.0",
+    "osl-keybinds": ">=0.3.0"
+  }
+}

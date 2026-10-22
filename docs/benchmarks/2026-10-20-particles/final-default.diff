@@ -1,0 +1,20 @@
+--- a/src/main/java/net/adiont/alacer/config/AlacerConfig.java (measured)
++++ b/src/main/java/net/adiont/alacer/config/AlacerConfig.java (final)
+@@ -143,7 +143,7 @@
+ 			"Answer entity shadows' block and light queries from cached chunk references instead of a chunk hash lookup per query.");
+ 		this.verifyFastEntityShadows = bool(file, system, "render.fastEntityShadows.verify", false,
+ 			"Debug: also run vanilla's shadow queries, use their results and log any difference.");
+-		this.fastParticleLight = bool(file, system, "render.fastParticleLight", false,
++		this.fastParticleLight = bool(file, system, "render.fastParticleLight", true,
+ 			"Answer particles' per-frame light queries from cached chunk references instead of chunk hash lookups, without allocating neighbor positions.");
+ 		this.verifyFastParticleLight = bool(file, system, "render.fastParticleLight.verify", false,
+ 			"Debug: also run vanilla's particle light query, use its result and log any difference.");
+@@ -204,7 +204,7 @@
+ 				this.avoidMatrixReads = value;
+ 				this.cacheClouds = value;
+ 				this.fastEntityShadows = value;
+-				this.fastParticleLight = false;
++				this.fastParticleLight = value;
+ 				this.skipZeroTranslates = false;
+ 				this.batchModelLists = false;
+ 				break;

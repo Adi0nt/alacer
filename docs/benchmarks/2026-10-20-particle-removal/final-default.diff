@@ -1,0 +1,42 @@
+--- a/src/main/java/net/adiont/alacer/config/AlacerConfig.java (measured)
++++ b/src/main/java/net/adiont/alacer/config/AlacerConfig.java (final)
+@@ -151,7 +151,7 @@
+ 			"Answer particles' per-frame light queries from cached chunk references instead of chunk hash lookups, without allocating neighbor positions.");
+ 		this.verifyFastParticleLight = bool(file, system, "render.fastParticleLight.verify", false,
+ 			"Debug: also run vanilla's particle light query, use its result and log any difference.");
+-		this.fastParticleRemoval = bool(file, system, "render.fastParticleRemoval", false,
++		this.fastParticleRemoval = bool(file, system, "render.fastParticleRemoval", true,
+ 			"Remove dead particles each tick in one pass by network id instead of comparing every live particle with every dead one (same particles, order and list).");
+ 		this.verifyFastParticleRemoval = bool(file, system, "render.fastParticleRemoval.verify", false,
+ 			"Debug: also run vanilla's dead-particle removal, use its result and log any difference.");
+@@ -213,7 +213,7 @@
+ 				this.cacheClouds = value;
+ 				this.fastEntityShadows = value;
+ 				this.fastParticleLight = value;
+-				this.fastParticleRemoval = false;
++				this.fastParticleRemoval = value;
+ 				this.skipZeroTranslates = false;
+ 				this.batchModelLists = false;
+ 				break;
+--- a/src/test/java/net/adiont/alacer/config/AlacerConfigTest.java (measured)
++++ b/src/test/java/net/adiont/alacer/config/AlacerConfigTest.java (final)
+@@ -88,7 +88,7 @@
+ 		assertFalse(config.profilerParticleDetail);
+ 		assertTrue(config.fastParticleLight);
+ 		assertFalse(config.verifyFastParticleLight);
+-		assertFalse(config.fastParticleRemoval);
++		assertTrue(config.fastParticleRemoval);
+ 		assertFalse(config.verifyFastParticleRemoval);
+ 	}
+ 
+@@ -123,8 +123,8 @@
+ 		assertFalse(config.fastParticleLight);
+ 		assertThrows(IllegalArgumentException.class, () -> config.setToggle("render.fastParticleLight.verify", true));
+ 		assertThrows(IllegalArgumentException.class, () -> config.setToggle("benchmark.disableParticles", true));
+-		config.setToggle("render.fastParticleRemoval", true);
+-		assertTrue(config.fastParticleRemoval);
++		config.setToggle("render.fastParticleRemoval", false);
++		assertFalse(config.fastParticleRemoval);
+ 		assertThrows(IllegalArgumentException.class, () -> config.setToggle("render.fastParticleRemoval.verify", true));
+ 		assertThrows(IllegalArgumentException.class, () -> config.setToggle("render.throttleGlErrorChecks.verify", true));
+ 		assertThrows(IllegalArgumentException.class, () -> config.setToggle("render.avoidMatrixReads.verify", true));

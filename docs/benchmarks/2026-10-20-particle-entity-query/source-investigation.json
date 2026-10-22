@@ -1,0 +1,20 @@
+{
+  "session": 19,
+  "source_jar": ".gradle\\loom-cache\\minecraftMaven\\net\\minecraft\\minecraft-merged-5d0b48031a\\1.8.9-loom.mappings.1_8_9.layered+hash.1480139456-v2\\minecraft-merged-5d0b48031a-1.8.9-loom.mappings.1_8_9.layered+hash.1480139456-v2-sources.jar",
+  "source_jar_sha256": "9a8846594ccc8ac1b4f0913caecd5dd8fcbdbc256dc9784d89b8eec0d06ff78b",
+  "control_source_snapshot": {
+    "path": "docs\\benchmarks\\2026-10-20-particle-entity-query\\sources-ba3b40a284a5e813.zip",
+    "sha256": "5d94af763bbaad885be29bdbd0f6697aac0c085c236e8102e38d0496d2e74dcb"
+  },
+  "inspected_regions": [
+    "Entity.move: query expansion; Y/X/Z clipping and virtual setShape after each axis; two step branches and callbacks",
+    "World.getCollisions: block loops and border mutation; grown(0.25) then getEntities; original collision-list append loop",
+    "World.getEntities(Entity,Box): EntityFilter.NOT_SPECTATOR delegation; X/Z loaded checks and chunk traversal",
+    "WorldChunk.getEntities: Y section iteration; shape predicate before exclude; filter then parts; duplicate/order behavior",
+    "Box.grown: scalar addition/subtraction followed by Math.min/max double constructor normalization",
+    "Box.intersects: receiver/argument orientation, comparisons and short-circuit order"
+  ],
+  "candidate": "Scalarize only the grown nearby-entity query bounds; materialize at virtual Box/chunk fallbacks. Preserve immutable movement boxes and query result list. No retained geometry/world/entity references.",
+  "rejected_for_this_session": "Removing nonzero Y/X/Z boxes would cross observable setShape boundaries; no scalar movement replacement justified or implemented.",
+  "third_party_performance_mod_source_used": false
+}

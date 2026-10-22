@@ -1,0 +1,98 @@
+{
+  "date": "2026-10-21",
+  "timezone": "America/Los_Angeles",
+  "scope": "Video settings UI and independent existing Fast/Fancy quality controls; not a benchmark or renderer promotion",
+  "java_home": "C:/Program Files/Eclipse Adoptium/jdk-25.0.4.101-hotspot",
+  "build_command": "gradlew.bat test build --offline --console=plain",
+  "tests": {
+    "tests": 98,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  "main_classes": 165,
+  "classfile_versions": [
+    69
+  ],
+  "client_run_directory": "build/settings-ui-client",
+  "client_command": "gradlew.bat runClient --offline --console=plain --init-script build/settings-ui-prep/ui-smoke.gradle -Pwindow=1280x800 -Pxmx=2G",
+  "launcher_evidence": "launcher.json",
+  "attempts": [
+    {
+      "label": "settings-ui-live-r1",
+      "log": "settings-ui-live-r1.log",
+      "sha256": "acafd51a43a36c2a2ffbe3a36c87f3fb17c087f88481dbe110a2dd492e12a939",
+      "outcome": "failed leaf hook injection; retained",
+      "build_successful": false
+    },
+    {
+      "label": "settings-ui-live-r2",
+      "log": "settings-ui-live-r2.log",
+      "sha256": "090ceeae126eae21b37a38809daee03659f6daf57e81944d63a71506507c8ee0",
+      "outcome": "failed leaf hook injection; retained",
+      "build_successful": false
+    },
+    {
+      "label": "settings-ui-live-r3",
+      "log": "settings-ui-live-r3.log",
+      "sha256": "90657789af8cb515e089db4effba22591dff0a8a6b8accf452e58891b3c5d48e",
+      "outcome": "successful UI smoke; no performance measurement",
+      "build_successful": true
+    },
+    {
+      "label": "settings-ui-live-r4",
+      "log": "settings-ui-live-r4.log",
+      "sha256": "5f79f6299c8880e47e6d6c251f2d29753b5caee4946a7f40755e4f5bf2fe2b54",
+      "outcome": "successful UI smoke; no performance measurement",
+      "build_successful": true
+    },
+    {
+      "label": "settings-ui-live-r5",
+      "log": "settings-ui-live-r5.log",
+      "sha256": "669c6d7f6576736c9b00188a67761c3c8990aca70657a52bf6bd93f8bad27ec2",
+      "outcome": "successful UI smoke; no performance measurement",
+      "build_successful": true
+    },
+    {
+      "label": "settings-ui-live-r6",
+      "log": "settings-ui-live-r6.log",
+      "sha256": "c9c45d81b901e7c7f247ed5fadd2bac422ac8afd3906db376bccd43c7dbf70b7",
+      "outcome": "successful UI smoke; no performance measurement",
+      "build_successful": true
+    }
+  ],
+  "changed_existing_files": [
+    "src/main/resources/alacer.mixins.json",
+    "src/main/java/net/adiont/alacer/config/AlacerConfig.java",
+    "README.md"
+  ],
+  "protected_baseline_files_unchanged": 1267,
+  "shared_normal_config_sha256": "0edf08f30cf5059c1f602ad9fd8e2992dc6b9f6bb6763227af916d46a13928f5",
+  "shared_normal_options_sha256": "dd93d94650ff437e0ab6619b9002995994ce3addefd6384f2a9b148dee08a247",
+  "source_manifest": "source-sha256.json",
+  "screenshots": {
+    "native-theme.png": "d62b91f13698b7276ccf9d37f0317b06ca167ca26dd9df77cf4ec331fad21d75",
+    "restart-message.png": "b1d852ae27682968ce122ae1821f3044e802921510c7a68bf6e252da9646503f"
+  },
+  "live_observations": [
+    "Native title-menu and in-world entry",
+    "Global search and staged edits",
+    "Keep Editing preserves edits",
+    "Page reset stages defaults",
+    "Saved quality survives relaunch",
+    "GUI scale application",
+    "Leaf/weather apply and terrain reload in isolated active world",
+    "Gold category/help and gray descriptions",
+    "Yellow pending markers and counts",
+    "Gold saved restart notice; reverting clears it",
+    "Green saved confirmation"
+  ],
+  "remaining_live_gaps": [
+    "Rain/snow and leaf visual matrix with resource packs/backends",
+    "Fullscreen/monitor transitions and every GUI scale",
+    "Complete keyboard-only interaction",
+    "Read-only/save-failure UI",
+    "Other mods and localization"
+  ],
+  "no_new_performance_claim": true
+}

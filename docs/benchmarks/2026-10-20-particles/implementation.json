@@ -1,0 +1,50 @@
+{
+  "source_sha256": {
+    "src/main/java/net/adiont/alacer/benchmark/BenchmarkRunner.java": "768944fb6669f3dbef3b5b924049041ebf4c16c33bf3d521390c7fa03990ec4f",
+    "src/main/java/net/adiont/alacer/render/ParticleTimings.java": "d2add5111ab035c053e0fd7d3526c509fdc670e8e3d12dc71502fc7482a6f6a3",
+    "src/main/java/net/adiont/alacer/render/ParticleLight.java": "a90255780135a450f49a56865b92fa811c1004e5274488cd9d0b10bd1643b3e9",
+    "src/main/java/net/adiont/alacer/mixin/ParticleManagerMixin.java": "6f837d1456e5434cc3462242ba268c3c431f1f0b27f5ae871c930d3bd2c0da39",
+    "src/main/java/net/adiont/alacer/mixin/ParticleDetailMixin.java": "08b3e8f94e2eb797af9ad8a3ab8dc81f557ce30868f22273e18b0a6f5d1e0056",
+    "src/main/java/net/adiont/alacer/mixin/EntityParticleDetailMixin.java": "d18291e30cb6791f78f3727045d5a9eebb34f9002833819ed17cf33bd980b400",
+    "src/main/java/net/adiont/alacer/mixin/EntityParticleLightMixin.java": "8f2acd1161b892074e839d1370fc1e6799b4e430dffcc4e9617e2367ae57b767",
+    "src/main/java/net/adiont/alacer/mixin/BlockParticleLightMixin.java": "64c5859bd18ce123b40c8e147db4348349766e0ccc85505458ff7a1e8ce77400",
+    "src/main/java/net/adiont/alacer/mixin/WorldRendererMixin.java": "ef1c2fec0e2e9d2aa46c71b17a9ae1440c4cb27be8335e1a70b006df95bcb229",
+    "src/main/java/net/adiont/alacer/render/EntityRendering.java": "3523436672dc929820cd7c823bf40265418d202f27abd3fd15f0fc117180bbd8",
+    "src/main/java/net/adiont/alacer/profiler/FrameProfiler.java": "93e7fee1136205d67eceb5639cc7fb255e564f0a380ed7b4fd35f2deb4dca830",
+    "src/main/java/net/adiont/alacer/config/AlacerConfig.java": "7b09e9585685e0cda72af481d3f53eb272ece8f6216a6c0744b51c2835ec74ac",
+    "src/main/java/net/adiont/alacer/config/AlacerMixinPlugin.java": "9b31396ad134ce8c48fbb83d05a53e79b2342243d75006ea4ddcd32bd3e7a54d",
+    "src/main/java/net/adiont/alacer/Alacer.java": "a9d65c15886aff0f0b8ce519e050ea6a30fc681abf1e3f05bda6caea5ff7962b",
+    "src/main/resources/alacer.mixins.json": "93dbd6135a22795d63bc7c2f568a3fe5ec38e9128b5d9a068a4d00c78a581b98"
+  },
+  "attribution_source_sha256": {
+    "src/main/java/net/adiont/alacer/benchmark/BenchmarkRunner.java": "a480c33b16cb7027ec283bd6b7f93428f94bada00fea1ad733567325de038a11",
+    "src/main/java/net/adiont/alacer/render/ParticleTimings.java": "d2add5111ab035c053e0fd7d3526c509fdc670e8e3d12dc71502fc7482a6f6a3",
+    "src/main/java/net/adiont/alacer/mixin/ParticleManagerMixin.java": "6f837d1456e5434cc3462242ba268c3c431f1f0b27f5ae871c930d3bd2c0da39",
+    "src/main/java/net/adiont/alacer/mixin/ParticleDetailMixin.java": "08b3e8f94e2eb797af9ad8a3ab8dc81f557ce30868f22273e18b0a6f5d1e0056",
+    "src/main/java/net/adiont/alacer/mixin/EntityParticleDetailMixin.java": "d18291e30cb6791f78f3727045d5a9eebb34f9002833819ed17cf33bd980b400",
+    "src/main/java/net/adiont/alacer/profiler/FrameProfiler.java": "93e7fee1136205d67eceb5639cc7fb255e564f0a380ed7b4fd35f2deb4dca830",
+    "src/main/java/net/adiont/alacer/config/AlacerConfig.java": "898c66e4e70554f16c212f8a6718dc06dae1d3b73590712cdfbf44b99a21781c",
+    "src/main/java/net/adiont/alacer/config/AlacerMixinPlugin.java": "9b31396ad134ce8c48fbb83d05a53e79b2342243d75006ea4ddcd32bd3e7a54d",
+    "src/main/java/net/adiont/alacer/Alacer.java": "5c49aa4cfcef5c08cd1b0db26066b57d161d38f017a6e7d38ef7d626b4c320b1",
+    "src/main/resources/alacer.mixins.json": "5ce18e3775b42c4d4564e9452d79f018a8c0d7b84d1fa15c2374e761e22c4b3a"
+  },
+  "note": "source_sha256 captured at 14:50 before the first measured optimization launch (pt-opt-1-r1) and frozen through every pt-opt-* and pt-attr2-* launch; pt-verify-r1 and the pt-smoke-* runs used the same build. attribution_source_sha256 is the earlier build of pt-attr-r1/r2, pt-detail-r1 and pt-jfr-r1, before ParticleLight and its mixins existed (A there has no light redirect at all).",
+  "final_source_sha256": {
+    "src/main/java/net/adiont/alacer/benchmark/BenchmarkRunner.java": "768944fb6669f3dbef3b5b924049041ebf4c16c33bf3d521390c7fa03990ec4f",
+    "src/main/java/net/adiont/alacer/render/ParticleTimings.java": "d2add5111ab035c053e0fd7d3526c509fdc670e8e3d12dc71502fc7482a6f6a3",
+    "src/main/java/net/adiont/alacer/render/ParticleLight.java": "a90255780135a450f49a56865b92fa811c1004e5274488cd9d0b10bd1643b3e9",
+    "src/main/java/net/adiont/alacer/mixin/ParticleManagerMixin.java": "6f837d1456e5434cc3462242ba268c3c431f1f0b27f5ae871c930d3bd2c0da39",
+    "src/main/java/net/adiont/alacer/mixin/ParticleDetailMixin.java": "08b3e8f94e2eb797af9ad8a3ab8dc81f557ce30868f22273e18b0a6f5d1e0056",
+    "src/main/java/net/adiont/alacer/mixin/EntityParticleDetailMixin.java": "d18291e30cb6791f78f3727045d5a9eebb34f9002833819ed17cf33bd980b400",
+    "src/main/java/net/adiont/alacer/mixin/EntityParticleLightMixin.java": "8f2acd1161b892074e839d1370fc1e6799b4e430dffcc4e9617e2367ae57b767",
+    "src/main/java/net/adiont/alacer/mixin/BlockParticleLightMixin.java": "64c5859bd18ce123b40c8e147db4348349766e0ccc85505458ff7a1e8ce77400",
+    "src/main/java/net/adiont/alacer/mixin/WorldRendererMixin.java": "ef1c2fec0e2e9d2aa46c71b17a9ae1440c4cb27be8335e1a70b006df95bcb229",
+    "src/main/java/net/adiont/alacer/render/EntityRendering.java": "3523436672dc929820cd7c823bf40265418d202f27abd3fd15f0fc117180bbd8",
+    "src/main/java/net/adiont/alacer/profiler/FrameProfiler.java": "93e7fee1136205d67eceb5639cc7fb255e564f0a380ed7b4fd35f2deb4dca830",
+    "src/main/java/net/adiont/alacer/config/AlacerConfig.java": "d80d7c6050b8712d99bc6db8fcfea85a086730368cf34bf879ef3648bf6a7ee7",
+    "src/main/java/net/adiont/alacer/config/AlacerMixinPlugin.java": "9b31396ad134ce8c48fbb83d05a53e79b2342243d75006ea4ddcd32bd3e7a54d",
+    "src/main/java/net/adiont/alacer/Alacer.java": "a9d65c15886aff0f0b8ce519e050ea6a30fc681abf1e3f05bda6caea5ff7962b",
+    "src/main/resources/alacer.mixins.json": "93dbd6135a22795d63bc7c2f568a3fe5ec38e9128b5d9a068a4d00c78a581b98"
+  },
+  "final_change": "After the measured series only AlacerConfig.java changed: render.fastParticleLight defaults to true and the render.defaults preset switches it (final-default.diff). The hot path, mixins and benchmark runner are identical to the measured build. pt-final-defaults (timeScale 0.3, render.defaults toggle) is the smoke run of the final build."
+}

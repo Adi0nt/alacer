@@ -1,0 +1,9 @@
+// Post-hoc Java 8 GC attribution only. Does not change game sources or the runtime target.
+gradle.projectsEvaluated {
+    def label = gradle.rootProject.findProperty('backendGcLabel')
+    if (!label) { throw new GradleException('backendGcLabel is required') }
+    gradle.rootProject.tasks.named('runClient').configure {
+        jvmArgs '-XX:+PrintGCDetails', '-XX:+PrintGCDateStamps', '-XX:+PrintGCTimeStamps',
+            '-XX:+PrintGCApplicationStoppedTime', "-Xloggc:${label}.gc.log"
+    }
+}

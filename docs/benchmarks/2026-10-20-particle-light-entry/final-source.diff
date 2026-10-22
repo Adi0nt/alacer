@@ -1,0 +1,45 @@
+diff -ru frozen/src/main/java/net/adiont/alacer/config/AlacerConfig.java src/main/java/net/adiont/alacer/config/AlacerConfig.java
+--- frozen/src/main/java/net/adiont/alacer/config/AlacerConfig.java	2026-10-20 20:45:54.000000000 -0700
++++ src/main/java/net/adiont/alacer/config/AlacerConfig.java	2026-10-20 21:29:01.556742900 -0700
+@@ -266,6 +266,7 @@
+ 				this.fastParticleLight = value;
+ 				this.fastParticleRemoval = value;
+ 				this.fastParticleVertices = value;
++				this.fastParticleLightEntry = false;
+ 				this.fastParticleMovement = false;
+ 				this.reuseParticleBoxes = false;
+ 				this.scalarParticleEntityQuery = false;
+diff -ru frozen/src/test/java/net/adiont/alacer/config/AlacerConfigTest.java src/test/java/net/adiont/alacer/config/AlacerConfigTest.java
+--- frozen/src/test/java/net/adiont/alacer/config/AlacerConfigTest.java	2026-10-20 20:22:26.000000000 -0700
++++ src/test/java/net/adiont/alacer/config/AlacerConfigTest.java	2026-10-20 21:29:16.239802500 -0700
+@@ -126,6 +126,8 @@
+ 		assertFalse(config.verifyFastParticleRemoval);
+ 		assertTrue(config.fastParticleVertices);
+ 		assertFalse(config.verifyFastParticleVertices);
++		assertFalse(config.fastParticleLightEntry);
++		assertFalse(config.verifyFastParticleLightEntry);
+ 		assertFalse(config.reuseParticleBoxes);
+ 		assertFalse(config.verifyReuseParticleBoxes);
+ 		assertFalse(config.scalarParticleEntityQuery);
+@@ -168,6 +170,9 @@
+ 		config.setToggle("render.fastParticleVertices", false);
+ 		assertFalse(config.fastParticleVertices);
+ 		assertThrows(IllegalArgumentException.class, () -> config.setToggle("render.fastParticleVertices.verify", true));
++		config.setToggle("render.fastParticleLightEntry", true);
++		assertTrue(config.fastParticleLightEntry);
++		assertThrows(IllegalArgumentException.class, () -> config.setToggle("render.fastParticleLightEntry.verify", true));
+ 		config.setToggle("render.fastParticleMovement", true);
+ 		config.setToggle("render.scalarParticleEntityQuery", true);
+ 		assertTrue(config.scalarParticleEntityQuery);
+@@ -194,6 +199,11 @@
+ 		assertFalse(config.fastParticleVertices);
+ 		config.setToggle("render.defaults", true);
+ 		assertTrue(config.fastParticleVertices);
++		// Session 21's light entry failed its gates: off by default and kept off by the preset.
++		assertFalse(config.fastParticleLightEntry);
++		config.setToggle("render.fastParticleLightEntry", true);
++		config.setToggle("render.defaults", true);
++		assertFalse(config.fastParticleLightEntry);
+ 		System.setProperty("alacer.render.fastParticleVertices", "false");
+ 		assertFalse(AlacerConfig.load(this.dir.resolve("vertices.properties"), LOGGER).fastParticleVertices);
+ 	}

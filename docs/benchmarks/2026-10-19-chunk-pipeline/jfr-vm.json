@@ -1,0 +1,104 @@
+[
+  {
+    "start_ns": 70711330700,
+    "frame_ms": 181.2953,
+    "estimated_gc_overlap_ms": 19.348388671875,
+    "conservative_gc_overlap_ms": 19.348388671875,
+    "vm_intervals": [
+      {
+        "type": "jdk.SafepointBegin",
+        "start_ms": 1792478759173.934,
+        "end_ms": 1792478759332.07,
+        "duration_ms": 158.1359,
+        "operation": null,
+        "safepoint_id": 769,
+        "overlap_ms": 158.135986328125
+      },
+      {
+        "type": "jdk.ExecuteVMOperation",
+        "start_ms": 1792478759332.072,
+        "end_ms": 1792478759351.4302,
+        "duration_ms": 19.3582,
+        "operation": "ParallelGCFailedAllocation",
+        "safepoint_id": 769,
+        "overlap_ms": 19.358154296875
+      }
+    ],
+    "chunk_upload_ms": 0.0967,
+    "chunk_gl_list_ms": 0.0233
+  },
+  {
+    "start_ns": 81962826700,
+    "frame_ms": 144.0746,
+    "estimated_gc_overlap_ms": 139.005126953125,
+    "conservative_gc_overlap_ms": 139.005126953125,
+    "vm_intervals": [
+      {
+        "type": "jdk.SafepointBegin",
+        "start_ms": 1792478770426.858,
+        "end_ms": 1792478770426.9795,
+        "duration_ms": 0.1216,
+        "operation": null,
+        "safepoint_id": 801,
+        "overlap_ms": 0.12158203125
+      },
+      {
+        "type": "jdk.ExecuteVMOperation",
+        "start_ms": 1792478770426.981,
+        "end_ms": 1792478770566.0015,
+        "duration_ms": 139.0205,
+        "operation": "ParallelGCFailedAllocation",
+        "safepoint_id": 801,
+        "overlap_ms": 139.0205078125
+      }
+    ],
+    "chunk_upload_ms": 1.0291,
+    "chunk_gl_list_ms": 1.0202
+  },
+  {
+    "start_ns": 65813007600,
+    "frame_ms": 78.3034,
+    "estimated_gc_overlap_ms": 15.115478515625,
+    "conservative_gc_overlap_ms": 15.115478515625,
+    "vm_intervals": [
+      {
+        "type": "jdk.SafepointBegin",
+        "start_ms": 1792478754274.094,
+        "end_ms": 1792478754333.2427,
+        "duration_ms": 59.1487,
+        "operation": null,
+        "safepoint_id": 753,
+        "overlap_ms": 59.148681640625
+      },
+      {
+        "type": "jdk.ExecuteVMOperation",
+        "start_ms": 1792478754333.243,
+        "end_ms": 1792478754348.3694,
+        "duration_ms": 15.1264,
+        "operation": "ParallelGCFailedAllocation",
+        "safepoint_id": 753,
+        "overlap_ms": 15.12646484375
+      },
+      {
+        "type": "jdk.SafepointBegin",
+        "start_ms": 1792478754348.567,
+        "end_ms": 1792478754348.6995,
+        "duration_ms": 0.1326,
+        "operation": null,
+        "safepoint_id": 755,
+        "overlap_ms": 0.132568359375
+      },
+      {
+        "type": "jdk.ExecuteVMOperation",
+        "start_ms": 1792478754348.7,
+        "end_ms": 1792478754348.7163,
+        "duration_ms": 0.0163,
+        "operation": "RevokeBias",
+        "safepoint_id": 755,
+        "overlap_ms": 0.016357421875
+      }
+    ],
+    "chunk_upload_ms": 0.3685,
+    "chunk_gl_list_ms": 0.356
+  }
+]

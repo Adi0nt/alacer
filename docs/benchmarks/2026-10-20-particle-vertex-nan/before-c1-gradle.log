@@ -1,0 +1,35 @@
+
+> Configure project :
+Fabric Loom: 1.18.4
+Ploceus: 1.18.1
+
+> Task :compileJava
+Note: C:\Users\CodyJ\OneDrive\Documents\GitLab\adiont\aevum\alacer\src\main\java\net\adiont\alacer\profiler\FrameProfiler.java uses or overrides a deprecated API.
+Note: Recompile with -Xlint:deprecation for details.
+
+> Task :processResources
+> Task :classes
+> Task :compileTestJava
+> Task :processTestResources NO-SOURCE
+> Task :testClasses
+
+> Task :test FAILED
+
+ParticleVertexWriterTest > edgeValuesMatchVanilla() FAILED
+    org.opentest4j.AssertionFailedError at ParticleVertexWriterTest.java:99
+
+[Incubating] Problems report is available at: file:///C:/Users/CodyJ/OneDrive/Documents/GitLab/adiont/aevum/alacer/build/reports/problems/problems-report.html
+
+3 tests completed, 1 failed
+
+FAILURE: Build failed with an exception.
+
+* What went wrong:
+Execution failed for task ':test'.
+> There were failing tests. See the report at: file:///C:/Users/CodyJ/OneDrive/Documents/GitLab/adiont/aevum/alacer/build/reports/tests/test/index.html
+
+* Try:
+> Run with --scan to get full insights from a Build Scan (powered by Develocity).
+
+BUILD FAILED in 5s
+4 actionable tasks: 4 executed

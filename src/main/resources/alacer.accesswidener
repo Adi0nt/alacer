@@ -1,0 +1,6 @@
+accessWidener v2 named
+
+# Lets the chunk visibility search create and pool the renderer's per-chunk info records.
+accessible class net/minecraft/client/render/world/WorldRenderer$RenderChunkInfo
+accessible method net/minecraft/client/render/world/WorldRenderer$RenderChunkInfo <init> (Lnet/minecraft/client/render/world/WorldRenderer;Lnet/minecraft/client/render/world/RenderChunk;Lnet/minecraft/util/math/Direction;I)V
+accessible field net/minecraft/client/render/world/WorldRenderer$RenderChunkInfo chunk Lnet/minecraft/client/render/world/RenderChunk;

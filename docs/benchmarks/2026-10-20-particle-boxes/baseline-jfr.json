@@ -1,0 +1,192 @@
+{
+  "jfr": "run\\pb18-profile.jfr",
+  "jfr_sha256": "0bf67f1c0001b46f4e8e98998981d4feded6cc046c241c25341ffb161e49f289",
+  "source_snapshot": {
+    "path": "docs\\benchmarks\\2026-10-20-particle-boxes\\sources-d6b57ad2e1e33d6a.zip",
+    "sha256": "5aa1a379edf05f2cfc683ed2a83f8e04dd63b83dcc90248257791043beffaa1d"
+  },
+  "scope_note": "JFR sampled weights are estimates, not exact allocated bytes. Phase windows use profiler epoch plus CSV start_ns; epoch uncertainty is retained in raw exports. Intrusive detail/JFR is attribution only.",
+  "phase_detail": {
+    "static": {
+      "tick_frames": 199,
+      "movement_ms_per_tick_frame": 1.4276366834170853,
+      "particle_tick_ms_per_tick_frame": 1.909194472361809,
+      "particles_per_tick_frame": 3517.331658291457
+    },
+    "pan": {
+      "tick_frames": 300,
+      "movement_ms_per_tick_frame": 1.3663016666666667,
+      "particle_tick_ms_per_tick_frame": 1.821083,
+      "particles_per_tick_frame": 3519.016666666667
+    }
+  },
+  "reports": {
+    "full-run": {
+      "sampled_weights": {
+        "client_sampled_weight_bytes": 3769085936,
+        "particle_tick_sampled_weight_bytes": 1383349008
+      },
+      "execution_samples": {
+        "client_samples": 2335,
+        "particle_tick_samples": 135,
+        "Entity.move": 104,
+        "World.getCollisions": 46,
+        "World.getEntities": 9
+      },
+      "box_allocation_sites": [
+        {
+          "site": "net/minecraft/util/math/Box.grown <- net/minecraft/world/World.getCollisions:974",
+          "weight_bytes": 152301832,
+          "samples": 261
+        },
+        {
+          "site": "net/minecraft/util/math/Box.moved <- net/minecraft/entity/Entity.move:501",
+          "weight_bytes": 152060528,
+          "samples": 261
+        },
+        {
+          "site": "net/minecraft/util/math/Box.moved <- net/minecraft/entity/Entity.move:507",
+          "weight_bytes": 142385640,
+          "samples": 259
+        },
+        {
+          "site": "net/minecraft/util/math/Box.moved <- net/minecraft/entity/Entity.move:493",
+          "weight_bytes": 138910320,
+          "samples": 260
+        },
+        {
+          "site": "net/minecraft/util/math/Box.expanded <- net/minecraft/entity/Entity.move:486",
+          "weight_bytes": 133456200,
+          "samples": 256
+        },
+        {
+          "site": "net/minecraft/util/math/Box.moved <- net/minecraft/entity/Entity.move:408",
+          "weight_bytes": 41041256,
+          "samples": 55
+        },
+        {
+          "site": "net/minecraft/util/math/Box.contract <- net/minecraft/entity/Entity.move:684",
+          "weight_bytes": 5770656,
+          "samples": 5
+        }
+      ],
+      "particle_tick_object_classes": {
+        "net/minecraft/util/math/Box": 846309208,
+        "net/minecraft/util/math/BlockPos": 188643944,
+        "net/minecraft/util/math/BlockPos$Mutable": 160175096,
+        "java/util/ArrayList": 102184328,
+        "java/util/ArrayList$Itr": 48241672,
+        "com/google/common/collect/Iterators$3": 28721568,
+        "[Ljava/lang/Object;": 9073192
+      }
+    },
+    "static": {
+      "sampled_weights": {
+        "client_sampled_weight_bytes": 431167176,
+        "particle_tick_sampled_weight_bytes": 358421912
+      },
+      "execution_samples": {
+        "client_samples": 513,
+        "particle_tick_samples": 36,
+        "Entity.move": 28,
+        "World.getCollisions": 11,
+        "World.getEntities": 5
+      },
+      "box_allocation_sites": [
+        {
+          "site": "net/minecraft/util/math/Box.grown <- net/minecraft/world/World.getCollisions:974",
+          "weight_bytes": 39953128,
+          "samples": 74
+        },
+        {
+          "site": "net/minecraft/util/math/Box.expanded <- net/minecraft/entity/Entity.move:486",
+          "weight_bytes": 37621080,
+          "samples": 68
+        },
+        {
+          "site": "net/minecraft/util/math/Box.moved <- net/minecraft/entity/Entity.move:493",
+          "weight_bytes": 36207456,
+          "samples": 65
+        },
+        {
+          "site": "net/minecraft/util/math/Box.moved <- net/minecraft/entity/Entity.move:507",
+          "weight_bytes": 35707040,
+          "samples": 60
+        },
+        {
+          "site": "net/minecraft/util/math/Box.moved <- net/minecraft/entity/Entity.move:501",
+          "weight_bytes": 31186360,
+          "samples": 58
+        },
+        {
+          "site": "net/minecraft/util/math/Box.moved <- net/minecraft/entity/Entity.move:408",
+          "weight_bytes": 8292464,
+          "samples": 16
+        }
+      ],
+      "particle_tick_object_classes": {
+        "net/minecraft/util/math/Box": 211901760,
+        "net/minecraft/util/math/BlockPos": 59188152,
+        "net/minecraft/util/math/BlockPos$Mutable": 41341392,
+        "java/util/ArrayList": 22639064,
+        "java/util/ArrayList$Itr": 16643992,
+        "com/google/common/collect/Iterators$3": 4089096,
+        "[Ljava/lang/Object;": 2618456
+      }
+    },
+    "pan": {
+      "sampled_weights": {
+        "client_sampled_weight_bytes": 1172833192,
+        "particle_tick_sampled_weight_bytes": 488933448
+      },
+      "execution_samples": {
+        "client_samples": 736,
+        "particle_tick_samples": 40,
+        "Entity.move": 32,
+        "World.getCollisions": 15,
+        "World.getEntities": 1
+      },
+      "box_allocation_sites": [
+        {
+          "site": "net/minecraft/util/math/Box.moved <- net/minecraft/entity/Entity.move:501",
+          "weight_bytes": 64906696,
+          "samples": 103
+        },
+        {
+          "site": "net/minecraft/util/math/Box.moved <- net/minecraft/entity/Entity.move:507",
+          "weight_bytes": 55791168,
+          "samples": 109
+        },
+        {
+          "site": "net/minecraft/util/math/Box.grown <- net/minecraft/world/World.getCollisions:974",
+          "weight_bytes": 48090984,
+          "samples": 86
+        },
+        {
+          "site": "net/minecraft/util/math/Box.moved <- net/minecraft/entity/Entity.move:493",
+          "weight_bytes": 41439536,
+          "samples": 83
+        },
+        {
+          "site": "net/minecraft/util/math/Box.expanded <- net/minecraft/entity/Entity.move:486",
+          "weight_bytes": 40422008,
+          "samples": 77
+        },
+        {
+          "site": "net/minecraft/util/math/Box.moved <- net/minecraft/entity/Entity.move:408",
+          "weight_bytes": 20434920,
+          "samples": 19
+        }
+      ],
+      "particle_tick_object_classes": {
+        "net/minecraft/util/math/Box": 300533832,
+        "net/minecraft/util/math/BlockPos": 71131640,
+        "net/minecraft/util/math/BlockPos$Mutable": 61814120,
+        "java/util/ArrayList": 33465256,
+        "java/util/ArrayList$Itr": 12408488,
+        "com/google/common/collect/Iterators$3": 6894648,
+        "[Ljava/lang/Object;": 2685464
+      }
+    }
+  }
+}

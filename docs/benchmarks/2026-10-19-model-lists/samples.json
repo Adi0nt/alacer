@@ -1,0 +1,71 @@
+{
+  "counts": {
+    "jdk.ExecutionSample": {
+      "shadow": 6,
+      "other": 17,
+      "setup/cleanup": 13,
+      "layers": 6,
+      "model": 2
+    },
+    "jdk.NativeMethodSample": {
+      "shadow": 6,
+      "layers": 22,
+      "model": 92,
+      "setup/cleanup": 4
+    }
+  },
+  "leaves": {
+    "net.minecraft.util.Long2ObjectHashMap.get": 11,
+    "org.lwjgl.opengl.GL11.glVertexPointer": 1,
+    "net.minecraft.world.chunk.WorldChunk.getLight": 2,
+    "org.lwjgl.opengl.GL11.nglDrawArrays": 6,
+    "org.lwjgl.opengl.GL11.nglCallList": 109,
+    "java.util.HashMap$TreeNode.getTreeNode": 15,
+    "org.lwjgl.opengl.GL11.nglDisable": 1,
+    "net.minecraft.entity.data.SyncedData.getByte": 3,
+    "org.lwjgl.opengl.GL11.nglRotatef": 1,
+    "org.lwjgl.opengl.GL11.glCallList": 1,
+    "org.lwjgl.opengl.GL11.glEnable": 1,
+    "net.minecraft.client.render.vertex.BufferBuilder.color": 1,
+    "org.lwjgl.opengl.GL11.nglBindTexture": 2,
+    "net.minecraft.client.render.entity.LivingEntityRenderer.renderLayers": 1,
+    "net.minecraft.world.World.getRawBrightness": 1,
+    "java.util.HashMap.getNode": 1,
+    "net.minecraft.client.render.model.entity.WolfModel.render": 1,
+    "net.minecraft.entity.Entity.hasCustomName": 1,
+    "org.lwjgl.opengl.GL11.nglTranslatef": 4,
+    "org.lwjgl.opengl.GL11.nglPushMatrix": 1,
+    "org.lwjgl.opengl.GL11.glTranslatef": 1,
+    "net.minecraft.client.render.entity.MobRenderer.render": 1,
+    "org.lwjgl.opengl.GL11.glDisable": 1,
+    "net.minecraft.world.World.getBrightness": 1
+  },
+  "all_events": 57526,
+  "scope": "whole launch including warmup; attribution only, not performance selection",
+  "model_part_leaves": {
+    "jdk.NativeMethodSample": {
+      "org.lwjgl.opengl.GL11.nglCallList": 109,
+      "org.lwjgl.opengl.GL11.nglTranslatef": 3
+    },
+    "jdk.ExecutionSample": {
+      "org.lwjgl.opengl.GL11.glCallList": 1,
+      "org.lwjgl.opengl.GL11.glTranslatef": 1
+    }
+  },
+  "period_settings": [
+    {
+      "id": 352,
+      "name": "period",
+      "value": "1 ms"
+    },
+    {
+      "id": 353,
+      "name": "period",
+      "value": "1 ms"
+    }
+  ],
+  "periods": {
+    "jdk.ExecutionSample": "1ms",
+    "jdk.NativeMethodSample": "1ms"
+  }
+}

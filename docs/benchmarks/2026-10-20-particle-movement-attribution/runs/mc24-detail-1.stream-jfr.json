@@ -1,0 +1,69 @@
+{
+  "scope": "client main thread; CSV phase windows; unlit ParticleManager.render stack",
+  "allocation_note": "JFR sampled weights are estimates, not exact allocated bytes. No samples is not proof of elimination.",
+  "phases": {
+    "static": {
+      "window_start_epoch_ns": 1792567009756499900,
+      "window_end_epoch_ns": 1792567019756977600,
+      "client_execution_samples": 455,
+      "pass_execution_samples": 331,
+      "pass_allocation_samples": 0,
+      "pass_allocation_sampled_weight": 0,
+      "particle_tick_execution_samples": 34,
+      "particle_move_execution_samples": 31,
+      "particle_gather_execution_samples": 16,
+      "particle_entity_query_execution_samples": 4,
+      "particle_tick_allocation_samples": 781,
+      "particle_tick_allocation_sampled_weight": 369380160,
+      "objects_sampled_weight": {},
+      "sites_sampled_weight": {},
+      "particle_box_sites_sampled_weight": {
+        "net.minecraft.util.math.Box.contract <- net.minecraft.entity.Entity.move:684": 35771856,
+        "net.minecraft.util.math.Box.moved <- net.minecraft.entity.Entity.move:493": 37633816,
+        "net.minecraft.util.math.Box.expanded <- net.minecraft.entity.Entity.move:486": 36372320,
+        "net.minecraft.util.math.Box.grown <- net.minecraft.world.World.getCollisions:974": 40623688,
+        "net.minecraft.util.math.Box.moved <- net.minecraft.entity.Entity.move:501": 46392096,
+        "net.minecraft.util.math.Box.moved <- net.minecraft.entity.Entity.move:507": 40450840,
+        "net.minecraft.util.math.Box.moved <- net.minecraft.entity.Entity.move:408": 6434416
+      }
+    },
+    "pan": {
+      "window_start_epoch_ns": 1792567024769426800,
+      "window_end_epoch_ns": 1792567039770452500,
+      "client_execution_samples": 673,
+      "pass_execution_samples": 339,
+      "pass_allocation_samples": 487,
+      "pass_allocation_sampled_weight": 342681304,
+      "particle_tick_execution_samples": 51,
+      "particle_move_execution_samples": 50,
+      "particle_gather_execution_samples": 22,
+      "particle_entity_query_execution_samples": 7,
+      "particle_tick_allocation_samples": 853,
+      "particle_tick_allocation_sampled_weight": 487691648,
+      "objects_sampled_weight": {
+        "net.minecraft.util.math.BlockPos": 342681304
+      },
+      "sites_sampled_weight": {
+        "net.minecraft.entity.Entity.getLightLevel <- net.minecraft.client.entity.particle.Particle.render <- net.minecraft.client.entity.particle.RedstoneParticle.render <- net.minecraft.client.ParticleManager.render": 144057160,
+        "net.minecraft.entity.Entity.getLightLevel <- net.minecraft.client.entity.particle.Particle.render <- net.minecraft.client.ParticleManager.render <- net.minecraft.client.render.GameRenderer.render": 83014672,
+        "net.minecraft.entity.Entity.getLightLevel <- net.minecraft.client.entity.particle.Particle.render <- net.minecraft.client.entity.particle.SmokeParticle.render <- net.minecraft.client.ParticleManager.render": 115609472
+      },
+      "particle_box_sites_sampled_weight": {
+        "net.minecraft.util.math.Box.moved <- net.minecraft.entity.Entity.move:507": 44300880,
+        "net.minecraft.util.math.Box.moved <- net.minecraft.entity.Entity.move:408": 12042728,
+        "net.minecraft.util.math.Box.moved <- net.minecraft.entity.Entity.move:493": 61670040,
+        "net.minecraft.util.math.Box.moved <- net.minecraft.entity.Entity.move:501": 36478800,
+        "net.minecraft.util.math.Box.expanded <- net.minecraft.entity.Entity.move:486": 60622048,
+        "net.minecraft.util.math.Box.contract <- net.minecraft.entity.Entity.move:684": 40624992,
+        "net.minecraft.util.math.Box.grown <- net.minecraft.world.World.getCollisions:974": 40147192
+      }
+    }
+  },
+  "record": "docs\\benchmarks\\2026-10-20-particle-movement-attribution\\runs\\mc24-detail-1.record.json",
+  "jfr_sha256": "9421f9438bf625250efbe67a9fcab7bfe7894942694237d74bc16ff22062a5c8",
+  "source_snapshot": {
+    "path": "docs\\benchmarks\\2026-10-20-particle-movement-attribution\\sources-456728c04df73d8f.zip",
+    "sha256": "e52cfb25e518c910e3d8904a041ccfd3d244e295e373101aa5d7df4814846369"
+  },
+  "epoch_uncertainty_ns": "1001600"
+}

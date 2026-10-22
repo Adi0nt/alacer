@@ -1,0 +1,100 @@
+plugins {
+	id 'fabric-loom' version '1.18-SNAPSHOT'
+	id 'ploceus' version '1.18-SNAPSHOT'
+}
+
+base {
+	archivesName = project.archives_base_name
+}
+version = "${project.version}+mc${project.minecraft_version}"
+group = project.maven_group
+
+loom {
+	accessWidenerPath = file('src/main/resources/alacer.accesswidener')
+}
+
+repositories {
+	mavenCentral()
+}
+
+dependencies {
+	minecraft "com.mojang:minecraft:${project.minecraft_version}"
+	modImplementation "net.fabricmc:fabric-loader:${project.loader_version}"
+
+	mappings ploceus.featherMappings(project.feather_build)
+
+	// Only the OSL modules actually used are declared, rather than the whole library.
+	ploceus.dependOslModule(project.osl_version, 'core')
+	ploceus.dependOslModule(project.osl_version, 'entrypoints')
+	ploceus.dependOslModule(project.osl_version, 'lifecycle-events')
+	ploceus.dependOslModule(project.osl_version, 'keybinds')
+
+	// Unit tests only exercise Minecraft-independent code (statistics, config parsing).
+	testImplementation platform('org.junit:junit-bom:5.13.4')
+	testImplementation 'org.junit.jupiter:junit-jupiter'
+	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+}
+
+processResources {
+	inputs.property 'version', version
+
+	filesMatching('fabric.mod.json') {
+		expand 'version': version
+	}
+}
+
+tasks.withType(JavaCompile).configureEach {
+	it.options.encoding = 'UTF-8'
+	it.options.release = 25
+}
+
+java {
+	toolchain {
+		languageVersion = JavaLanguageVersion.of(25)
+	}
+	sourceCompatibility = JavaVersion.VERSION_25
+	targetCompatibility = JavaVersion.VERSION_25
+	withSourcesJar()
+}
+
+test {
+	useJUnitPlatform()
+}
+
+// Minecraft's JVM is independent of the JVM running Gradle and the bytecode target.
+// Java 25 is the primary development and benchmark runtime.
+tasks.withType(net.fabricmc.loom.task.AbstractRunTask).configureEach {
+	javaLauncher = javaToolchains.launcherFor {
+		languageVersion = JavaLanguageVersion.of(25)
+	}
+	// LWJGL 2 loads native OpenGL/OpenAL/JInput libraries on the classpath.
+	jvmArgs '--enable-native-access=ALL-UNNAMED'
+
+	// Forward -Palacer.<key>=<value> to the game as -Dalacer.<key>=<value>, e.g.
+	//   ./gradlew runClient -Palacer.benchmark=true -Palacer.render.fastChunkVisibility=false
+	project.properties.each { key, value ->
+		if (key.startsWith('alacer.')) {
+			systemProperty key, value.toString()
+		}
+	}
+
+	// -Pjfr=<name> records a Java Flight Recorder profile to run/<name>.jfr.
+	if (project.hasProperty('jfr')) {
+		def settings = project.findProperty('jfrSettings') ?: 'profile'
+		jvmArgs "-XX:StartFlightRecording=settings=${settings},filename=${project.property('jfr')}.jfr,dumponexit=true"
+		// -PjfrDebugNonSafepoints=true (attribution only) records inlined-frame debug info at non-safepoint PCs.
+		if (project.findProperty('jfrDebugNonSafepoints') == 'true') {
+			jvmArgs '-XX:+UnlockDiagnosticVMOptions', '-XX:+DebugNonSafepoints'
+		}
+	}
+
+	// -Pwindow=1920x1080 sets the initial window size, which drives fill-rate (GPU) load.
+	if (project.hasProperty('window')) {
+		def (w, h) = project.property('window').toString().split('x')
+		args '--width', w, '--height', h
+	}
+
+	if (project.hasProperty('xmx')) {
+		jvmArgs "-Xmx${project.property('xmx')}"
+	}
+}

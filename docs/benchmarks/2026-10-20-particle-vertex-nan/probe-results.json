@@ -1,0 +1,83 @@
+[
+  {
+    "mode": "raw-default-1",
+    "exit": 0,
+    "output": [
+      "first byte=63 expected=ffc00000 actual=7fc00000 case=220 edgeIteration=219 offsetBits=(7ff8000000000000,fff8000000000000,7ff8000000000000) xyzBits=(800116c2,800116c2,7fc00000)",
+      "first byte=35 expected=ffc00000 actual=7fc00000 case=317 edgeIteration=316 offsetBits=(7ff8000000000000,fff8000000000000,7ff8000000000000) xyzBits=(ff7fffff,7fc00000,80000000)",
+      "cases=400000 strictMismatches=20 semanticMismatches=0",
+      "differences={byte=35 expected=ffc00000 actual=7fc00000=8, byte=63 expected=ffc00000 actual=7fc00000=12}"
+    ]
+  },
+  {
+    "mode": "raw-default-2",
+    "exit": 0,
+    "output": [
+      "first byte=35 expected=ffc00000 actual=7fc00000 case=130 edgeIteration=129 offsetBits=(7ff8000000000000,fff8000000000000,7ff8000000000000) xyzBits=(000116c2,7fc00000,3f800000)",
+      "first byte=63 expected=ffc00000 actual=7fc00000 case=220 edgeIteration=219 offsetBits=(7ff8000000000000,fff8000000000000,7ff8000000000000) xyzBits=(800116c2,800116c2,7fc00000)",
+      "first byte=35 expected=7fc00000 actual=ffc00000 case=49591 edgeIteration=1590 offsetBits=(7ff8000000000000,fff8000000000000,7ff8000000000000) xyzBits=(7f800000,7fc00000,3f7fffff)",
+      "cases=400000 strictMismatches=2488 semanticMismatches=0",
+      "differences={byte=35 expected=7fc00000 actual=ffc00000=2458, byte=35 expected=ffc00000 actual=7fc00000=14, byte=63 expected=ffc00000 actual=7fc00000=16}"
+    ]
+  },
+  {
+    "mode": "raw-default-3",
+    "exit": 0,
+    "output": [
+      "first byte=35 expected=ffc00000 actual=7fc00000 case=130 edgeIteration=129 offsetBits=(7ff8000000000000,fff8000000000000,7ff8000000000000) xyzBits=(000116c2,7fc00000,3f800000)",
+      "first byte=63 expected=ffc00000 actual=7fc00000 case=220 edgeIteration=219 offsetBits=(7ff8000000000000,fff8000000000000,7ff8000000000000) xyzBits=(800116c2,800116c2,7fc00000)",
+      "cases=400000 strictMismatches=30 semanticMismatches=0",
+      "differences={byte=35 expected=ffc00000 actual=7fc00000=14, byte=63 expected=ffc00000 actual=7fc00000=16}"
+    ]
+  },
+  {
+    "mode": "raw-default-4",
+    "exit": 0,
+    "output": [
+      "first byte=35 expected=ffc00000 actual=7fc00000 case=130 edgeIteration=129 offsetBits=(7ff8000000000000,fff8000000000000,7ff8000000000000) xyzBits=(000116c2,7fc00000,3f800000)",
+      "first byte=63 expected=ffc00000 actual=7fc00000 case=220 edgeIteration=219 offsetBits=(7ff8000000000000,fff8000000000000,7ff8000000000000) xyzBits=(800116c2,800116c2,7fc00000)",
+      "first byte=35 expected=7fc00000 actual=ffc00000 case=45591 edgeIteration=1590 offsetBits=(7ff8000000000000,fff8000000000000,7ff8000000000000) xyzBits=(7f800000,7fc00000,3f7fffff)",
+      "cases=400000 strictMismatches=2515 semanticMismatches=0",
+      "differences={byte=35 expected=7fc00000 actual=ffc00000=2486, byte=35 expected=ffc00000 actual=7fc00000=13, byte=63 expected=ffc00000 actual=7fc00000=16}"
+    ]
+  },
+  {
+    "mode": "raw-default-5",
+    "exit": 0,
+    "output": [
+      "first byte=35 expected=ffc00000 actual=7fc00000 case=130 edgeIteration=129 offsetBits=(7ff8000000000000,fff8000000000000,7ff8000000000000) xyzBits=(000116c2,7fc00000,3f800000)",
+      "first byte=63 expected=ffc00000 actual=7fc00000 case=220 edgeIteration=219 offsetBits=(7ff8000000000000,fff8000000000000,7ff8000000000000) xyzBits=(800116c2,800116c2,7fc00000)",
+      "first byte=35 expected=7fc00000 actual=ffc00000 case=54578 edgeIteration=2577 offsetBits=(7ff8000000000000,fff8000000000000,7ff8000000000000) xyzBits=(ff800000,7fc00000,00000000)",
+      "cases=400000 strictMismatches=2450 semanticMismatches=0",
+      "differences={byte=35 expected=7fc00000 actual=ffc00000=2421, byte=35 expected=ffc00000 actual=7fc00000=13, byte=63 expected=ffc00000 actual=7fc00000=16}"
+    ]
+  },
+  {
+    "mode": "raw-c1",
+    "exit": 0,
+    "output": [
+      "first byte=35 expected=ffc00000 actual=7fc00000 case=130 edgeIteration=129 offsetBits=(7ff8000000000000,fff8000000000000,7ff8000000000000) xyzBits=(000116c2,7fc00000,3f800000)",
+      "first byte=63 expected=ffc00000 actual=7fc00000 case=220 edgeIteration=219 offsetBits=(7ff8000000000000,fff8000000000000,7ff8000000000000) xyzBits=(800116c2,800116c2,7fc00000)",
+      "cases=400000 strictMismatches=5699 semanticMismatches=0",
+      "differences={byte=35 expected=ffc00000 actual=7fc00000=2800, byte=63 expected=ffc00000 actual=7fc00000=2899}"
+    ]
+  },
+  {
+    "mode": "raw-c2",
+    "exit": 0,
+    "output": [
+      "first byte=35 expected=7fc00000 actual=ffc00000 case=2363 edgeIteration=2362 offsetBits=(7ff8000000000000,fff8000000000000,7ff8000000000000) xyzBits=(3f800001,7fc00000,7fc00000)",
+      "first byte=63 expected=7fc00000 actual=ffc00000 case=2377 edgeIteration=2376 offsetBits=(7ff8000000000000,fff8000000000000,7ff8000000000000) xyzBits=(3f000000,c37f0000,7fc00000)",
+      "cases=400000 strictMismatches=5670 semanticMismatches=0",
+      "differences={byte=35 expected=7fc00000 actual=ffc00000=2787, byte=63 expected=7fc00000 actual=ffc00000=2883}"
+    ]
+  },
+  {
+    "mode": "raw-interpreter",
+    "exit": 0,
+    "output": [
+      "cases=40000 strictMismatches=0 semanticMismatches=0",
+      "differences={}"
+    ]
+  }
+]

@@ -1,0 +1,266 @@
+[
+  {
+    "label": "lc23-draw-1-r1",
+    "phase": "static",
+    "variants": {
+      "a": {
+        "passes": 7779,
+        "pass_wall_ns": 429496.22059390665,
+        "pass_client_cpu_ns": 455955.1356215452,
+        "draw_host_wall_ns": 37733.32047821057,
+        "draw_client_cpu_ns": 40172.25864507006,
+        "gpu_ns": 30283.230235248746,
+        "pass_allocation_bytes": 79010.82915541844,
+        "completed": 15558,
+        "dropped": 0,
+        "outstanding": 0
+      },
+      "b": {
+        "passes": 8140,
+        "pass_wall_ns": 367306.84275184275,
+        "pass_client_cpu_ns": 337837.8378378378,
+        "draw_host_wall_ns": 39008.98034398034,
+        "draw_client_cpu_ns": 51827.395577395575,
+        "gpu_ns": 29955.14496314496,
+        "pass_allocation_bytes": 79380.66044226044,
+        "completed": 16280,
+        "dropped": 0,
+        "outstanding": 0
+      }
+    },
+    "cycles": false
+  },
+  {
+    "label": "lc23-draw-1-r1",
+    "phase": "pan",
+    "variants": {
+      "a": {
+        "passes": 7955,
+        "pass_wall_ns": 474525.0157133878,
+        "pass_client_cpu_ns": 426225.64424890006,
+        "draw_host_wall_ns": 40272.92269013199,
+        "draw_client_cpu_ns": 39283.46951602765,
+        "gpu_ns": 37416.61244500314,
+        "pass_allocation_bytes": 79554.07768698932,
+        "completed": 15910,
+        "dropped": 0,
+        "outstanding": 0
+      },
+      "b": {
+        "passes": 7203,
+        "pass_wall_ns": 462583.49298903235,
+        "pass_client_cpu_ns": 414323.89282243507,
+        "draw_host_wall_ns": 44408.17714841038,
+        "draw_client_cpu_ns": 30369.290573372207,
+        "gpu_ns": 40481.33722060252,
+        "pass_allocation_bytes": 79297.28946272387,
+        "completed": 14406,
+        "dropped": 0,
+        "outstanding": 0
+      }
+    },
+    "cycles": false
+  },
+  {
+    "label": "lc23-draw-1-r2",
+    "phase": "static",
+    "variants": {
+      "a": {
+        "passes": 7113,
+        "pass_wall_ns": 463157.35976381274,
+        "pass_client_cpu_ns": 397599.4657669057,
+        "draw_host_wall_ns": 39502.38999015887,
+        "draw_client_cpu_ns": 19770.13918177984,
+        "gpu_ns": 31985.13594826374,
+        "pass_allocation_bytes": 79209.49472796288,
+        "completed": 14226,
+        "dropped": 0,
+        "outstanding": 0
+      },
+      "b": {
+        "passes": 8299,
+        "pass_wall_ns": 355772.61115797085,
+        "pass_client_cpu_ns": 342661.7664778889,
+        "draw_host_wall_ns": 37574.249909627666,
+        "draw_client_cpu_ns": 16944.812628027474,
+        "gpu_ns": 30871.64429449331,
+        "pass_allocation_bytes": 79269.24689721654,
+        "completed": 16598,
+        "dropped": 0,
+        "outstanding": 0
+      }
+    },
+    "cycles": false
+  },
+  {
+    "label": "lc23-draw-1-r2",
+    "phase": "pan",
+    "variants": {
+      "a": {
+        "passes": 7798,
+        "pass_wall_ns": 487915.2474993588,
+        "pass_client_cpu_ns": 424788.40728391893,
+        "draw_host_wall_ns": 40273.15978456014,
+        "draw_client_cpu_ns": 22040.907925109,
+        "gpu_ns": 45574.04052321108,
+        "pass_allocation_bytes": 79197.10079507566,
+        "completed": 15596,
+        "dropped": 0,
+        "outstanding": 0
+      },
+      "b": {
+        "passes": 8942,
+        "pass_wall_ns": 383284.1981659584,
+        "pass_client_cpu_ns": 349474.3905166629,
+        "draw_host_wall_ns": 38102.2590024603,
+        "draw_client_cpu_ns": 31452.695146499664,
+        "gpu_ns": 51890.75911429211,
+        "pass_allocation_bytes": 79856.03310221426,
+        "completed": 17884,
+        "dropped": 0,
+        "outstanding": 0
+      }
+    },
+    "cycles": false
+  },
+  {
+    "label": "lc23-cycles-draw-1-r1",
+    "phase": "static",
+    "variants": {
+      "a": {
+        "passes": 7841,
+        "pass_wall_ns": 418251.3582451218,
+        "pass_client_cpu_ns": 408509.7564086213,
+        "draw_host_wall_ns": 36356.332100497384,
+        "draw_client_cpu_ns": 0.0,
+        "gpu_ns": 31185.44267312843,
+        "pass_allocation_bytes": 0.0,
+        "completed": 15682,
+        "dropped": 0,
+        "outstanding": 0,
+        "pass_thread_cycles": 868449.8395612804,
+        "draw_thread_cycles": 82347.18135441908
+      },
+      "b": {
+        "passes": 8449,
+        "pass_wall_ns": 349925.3994555569,
+        "pass_client_cpu_ns": 347674.28097999765,
+        "draw_host_wall_ns": 35850.479346668246,
+        "draw_client_cpu_ns": 1849.331281808498,
+        "gpu_ns": 30587.167238726477,
+        "pass_allocation_bytes": 0.0,
+        "completed": 16898,
+        "dropped": 0,
+        "outstanding": 0,
+        "pass_thread_cycles": 722542.0997751213,
+        "draw_thread_cycles": 80766.082021541
+      }
+    },
+    "cycles": true
+  },
+  {
+    "label": "lc23-cycles-draw-1-r1",
+    "phase": "pan",
+    "variants": {
+      "a": {
+        "passes": 7168,
+        "pass_wall_ns": 517185.03069196426,
+        "pass_client_cpu_ns": 527518.1361607143,
+        "draw_host_wall_ns": 42165.08091517857,
+        "draw_client_cpu_ns": 0.0,
+        "gpu_ns": 41084.71428571428,
+        "pass_allocation_bytes": 79099.54352678571,
+        "completed": 14336,
+        "dropped": 0,
+        "outstanding": 0,
+        "pass_thread_cycles": 1067001.8113839286,
+        "draw_thread_cycles": 95254.2216796875
+      },
+      "b": {
+        "passes": 7605,
+        "pass_wall_ns": 444144.352399737,
+        "pass_client_cpu_ns": 423241.288625904,
+        "draw_host_wall_ns": 41646.969099276794,
+        "draw_client_cpu_ns": 2054.56936226167,
+        "gpu_ns": 40188.86942800789,
+        "pass_allocation_bytes": 79349.59526627218,
+        "completed": 15210,
+        "dropped": 0,
+        "outstanding": 0,
+        "pass_thread_cycles": 913546.3835634451,
+        "draw_thread_cycles": 93627.63786982249
+      }
+    },
+    "cycles": true
+  },
+  {
+    "label": "lc23-cycles-draw-1-r2",
+    "phase": "static",
+    "variants": {
+      "a": {
+        "passes": 6560,
+        "pass_wall_ns": 488869.4969512195,
+        "pass_client_cpu_ns": 423971.03658536583,
+        "draw_host_wall_ns": 40519.83231707317,
+        "draw_client_cpu_ns": 0.0,
+        "gpu_ns": 31708.878048780487,
+        "pass_allocation_bytes": 0.0,
+        "completed": 13120,
+        "dropped": 0,
+        "outstanding": 0,
+        "pass_thread_cycles": 1005555.4484756098,
+        "draw_thread_cycles": 90775.50045731707
+      },
+      "b": {
+        "passes": 7375,
+        "pass_wall_ns": 391841.42372881353,
+        "pass_client_cpu_ns": 398305.0847457627,
+        "draw_host_wall_ns": 39081.45084745763,
+        "draw_client_cpu_ns": 0.0,
+        "gpu_ns": 31538.78345762712,
+        "pass_allocation_bytes": 0.0,
+        "completed": 14750,
+        "dropped": 0,
+        "outstanding": 0,
+        "pass_thread_cycles": 806955.5873898305,
+        "draw_thread_cycles": 87281.99050847457
+      }
+    },
+    "cycles": true
+  },
+  {
+    "label": "lc23-cycles-draw-1-r2",
+    "phase": "pan",
+    "variants": {
+      "a": {
+        "passes": 7102,
+        "pass_wall_ns": 523165.22106448887,
+        "pass_client_cpu_ns": 523620.10701210925,
+        "draw_host_wall_ns": 42594.3677837229,
+        "draw_client_cpu_ns": 2200.0844832441567,
+        "gpu_ns": 40012.70627992115,
+        "pass_allocation_bytes": 79160.0326668544,
+        "completed": 14204,
+        "dropped": 0,
+        "outstanding": 0,
+        "pass_thread_cycles": 1084461.7755561813,
+        "draw_thread_cycles": 96326.3231484089
+      },
+      "b": {
+        "passes": 7721,
+        "pass_wall_ns": 434620.2434917757,
+        "pass_client_cpu_ns": 455332.85843802616,
+        "draw_host_wall_ns": 41456.4434658723,
+        "draw_client_cpu_ns": 2023.7015930578941,
+        "gpu_ns": 36888.53568190649,
+        "pass_allocation_bytes": 79301.23766351509,
+        "completed": 15442,
+        "dropped": 0,
+        "outstanding": 0,
+        "pass_thread_cycles": 901453.7961403963,
+        "draw_thread_cycles": 93791.5824375081
+      }
+    },
+    "cycles": true
+  }
+]

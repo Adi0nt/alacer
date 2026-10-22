@@ -1,0 +1,165 @@
+{
+  "session": 27,
+  "named_candidate": null,
+  "implemented_optimization": false,
+  "promoted": false,
+  "scenes": {
+    "near": {
+      "checks": [
+        {
+          "label": "cu27-near-control-r1",
+          "mean_upload_fraction": 0.08958390004473477,
+          "slow99_upload_fraction": 0.23639708422272726,
+          "slow99_upload_ms": 1.3451647773279352,
+          "mean_test": false,
+          "tail_test": true
+        },
+        {
+          "label": "cu27-near-control-r2",
+          "mean_upload_fraction": 0.09409890854420624,
+          "slow99_upload_fraction": 0.17559689869677975,
+          "slow99_upload_ms": 1.2261208955223881,
+          "mean_test": false,
+          "tail_test": false
+        },
+        {
+          "label": "cu27-near-control-r3",
+          "mean_upload_fraction": 0.09146212519885313,
+          "slow99_upload_fraction": 0.17704942661669923,
+          "slow99_upload_ms": 1.0699302631578949,
+          "mean_test": false,
+          "tail_test": false
+        }
+      ],
+      "qualifying_controls": 1,
+      "required_controls": 2,
+      "large_region_rule": false,
+      "corroboration": true,
+      "control_diagnostic_observations_not_causal_overhead_estimates": {
+        "frame_mean_ms": {
+          "control_median": 1.7572652257951151,
+          "diagnostic_median": 1.8178132495784824,
+          "relative_change": 0.034455825389688055
+        },
+        "frame_p99_ms": {
+          "control_median": 4.8171,
+          "diagnostic_median": 5.540150000000001,
+          "relative_change": 0.15010068298353785
+        },
+        "tick_frame_p99_ms": {
+          "control_median": 5.9638,
+          "diagnostic_median": 7.9079999999999995,
+          "relative_change": 0.3260002012139911
+        },
+        "cpu_ms_per_frame": {
+          "control_median": 1.7036,
+          "diagnostic_median": 1.74765,
+          "relative_change": 0.025857008687485195
+        },
+        "allocation_bytes_per_frame": {
+          "control_median": 28625.063784923565,
+          "diagnostic_median": 29640.451251565013,
+          "relative_change": 0.03547197219438991
+        },
+        "slow99_frame_mean_ms": {
+          "control_median": 6.043116228070176,
+          "diagnostic_median": 7.06296222723544,
+          "relative_change": 0.1687616058794461
+        }
+      }
+    },
+    "high": {
+      "checks": [
+        {
+          "label": "cu27-high-control-r1",
+          "mean_upload_fraction": 0.08762339211470148,
+          "slow99_upload_fraction": 0.16184148728450895,
+          "slow99_upload_ms": 1.0807442786069652,
+          "mean_test": false,
+          "tail_test": false
+        },
+        {
+          "label": "cu27-high-control-r2",
+          "mean_upload_fraction": 0.08872486202100792,
+          "slow99_upload_fraction": 0.1874698274315074,
+          "slow99_upload_ms": 1.1759379487179487,
+          "mean_test": false,
+          "tail_test": false
+        },
+        {
+          "label": "cu27-high-control-r3",
+          "mean_upload_fraction": 0.08555481487483474,
+          "slow99_upload_fraction": 0.13065063933648502,
+          "slow99_upload_ms": 0.8208052380952381,
+          "mean_test": false,
+          "tail_test": false
+        }
+      ],
+      "qualifying_controls": 0,
+      "required_controls": 2,
+      "large_region_rule": false,
+      "corroboration": true,
+      "control_diagnostic_observations_not_causal_overhead_estimates": {
+        "frame_mean_ms": {
+          "control_median": 1.9965244410061886,
+          "diagnostic_median": 1.8721325406758191,
+          "relative_change": -0.06230422116329304
+        },
+        "frame_p99_ms": {
+          "control_median": 5.0141,
+          "diagnostic_median": 5.0853,
+          "relative_change": 0.01419995612373115
+        },
+        "tick_frame_p99_ms": {
+          "control_median": 6.499,
+          "diagnostic_median": 6.2044,
+          "relative_change": -0.04533005077704266
+        },
+        "cpu_ms_per_frame": {
+          "control_median": 1.9239,
+          "diagnostic_median": 1.81425,
+          "relative_change": -0.056993606736316926
+        },
+        "allocation_bytes_per_frame": {
+          "control_median": 33636.18486723897,
+          "diagnostic_median": 30991.00366711017,
+          "relative_change": -0.07864094012353806
+        },
+        "slow99_frame_mean_ms": {
+          "control_median": 6.282443333333333,
+          "diagnostic_median": 6.403533497536946,
+          "relative_change": 0.0192743742806456
+        }
+      }
+    }
+  },
+  "exactness_audit_after_measurement": [
+    {
+      "idea": "Remove or batch required GL list compilation",
+      "exact_removable_set_established": false,
+      "reason": "94-95% is the uploadGlList scope, not redundant calls. Vanilla binds each compiled list to one render chunk/layer, records its transform and vertex state, and publishes after futures complete. No duplicate-content/epoch census or proven equivalent representation removes a measured subset. Grouping changes object ownership and ordering and needs a new design/series."
+    },
+    {
+      "idea": "Skip upload of empty geometry",
+      "exact_removable_set_established": false,
+      "reason": "ChunkRenderWorker tests CompiledChunk.hasLayer(layer) before rebuild uploads, so never-started layers are already skipped. A started layer may still have zero emitted vertices; this series has no per-list vertex/byte census to quantify those uploads. More worker builds than GL list calls does not identify a removable share."
+    },
+    {
+      "idea": "Deduplicate, defer, reprioritize or change drain budget",
+      "exact_removable_set_established": false,
+      "reason": "No exact content/invalidation identity or visible-update latency was recorded. Dirty-set ages are lower bounds and queued entries omit active work; schedules/starts/uploads count different units. Deferring required work can lower frame cost without delivering the same throughput/latency. FIFO/cancellation/publication cannot be changed on these counters."
+    },
+    {
+      "idea": "Force VBO instead of display lists",
+      "exact_removable_set_established": false,
+      "reason": "Explicitly excluded by the frozen rule and session 14 boundary; no VBO comparison ran in this series."
+    }
+  ],
+  "reason": "Neither scene reaches the frozen 2/3 control region-size gate (near 1/3, high 0/3); subregion corroboration passes. No exact removable-work set is established independently either.",
+  "later_correctness_lifecycle_ordering_throughput_latency_tail_cpu_allocation_gates": "NOT RUN / NOT MET: this is attribution, no candidate A/B",
+  "gpu_boundary": "4859/4859 timestamp pairs completed over all diagnostic phases; no dropped/outstanding pairs. Command-stream elapsed is not GPU busy time or driver CPU time.",
+  "source_snapshot": {
+    "path": "docs\\benchmarks\\2026-10-21-chunk-upload\\sources-fd575d1dbef39179.zip",
+    "sha256": "8f10d78efa3fdb4af37bff6a0110c5621e5b9baef3d9c1830a69a9133f788bb3"
+  }
+}
