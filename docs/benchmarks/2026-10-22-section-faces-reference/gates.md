@@ -111,3 +111,16 @@ A pair with fewer than 1,000 tick-free frames on either side is unresolved for a
 separate, explicit decision; nothing changes defaults automatically). If 1-6 pass except 2, the option is closed as
 exact but without a demonstrated frame-time benefit, and stays off. Any other failure closes it as well. Post hoc
 analyses (for example crossing frames only) are reported, never rescored.
+
+## Pre-freeze amendment (after the first smoke pair, before the freeze)
+
+Written on the reference machine, October 22, 2026. The first smoke pair, `sf30-smoke-verify` and `sf30-smoke-near`,
+passed on the merged build (6,802 and 7,266 answers compared, 0 mismatched; the static, pan and fly captures were
+inspected and show complete terrain, mobs and sky). Their attempt files are kept. Before the freeze, session 29's
+amendment 2 was found missing from this line: `BenchmarkRunner` still sized each phase's frame buffer for 2,000 frames
+per second (`seconds * 2000 + 1000`). In session 29 a d0 static phase reached about 2,255 frames per second, dropped
+4,102 frames and was rejected; this series runs eight d0 launches, so the same rejection was likely. Session 29's fix
+(`seconds * 4000 + 1000`, approved there) is ported unchanged. The buffer is still allocated once before recording, so
+recorded frames and allocation per frame are unaffected. The client is rebuilt and the smoke repeated under new labels,
+`sf30-smoke-verify-r2` and `sf30-smoke-near-r2` (the runner's smoke list names them and the freeze requires them).
+Nothing else changes: launches, checks, metrics, thresholds and pass conditions are as above.

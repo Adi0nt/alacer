@@ -75,8 +75,8 @@ def jobs():
 
 def smoke_jobs():
     # Shape the tooling only: verification, fixed-pose screenshots and a fresh flight, at short time scales.
-    return [('smoke', 'sf30-smoke-verify', 'd200', {'on': True, 'verify': True, 'scale': '0.2', 'screenshots': True}),
-            ('smoke', 'sf30-smoke-near', 'near', {'on': True, 'verify': True, 'scale': '0.1'})]
+    return [('smoke', 'sf30-smoke-verify-r2', 'd200', {'on': True, 'verify': True, 'scale': '0.2', 'screenshots': True}),
+            ('smoke', 'sf30-smoke-near-r2', 'near', {'on': True, 'verify': True, 'scale': '0.1'})]
 
 
 def options(scene, label, spec):

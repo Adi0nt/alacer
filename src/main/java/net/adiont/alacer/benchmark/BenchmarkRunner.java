@@ -964,7 +964,7 @@ public final class BenchmarkRunner implements FrameProfiler.FrameListener {
 
 	private void startRecording(Phase phase, long now) {
 		phase.config = configSnapshot();
-		int capacity = (int) Math.min(Integer.MAX_VALUE / 2, (long) (phase.seconds * 2000) + 1000);
+		int capacity = (int) Math.min(Integer.MAX_VALUE / 2, (long) (phase.seconds * 4000) + 1000);
 		phase.columns = new long[FrameProfiler.COLUMNS][capacity];
 		phase.rows = 0;
 		phase.entitiesAtStart = this.minecraft.world.getEntities().size();

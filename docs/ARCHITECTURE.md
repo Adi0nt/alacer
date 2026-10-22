@@ -1045,7 +1045,7 @@ remains is mostly `getLightLevel`'s own work and its `isChunkLoaded` entry. **Of
 off by `render.defaults`, retained with its hooks absent unless requested. See BENCHMARKS session 22
 and the [session 22 archive](benchmarks/2026-10-20-particle-light-reuse/README.md).
 
-## Session 28b: camera-section open faces (verified, unmeasured, off by default)
+## Session 28b: camera-section open faces (verified; measured and closed in session 30, off by default)
 
 Developed in a parallel session from `main` (branch `claude/vibrant-bardeen-9adcot`) at the same time as the
 allocation-selection session 28 below, and merged onto this line afterwards; "28b" keeps the two apart.
@@ -1089,8 +1089,11 @@ session's headless Linux container (Xvfb, Mesa llvmpipe, 854x480, view distance 
 `render.fastChunkVisibility.verify` (1,000 searches, 0 mismatches); the particle diagnostic launch,
 whose camera never leaves its block, re-read the section 152 times as its block changes invalidated it.
 
-**Result.** Not measured. No claim of a frame-time, CPU or allocation improvement is made; the option
-stays off until the separate-launch flight comparison below passes on the reference hardware.
+**Result.** Measured in session 30 on the reference hardware (Roadmap, "Done in session 30") under
+gates frozen before measuring: exact (364,446 answers compared, 0 mismatched) and about 28% less
+tick-free allocation per frame in every moving phase, but the visibility search (`terrain_setup`) fell
+only 1.65% pooled, not at all in the fresh flights, and the region, no-regression, still-phase and
+screenshot gates failed. **Closed:** the option stays off by default and outside `render.defaults`.
 
 **Protocol to run before any selection.** In-process A/B covers only static and pan, where this
 option does nothing, so compare separate launches in alternating order (A, B, B, A, then B, A, A, B),
@@ -1250,12 +1253,44 @@ that rescues nothing. **Off by default and outside `render.defaults`.** The open
 200-240 KB per cache miss (one per block the camera enters), which this frame rate cannot rank. See the
 [session 28 archive](benchmarks/2026-10-22-allocation-selection/README.md).
 
-### Next session (29): recommended order
+Done in session 29: **`render.reuseShadowPositions` on the reference hardware** (Windows 11, i7-12700F, RTX 3060 Ti,
+1920x1080, Java 25), with session 28's gates, a tick-free allocation target and fixed end-pose screenshots, frozen
+before measuring. Two user-approved amendments refroze the series: the first verify launch was ended from outside the
+runner (cause not established; repeated as `-r2`), and a d0 static phase at about 2,255 FPS dropped 4,102 frames, so
+`BenchmarkRunner`'s frame buffer was raised to 4,000 FPS and that pair repeated. 26 judged launches (3 verify,
+3 screenshot, 4 in-process A/B, 16 startup); every attempt was kept. `.verify` compared 335,264,645 positions with 0
+mismatches, and the allocation target passed clearly: tick-free allocation per frame -37.7% / -38.5% in-process
+(about 20.0 / 21.4 KB) and -38.4% / -37.4% at startup (d200 static / pan). Everything else that selects failed: the
+fly screenshot (1.74% of pixels against 0.08% between the absent captures), d200 frame mean (in-process pan +2.3%,
+startup fly +6.6%, above the 1% limit) with matching tail and CPU failures, tick-free allocation in startup d200 fly
+(+9.0%) and d0 pan/fly (+2.1% / +2.3%), d0 fly visible chunks (-2.4%), and d0 frame means (+3.3% to +24.4%, two pairs).
+**Closed; off by default and outside `render.defaults`.** The results (`gates.json`, attempts, records, three freezes)
+are in the shared reference checkout's uncommitted
+[session 29 archive](benchmarks/2026-10-22-shadow-positions-reference/README.md). TODO: that archive's README is still
+the run plan and `docs/BENCHMARKS.md` has no session 29 entry; neither is on this branch yet.
 
-Session 28b (above, a parallel session) implemented and verified the camera-section open-faces candidate (the flood
-fill in item 1's allocation list); it is off and unmeasured. After the merge onto this line, container launches of every
-series scene compared 18,133 answers with vanilla, 0 mismatched (correctness only). Its separate-launch reference series is prepared as
-session 30 (item 1b below).
+Done in session 30: **`render.fastCameraSectionFaces` (session 28b) on the reference hardware.** Gates were written from
+the mechanism and frozen before measuring (one pre-freeze amendment ported session 29's 4,000 FPS buffer, which four
+recorded phases needed). 4 verify, 3 fixed-pose screenshot and 40 startup launches (four alternating off/on pairs in
+each of d0, d200, terrain and session 27's near/high fresh flights) all passed the runner's checks; none was rejected.
+Exact: 364,446 answers compared with vanilla, 0 mismatched. Allocation per tick-free frame fell in every moving
+scene-phase (pooled -28.3%, about 2-10 KB per frame), and the pooled moving frame mean fell 1.22% (the benefit gate's
+1% threshold). But the visibility search's own time (`terrain_setup`) fell only 1.65% pooled (3% required) and not in
+the fresh flights (2 of 4 pairs lower each); 12 regression checks failed (for example high still tick-frame p99 +28%,
+terrain sort frame mean +2.7%); still phases, where the option does no work, moved beyond 2% (d0 static
+`terrain_setup` +8.3%, d0 pan allocation +8.4%); and the static and pan screenshot comparisons failed by about one
+mob's pose (terrain identical on inspection). Still phases varied by up to 17% in frame mean and 28% in tails between
+launches, so four pairs per scene cannot resolve 1-2% effects on this machine. **Closed under the frozen rule (not the
+"no demonstrated benefit" closure, since conditions other than the benefit gate failed); off by default and outside
+`render.defaults`.** See the [session 30 archive](benchmarks/2026-10-22-section-faces-reference/README.md).
+
+### Next session (31): recommended order
+
+Sessions 29 and 30 closed both remaining measured candidates on the reference hardware (items 1 and 1b below). Both
+were exact and cut allocation substantially, yet neither showed a frame-time benefit that survived its frozen gates;
+per-frame allocation savings of about 20 KB (session 29) or 2-10 KB while moving (session 30) are not a selection
+target on their own at these frame rates. Any new candidate needs a frame-time mechanism, and its series must account
+for launch-to-launch variance of several percent in means and tens of percent in tails (session 30's still phases).
 
 Sessions 26-27 found no qualifying candidate under their separate frozen rules. Do not select a chunk scheduling,
 upload budget, list replacement or backend change from these aggregate costs. Revisit upload only with a design
@@ -1264,16 +1299,18 @@ control. Missing per-list vertex/byte and obsolete-work identity, exact block/li
 lifecycle/order/cancellation stress and driver attribution remain explicit gaps, not a selected follow-up. Later
 10 s bins sometimes exceed the session 27 size threshold; selecting those bins after measurement would change its
 predeclared whole-flight unit. Session 28's allocation candidate failed its gates in a software-GL container whose
-frame rate made the allocation target unresolvable; it needs real hardware, not more container runs.
+frame rate made the allocation target unresolvable; session 29 then closed it on the reference hardware.
 
-1. **Confirm or close `render.reuseShadowPositions` on the reference hardware.** Freeze a new series before measuring:
+1. **Done (session 29): closed.** `render.reuseShadowPositions` failed its reference-hardware gates (above) and stays
+   off; do not reopen without new evidence. The original item follows for the record.
+   *Confirm or close `render.reuseShadowPositions` on the reference hardware.* Freeze a new series before measuring:
    the session 28 gates (gates.md) on the Windows/RTX 3060 Ti machine, where most frames have no client tick, with the
    allocation target pre-declared on tick-free frames (or whole frames, if their tick share is reported first) and
    screenshots at a fixed camera angle (for example the static view, or a pan capture keyed to the yaw, not the
    frame after the phase ends). Keep hooks-absent startup pairs. If the frozen gates pass there, it may still only be
    promoted under them; if not, close it. The flood fill (about 200-240 KB per cache miss) and entity brightness
    positions (about 11 KB per frame at 200 mobs) can be re-ranked in the same attribution, with a rule written first.
-   **Prepared, not frozen or run:** the series, its Windows runner and evaluator are in the
+   Ran in session 29 (results above): the series, its Windows runner and evaluator are in the
    [session 29 archive](benchmarks/2026-10-22-shadow-positions-reference/README.md) (tick-free allocation target,
    `benchmark.screenshotEndPose` captures).
 
@@ -1282,8 +1319,9 @@ frame rate made the allocation target unresolvable; it needs real hardware, not 
    d200, terrain and session 27's near/high fresh flights, plus verify and fixed-pose screenshot launches. Gates were
    written from the mechanism before measuring: the visibility search's own section (`terrain_setup`) must fall in the
    moving phases, a frame-level benefit (mean, slow-1% or p99) is required, still phases must be unchanged, and nothing
-   may regress. **Prepared, not frozen or run:** the series, Windows runner and evaluator are in the
-   [session 30 archive](benchmarks/2026-10-22-section-faces-reference/README.md).
+   may regress. **Done (session 30): closed.** The series ran as frozen; region, no-regression, still-phase and
+   screenshot gates failed (above, "Done in session 30"), so `render.fastCameraSectionFaces` stays off; do not reopen
+   without new evidence. Results: [session 30 archive](benchmarks/2026-10-22-section-faces-reference/README.md).
 
 2. **Parked: particle movement block re-reads through a client world-mutation epoch.** Session 26 confirmed that
    particle ticks do not matter in ordinary scenes (at most 0.1% of client samples and 0.4-1.7% of slow-1% samples in

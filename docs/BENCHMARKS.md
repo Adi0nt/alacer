@@ -1881,3 +1881,34 @@ runner-check rejections kept and repeated):
 Verdict: fails; stays off. Whole-frame allocation carries the client tick in nearly every frame here; tick-free frames
 (post hoc, not rescored) showed a 17.0-20.1 KB saving in all eight in-process launch/phase pairs. Build: 105 tests pass
 on JDK 25. Needs the reference hardware to confirm or close it.
+
+## Session 30 - `render.fastCameraSectionFaces` on the reference hardware (2026-10-22, Java 25)
+Roadmap item 1b of "Next session (29)". Gates, amendment, per-gate table, per-scene medians and every attempt are in the
+[session 30 archive](benchmarks/2026-10-22-section-faces-reference/README.md); `gates.json` there holds every pair.
+
+**Environment:** Windows 11, i7-12700F, RTX 3060 Ti (OpenGL 4.6.0 NVIDIA 616.92), Adoptium 25.0.4.1, 1920x1080, 2 GiB
+heap, view distance 12, vsync off, display lists; seed-1789 base world and shared config equal to session 29's manifest.
+Separate launches only, from a git worktree of `claude/project-thread-3lu2ch` at `7d153c0`. Build: 123 tests pass on
+JDK 25 (classfile 69).
+
+Series (frozen 2026-10-22T20:05:42Z after two passed smoke pairs; one pre-freeze amendment ported session 29's
+4,000 FPS frame buffer, which four recorded phases needed): 4 verify, 3 fixed-pose screenshot and 40 startup launches
+(four alternating off/on pairs in each of d0, d200, terrain, near and high fresh flight). All 47 scored launches passed
+the runner's checks; none was rejected or repeated.
+
+| Condition | Result |
+|---|---|
+| 1. Region: pooled moving `terrain_setup` <= -3%, 3 of 4 pairs lower per moving phase | fail: -1.65%; near and high fresh-flight 2 of 4 |
+| 2. Benefit: pooled moving frame mean <= -1% (or slow-1%/p99 <= -2%) | pass: frame mean -1.22% (slow-1% -1.24%, p99 -1.46%) |
+| 3. Allocation per tick-free frame lower, 3 of 4 pairs per moving phase | pass: pooled -28.3% (about 2-10 KB per frame) |
+| 4. No regressions in any judged phase | fail: 12, for example high still tick-frame p99 +28.0%, d0 pan +15.7%, terrain sort frame mean +2.7% |
+| 5. Still phases unchanged | fail: d0 static `terrain_setup` +8.3%, d0 pan tick-free allocation +8.4%, near still `terrain_setup` +5.9% |
+| C1 `.verify` | pass: 364,446 answers compared, 718 flood fills, 0 mismatched |
+| C2 screenshots | fail in static and pan (on vs off-1 6.76% / 6.87% of pixels against limits 5.70% / 5.82%); differences inspected: clouds, mobs and water only, terrain identical |
+| C3 counters | pass (largest median change 0.40%) |
+
+Tick-frame share 0.95-10.2% (median 2.1%); tick-free allocation resolved in every pair. Still phases, where the option
+does no work, moved by -16.6% to +1.2% in frame mean and up to +28% in tails between launches, so this series cannot
+resolve effects of about 1-2%. Verdict: **closed** under the frozen rule (not the "no demonstrated benefit" closure,
+because conditions other than 2 failed). `render.fastCameraSectionFaces` stays off by default and outside
+`render.defaults`.
