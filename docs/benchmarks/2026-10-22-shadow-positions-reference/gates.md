@@ -103,3 +103,35 @@ regression above 1%. Every judged condition must hold, together with both correc
 explicit decision; nothing changes defaults automatically). If anything fails, the candidate is closed and stays off
 and outside `render.defaults`. Gate 2 asks for a 2% frame-mean saving from about 20 KB less allocation per frame;
 failing it alone also closes the candidate. Post hoc analyses are reported, never rescored.
+
+## Amendment 1 (after the first verify launch, before any accepted launch)
+
+Freeze 1 (`freeze-1.json`, frozen 2026-10-22T08:43:46Z, sources ZIP `sources-e337ca1723d15205.zip`) followed the two
+passed smoke launches. Its first launch, `spr29-verify-d200-1`, started at 01:44 local and was ended from outside
+the runner at about 01:49 local, just after the client logged `recording 'fly'`: no Java or Python process remained,
+the attempt file was left at status `running` with no exit code, and no result folder was written. The cause was not
+established; it was neither a client failure nor a runner rejection. The attempt file and `build/spr29-verify-d200-1.log`
+are kept unchanged as evidence. Its periodic verification lines (153,000,000 positions compared, 0 mismatched) are not
+counted toward the `.verify` gate.
+
+With the user's approval (the run plan otherwise reserves `-r2` repeats for runner bugs), the launch is repeated as
+`spr29-verify-d200-1-r2` with the same settings; the runner's launch list and `gates.py`'s verify list name the new
+label. Nothing else changes: launches, checks, metrics, thresholds and pass conditions are as above, and the smoke
+launches carry over. The series is frozen again (freeze 2, `manifest.json`) before any further launch.
+
+## Amendment 2 (after 22 accepted launches under freeze 2, before the terrain pairs)
+
+Under freeze 2 (`freeze-2.json`, frozen 2026-10-22T08:55:29Z, sources ZIP `sources-44da61fd7f3fdf70.zip`) the verify,
+screens and ab groups and the first 11 startup launches were accepted. `spr29-st-d0-2-absent` was then rejected: its
+static phase reached about 2,255 frames per second, the benchmark's per-phase frame buffer held `seconds * 2000 + 1000`
+rows (41,000 for the 20-second static phase), and 4,102 frames were dropped. The runner's zero-dropped-frames check
+rejected the launch as intended. The other d0 launches ran the static phase at about 1,700-1,830 frames per second.
+
+With the user's approval, `BenchmarkRunner` now sizes the buffer for 4,000 frames per second (`seconds * 4000 + 1000`).
+The buffer is still allocated once before recording, so recorded frames and allocation per frame are unaffected; only
+the pre-recording allocation is larger. The client is rebuilt and the series frozen again (freeze 3, `manifest.json`).
+To keep both sides of a pair on one build, the whole d0-2 pair is repeated as `spr29-st-d0-2-on-r2` and
+`spr29-st-d0-2-absent-r2` (same order and settings), followed by the four terrain launches; the runner's launch list
+and `gates.py` name the new labels. The accepted `spr29-st-d0-2-on` record and the rejected `spr29-st-d0-2-absent`
+attempt are kept but not judged. Launches accepted under freeze 2 keep their results: they ran with the smaller buffer
+and dropped no frames, so the change does not affect them. Nothing else changes.

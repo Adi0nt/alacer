@@ -24,7 +24,7 @@ MIN_TICK_FREE_FRAMES = 1000
 COUNTERS = ('visible_chunks', 'terrain_solid_chunks', 'terrain_cutout_mipped_chunks', 'terrain_cutout_chunks',
             'terrain_translucent_chunks', 'entities_drawn', 'block_entities_drawn', 'shadows_drawn')
 AB = tuple(f'spr29-ab-{n}' for n in range(1, 5))
-VERIFY = ('spr29-verify-d200-1', 'spr29-verify-d200-2', 'spr29-verify-walk')
+VERIFY = ('spr29-verify-d200-1-r2', 'spr29-verify-d200-2', 'spr29-verify-walk')
 STARTUP = (('d200', 4, ('static', 'pan', 'fly')), ('d0', 2, ('static', 'pan', 'fly')),
            ('terrain', 2, ('steady', 'pan', 'sort', 'fly')))
 
@@ -143,7 +143,8 @@ def main(out_path):
     for scene, pairs, phases in STARTUP:
         sp = {}
         for n in range(1, pairs + 1):
-            ra, rb = record(f'spr29-st-{scene}-{n}-absent'), record(f'spr29-st-{scene}-{n}-on')
+            sfx = '-r2' if (scene, n) == ('d0', 2) else ''  # Amendment 2 (gates.md)
+            ra, rb = record(f'spr29-st-{scene}-{n}-absent{sfx}'), record(f'spr29-st-{scene}-{n}-on{sfx}')
             sp[n] = {}
             for phase in phases:
                 a, b = metrics(ra['source'], (phase,)), metrics(rb['source'], (phase,))

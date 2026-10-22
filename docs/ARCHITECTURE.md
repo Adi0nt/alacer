@@ -1265,9 +1265,9 @@ fly screenshot (1.74% of pixels against 0.08% between the absent captures), d200
 startup fly +6.6%, above the 1% limit) with matching tail and CPU failures, tick-free allocation in startup d200 fly
 (+9.0%) and d0 pan/fly (+2.1% / +2.3%), d0 fly visible chunks (-2.4%), and d0 frame means (+3.3% to +24.4%, two pairs).
 **Closed; off by default and outside `render.defaults`.** The results (`gates.json`, attempts, records, three freezes)
-are in the shared reference checkout's uncommitted
-[session 29 archive](benchmarks/2026-10-22-shadow-positions-reference/README.md). TODO: that archive's README is still
-the run plan and `docs/BENCHMARKS.md` has no session 29 entry; neither is on this branch yet.
+are in the [session 29 archive](benchmarks/2026-10-22-shadow-positions-reference/README.md), committed byte-for-byte
+from the reference checkout. TODO: that archive's README is still the run plan, and `docs/BENCHMARKS.md` has no
+session 29 entry.
 
 Done in session 30: **`render.fastCameraSectionFaces` (session 28b) on the reference hardware.** Gates were written from
 the mechanism and frozen before measuring (one pre-freeze amendment ported session 29's 4,000 FPS buffer, which four

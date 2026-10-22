@@ -55,7 +55,8 @@ def write(path, value):
 
 
 def jobs():
-    out = [('verify', 'spr29-verify-d200-1', 'd200', {'on': True, 'verify': True, 'scale': '10'}),
+    # Amendment 1 (gates.md): spr29-verify-d200-1 was interrupted under freeze 1 and is repeated as -r2.
+    out = [('verify', 'spr29-verify-d200-1-r2', 'd200', {'on': True, 'verify': True, 'scale': '10'}),
            ('verify', 'spr29-verify-d200-2', 'd200', {'on': True, 'verify': True, 'scale': '10'}),
            ('verify', 'spr29-verify-walk', 'd200', {'on': True, 'verify': True, 'scale': '4', 'shadowDiagnostic': True})]
     out += [('screens', 'spr29-shot-absent-1', 'd200', {'on': False, 'scale': '1', 'screenshots': True}),
@@ -67,7 +68,9 @@ def jobs():
         for n in range(1, pairs + 1):
             for side in (('absent', 'on') if n % 2 == 1 else ('on', 'absent')):
                 out.append(('startup', f'spr29-st-{scene}-{n}-{side}', scene, {'on': side == 'on', 'scale': '2'}))
-    return out
+    # Amendment 2 (gates.md): the d0-2 pair is repeated as -r2 with the larger frame buffer.
+    return [(g, label + '-r2' if label.startswith('spr29-st-d0-2-') else label, scene, spec)
+            for g, label, scene, spec in out]
 
 
 def smoke_jobs():
