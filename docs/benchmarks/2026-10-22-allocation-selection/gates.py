@@ -87,7 +87,7 @@ def screenshots():
 
     out = {}
     for phase in ('static', 'pan', 'fly'):
-        base = load('alloc28g-shot-absent-1', phase)
+        base = load('alloc28g-shot-absent-1-r2', phase)
         res = {}
         for other in ('alloc28g-shot-on', 'alloc28g-shot-absent-2'):
             d = np.abs(load(other, phase) - base)
@@ -101,7 +101,7 @@ def screenshots():
 
 def main(out_path):
     result = {}
-    verify = [record(l) for l in ('alloc28g-verify-d200-1', 'alloc28g-verify-d200-2', 'alloc28g-verify-walk')]
+    verify = [record(l) for l in ('alloc28g-verify-d200-1-r2', 'alloc28g-verify-d200-2', 'alloc28g-verify-walk')]
     compared = sum(r['shadow_positions_compared'] for r in verify)
     mismatched = sum(r['shadow_positions_mismatched'] for r in verify)
     result['verify'] = {'compared': compared, 'mismatched': mismatched,

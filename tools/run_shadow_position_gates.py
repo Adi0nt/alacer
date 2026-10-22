@@ -21,7 +21,8 @@ import run_allocation_selection as base
 ROOT = base.ROOT
 ARCHIVE = base.ARCHIVE
 BENCH = base.BENCH
-FREEZE = ARCHIVE / 'freeze-gates.json'
+# Amendment 1 (gates.md) re-froze the runner; freeze-gates.json records the first freeze.
+FREEZE = ARCHIVE / 'freeze-gates-2.json'
 FROZEN_PATHS = base.FROZEN_PATHS + ('tools/run_shadow_position_gates.py',
                                     'docs/benchmarks/2026-10-22-allocation-selection/gates.md',
                                     'docs/benchmarks/2026-10-22-allocation-selection/gates.py',
@@ -36,10 +37,11 @@ FINAL = re.compile(r'Shadow position reuse final: (\d+) positions compared, (\d+
 
 def jobs():
     out = []
-    out += [('verify', 'alloc28g-verify-d200-1', 'd200', {'on': True, 'verify': True, 'scale': '10'}),
+    # Labels ending in -r2 replace attempts rejected by runner bugs fixed in amendment 1 (kept under attempts/).
+    out += [('verify', 'alloc28g-verify-d200-1-r2', 'd200', {'on': True, 'verify': True, 'scale': '10'}),
             ('verify', 'alloc28g-verify-d200-2', 'd200', {'on': True, 'verify': True, 'scale': '10'}),
             ('verify', 'alloc28g-verify-walk', 'd200', {'on': True, 'verify': True, 'scale': '4', 'shadowDiagnostic': True})]
-    out += [('screens', 'alloc28g-shot-absent-1', 'd200', {'on': False, 'scale': '1', 'screenshots': True}),
+    out += [('screens', 'alloc28g-shot-absent-1-r2', 'd200', {'on': False, 'scale': '1', 'screenshots': True}),
             ('screens', 'alloc28g-shot-on', 'd200', {'on': True, 'scale': '1', 'screenshots': True}),
             ('screens', 'alloc28g-shot-absent-2', 'd200', {'on': False, 'scale': '1', 'screenshots': True})]
     for n, reverse in enumerate((False, True, False, True), 1):
@@ -150,8 +152,9 @@ def run(group, label, scene, spec, jdk, init):
             fail('log contains ' + bad)
     for line in text.splitlines():
         if 'ismatch' in line:
+            # Exit (final:) and periodic (verification:) summaries may report zero mismatches.
             counts = re.findall(r'(\d+) mismatch', line)
-            if 'final:' not in line or not counts or any(int(c) != 0 for c in counts):
+            if ('final:' not in line and 'verification:' not in line) or not counts or any(int(c) != 0 for c in counts):
                 fail('mismatch line: ' + line.strip())
     final = FINAL.search(text)
     if not final:
@@ -202,9 +205,11 @@ def run(group, label, scene, spec, jdk, init):
     shots = {}
     if spec.get('screenshots'):
         for name in expected:
-            shot = ROOT / 'run/screenshots' / f'alacer-{label}-{name}.png'
-            if not shot.exists():
-                fail('screenshot missing: ' + shot.name)
+            # The benchmark appends its own suffix to the label (for example -vis_on-ecl_on-ent200).
+            found = sorted((ROOT / 'run/screenshots').glob(f'alacer-{label}-*-{name}.png'))
+            if len(found) != 1:
+                fail('screenshot missing or not unique: ' + name)
+            shot = found[0]
             shots[name] = {'path': str(shot.relative_to(ROOT)), 'sha256': base.sha(shot)}
     record = {'label': label, 'group': group, 'scene': scene, 'spec': spec, 'command': args, 'head': head,
               'launcher': launcher, 'elapsed_seconds': elapsed, 'source': str(folder.relative_to(ROOT)),

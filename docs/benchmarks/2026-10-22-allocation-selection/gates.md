@@ -13,6 +13,16 @@ before any gate launch (git commit recorded in `freeze-gates.json`). Every attem
 `EntityRenderer.renderShadow` still calls `BlockPos.down` at bytecode 305 (hook absent); with it on, that call is
 `redirect$...$alacer$below`. Logs under `build/`.
 
+## Amendment 1 (before any accepted gate launch)
+
+Two runner acceptance checks were wrong and rejected completed launches: `alloc28g-verify-d200-1` (the check for
+mismatch lines also matched the periodic zero-count `Shadow position reuse verification: 1000000 positions compared, 0
+mismatched` line) and `alloc28g-shot-absent-1` (the benchmark names screenshots
+`alacer-<label>-vis_on-ecl_on-ent200-<phase>.png`, not `alacer-<label>-<phase>.png`). Both attempts are kept. The runner
+now accepts zero-count periodic summaries and finds screenshots by `alacer-<label>-*-<phase>.png`; the two launches
+are repeated as `alloc28g-verify-d200-1-r2` and `alloc28g-shot-absent-1-r2`. Launch list, metrics and pass conditions
+are unchanged. The amended runner and `gates.py` (label references only) are frozen again in `freeze-gates-2.json`.
+
 ## Launches (serial, fresh copied worlds, 854x480, 2 GiB, view distance 12, display lists, no JFR)
 
 Every launch passes all options explicitly, as the attribution did, plus `render.reuseShadowPositions` and its
@@ -20,9 +30,9 @@ Every launch passes all options explicitly, as the attribution did, plus `render
 
 | Group | Labels | Scene | Settings |
 |---|---|---|---|
-| verify | `alloc28g-verify-d200-1`, `-2` | d200 | on + `.verify`, time scale 10 |
+| verify | `alloc28g-verify-d200-1-r2`, `alloc28g-verify-d200-2` | d200 | on + `.verify`, time scale 10 |
 | verify | `alloc28g-verify-walk` | d200 + `benchmark.shadowDiagnostic=true` (mobs walk; cells under shadows cycle through glowstone, slab, air) | on + `.verify`, time scale 4 |
-| screens | `alloc28g-shot-absent-1`, `alloc28g-shot-on`, `alloc28g-shot-absent-2` | d200, `benchmark.screenshots=true` | absent / on / absent, time scale 1 |
+| screens | `alloc28g-shot-absent-1-r2`, `alloc28g-shot-on`, `alloc28g-shot-absent-2` | d200, `benchmark.screenshots=true` | absent / on / absent, time scale 1 |
 | ab | `alloc28g-ab-1` .. `-4` | d200, `benchmark.toggle=render.reuseShadowPositions` | `toggleReverse` false, true, false, true (A1/B1/B2/A2, B1/A1/A2/B2); both paths warmed; time scale 2 |
 | startup | `alloc28g-st-d200-<n>-<side>`, n = 1..4 | d200 | pairs in order absent/on, on/absent, absent/on, on/absent; time scale 2 |
 | startup | `alloc28g-st-d0-<n>-<side>`, `alloc28g-st-terrain-<n>-<side>`, n = 1..2 | d0, terrain (non-selecting) | absent/on, on/absent; time scale 2 |
