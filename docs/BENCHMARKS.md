@@ -1844,3 +1844,40 @@ No candidate A/B, framebuffer identity, exact block/light update latency, lifecy
 worker/native allocation, driver trace or whole-frame GPU busy-time claim. Those correctness, lifecycle, ordering,
 throughput, latency, frame-tail, CPU and allocation gates require a separately frozen candidate series. All prior
 archives/tooling/config/defaults preserved; no commit, push, publish, stash, reset, clean or branch switch.
+
+## Session 28 - allocation-based selection (2026-10-22, Java 25, cloud container)
+Roadmap item 1 of "Next session (28)". Full protocol, freezes, per-launch records, decision and gate outputs are in the
+[session 28 archive](benchmarks/2026-10-22-allocation-selection/README.md).
+
+**Environment:** Linux container, 4 vCPU Xeon 2.1 GHz, Adoptium 25.0.4.1, Xvfb 854x480, **Mesa llvmpipe (software
+GL)**, about 16-25 FPS. Frame-time, tail and CPU numbers from this series do not represent a GPU machine and were not
+judged; allocation attribution, `.verify` and screenshots were. Not comparable with sessions 1-27 (different machine).
+
+Attribution (frozen at `b517184` before measuring; six hooks-absent JFR launches, d0/d200/terrain x2, time scale 2,
+fixed 16 KiB TLAB for allocation sampling; per-frame path outside `Minecraft.tick`; static/pan ranked):
+
+| Set | d200 static share / bytes per frame | d200 pan | Result |
+|---|---|---|---|
+| shadow `pos.down()` | 15.5-22.1% / 19,710 | 20.8-22.9% / 21,474 | named |
+| entity brightness `BlockPos` | 7.9-12.8% / 10,740 | 10.4-11.9% / 10,921 | one combination |
+| name-check regex | 8.6% / 8,812 | 8.9% / 8,709 | below 10% |
+| crosshair ray march | 1.0% / 995 | 0.8% / 732 | below |
+
+JFR/ThreadMXBean bytes-per-frame ratio 1.000-1.005 everywhere. Flood fill: 4.8 MB/s in fly, about 200-240 KB per
+open-faces cache miss (not rankable at this frame rate).
+
+Candidate `render.reuseShadowPositions` (off by default; separately frozen gate series, 26 accepted launches, three
+runner-check rejections kept and repeated):
+
+| Gate | Result |
+|---|---|
+| `.verify` (>= 10 M, 0 mismatches) | pass: 10,388,241 compared, 0 mismatched |
+| Screenshots | static and fly pass; pan fails (captures a few degrees apart) |
+| Allocation target d200 static / pan | fail (in-process median -6.0 KB, -3.4%) / pass (-13.4 KB, -6.7%) |
+| No-op scenes, allocation <= +2% | fail (d0 static +17.8%, terrain steady/pan/sort +12.3/+5.6/+7.4%) |
+| Visible-chunk counter | pass |
+| Frame/tail/CPU | reported only; in-process frame mean +1.1% static, +0.6% pan (llvmpipe) |
+
+Verdict: fails; stays off. Whole-frame allocation carries the client tick in nearly every frame here; tick-free frames
+(post hoc, not rescored) showed a 17.0-20.1 KB saving in all eight in-process launch/phase pairs. Build: 105 tests pass
+on JDK 25. Needs the reference hardware to confirm or close it.

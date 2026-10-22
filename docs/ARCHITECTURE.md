@@ -1175,7 +1175,24 @@ Near diagnostic tails worsened; current draw/CPU timing differs from session 26 
 both observations, all defaults and prior evidence. See the
 [session 27 archive](benchmarks/2026-10-21-chunk-upload/README.md).
 
-### Next session (28): recommended order
+Done in session 28: **allocation-based selection**, in a Linux cloud container with Mesa llvmpipe (software GL,
+about 16-25 FPS), so its frame times judge nothing. A rule was frozen before measuring (git commit `b517184`): six
+hooks-absent JFR allocation launches (d0, d200, terrain), samples at a fixed 16 KiB TLAB, ranked on the per-frame path
+outside `Minecraft.tick` in static/pan phases only (camera translation makes per-block-crossing work scale with 1/FPS);
+the JFR estimate matched ThreadMXBean within 0.5%. Only `pos.down()` in `EntityRenderer.renderShadow` qualified
+(d200: 15.5-22.9% of frame-path allocation, about 20 KB per frame); entity brightness positions qualified only in pan,
+the name-check regex stayed below 10%, and the crosshair ray march below 6%. It is implemented as
+`render.reuseShadowPositions` (one reused position for exactly `ClientWorld`; the `down()` result only feeds optimization
+6's redirected `getBlockState`; mixin absent unless set at startup). `.verify` compared 10.4 million positions and
+block states with 0 mismatches, but the separately frozen gates failed here: the static allocation target (whole-frame
+`alloc_bytes` carries the client tick in nearly every frame at this frame rate and swung tens of KB between
+launches), the no-op scenes' 2% allocation limit for the same reason, and the pan screenshot rule (captures a few
+degrees apart). A post hoc look at tick-free frames found a 17-20 KB per-frame saving in every in-process launch;
+that rescues nothing. **Off by default and outside `render.defaults`.** The open-faces flood fill allocates about
+200-240 KB per cache miss (one per block the camera enters), which this frame rate cannot rank. See the
+[session 28 archive](benchmarks/2026-10-22-allocation-selection/README.md).
+
+### Next session (29): recommended order
 
 Sessions 26-27 found no qualifying candidate under their separate frozen rules. Do not select a chunk scheduling,
 upload budget, list replacement or backend change from these aggregate costs. Revisit upload only with a design
@@ -1183,13 +1200,16 @@ that identifies exact removable operations and separately frozen gates; never us
 control. Missing per-list vertex/byte and obsolete-work identity, exact block/light-change-to-visible latency,
 lifecycle/order/cancellation stress and driver attribution remain explicit gaps, not a selected follow-up. Later
 10 s bins sometimes exceed the session 27 size threshold; selecting those bins after measurement would change its
-predeclared whole-flight unit. The next independent target is allocation, with a rule written before measurement.
+predeclared whole-flight unit. Session 28's allocation candidate failed its gates in a software-GL container whose
+frame rate made the allocation target unresolvable; it needs real hardware, not more container runs.
 
-1. **Allocation-based selection (predeclare a rule for it).** With 200 mobs, entity draws allocate 53-58 KB per frame,
-   61% `BlockPos` (mostly `BlockPos.offset` in shadow and brightness code) and 8% regex `Matcher`; without mobs the
-   per-frame crosshair ray trace (`world.pick`: `Vec3d`, `HitResult`) is 23% (d0) and 18% (terrain) of client
-   allocation, and vanilla's camera-section flood fill allocates `Direction.values()` copies in flight. Any candidate needs hooks-absent
-   startup controls (installed-but-off is not an allocation control, session 24) and the session 26 gates.
+1. **Confirm or close `render.reuseShadowPositions` on the reference hardware.** Freeze a new series before measuring:
+   the session 28 gates (gates.md) on the Windows/RTX 3060 Ti machine, where most frames have no client tick, with the
+   allocation target pre-declared on tick-free frames (or whole frames, if their tick share is reported first) and
+   screenshots at a fixed camera angle (for example the static view, or a pan capture keyed to the yaw, not the
+   frame after the phase ends). Keep hooks-absent startup pairs. If the frozen gates pass there, it may still only be
+   promoted under them; if not, close it. The flood fill (about 200-240 KB per cache miss) and entity brightness
+   positions (about 11 KB per frame at 200 mobs) can be re-ranked in the same attribution, with a rule written first.
 
 2. **Parked: particle movement block re-reads through a client world-mutation epoch.** Session 26 confirmed that
    particle ticks do not matter in ordinary scenes (at most 0.1% of client samples and 0.4-1.7% of slow-1% samples in
