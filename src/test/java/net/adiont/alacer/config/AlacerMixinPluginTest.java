@@ -136,6 +136,33 @@ class AlacerMixinPluginTest {
 	}
 
 	@Test
+	void shadowPositionHookIsAbsentUnlessOptionVerificationOrToggle() throws Exception {
+		Properties file = new Properties();
+		assertFalse(AlacerMixinPlugin.shadowPositionsEnabled(file));
+		file.setProperty("render.reuseShadowPositions.verify", "true");
+		assertTrue(AlacerMixinPlugin.shadowPositionsEnabled(file));
+		file.clear();
+		file.setProperty("render.reuseShadowPositions", "true");
+		assertTrue(AlacerMixinPlugin.shadowPositionsEnabled(file));
+		try {
+			System.setProperty("alacer.benchmark", "true");
+			assertFalse(AlacerMixinPlugin.shadowPositionsEnabled(file));
+			System.setProperty("alacer.benchmark.toggle", "render.defaults");
+			assertFalse(AlacerMixinPlugin.shadowPositionsEnabled(file));
+			System.setProperty("alacer.benchmark.toggle", " render.reuseShadowPositions ");
+			assertTrue(AlacerMixinPlugin.shadowPositionsEnabled(file));
+		} finally {
+			System.clearProperty("alacer.benchmark"); System.clearProperty("alacer.benchmark.toggle");
+		}
+		AlacerMixinPlugin plugin = new AlacerMixinPlugin();
+		assertFalse(plugin.shouldApplyMixin("unused", "net.adiont.alacer.mixin.EntityShadowPositionMixin"));
+		java.lang.reflect.Field field = AlacerMixinPlugin.class.getDeclaredField("shadowPositions");
+		field.setAccessible(true); field.setBoolean(plugin, true);
+		assertTrue(plugin.shouldApplyMixin("unused", "net.adiont.alacer.mixin.EntityShadowPositionMixin"));
+		assertTrue(plugin.shouldApplyMixin("unused", "net.adiont.alacer.mixin.EntityShadowMixin"));
+	}
+
+	@Test
 	void particleVertexHooksFollowTheOptionVerificationOrToggle() {
 		Properties file = new Properties();
 		assertTrue(AlacerMixinPlugin.particleVerticesEnabled(file) == AlacerConfig.FAST_PARTICLE_VERTICES);

@@ -390,6 +390,7 @@ public final class BenchmarkRunner implements FrameProfiler.FrameListener {
 			|| "render.fastParticleMovement".equals(key)
 			|| "render.reuseParticleBoxes".equals(key)
 			|| "render.scalarParticleEntityQuery".equals(key)
+			|| "render.reuseShadowPositions".equals(key)
 			|| DISABLE_SHADOWS.equals(key) || DISABLE_PARTICLES.equals(key);
 	}
 
@@ -1125,6 +1126,7 @@ public final class BenchmarkRunner implements FrameProfiler.FrameListener {
 		}
 		Alacer.LOGGER.info("Model list batch final: {}", net.adiont.alacer.render.ModelListBatch.summary());
 		Alacer.LOGGER.info("Entity shadow queries final: {}", EntityShadows.verificationSummary());
+		Alacer.LOGGER.info("Shadow position reuse final: {}", net.adiont.alacer.render.ShadowPositions.verificationSummary());
 		Alacer.LOGGER.info("Particle light queries final: {}", net.adiont.alacer.render.ParticleLight.verificationSummary());
 		Alacer.LOGGER.info("Particle removal final: {}", net.adiont.alacer.render.ParticleRemoval.verificationSummary());
 		Alacer.LOGGER.info("Particle vertices final: {}", net.adiont.alacer.render.ParticleVertices.verificationSummary());

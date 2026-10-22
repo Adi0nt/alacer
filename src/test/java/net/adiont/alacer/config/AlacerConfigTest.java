@@ -135,6 +135,8 @@ class AlacerConfigTest {
 		assertFalse(config.verifyReuseParticleBoxes);
 		assertFalse(config.scalarParticleEntityQuery);
 		assertFalse(config.verifyScalarParticleEntityQuery);
+		assertFalse(config.reuseShadowPositions);
+		assertFalse(config.verifyReuseShadowPositions);
 	}
 
 	@Test
@@ -187,6 +189,9 @@ class AlacerConfigTest {
 		assertThrows(IllegalArgumentException.class, () -> config.setToggle("render.scalarParticleEntityQuery.verify", true));
 		config.setToggle("render.reuseParticleBoxes", true);
 		assertTrue(config.reuseParticleBoxes);
+		config.setToggle("render.reuseShadowPositions", true);
+		assertTrue(config.reuseShadowPositions);
+		assertThrows(IllegalArgumentException.class, () -> config.setToggle("render.reuseShadowPositions.verify", true));
 		assertThrows(IllegalArgumentException.class, () -> config.setToggle("render.reuseParticleBoxes.verify", true));
 		assertTrue(config.fastParticleMovement);
 		assertThrows(IllegalArgumentException.class, () -> config.setToggle("render.fastParticleMovement.verify", true));
@@ -228,6 +233,7 @@ class AlacerConfigTest {
 		config.fastParticleMovement = true;
 		config.reuseParticleBoxes = true;
 		config.scalarParticleEntityQuery = true;
+		config.reuseShadowPositions = true;
 		for (boolean enabled : new boolean[]{false, true, false, true}) {
 			config.setToggle("render.defaults", enabled);
 			for (java.util.Map.Entry<String, String> option : config.describe().entrySet()) {

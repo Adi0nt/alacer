@@ -118,6 +118,10 @@ public final class AlacerConfig {
 	public volatile boolean scalarParticleEntityQuery;
 	/** Compare scalar bounds and ordered entity lists, returning the candidate. */
 	public volatile boolean verifyScalarParticleEntityQuery;
+	/** Session 28 candidate: one reused position for entity shadows' block-below query. Runtime-toggleable when installed. */
+	public volatile boolean reuseShadowPositions;
+	/** Also make vanilla's position, use it, and compare coordinates and the block state answered for both. Debug only. */
+	public volatile boolean verifyReuseShadowPositions;
 
 	/** Batch vanilla model-part face draws inside an alternate display list. Runtime-toggleable. */
 	public volatile boolean batchModelLists;
@@ -226,6 +230,10 @@ public final class AlacerConfig {
 			"Experimental: scalar particle collision nearby-entity query bounds. Off by default.");
 		this.verifyScalarParticleEntityQuery = bool(file, system, "render.scalarParticleEntityQuery.verify", false,
 			"Debug: compare scalar bounds and ordered entity query results with vanilla.");
+		this.reuseShadowPositions = bool(file, system, "render.reuseShadowPositions", false,
+			"Experimental: pass one reused position instead of a new BlockPos to each entity shadow's block-below query (same query and answer). Off by default; its hook is installed only when on at startup (or verified, or benchmark-toggled).");
+		this.verifyReuseShadowPositions = bool(file, system, "render.reuseShadowPositions.verify", false,
+			"Debug: keep vanilla's new position, compare the reused one's coordinates and the block state answered for each, and log any difference.");
 		this.batchModelLists = bool(file, system, "render.batchModelLists", false,
 			"Combine vanilla model-part face uploads in an alternate display list; experimental, off by default.");
 		this.verifyBatchModelLists = bool(file, system, "render.batchModelLists.verify", false,
@@ -299,6 +307,7 @@ public final class AlacerConfig {
 				this.fastParticleMovement = false;
 				this.reuseParticleBoxes = false;
 				this.scalarParticleEntityQuery = false;
+				this.reuseShadowPositions = false;
 				this.skipZeroTranslates = false;
 				this.batchModelLists = false;
 				break;
@@ -352,6 +361,9 @@ public final class AlacerConfig {
 				break;
 			case "render.reuseParticleBoxes":
 				this.reuseParticleBoxes = value;
+				break;
+			case "render.reuseShadowPositions":
+				this.reuseShadowPositions = value;
 				break;
 			default:
 				throw new IllegalArgumentException("Not a runtime-toggleable option: " + key);
@@ -441,6 +453,8 @@ public final class AlacerConfig {
 		values.put("render.fastParticleMovement.verify", String.valueOf(this.verifyFastParticleMovement));
 		values.put("render.scalarParticleEntityQuery", String.valueOf(this.scalarParticleEntityQuery));
 		values.put("render.scalarParticleEntityQuery.verify", String.valueOf(this.verifyScalarParticleEntityQuery));
+		values.put("render.reuseShadowPositions", String.valueOf(this.reuseShadowPositions));
+		values.put("render.reuseShadowPositions.verify", String.valueOf(this.verifyReuseShadowPositions));
 		values.put("render.reuseParticleBoxes", String.valueOf(this.reuseParticleBoxes));
 		values.put("render.reuseParticleBoxes.verify", String.valueOf(this.verifyReuseParticleBoxes));
 		values.put("render.batchModelLists", String.valueOf(this.batchModelLists));
