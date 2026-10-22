@@ -52,6 +52,12 @@ import net.minecraft.world.chunk.WorldChunk;
  * first client tick are never cached, because their block changes are not reported.</li>
  * </ul>
  *
+ * <p>With {@code render.fastCameraSectionFaces} those open faces come from {@link SectionFaces}
+ * instead of vanilla's flood fill: the section's opaque blocks are read with vanilla's own
+ * {@code getBlock(pos).isSolidRender()} calls and flooded without allocation, and the answer is
+ * reused while the camera stays inside the same connected pocket of air, under the same
+ * invalidation as above (any reuse needs a chunk that was populated when its blocks were read).
+ *
  * <p>Traversal order, direction order, range checks and the point at which a chunk is marked
  * visited (before the frustum test) all mirror vanilla so the output is identical; the
  * {@code render.fastChunkVisibility.verify} option checks that at runtime. Chunk boxes are tested
@@ -116,6 +122,20 @@ public final class ChunkVisibility {
 	private int facesZ;
 	private WorldChunk facesChunk;
 	private int faces;
+
+	// render.fastCameraSectionFaces: the camera section's opaque blocks and last flood fill.
+	private final SectionFaces section = new SectionFaces();
+	private final BlockPos.Mutable sectionCell = new BlockPos.Mutable();
+	private boolean sectionValid;
+	private int sectionX;
+	private int sectionY;
+	private int sectionZ;
+	private WorldChunk sectionChunk;
+	private static long sectionReads;
+	private static long sectionFills;
+	private static long sectionReuses;
+	private static long sectionCompared;
+	private static long sectionMismatches;
 
 	// Verification against vanilla (render.fastChunkVisibility.verify).
 	//
@@ -492,11 +512,18 @@ public final class ChunkVisibility {
 		}
 		this.stamp = 0;
 		this.facesValid = false;
+		this.sectionValid = false;
 	}
 
 	private int openFaces(BlockPos eye) {
 		ClientWorld world = this.access.alacer$getWorld();
 		WorldChunk chunk = world.getChunk(eye);
+		AlacerConfig config = Alacer.get().config();
+		if (config.fastCameraSectionFaces || config.verifyCameraSectionFaces) {
+			// The per-block cache below is not maintained meanwhile; never resume from it.
+			this.facesValid = false;
+			return sectionFaces(chunk, eye, config.verifyCameraSectionFaces);
+		}
 		// Block changes in a chunk that is not yet "populated" (it has not had its first client
 		// tick) do not notify render listeners, so markDirty would not invalidate the cache.
 		// Recompute every time for such chunks, exactly like vanilla, and keep the result only if
@@ -518,8 +545,93 @@ public final class ChunkVisibility {
 		return this.faces;
 	}
 
+	/**
+	 * {@code getOpenChunkFaces(eye)} as a direction mask, from {@link SectionFaces}. The section's
+	 * blocks are read again unless they are known unchanged since the last read (same chunk object
+	 * and section, populated when read, no render-dirty region touching it since), and the last
+	 * flood fill's answer is reused when the eye is in the pocket it reached.
+	 */
+	private int sectionFaces(WorldChunk chunk, BlockPos eye, boolean verify) {
+		int x = eye.getX();
+		int y = eye.getY();
+		int z = eye.getZ();
+		int sx = x & ~15;
+		int sy = y & ~15;
+		int sz = z & ~15;
+		boolean unchanged = this.sectionValid && this.sectionChunk == chunk && this.sectionX == sx && this.sectionY == sy && this.sectionZ == sz;
+		int mask;
+		if (unchanged && this.section.reuses(x & 15, y & 15, z & 15)) {
+			mask = this.section.faces();
+			sectionReuses++;
+		} else {
+			if (!unchanged) {
+				// The same reads as vanilla's getOpenChunkFaces, through one reused position.
+				SectionFaces section = this.section;
+				BlockPos.Mutable cell = this.sectionCell;
+				section.clear();
+				for (int cy = 0; cy < 16; cy++) {
+					for (int cz = 0; cz < 16; cz++) {
+						for (int cx = 0; cx < 16; cx++) {
+							if (chunk.getBlock(cell.set(sx + cx, sy + cy, sz + cz)).isSolidRender()) {
+								section.setOpaque(cx, cy, cz);
+							}
+						}
+					}
+				}
+				this.sectionChunk = chunk;
+				this.sectionX = sx;
+				this.sectionY = sy;
+				this.sectionZ = sz;
+				// Block changes in a chunk without its first client tick are not reported to
+				// markDirty, so such a chunk's blocks are read again every time.
+				this.sectionValid = chunk.isPopulated();
+				sectionReads++;
+			}
+			mask = this.section.fill(x & 15, y & 15, z & 15);
+			sectionFills++;
+		}
+		if (verify) {
+			int expected = mask(this.access.alacer$getOpenChunkFaces(eye));
+			sectionCompared++;
+			if (expected != mask) {
+				sectionMismatches++;
+				if (sectionMismatches <= 10) {
+					Alacer.LOGGER.warn("Camera section faces mismatch at {}: Alacer {} vs vanilla {} (section {})",
+						eye, Integer.toBinaryString(mask), Integer.toBinaryString(expected), unchanged ? "reused" : "read");
+				}
+			}
+			if (sectionCompared % 1000 == 0) {
+				Alacer.LOGGER.info("Camera section faces verification: {}", sectionFacesSummary());
+			}
+			return expected;
+		}
+		return mask;
+	}
+
+	private static int mask(Set<Direction> directions) {
+		int mask = 0;
+		for (Direction direction : directions) {
+			mask |= 1 << direction.ordinal();
+		}
+		return mask;
+	}
+
+	/** Counts for {@code render.fastCameraSectionFaces} and its verification, over all renderers. */
+	public static String sectionFacesSummary() {
+		return sectionReads + " section reads, " + sectionFills + " flood fills, " + sectionReuses + " reused answers; "
+			+ sectionCompared + " compared with vanilla, " + sectionMismatches + " mismatched";
+	}
+
 	/** Called for every render-dirty region; drops the cached faces if they could be affected. */
 	public void onRegionDirty(int minX, int minY, int minZ, int maxX, int maxY, int maxZ) {
+		if (this.sectionValid) {
+			int sx = this.sectionX;
+			int sy = this.sectionY;
+			int sz = this.sectionZ;
+			if (maxX >= sx && minX <= sx + 15 && maxY >= sy && minY <= sy + 15 && maxZ >= sz && minZ <= sz + 15) {
+				this.sectionValid = false;
+			}
+		}
 		if (!this.facesValid) {
 			return;
 		}
@@ -537,6 +649,8 @@ public final class ChunkVisibility {
 		this.infos = null;
 		this.facesValid = false;
 		this.facesChunk = null;
+		this.sectionValid = false;
+		this.sectionChunk = null;
 		this.testedCuller = null;
 		this.result.clear();
 	}

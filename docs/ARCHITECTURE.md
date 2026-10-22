@@ -25,6 +25,7 @@ net.adiont.alacer
 ├── render/
 │   ├── ChunkVisibility     Allocation-free chunk visibility search (optimization 1)
 │   ├── ChunkFrustum        Exact one-corner-per-plane chunk predicate (session 12)
+│   ├── SectionFaces        Allocation-free camera-section flood fill with pocket reuse (session 28, unmeasured, off)
 │   ├── ChunkPipelineTimings Opt-in build, queue, scheduling and upload attribution (session 13)
 │   ├── EntityRendering     renderEntities phase timing and world-chunk lookup cache (optimization 2)
 │   ├── EntityDrawDetails   Optional per-class draw-stage times and call counts
@@ -1044,6 +1045,60 @@ remains is mostly `getLightLevel`'s own work and its `isChunkLoaded` entry. **Of
 off by `render.defaults`, retained with its hooks absent unless requested. See BENCHMARKS session 22
 and the [session 22 archive](benchmarks/2026-10-20-particle-light-reuse/README.md).
 
+## Session 28: camera-section open faces (verified, unmeasured, off by default)
+
+**Evidence.** Session 26's allocation samples put vanilla's camera-section flood fill
+(`getOpenChunkFaces`, reached through optimization 1's per-block cache) at 16.6-21.1% of fly-phase
+client allocation for its `Direction.values()` copies plus 7.6-11.8% for `LinkedList` nodes (d0, d200,
+terrain; about 4-9 KB per frame on average), and 0.7-1.1% of fly Java samples. It runs whenever the
+camera enters another block, so it costs nothing still or turning. This is allocation and CPU
+evidence only; no frame-time share was established.
+
+**What vanilla does.** Builds a `ChunkOcclusionGraph` from `WorldChunk.getBlock(pos).isSolidRender()`
+for all 4096 blocks of the camera's section, then floods from the camera's block with a linked queue
+of boxed indices, copying `Direction.values()` for every visited cell, into an `EnumSet` of faces.
+
+**Design** (`render/SectionFaces`, `render/ChunkVisibility`, `render.fastCameraSectionFaces`):
+
+- The same 4096 `getBlock(pos).isSolidRender()` reads through one reused `BlockPos.Mutable`, into a
+  4096-bit opaque set; the flood uses a second bit set and a fixed `short[]` stack. The answer is a
+  set of faces, so visiting order cannot change it; the start cell is entered even when opaque, as in
+  vanilla.
+- **Pocket reuse.** After a flood from a non-opaque cell, the reached cells are that cell's whole
+  connected component of non-opaque cells, so a flood from any of them reaches the same cells and
+  faces. A new eye block inside the reached set (or the same start cell) takes the last answer.
+- **Grid validity.** The opaque grid and answer are kept only for the same `WorldChunk` object and
+  section, only if the chunk was populated when its blocks were read (block changes in an unpopulated
+  chunk are not reported), and are dropped by any `markDirty` region touching the section, by chunk
+  storage rebuilds and by `setWorld`, the invalidation optimization 1 already relies on. Leaving the
+  pocket within an unchanged section floods again without re-reading blocks.
+- Client thread only; no hooks added (it lives inside optimization 1's search, which must be on).
+  Runtime-toggleable; off by default and kept off by `render.defaults`. When on, optimization 1's
+  per-block faces cache is bypassed and invalidated, so toggling back never uses a stale entry.
+
+**Verification.** Unit tests compare `SectionFaces` with a vanilla-structured reference (16,000
+random and wall-pocket grids/starts plus every start cell of one grid) and with vanilla's real
+`ChunkOcclusionGraph` in world coordinates, including sampled reused answers; 2,000 repeated fills
+allocate under 64 KB in total. `render.fastCameraSectionFaces.verify` runs vanilla's
+`getOpenChunkFaces` for every answer and uses vanilla's. Three Java 25 client launches on this
+session's headless Linux container (Xvfb, Mesa llvmpipe, 854x480, view distance 8; correctness only):
+**3,400 answers compared, 0 mismatches**, 3,095 reused and 305 flood fills. One launch also ran
+`render.fastChunkVisibility.verify` (1,000 searches, 0 mismatches); the particle diagnostic launch,
+whose camera never leaves its block, re-read the section 152 times as its block changes invalidated it.
+
+**Result.** Not measured. No claim of a frame-time, CPU or allocation improvement is made; the option
+stays off until the separate-launch flight comparison below passes on the reference hardware.
+
+**Protocol to run before any selection.** In-process A/B covers only static and pan, where this
+option does nothing, so compare separate launches in alternating order (A, B, B, A, then B, A, A, B),
+each from a fresh copied world, explicit Java 25, 1920x1080, `-Pxmx=2G`, verification/detail off:
+the default path at 0 and 200 mobs, the terrain backend scenario (`sort` and `fly`), and session 27's
+`benchmark.chunkFlight=near|high`. Gates (predeclare before measuring): fly allocation per frame
+lower in every pair; fly/fresh-flight mean, p99, slow-1% mean and tick-frame p99 not worse by more
+than 2% / 5% in the pooled medians; static and pan unchanged within noise; `terrain_setup` per frame
+not higher; 0 mismatches in a separate verify launch. A hooks-absent control is not needed (no hooks
+are added), but A must run the same build with the option false.
+
 ## Roadmap (recommended order)
 
 Done in session 11: nearby-mob shadow queries (optimization 6). With it on, shadows still cost
@@ -1193,6 +1248,9 @@ that rescues nothing. **Off by default and outside `render.defaults`.** The open
 [session 28 archive](benchmarks/2026-10-22-allocation-selection/README.md).
 
 ### Next session (29): recommended order
+
+Session 28 (above) implemented and verified the camera-section open-faces candidate from item 1's
+allocation list; it is off and unmeasured. Its flight comparison is the next measurement.
 
 Sessions 26-27 found no qualifying candidate under their separate frozen rules. Do not select a chunk scheduling,
 upload budget, list replacement or backend change from these aggregate costs. Revisit upload only with a design

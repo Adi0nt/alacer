@@ -388,6 +388,7 @@ public final class BenchmarkRunner implements FrameProfiler.FrameListener {
 	private static boolean warmsBothPaths(String key) {
 		return "render.defaults".equals(key) || "render.fastEntityShadows".equals(key)
 			|| "render.fastChunkFrustum".equals(key) || "render.fastParticleLight".equals(key)
+			|| "render.fastCameraSectionFaces".equals(key)
 			|| "render.fastParticleRemoval".equals(key)
 			|| "render.fastParticleVertices".equals(key)
 			|| "render.fastParticleLightEntry".equals(key)
@@ -1152,6 +1153,7 @@ public final class BenchmarkRunner implements FrameProfiler.FrameListener {
 			Alacer.LOGGER.info("Cloud cache verification final: {}", net.adiont.alacer.render.CloudCache.verificationSummary());
 		}
 		Alacer.LOGGER.info("Model list batch final: {}", net.adiont.alacer.render.ModelListBatch.summary());
+		Alacer.LOGGER.info("Camera section faces final: {}", net.adiont.alacer.render.ChunkVisibility.sectionFacesSummary());
 		Alacer.LOGGER.info("Entity shadow queries final: {}", EntityShadows.verificationSummary());
 		Alacer.LOGGER.info("Shadow position reuse final: {}", net.adiont.alacer.render.ShadowPositions.verificationSummary());
 		Alacer.LOGGER.info("Particle light queries final: {}", net.adiont.alacer.render.ParticleLight.verificationSummary());
