@@ -126,7 +126,7 @@ public final class BenchmarkRunner implements FrameProfiler.FrameListener {
 	private static final int PARTICLE_EMITTERS = 16;
 
 	private enum Stage {
-		WAIT_FOR_MENU, WAIT_FOR_WORLD, CONFIGURE, POPULATE, SETTLE, PHASE, DONE
+		WAIT_FOR_MENU, WAIT_FOR_WORLD, CONFIGURE, POPULATE, SETTLE, PHASE, CAPTURE, DONE
 	}
 
 	private interface CameraPath {
@@ -171,6 +171,7 @@ public final class BenchmarkRunner implements FrameProfiler.FrameListener {
 	private final int chestCount;
 	private final boolean exitWhenDone;
 	private final boolean screenshots;
+	private final boolean screenshotAtEndPose;
 	private final String toggleKey;
 	private final boolean shadowDiagnostic;
 	private final boolean backendScenario;
@@ -224,6 +225,10 @@ public final class BenchmarkRunner implements FrameProfiler.FrameListener {
 		this.chestCount = (int) longProperty("alacer.benchmark.chests", 0);
 		this.exitWhenDone = Boolean.parseBoolean(System.getProperty("alacer.benchmark.exit", "true"));
 		this.screenshots = Boolean.getBoolean("alacer.benchmark.screenshots");
+		this.screenshotAtEndPose = Boolean.getBoolean("alacer.benchmark.screenshotEndPose");
+		if (this.screenshotAtEndPose && !this.screenshots) {
+			throw new IllegalArgumentException("screenshotEndPose requires screenshots");
+		}
 		this.shadowDiagnostic = Boolean.getBoolean("alacer.benchmark.shadowDiagnostic");
 		this.backendScenario = Boolean.getBoolean("alacer.benchmark.backendScenario");
 		this.requestedVbo = BackendScenario.requestedVbo(System.getProperty("alacer.benchmark.vbo"), this.backendScenario);
@@ -489,18 +494,18 @@ public final class BenchmarkRunner implements FrameProfiler.FrameListener {
 					double t = (now - this.stageStart) / NANOS;
 					if (t >= this.recording.seconds) {
 						stopRecording(this.recording, now);
+						if (this.screenshotAtEndPose) {
+							// Render one unrecorded frame at the phase's exact end pose and capture it next frame,
+							// so the camera angle does not depend on the frame rate.
+							hold(this.recording, this.recording.seconds);
+							enter(Stage.CAPTURE, now);
+							break;
+						}
 						if (this.screenshots) {
 							// The framebuffer still holds the previous frame at this point.
-							Screenshot.take(this.minecraft.gameDir, "alacer-" + this.label + "-" + this.recording.name + ".png",
-								this.minecraft.width, this.minecraft.height, this.minecraft.getRenderTarget());
+							takeScreenshot(this.recording);
 						}
-						this.recording = null;
-						this.phaseIndex++;
-						if (this.phaseIndex < this.phases.size()) {
-							beginSettle(this.phases.get(this.phaseIndex), now);
-						} else {
-							finish();
-						}
+						endPhase(now);
 					} else {
 						hold(this.recording, t);
 						if (this.shadowDiagnostic && this.stageFrames % 30 == 0) {
@@ -510,6 +515,11 @@ public final class BenchmarkRunner implements FrameProfiler.FrameListener {
 							toggleParticleCells();
 						}
 					}
+					break;
+				case CAPTURE:
+					// The framebuffer holds the frame rendered at the end pose.
+					takeScreenshot(this.recording);
+					endPhase(now);
 					break;
 				default:
 					break;
@@ -678,6 +688,21 @@ public final class BenchmarkRunner implements FrameProfiler.FrameListener {
 
 	private static double jitter(Random random) {
 		return (random.nextDouble() - 0.5) * 0.6;
+	}
+
+	private void takeScreenshot(Phase phase) {
+		Screenshot.take(this.minecraft.gameDir, "alacer-" + this.label + "-" + phase.name + ".png",
+			this.minecraft.width, this.minecraft.height, this.minecraft.getRenderTarget());
+	}
+
+	private void endPhase(long now) throws IOException {
+		this.recording = null;
+		this.phaseIndex++;
+		if (this.phaseIndex < this.phases.size()) {
+			beginSettle(this.phases.get(this.phaseIndex), now);
+		} else {
+			finish();
+		}
 	}
 
 	private void enter(Stage stage, long now) {
@@ -1093,6 +1118,8 @@ public final class BenchmarkRunner implements FrameProfiler.FrameListener {
 		environment.put("benchmark.logGlErrors", String.valueOf(((net.adiont.alacer.mixin.MinecraftAccessor) this.minecraft).alacer$logsGlErrors()));
 		environment.put("benchmark.toggle", this.toggleKey == null ? "" : this.toggleKey + " (a=false, b=true)");
 		environment.put("benchmark.toggleReverse", String.valueOf(Boolean.getBoolean("alacer.benchmark.toggleReverse")));
+		environment.put("benchmark.screenshots", String.valueOf(this.screenshots));
+		environment.put("benchmark.screenshotEndPose", String.valueOf(this.screenshotAtEndPose));
 		environment.put("profiler.particleDrawDiagnostics", String.valueOf(net.adiont.alacer.render.ParticleDrawDiagnostics.ENABLED));
 		environment.put("profiler.particleMovementCensus", String.valueOf(net.adiont.alacer.render.ParticleMovementCensus.ENABLED));
 		environment.put("profiler.particleMovementRegions", String.valueOf(net.adiont.alacer.render.ParticleMovementCensus.REGIONS));

@@ -1210,6 +1210,9 @@ frame rate made the allocation target unresolvable; it needs real hardware, not 
    frame after the phase ends). Keep hooks-absent startup pairs. If the frozen gates pass there, it may still only be
    promoted under them; if not, close it. The flood fill (about 200-240 KB per cache miss) and entity brightness
    positions (about 11 KB per frame at 200 mobs) can be re-ranked in the same attribution, with a rule written first.
+   **Prepared, not frozen or run:** the series, its Windows runner and evaluator are in the
+   [session 29 archive](benchmarks/2026-10-22-shadow-positions-reference/README.md) (tick-free allocation target,
+   `benchmark.screenshotEndPose` captures).
 
 2. **Parked: particle movement block re-reads through a client world-mutation epoch.** Session 26 confirmed that
    particle ticks do not matter in ordinary scenes (at most 0.1% of client samples and 0.4-1.7% of slow-1% samples in
