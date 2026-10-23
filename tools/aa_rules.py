@@ -301,6 +301,10 @@ def build_calibration(protocol, records):
             out['pass'] = False
             out['failures'].append(f'{scene}: GPU backend differs between calibration launches')
         entry['backend'] = backend_identity(recs[0])
+        entry['config_sha'] = sorted({r['config_sha'] for r in recs})
+        if len(entry['config_sha']) != 1:
+            out['pass'] = False
+            out['failures'].append(f'{scene}: calibration launches ran with different configurations')
         freqs = [r['monitor']['launch'].get('frequency_p_mean_mhz') for r in recs]
         freqs = [f for f in freqs if f is not None]
         entry['p_core_mhz_median'] = statistics.median(freqs) if freqs else None
@@ -312,9 +316,6 @@ def build_calibration(protocol, records):
         out['pass'] = False
         out['failures'].append('power plan changed during calibration')
     out['config_sha'] = sorted({r['config_sha'] for r in records})
-    if len(out['config_sha']) > 1:
-        out['pass'] = False
-        out['failures'].append('calibration launches ran with different configurations')
     return out
 
 
@@ -432,7 +433,10 @@ def validate_environment(protocol, record, calibration=None, topology=None):
                                        f'from calibration {base["median"]:.4f} (band +/-{100 * base["band"]:.1f}%)')
             if canonical_sha(backend_identity(record)) != canonical_sha(scene_cal['backend']):
                 reasons.append('GPU backend or platform identity differs from calibration')
-            if record['config_sha'] not in calibration['config_sha']:
+            scene_configs = scene_cal.get('config_sha')
+            if not scene_configs:
+                reasons.append('no calibration configuration baseline for this scene')
+            elif record['config_sha'] not in scene_configs:
                 reasons.append('configuration differs from calibration')
             base_mhz = scene_cal.get('p_core_mhz_median')
             for phase in phases:

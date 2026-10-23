@@ -1,6 +1,7 @@
 # Session 31: A/A stability infrastructure, implementation and validation report
 
-This report covers what was built and how it was tested. It is not a measurement: the pilot protocol is
+This report covers the original implementation and container validation. Current Windows validation is tracked in
+[WINDOWS.md](WINDOWS.md). The original report below is not a measurement: the pilot protocol is
 [README.md](README.md) with [protocol.json](protocol.json), and it has not yet run on the reference machine. Every
 launch described here ran in a Linux cloud container with Mesa llvmpipe (software GL, about 20 FPS); those launches
 tested the tooling and judge nothing about frame-time stability.

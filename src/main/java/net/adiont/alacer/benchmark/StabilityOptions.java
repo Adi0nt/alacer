@@ -35,7 +35,8 @@ import java.util.function.Function;
  * client thread ran each recorded frame on ({@link ProcessorSampler}).</li>
  * <li>{@code alacer.benchmark.mobPoseCheck=true}: records how far the client's mobs moved and
  * turned between the start and end of each recorded phase.</li>
- * <li>{@code alacer.benchmark.freezeMobs=true}: before every phase settles, sets NoAI on every mob the
+ * <li>{@code alacer.benchmark.freezeMobs=true}: suppresses mob ticks on both sides of the integrated server;
+ * before every phase settles, also sets NoAI on every mob the
  * server has loaded, including the animals the world generated (which otherwise walk and turn
  * during "still" phases even with {@code benchmark.entities=0}); the benchmark's own mobs are NoAI
  * already.</li>

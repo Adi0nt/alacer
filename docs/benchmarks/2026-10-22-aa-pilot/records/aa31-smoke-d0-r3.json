@@ -1,0 +1,4408 @@
+{
+ "label": "aa31-smoke-d0-r3",
+ "stage": "smoke",
+ "scene": "d0",
+ "pair_id": null,
+ "started_epoch": 1792714849.811571,
+ "launch_epoch": 1792714877.1428952,
+ "ended_epoch": 1792715186.246553,
+ "source": "run/alacer/benchmarks/20261022-172615-aa31-smoke-d0-r3-vis_on-ecl_on-ent0",
+ "files_sha256": {
+  "fly.csv": "c4495fa99f3c95c6900eedfa639aa2079a02bff93122e62a016535f3c79d303f",
+  "fly.json": "72957352dcae4fc37bd717d4ee7d6015613200474d6d1b7b946a50552ca4376b",
+  "pan.csv": "74f9af83a5a6025f48812849ed5ec2cdeab5bf3a2944b45baffa78e152e5146d",
+  "pan.json": "9805a28ae3af5f8e10aa6c9b8a1c6176b452ea49253697cb5d64bf97ea13ebca",
+  "reference-post.csv": "7d879b478592f18066e2f3a01803a4cf06c52da5ea985a1d924a3e4c1fe4ec4b",
+  "reference-post.json": "021818456273e94e2a13b8c3fc6d05a7caaa55c77cd4ca83d084221fdd84a219",
+  "reference-pre.csv": "eea6d43b20f8e28ad9a9354ad27735dc73c38cd072b00ea05913934eb4937f50",
+  "reference-pre.json": "0a1aa5959bf30ece4014b03c0b753129729c6266d77930ab0703666ea632d8fc",
+  "repeat-01.csv": "aa22fb54cb768f16739f0b894d03963d458f39615b9dfbb835d13e72136a604f",
+  "repeat-01.json": "cf62a0bee1ac18b4ad63711b27af84e55fd21b3f3d4e8d0b1ea064fc1b4d4b41",
+  "repeat-02.csv": "f9fcf57a4507b3bf8db9220268edb160a92fcace3bc15fe31c104eaf5347b006",
+  "repeat-02.json": "15cb31cefafb8e75afd35723874bb0627f0af53974acd272049fe60766b2e3c1",
+  "repeat-03.csv": "cdda6cf005325122905728629741fbf60da57c30bea33618798594cbe627fe02",
+  "repeat-03.json": "82c89c5d2b8d22731ea8e0b5455845760a2d2bec23d1667e619f1d587c0a2a58",
+  "repeat-04.csv": "ddec3f338fb45134230f246550a51de6f5653cd38ae396290d9ad7c6c5540b05",
+  "repeat-04.json": "f972c1542d198055dca75c7b562813a28e7c7fe733d78bee094ca54c69a64371",
+  "repeat-05.csv": "664e70a0288555a09f6814ce7ebd6fa987dd7e74b9e372317c865a70ee6ea6d2",
+  "repeat-05.json": "918e4d2fb18af77d6cd2815791742cc9a2a2299db423f4c05ac1b493b72908f3",
+  "repeat-06.csv": "13211069c17069e8b2a129b2b81f0f7d37e1c35e8c8414b5978102945b4d3a45",
+  "repeat-06.json": "473c5489cec686218e38e536a29bf95cfc673fd206028c0dbd25866cc2ffa987",
+  "repeat-07.csv": "a0396dc7564b3c497daa034f415bfabb1e76bb6bc33c4da658bf7c5bdb524d8c",
+  "repeat-07.json": "089e871c4a763fdfaeb41eba3f1d783866636509d86e19be1211eec0bd901066",
+  "repeat-08.csv": "de25899eb05b42e6194382223a88efa537e3e0e365fb749c8265701a5ec5ec2b",
+  "repeat-08.json": "37563bafebd43e8ff8f708ee0fbb1e57eee3136620f71e20ea34d722f9517893",
+  "static.csv": "458fab3f8233f6122fb3a19d7ca91023926f7a11f4839dbb8b601f4b4e1604be",
+  "static.json": "65e3bfdd2ec13184f525b77d66ad9dfe55cf4363bf927b4474017a58cfa7130b",
+  "summary.json": "861123655ff61bb5a59a55aed88b290ae5a906d3a1315ab26cadf35b388aeaa6"
+ },
+ "environment": {
+  "alacer.version": "0.1.0+mc1.8.9",
+  "java.version": "25.0.4.1",
+  "java.vendor": "Eclipse Adoptium",
+  "java.vm": "OpenJDK 64-Bit Server VM",
+  "java.runtime.version": "25.0.4.1+1-LTS",
+  "java.vm.version": "25.0.4.1+1-LTS",
+  "jvm.args": "-Dalacer.benchmark=true -Dalacer.benchmark.backendScenario=false -Dalacer.benchmark.chests=0 -Dalacer.benchmark.cloudSweep=false -Dalacer.benchmark.entities=0 -Dalacer.benchmark.exit=true -Dalacer.benchmark.freezeMobs=true -Dalacer.benchmark.label=aa31-smoke-d0-r3 -Dalacer.benchmark.mobPoseCheck=true -Dalacer.benchmark.movementCensusInactive=false -Dalacer.benchmark.particleBoxDiagnostic=false -Dalacer.benchmark.particleDiagnostic=false -Dalacer.benchmark.particleEntityQueryDiagnostic=false -Dalacer.benchmark.particleMovementDiagnostic=false -Dalacer.benchmark.particleRemovalDiagnostic=false -Dalacer.benchmark.particles=false -Dalacer.benchmark.phaseSeconds=static:60 -Dalacer.benchmark.processorSampling=true -Dalacer.benchmark.reference=20 -Dalacer.benchmark.referencePost=true -Dalacer.benchmark.repeatSegmentSeconds=8 -Dalacer.benchmark.repeatSegments=8 -Dalacer.benchmark.screenshotEndPose=false -Dalacer.benchmark.screenshots=false -Dalacer.benchmark.shadowDiagnostic=false -Dalacer.benchmark.timeScale=2 -Dalacer.benchmark.timeout=1500 -Dalacer.benchmark.toggleReverse=false -Dalacer.benchmark.vbo=false -Dalacer.benchmark.viewDistance=12 -Dalacer.profiler.chunkDetail=false -Dalacer.profiler.enabled=true -Dalacer.profiler.entityDetail=false -Dalacer.profiler.entityStages=false -Dalacer.profiler.frustumTiming=false -Dalacer.profiler.hud=false -Dalacer.profiler.particleDetail=false -Dalacer.profiler.particleDrawDiagnostics=false -Dalacer.profiler.particleLightRepeats=false -Dalacer.profiler.particleMovementCensus=false -Dalacer.profiler.particleMovementRegions=false -Dalacer.profiler.particleThreadCycles=false -Dalacer.profiler.shadowTiming=false -Dalacer.render.avoidMatrixReads=true -Dalacer.render.avoidMatrixReads.verify=false -Dalacer.render.batchModelLists=false -Dalacer.render.batchModelLists.verify=false -Dalacer.render.cacheClouds=true -Dalacer.render.cacheClouds.verify=false -Dalacer.render.fastCameraSectionFaces=false -Dalacer.render.fastCameraSectionFaces.verify=false -Dalacer.render.fastChunkFrustum=false -Dalacer.render.fastChunkFrustum.verify=false -Dalacer.render.fastChunkVisibility=true -Dalacer.render.fastChunkVisibility.verify=false -Dalacer.render.fastEntityChunkLookup=true -Dalacer.render.fastEntityChunkLookup.verify=false -Dalacer.render.fastEntityShadows=true -Dalacer.render.fastEntityShadows.verify=false -Dalacer.render.fastParticleLight=true -Dalacer.render.fastParticleLight.verify=false -Dalacer.render.fastParticleLightEntry=false -Dalacer.render.fastParticleLightEntry.verify=false -Dalacer.render.fastParticleMovement=false -Dalacer.render.fastParticleMovement.verify=false -Dalacer.render.fastParticleRemoval=true -Dalacer.render.fastParticleRemoval.verify=false -Dalacer.render.fastParticleVertices=true -Dalacer.render.fastParticleVertices.verify=false -Dalacer.render.reuseParticleBoxes=false -Dalacer.render.reuseParticleBoxes.verify=false -Dalacer.render.reuseParticleLight=false -Dalacer.render.reuseParticleLight.verify=false -Dalacer.render.reuseShadowPositions=false -Dalacer.render.reuseShadowPositions.verify=false -Dalacer.render.scalarParticleEntityQuery=false -Dalacer.render.scalarParticleEntityQuery.verify=false -Dalacer.render.skipZeroTranslates=false -Dalacer.render.skipZeroTranslates.verify=false -Dalacer.render.throttleGlErrorChecks=true -Dalacer.render.throttleGlErrorChecks.verify=false -Dfabric.dli.config=C:\\Users\\CodyJ\\.codex\\worktrees\\alacer-session31-aa\\alacer\\.gradle\\loom-cache\\launch.cfg -Dfabric.dli.env=client -Dfabric.dli.main=net.fabricmc.loader.impl.launch.knot.KnotClient -Dfabric.gameVersion=1.8.9 --enable-native-access=ALL-UNNAMED -XX:StackShadowPages=32 -Xmx2G -Dfile.encoding=UTF-8 -Duser.country=US -Duser.language=en -Duser.variant",
+  "jvm.maxHeapMB": "2048",
+  "jvm.gc": "G1 Young Generation, G1 Concurrent GC, G1 Old Generation",
+  "alacer.configSource": "build-defaults-and-jvm-overrides",
+  "profiler.allocationAvailable": "true",
+  "profiler.epochWallMillis": "1792714879581",
+  "profiler.epochWallUncertaintyNanos": "1002000",
+  "os": "Windows 11 10.0 amd64",
+  "cpu.threads": "20",
+  "cpu": "20x 12th Gen Intel(R) Core(TM) i7-12700F",
+  "gl.vendor": "NVIDIA Corporation",
+  "gl.renderer": "NVIDIA GeForce RTX 3060 Ti/PCIe/SSE2",
+  "gl.version": "4.6.0 NVIDIA 616.92",
+  "window": "1920x1080",
+  "options.renderDistance": "12",
+  "options.fancyGraphics": "true",
+  "options.smoothLighting": "2",
+  "options.fpsLimit": "260",
+  "options.vsync": "false",
+  "options.useVbo": "false",
+  "vboActive": "false",
+  "options.mipmapLevels": "4",
+  "options.clouds": "2",
+  "options.particles": "0",
+  "options.entityShadows": "true",
+  "mods": "alacer@0.1.0+mc1.8.9 java@25 osl-keybinds@0.3.0+mc13w36a-mc17w15a osl-lifecycle-events@0.6.1+mc13w36a-mc19w07a mixinextras@0.5.5 fabricloader@0.20.0 osl-core@0.11.0+mc14w27a-mc1.14.4 minecraft@1.8.9 osl-entrypoints@0.6.1+mc13w16a-mc1.14.4",
+  "benchmark.seed": "1789",
+  "benchmark.anchor": "-200.5 65.0 267.5",
+  "benchmark.joinSettleSeconds": "10.00",
+  "benchmark.mobs": "0",
+  "benchmark.chests": "0",
+  "benchmark.generationRun": "false",
+  "benchmark.backendScenario": "false",
+  "benchmark.chunkFlight": "",
+  "benchmark.chunkUploadGpu": "false",
+  "benchmark.glassBlocks": "0",
+  "benchmark.particles": "false",
+  "benchmark.particleDiagnostic": "false",
+  "benchmark.particleRemovalDiagnostic": "false",
+  "benchmark.logGlErrors": "true",
+  "benchmark.toggle": "",
+  "benchmark.toggleReverse": "false",
+  "benchmark.screenshots": "false",
+  "benchmark.screenshotEndPose": "false",
+  "profiler.particleDrawDiagnostics": "false",
+  "profiler.particleMovementCensus": "false",
+  "profiler.particleMovementRegions": "false",
+  "benchmark.movementCensusInactive": "false",
+  "benchmark.reference": "20.000",
+  "benchmark.referencePost": "true",
+  "benchmark.phaseSeconds": "static:60.000",
+  "benchmark.repeatSegments": "8",
+  "benchmark.repeatSegmentSeconds": "8.000",
+  "benchmark.toggleBlocks": "0",
+  "benchmark.toggleSegmentSeconds": "5.000",
+  "benchmark.processorSampling": "true",
+  "benchmark.mobPoseCheck": "true",
+  "benchmark.freezeMobs": "true",
+  "benchmark.processorSource": "windows:GetCurrentProcessorNumberEx",
+  "benchmark.frozenMobs": "417"
+ },
+ "phase_configs": {
+  "reference-pre": {
+   "quality.leaves": "0",
+   "quality.weather": "0",
+   "quality.rainSplashes": "0",
+   "quality.vignette": "0",
+   "quality.stars": "1",
+   "quality.enchantGlint": "1",
+   "quality.droppedItems": "1",
+   "quality.lightingStyle": "0",
+   "quality.aoStrength": "100",
+   "profiler.enabled": "true",
+   "profiler.history": "8192",
+   "profiler.logInterval": "0",
+   "profiler.entityDetail": "false",
+   "profiler.entityStages": "false",
+   "profiler.shadowTiming": "false",
+   "profiler.frustumTiming": "false",
+   "profiler.chunkDetail": "false",
+   "profiler.particleDetail": "false",
+   "profiler.particleLightRepeats": "false",
+   "profiler.hud": "false",
+   "render.fastChunkVisibility": "true",
+   "render.fastChunkVisibility.verify": "false",
+   "render.fastChunkFrustum": "false",
+   "render.fastChunkFrustum.verify": "false",
+   "render.fastCameraSectionFaces": "false",
+   "render.fastCameraSectionFaces.verify": "false",
+   "render.fastEntityChunkLookup": "true",
+   "render.fastEntityChunkLookup.verify": "false",
+   "render.throttleGlErrorChecks": "true",
+   "render.throttleGlErrorChecks.verify": "false",
+   "render.avoidMatrixReads": "true",
+   "render.avoidMatrixReads.verify": "false",
+   "render.skipZeroTranslates": "false",
+   "render.skipZeroTranslates.verify": "false",
+   "render.cacheClouds": "true",
+   "render.cacheClouds.verify": "false",
+   "render.fastEntityShadows": "true",
+   "render.fastEntityShadows.verify": "false",
+   "render.fastParticleLight": "true",
+   "render.fastParticleLight.verify": "false",
+   "render.fastParticleRemoval": "true",
+   "render.fastParticleRemoval.verify": "false",
+   "render.fastParticleVertices": "true",
+   "render.fastParticleVertices.verify": "false",
+   "render.fastParticleLightEntry": "false",
+   "render.fastParticleLightEntry.verify": "false",
+   "render.reuseParticleLight": "false",
+   "render.reuseParticleLight.verify": "false",
+   "render.fastParticleMovement": "false",
+   "render.fastParticleMovement.verify": "false",
+   "render.scalarParticleEntityQuery": "false",
+   "render.scalarParticleEntityQuery.verify": "false",
+   "render.reuseShadowPositions": "false",
+   "render.reuseShadowPositions.verify": "false",
+   "render.reuseParticleBoxes": "false",
+   "render.reuseParticleBoxes.verify": "false",
+   "render.batchModelLists": "false",
+   "render.batchModelLists.verify": "false",
+   "options.entityShadows": "true",
+   "options.useVbo": "false",
+   "vboActive": "false"
+  },
+  "static": {
+   "quality.leaves": "0",
+   "quality.weather": "0",
+   "quality.rainSplashes": "0",
+   "quality.vignette": "0",
+   "quality.stars": "1",
+   "quality.enchantGlint": "1",
+   "quality.droppedItems": "1",
+   "quality.lightingStyle": "0",
+   "quality.aoStrength": "100",
+   "profiler.enabled": "true",
+   "profiler.history": "8192",
+   "profiler.logInterval": "0",
+   "profiler.entityDetail": "false",
+   "profiler.entityStages": "false",
+   "profiler.shadowTiming": "false",
+   "profiler.frustumTiming": "false",
+   "profiler.chunkDetail": "false",
+   "profiler.particleDetail": "false",
+   "profiler.particleLightRepeats": "false",
+   "profiler.hud": "false",
+   "render.fastChunkVisibility": "true",
+   "render.fastChunkVisibility.verify": "false",
+   "render.fastChunkFrustum": "false",
+   "render.fastChunkFrustum.verify": "false",
+   "render.fastCameraSectionFaces": "false",
+   "render.fastCameraSectionFaces.verify": "false",
+   "render.fastEntityChunkLookup": "true",
+   "render.fastEntityChunkLookup.verify": "false",
+   "render.throttleGlErrorChecks": "true",
+   "render.throttleGlErrorChecks.verify": "false",
+   "render.avoidMatrixReads": "true",
+   "render.avoidMatrixReads.verify": "false",
+   "render.skipZeroTranslates": "false",
+   "render.skipZeroTranslates.verify": "false",
+   "render.cacheClouds": "true",
+   "render.cacheClouds.verify": "false",
+   "render.fastEntityShadows": "true",
+   "render.fastEntityShadows.verify": "false",
+   "render.fastParticleLight": "true",
+   "render.fastParticleLight.verify": "false",
+   "render.fastParticleRemoval": "true",
+   "render.fastParticleRemoval.verify": "false",
+   "render.fastParticleVertices": "true",
+   "render.fastParticleVertices.verify": "false",
+   "render.fastParticleLightEntry": "false",
+   "render.fastParticleLightEntry.verify": "false",
+   "render.reuseParticleLight": "false",
+   "render.reuseParticleLight.verify": "false",
+   "render.fastParticleMovement": "false",
+   "render.fastParticleMovement.verify": "false",
+   "render.scalarParticleEntityQuery": "false",
+   "render.scalarParticleEntityQuery.verify": "false",
+   "render.reuseShadowPositions": "false",
+   "render.reuseShadowPositions.verify": "false",
+   "render.reuseParticleBoxes": "false",
+   "render.reuseParticleBoxes.verify": "false",
+   "render.batchModelLists": "false",
+   "render.batchModelLists.verify": "false",
+   "options.entityShadows": "true",
+   "options.useVbo": "false",
+   "vboActive": "false"
+  },
+  "pan": {
+   "quality.leaves": "0",
+   "quality.weather": "0",
+   "quality.rainSplashes": "0",
+   "quality.vignette": "0",
+   "quality.stars": "1",
+   "quality.enchantGlint": "1",
+   "quality.droppedItems": "1",
+   "quality.lightingStyle": "0",
+   "quality.aoStrength": "100",
+   "profiler.enabled": "true",
+   "profiler.history": "8192",
+   "profiler.logInterval": "0",
+   "profiler.entityDetail": "false",
+   "profiler.entityStages": "false",
+   "profiler.shadowTiming": "false",
+   "profiler.frustumTiming": "false",
+   "profiler.chunkDetail": "false",
+   "profiler.particleDetail": "false",
+   "profiler.particleLightRepeats": "false",
+   "profiler.hud": "false",
+   "render.fastChunkVisibility": "true",
+   "render.fastChunkVisibility.verify": "false",
+   "render.fastChunkFrustum": "false",
+   "render.fastChunkFrustum.verify": "false",
+   "render.fastCameraSectionFaces": "false",
+   "render.fastCameraSectionFaces.verify": "false",
+   "render.fastEntityChunkLookup": "true",
+   "render.fastEntityChunkLookup.verify": "false",
+   "render.throttleGlErrorChecks": "true",
+   "render.throttleGlErrorChecks.verify": "false",
+   "render.avoidMatrixReads": "true",
+   "render.avoidMatrixReads.verify": "false",
+   "render.skipZeroTranslates": "false",
+   "render.skipZeroTranslates.verify": "false",
+   "render.cacheClouds": "true",
+   "render.cacheClouds.verify": "false",
+   "render.fastEntityShadows": "true",
+   "render.fastEntityShadows.verify": "false",
+   "render.fastParticleLight": "true",
+   "render.fastParticleLight.verify": "false",
+   "render.fastParticleRemoval": "true",
+   "render.fastParticleRemoval.verify": "false",
+   "render.fastParticleVertices": "true",
+   "render.fastParticleVertices.verify": "false",
+   "render.fastParticleLightEntry": "false",
+   "render.fastParticleLightEntry.verify": "false",
+   "render.reuseParticleLight": "false",
+   "render.reuseParticleLight.verify": "false",
+   "render.fastParticleMovement": "false",
+   "render.fastParticleMovement.verify": "false",
+   "render.scalarParticleEntityQuery": "false",
+   "render.scalarParticleEntityQuery.verify": "false",
+   "render.reuseShadowPositions": "false",
+   "render.reuseShadowPositions.verify": "false",
+   "render.reuseParticleBoxes": "false",
+   "render.reuseParticleBoxes.verify": "false",
+   "render.batchModelLists": "false",
+   "render.batchModelLists.verify": "false",
+   "options.entityShadows": "true",
+   "options.useVbo": "false",
+   "vboActive": "false"
+  },
+  "fly": {
+   "quality.leaves": "0",
+   "quality.weather": "0",
+   "quality.rainSplashes": "0",
+   "quality.vignette": "0",
+   "quality.stars": "1",
+   "quality.enchantGlint": "1",
+   "quality.droppedItems": "1",
+   "quality.lightingStyle": "0",
+   "quality.aoStrength": "100",
+   "profiler.enabled": "true",
+   "profiler.history": "8192",
+   "profiler.logInterval": "0",
+   "profiler.entityDetail": "false",
+   "profiler.entityStages": "false",
+   "profiler.shadowTiming": "false",
+   "profiler.frustumTiming": "false",
+   "profiler.chunkDetail": "false",
+   "profiler.particleDetail": "false",
+   "profiler.particleLightRepeats": "false",
+   "profiler.hud": "false",
+   "render.fastChunkVisibility": "true",
+   "render.fastChunkVisibility.verify": "false",
+   "render.fastChunkFrustum": "false",
+   "render.fastChunkFrustum.verify": "false",
+   "render.fastCameraSectionFaces": "false",
+   "render.fastCameraSectionFaces.verify": "false",
+   "render.fastEntityChunkLookup": "true",
+   "render.fastEntityChunkLookup.verify": "false",
+   "render.throttleGlErrorChecks": "true",
+   "render.throttleGlErrorChecks.verify": "false",
+   "render.avoidMatrixReads": "true",
+   "render.avoidMatrixReads.verify": "false",
+   "render.skipZeroTranslates": "false",
+   "render.skipZeroTranslates.verify": "false",
+   "render.cacheClouds": "true",
+   "render.cacheClouds.verify": "false",
+   "render.fastEntityShadows": "true",
+   "render.fastEntityShadows.verify": "false",
+   "render.fastParticleLight": "true",
+   "render.fastParticleLight.verify": "false",
+   "render.fastParticleRemoval": "true",
+   "render.fastParticleRemoval.verify": "false",
+   "render.fastParticleVertices": "true",
+   "render.fastParticleVertices.verify": "false",
+   "render.fastParticleLightEntry": "false",
+   "render.fastParticleLightEntry.verify": "false",
+   "render.reuseParticleLight": "false",
+   "render.reuseParticleLight.verify": "false",
+   "render.fastParticleMovement": "false",
+   "render.fastParticleMovement.verify": "false",
+   "render.scalarParticleEntityQuery": "false",
+   "render.scalarParticleEntityQuery.verify": "false",
+   "render.reuseShadowPositions": "false",
+   "render.reuseShadowPositions.verify": "false",
+   "render.reuseParticleBoxes": "false",
+   "render.reuseParticleBoxes.verify": "false",
+   "render.batchModelLists": "false",
+   "render.batchModelLists.verify": "false",
+   "options.entityShadows": "true",
+   "options.useVbo": "false",
+   "vboActive": "false"
+  },
+  "repeat-01": {
+   "quality.leaves": "0",
+   "quality.weather": "0",
+   "quality.rainSplashes": "0",
+   "quality.vignette": "0",
+   "quality.stars": "1",
+   "quality.enchantGlint": "1",
+   "quality.droppedItems": "1",
+   "quality.lightingStyle": "0",
+   "quality.aoStrength": "100",
+   "profiler.enabled": "true",
+   "profiler.history": "8192",
+   "profiler.logInterval": "0",
+   "profiler.entityDetail": "false",
+   "profiler.entityStages": "false",
+   "profiler.shadowTiming": "false",
+   "profiler.frustumTiming": "false",
+   "profiler.chunkDetail": "false",
+   "profiler.particleDetail": "false",
+   "profiler.particleLightRepeats": "false",
+   "profiler.hud": "false",
+   "render.fastChunkVisibility": "true",
+   "render.fastChunkVisibility.verify": "false",
+   "render.fastChunkFrustum": "false",
+   "render.fastChunkFrustum.verify": "false",
+   "render.fastCameraSectionFaces": "false",
+   "render.fastCameraSectionFaces.verify": "false",
+   "render.fastEntityChunkLookup": "true",
+   "render.fastEntityChunkLookup.verify": "false",
+   "render.throttleGlErrorChecks": "true",
+   "render.throttleGlErrorChecks.verify": "false",
+   "render.avoidMatrixReads": "true",
+   "render.avoidMatrixReads.verify": "false",
+   "render.skipZeroTranslates": "false",
+   "render.skipZeroTranslates.verify": "false",
+   "render.cacheClouds": "true",
+   "render.cacheClouds.verify": "false",
+   "render.fastEntityShadows": "true",
+   "render.fastEntityShadows.verify": "false",
+   "render.fastParticleLight": "true",
+   "render.fastParticleLight.verify": "false",
+   "render.fastParticleRemoval": "true",
+   "render.fastParticleRemoval.verify": "false",
+   "render.fastParticleVertices": "true",
+   "render.fastParticleVertices.verify": "false",
+   "render.fastParticleLightEntry": "false",
+   "render.fastParticleLightEntry.verify": "false",
+   "render.reuseParticleLight": "false",
+   "render.reuseParticleLight.verify": "false",
+   "render.fastParticleMovement": "false",
+   "render.fastParticleMovement.verify": "false",
+   "render.scalarParticleEntityQuery": "false",
+   "render.scalarParticleEntityQuery.verify": "false",
+   "render.reuseShadowPositions": "false",
+   "render.reuseShadowPositions.verify": "false",
+   "render.reuseParticleBoxes": "false",
+   "render.reuseParticleBoxes.verify": "false",
+   "render.batchModelLists": "false",
+   "render.batchModelLists.verify": "false",
+   "options.entityShadows": "true",
+   "options.useVbo": "false",
+   "vboActive": "false"
+  },
+  "repeat-02": {
+   "quality.leaves": "0",
+   "quality.weather": "0",
+   "quality.rainSplashes": "0",
+   "quality.vignette": "0",
+   "quality.stars": "1",
+   "quality.enchantGlint": "1",
+   "quality.droppedItems": "1",
+   "quality.lightingStyle": "0",
+   "quality.aoStrength": "100",
+   "profiler.enabled": "true",
+   "profiler.history": "8192",
+   "profiler.logInterval": "0",
+   "profiler.entityDetail": "false",
+   "profiler.entityStages": "false",
+   "profiler.shadowTiming": "false",
+   "profiler.frustumTiming": "false",
+   "profiler.chunkDetail": "false",
+   "profiler.particleDetail": "false",
+   "profiler.particleLightRepeats": "false",
+   "profiler.hud": "false",
+   "render.fastChunkVisibility": "true",
+   "render.fastChunkVisibility.verify": "false",
+   "render.fastChunkFrustum": "false",
+   "render.fastChunkFrustum.verify": "false",
+   "render.fastCameraSectionFaces": "false",
+   "render.fastCameraSectionFaces.verify": "false",
+   "render.fastEntityChunkLookup": "true",
+   "render.fastEntityChunkLookup.verify": "false",
+   "render.throttleGlErrorChecks": "true",
+   "render.throttleGlErrorChecks.verify": "false",
+   "render.avoidMatrixReads": "true",
+   "render.avoidMatrixReads.verify": "false",
+   "render.skipZeroTranslates": "false",
+   "render.skipZeroTranslates.verify": "false",
+   "render.cacheClouds": "true",
+   "render.cacheClouds.verify": "false",
+   "render.fastEntityShadows": "true",
+   "render.fastEntityShadows.verify": "false",
+   "render.fastParticleLight": "true",
+   "render.fastParticleLight.verify": "false",
+   "render.fastParticleRemoval": "true",
+   "render.fastParticleRemoval.verify": "false",
+   "render.fastParticleVertices": "true",
+   "render.fastParticleVertices.verify": "false",
+   "render.fastParticleLightEntry": "false",
+   "render.fastParticleLightEntry.verify": "false",
+   "render.reuseParticleLight": "false",
+   "render.reuseParticleLight.verify": "false",
+   "render.fastParticleMovement": "false",
+   "render.fastParticleMovement.verify": "false",
+   "render.scalarParticleEntityQuery": "false",
+   "render.scalarParticleEntityQuery.verify": "false",
+   "render.reuseShadowPositions": "false",
+   "render.reuseShadowPositions.verify": "false",
+   "render.reuseParticleBoxes": "false",
+   "render.reuseParticleBoxes.verify": "false",
+   "render.batchModelLists": "false",
+   "render.batchModelLists.verify": "false",
+   "options.entityShadows": "true",
+   "options.useVbo": "false",
+   "vboActive": "false"
+  },
+  "repeat-03": {
+   "quality.leaves": "0",
+   "quality.weather": "0",
+   "quality.rainSplashes": "0",
+   "quality.vignette": "0",
+   "quality.stars": "1",
+   "quality.enchantGlint": "1",
+   "quality.droppedItems": "1",
+   "quality.lightingStyle": "0",
+   "quality.aoStrength": "100",
+   "profiler.enabled": "true",
+   "profiler.history": "8192",
+   "profiler.logInterval": "0",
+   "profiler.entityDetail": "false",
+   "profiler.entityStages": "false",
+   "profiler.shadowTiming": "false",
+   "profiler.frustumTiming": "false",
+   "profiler.chunkDetail": "false",
+   "profiler.particleDetail": "false",
+   "profiler.particleLightRepeats": "false",
+   "profiler.hud": "false",
+   "render.fastChunkVisibility": "true",
+   "render.fastChunkVisibility.verify": "false",
+   "render.fastChunkFrustum": "false",
+   "render.fastChunkFrustum.verify": "false",
+   "render.fastCameraSectionFaces": "false",
+   "render.fastCameraSectionFaces.verify": "false",
+   "render.fastEntityChunkLookup": "true",
+   "render.fastEntityChunkLookup.verify": "false",
+   "render.throttleGlErrorChecks": "true",
+   "render.throttleGlErrorChecks.verify": "false",
+   "render.avoidMatrixReads": "true",
+   "render.avoidMatrixReads.verify": "false",
+   "render.skipZeroTranslates": "false",
+   "render.skipZeroTranslates.verify": "false",
+   "render.cacheClouds": "true",
+   "render.cacheClouds.verify": "false",
+   "render.fastEntityShadows": "true",
+   "render.fastEntityShadows.verify": "false",
+   "render.fastParticleLight": "true",
+   "render.fastParticleLight.verify": "false",
+   "render.fastParticleRemoval": "true",
+   "render.fastParticleRemoval.verify": "false",
+   "render.fastParticleVertices": "true",
+   "render.fastParticleVertices.verify": "false",
+   "render.fastParticleLightEntry": "false",
+   "render.fastParticleLightEntry.verify": "false",
+   "render.reuseParticleLight": "false",
+   "render.reuseParticleLight.verify": "false",
+   "render.fastParticleMovement": "false",
+   "render.fastParticleMovement.verify": "false",
+   "render.scalarParticleEntityQuery": "false",
+   "render.scalarParticleEntityQuery.verify": "false",
+   "render.reuseShadowPositions": "false",
+   "render.reuseShadowPositions.verify": "false",
+   "render.reuseParticleBoxes": "false",
+   "render.reuseParticleBoxes.verify": "false",
+   "render.batchModelLists": "false",
+   "render.batchModelLists.verify": "false",
+   "options.entityShadows": "true",
+   "options.useVbo": "false",
+   "vboActive": "false"
+  },
+  "repeat-04": {
+   "quality.leaves": "0",
+   "quality.weather": "0",
+   "quality.rainSplashes": "0",
+   "quality.vignette": "0",
+   "quality.stars": "1",
+   "quality.enchantGlint": "1",
+   "quality.droppedItems": "1",
+   "quality.lightingStyle": "0",
+   "quality.aoStrength": "100",
+   "profiler.enabled": "true",
+   "profiler.history": "8192",
+   "profiler.logInterval": "0",
+   "profiler.entityDetail": "false",
+   "profiler.entityStages": "false",
+   "profiler.shadowTiming": "false",
+   "profiler.frustumTiming": "false",
+   "profiler.chunkDetail": "false",
+   "profiler.particleDetail": "false",
+   "profiler.particleLightRepeats": "false",
+   "profiler.hud": "false",
+   "render.fastChunkVisibility": "true",
+   "render.fastChunkVisibility.verify": "false",
+   "render.fastChunkFrustum": "false",
+   "render.fastChunkFrustum.verify": "false",
+   "render.fastCameraSectionFaces": "false",
+   "render.fastCameraSectionFaces.verify": "false",
+   "render.fastEntityChunkLookup": "true",
+   "render.fastEntityChunkLookup.verify": "false",
+   "render.throttleGlErrorChecks": "true",
+   "render.throttleGlErrorChecks.verify": "false",
+   "render.avoidMatrixReads": "true",
+   "render.avoidMatrixReads.verify": "false",
+   "render.skipZeroTranslates": "false",
+   "render.skipZeroTranslates.verify": "false",
+   "render.cacheClouds": "true",
+   "render.cacheClouds.verify": "false",
+   "render.fastEntityShadows": "true",
+   "render.fastEntityShadows.verify": "false",
+   "render.fastParticleLight": "true",
+   "render.fastParticleLight.verify": "false",
+   "render.fastParticleRemoval": "true",
+   "render.fastParticleRemoval.verify": "false",
+   "render.fastParticleVertices": "true",
+   "render.fastParticleVertices.verify": "false",
+   "render.fastParticleLightEntry": "false",
+   "render.fastParticleLightEntry.verify": "false",
+   "render.reuseParticleLight": "false",
+   "render.reuseParticleLight.verify": "false",
+   "render.fastParticleMovement": "false",
+   "render.fastParticleMovement.verify": "false",
+   "render.scalarParticleEntityQuery": "false",
+   "render.scalarParticleEntityQuery.verify": "false",
+   "render.reuseShadowPositions": "false",
+   "render.reuseShadowPositions.verify": "false",
+   "render.reuseParticleBoxes": "false",
+   "render.reuseParticleBoxes.verify": "false",
+   "render.batchModelLists": "false",
+   "render.batchModelLists.verify": "false",
+   "options.entityShadows": "true",
+   "options.useVbo": "false",
+   "vboActive": "false"
+  },
+  "repeat-05": {
+   "quality.leaves": "0",
+   "quality.weather": "0",
+   "quality.rainSplashes": "0",
+   "quality.vignette": "0",
+   "quality.stars": "1",
+   "quality.enchantGlint": "1",
+   "quality.droppedItems": "1",
+   "quality.lightingStyle": "0",
+   "quality.aoStrength": "100",
+   "profiler.enabled": "true",
+   "profiler.history": "8192",
+   "profiler.logInterval": "0",
+   "profiler.entityDetail": "false",
+   "profiler.entityStages": "false",
+   "profiler.shadowTiming": "false",
+   "profiler.frustumTiming": "false",
+   "profiler.chunkDetail": "false",
+   "profiler.particleDetail": "false",
+   "profiler.particleLightRepeats": "false",
+   "profiler.hud": "false",
+   "render.fastChunkVisibility": "true",
+   "render.fastChunkVisibility.verify": "false",
+   "render.fastChunkFrustum": "false",
+   "render.fastChunkFrustum.verify": "false",
+   "render.fastCameraSectionFaces": "false",
+   "render.fastCameraSectionFaces.verify": "false",
+   "render.fastEntityChunkLookup": "true",
+   "render.fastEntityChunkLookup.verify": "false",
+   "render.throttleGlErrorChecks": "true",
+   "render.throttleGlErrorChecks.verify": "false",
+   "render.avoidMatrixReads": "true",
+   "render.avoidMatrixReads.verify": "false",
+   "render.skipZeroTranslates": "false",
+   "render.skipZeroTranslates.verify": "false",
+   "render.cacheClouds": "true",
+   "render.cacheClouds.verify": "false",
+   "render.fastEntityShadows": "true",
+   "render.fastEntityShadows.verify": "false",
+   "render.fastParticleLight": "true",
+   "render.fastParticleLight.verify": "false",
+   "render.fastParticleRemoval": "true",
+   "render.fastParticleRemoval.verify": "false",
+   "render.fastParticleVertices": "true",
+   "render.fastParticleVertices.verify": "false",
+   "render.fastParticleLightEntry": "false",
+   "render.fastParticleLightEntry.verify": "false",
+   "render.reuseParticleLight": "false",
+   "render.reuseParticleLight.verify": "false",
+   "render.fastParticleMovement": "false",
+   "render.fastParticleMovement.verify": "false",
+   "render.scalarParticleEntityQuery": "false",
+   "render.scalarParticleEntityQuery.verify": "false",
+   "render.reuseShadowPositions": "false",
+   "render.reuseShadowPositions.verify": "false",
+   "render.reuseParticleBoxes": "false",
+   "render.reuseParticleBoxes.verify": "false",
+   "render.batchModelLists": "false",
+   "render.batchModelLists.verify": "false",
+   "options.entityShadows": "true",
+   "options.useVbo": "false",
+   "vboActive": "false"
+  },
+  "repeat-06": {
+   "quality.leaves": "0",
+   "quality.weather": "0",
+   "quality.rainSplashes": "0",
+   "quality.vignette": "0",
+   "quality.stars": "1",
+   "quality.enchantGlint": "1",
+   "quality.droppedItems": "1",
+   "quality.lightingStyle": "0",
+   "quality.aoStrength": "100",
+   "profiler.enabled": "true",
+   "profiler.history": "8192",
+   "profiler.logInterval": "0",
+   "profiler.entityDetail": "false",
+   "profiler.entityStages": "false",
+   "profiler.shadowTiming": "false",
+   "profiler.frustumTiming": "false",
+   "profiler.chunkDetail": "false",
+   "profiler.particleDetail": "false",
+   "profiler.particleLightRepeats": "false",
+   "profiler.hud": "false",
+   "render.fastChunkVisibility": "true",
+   "render.fastChunkVisibility.verify": "false",
+   "render.fastChunkFrustum": "false",
+   "render.fastChunkFrustum.verify": "false",
+   "render.fastCameraSectionFaces": "false",
+   "render.fastCameraSectionFaces.verify": "false",
+   "render.fastEntityChunkLookup": "true",
+   "render.fastEntityChunkLookup.verify": "false",
+   "render.throttleGlErrorChecks": "true",
+   "render.throttleGlErrorChecks.verify": "false",
+   "render.avoidMatrixReads": "true",
+   "render.avoidMatrixReads.verify": "false",
+   "render.skipZeroTranslates": "false",
+   "render.skipZeroTranslates.verify": "false",
+   "render.cacheClouds": "true",
+   "render.cacheClouds.verify": "false",
+   "render.fastEntityShadows": "true",
+   "render.fastEntityShadows.verify": "false",
+   "render.fastParticleLight": "true",
+   "render.fastParticleLight.verify": "false",
+   "render.fastParticleRemoval": "true",
+   "render.fastParticleRemoval.verify": "false",
+   "render.fastParticleVertices": "true",
+   "render.fastParticleVertices.verify": "false",
+   "render.fastParticleLightEntry": "false",
+   "render.fastParticleLightEntry.verify": "false",
+   "render.reuseParticleLight": "false",
+   "render.reuseParticleLight.verify": "false",
+   "render.fastParticleMovement": "false",
+   "render.fastParticleMovement.verify": "false",
+   "render.scalarParticleEntityQuery": "false",
+   "render.scalarParticleEntityQuery.verify": "false",
+   "render.reuseShadowPositions": "false",
+   "render.reuseShadowPositions.verify": "false",
+   "render.reuseParticleBoxes": "false",
+   "render.reuseParticleBoxes.verify": "false",
+   "render.batchModelLists": "false",
+   "render.batchModelLists.verify": "false",
+   "options.entityShadows": "true",
+   "options.useVbo": "false",
+   "vboActive": "false"
+  },
+  "repeat-07": {
+   "quality.leaves": "0",
+   "quality.weather": "0",
+   "quality.rainSplashes": "0",
+   "quality.vignette": "0",
+   "quality.stars": "1",
+   "quality.enchantGlint": "1",
+   "quality.droppedItems": "1",
+   "quality.lightingStyle": "0",
+   "quality.aoStrength": "100",
+   "profiler.enabled": "true",
+   "profiler.history": "8192",
+   "profiler.logInterval": "0",
+   "profiler.entityDetail": "false",
+   "profiler.entityStages": "false",
+   "profiler.shadowTiming": "false",
+   "profiler.frustumTiming": "false",
+   "profiler.chunkDetail": "false",
+   "profiler.particleDetail": "false",
+   "profiler.particleLightRepeats": "false",
+   "profiler.hud": "false",
+   "render.fastChunkVisibility": "true",
+   "render.fastChunkVisibility.verify": "false",
+   "render.fastChunkFrustum": "false",
+   "render.fastChunkFrustum.verify": "false",
+   "render.fastCameraSectionFaces": "false",
+   "render.fastCameraSectionFaces.verify": "false",
+   "render.fastEntityChunkLookup": "true",
+   "render.fastEntityChunkLookup.verify": "false",
+   "render.throttleGlErrorChecks": "true",
+   "render.throttleGlErrorChecks.verify": "false",
+   "render.avoidMatrixReads": "true",
+   "render.avoidMatrixReads.verify": "false",
+   "render.skipZeroTranslates": "false",
+   "render.skipZeroTranslates.verify": "false",
+   "render.cacheClouds": "true",
+   "render.cacheClouds.verify": "false",
+   "render.fastEntityShadows": "true",
+   "render.fastEntityShadows.verify": "false",
+   "render.fastParticleLight": "true",
+   "render.fastParticleLight.verify": "false",
+   "render.fastParticleRemoval": "true",
+   "render.fastParticleRemoval.verify": "false",
+   "render.fastParticleVertices": "true",
+   "render.fastParticleVertices.verify": "false",
+   "render.fastParticleLightEntry": "false",
+   "render.fastParticleLightEntry.verify": "false",
+   "render.reuseParticleLight": "false",
+   "render.reuseParticleLight.verify": "false",
+   "render.fastParticleMovement": "false",
+   "render.fastParticleMovement.verify": "false",
+   "render.scalarParticleEntityQuery": "false",
+   "render.scalarParticleEntityQuery.verify": "false",
+   "render.reuseShadowPositions": "false",
+   "render.reuseShadowPositions.verify": "false",
+   "render.reuseParticleBoxes": "false",
+   "render.reuseParticleBoxes.verify": "false",
+   "render.batchModelLists": "false",
+   "render.batchModelLists.verify": "false",
+   "options.entityShadows": "true",
+   "options.useVbo": "false",
+   "vboActive": "false"
+  },
+  "repeat-08": {
+   "quality.leaves": "0",
+   "quality.weather": "0",
+   "quality.rainSplashes": "0",
+   "quality.vignette": "0",
+   "quality.stars": "1",
+   "quality.enchantGlint": "1",
+   "quality.droppedItems": "1",
+   "quality.lightingStyle": "0",
+   "quality.aoStrength": "100",
+   "profiler.enabled": "true",
+   "profiler.history": "8192",
+   "profiler.logInterval": "0",
+   "profiler.entityDetail": "false",
+   "profiler.entityStages": "false",
+   "profiler.shadowTiming": "false",
+   "profiler.frustumTiming": "false",
+   "profiler.chunkDetail": "false",
+   "profiler.particleDetail": "false",
+   "profiler.particleLightRepeats": "false",
+   "profiler.hud": "false",
+   "render.fastChunkVisibility": "true",
+   "render.fastChunkVisibility.verify": "false",
+   "render.fastChunkFrustum": "false",
+   "render.fastChunkFrustum.verify": "false",
+   "render.fastCameraSectionFaces": "false",
+   "render.fastCameraSectionFaces.verify": "false",
+   "render.fastEntityChunkLookup": "true",
+   "render.fastEntityChunkLookup.verify": "false",
+   "render.throttleGlErrorChecks": "true",
+   "render.throttleGlErrorChecks.verify": "false",
+   "render.avoidMatrixReads": "true",
+   "render.avoidMatrixReads.verify": "false",
+   "render.skipZeroTranslates": "false",
+   "render.skipZeroTranslates.verify": "false",
+   "render.cacheClouds": "true",
+   "render.cacheClouds.verify": "false",
+   "render.fastEntityShadows": "true",
+   "render.fastEntityShadows.verify": "false",
+   "render.fastParticleLight": "true",
+   "render.fastParticleLight.verify": "false",
+   "render.fastParticleRemoval": "true",
+   "render.fastParticleRemoval.verify": "false",
+   "render.fastParticleVertices": "true",
+   "render.fastParticleVertices.verify": "false",
+   "render.fastParticleLightEntry": "false",
+   "render.fastParticleLightEntry.verify": "false",
+   "render.reuseParticleLight": "false",
+   "render.reuseParticleLight.verify": "false",
+   "render.fastParticleMovement": "false",
+   "render.fastParticleMovement.verify": "false",
+   "render.scalarParticleEntityQuery": "false",
+   "render.scalarParticleEntityQuery.verify": "false",
+   "render.reuseShadowPositions": "false",
+   "render.reuseShadowPositions.verify": "false",
+   "render.reuseParticleBoxes": "false",
+   "render.reuseParticleBoxes.verify": "false",
+   "render.batchModelLists": "false",
+   "render.batchModelLists.verify": "false",
+   "options.entityShadows": "true",
+   "options.useVbo": "false",
+   "vboActive": "false"
+  },
+  "reference-post": {
+   "quality.leaves": "0",
+   "quality.weather": "0",
+   "quality.rainSplashes": "0",
+   "quality.vignette": "0",
+   "quality.stars": "1",
+   "quality.enchantGlint": "1",
+   "quality.droppedItems": "1",
+   "quality.lightingStyle": "0",
+   "quality.aoStrength": "100",
+   "profiler.enabled": "true",
+   "profiler.history": "8192",
+   "profiler.logInterval": "0",
+   "profiler.entityDetail": "false",
+   "profiler.entityStages": "false",
+   "profiler.shadowTiming": "false",
+   "profiler.frustumTiming": "false",
+   "profiler.chunkDetail": "false",
+   "profiler.particleDetail": "false",
+   "profiler.particleLightRepeats": "false",
+   "profiler.hud": "false",
+   "render.fastChunkVisibility": "true",
+   "render.fastChunkVisibility.verify": "false",
+   "render.fastChunkFrustum": "false",
+   "render.fastChunkFrustum.verify": "false",
+   "render.fastCameraSectionFaces": "false",
+   "render.fastCameraSectionFaces.verify": "false",
+   "render.fastEntityChunkLookup": "true",
+   "render.fastEntityChunkLookup.verify": "false",
+   "render.throttleGlErrorChecks": "true",
+   "render.throttleGlErrorChecks.verify": "false",
+   "render.avoidMatrixReads": "true",
+   "render.avoidMatrixReads.verify": "false",
+   "render.skipZeroTranslates": "false",
+   "render.skipZeroTranslates.verify": "false",
+   "render.cacheClouds": "true",
+   "render.cacheClouds.verify": "false",
+   "render.fastEntityShadows": "true",
+   "render.fastEntityShadows.verify": "false",
+   "render.fastParticleLight": "true",
+   "render.fastParticleLight.verify": "false",
+   "render.fastParticleRemoval": "true",
+   "render.fastParticleRemoval.verify": "false",
+   "render.fastParticleVertices": "true",
+   "render.fastParticleVertices.verify": "false",
+   "render.fastParticleLightEntry": "false",
+   "render.fastParticleLightEntry.verify": "false",
+   "render.reuseParticleLight": "false",
+   "render.reuseParticleLight.verify": "false",
+   "render.fastParticleMovement": "false",
+   "render.fastParticleMovement.verify": "false",
+   "render.scalarParticleEntityQuery": "false",
+   "render.scalarParticleEntityQuery.verify": "false",
+   "render.reuseShadowPositions": "false",
+   "render.reuseShadowPositions.verify": "false",
+   "render.reuseParticleBoxes": "false",
+   "render.reuseParticleBoxes.verify": "false",
+   "render.batchModelLists": "false",
+   "render.batchModelLists.verify": "false",
+   "options.entityShadows": "true",
+   "options.useVbo": "false",
+   "vboActive": "false"
+  }
+ },
+ "config_sha": "7ef399971e4df2ff988ce8a39a186b1469f6fb08546c70157d2334b9c36a14d9",
+ "props_identity": "d35907c86f9292a22c1a846f65389f9fa794f7acf70066c48df67c89199d8d1f",
+ "launcher": {
+  "pid": 21708,
+  "exe": "C:\\Program Files\\Eclipse Adoptium\\jdk-25.0.4.101-hotspot\\bin\\java.exe",
+  "cmdline": "\"C:\\Program Files\\Eclipse Adoptium\\jdk-25.0.4.101-hotspot\\bin\\java.exe\" -Dalacer.benchmark=true -Dalacer.benchmark.backendScenario=false -Dalacer.benchmark.chests=0 -Dalacer.benchmark.cloudSweep=false -Dalacer.benchmark.entities=0 -Dalacer.benchmark.exit=true -Dalacer.benchmark.freezeMobs=true -Dalacer.benchmark.label=aa31-smoke-d0-r3 -Dalacer.benchmark.mobPoseCheck=true -Dalacer.benchmark.movementCensusInactive=false -Dalacer.benchmark.particleBoxDiagnostic=false -Dalacer.benchmark.particleDiagnostic=false -Dalacer.benchmark.particleEntityQueryDiagnostic=false -Dalacer.benchmark.particleMovementDiagnostic=false -Dalacer.benchmark.particleRemovalDiagnostic=false -Dalacer.benchmark.particles=false -Dalacer.benchmark.phaseSeconds=static:60 -Dalacer.benchmark.processorSampling=true -Dalacer.benchmark.reference=20 -Dalacer.benchmark.referencePost=true -Dalacer.benchmark.repeatSegmentSeconds=8 -Dalacer.benchmark.repeatSegments=8 -Dalacer.benchmark.screenshotEndPose=false -Dalacer.benchmark.screenshots=false -Dalacer.benchmark.shadowDiagnostic=false -Dalacer.benchmark.timeScale=2 -Dalacer.benchmark.timeout=1500 -Dalacer.benchmark.toggleReverse=false -Dalacer.benchmark.vbo=false -Dalacer.benchmark.viewDistance=12 -Dalacer.profiler.chunkDetail=false -Dalacer.profiler.enabled=true -Dalacer.profiler.entityDetail=false -Dalacer.profiler.entityStages=false -Dalacer.profiler.frustumTiming=false -Dalacer.profiler.hud=false -Dalacer.profiler.particleDetail=false -Dalacer.profiler.particleDrawDiagnostics=false -Dalacer.profiler.particleLightRepeats=false -Dalacer.profiler.particleMovementCensus=false -Dalacer.profiler.particleMovementRegions=false -Dalacer.profiler.particleThreadCycles=false -Dalacer.profiler.shadowTiming=false -Dalacer.render.avoidMatrixReads=true -Dalacer.render.avoidMatrixReads.verify=false -Dalacer.render.batchModelLists=false -Dalacer.render.batchModelLists.verify=false -Dalacer.render.cacheClouds=true -Dalacer.render.cacheClouds.verify=false -Dalacer.render.fastCameraSectionFaces=false -Dalacer.render.fastCameraSectionFaces.verify=false -Dalacer.render.fastChunkFrustum=false -Dalacer.render.fastChunkFrustum.verify=false -Dalacer.render.fastChunkVisibility=true -Dalacer.render.fastChunkVisibility.verify=false -Dalacer.render.fastEntityChunkLookup=true -Dalacer.render.fastEntityChunkLookup.verify=false -Dalacer.render.fastEntityShadows=true -Dalacer.render.fastEntityShadows.verify=false -Dalacer.render.fastParticleLight=true -Dalacer.render.fastParticleLight.verify=false -Dalacer.render.fastParticleLightEntry=false -Dalacer.render.fastParticleLightEntry.verify=false -Dalacer.render.fastParticleMovement=false -Dalacer.render.fastParticleMovement.verify=false -Dalacer.render.fastParticleRemoval=true -Dalacer.render.fastParticleRemoval.verify=false -Dalacer.render.fastParticleVertices=true -Dalacer.render.fastParticleVertices.verify=false -Dalacer.render.reuseParticleBoxes=false -Dalacer.render.reuseParticleBoxes.verify=false -Dalacer.render.reuseParticleLight=false -Dalacer.render.reuseParticleLight.verify=false -Dalacer.render.reuseShadowPositions=false -Dalacer.render.reuseShadowPositions.verify=false -Dalacer.render.scalarParticleEntityQuery=false -Dalacer.render.scalarParticleEntityQuery.verify=false -Dalacer.render.skipZeroTranslates=false -Dalacer.render.skipZeroTranslates.verify=false -Dalacer.render.throttleGlErrorChecks=true -Dalacer.render.throttleGlErrorChecks.verify=false -Dfabric.dli.config=C:\\Users\\CodyJ\\.codex\\worktrees\\alacer-session31-aa\\alacer\\.gradle\\loom-cache\\launch.cfg -Dfabric.dli.env=client -Dfabric.dli.main=net.fabricmc.loader.impl.launch.knot.KnotClient -Dfabric.gameVersion=1.8.9 --enable-native-access=ALL-UNNAMED @C:\\Users\\CodyJ\\.codex\\worktrees\\alacer-session31-aa\\alacer\\build\\loom-cache\\argFiles\\runClient -XX:StackShadowPages=32 -Xmx2G -Dfile.encoding=UTF-8 -Duser.country=US -Duser.language=en -Duser.variant net.fabricmc.devlaunchinjector.Main --width 1920 --height 1080",
+  "affinity_applied_after_s": 29.34546330000012
+ },
+ "expected_affinity": [
+  0,
+  1,
+  2,
+  3,
+  4,
+  5,
+  6,
+  7,
+  8,
+  9,
+  10,
+  11,
+  12,
+  13,
+  14,
+  15
+ ],
+ "phases_expected": {
+  "reference-pre": 20.0,
+  "static": 60.0,
+  "pan": 30.0,
+  "fly": 40.0,
+  "repeat-01": 8.0,
+  "repeat-02": 8.0,
+  "repeat-03": 8.0,
+  "repeat-04": 8.0,
+  "repeat-05": 8.0,
+  "repeat-06": 8.0,
+  "repeat-07": 8.0,
+  "repeat-08": 8.0,
+  "reference-post": 20.0
+ },
+ "metrics": {
+  "reference-pre": {
+   "frames": 32854,
+   "tick_free_frames": 32454,
+   "tick_frame_share": 0.012175077616119802,
+   "frame_mean_ms": 0.6087604157789006,
+   "p95_ms": 0.7922,
+   "p99_ms": 1.0751,
+   "slow1_mean_ms": 1.3484996951219512,
+   "tick_mean_ms": 1.096017,
+   "tick_p90_ms": 1.3024,
+   "tick_p99_ms": 1.7038,
+   "alloc_per_tick_free_frame": 2961.9005361434647,
+   "alloc_per_frame": 3540.397151031838,
+   "terrain_setup_ms": 0.0094133682352225,
+   "visible_chunks": 1374.0,
+   "client_cpu_ms_per_frame": 0.5945,
+   "process_cpu_ms_per_frame": 0.6658007773787057,
+   "wall_start": 1792714899.7148356,
+   "wall_end": 1792714919.7150505
+  },
+  "static": {
+   "frames": 98837,
+   "tick_free_frames": 97637,
+   "tick_frame_share": 0.012141202181369326,
+   "frame_mean_ms": 0.6070635349110152,
+   "p95_ms": 0.7825,
+   "p99_ms": 1.0481,
+   "slow1_mean_ms": 1.327059008097166,
+   "tick_mean_ms": 1.04414925,
+   "tick_p90_ms": 1.1976,
+   "tick_p99_ms": 1.657,
+   "alloc_per_tick_free_frame": 2962.1816319632926,
+   "alloc_per_frame": 3540.44448941186,
+   "terrain_setup_ms": 0.00946456084259943,
+   "visible_chunks": 1374.0007588251362,
+   "client_cpu_ms_per_frame": 0.5879,
+   "process_cpu_ms_per_frame": 0.6538677127998624,
+   "wall_start": 1792714922.7507584,
+   "wall_end": 1792714982.7510972
+  },
+  "pan": {
+   "frames": 31042,
+   "tick_free_frames": 30442,
+   "tick_frame_share": 0.019328651504413374,
+   "frame_mean_ms": 0.9664373977192192,
+   "p95_ms": 1.4283,
+   "p99_ms": 2.0331,
+   "slow1_mean_ms": 2.588509032258065,
+   "tick_mean_ms": 1.4691851666666667,
+   "tick_p90_ms": 1.8047,
+   "tick_p99_ms": 2.7917,
+   "alloc_per_tick_free_frame": 3822.29656395769,
+   "alloc_per_frame": 5285.614586689002,
+   "terrain_setup_ms": 0.15623647316538883,
+   "visible_chunks": 1482.760840152052,
+   "client_cpu_ms_per_frame": 0.9428,
+   "process_cpu_ms_per_frame": 1.0977780806649053,
+   "wall_start": 1792714985.7657206,
+   "wall_end": 1792715015.7658703
+  },
+  "fly": {
+   "frames": 32020,
+   "tick_free_frames": 31220,
+   "tick_frame_share": 0.024984384759525295,
+   "frame_mean_ms": 1.2492740630855714,
+   "p95_ms": 2.6219,
+   "p99_ms": 3.6942,
+   "slow1_mean_ms": 4.855532500000001,
+   "tick_mean_ms": 1.899318125,
+   "tick_p90_ms": 2.756,
+   "tick_p99_ms": 4.9433,
+   "alloc_per_tick_free_frame": 19042.202434336963,
+   "alloc_per_frame": 20883.182261086822,
+   "terrain_setup_ms": 0.1852022329793879,
+   "visible_chunks": 1255.6242973141786,
+   "client_cpu_ms_per_frame": 1.2102,
+   "process_cpu_ms_per_frame": 2.296418137414116,
+   "wall_start": 1792715018.786533,
+   "wall_end": 1792715058.7882886
+  },
+  "repeat-01": {
+   "frames": 13145,
+   "tick_free_frames": 12985,
+   "tick_frame_share": 0.012171928489920122,
+   "frame_mean_ms": 0.608615252947889,
+   "p95_ms": 0.8002,
+   "p99_ms": 1.0423,
+   "slow1_mean_ms": 1.2576656488549618,
+   "tick_mean_ms": 1.03260875,
+   "tick_p90_ms": 1.2057,
+   "tick_p99_ms": 1.5746,
+   "alloc_per_tick_free_frame": 3122.0053908355794,
+   "alloc_per_frame": 3705.5726131608976,
+   "terrain_setup_ms": 0.010489646253328261,
+   "visible_chunks": 1374.0,
+   "client_cpu_ms_per_frame": 0.592,
+   "process_cpu_ms_per_frame": 0.7060503628756181,
+   "wall_start": 1792715063.663996,
+   "wall_end": 1792715071.6642437
+  },
+  "repeat-02": {
+   "frames": 13246,
+   "tick_free_frames": 13086,
+   "tick_frame_share": 0.012079118224369622,
+   "frame_mean_ms": 0.603972353918164,
+   "p95_ms": 0.7781,
+   "p99_ms": 0.9779,
+   "slow1_mean_ms": 1.267494696969697,
+   "tick_mean_ms": 1.01314375,
+   "tick_p90_ms": 1.2009,
+   "tick_p99_ms": 1.4833,
+   "alloc_per_tick_free_frame": 3121.9874675225433,
+   "alloc_per_frame": 3725.422920126831,
+   "terrain_setup_ms": 0.010281760531481202,
+   "visible_chunks": 1374.0,
+   "client_cpu_ms_per_frame": 0.5827,
+   "process_cpu_ms_per_frame": 0.6440746851879812,
+   "wall_start": 1792715074.6699188,
+   "wall_end": 1792715082.6701365
+  },
+  "repeat-03": {
+   "frames": 12763,
+   "tick_free_frames": 12603,
+   "tick_frame_share": 0.012536237561701795,
+   "frame_mean_ms": 0.6268419572200893,
+   "p95_ms": 0.8272,
+   "p99_ms": 1.0945,
+   "slow1_mean_ms": 1.3290299212598424,
+   "tick_mean_ms": 1.0117,
+   "tick_p90_ms": 1.1627,
+   "tick_p99_ms": 1.6018,
+   "alloc_per_tick_free_frame": 3122.0636356423074,
+   "alloc_per_frame": 3720.080231920395,
+   "terrain_setup_ms": 0.010554493457651023,
+   "visible_chunks": 1374.0,
+   "client_cpu_ms_per_frame": 0.5925,
+   "process_cpu_ms_per_frame": 0.6366219728903864,
+   "wall_start": 1792715086.162829,
+   "wall_end": 1792715094.1632128
+  },
+  "repeat-04": {
+   "frames": 12703,
+   "tick_free_frames": 12543,
+   "tick_frame_share": 0.012595449893725892,
+   "frame_mean_ms": 0.6298016846414233,
+   "p95_ms": 0.832,
+   "p99_ms": 1.0655,
+   "slow1_mean_ms": 1.2938818897637796,
+   "tick_mean_ms": 1.03415125,
+   "tick_p90_ms": 1.2084,
+   "tick_p99_ms": 1.7941,
+   "alloc_per_tick_free_frame": 3122.117515745834,
+   "alloc_per_frame": 3732.0695898606627,
+   "terrain_setup_ms": 0.010912957569078171,
+   "visible_chunks": 1374.0,
+   "client_cpu_ms_per_frame": 0.6015,
+   "process_cpu_ms_per_frame": 0.6605384176966071,
+   "wall_start": 1792715099.0124872,
+   "wall_end": 1792715107.012858
+  },
+  "repeat-05": {
+   "frames": 12371,
+   "tick_free_frames": 12211,
+   "tick_frame_share": 0.01293347344596233,
+   "frame_mean_ms": 0.6466975992239916,
+   "p95_ms": 0.867,
+   "p99_ms": 1.1599,
+   "slow1_mean_ms": 1.600341463414634,
+   "tick_mean_ms": 1.0862981250000001,
+   "tick_p90_ms": 1.3102,
+   "tick_p99_ms": 1.7528,
+   "alloc_per_tick_free_frame": 3122.129882892474,
+   "alloc_per_frame": 3755.6821598900656,
+   "terrain_setup_ms": 0.011309789022714413,
+   "visible_chunks": 1374.0,
+   "client_cpu_ms_per_frame": 0.6126,
+   "process_cpu_ms_per_frame": 0.6820076291326489,
+   "wall_start": 1792715110.0174782,
+   "wall_end": 1792715118.0177743
+  },
+  "repeat-06": {
+   "frames": 13028,
+   "tick_free_frames": 12868,
+   "tick_frame_share": 0.012281240405280933,
+   "frame_mean_ms": 0.6140674393613755,
+   "p95_ms": 0.7855,
+   "p99_ms": 1.0554,
+   "slow1_mean_ms": 1.3152823076923075,
+   "tick_mean_ms": 1.03225125,
+   "tick_p90_ms": 1.1728,
+   "tick_p99_ms": 1.5379,
+   "alloc_per_tick_free_frame": 3122.0658999067455,
+   "alloc_per_frame": 3708.7159963156278,
+   "terrain_setup_ms": 0.010861106846791526,
+   "visible_chunks": 1374.0,
+   "client_cpu_ms_per_frame": 0.5985,
+   "process_cpu_ms_per_frame": 0.659633667485416,
+   "wall_start": 1792715122.2114522,
+   "wall_end": 1792715130.2115228
+  },
+  "repeat-07": {
+   "frames": 13481,
+   "tick_free_frames": 13321,
+   "tick_frame_share": 0.011868555745122765,
+   "frame_mean_ms": 0.5934745642014687,
+   "p95_ms": 0.7519,
+   "p99_ms": 0.9539,
+   "slow1_mean_ms": 1.2433029850746269,
+   "tick_mean_ms": 0.9631025,
+   "tick_p90_ms": 1.0531,
+   "tick_p99_ms": 1.5139,
+   "alloc_per_tick_free_frame": 3121.9926431949552,
+   "alloc_per_frame": 3695.659372450115,
+   "terrain_setup_ms": 0.010334923225280023,
+   "visible_chunks": 1374.0,
+   "client_cpu_ms_per_frame": 0.576,
+   "process_cpu_ms_per_frame": 0.6502082456791038,
+   "wall_start": 1792715133.217428,
+   "wall_end": 1792715141.2180586
+  },
+  "repeat-08": {
+   "frames": 13180,
+   "tick_free_frames": 13020,
+   "tick_frame_share": 0.012139605462822459,
+   "frame_mean_ms": 0.6070220257966616,
+   "p95_ms": 0.7743,
+   "p99_ms": 0.9795,
+   "slow1_mean_ms": 1.1663595419847328,
+   "tick_mean_ms": 0.99071625,
+   "tick_p90_ms": 1.1968,
+   "tick_p99_ms": 1.4031,
+   "alloc_per_tick_free_frame": 3122.066973886329,
+   "alloc_per_frame": 3716.119575113809,
+   "terrain_setup_ms": 0.010656646433990896,
+   "visible_chunks": 1374.0,
+   "client_cpu_ms_per_frame": 0.5963,
+   "process_cpu_ms_per_frame": 0.646118257966616,
+   "wall_start": 1792715144.2231095,
+   "wall_end": 1792715152.2236598
+  },
+  "reference-post": {
+   "frames": 31737,
+   "tick_free_frames": 31337,
+   "tick_frame_share": 0.012603585720137379,
+   "frame_mean_ms": 0.6301807039102624,
+   "p95_ms": 0.8329,
+   "p99_ms": 1.0886,
+   "slow1_mean_ms": 1.367864353312303,
+   "tick_mean_ms": 1.04464475,
+   "tick_p90_ms": 1.2439,
+   "tick_p99_ms": 1.8712,
+   "alloc_per_tick_free_frame": 3122.1153269298275,
+   "alloc_per_frame": 3746.8128682610204,
+   "terrain_setup_ms": 0.010939027003182406,
+   "visible_chunks": 1374.0,
+   "client_cpu_ms_per_frame": 0.5933,
+   "process_cpu_ms_per_frame": 0.6395059394397706,
+   "wall_start": 1792715155.2353487,
+   "wall_end": 1792715175.2353938
+  }
+ },
+ "processors": {
+  "reference-pre": {
+   "status": "ok",
+   "frames": 32854,
+   "unknown_frames": 0,
+   "processors": {
+    "0": 1270,
+    "2": 1656,
+    "3": 5,
+    "4": 643,
+    "5": 3,
+    "6": 257,
+    "8": 8285,
+    "9": 1998,
+    "10": 15390,
+    "11": 1866,
+    "12": 117,
+    "13": 6,
+    "14": 25,
+    "15": 1333
+   },
+   "p_core_frames": 32854,
+   "e_core_frames": 0,
+   "e_core_share": 0.0
+  },
+  "static": {
+   "status": "ok",
+   "frames": 98837,
+   "unknown_frames": 0,
+   "processors": {
+    "0": 1378,
+    "1": 1850,
+    "2": 4812,
+    "3": 10,
+    "4": 3453,
+    "5": 11,
+    "6": 1755,
+    "7": 76,
+    "8": 16878,
+    "9": 16877,
+    "10": 48579,
+    "11": 1564,
+    "12": 1208,
+    "13": 8,
+    "14": 368,
+    "15": 10
+   },
+   "p_core_frames": 98837,
+   "e_core_frames": 0,
+   "e_core_share": 0.0
+  },
+  "pan": {
+   "status": "ok",
+   "frames": 31042,
+   "unknown_frames": 0,
+   "processors": {
+    "0": 33,
+    "1": 4,
+    "2": 470,
+    "3": 952,
+    "4": 1539,
+    "5": 2,
+    "6": 1035,
+    "7": 2,
+    "8": 9881,
+    "9": 1717,
+    "10": 7456,
+    "11": 6881,
+    "12": 807,
+    "13": 18,
+    "14": 243,
+    "15": 2
+   },
+   "p_core_frames": 31042,
+   "e_core_frames": 0,
+   "e_core_share": 0.0
+  },
+  "fly": {
+   "status": "ok",
+   "frames": 32020,
+   "unknown_frames": 0,
+   "processors": {
+    "0": 390,
+    "1": 21,
+    "2": 282,
+    "3": 348,
+    "4": 1050,
+    "5": 11,
+    "6": 1302,
+    "7": 6,
+    "8": 6769,
+    "9": 4073,
+    "10": 9391,
+    "11": 4916,
+    "12": 2010,
+    "13": 91,
+    "14": 1343,
+    "15": 17
+   },
+   "p_core_frames": 32020,
+   "e_core_frames": 0,
+   "e_core_share": 0.0
+  },
+  "repeat-01": {
+   "status": "ok",
+   "frames": 13145,
+   "unknown_frames": 0,
+   "processors": {
+    "0": 33,
+    "2": 19,
+    "5": 339,
+    "6": 353,
+    "7": 4,
+    "9": 3817,
+    "10": 7181,
+    "11": 5,
+    "12": 1102,
+    "13": 2,
+    "14": 290
+   },
+   "p_core_frames": 13145,
+   "e_core_frames": 0,
+   "e_core_share": 0.0
+  },
+  "repeat-02": {
+   "status": "ok",
+   "frames": 13246,
+   "unknown_frames": 0,
+   "processors": {
+    "0": 26,
+    "1": 1,
+    "2": 31,
+    "4": 3,
+    "5": 352,
+    "6": 335,
+    "8": 178,
+    "9": 4165,
+    "10": 6810,
+    "12": 1191,
+    "14": 152,
+    "15": 2
+   },
+   "p_core_frames": 13246,
+   "e_core_frames": 0,
+   "e_core_share": 0.0
+  },
+  "repeat-03": {
+   "status": "ok",
+   "frames": 12763,
+   "unknown_frames": 0,
+   "processors": {
+    "0": 60,
+    "2": 3,
+    "4": 3,
+    "5": 90,
+    "6": 333,
+    "8": 3037,
+    "9": 1620,
+    "10": 5720,
+    "12": 1298,
+    "13": 3,
+    "14": 593,
+    "15": 3
+   },
+   "p_core_frames": 12763,
+   "e_core_frames": 0,
+   "e_core_share": 0.0
+  },
+  "repeat-04": {
+   "status": "ok",
+   "frames": 12703,
+   "unknown_frames": 0,
+   "processors": {
+    "0": 32,
+    "2": 49,
+    "4": 16,
+    "5": 3,
+    "6": 223,
+    "8": 3431,
+    "9": 886,
+    "10": 5272,
+    "11": 725,
+    "12": 1333,
+    "14": 733
+   },
+   "p_core_frames": 12703,
+   "e_core_frames": 0,
+   "e_core_share": 0.0
+  },
+  "repeat-05": {
+   "status": "ok",
+   "frames": 12371,
+   "unknown_frames": 0,
+   "processors": {
+    "0": 66,
+    "1": 2,
+    "2": 39,
+    "4": 14,
+    "5": 7,
+    "6": 269,
+    "7": 10,
+    "8": 3879,
+    "9": 703,
+    "10": 5666,
+    "11": 131,
+    "12": 1043,
+    "14": 542
+   },
+   "p_core_frames": 12371,
+   "e_core_frames": 0,
+   "e_core_share": 0.0
+  },
+  "repeat-06": {
+   "status": "ok",
+   "frames": 13028,
+   "unknown_frames": 0,
+   "processors": {
+    "0": 73,
+    "1": 2,
+    "2": 70,
+    "3": 3,
+    "4": 24,
+    "5": 7,
+    "6": 3,
+    "7": 266,
+    "8": 4935,
+    "9": 27,
+    "10": 4317,
+    "11": 1515,
+    "12": 995,
+    "13": 22,
+    "14": 760,
+    "15": 9
+   },
+   "p_core_frames": 13028,
+   "e_core_frames": 0,
+   "e_core_share": 0.0
+  },
+  "repeat-07": {
+   "status": "ok",
+   "frames": 13481,
+   "unknown_frames": 0,
+   "processors": {
+    "0": 84,
+    "2": 35,
+    "4": 25,
+    "7": 183,
+    "8": 3927,
+    "9": 188,
+    "10": 5307,
+    "11": 2078,
+    "12": 1067,
+    "14": 584,
+    "15": 3
+   },
+   "p_core_frames": 13481,
+   "e_core_frames": 0,
+   "e_core_share": 0.0
+  },
+  "repeat-08": {
+   "status": "ok",
+   "frames": 13180,
+   "unknown_frames": 0,
+   "processors": {
+    "0": 84,
+    "1": 3,
+    "2": 32,
+    "4": 13,
+    "5": 3,
+    "6": 12,
+    "7": 82,
+    "8": 3855,
+    "9": 561,
+    "10": 6578,
+    "11": 5,
+    "12": 1139,
+    "14": 813
+   },
+   "p_core_frames": 13180,
+   "e_core_frames": 0,
+   "e_core_share": 0.0
+  },
+  "reference-post": {
+   "status": "ok",
+   "frames": 31737,
+   "unknown_frames": 0,
+   "processors": {
+    "0": 467,
+    "2": 216,
+    "3": 1,
+    "4": 93,
+    "5": 15,
+    "6": 102,
+    "7": 2,
+    "8": 8940,
+    "9": 1261,
+    "10": 15426,
+    "11": 21,
+    "12": 2718,
+    "13": 13,
+    "14": 2459,
+    "15": 3
+   },
+   "p_core_frames": 31737,
+   "e_core_frames": 0,
+   "e_core_share": 0.0
+  }
+ },
+ "mob_pose": {
+  "reference-pre": {
+   "mobs_start": 8,
+   "mobs_end": 8,
+   "mobs_both": 8,
+   "max_move_blocks": 0.0,
+   "max_turn_degrees": 0.0
+  },
+  "static": {
+   "mobs_start": 8,
+   "mobs_end": 8,
+   "mobs_both": 8,
+   "max_move_blocks": 0.2577,
+   "max_turn_degrees": 2.8125
+  },
+  "pan": {
+   "mobs_start": 8,
+   "mobs_end": 8,
+   "mobs_both": 8,
+   "max_move_blocks": 0.0,
+   "max_turn_degrees": 0.0
+  },
+  "fly": {
+   "mobs_start": 8,
+   "mobs_end": 55,
+   "mobs_both": 0,
+   "max_move_blocks": 0.0,
+   "max_turn_degrees": 0.0
+  },
+  "repeat-01": {
+   "mobs_start": 8,
+   "mobs_end": 8,
+   "mobs_both": 8,
+   "max_move_blocks": 0.0,
+   "max_turn_degrees": 0.0
+  },
+  "repeat-02": {
+   "mobs_start": 8,
+   "mobs_end": 8,
+   "mobs_both": 8,
+   "max_move_blocks": 0.0,
+   "max_turn_degrees": 0.0
+  },
+  "repeat-03": {
+   "mobs_start": 8,
+   "mobs_end": 8,
+   "mobs_both": 8,
+   "max_move_blocks": 0.0,
+   "max_turn_degrees": 0.0
+  },
+  "repeat-04": {
+   "mobs_start": 8,
+   "mobs_end": 8,
+   "mobs_both": 8,
+   "max_move_blocks": 0.0,
+   "max_turn_degrees": 0.0
+  },
+  "repeat-05": {
+   "mobs_start": 8,
+   "mobs_end": 8,
+   "mobs_both": 8,
+   "max_move_blocks": 0.0,
+   "max_turn_degrees": 0.0
+  },
+  "repeat-06": {
+   "mobs_start": 8,
+   "mobs_end": 8,
+   "mobs_both": 8,
+   "max_move_blocks": 0.0,
+   "max_turn_degrees": 0.0
+  },
+  "repeat-07": {
+   "mobs_start": 8,
+   "mobs_end": 8,
+   "mobs_both": 8,
+   "max_move_blocks": 0.0,
+   "max_turn_degrees": 0.0
+  },
+  "repeat-08": {
+   "mobs_start": 8,
+   "mobs_end": 8,
+   "mobs_both": 8,
+   "max_move_blocks": 0.0,
+   "max_turn_degrees": 0.0
+  },
+  "reference-post": {
+   "mobs_start": 8,
+   "mobs_end": 8,
+   "mobs_both": 8,
+   "max_move_blocks": 0.0,
+   "max_turn_degrees": 0.0
+  }
+ },
+ "monitor": {
+  "phases": {
+   "reference-pre": {
+    "samples": 20,
+    "expected_samples": 20,
+    "coverage": 1.0,
+    "availability": {
+     "cpu": {
+      "samples": 20,
+      "ok": 20,
+      "counts": {
+       "ok": 20
+      },
+      "reasons": [],
+      "fraction_ok": 1.0
+     },
+     "frequency": {
+      "samples": 20,
+      "ok": 20,
+      "counts": {
+       "ok": 20
+      },
+      "reasons": [],
+      "fraction_ok": 1.0
+     },
+     "foreground": {
+      "samples": 20,
+      "ok": 20,
+      "counts": {
+       "ok": 20
+      },
+      "reasons": [],
+      "fraction_ok": 1.0
+     },
+     "power_plan": {
+      "samples": 20,
+      "ok": 20,
+      "counts": {
+       "ok": 20
+      },
+      "reasons": [],
+      "fraction_ok": 1.0
+     },
+     "memory": {
+      "samples": 20,
+      "ok": 20,
+      "counts": {
+       "ok": 20
+      },
+      "reasons": [],
+      "fraction_ok": 1.0
+     },
+     "client_affinity": {
+      "samples": 20,
+      "ok": 20,
+      "counts": {
+       "ok": 20
+      },
+      "reasons": [],
+      "fraction_ok": 1.0
+     },
+     "gpu": {
+      "samples": 19,
+      "ok": 19
+     }
+    },
+    "busy_pct_mean": 14.62058119031729,
+    "client_cores_mean": 1.0946887620526182,
+    "harness_cores_mean": 0.025759570444322522,
+    "background_cores_mean": 0.3907024393498461,
+    "background_cores_max": 1.2038520062265448,
+    "background_rolling_max": 0.5586981791184639,
+    "background_step": 0.28892815430463353,
+    "unattributed_cores_mean": 1.4131589063494403,
+    "unreadable_processes_max": 162,
+    "top_background_core_seconds": {
+     "RobloxPlayerBeta.exe": 1.7520999999999998,
+     "ChatGPT.exe": 1.6569,
+     "zen.exe": 1.2330999999999999,
+     "FxSound.exe": 0.5313,
+     "iCUE.exe": 0.5164,
+     "OmenCommandCenterBackground.exe": 0.3594,
+     "Discord.exe": 0.2511,
+     "RobloxCrashHandler.exe": 0.12460000000000002
+    },
+    "frequency_mean_mhz": 3545.605350798636,
+    "frequency_p_mean_mhz": 3619.0480249049187,
+    "frequency_e_mean_mhz": 3251.834654373507,
+    "frequency_min_mhz": 3220.180582292496,
+    "foreground_client_fraction": 1.0,
+    "foreground_other_exes": [],
+    "power_plans": [
+     {
+      "guid": "8c5e7fda-e8bf-4a96-9a85-a6e23a8c635c",
+      "name": "High performance"
+     }
+    ],
+    "client_affinities": [
+     [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15
+     ]
+    ],
+    "memory_available_mb_min": 12635.75,
+    "gpu_util_mean": 77.89473684210526,
+    "gpu_clock_mean_mhz": 1875.7894736842106,
+    "gpu_clock_min_mhz": 1875.0,
+    "gpu_pstates": [
+     "P0"
+    ],
+    "monitor_self_cpu_ms_mean": 13.28125,
+    "monitor_self_cpu_ms_max": 15.625,
+    "monitor_self_cores": 0.01328125
+   },
+   "static": {
+    "samples": 60,
+    "expected_samples": 60,
+    "coverage": 1.0,
+    "availability": {
+     "cpu": {
+      "samples": 60,
+      "ok": 60,
+      "counts": {
+       "ok": 60
+      },
+      "reasons": [],
+      "fraction_ok": 1.0
+     },
+     "frequency": {
+      "samples": 60,
+      "ok": 60,
+      "counts": {
+       "ok": 60
+      },
+      "reasons": [],
+      "fraction_ok": 1.0
+     },
+     "foreground": {
+      "samples": 60,
+      "ok": 60,
+      "counts": {
+       "ok": 60
+      },
+      "reasons": [],
+      "fraction_ok": 1.0
+     },
+     "power_plan": {
+      "samples": 60,
+      "ok": 60,
+      "counts": {
+       "ok": 60
+      },
+      "reasons": [],
+      "fraction_ok": 1.0
+     },
+     "memory": {
+      "samples": 60,
+      "ok": 60,
+      "counts": {
+       "ok": 60
+      },
+      "reasons": [],
+      "fraction_ok": 1.0
+     },
+     "client_affinity": {
+      "samples": 60,
+      "ok": 60,
+      "counts": {
+       "ok": 60
+      },
+      "reasons": [],
+      "fraction_ok": 1.0
+     },
+     "gpu": {
+      "samples": 60,
+      "ok": 60
+     }
+    },
+    "busy_pct_mean": 13.665760578430431,
+    "client_cores_mean": 1.0762638139222886,
+    "harness_cores_mean": 0.018996734533605834,
+    "background_cores_mean": 0.4240536499863646,
+    "background_cores_max": 2.067535897185199,
+    "background_rolling_max": 1.1123617665778514,
+    "background_step": 0.9277154974272821,
+    "unattributed_cores_mean": 1.2136894860246659,
+    "unreadable_processes_max": 162,
+    "top_background_core_seconds": {
+     "RobloxPlayerBeta.exe": 8.075499999999996,
+     "zen.exe": 3.9425999999999983,
+     "ChatGPT.exe": 2.4338,
+     "Discord.exe": 2.2130000000000005,
+     "iCUE.exe": 1.8437000000000006,
+     "FxSound.exe": 1.015,
+     "audiodg.exe": 0.906,
+     "OmenCommandCenterBackground.exe": 0.6708999999999999
+    },
+    "frequency_mean_mhz": 3529.3440466188317,
+    "frequency_p_mean_mhz": 3612.632043184312,
+    "frequency_e_mean_mhz": 3196.192060356911,
+    "frequency_min_mhz": 3358.3541680307617,
+    "foreground_client_fraction": 1.0,
+    "foreground_other_exes": [],
+    "power_plans": [
+     {
+      "guid": "8c5e7fda-e8bf-4a96-9a85-a6e23a8c635c",
+      "name": "High performance"
+     }
+    ],
+    "client_affinities": [
+     [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15
+     ]
+    ],
+    "memory_available_mb_min": 12172.31640625,
+    "gpu_util_mean": 78.93333333333334,
+    "gpu_clock_mean_mhz": 1780.25,
+    "gpu_clock_min_mhz": 1695.0,
+    "gpu_pstates": [
+     "P0"
+    ],
+    "monitor_self_cpu_ms_mean": 11.197916666666666,
+    "monitor_self_cpu_ms_max": 15.625,
+    "monitor_self_cores": 0.011197916666666667
+   },
+   "pan": {
+    "samples": 30,
+    "expected_samples": 30,
+    "coverage": 1.0,
+    "availability": {
+     "cpu": {
+      "samples": 30,
+      "ok": 30,
+      "counts": {
+       "ok": 30
+      },
+      "reasons": [],
+      "fraction_ok": 1.0
+     },
+     "frequency": {
+      "samples": 30,
+      "ok": 30,
+      "counts": {
+       "ok": 30
+      },
+      "reasons": [],
+      "fraction_ok": 1.0
+     },
+     "foreground": {
+      "samples": 30,
+      "ok": 30,
+      "counts": {
+       "ok": 30
+      },
+      "reasons": [],
+      "fraction_ok": 1.0
+     },
+     "power_plan": {
+      "samples": 30,
+      "ok": 30,
+      "counts": {
+       "ok": 30
+      },
+      "reasons": [],
+      "fraction_ok": 1.0
+     },
+     "memory": {
+      "samples": 30,
+      "ok": 30,
+      "counts": {
+       "ok": 30
+      },
+      "reasons": [],
+      "fraction_ok": 1.0
+     },
+     "client_affinity": {
+      "samples": 30,
+      "ok": 30,
+      "counts": {
+       "ok": 30
+      },
+      "reasons": [],
+      "fraction_ok": 1.0
+     },
+     "gpu": {
+      "samples": 29,
+      "ok": 29
+     }
+    },
+    "busy_pct_mean": 13.262043646409085,
+    "client_cores_mean": 1.1372622484237822,
+    "harness_cores_mean": 0.01771721890864736,
+    "background_cores_mean": 0.36370375293536533,
+    "background_cores_max": 1.3611533468455623,
+    "background_rolling_max": 0.5851504343223125,
+    "background_step": 0.3635367273049992,
+    "unattributed_cores_mean": 1.133918609623646,
+    "unreadable_processes_max": 162,
+    "top_background_core_seconds": {
+     "RobloxPlayerBeta.exe": 3.2851,
+     "zen.exe": 1.4506000000000012,
+     "Discord.exe": 1.0803000000000003,
+     "iCUE.exe": 0.8907999999999998,
+     "ChatGPT.exe": 0.7827,
+     "OmenCommandCenterBackground.exe": 0.4685,
+     "FxSound.exe": 0.39019999999999994,
+     "audiodg.exe": 0.3126
+    },
+    "frequency_mean_mhz": 3531.9340600504647,
+    "frequency_p_mean_mhz": 3613.5944780918308,
+    "frequency_e_mean_mhz": 3205.292387885,
+    "frequency_min_mhz": 3232.6338457924003,
+    "foreground_client_fraction": 1.0,
+    "foreground_other_exes": [],
+    "power_plans": [
+     {
+      "guid": "8c5e7fda-e8bf-4a96-9a85-a6e23a8c635c",
+      "name": "High performance"
+     }
+    ],
+    "client_affinities": [
+     [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15
+     ]
+    ],
+    "memory_available_mb_min": 11847.546875,
+    "gpu_util_mean": 65.13793103448276,
+    "gpu_clock_mean_mhz": 1807.7586206896551,
+    "gpu_clock_min_mhz": 1665.0,
+    "gpu_pstates": [
+     "P0"
+    ],
+    "monitor_self_cpu_ms_mean": 11.458333333333334,
+    "monitor_self_cpu_ms_max": 15.625,
+    "monitor_self_cores": 0.011458333333333333
+   },
+   "fly": {
+    "samples": 40,
+    "expected_samples": 40,
+    "coverage": 1.0,
+    "availability": {
+     "cpu": {
+      "samples": 40,
+      "ok": 40,
+      "counts": {
+       "ok": 40
+      },
+      "reasons": [],
+      "fraction_ok": 1.0
+     },
+     "frequency": {
+      "samples": 40,
+      "ok": 40,
+      "counts": {
+       "ok": 40
+      },
+      "reasons": [],
+      "fraction_ok": 1.0
+     },
+     "foreground": {
+      "samples": 40,
+      "ok": 40,
+      "counts": {
+       "ok": 40
+      },
+      "reasons": [],
+      "fraction_ok": 1.0
+     },
+     "power_plan": {
+      "samples": 40,
+      "ok": 40,
+      "counts": {
+       "ok": 40
+      },
+      "reasons": [],
+      "fraction_ok": 1.0
+     },
+     "memory": {
+      "samples": 40,
+      "ok": 40,
+      "counts": {
+       "ok": 40
+      },
+      "reasons": [],
+      "fraction_ok": 1.0
+     },
+     "client_affinity": {
+      "samples": 40,
+      "ok": 40,
+      "counts": {
+       "ok": 40
+      },
+      "reasons": [],
+      "fraction_ok": 1.0
+     },
+     "gpu": {
+      "samples": 40,
+      "ok": 40
+     }
+    },
+    "busy_pct_mean": 17.958468606062624,
+    "client_cores_mean": 1.8255425275199113,
+    "harness_cores_mean": 0.021096454899594306,
+    "background_cores_mean": 0.43151435686004574,
+    "background_cores_max": 1.316498072999817,
+    "background_rolling_max": 0.7665653847862826,
+    "background_step": 0.5570257839314319,
+    "unattributed_cores_mean": 1.3131880831386304,
+    "unreadable_processes_max": 161,
+    "top_background_core_seconds": {
+     "RobloxPlayerBeta.exe": 4.2031,
+     "ChatGPT.exe": 2.458099999999999,
+     "zen.exe": 2.028400000000001,
+     "iCUE.exe": 1.5008000000000001,
+     "FxSound.exe": 1.2967000000000002,
+     "Discord.exe": 1.1796000000000004,
+     "audiodg.exe": 0.6565,
+     "OmenCommandCenterBackground.exe": 0.48349999999999993
+    },
+    "frequency_mean_mhz": 3530.2491396845858,
+    "frequency_p_mean_mhz": 3646.7336563325334,
+    "frequency_e_mean_mhz": 3064.3110730927942,
+    "frequency_min_mhz": 3188.9248475871964,
+    "foreground_client_fraction": 1.0,
+    "foreground_other_exes": [],
+    "power_plans": [
+     {
+      "guid": "8c5e7fda-e8bf-4a96-9a85-a6e23a8c635c",
+      "name": "High performance"
+     }
+    ],
+    "client_affinities": [
+     [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15
+     ]
+    ],
+    "memory_available_mb_min": 10963.23828125,
+    "gpu_util_mean": 63.375,
+    "gpu_clock_mean_mhz": 1821.375,
+    "gpu_clock_min_mhz": 1665.0,
+    "gpu_pstates": [
+     "P0"
+    ],
+    "monitor_self_cpu_ms_mean": 13.671875,
+    "monitor_self_cpu_ms_max": 15.625,
+    "monitor_self_cores": 0.013671875
+   },
+   "repeat-01": {
+    "samples": 8,
+    "expected_samples": 8,
+    "coverage": 1.0,
+    "availability": {
+     "cpu": {
+      "samples": 8,
+      "ok": 8,
+      "counts": {
+       "ok": 8
+      },
+      "reasons": [],
+      "fraction_ok": 1.0
+     },
+     "frequency": {
+      "samples": 8,
+      "ok": 8,
+      "counts": {
+       "ok": 8
+      },
+      "reasons": [],
+      "fraction_ok": 1.0
+     },
+     "foreground": {
+      "samples": 8,
+      "ok": 8,
+      "counts": {
+       "ok": 8
+      },
+      "reasons": [],
+      "fraction_ok": 1.0
+     },
+     "power_plan": {
+      "samples": 8,
+      "ok": 8,
+      "counts": {
+       "ok": 8
+      },
+      "reasons": [],
+      "fraction_ok": 1.0
+     },
+     "memory": {
+      "samples": 8,
+      "ok": 8,
+      "counts": {
+       "ok": 8
+      },
+      "reasons": [],
+      "fraction_ok": 1.0
+     },
+     "client_affinity": {
+      "samples": 8,
+      "ok": 8,
+      "counts": {
+       "ok": 8
+      },
+      "reasons": [],
+      "fraction_ok": 1.0
+     },
+     "gpu": {
+      "samples": 7,
+      "ok": 7
+     }
+    },
+    "busy_pct_mean": 13.723464148642709,
+    "client_cores_mean": 1.1577523781231551,
+    "harness_cores_mean": 0.017592228953052833,
+    "background_cores_mean": 0.40008766422193753,
+    "background_cores_max": 0.7277144479717482,
+    "background_rolling_max": 0.4785951032811943,
+    "background_step": 0.032347116684397714,
+    "unattributed_cores_mean": 1.1681920407304849,
+    "unreadable_processes_max": 160,
+    "top_background_core_seconds": {
+     "RobloxPlayerBeta.exe": 0.9183,
+     "zen.exe": 0.5003,
+     "iCUE.exe": 0.3756,
+     "audiodg.exe": 0.2188,
+     "Discord.exe": 0.1875,
+     "ChatGPT.exe": 0.1258,
+     "OmenCommandCenterBackground.exe": 0.1095,
+     "QmlRenderer.exe": 0.07819999999999999
+    },
+    "frequency_mean_mhz": 3484.4301689721956,
+    "frequency_p_mean_mhz": 3566.7808614673,
+    "frequency_e_mean_mhz": 3155.0273989917778,
+    "frequency_min_mhz": 3380.08612278561,
+    "foreground_client_fraction": 1.0,
+    "foreground_other_exes": [],
+    "power_plans": [
+     {
+      "guid": "8c5e7fda-e8bf-4a96-9a85-a6e23a8c635c",
+      "name": "High performance"
+     }
+    ],
+    "client_affinities": [
+     [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15
+     ]
+    ],
+    "memory_available_mb_min": 10876.40234375,
+    "gpu_util_mean": 78.85714285714286,
+    "gpu_clock_mean_mhz": 1787.142857142857,
+    "gpu_clock_min_mhz": 1755.0,
+    "gpu_pstates": [
+     "P0"
+    ],
+    "monitor_self_cpu_ms_mean": 9.765625,
+    "monitor_self_cpu_ms_max": 15.625,
+    "monitor_self_cores": 0.009765625
+   },
+   "repeat-02": {
+    "samples": 8,
+    "expected_samples": 8,
+    "coverage": 1.0,
+    "availability": {
+     "cpu": {
+      "samples": 8,
+      "ok": 8,
+      "counts": {
+       "ok": 8
+      },
+      "reasons": [],
+      "fraction_ok": 1.0
+     },
+     "frequency": {
+      "samples": 8,
+      "ok": 8,
+      "counts": {
+       "ok": 8
+      },
+      "reasons": [],
+      "fraction_ok": 1.0
+     },
+     "foreground": {
+      "samples": 8,
+      "ok": 8,
+      "counts": {
+       "ok": 8
+      },
+      "reasons": [],
+      "fraction_ok": 1.0
+     },
+     "power_plan": {
+      "samples": 8,
+      "ok": 8,
+      "counts": {
+       "ok": 8
+      },
+      "reasons": [],
+      "fraction_ok": 1.0
+     },
+     "memory": {
+      "samples": 8,
+      "ok": 8,
+      "counts": {
+       "ok": 8
+      },
+      "reasons": [],
+      "fraction_ok": 1.0
+     },
+     "client_affinity": {
+      "samples": 8,
+      "ok": 8,
+      "counts": {
+       "ok": 8
+      },
+      "reasons": [],
+      "fraction_ok": 1.0
+     },
+     "gpu": {
+      "samples": 8,
+      "ok": 8
+     }
+    },
+    "busy_pct_mean": 13.109204610520909,
+    "client_cores_mean": 1.0655057288021257,
+    "harness_cores_mean": 0.02151409071497116,
+    "background_cores_mean": 0.3970769428577976,
+    "background_cores_max": 0.8310752339735042,
+    "background_rolling_max": 0.4291432228370722,
+    "background_step": 0.11308761887131197,
+    "unattributed_cores_mean": 1.136155537003446,
+    "unreadable_processes_max": 160,
+    "top_background_core_seconds": {
+     "zen.exe": 0.9868999999999997,
+     "RobloxPlayerBeta.exe": 0.3755,
+     "iCUE.exe": 0.31279999999999997,
+     "FxSound.exe": 0.2814,
+     "OmenCommandCenterBackground.exe": 0.1564,
+     "ChatGPT.exe": 0.1409,
+     "audiodg.exe": 0.1408,
+     "Discord.exe": 0.1094
+    },
+    "frequency_mean_mhz": 3537.2506034492603,
+    "frequency_p_mean_mhz": 3627.553034474528,
+    "frequency_e_mean_mhz": 3176.0408793481897,
+    "frequency_min_mhz": 3420.025220239804,
+    "foreground_client_fraction": 1.0,
+    "foreground_other_exes": [],
+    "power_plans": [
+     {
+      "guid": "8c5e7fda-e8bf-4a96-9a85-a6e23a8c635c",
+      "name": "High performance"
+     }
+    ],
+    "client_affinities": [
+     [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15
+     ]
+    ],
+    "memory_available_mb_min": 10796.92578125,
+    "gpu_util_mean": 80.0,
+    "gpu_clock_mean_mhz": 1764.375,
+    "gpu_clock_min_mhz": 1710.0,
+    "gpu_pstates": [
+     "P0"
+    ],
+    "monitor_self_cpu_ms_mean": 11.71875,
+    "monitor_self_cpu_ms_max": 15.625,
+    "monitor_self_cores": 0.01171875
+   },
+   "repeat-03": {
+    "samples": 8,
+    "expected_samples": 8,
+    "coverage": 1.0,
+    "availability": {
+     "cpu": {
+      "samples": 8,
+      "ok": 8,
+      "counts": {
+       "ok": 8
+      },
+      "reasons": [],
+      "fraction_ok": 1.0
+     },
+     "frequency": {
+      "samples": 8,
+      "ok": 8,
+      "counts": {
+       "ok": 8
+      },
+      "reasons": [],
+      "fraction_ok": 1.0
+     },
+     "foreground": {
+      "samples": 8,
+      "ok": 8,
+      "counts": {
+       "ok": 8
+      },
+      "reasons": [],
+      "fraction_ok": 1.0
+     },
+     "power_plan": {
+      "samples": 8,
+      "ok": 8,
+      "counts": {
+       "ok": 8
+      },
+      "reasons": [],
+      "fraction_ok": 1.0
+     },
+     "memory": {
+      "samples": 8,
+      "ok": 8,
+      "counts": {
+       "ok": 8
+      },
+      "reasons": [],
+      "fraction_ok": 1.0
+     },
+     "client_affinity": {
+      "samples": 8,
+      "ok": 8,
+      "counts": {
+       "ok": 8
+      },
+      "reasons": [],
+      "fraction_ok": 1.0
+     },
+     "gpu": {
+      "samples": 8,
+      "ok": 8
+     }
+    },
+    "busy_pct_mean": 11.995839086052563,
+    "client_cores_mean": 1.0133949141390175,
+    "harness_cores_mean": 0.01761454537472368,
+    "background_cores_mean": 0.2582954737841794,
+    "background_cores_max": 0.47017481776741504,
+    "background_rolling_max": 0.27563663506612707,
+    "background_step": 0.09418832359404536,
+    "unattributed_cores_mean": 1.1093240954171564,
+    "unreadable_processes_max": 160,
+    "top_background_core_seconds": {
+     "zen.exe": 0.4384999999999999,
+     "RobloxPlayerBeta.exe": 0.4071,
+     "iCUE.exe": 0.3131,
+     "ChatGPT.exe": 0.1722,
+     "OverlayHelper.exe": 0.094,
+     "FxSound.exe": 0.0939,
+     "Discord.exe": 0.0783,
+     "Codex Web GPT.exe": 0.0627
+    },
+    "frequency_mean_mhz": 3516.2975249864776,
+    "frequency_p_mean_mhz": 3591.7698093909244,
+    "frequency_e_mean_mhz": 3214.4083873686914,
+    "frequency_min_mhz": 3398.7111327725615,
+    "foreground_client_fraction": 1.0,
+    "foreground_other_exes": [],
+    "power_plans": [
+     {
+      "guid": "8c5e7fda-e8bf-4a96-9a85-a6e23a8c635c",
+      "name": "High performance"
+     }
+    ],
+    "client_affinities": [
+     [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15
+     ]
+    ],
+    "memory_available_mb_min": 10731.86328125,
+    "gpu_util_mean": 77.625,
+    "gpu_clock_mean_mhz": 1766.25,
+    "gpu_clock_min_mhz": 1755.0,
+    "gpu_pstates": [
+     "P0"
+    ],
+    "monitor_self_cpu_ms_mean": 11.71875,
+    "monitor_self_cpu_ms_max": 15.625,
+    "monitor_self_cores": 0.01171875
+   },
+   "repeat-04": {
+    "samples": 8,
+    "expected_samples": 8,
+    "coverage": 1.0,
+    "availability": {
+     "cpu": {
+      "samples": 8,
+      "ok": 8,
+      "counts": {
+       "ok": 8
+      },
+      "reasons": [],
+      "fraction_ok": 1.0
+     },
+     "frequency": {
+      "samples": 8,
+      "ok": 8,
+      "counts": {
+       "ok": 8
+      },
+      "reasons": [],
+      "fraction_ok": 1.0
+     },
+     "foreground": {
+      "samples": 8,
+      "ok": 8,
+      "counts": {
+       "ok": 8
+      },
+      "reasons": [],
+      "fraction_ok": 1.0
+     },
+     "power_plan": {
+      "samples": 8,
+      "ok": 8,
+      "counts": {
+       "ok": 8
+      },
+      "reasons": [],
+      "fraction_ok": 1.0
+     },
+     "memory": {
+      "samples": 8,
+      "ok": 8,
+      "counts": {
+       "ok": 8
+      },
+      "reasons": [],
+      "fraction_ok": 1.0
+     },
+     "client_affinity": {
+      "samples": 8,
+      "ok": 8,
+      "counts": {
+       "ok": 8
+      },
+      "reasons": [],
+      "fraction_ok": 1.0
+     },
+     "gpu": {
+      "samples": 8,
+      "ok": 8
+     }
+    },
+    "busy_pct_mean": 14.225545253082041,
+    "client_cores_mean": 1.0522894765848312,
+    "harness_cores_mean": 0.01954642840670591,
+    "background_cores_mean": 0.47514324995074386,
+    "background_cores_max": 1.1906670553017817,
+    "background_rolling_max": 0.5914456593483848,
+    "background_step": 0.3474579442172567,
+    "unattributed_cores_mean": 1.297105934836558,
+    "unreadable_processes_max": 163,
+    "top_background_core_seconds": {
+     "RobloxPlayerBeta.exe": 0.9235,
+     "backgroundTaskHost.exe": 0.6113,
+     "zen.exe": 0.5314,
+     "iCUE.exe": 0.2652,
+     "audiodg.exe": 0.24999999999999997,
+     "ms-teamsupdate.exe": 0.1568,
+     "Discord.exe": 0.14100000000000001,
+     "sihost.exe": 0.0627
+    },
+    "frequency_mean_mhz": 3472.1657858868457,
+    "frequency_p_mean_mhz": 3540.4632025738742,
+    "frequency_e_mean_mhz": 3198.9761191387315,
+    "frequency_min_mhz": 3361.0791399765462,
+    "foreground_client_fraction": 1.0,
+    "foreground_other_exes": [],
+    "power_plans": [
+     {
+      "guid": "8c5e7fda-e8bf-4a96-9a85-a6e23a8c635c",
+      "name": "High performance"
+     }
+    ],
+    "client_affinities": [
+     [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15
+     ]
+    ],
+    "memory_available_mb_min": 10661.75390625,
+    "gpu_util_mean": 78.0,
+    "gpu_clock_mean_mhz": 1771.875,
+    "gpu_clock_min_mhz": 1755.0,
+    "gpu_pstates": [
+     "P0"
+    ],
+    "monitor_self_cpu_ms_mean": 13.671875,
+    "monitor_self_cpu_ms_max": 15.625,
+    "monitor_self_cores": 0.013671875
+   },
+   "repeat-05": {
+    "samples": 8,
+    "expected_samples": 8,
+    "coverage": 1.0,
+    "availability": {
+     "cpu": {
+      "samples": 8,
+      "ok": 8,
+      "counts": {
+       "ok": 8
+      },
+      "reasons": [],
+      "fraction_ok": 1.0
+     },
+     "frequency": {
+      "samples": 8,
+      "ok": 8,
+      "counts": {
+       "ok": 8
+      },
+      "reasons": [],
+      "fraction_ok": 1.0
+     },
+     "foreground": {
+      "samples": 8,
+      "ok": 8,
+      "counts": {
+       "ok": 8
+      },
+      "reasons": [],
+      "fraction_ok": 1.0
+     },
+     "power_plan": {
+      "samples": 8,
+      "ok": 8,
+      "counts": {
+       "ok": 8
+      },
+      "reasons": [],
+      "fraction_ok": 1.0
+     },
+     "memory": {
+      "samples": 8,
+      "ok": 8,
+      "counts": {
+       "ok": 8
+      },
+      "reasons": [],
+      "fraction_ok": 1.0
+     },
+     "client_affinity": {
+      "samples": 8,
+      "ok": 8,
+      "counts": {
+       "ok": 8
+      },
+      "reasons": [],
+      "fraction_ok": 1.0
+     },
+     "gpu": {
+      "samples": 8,
+      "ok": 8
+     }
+    },
+    "busy_pct_mean": 15.441559197162814,
+    "client_cores_mean": 1.0598179409532604,
+    "harness_cores_mean": 0.019509718332858413,
+    "background_cores_mean": 0.5890989833677377,
+    "background_cores_max": 1.3178204364446782,
+    "background_rolling_max": 0.66383425807152,
+    "background_step": 0.34848160630190655,
+    "unattributed_cores_mean": 1.422791387163187,
+    "unreadable_processes_max": 163,
+    "top_background_core_seconds": {
+     "ChatGPT.exe": 1.5369999999999997,
+     "RobloxPlayerBeta.exe": 1.1116000000000001,
+     "zen.exe": 0.42219999999999996,
+     "Discord.exe": 0.39249999999999996,
+     "iCUE.exe": 0.31220000000000003,
+     "OmenCommandCenterBackground.exe": 0.1402,
+     "FxSound.exe": 0.1096,
+     "audiodg.exe": 0.0941
+    },
+    "frequency_mean_mhz": 3460.6608066915123,
+    "frequency_p_mean_mhz": 3522.522262758644,
+    "frequency_e_mean_mhz": 3213.2149824229846,
+    "frequency_min_mhz": 3245.0951902640923,
+    "foreground_client_fraction": 1.0,
+    "foreground_other_exes": [],
+    "power_plans": [
+     {
+      "guid": "8c5e7fda-e8bf-4a96-9a85-a6e23a8c635c",
+      "name": "High performance"
+     }
+    ],
+    "client_affinities": [
+     [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15
+     ]
+    ],
+    "memory_available_mb_min": 10680.91015625,
+    "gpu_util_mean": 76.125,
+    "gpu_clock_mean_mhz": 1779.375,
+    "gpu_clock_min_mhz": 1740.0,
+    "gpu_pstates": [
+     "P0"
+    ],
+    "monitor_self_cpu_ms_mean": 13.671875,
+    "monitor_self_cpu_ms_max": 15.625,
+    "monitor_self_cores": 0.013671875
+   },
+   "repeat-06": {
+    "samples": 8,
+    "expected_samples": 8,
+    "coverage": 1.0,
+    "availability": {
+     "cpu": {
+      "samples": 8,
+      "ok": 8,
+      "counts": {
+       "ok": 8
+      },
+      "reasons": [],
+      "fraction_ok": 1.0
+     },
+     "frequency": {
+      "samples": 8,
+      "ok": 8,
+      "counts": {
+       "ok": 8
+      },
+      "reasons": [],
+      "fraction_ok": 1.0
+     },
+     "foreground": {
+      "samples": 8,
+      "ok": 8,
+      "counts": {
+       "ok": 8
+      },
+      "reasons": [],
+      "fraction_ok": 1.0
+     },
+     "power_plan": {
+      "samples": 8,
+      "ok": 8,
+      "counts": {
+       "ok": 8
+      },
+      "reasons": [],
+      "fraction_ok": 1.0
+     },
+     "memory": {
+      "samples": 8,
+      "ok": 8,
+      "counts": {
+       "ok": 8
+      },
+      "reasons": [],
+      "fraction_ok": 1.0
+     },
+     "client_affinity": {
+      "samples": 8,
+      "ok": 8,
+      "counts": {
+       "ok": 8
+      },
+      "reasons": [],
+      "fraction_ok": 1.0
+     },
+     "gpu": {
+      "samples": 8,
+      "ok": 8
+     }
+    },
+    "busy_pct_mean": 15.47303774286756,
+    "client_cores_mean": 1.0720949557809398,
+    "harness_cores_mean": 0.01757793162031326,
+    "background_cores_mean": 0.7479070956133393,
+    "background_cores_max": 1.2656064712115822,
+    "background_rolling_max": 1.0211046804953745,
+    "background_step": 0.5485433680844831,
+    "unattributed_cores_mean": 1.2601541406228696,
+    "unreadable_processes_max": 163,
+    "top_background_core_seconds": {
+     "RobloxPlayerBeta.exe": 3.7951,
+     "zen.exe": 0.5934,
+     "FxSound.exe": 0.23389999999999994,
+     "iCUE.exe": 0.21919999999999995,
+     "ChatGPT.exe": 0.1255,
+     "codex.exe": 0.1098,
+     "OmenCommandCenterBackground.exe": 0.0779,
+     "codex-computer-use.exe": 0.0628
+    },
+    "frequency_mean_mhz": 3551.331151186406,
+    "frequency_p_mean_mhz": 3646.5590523321407,
+    "frequency_e_mean_mhz": 3170.419546603468,
+    "frequency_min_mhz": 3505.371717737055,
+    "foreground_client_fraction": 1.0,
+    "foreground_other_exes": [],
+    "power_plans": [
+     {
+      "guid": "8c5e7fda-e8bf-4a96-9a85-a6e23a8c635c",
+      "name": "High performance"
+     }
+    ],
+    "client_affinities": [
+     [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15
+     ]
+    ],
+    "memory_available_mb_min": 10517.8828125,
+    "gpu_util_mean": 80.5,
+    "gpu_clock_mean_mhz": 1766.25,
+    "gpu_clock_min_mhz": 1740.0,
+    "gpu_pstates": [
+     "P0"
+    ],
+    "monitor_self_cpu_ms_mean": 9.765625,
+    "monitor_self_cpu_ms_max": 15.625,
+    "monitor_self_cores": 0.009765625
+   },
+   "repeat-07": {
+    "samples": 8,
+    "expected_samples": 8,
+    "coverage": 1.0,
+    "availability": {
+     "cpu": {
+      "samples": 8,
+      "ok": 8,
+      "counts": {
+       "ok": 8
+      },
+      "reasons": [],
+      "fraction_ok": 1.0
+     },
+     "frequency": {
+      "samples": 8,
+      "ok": 8,
+      "counts": {
+       "ok": 8
+      },
+      "reasons": [],
+      "fraction_ok": 1.0
+     },
+     "foreground": {
+      "samples": 8,
+      "ok": 8,
+      "counts": {
+       "ok": 8
+      },
+      "reasons": [],
+      "fraction_ok": 1.0
+     },
+     "power_plan": {
+      "samples": 8,
+      "ok": 8,
+      "counts": {
+       "ok": 8
+      },
+      "reasons": [],
+      "fraction_ok": 1.0
+     },
+     "memory": {
+      "samples": 8,
+      "ok": 8,
+      "counts": {
+       "ok": 8
+      },
+      "reasons": [],
+      "fraction_ok": 1.0
+     },
+     "client_affinity": {
+      "samples": 8,
+      "ok": 8,
+      "counts": {
+       "ok": 8
+      },
+      "reasons": [],
+      "fraction_ok": 1.0
+     },
+     "gpu": {
+      "samples": 8,
+      "ok": 8
+     }
+    },
+    "busy_pct_mean": 12.785489176920766,
+    "client_cores_mean": 1.0963340701658568,
+    "harness_cores_mean": 0.015650980492151887,
+    "background_cores_mean": 0.2818527182367118,
+    "background_cores_max": 0.549540988196121,
+    "background_rolling_max": 0.32275222035107565,
+    "background_step": 0.09779158003064634,
+    "unattributed_cores_mean": 1.1630279424378016,
+    "unreadable_processes_max": 163,
+    "top_background_core_seconds": {
+     "RobloxPlayerBeta.exe": 0.7993,
+     "zen.exe": 0.3757999999999999,
+     "iCUE.exe": 0.266,
+     "FxSound.exe": 0.1248,
+     "ChatGPT.exe": 0.10930000000000001,
+     "audiodg.exe": 0.0937,
+     "OmenCommandCenterBackground.exe": 0.046799999999999994,
+     "QmlRenderer.exe": 0.046700000000000005
+    },
+    "frequency_mean_mhz": 3446.2221394208937,
+    "frequency_p_mean_mhz": 3507.2648814593917,
+    "frequency_e_mean_mhz": 3202.0511712669017,
+    "frequency_min_mhz": 3355.3184953947784,
+    "foreground_client_fraction": 1.0,
+    "foreground_other_exes": [],
+    "power_plans": [
+     {
+      "guid": "8c5e7fda-e8bf-4a96-9a85-a6e23a8c635c",
+      "name": "High performance"
+     }
+    ],
+    "client_affinities": [
+     [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15
+     ]
+    ],
+    "memory_available_mb_min": 10784.70703125,
+    "gpu_util_mean": 81.125,
+    "gpu_clock_mean_mhz": 1760.625,
+    "gpu_clock_min_mhz": 1740.0,
+    "gpu_pstates": [
+     "P0"
+    ],
+    "monitor_self_cpu_ms_mean": 7.8125,
+    "monitor_self_cpu_ms_max": 15.625,
+    "monitor_self_cores": 0.0078125
+   },
+   "repeat-08": {
+    "samples": 8,
+    "expected_samples": 8,
+    "coverage": 1.0,
+    "availability": {
+     "cpu": {
+      "samples": 8,
+      "ok": 8,
+      "counts": {
+       "ok": 8
+      },
+      "reasons": [],
+      "fraction_ok": 1.0
+     },
+     "frequency": {
+      "samples": 8,
+      "ok": 8,
+      "counts": {
+       "ok": 8
+      },
+      "reasons": [],
+      "fraction_ok": 1.0
+     },
+     "foreground": {
+      "samples": 8,
+      "ok": 8,
+      "counts": {
+       "ok": 8
+      },
+      "reasons": [],
+      "fraction_ok": 1.0
+     },
+     "power_plan": {
+      "samples": 8,
+      "ok": 8,
+      "counts": {
+       "ok": 8
+      },
+      "reasons": [],
+      "fraction_ok": 1.0
+     },
+     "memory": {
+      "samples": 8,
+      "ok": 8,
+      "counts": {
+       "ok": 8
+      },
+      "reasons": [],
+      "fraction_ok": 1.0
+     },
+     "client_affinity": {
+      "samples": 8,
+      "ok": 8,
+      "counts": {
+       "ok": 8
+      },
+      "reasons": [],
+      "fraction_ok": 1.0
+     },
+     "gpu": {
+      "samples": 8,
+      "ok": 8
+     }
+    },
+    "busy_pct_mean": 13.159215311765479,
+    "client_cores_mean": 1.0651648009330312,
+    "harness_cores_mean": 0.019528766192026464,
+    "background_cores_mean": 0.35017911322157985,
+    "background_cores_max": 0.909964924091154,
+    "background_rolling_max": 0.4234509196524531,
+    "background_step": 0.20512620365037118,
+    "unattributed_cores_mean": 1.199351552681099,
+    "unreadable_processes_max": 163,
+    "top_background_core_seconds": {
+     "Discord.exe": 1.0068,
+     "zen.exe": 0.42100000000000004,
+     "RobloxPlayerBeta.exe": 0.3126,
+     "ChatGPT.exe": 0.1698,
+     "iCUE.exe": 0.15619999999999998,
+     "FxSound.exe": 0.1559,
+     "audiodg.exe": 0.07830000000000001,
+     "OmenCommandCenterBackground.exe": 0.07800000000000001
+    },
+    "frequency_mean_mhz": 3477.1883291895097,
+    "frequency_p_mean_mhz": 3573.587320617663,
+    "frequency_e_mean_mhz": 3091.5923634768965,
+    "frequency_min_mhz": 3372.960275783798,
+    "foreground_client_fraction": 1.0,
+    "foreground_other_exes": [],
+    "power_plans": [
+     {
+      "guid": "8c5e7fda-e8bf-4a96-9a85-a6e23a8c635c",
+      "name": "High performance"
+     }
+    ],
+    "client_affinities": [
+     [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15
+     ]
+    ],
+    "memory_available_mb_min": 10811.73828125,
+    "gpu_util_mean": 79.25,
+    "gpu_clock_mean_mhz": 1768.125,
+    "gpu_clock_min_mhz": 1740.0,
+    "gpu_pstates": [
+     "P0"
+    ],
+    "monitor_self_cpu_ms_mean": 13.671875,
+    "monitor_self_cpu_ms_max": 15.625,
+    "monitor_self_cores": 0.013671875
+   },
+   "reference-post": {
+    "samples": 20,
+    "expected_samples": 20,
+    "coverage": 1.0,
+    "availability": {
+     "cpu": {
+      "samples": 20,
+      "ok": 20,
+      "counts": {
+       "ok": 20
+      },
+      "reasons": [],
+      "fraction_ok": 1.0
+     },
+     "frequency": {
+      "samples": 20,
+      "ok": 20,
+      "counts": {
+       "ok": 20
+      },
+      "reasons": [],
+      "fraction_ok": 1.0
+     },
+     "foreground": {
+      "samples": 20,
+      "ok": 20,
+      "counts": {
+       "ok": 20
+      },
+      "reasons": [],
+      "fraction_ok": 1.0
+     },
+     "power_plan": {
+      "samples": 20,
+      "ok": 20,
+      "counts": {
+       "ok": 20
+      },
+      "reasons": [],
+      "fraction_ok": 1.0
+     },
+     "memory": {
+      "samples": 20,
+      "ok": 20,
+      "counts": {
+       "ok": 20
+      },
+      "reasons": [],
+      "fraction_ok": 1.0
+     },
+     "client_affinity": {
+      "samples": 20,
+      "ok": 20,
+      "counts": {
+       "ok": 20
+      },
+      "reasons": [],
+      "fraction_ok": 1.0
+     },
+     "gpu": {
+      "samples": 20,
+      "ok": 20
+     }
+    },
+    "busy_pct_mean": 14.128567191325814,
+    "client_cores_mean": 1.0139714892669027,
+    "harness_cores_mean": 0.014838491356204669,
+    "background_cores_mean": 0.4043305228299059,
+    "background_cores_max": 1.3344114121645854,
+    "background_rolling_max": 0.7203271192186209,
+    "background_step": 0.43574496331802903,
+    "unattributed_cores_mean": 1.3921681812939954,
+    "unreadable_processes_max": 163,
+    "top_background_core_seconds": {
+     "ChatGPT.exe": 1.9736999999999998,
+     "RobloxPlayerBeta.exe": 1.5176,
+     "zen.exe": 0.9213000000000002,
+     "iCUE.exe": 0.6408000000000001,
+     "Discord.exe": 0.34309999999999996,
+     "audiodg.exe": 0.3131,
+     "FxSound.exe": 0.2189,
+     "OmenCommandCenterBackground.exe": 0.2029
+    },
+    "frequency_mean_mhz": 3477.4057609283823,
+    "frequency_p_mean_mhz": 3551.838159491035,
+    "frequency_e_mean_mhz": 3179.6761666777725,
+    "frequency_min_mhz": 3280.7970321143634,
+    "foreground_client_fraction": 1.0,
+    "foreground_other_exes": [],
+    "power_plans": [
+     {
+      "guid": "8c5e7fda-e8bf-4a96-9a85-a6e23a8c635c",
+      "name": "High performance"
+     }
+    ],
+    "client_affinities": [
+     [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15
+     ]
+    ],
+    "memory_available_mb_min": 10799.3203125,
+    "gpu_util_mean": 78.6,
+    "gpu_clock_mean_mhz": 1766.25,
+    "gpu_clock_min_mhz": 1695.0,
+    "gpu_pstates": [
+     "P0"
+    ],
+    "monitor_self_cpu_ms_mean": 12.5,
+    "monitor_self_cpu_ms_max": 15.625,
+    "monitor_self_cores": 0.0125
+   }
+  },
+  "launch": {
+   "samples": 276,
+   "expected_samples": 275,
+   "coverage": 1.0036363636363637,
+   "availability": {
+    "cpu": {
+     "samples": 276,
+     "ok": 276,
+     "counts": {
+      "ok": 276
+     },
+     "reasons": [],
+     "fraction_ok": 1.0
+    },
+    "frequency": {
+     "samples": 276,
+     "ok": 276,
+     "counts": {
+      "ok": 276
+     },
+     "reasons": [],
+     "fraction_ok": 1.0
+    },
+    "foreground": {
+     "samples": 276,
+     "ok": 276,
+     "counts": {
+      "ok": 276
+     },
+     "reasons": [],
+     "fraction_ok": 1.0
+    },
+    "power_plan": {
+     "samples": 276,
+     "ok": 276,
+     "counts": {
+      "ok": 276
+     },
+     "reasons": [],
+     "fraction_ok": 1.0
+    },
+    "memory": {
+     "samples": 276,
+     "ok": 276,
+     "counts": {
+      "ok": 276
+     },
+     "reasons": [],
+     "fraction_ok": 1.0
+    },
+    "client_affinity": {
+     "samples": 276,
+     "ok": 276,
+     "counts": {
+      "ok": 276
+     },
+     "reasons": [],
+     "fraction_ok": 1.0
+    },
+    "gpu": {
+     "samples": 272,
+     "ok": 272
+    }
+   },
+   "busy_pct_mean": 14.415608757230387,
+   "client_cores_mean": 1.1930466663583237,
+   "harness_cores_mean": 0.019418481328662585,
+   "background_cores_mean": 0.4184714663971449,
+   "background_cores_max": 2.067535897185199,
+   "background_rolling_max": 1.1123617665778514,
+   "background_step": 0.9555923675935811,
+   "unattributed_cores_mean": 1.2520342607295643,
+   "unreadable_processes_max": 163,
+   "top_background_core_seconds": {
+    "RobloxPlayerBeta.exe": 31.573699999999988,
+    "zen.exe": 16.12240000000001,
+    "ChatGPT.exe": 14.129799999999998,
+    "Discord.exe": 10.381099999999993,
+    "iCUE.exe": 8.753799999999996,
+    "FxSound.exe": 5.466099999999994,
+    "audiodg.exe": 3.7048,
+    "OmenCommandCenterBackground.exe": 3.3716000000000004
+   },
+   "frequency_mean_mhz": 3511.8252115679693,
+   "frequency_p_mean_mhz": 3596.0731620495253,
+   "frequency_e_mean_mhz": 3174.833409641744,
+   "frequency_min_mhz": 3188.9248475871964,
+   "foreground_client_fraction": 1.0,
+   "foreground_other_exes": [],
+   "power_plans": [
+    {
+     "guid": "8c5e7fda-e8bf-4a96-9a85-a6e23a8c635c",
+     "name": "High performance"
+    }
+   ],
+   "client_affinities": [
+    [
+     0,
+     1,
+     2,
+     3,
+     4,
+     5,
+     6,
+     7,
+     8,
+     9,
+     10,
+     11,
+     12,
+     13,
+     14,
+     15
+    ]
+   ],
+   "memory_available_mb_min": 10517.8828125,
+   "gpu_util_mean": 74.94117647058823,
+   "gpu_clock_mean_mhz": 1791.672794117647,
+   "gpu_clock_min_mhz": 1665.0,
+   "gpu_pstates": [
+    "P0"
+   ],
+   "monitor_self_cpu_ms_mean": 12.341485507246377,
+   "monitor_self_cpu_ms_max": 15.625,
+   "monitor_self_cores": 0.012341485507246376
+  },
+  "pre_launch": {
+   "samples": 9,
+   "expected_samples": 10,
+   "coverage": 0.9,
+   "availability": {
+    "cpu": {
+     "samples": 9,
+     "ok": 9,
+     "counts": {
+      "ok": 9
+     },
+     "reasons": [],
+     "fraction_ok": 1.0
+    },
+    "frequency": {
+     "samples": 9,
+     "ok": 9,
+     "counts": {
+      "ok": 9
+     },
+     "reasons": [],
+     "fraction_ok": 1.0
+    },
+    "foreground": {
+     "samples": 9,
+     "ok": 9,
+     "counts": {
+      "ok": 9
+     },
+     "reasons": [],
+     "fraction_ok": 1.0
+    },
+    "power_plan": {
+     "samples": 9,
+     "ok": 9,
+     "counts": {
+      "ok": 9
+     },
+     "reasons": [],
+     "fraction_ok": 1.0
+    },
+    "memory": {
+     "samples": 9,
+     "ok": 9,
+     "counts": {
+      "ok": 9
+     },
+     "reasons": [],
+     "fraction_ok": 1.0
+    },
+    "client_affinity": {
+     "samples": 9,
+     "ok": 0,
+     "counts": {
+      "missing": 9
+     },
+     "reasons": [],
+     "fraction_ok": 0.0
+    },
+    "gpu": {
+     "samples": 10,
+     "ok": 10
+    }
+   },
+   "busy_pct_mean": 6.786685619035042,
+   "client_cores_mean": null,
+   "harness_cores_mean": 0.012124828694549901,
+   "background_cores_mean": 0.4600658398970203,
+   "background_cores_max": 0.7710810150463931,
+   "background_rolling_max": 0.552799652235404,
+   "background_step": 0.20909096086627738,
+   "unattributed_cores_mean": 0.884779104170545,
+   "unreadable_processes_max": 163,
+   "top_background_core_seconds": {
+    "ChatGPT.exe": 1.4554999999999998,
+    "zen.exe": 0.6222999999999999,
+    "RobloxPlayerBeta.exe": 0.484,
+    "iCUE.exe": 0.2344,
+    "codex-computer-use.exe": 0.2041,
+    "FxSound.exe": 0.1406,
+    "Discord.exe": 0.1253,
+    "RobloxCrashHandler.exe": 0.0623
+   },
+   "frequency_mean_mhz": 3359.4438659536722,
+   "frequency_p_mean_mhz": 3381.7730861086034,
+   "frequency_e_mean_mhz": 3270.1269853339477,
+   "frequency_min_mhz": 3191.1703216252263,
+   "foreground_client_fraction": 0.0,
+   "foreground_other_exes": [
+    "ChatGPT.exe"
+   ],
+   "power_plans": [
+    {
+     "guid": "8c5e7fda-e8bf-4a96-9a85-a6e23a8c635c",
+     "name": "High performance"
+    }
+   ],
+   "client_affinities": [],
+   "memory_available_mb_min": 13631.88671875,
+   "gpu_util_mean": 38.3,
+   "gpu_clock_mean_mhz": 583.5,
+   "gpu_clock_min_mhz": 570.0,
+   "gpu_pstates": [
+    "P3"
+   ],
+   "monitor_self_cpu_ms_mean": 10.416666666666666,
+   "monitor_self_cpu_ms_max": 15.625,
+   "monitor_self_cores": 0.010416666666666666
+  },
+  "marks": [
+   {
+    "t": 1792714877.1423483,
+    "event": "quiet-window-passed",
+    "waited_s": 27.009267100002035,
+    "samples": 10
+   },
+   {
+    "t": 1792714877.1447618,
+    "event": "launch",
+    "label": "aa31-smoke-d0-r3"
+   },
+   {
+    "t": 1792714879.1582682,
+    "event": "affinity",
+    "processors": [
+     0,
+     1,
+     2,
+     3,
+     4,
+     5,
+     6,
+     7,
+     8,
+     9,
+     10,
+     11,
+     12,
+     13,
+     14,
+     15
+    ]
+   },
+   {
+    "t": 1792715177.5639105,
+    "event": "exit"
+   }
+  ],
+  "errors": [],
+  "gpu_status": {
+   "status": "ok",
+   "value": [
+    {
+     "name": "NVIDIA GeForce RTX 3060 Ti",
+     "driver_version": "616.92",
+     "pci.bus_id": "00000000:01:00.0",
+     "clocks.max.gr": "2100",
+     "clocks.max.mem": "7001",
+     "power.limit": "200.00"
+    }
+   ],
+   "source": "nvidia-smi --query-gpu"
+  }
+ },
+ "series_5s": [
+  {
+   "t": 1792714850.133,
+   "busy_pct": 12.9691,
+   "client_cores": null,
+   "background_cores": 0.8548,
+   "harness_cores": 0.0661,
+   "freq_mean_mhz": 3306.72,
+   "freq_p_mean_mhz": 3395.46,
+   "freq_e_mean_mhz": 2951.7,
+   "fg_client": false,
+   "self_cpu_ms": 46.875
+  },
+  {
+   "t": 1792714855.141,
+   "busy_pct": 10.9421,
+   "client_cores": null,
+   "background_cores": 0.8899,
+   "harness_cores": 0.0104,
+   "freq_mean_mhz": 3528.4333,
+   "freq_p_mean_mhz": 3589.6833,
+   "freq_e_mean_mhz": 3283.5,
+   "fg_client": false,
+   "self_cpu_ms": 7.8125
+  },
+  {
+   "t": 1792714861.141,
+   "busy_pct": 9.7741,
+   "client_cores": null,
+   "background_cores": 0.8401,
+   "harness_cores": 0.0094,
+   "freq_mean_mhz": 3489.82,
+   "freq_p_mean_mhz": 3553.96,
+   "freq_e_mean_mhz": 3233.26,
+   "fg_client": false,
+   "self_cpu_ms": 6.25
+  },
+  {
+   "t": 1792714866.147,
+   "busy_pct": 7.8471,
+   "client_cores": null,
+   "background_cores": 0.6094,
+   "harness_cores": 0.0155,
+   "freq_mean_mhz": 3340.9167,
+   "freq_p_mean_mhz": 3361.0333,
+   "freq_e_mean_mhz": 3260.4,
+   "fg_client": false,
+   "self_cpu_ms": 7.8125
+  },
+  {
+   "t": 1792714872.145,
+   "busy_pct": 6.0176,
+   "client_cores": null,
+   "background_cores": 0.3437,
+   "harness_cores": 0.0125,
+   "freq_mean_mhz": 3385.7,
+   "freq_p_mean_mhz": 3412.12,
+   "freq_e_mean_mhz": 3279.92,
+   "fg_client": false,
+   "self_cpu_ms": 12.5
+  },
+  {
+   "t": 1792714877.147,
+   "busy_pct": 26.4934,
+   "client_cores": 3.393,
+   "background_cores": 0.8512,
+   "harness_cores": 0.393,
+   "freq_mean_mhz": 3746.4,
+   "freq_p_mean_mhz": 3885.65,
+   "freq_e_mean_mhz": 3189.4,
+   "fg_client": false,
+   "self_cpu_ms": 15.625
+  },
+  {
+   "t": 1792714883.148,
+   "busy_pct": 32.4938,
+   "client_cores": 3.3927,
+   "background_cores": 1.1645,
+   "harness_cores": 0.0337,
+   "freq_mean_mhz": 3748.9167,
+   "freq_p_mean_mhz": 3902.3333,
+   "freq_e_mean_mhz": 3135.2833,
+   "fg_client": false,
+   "self_cpu_ms": 15.625
+  },
+  {
+   "t": 1792714889.146,
+   "busy_pct": 16.7434,
+   "client_cores": 1.7026,
+   "background_cores": 0.4145,
+   "harness_cores": 0.0131,
+   "freq_mean_mhz": 3625.8667,
+   "freq_p_mean_mhz": 3735.75,
+   "freq_e_mean_mhz": 3186.25,
+   "fg_client": true,
+   "self_cpu_ms": 13.0208
+  },
+  {
+   "t": 1792714895.14,
+   "busy_pct": 15.1737,
+   "client_cores": 1.1207,
+   "background_cores": 0.6348,
+   "harness_cores": 0.0131,
+   "freq_mean_mhz": 3537.25,
+   "freq_p_mean_mhz": 3608.0333,
+   "freq_e_mean_mhz": 3254.0667,
+   "fg_client": true,
+   "self_cpu_ms": 10.4167
+  },
+  {
+   "t": 1792714901.135,
+   "busy_pct": 15.7263,
+   "client_cores": 1.0851,
+   "background_cores": 0.5587,
+   "harness_cores": 0.0249,
+   "freq_mean_mhz": 3490.64,
+   "freq_p_mean_mhz": 3569.3,
+   "freq_e_mean_mhz": 3176.04,
+   "fg_client": true,
+   "self_cpu_ms": 15.625
+  },
+  {
+   "t": 1792714906.148,
+   "busy_pct": 15.6943,
+   "client_cores": 1.1142,
+   "background_cores": 0.282,
+   "harness_cores": 0.0235,
+   "freq_mean_mhz": 3582.0833,
+   "freq_p_mean_mhz": 3649.3167,
+   "freq_e_mean_mhz": 3313.1333,
+   "fg_client": true,
+   "self_cpu_ms": 13.0208
+  },
+  {
+   "t": 1792714912.136,
+   "busy_pct": 13.2053,
+   "client_cores": 1.0645,
+   "background_cores": 0.3534,
+   "harness_cores": 0.0218,
+   "freq_mean_mhz": 3530.1,
+   "freq_p_mean_mhz": 3598.34,
+   "freq_e_mean_mhz": 3257.2,
+   "fg_client": true,
+   "self_cpu_ms": 12.5
+  },
+  {
+   "t": 1792714917.14,
+   "busy_pct": 13.6422,
+   "client_cores": 1.0889,
+   "background_cores": 0.439,
+   "harness_cores": 0.0313,
+   "freq_mean_mhz": 3564.86,
+   "freq_p_mean_mhz": 3646.78,
+   "freq_e_mean_mhz": 3237.16,
+   "fg_client": true,
+   "self_cpu_ms": 12.5
+  },
+  {
+   "t": 1792714922.147,
+   "busy_pct": 12.3132,
+   "client_cores": 1.0441,
+   "background_cores": 0.2651,
+   "harness_cores": 0.0156,
+   "freq_mean_mhz": 3521.65,
+   "freq_p_mean_mhz": 3601.75,
+   "freq_e_mean_mhz": 3201.3167,
+   "fg_client": true,
+   "self_cpu_ms": 10.4167
+  },
+  {
+   "t": 1792714928.146,
+   "busy_pct": 13.8466,
+   "client_cores": 1.1755,
+   "background_cores": 0.4256,
+   "harness_cores": 0.0219,
+   "freq_mean_mhz": 3530.06,
+   "freq_p_mean_mhz": 3604.82,
+   "freq_e_mean_mhz": 3231.0,
+   "fg_client": true,
+   "self_cpu_ms": 15.625
+  },
+  {
+   "t": 1792714933.146,
+   "busy_pct": 12.5453,
+   "client_cores": 1.0532,
+   "background_cores": 0.2598,
+   "harness_cores": 0.0182,
+   "freq_mean_mhz": 3559.9333,
+   "freq_p_mean_mhz": 3648.8333,
+   "freq_e_mean_mhz": 3204.2833,
+   "fg_client": true,
+   "self_cpu_ms": 7.8125
+  },
+  {
+   "t": 1792714939.142,
+   "busy_pct": 16.539,
+   "client_cores": 1.0679,
+   "background_cores": 0.9636,
+   "harness_cores": 0.026,
+   "freq_mean_mhz": 3538.3333,
+   "freq_p_mean_mhz": 3642.2333,
+   "freq_e_mean_mhz": 3122.7333,
+   "fg_client": true,
+   "self_cpu_ms": 13.0208
+  },
+  {
+   "t": 1792714945.137,
+   "busy_pct": 13.3581,
+   "client_cores": 1.0605,
+   "background_cores": 0.297,
+   "harness_cores": 0.0234,
+   "freq_mean_mhz": 3502.2667,
+   "freq_p_mean_mhz": 3585.9667,
+   "freq_e_mean_mhz": 3167.4333,
+   "fg_client": true,
+   "self_cpu_ms": 13.0208
+  },
+  {
+   "t": 1792714951.148,
+   "busy_pct": 14.7603,
+   "client_cores": 1.0748,
+   "background_cores": 0.4049,
+   "harness_cores": 0.0156,
+   "freq_mean_mhz": 3542.5167,
+   "freq_p_mean_mhz": 3618.2167,
+   "freq_e_mean_mhz": 3239.6167,
+   "fg_client": true,
+   "self_cpu_ms": 7.8125
+  },
+  {
+   "t": 1792714957.14,
+   "busy_pct": 13.3286,
+   "client_cores": 1.0679,
+   "background_cores": 0.3742,
+   "harness_cores": 0.0219,
+   "freq_mean_mhz": 3545.46,
+   "freq_p_mean_mhz": 3624.98,
+   "freq_e_mean_mhz": 3227.28,
+   "fg_client": true,
+   "self_cpu_ms": 12.5
+  },
+  {
+   "t": 1792714962.143,
+   "busy_pct": 12.1614,
+   "client_cores": 1.0328,
+   "background_cores": 0.2792,
+   "harness_cores": 0.0183,
+   "freq_mean_mhz": 3571.5667,
+   "freq_p_mean_mhz": 3661.7667,
+   "freq_e_mean_mhz": 3210.6667,
+   "fg_client": true,
+   "self_cpu_ms": 10.4167
+  },
+  {
+   "t": 1792714968.148,
+   "busy_pct": 13.7741,
+   "client_cores": 1.0845,
+   "background_cores": 0.4419,
+   "harness_cores": 0.0182,
+   "freq_mean_mhz": 3466.9833,
+   "freq_p_mean_mhz": 3541.8,
+   "freq_e_mean_mhz": 3167.6167,
+   "fg_client": true,
+   "self_cpu_ms": 7.8125
+  },
+  {
+   "t": 1792714974.14,
+   "busy_pct": 14.4175,
+   "client_cores": 1.1128,
+   "background_cores": 0.5529,
+   "harness_cores": 0.0157,
+   "freq_mean_mhz": 3542.95,
+   "freq_p_mean_mhz": 3628.85,
+   "freq_e_mean_mhz": 3199.4167,
+   "fg_client": true,
+   "self_cpu_ms": 13.0208
+  },
+  {
+   "t": 1792714980.137,
+   "busy_pct": 12.3124,
+   "client_cores": 1.0679,
+   "background_cores": 0.3088,
+   "harness_cores": 0.0125,
+   "freq_mean_mhz": 3490.02,
+   "freq_p_mean_mhz": 3552.22,
+   "freq_e_mean_mhz": 3241.2,
+   "fg_client": true,
+   "self_cpu_ms": 15.625
+  },
+  {
+   "t": 1792714985.138,
+   "busy_pct": 15.7548,
+   "client_cores": 1.3426,
+   "background_cores": 0.5789,
+   "harness_cores": 0.0282,
+   "freq_mean_mhz": 3530.46,
+   "freq_p_mean_mhz": 3628.74,
+   "freq_e_mean_mhz": 3137.26,
+   "fg_client": true,
+   "self_cpu_ms": 15.625
+  },
+  {
+   "t": 1792714990.146,
+   "busy_pct": 12.8571,
+   "client_cores": 1.1837,
+   "background_cores": 0.2743,
+   "harness_cores": 0.0156,
+   "freq_mean_mhz": 3506.94,
+   "freq_p_mean_mhz": 3593.54,
+   "freq_e_mean_mhz": 3160.46,
+   "fg_client": true,
+   "self_cpu_ms": 12.5
+  },
+  {
+   "t": 1792714995.146,
+   "busy_pct": 12.5223,
+   "client_cores": 1.0969,
+   "background_cores": 0.2137,
+   "harness_cores": 0.0156,
+   "freq_mean_mhz": 3499.45,
+   "freq_p_mean_mhz": 3562.5167,
+   "freq_e_mean_mhz": 3247.2,
+   "fg_client": true,
+   "self_cpu_ms": 7.8125
+  },
+  {
+   "t": 1792715001.14,
+   "busy_pct": 13.6355,
+   "client_cores": 1.0783,
+   "background_cores": 0.5695,
+   "harness_cores": 0.0093,
+   "freq_mean_mhz": 3518.68,
+   "freq_p_mean_mhz": 3576.8,
+   "freq_e_mean_mhz": 3286.16,
+   "fg_client": true,
+   "self_cpu_ms": 12.5
+  },
+  {
+   "t": 1792715006.14,
+   "busy_pct": 12.7857,
+   "client_cores": 1.0429,
+   "background_cores": 0.3341,
+   "harness_cores": 0.0261,
+   "freq_mean_mhz": 3566.4333,
+   "freq_p_mean_mhz": 3652.9667,
+   "freq_e_mean_mhz": 3220.2667,
+   "fg_client": true,
+   "self_cpu_ms": 10.4167
+  },
+  {
+   "t": 1792715012.135,
+   "busy_pct": 11.9542,
+   "client_cores": 1.0743,
+   "background_cores": 0.2213,
+   "harness_cores": 0.0125,
+   "freq_mean_mhz": 3582.42,
+   "freq_p_mean_mhz": 3685.78,
+   "freq_e_mean_mhz": 3169.14,
+   "fg_client": true,
+   "self_cpu_ms": 12.5
+  },
+  {
+   "t": 1792715017.139,
+   "busy_pct": 15.8359,
+   "client_cores": 1.3847,
+   "background_cores": 0.4331,
+   "harness_cores": 0.0156,
+   "freq_mean_mhz": 3536.72,
+   "freq_p_mean_mhz": 3647.14,
+   "freq_e_mean_mhz": 3095.0,
+   "fg_client": true,
+   "self_cpu_ms": 12.5
+  },
+  {
+   "t": 1792715022.142,
+   "busy_pct": 14.0856,
+   "client_cores": 1.33,
+   "background_cores": 0.2947,
+   "harness_cores": 0.0208,
+   "freq_mean_mhz": 3604.0833,
+   "freq_p_mean_mhz": 3717.8167,
+   "freq_e_mean_mhz": 3149.1333,
+   "fg_client": true,
+   "self_cpu_ms": 13.0208
+  },
+  {
+   "t": 1792715028.134,
+   "busy_pct": 13.6038,
+   "client_cores": 1.3426,
+   "background_cores": 0.2095,
+   "harness_cores": 0.0125,
+   "freq_mean_mhz": 3593.0,
+   "freq_p_mean_mhz": 3717.18,
+   "freq_e_mean_mhz": 3096.26,
+   "fg_client": true,
+   "self_cpu_ms": 9.375
+  },
+  {
+   "t": 1792715033.138,
+   "busy_pct": 16.832,
+   "client_cores": 1.4911,
+   "background_cores": 0.6264,
+   "harness_cores": 0.0218,
+   "freq_mean_mhz": 3564.16,
+   "freq_p_mean_mhz": 3652.9,
+   "freq_e_mean_mhz": 3209.24,
+   "fg_client": true,
+   "self_cpu_ms": 15.625
+  },
+  {
+   "t": 1792715038.144,
+   "busy_pct": 24.3708,
+   "client_cores": 2.6658,
+   "background_cores": 0.4103,
+   "harness_cores": 0.0219,
+   "freq_mean_mhz": 3428.14,
+   "freq_p_mean_mhz": 3556.48,
+   "freq_e_mean_mhz": 2914.78,
+   "fg_client": true,
+   "self_cpu_ms": 12.5
+  },
+  {
+   "t": 1792715043.147,
+   "busy_pct": 20.784,
+   "client_cores": 2.1429,
+   "background_cores": 0.6124,
+   "harness_cores": 0.0182,
+   "freq_mean_mhz": 3496.7667,
+   "freq_p_mean_mhz": 3618.7167,
+   "freq_e_mean_mhz": 3009.0167,
+   "fg_client": true,
+   "self_cpu_ms": 15.625
+  },
+  {
+   "t": 1792715049.135,
+   "busy_pct": 18.857,
+   "client_cores": 2.0937,
+   "background_cores": 0.4814,
+   "harness_cores": 0.0281,
+   "freq_mean_mhz": 3466.36,
+   "freq_p_mean_mhz": 3579.14,
+   "freq_e_mean_mhz": 3015.36,
+   "fg_client": true,
+   "self_cpu_ms": 15.625
+  },
+  {
+   "t": 1792715054.138,
+   "busy_pct": 17.8736,
+   "client_cores": 1.9371,
+   "background_cores": 0.3259,
+   "harness_cores": 0.0313,
+   "freq_mean_mhz": 3552.4333,
+   "freq_p_mean_mhz": 3688.1667,
+   "freq_e_mean_mhz": 3009.5333,
+   "fg_client": true,
+   "self_cpu_ms": 13.0208
+  },
+  {
+   "t": 1792715060.135,
+   "busy_pct": 14.7626,
+   "client_cores": 1.3665,
+   "background_cores": 0.4464,
+   "harness_cores": 0.0188,
+   "freq_mean_mhz": 3504.54,
+   "freq_p_mean_mhz": 3600.68,
+   "freq_e_mean_mhz": 3119.84,
+   "fg_client": true,
+   "self_cpu_ms": 15.625
+  },
+  {
+   "t": 1792715065.14,
+   "busy_pct": 14.6107,
+   "client_cores": 1.159,
+   "background_cores": 0.4786,
+   "harness_cores": 0.0188,
+   "freq_mean_mhz": 3464.78,
+   "freq_p_mean_mhz": 3542.44,
+   "freq_e_mean_mhz": 3154.26,
+   "fg_client": true,
+   "self_cpu_ms": 9.375
+  },
+  {
+   "t": 1792715070.143,
+   "busy_pct": 12.9815,
+   "client_cores": 1.0794,
+   "background_cores": 0.3384,
+   "harness_cores": 0.0156,
+   "freq_mean_mhz": 3549.25,
+   "freq_p_mean_mhz": 3641.6,
+   "freq_e_mean_mhz": 3179.7833,
+   "fg_client": true,
+   "self_cpu_ms": 10.4167
+  },
+  {
+   "t": 1792715076.141,
+   "busy_pct": 12.8344,
+   "client_cores": 1.0711,
+   "background_cores": 0.3362,
+   "harness_cores": 0.0261,
+   "freq_mean_mhz": 3521.3667,
+   "freq_p_mean_mhz": 3608.8167,
+   "freq_e_mean_mhz": 3171.7333,
+   "fg_client": true,
+   "self_cpu_ms": 10.4167
+  },
+  {
+   "t": 1792715082.136,
+   "busy_pct": 14.2238,
+   "client_cores": 1.0355,
+   "background_cores": 0.6563,
+   "harness_cores": 0.0187,
+   "freq_mean_mhz": 3458.74,
+   "freq_p_mean_mhz": 3522.02,
+   "freq_e_mean_mhz": 3205.64,
+   "fg_client": true,
+   "self_cpu_ms": 15.625
+  },
+  {
+   "t": 1792715087.147,
+   "busy_pct": 11.7906,
+   "client_cores": 1.0224,
+   "background_cores": 0.2296,
+   "harness_cores": 0.0157,
+   "freq_mean_mhz": 3498.1833,
+   "freq_p_mean_mhz": 3572.6333,
+   "freq_e_mean_mhz": 3200.4833,
+   "fg_client": true,
+   "self_cpu_ms": 10.4167
+  },
+  {
+   "t": 1792715093.136,
+   "busy_pct": 12.4929,
+   "client_cores": 0.9835,
+   "background_cores": 0.2781,
+   "harness_cores": 0.0187,
+   "freq_mean_mhz": 3508.34,
+   "freq_p_mean_mhz": 3571.38,
+   "freq_e_mean_mhz": 3256.06,
+   "fg_client": true,
+   "self_cpu_ms": 15.625
+  },
+  {
+   "t": 1792715098.14,
+   "busy_pct": 14.8043,
+   "client_cores": 1.0682,
+   "background_cores": 0.582,
+   "harness_cores": 0.0188,
+   "freq_mean_mhz": 3453.06,
+   "freq_p_mean_mhz": 3516.18,
+   "freq_e_mean_mhz": 3200.56,
+   "fg_client": true,
+   "self_cpu_ms": 9.375
+  },
+  {
+   "t": 1792715103.14,
+   "busy_pct": 13.0609,
+   "client_cores": 1.0169,
+   "background_cores": 0.3052,
+   "harness_cores": 0.0235,
+   "freq_mean_mhz": 3500.45,
+   "freq_p_mean_mhz": 3576.9167,
+   "freq_e_mean_mhz": 3194.7667,
+   "fg_client": true,
+   "self_cpu_ms": 15.625
+  },
+  {
+   "t": 1792715109.134,
+   "busy_pct": 16.634,
+   "client_cores": 1.1029,
+   "background_cores": 0.7582,
+   "harness_cores": 0.0156,
+   "freq_mean_mhz": 3436.38,
+   "freq_p_mean_mhz": 3505.58,
+   "freq_e_mean_mhz": 3159.56,
+   "fg_client": true,
+   "self_cpu_ms": 12.5
+  },
+  {
+   "t": 1792715114.134,
+   "busy_pct": 16.529,
+   "client_cores": 1.0411,
+   "background_cores": 0.7392,
+   "harness_cores": 0.0219,
+   "freq_mean_mhz": 3465.06,
+   "freq_p_mean_mhz": 3531.18,
+   "freq_e_mean_mhz": 3200.58,
+   "fg_client": true,
+   "self_cpu_ms": 15.625
+  },
+  {
+   "t": 1792715119.147,
+   "busy_pct": 14.549,
+   "client_cores": 1.0606,
+   "background_cores": 0.5736,
+   "harness_cores": 0.026,
+   "freq_mean_mhz": 3504.9333,
+   "freq_p_mean_mhz": 3582.1167,
+   "freq_e_mean_mhz": 3196.15,
+   "fg_client": true,
+   "self_cpu_ms": 13.0208
+  },
+  {
+   "t": 1792715125.139,
+   "busy_pct": 14.6134,
+   "client_cores": 1.0716,
+   "background_cores": 0.5876,
+   "harness_cores": 0.0131,
+   "freq_mean_mhz": 3538.35,
+   "freq_p_mean_mhz": 3628.2833,
+   "freq_e_mean_mhz": 3178.7167,
+   "fg_client": true,
+   "self_cpu_ms": 7.8125
+  },
+  {
+   "t": 1792715131.133,
+   "busy_pct": 12.9593,
+   "client_cores": 1.0805,
+   "background_cores": 0.2496,
+   "harness_cores": 0.0219,
+   "freq_mean_mhz": 3439.64,
+   "freq_p_mean_mhz": 3495.12,
+   "freq_e_mean_mhz": 3217.66,
+   "fg_client": true,
+   "self_cpu_ms": 9.375
+  },
+  {
+   "t": 1792715136.14,
+   "busy_pct": 13.0499,
+   "client_cores": 1.0891,
+   "background_cores": 0.3002,
+   "harness_cores": 0.0157,
+   "freq_mean_mhz": 3441.05,
+   "freq_p_mean_mhz": 3504.4833,
+   "freq_e_mean_mhz": 3187.35,
+   "fg_client": true,
+   "self_cpu_ms": 10.4167
+  },
+  {
+   "t": 1792715142.142,
+   "busy_pct": 12.8385,
+   "client_cores": 1.0699,
+   "background_cores": 0.2964,
+   "harness_cores": 0.0156,
+   "freq_mean_mhz": 3437.88,
+   "freq_p_mean_mhz": 3509.8,
+   "freq_e_mean_mhz": 3150.2,
+   "fg_client": true,
+   "self_cpu_ms": 15.625
+  },
+  {
+   "t": 1792715147.143,
+   "busy_pct": 13.4724,
+   "client_cores": 1.0677,
+   "background_cores": 0.3762,
+   "harness_cores": 0.0187,
+   "freq_mean_mhz": 3494.94,
+   "freq_p_mean_mhz": 3601.24,
+   "freq_e_mean_mhz": 3069.8,
+   "fg_client": true,
+   "self_cpu_ms": 12.5
+  },
+  {
+   "t": 1792715152.144,
+   "busy_pct": 14.0088,
+   "client_cores": 1.0496,
+   "background_cores": 0.4701,
+   "harness_cores": 0.0188,
+   "freq_mean_mhz": 3470.04,
+   "freq_p_mean_mhz": 3541.74,
+   "freq_e_mean_mhz": 3183.34,
+   "fg_client": true,
+   "self_cpu_ms": 15.625
+  },
+  {
+   "t": 1792715157.147,
+   "busy_pct": 12.6341,
+   "client_cores": 1.0314,
+   "background_cores": 0.2908,
+   "harness_cores": 0.0188,
+   "freq_mean_mhz": 3563.96,
+   "freq_p_mean_mhz": 3655.22,
+   "freq_e_mean_mhz": 3198.82,
+   "fg_client": true,
+   "self_cpu_ms": 12.5
+  },
+  {
+   "t": 1792715162.147,
+   "busy_pct": 13.8034,
+   "client_cores": 1.0153,
+   "background_cores": 0.3046,
+   "harness_cores": 0.0156,
+   "freq_mean_mhz": 3417.1667,
+   "freq_p_mean_mhz": 3486.05,
+   "freq_e_mean_mhz": 3141.4833,
+   "fg_client": true,
+   "self_cpu_ms": 15.625
+  },
+  {
+   "t": 1792715168.149,
+   "busy_pct": 16.3278,
+   "client_cores": 1.0087,
+   "background_cores": 0.6415,
+   "harness_cores": 0.0104,
+   "freq_mean_mhz": 3433.1167,
+   "freq_p_mean_mhz": 3493.0667,
+   "freq_e_mean_mhz": 3193.3333,
+   "fg_client": true,
+   "self_cpu_ms": 10.4167
+  },
+  {
+   "t": 1792715174.144,
+   "busy_pct": 20.2157,
+   "client_cores": 1.0501,
+   "background_cores": 0.832,
+   "harness_cores": 0.0653,
+   "freq_mean_mhz": 3491.58,
+   "freq_p_mean_mhz": 3597.68,
+   "freq_e_mean_mhz": 3067.22,
+   "fg_client": false,
+   "self_cpu_ms": 12.5
+  }
+ ],
+ "hardware": {
+  "static": {
+   "platform": "windows",
+   "os": "Windows-11-10.0.26200-SP0",
+   "cpu_model": "12th Gen Intel(R) Core(TM) i7-12700F",
+   "logical_processors": 20
+  },
+  "topology": {
+   "status": "ok",
+   "value": {
+    "logical_processors": 20,
+    "cores": 12,
+    "efficiency_class": {
+     "0": 1,
+     "1": 1,
+     "2": 1,
+     "3": 1,
+     "4": 1,
+     "5": 1,
+     "6": 1,
+     "7": 1,
+     "8": 1,
+     "9": 1,
+     "10": 1,
+     "11": 1,
+     "12": 1,
+     "13": 1,
+     "14": 1,
+     "15": 1,
+     "16": 0,
+     "17": 0,
+     "18": 0,
+     "19": 0
+    },
+    "smt": {
+     "0": true,
+     "1": true,
+     "2": true,
+     "3": true,
+     "4": true,
+     "5": true,
+     "6": true,
+     "7": true,
+     "8": true,
+     "9": true,
+     "10": true,
+     "11": true,
+     "12": true,
+     "13": true,
+     "14": true,
+     "15": true,
+     "16": false,
+     "17": false,
+     "18": false,
+     "19": false
+    },
+    "classes": [
+     0,
+     1
+    ],
+    "hybrid": true,
+    "multi_group": false,
+    "performance_processors": [
+     0,
+     1,
+     2,
+     3,
+     4,
+     5,
+     6,
+     7,
+     8,
+     9,
+     10,
+     11,
+     12,
+     13,
+     14,
+     15
+    ],
+    "efficiency_processors": [
+     16,
+     17,
+     18,
+     19
+    ]
+   },
+   "source": "windows:GetLogicalProcessorInformationEx(RelationProcessorCore)"
+  },
+  "gpu": {
+   "status": "ok",
+   "value": [
+    {
+     "name": "NVIDIA GeForce RTX 3060 Ti",
+     "driver_version": "616.92",
+     "pci.bus_id": "00000000:01:00.0",
+     "clocks.max.gr": "2100",
+     "clocks.max.mem": "7001",
+     "power.limit": "200.00"
+    }
+   ],
+   "source": "nvidia-smi --query-gpu"
+  }
+ },
+ "hardware_sha": "944707e0516546d1e0739cce5736c88be64ae510444489fb057e5d2db181eb91",
+ "manifest_sha": null,
+ "artifacts_sha": "97fd0b336b54400e935baf9d32bb8431b6ca0bf7887982b5e3f13f24524b382f",
+ "jdk_sha": "f42dd0538c7e7b8e8cdc6663147634c82fb5b8fd6ad657a63046d33ee9928da0",
+ "flags": [
+  "reference-pre: 1.41 busy cores not attributed to any readable process",
+  "static: 1.21 busy cores not attributed to any readable process",
+  "pan: 1.13 busy cores not attributed to any readable process",
+  "fly: 1.31 busy cores not attributed to any readable process",
+  "repeat-01: 1.17 busy cores not attributed to any readable process",
+  "repeat-02: 1.14 busy cores not attributed to any readable process",
+  "repeat-03: 1.11 busy cores not attributed to any readable process",
+  "repeat-04: 1.30 busy cores not attributed to any readable process",
+  "repeat-05: 1.42 busy cores not attributed to any readable process",
+  "repeat-06: 1.26 busy cores not attributed to any readable process",
+  "repeat-07: 1.16 busy cores not attributed to any readable process",
+  "repeat-08: 1.20 busy cores not attributed to any readable process",
+  "reference-post: 1.39 busy cores not attributed to any readable process"
+ ]
+}

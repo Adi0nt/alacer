@@ -1361,6 +1361,17 @@ run `tools\aa_pilot_windows.bat check`, then `prepare` (the first real test of e
 policy; amend before the freeze if either fails), then `run` unattended (about 3.8 h), and write the results. No
 candidate series should be frozen before that pilot's verdict.
 
+**Windows validation update (session 31, 2026-10-22):** reference i7-12700F / RTX 3060 Ti integration and fresh
+d0/terrain smoke pass with the pinned Java 25 runtime, P-core affinity and complete critical telemetry. Windows
+quiet-window expiry now fails closed; smoke inspection precedes freeze; JSON replacement has bounded Windows
+retry; and an opt-in mob tick freeze eliminates the observed movement that NoAI alone permitted. 131 Java tests
+and 105 Python tests pass, with 2 Linux-only skips. The original aa31 calibration retained 7 accepted launches
+but failed a validator defect requiring one configuration hash across distinct scenes. Its failed calibration,
+manifest, source ZIP and attempts are preserved without rescoring. The correction scopes configuration identity
+to each scene and keeps all numerical gates unchanged. The [fresh aa31w2 protocol](benchmarks/2026-10-22-aa-pilot/windows2/README.md)
+has passed smoke and is awaiting its new freeze and full scored series; 1-2% measurement power remains unresolved.
+See [Windows findings](benchmarks/2026-10-22-aa-pilot/WINDOWS.md). No rendering default or candidate selection changed.
+
 **Frame-time mechanisms already in the archives: none qualifies.** The visibility search is still the largest
 frame-time component: about 60% of client-thread Java samples and 18-29% of frame time whenever the camera moves, and
 2-9% when it is still (session 26). Its remaining cost is the per-chunk traversal that optimization 1 already does.

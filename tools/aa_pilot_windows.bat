@@ -2,7 +2,7 @@
 rem Session 31 A/A pilot on the reference machine. Protocol: docs\benchmarks\2026-10-22-aa-pilot\README.md
 rem
 rem   tools\aa_pilot_windows.bat check     operator checks only (power plan, Python, JDK, no client running)
-rem   tools\aa_pilot_windows.bat prepare   build + tests, one smoke launch per scene, then freeze (attended)
+rem   tools\aa_pilot_windows.bat prepare   build + tests, one smoke launch per scene; inspect before freeze
 rem   tools\aa_pilot_windows.bat run       calibrate, pilot, evaluate (unattended; resumable: run it again)
 rem   tools\aa_pilot_windows.bat sitting N calibrate if needed, then at most N pairs (split the series)
 rem
@@ -10,8 +10,10 @@ rem Nothing here changes machine settings: it checks them and stops if they diff
 setlocal
 cd /d "%~dp0.."
 set "JAVA_HOME=C:\Program Files\Eclipse Adoptium\jdk-25.0.4.101-hotspot"
-set "PROTOCOL=docs\benchmarks\2026-10-22-aa-pilot\protocol.json"
+set "PROTOCOL=docs\benchmarks\2026-10-22-aa-pilot\windows2\protocol.json"
+if defined ALACER_AA_PROTOCOL set "PROTOCOL=%ALACER_AA_PROTOCOL%"
 set "PY=python"
+echo Protocol: %PROTOCOL%
 
 if not exist "%JAVA_HOME%\bin\java.exe" (echo JDK not found: %JAVA_HOME% & exit /b 2)
 %PY% -c "import sys; assert sys.version_info >= (3, 9)" || (echo Python 3.9 or newer is required & exit /b 2)
@@ -38,8 +40,8 @@ exit /b %errorlevel%
 call gradlew.bat build --offline --console=plain || exit /b 1
 %PY% -m unittest discover -s tools\tests -p "test_aa_*.py" || exit /b 1
 %PY% tools\aa_pilot.py smoke --protocol %PROTOCOL% || exit /b 1
-echo Inspect the smoke records under docs\benchmarks\2026-10-22-aa-pilot\records before freezing.
-%PY% tools\aa_pilot.py freeze --protocol %PROTOCOL% || exit /b 1
+echo Inspect the smoke records next to %PROTOCOL% before freezing.
+echo Then freeze explicitly: %PY% tools\aa_pilot.py freeze --protocol %PROTOCOL%
 exit /b 0
 
 :run

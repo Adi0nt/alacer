@@ -83,7 +83,10 @@ class Monitor:
     # -----------------------------------------------------------------------------------------------------
     def _cmdline(self, key, pid):
         if key not in self.cmdline_cache:
-            self.cmdline_cache[key] = self.platform.command_line(pid)
+            cmd = self.platform.command_line(pid)
+            if cmd:
+                self.cmdline_cache[key] = cmd
+            return cmd  # A temporary failure must be retried, never cached as absence.
         return self.cmdline_cache[key]
 
     def sample_once(self):
@@ -312,6 +315,20 @@ def downsample(samples, keep=('busy_pct', 'client_cores', 'background_cores', 'h
     return out
 
 
+def check_health(monitor):
+    """Standalone preflight: missing critical probes are failures, not a successful empty report."""
+    reasons = list(monitor.errors)
+    summary = summarize(monitor.samples, monitor.gpu_samples())
+    if monitor.topology.get('status') != 'ok':
+        reasons.append('processor topology unavailable')
+    for source in ('cpu', 'foreground', 'power_plan'):
+        if summary['availability'][source]['fraction_ok'] < 0.9:
+            reasons.append(f'{source}: less than 90% availability')
+    if monitor.samples and any(s.get('clients_seen') for s in monitor.samples):
+        reasons.append('another Minecraft client is running')
+    return reasons
+
+
 if __name__ == '__main__':
     # Standalone check: python tools/aa_monitor.py [seconds]  -> prints a summary of this machine right now.
     import sys
@@ -325,5 +342,8 @@ if __name__ == '__main__':
     m.start()
     time.sleep(seconds)
     m.stop()
+    failures = check_health(m)
     print(json.dumps({'static': p.static_info(), 'topology': m.topology, 'gpu': m.gpu.status,
-                      'summary': summarize(m.samples, m.gpu_samples()), 'errors': m.errors}, indent=1, default=str))
+                      'summary': summarize(m.samples, m.gpu_samples()), 'errors': m.errors,
+                      'check_failures': failures}, indent=1, default=str))
+    sys.exit(1 if failures else 0)

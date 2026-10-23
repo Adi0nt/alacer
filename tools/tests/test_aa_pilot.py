@@ -32,7 +32,7 @@ class FakeRunner(pilot.Runner):
     """Writes attempts and records as the real launch would, with outcomes chosen per label."""
 
     def __init__(self, protocol, archive, outcomes=None, noise=None, frame_fn=None):
-        super().__init__(protocol, archive, jdk=sys.prefix, platform=plat.LinuxPlatform())
+        super().__init__(protocol, archive, jdk=sys.prefix, platform=plat.Platform())
         self.outcomes = outcomes or {}
         self.noise = noise or {}
         self.frame_fn = frame_fn
@@ -290,7 +290,7 @@ class ArchiveGuards(unittest.TestCase):
             archive = pilot.Archive(protocol, path)
             archive.ensure()
             pilot.write_json(archive.attempts / 'aa31t-pl-d0-1-a.json', {'status': 'passed'})
-            runner = pilot.Runner(protocol, archive, jdk=sys.prefix, platform=plat.LinuxPlatform())
+            runner = pilot.Runner(protocol, archive, jdk=sys.prefix, platform=plat.Platform())
             with self.assertRaises(SystemExit):
                 runner.launch('aa31t-pl-d0-1-a', 'pilot', 'd0')
             self.assertEqual(json.loads((archive.attempts / 'aa31t-pl-d0-1-a.json').read_text()), {'status': 'passed'})
@@ -325,7 +325,7 @@ class ResultParsing(unittest.TestCase):
         self.bench = self.tmp / 'benchmarks'
         self.saved = pilot.BENCH
         pilot.BENCH = self.bench
-        self.runner = pilot.Runner(self.protocol, self.archive, jdk=sys.prefix, platform=plat.LinuxPlatform())
+        self.runner = pilot.Runner(self.protocol, self.archive, jdk=sys.prefix, platform=plat.Platform())
         self.label = 'aa31t-pl-d0-1-a'
         self.props = pilot.explicit_props(self.protocol, 'd0', self.label)
 

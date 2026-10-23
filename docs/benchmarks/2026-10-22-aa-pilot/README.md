@@ -1,7 +1,8 @@
-# Session 31: A/A pilot protocol and stability infrastructure (proposed; not run on the reference machine)
+# Session 31: A/A pilot protocol and stability infrastructure
 
-**Status: protocol and tooling written and tested; no scored launch has run.** Nothing in this folder is a
-measurement of the reference machine. The proposed series is [protocol.json](protocol.json) with this text; it is
+**Status: Windows integration and corrected smoke passed; calibration and pilot pending.** Reference-hardware smoke findings and retained
+rejections are recorded in [WINDOWS.md](WINDOWS.md). Smoke runs are not measurements of the machine's noise floor.
+The proposed series is [protocol.json](protocol.json) with this text; it is
 frozen by `tools/aa_pilot.py freeze` on the reference machine (hash manifest and sources ZIP, session 27's method)
 before its first calibration launch. Only container tooling tests have run so far (section "Validation so far"); they
 used software GL and judge nothing.
@@ -74,6 +75,11 @@ display lists (`benchmark.vbo=false`), view distance 12, a 2 GiB heap and a fres
   148 degrees within one phase). `benchmark.freezeMobs` sets NoAI on every loaded mob before each phase settles (the
   benchmark's own placed mobs are NoAI already), and `benchmark.mobPoseCheck` records each phase's largest mob
   movement and turn.
+  **Windows amendment before scoring:** NoAI alone still allowed a mob to move 0.26 blocks during a focused static
+  phase. `BenchmarkMobFreezeMixin`, applied only with both benchmark and freezeMobs enabled, now suppresses mob ticks
+  on client and integrated server, including newly loaded mobs, and clears velocity. NoAI remains set at phase
+  boundaries. This changes this opt-in benchmark control, including server simulation cost; it changes no normal
+  rendering default. Both A/A sides and their new calibration use the corrected control. The 0.25-block gate is unchanged.
 - `benchmark.processorSampling` records, every recorded frame, the logical processor the client thread is on
   (`GetCurrentProcessorNumberEx` through the Java 25 foreign-function API).
 
@@ -145,6 +151,7 @@ own acceptance.
 | Reference frame mean (`reference-pre` and `reference-post`) | within +/-5% of the calibration median of the same scene and phase |
 | Reference client and process CPU per frame | within +/- clamp(3 x calibration robust spread, 5%, 15%) of the calibration median |
 | Background CPU (other processes) in every recorded phase | mean <= 0.5 cores and 5 s rolling peak <= 1.5 cores |
+| Pre-launch quiet window | 10 s of consecutive fresh, finite CPU readings, mean <= 0.5 cores; a gap or unavailable reading resets the window; expiry at 300 s rejects without starting a client |
 | Foreground | the client in front in >= 95% of samples of every phase |
 | Power plan | one plan for the whole launch, High performance (`8c5e7fda-...`), equal to calibration's |
 | Affinity | constant and equal to the P-core mask; no client-thread frame on an efficiency core |
@@ -209,15 +216,33 @@ Prerequisites: the shared checkout's base world `run/saves/alacer-benchmark` (ha
 
 ```bat
 tools\aa_pilot_windows.bat check      & rem schedule, a 10 s monitor reading of this machine, status
-tools\aa_pilot_windows.bat prepare    & rem attended: build + tests, smoke per scene, inspect, freeze
+tools\aa_pilot_windows.bat prepare    & rem attended: build + tests, smoke per scene; stops for inspection
+python tools\aa_pilot.py freeze --protocol docs\benchmarks\2026-10-22-aa-pilot\protocol.json
 tools\aa_pilot_windows.bat run        & rem unattended (about 3.8 h): calibrate, pilot, evaluate; rerun resumes
 tools\aa_pilot_windows.bat sitting 6  & rem or: calibrate if needed, then at most 6 pairs per sitting
 ```
 
-Before `run`: close browsers, chat, music and the agent app; keep the game window in front (the runner keeps the
+Before standalone `run`: close browsers, chat, music and the agent app; keep the game window in front (the runner keeps the
 display on and the machine awake while a stage runs); do not build, analyse or edit the checkout until the stage ends
 (the manifest check rejects any change, as it did in the container test below). After `run`, read `pilot.md`, inspect
 rejected attempts and their monitoring data, then write the results section of this README.
+
+For the assisted reference run, the user authorized an idle sitting and closing Roblox, Zen Browser and Discord;
+those processes were stopped before the qualifying smoke. The Codex host remains resident to operate the startup
+focus helper. Its CPU is still counted as background, and every quantitative CPU, foreground and telemetry gate
+remains unchanged. This operator amendment is recorded before freezing and before any scored launch.
+
+`prepare` does not freeze automatically. Inspect every smoke record and its `environment_rejections` first;
+`freeze` refuses a scene without environmentally valid smoke evidence. A failed smoke launch returns a nonzero
+exit code. The Windows monitor check also fails on missing critical probes, rather than printing an empty success.
+
+For this attended Windows validation, `tools/aa_foreground_windows.mjs` runs through the Computer Use `node_repl`
+and its imported `@oai/sky` client. Its `service(45000)` method must be awaited inside each active tool call; background
+Computer Use calls have no execution context and are unsupported. It watches attempt-file changes and activates the uniquely identified Minecraft
+window once per newly observed client, before the reference phase. It never reclaims focus during a launch; the
+unchanged 95% foreground rule still rejects subsequent interference. Activation events are preserved under
+`run/alacer/stability/aa31/foreground-helper.jsonl`. The helper source is included in the freeze. Its file watcher
+is idle during recording; UI enumeration is performed only while waiting for a new client window.
 
 ## Validation so far (container tooling tests; not evidence about the reference machine)
 

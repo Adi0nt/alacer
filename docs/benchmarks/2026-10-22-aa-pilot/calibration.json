@@ -1,0 +1,281 @@
+{
+ "scenes": {
+  "d0": {
+   "launches": [
+    "aa31-cal-d0-2",
+    "aa31-cal-d0-3",
+    "aa31-cal-d0-4-r2"
+   ],
+   "reference-pre": {
+    "frame_mean_ms": {
+     "median": 0.5902411686586986,
+     "spread": 0.017895643134724516,
+     "values": [
+      0.6543028102201721,
+      0.5832217653748578,
+      0.5902411686586986
+     ],
+     "band": 0.05
+    },
+    "client_cpu_ms_per_frame": {
+     "median": 0.5704,
+     "spread": 0.01313900683186563,
+     "values": [
+      0.593,
+      0.5654,
+      0.5704
+     ],
+     "band": 0.05
+    },
+    "process_cpu_ms_per_frame": {
+     "median": 0.6225266758152573,
+     "spread": 0.04301446189345278,
+     "values": [
+      0.6675860251251349,
+      0.6050918554807104,
+      0.6225266758152573
+     ],
+     "band": 0.12904338568035834
+    }
+   },
+   "reference-post": {
+    "frame_mean_ms": {
+     "median": 0.6201843592049366,
+     "spread": 0.03622772042181054,
+     "values": [
+      0.6201843592049366,
+      0.6054752785178009,
+      0.6801164654674057
+     ],
+     "band": 0.05
+    },
+    "client_cpu_ms_per_frame": {
+     "median": 0.5746,
+     "spread": 0.028531127206926493,
+     "values": [
+      0.5746,
+      0.5638,
+      0.5908
+     ],
+     "band": 0.08559338162077948
+    },
+    "process_cpu_ms_per_frame": {
+     "median": 0.622602287512791,
+     "spread": 0.009189920950391204,
+     "values": [
+      0.622602287512791,
+      0.5950623116977476,
+      0.6264557493113886
+     ],
+     "band": 0.05
+    }
+   },
+   "backend": {
+    "gl.vendor": "NVIDIA Corporation",
+    "gl.renderer": "NVIDIA GeForce RTX 3060 Ti/PCIe/SSE2",
+    "gl.version": "4.6.0 NVIDIA 616.92",
+    "vboActive": "false",
+    "options.useVbo": "false",
+    "window": "1920x1080",
+    "os": "Windows 11 10.0 amd64",
+    "cpu": "20x 12th Gen Intel(R) Core(TM) i7-12700F",
+    "cpu.threads": "20",
+    "java.runtime.version": "25.0.4.1+1-LTS",
+    "java.vendor": "Eclipse Adoptium",
+    "backend.renderChunkClass": []
+   },
+   "p_core_mhz_median": 3378.4269160343256,
+   "background_cores_mean": [
+    0.1867914746099387,
+    0.19150104470909154,
+    0.1831804977985599
+   ]
+  },
+  "terrain": {
+   "launches": [
+    "aa31-cal-terrain-1",
+    "aa31-cal-terrain-2",
+    "aa31-cal-terrain-3",
+    "aa31-cal-terrain-4"
+   ],
+   "reference-pre": {
+    "frame_mean_ms": {
+     "median": 0.6180583459195539,
+     "spread": 0.044581747188880305,
+     "values": [
+      0.6198861273826127,
+      0.49523496100037145,
+      0.6162305644564949,
+      0.653576196856312
+     ],
+     "band": 0.05
+    },
+    "client_cpu_ms_per_frame": {
+     "median": 0.58405,
+     "spread": 0.040072893366790645,
+     "values": [
+      0.5894,
+      0.2039,
+      0.5787,
+      0.6102
+     ],
+     "band": 0.12021868010037193
+    },
+    "process_cpu_ms_per_frame": {
+     "median": 0.658590502372763,
+     "spread": 0.015458867889432376,
+     "values": [
+      0.6590620771734076,
+      0.6581189275721184,
+      0.6455638106975597,
+      0.6882816022352211
+     ],
+     "band": 0.05
+    }
+   },
+   "reference-post": {
+    "frame_mean_ms": {
+     "median": 0.6283321237706901,
+     "spread": 0.005199555153334021,
+     "values": [
+      0.6250024656250001,
+      0.6738366631852026,
+      0.6272757558650106,
+      0.6293884916763697
+     ],
+     "band": 0.05
+    },
+    "client_cpu_ms_per_frame": {
+     "median": 0.60415,
+     "spread": 0.0013501788527345113,
+     "values": [
+      0.6045,
+      0.6049,
+      0.5959,
+      0.6038
+     ],
+     "band": 0.05
+    },
+    "process_cpu_ms_per_frame": {
+     "median": 0.65039658966589,
+     "spread": 0.010826086063489986,
+     "values": [
+      0.6543157715625,
+      0.64647740776928,
+      0.6449034879563418,
+      0.7119650413821318
+     ],
+     "band": 0.05
+    }
+   },
+   "backend": {
+    "gl.vendor": "NVIDIA Corporation",
+    "gl.renderer": "NVIDIA GeForce RTX 3060 Ti/PCIe/SSE2",
+    "gl.version": "4.6.0 NVIDIA 616.92",
+    "vboActive": "false",
+    "options.useVbo": "false",
+    "window": "1920x1080",
+    "os": "Windows 11 10.0 amd64",
+    "cpu": "20x 12th Gen Intel(R) Core(TM) i7-12700F",
+    "cpu.threads": "20",
+    "java.runtime.version": "25.0.4.1+1-LTS",
+    "java.vendor": "Eclipse Adoptium",
+    "backend.renderChunkClass": [
+     "net.minecraft.client.render.world.GlListRenderChunk"
+    ]
+   },
+   "p_core_mhz_median": 3414.4530658606263,
+   "background_cores_mean": [
+    0.18375257475094808,
+    0.18658510306685389,
+    0.18717115545273683,
+    0.2195298114624424
+   ]
+  }
+ },
+ "pass": false,
+ "failures": [
+  "calibration launches ran with different configurations"
+ ],
+ "power_plans": [
+  {
+   "guid": "8c5e7fda-e8bf-4a96-9a85-a6e23a8c635c",
+   "name": "High performance"
+  }
+ ],
+ "config_sha": [
+  "06401f93e0142cd4a3d5b31bfbd2c783702a9a5b7e72dcb7c719b45242c7678b",
+  "7ef399971e4df2ff988ce8a39a186b1469f6fb08546c70157d2334b9c36a14d9"
+ ],
+ "written_utc": "2026-10-23T01:50:35.228344+00:00",
+ "slots": [
+  {
+   "scene": "d0",
+   "i": 1,
+   "labels": [
+    "aa31-cal-d0-1",
+    "aa31-cal-d0-1-r2",
+    "aa31-cal-d0-1-r3"
+   ],
+   "status": "exhausted"
+  },
+  {
+   "scene": "terrain",
+   "i": 1,
+   "labels": [
+    "aa31-cal-terrain-1"
+   ],
+   "status": "passed"
+  },
+  {
+   "scene": "d0",
+   "i": 2,
+   "labels": [
+    "aa31-cal-d0-2"
+   ],
+   "status": "passed"
+  },
+  {
+   "scene": "terrain",
+   "i": 2,
+   "labels": [
+    "aa31-cal-terrain-2"
+   ],
+   "status": "passed"
+  },
+  {
+   "scene": "d0",
+   "i": 3,
+   "labels": [
+    "aa31-cal-d0-3"
+   ],
+   "status": "passed"
+  },
+  {
+   "scene": "terrain",
+   "i": 3,
+   "labels": [
+    "aa31-cal-terrain-3"
+   ],
+   "status": "passed"
+  },
+  {
+   "scene": "d0",
+   "i": 4,
+   "labels": [
+    "aa31-cal-d0-4",
+    "aa31-cal-d0-4-r2"
+   ],
+   "status": "passed"
+  },
+  {
+   "scene": "terrain",
+   "i": 4,
+   "labels": [
+    "aa31-cal-terrain-4"
+   ],
+   "status": "passed"
+  }
+ ],
+ "protocol_sha256": "97f138185b1d2777c18e66b2644bc65737e51de6420b6c561ef327e7f2259948"
+}

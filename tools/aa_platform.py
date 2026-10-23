@@ -202,9 +202,13 @@ class Platform:
 
     def find_clients(self, procs=None):
         found = []
-        for (pid, _), p in (procs or self.processes()).items():
+        for (pid, _), p in (self.processes() if procs is None else procs).items():
             if p['name'].lower() in JAVA_NAMES:
                 cmd = self.command_line(pid)
+                if not cmd:
+                    if any(key[0] == pid for key in self.processes()):
+                        raise OSError(f'cannot classify Java process {pid}: command line unavailable')
+                    continue  # The process really exited after the first snapshot.
                 if is_client_command(cmd):
                     found.append({'pid': pid, 'exe': self.executable(pid), 'cmdline': cmd})
         return found
@@ -393,9 +397,16 @@ if WINDOWS:
         _fields_ = [('szName', ctypes.c_wchar_p), ('FmtValue', PDH_FMT_COUNTERVALUE)]
 
     kernel32.CreateToolhelp32Snapshot.restype = wintypes.HANDLE
+    kernel32.CreateToolhelp32Snapshot.argtypes = [wintypes.DWORD, wintypes.DWORD]
+    kernel32.Process32FirstW.argtypes = [wintypes.HANDLE, ctypes.POINTER(PROCESSENTRY32W)]
+    kernel32.Process32NextW.argtypes = [wintypes.HANDLE, ctypes.POINTER(PROCESSENTRY32W)]
     kernel32.OpenProcess.restype = wintypes.HANDLE
     kernel32.OpenProcess.argtypes = [wintypes.DWORD, wintypes.BOOL, wintypes.DWORD]
     kernel32.CloseHandle.argtypes = [wintypes.HANDLE]
+    kernel32.LocalFree.argtypes = [ctypes.c_void_p]
+    kernel32.LocalFree.restype = ctypes.c_void_p
+    kernel32.SetThreadExecutionState.argtypes = [wintypes.DWORD]
+    kernel32.SetThreadExecutionState.restype = wintypes.DWORD
     kernel32.GetProcessTimes.argtypes = [wintypes.HANDLE] + [ctypes.POINTER(FILETIME)] * 4
     kernel32.GetProcessAffinityMask.argtypes = [wintypes.HANDLE, ctypes.POINTER(ctypes.c_size_t),
                                                 ctypes.POINTER(ctypes.c_size_t)]
@@ -433,6 +444,8 @@ class WindowsPlatform(Platform):
             entry = PROCESSENTRY32W()
             entry.dwSize = ctypes.sizeof(entry)
             more = kernel32.Process32FirstW(snap, ctypes.byref(entry))
+            if not more:
+                raise ctypes.WinError(ctypes.get_last_error())
             while more:
                 pid = entry.th32ProcessID
                 info = {'pid': pid, 'ppid': entry.th32ParentProcessID, 'name': entry.szExeFile, 'cpu_s': None}
@@ -447,6 +460,8 @@ class WindowsPlatform(Platform):
                         kernel32.CloseHandle(h)
                 out[(pid, start)] = info
                 more = kernel32.Process32NextW(snap, ctypes.byref(entry))
+            if ctypes.get_last_error() != 18:  # ERROR_NO_MORE_FILES is the only successful end.
+                raise ctypes.WinError(ctypes.get_last_error())
         finally:
             kernel32.CloseHandle(snap)
         return out

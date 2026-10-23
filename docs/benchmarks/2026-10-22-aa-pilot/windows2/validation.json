@@ -1,0 +1,58 @@
+{
+ "series": "aa31w2",
+ "java_tests": {
+  "tests": 131,
+  "failures": 0,
+  "errors": 0
+ },
+ "python_tests": {
+  "discovered": 107,
+  "passed": 105,
+  "skipped_linux_only": 2,
+  "failures": 0,
+  "errors": 0
+ },
+ "windows_integration": "PASS",
+ "fresh_smoke": [
+  {
+   "label": "aa31w2-smoke-d0",
+   "phases": 13,
+   "environment_rejections": [],
+   "monitor_min_coverage": 1.0,
+   "critical_min_availability": 1.0,
+   "max_phase_background_cores": 0.32400561027304886,
+   "processor_frames": 341458,
+   "unknown_processor_frames": 0,
+   "e_core_frames": 0,
+   "monitor_self_cores": 0.013442095588235295,
+   "renderer": "NVIDIA GeForce RTX 3060 Ti/PCIe/SSE2",
+   "java_runtime": "25.0.4.1+1-LTS",
+   "still_max_move_blocks": 0.0,
+   "still_max_turn_degrees": 0.0
+  },
+  {
+   "label": "aa31w2-smoke-terrain",
+   "phases": 8,
+   "environment_rejections": [],
+   "monitor_min_coverage": 1.0,
+   "critical_min_availability": 1.0,
+   "max_phase_background_cores": 0.39669399476552475,
+   "processor_frames": 314820,
+   "unknown_processor_frames": 0,
+   "e_core_frames": 0,
+   "monitor_self_cores": 0.014753919860627178,
+   "renderer": "NVIDIA GeForce RTX 3060 Ti/PCIe/SSE2",
+   "java_runtime": "25.0.4.1+1-LTS",
+   "still_max_move_blocks": 0.0,
+   "still_max_turn_degrees": 0.0
+  }
+ ],
+ "log_sha256": {
+  "aa-config-scope-before.log": "13deed16895cb427e3f9089c41410d09020f254dc787799e6e5d07730efe8eb0",
+  "aa-config-scope-after.log": "8ac12aca8ee85d9faf4a1802270493b9f5d23087254b23255718de740af19613",
+  "aa-windows2-prepare.log": "8f76fa8d4f5e5765e5872553d965b8c47cd76e195eb79ebe168e9beeba8e8872",
+  "aa-windows-atomic-json-tests.log": "82ebff69da633cb33c2ba6d9c3a3b65dc8b86212fd071dc74d4fde7f25f6ac10",
+  "aa-windows2-prepare-2.log": "529e90a3d67849abdb5ad64c53f93da6ea4829817f056e56f7666c9dc3070653",
+  "aa-windows2-check.log": "b4d9d82a61844dd9574044fc55a0ff95c24b1bfe8a91fd45645e078fea8ee33c"
+ }
+}

@@ -1,4 +1,5 @@
 """Pure rules of the A/A pilot: schedule, labels, resume state, metrics, validation, calibration, pair identity."""
+import copy
 import csv
 import json
 import math
@@ -203,6 +204,42 @@ class Validation(unittest.TestCase):
 
     def rec(self, **kw):
         return fx.record(self.p, 'aa31-pl-d0-1-a', 'd0', 1_800_010_000.0, **kw)
+
+    def distinct_scene_calibration(self):
+        _, records = fx.calibration_for(self.p)
+        records = copy.deepcopy(records)
+        for record in records:
+            # Real Windows exports: terrain adds scene settings that d0 does not export.
+            config = {'render.fastChunkVisibility': 'true', 'options.entityShadows': 'true'}
+            if record['scene'] == 'terrain':
+                config.update({'options.fov': '70.0', 'backend.renderChunkClass': 'RenderChunk'})
+            record['config_sha'] = rules.canonical_sha(config)
+        return rules.build_calibration(self.p, records), records
+
+    def test_different_scenes_can_have_distinct_constant_configurations(self):
+        cal, _ = self.distinct_scene_calibration()
+        self.assertTrue(cal['pass'], cal['failures'])
+        self.assertNotEqual(cal['scenes']['d0']['config_sha'], cal['scenes']['terrain']['config_sha'])
+
+    def test_configuration_drift_within_a_scene_still_fails(self):
+        _, records = self.distinct_scene_calibration()
+        next(r for r in records if r['scene'] == 'd0')['config_sha'] = 'changed-within-d0'
+        cal = rules.build_calibration(self.p, records)
+        self.assertFalse(cal['pass'])
+        self.assertTrue(any('d0' in reason and 'configurations' in reason for reason in cal['failures']))
+
+    def test_pilot_cannot_use_another_scenes_configuration(self):
+        cal, records = self.distinct_scene_calibration()
+        record = self.rec()
+        record['config_sha'] = next(r['config_sha'] for r in records if r['scene'] == 'terrain')
+        reasons, _ = rules.validate_environment(self.p, record, cal)
+        self.assertTrue(any('configuration differs' in reason for reason in reasons))
+
+    def test_missing_scene_configuration_baseline_fails_closed(self):
+        cal = copy.deepcopy(self.cal)
+        cal['scenes']['d0'].pop('config_sha', None)
+        reasons, _ = rules.validate_environment(self.p, self.rec(), cal)
+        self.assertTrue(any('configuration baseline' in reason for reason in reasons))
 
     def test_calibration_sets_bands_from_its_own_launches(self):
         self.assertTrue(self.cal['pass'], self.cal['failures'])

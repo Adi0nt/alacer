@@ -22,6 +22,7 @@ nothing and the protocol for them must say so.
 import argparse
 import datetime
 import json
+import math
 import os
 from pathlib import Path
 import re
@@ -44,7 +45,8 @@ RAW = ROOT / 'run/alacer/stability'
 LATER_OFF = ('reuseShadowPositions', 'fastCameraSectionFaces')  # Experiments added after session 28's OFF list.
 BAD = s28.BAD + ('Chunk render task was', 'OpenGL Error', 'Chunk GPU context changed')
 TOOLING = ('tools/aa_pilot.py', 'tools/aa_rules.py', 'tools/aa_monitor.py', 'tools/aa_platform.py', 'tools/aa_stats.py',
-           'tools/aa_report.py', 'tools/run_allocation_selection.py', 'tools/run_particle_movement.py', 'settings.gradle',
+           'tools/aa_report.py', 'tools/aa_pilot_windows.bat', 'tools/aa_foreground_windows.mjs',
+           'tools/run_allocation_selection.py', 'tools/run_particle_movement.py', 'settings.gradle',
            'gradle/gradle-daemon-jvm.properties', 'gradle/wrapper/gradle-wrapper.properties')
 
 
@@ -66,7 +68,14 @@ def write_json(path, value, exclusive=False):
     else:
         tmp = path.with_suffix(path.suffix + '.tmp')
         tmp.write_bytes(data)
-        os.replace(tmp, path)
+        for attempt in range(6):
+            try:
+                os.replace(tmp, path)
+                break
+            except PermissionError:
+                if not plat.WINDOWS or attempt == 5:
+                    raise  # Never report a successful write when the target stayed unchanged.
+                time.sleep(0.05 * (attempt + 1))  # Windows readers/scanners can briefly deny replacement.
 
 
 def now_utc():
@@ -306,7 +315,8 @@ class Runner:
         check(self.platform.find_clients() == [], 'client running during freeze')
         attempts = archive.load(archive.attempts)
         for scene in self.protocol['pilot']['pairs']:
-            check(any(a['status'] == 'passed-smoke' and a['scene'] == scene for a in attempts.values()),
+            check(any(a['status'] == 'passed-smoke' and a['scene'] == scene
+                      and a.get('environment_rejections') == [] for a in attempts.values()),
                   f'a passing smoke launch of {scene} must precede the freeze')
         state = self.state_hashes()
         check(all(state['source_sha256'].values()), 'missing sources or tooling')
@@ -373,8 +383,12 @@ class Runner:
                 monitor = mon.Monitor(self.platform, raw, interval=interval, top_n=self.protocol['monitor']['top_n'],
                                       gpu=gpu, topology=topology)
                 monitor.start()
-                waited = self.wait_quiet(monitor)
-                attempt['quiet_wait_s'] = waited
+                quiet_started = time.monotonic()
+                try:
+                    attempt['quiet_wait_s'] = self.wait_quiet(monitor)
+                except CheckFailed:
+                    attempt['quiet_wait_s'] = time.monotonic() - quiet_started
+                    raise
             command = launch_command(self.protocol, props, self.jdk, self.init)
             attempt.update(status='running', command=command, hardware_sha=rules.canonical_sha(hardware),
                            launch_epoch=time.time())
@@ -431,6 +445,7 @@ class Runner:
                 reasons, flags = [], ['monitoring off (overhead stage)']
             record['flags'] = flags
             if stage == 'smoke':
+                attempt['environment_rejections'] = reasons
                 flags = flags + [f'(smoke) would reject: {r}' for r in reasons]
                 reasons = []
             write_json(archive.records / (label + '.json'), record, exclusive=True)
@@ -464,17 +479,35 @@ class Runner:
 
     def wait_quiet(self, monitor):
         cfg = self.protocol['monitor']
-        need = int(cfg['pre_launch_quiet_s'] / cfg['interval_s'])
+        interval = cfg['interval_s']
+        check(interval > 0 and cfg['pre_launch_quiet_s'] > 0 and cfg['quiet_wait_max_s'] > 0,
+              'quiet-window durations must be positive')
+        need = math.ceil(cfg['pre_launch_quiet_s'] / interval)
         start = time.monotonic()
+        wall_start = time.time()
         while True:
-            time.sleep(cfg['interval_s'])
-            recent = [s['cpu']['value']['background_cores'] for s in monitor.samples[-need:]
-                      if s.get('cpu', {}).get('status') == 'ok']
-            if len(recent) >= need and sum(recent) / len(recent) <= self.protocol['limits']['background_cores_mean']:
-                return time.monotonic() - start
-            if time.monotonic() - start > cfg['quiet_wait_max_s']:
-                monitor.mark('quiet-wait-expired')
-                return time.monotonic() - start
+            time.sleep(interval)
+            elapsed = time.monotonic() - start
+            if elapsed >= cfg['quiet_wait_max_s']:
+                monitor.mark('quiet-wait-expired', waited_s=elapsed)
+                raise CheckFailed('pre-launch quiet window expired; launch rejected (no client started)')
+            recent = list(monitor.samples[-need:])
+            if len(recent) < need:
+                continue
+            stamps = [s.get('t', 0) for s in recent]
+            now = time.time()
+            if (stamps[0] < wall_start or not 0 <= now - stamps[-1] <= 1.5 * interval
+                    or any(not 0 < b - a <= 1.5 * interval for a, b in zip(stamps, stamps[1:]))):
+                continue  # A stalled monitor or a telemetry gap is not a quiet window.
+            cpu = [s.get('cpu', {}) for s in recent]
+            if any(r.get('status') != 'ok' or not isinstance(r.get('value'), dict) for r in cpu):
+                continue
+            values = [r['value'].get('background_cores') for r in cpu]
+            if any(not isinstance(v, (int, float)) or not math.isfinite(v) or v < 0 for v in values):
+                continue
+            if elapsed >= cfg['pre_launch_quiet_s'] and sum(values) / len(values) <= self.protocol['limits']['background_cores_mean']:
+                monitor.mark('quiet-window-passed', waited_s=elapsed, samples=need)
+                return elapsed
 
     def verify_launcher(self, pid, props):
         exe = self.platform.executable(pid)
@@ -638,7 +671,8 @@ class Runner:
             k = 1
             while f'{self.protocol["series"]}-smoke-{scene}{rules.retry_suffix(k)}' in attempts:
                 k += 1  # A repeated smoke gets a new label; earlier smoke attempts stay.
-            self.launch(f'{self.protocol["series"]}-smoke-{scene}{rules.retry_suffix(k)}', 'smoke', scene)
+            attempt = self.launch(f'{self.protocol["series"]}-smoke-{scene}{rules.retry_suffix(k)}', 'smoke', scene)
+            check(attempt['status'] == 'passed-smoke', f'{scene} smoke failed: {attempt["reasons"]}')
 
     def run_calibration(self):
         check(self.manifest is not None, 'not frozen: run smoke and freeze first')
