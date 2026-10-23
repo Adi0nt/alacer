@@ -24,6 +24,10 @@ public final class ModernGl {
 		return !FORCE_FALLBACK && Alacer.get() != null && (Alacer.get().config().directBufferUploads || verify())
 			&& GLContext.getCapabilities().OpenGL45 && RenderCompatibility.buffers();
 	}
+	public static boolean pipelineActive() {
+		return !FORCE_FALLBACK && Alacer.get() != null && (Alacer.get().config().terrainVaos || verify())
+			&& RenderCompatibility.buffers();
+	}
 
 	/** Nonzero names must be real objects for named-buffer operations, not merely glGenBuffers reservations. */
 	public static int createBuffer() { namedCreates++; return GL45.glCreateBuffers(); }

@@ -26,6 +26,7 @@ public class ModernVertexBufferMixin implements ModernVertexBuffer {
 	@Unique private ContextCapabilities alacer$context;
 	@Unique private boolean alacer$created;
 	@Override public int alacer$bufferId() { return this.id; }
+	@Override public int alacer$vertexCount() { return this.vertexCount; }
 	@Override public TerrainVertexArray alacer$vertexArray() {
 		if (this.alacer$array == null) { this.alacer$array = new TerrainVertexArray(); }
 		return this.alacer$array;

@@ -1,0 +1,264 @@
+"""Focused 6-client diagnostic investigation of Alacer terrain rendering mechanisms."""
+import copy
+import csv
+import datetime
+import gzip
+import hashlib
+import json
+import os
+from pathlib import Path
+import subprocess
+import sys
+import traceback
+import zipfile
+
+HERE = Path(__file__).resolve().parent
+ROOT = HERE.parents[2]
+OLD = HERE.parent / '2026-10-23-modern-rendering'
+JDK = Path('C:/Program Files/Eclipse Adoptium/jdk-25.0.4.101-hotspot')
+ENV = {**os.environ, 'JAVA_HOME': str(JDK), 'PATH': str(JDK/'bin') + ';' + os.environ['PATH'], 'PYTHONDONTWRITEBYTECODE': '1'}
+RECEIPTS = []
+LAYERS = ['terrain_solid', 'terrain_cutout_mipped', 'terrain_cutout', 'terrain_translucent']
+PHASES = ['static', 'pan', 'fly']
+
+
+def now():
+    return datetime.datetime.now(datetime.timezone.utc).isoformat()
+
+
+def digest(path):
+    return hashlib.sha256(path.read_bytes()).hexdigest()
+
+
+def save(name, value):
+    (HERE/name).write_text(json.dumps(value, indent=2) + '\n', encoding='utf-8', newline='\n')
+
+
+def require(condition, message):
+    if not condition:
+        raise RuntimeError(message)
+
+
+def source_hashes():
+    return {p.relative_to(ROOT).as_posix(): digest(p) for p in sorted((ROOT/'src').rglob('*')) if p.is_file()}
+
+
+def check(frozen):
+    changed = [p for p, h in frozen.items() if not (ROOT/p).is_file() or digest(ROOT/p) != h]
+    require(not changed, 'Frozen bytes changed: ' + repr(changed))
+
+
+def check_idle():
+    command = "Get-CimInstance Win32_Process | Where-Object { $_.Name -match '^java(w)?\\.exe$' -and $_.CommandLine -match 'KnotClient|GradleWrapperMain.*runClient' } | Select-Object ProcessId,CommandLine | ConvertTo-Json -Compress"
+    active = subprocess.check_output(['powershell.exe', '-NoProfile', '-Command', command], text=True).strip()
+    require(not active, 'Another client/launcher is active: ' + active)
+
+
+def validate_launch(data, label, arm):
+    env = data['environment']
+    ref = json.loads((OLD/'raw/20261023-133916-mg-ablation-control-vis_on-ecl_on-ent0/summary.json').read_text())
+    fixed = ('java.version', 'java.runtime.version', 'java.vm.version', 'cpu', 'gl.vendor', 'gl.renderer', 'gl.version',
+             'window', 'options.renderDistance', 'jvm.maxHeapMB', 'vboActive', 'options.vsync',
+             'alacer.configSource', 'benchmark.generationRun', 'benchmark.backendScenario', 'benchmark.screenshots')
+    for key in fixed:
+        require(env[key] == ref['environment'][key], f'{key}: unexpected {env[key]}')
+    require(sorted(env['mods'].split()) == sorted(ref['environment']['mods'].split()), 'Mods list mismatch')
+    if arm.get('jfr'):
+        require('StartFlightRecording' in env['jvm.args'], 'Expected JFR args missing')
+    else:
+        require('StartFlightRecording' not in env['jvm.args'], 'Unexpected JFR args')
+    for phase in PHASES:
+        p = data['phases'][phase]
+        require(p['dropped_frames'] == 0, f'{label} dropped frames in {phase}')
+        require(p['client_thread_cpu_ms_per_frame'] > 0, f'{label} invalid CPU time in {phase}')
+
+
+def launch_client(index, label, arm, frozen):
+    check_idle()
+    check(frozen)
+    log = HERE/'logs'/(label + '.log')
+    require(not log.exists(), 'Attempt log already exists: ' + label)
+    require(not list((ROOT/'run/alacer/benchmarks').glob('*-' + label + '-*')), 'Attempt raw path already exists: ' + label)
+
+    args = [str(ROOT/'gradlew.bat'), '--offline', '--console=plain', 'runClient',
+            '-Pwindow=1920x1080', '-Pxmx=2G',
+            '-Palacer.benchmark=true', '-Palacer.benchmark.vbo=true', '-Palacer.benchmark.viewDistance=12',
+            '-Palacer.benchmark.label=' + label,
+            '-Palacer.render.fastChunkNeighbours=false',
+            '-Palacer.render.directBufferUploads=false',
+            '-Palacer.render.modernGl.diagnostic=true',
+            '-Palacer.render.terrainVaos=' + str(arm.get('vaos', False)).lower(),
+            '-Palacer.modernGl.forceFallback=' + str(arm.get('fallback', False)).lower(),
+            '-Palacer.modernGl.skipVaoQuery=' + str(arm.get('skipQuery', False)).lower(),
+            '-Palacer.modernGl.diagnosticNoGlBind=' + str(arm.get('noGlBind', False)).lower()]
+    if arm.get('jfr'):
+        args.extend(['-Pjfr=' + label, '-PjfrDebugNonSafepoints=true'])
+
+    receipt = {'label': label, 'index': index, 'arm': arm, 'command': args,
+               'java_home': str(JDK), 'started_utc': now(), 'status': 'running',
+               'log': log.relative_to(ROOT).as_posix()}
+    RECEIPTS.append(receipt)
+    save('launches.json', RECEIPTS)
+    print(f'START [{index}/6] {label} {now()}', flush=True)
+
+    with log.open('x', encoding='utf-8') as stream:
+        proc = subprocess.Popen(args, cwd=ROOT, env=ENV, stdout=stream, stderr=subprocess.STDOUT)
+        receipt['launcher_pid'] = proc.pid
+        save('launches.json', RECEIPTS)
+        try:
+            code = proc.wait(timeout=240)
+        except subprocess.TimeoutExpired:
+            subprocess.run(['taskkill.exe', '/PID', str(proc.pid), '/T', '/F'], capture_output=True)
+            receipt.update(status='timeout', ended_utc=now())
+            save('launches.json', RECEIPTS)
+            raise RuntimeError('Launch timed out: ' + label)
+
+    receipt.update(exit=code, ended_utc=now(), log_sha256=digest(log), status='validating')
+    save('launches.json', RECEIPTS)
+    require(code == 0, f'Launch failed ({code}): {label}')
+    text = log.read_text(encoding='utf-8', errors='replace')
+    require(not any(x in text for x in ('Benchmark aborted', 'benchmark aborted', 'OpenGL Error', 'Mixin apply failed')),
+            'Client error in log: ' + label)
+    matches = list((ROOT/'run/alacer/benchmarks').glob('*-' + label + '-*/summary.json'))
+    require(len(matches) == 1, 'Missing/ambiguous summary: ' + label)
+    receipt['summary'] = matches[0].relative_to(ROOT).as_posix()
+    summary_data = json.loads(matches[0].read_text())
+    validate_launch(summary_data, label, arm)
+    check_idle()
+    check(frozen)
+    receipt['status'] = 'valid'
+    save('launches.json', RECEIPTS)
+    print(f'END [{index}/6] {label} {now()}', flush=True)
+    return receipt
+
+
+def parse_metrics(receipt):
+    summary_path = ROOT / receipt['summary']
+    data = json.loads(summary_path.read_text())
+    env = data['environment']
+    res = {
+        'label': receipt['label'],
+        'arm': receipt['arm'],
+        'terrain_draw_calls': int(env.get('modernGl.terrainDrawCalls', 0)),
+        'terrain_draw_vertices': int(env.get('modernGl.terrainDrawVertices', 0)),
+        'terrain_chunks_rendered': int(env.get('modernGl.terrainChunksRendered', 0)),
+        'vao_binds': int(env.get('modernGl.vaoBinds', 0)),
+        'pointer_setups': int(env.get('modernGl.pointerSetups', 0)),
+        'phases': {}
+    }
+    for phase in PHASES:
+        p = data['phases'][phase]
+        with (summary_path.parent / (phase + '.csv')).open(newline='') as f:
+            rows = csv.DictReader(f)
+            count = total = 0
+            for row in rows:
+                total += int(row['visible_chunks'])
+                count += 1
+        res['phases'][phase] = {
+            'frame_ms': 1000 / p['avg_fps'],
+            'cpu_ms': p['client_thread_cpu_ms_per_frame'],
+            'p99_ms': p['frame_p99_ms'],
+            'slow1_ms': 1000 / p['one_percent_low_fps'],
+            'alloc_bytes': p['alloc_mean_bytes'],
+            'visible_chunks': total / count if count else 0,
+            'visibility_ms': p['visibility_mean_ms'],
+            'terrain_layers_ms': sum(p[k + '_mean_ms'] for k in LAYERS),
+            'render_ms': p['render_mean_ms'],
+            'setup_ms': p['terrain_setup_mean_ms'],
+            'upload_ms': p['chunk_upload_mean_ms'],
+            'swap_ms': p['swap_mean_ms'],
+            'process_cpu_cores': p['process_cpu_cores'],
+            **{k + '_ms': p[k + '_mean_ms'] for k in LAYERS}
+        }
+    return res
+
+
+def archive():
+    manifest = json.loads((HERE/'raw-manifest.json').read_text()) if (HERE/'raw-manifest.json').exists() else {}
+    for receipt in RECEIPTS:
+        if 'summary' not in receipt:
+            continue
+        directory = ROOT / receipt['summary']
+        directory = directory.parent
+        target = HERE/'raw'/directory.name
+        target.mkdir(parents=True, exist_ok=True)
+        for p in directory.iterdir():
+            if p.suffix not in ('.csv', '.json'):
+                continue
+            original = p.read_bytes()
+            manifest[p.relative_to(ROOT).as_posix()] = hashlib.sha256(original).hexdigest()
+            dest = target/(p.name + '.gz' if p.suffix == '.csv' else p.name)
+            content = gzip.compress(original, mtime=0) if p.suffix == '.csv' else original
+            if dest.exists():
+                require(dest.read_bytes() == content, 'Refusing archive overwrite: ' + str(dest))
+            else:
+                dest.write_bytes(content)
+    save('raw-manifest.json', manifest)
+
+
+def main():
+    require(Path.cwd().resolve() == ROOT, 'Run from specified worktree root')
+    check_idle()
+    global RECEIPTS
+    if (HERE/'launches.json').exists():
+        RECEIPTS = json.loads((HERE/'launches.json').read_text())
+        frozen = json.loads((HERE/'diagnostic-freeze.json').read_text())
+    else:
+        frozen = source_hashes()
+        save('diagnostic-freeze.json', frozen)
+        with zipfile.ZipFile(HERE/'diagnostic-source.zip', 'w', zipfile.ZIP_DEFLATED) as z:
+            for p in sorted((ROOT/'src').rglob('*')):
+                if p.is_file():
+                    z.write(p, p.relative_to(ROOT).as_posix())
+
+        save('preflight.json', {
+            'started_utc': now(),
+            'java_home': str(JDK),
+            'gradle_java': subprocess.check_output([str(JDK/'bin/java.exe'), '-version'], stderr=subprocess.STDOUT, text=True),
+            'frozen_source_entries': len(frozen),
+            'launch_budget': 6,
+            'arms': [
+                'diag-1-ctrl: control baseline with workload instrumentation',
+                'diag-2-vao: active VAO baseline with workload instrumentation',
+                'diag-3-noquery: active VAO with query bypassed',
+                'diag-4-nobind: active VAO with Java checks active and glBindVertexArray bypassed (crashed in native glDrawArrays)',
+                'diag-5-fallback: forced fallback with hooks present',
+                'diag-6-jfr: active VAO with JFR profiling enabled'
+            ]
+        })
+    (HERE/'logs').mkdir(exist_ok=True)
+
+    configs = [
+        ('diag-1-ctrl', {'vaos': False, 'fallback': False, 'skipQuery': False, 'noGlBind': False, 'jfr': False}),
+        ('diag-2-vao', {'vaos': True, 'fallback': False, 'skipQuery': False, 'noGlBind': False, 'jfr': False}),
+        ('diag-3-noquery', {'vaos': True, 'fallback': False, 'skipQuery': True, 'noGlBind': False, 'jfr': False}),
+        ('diag-4-nobind', {'vaos': True, 'fallback': False, 'skipQuery': False, 'noGlBind': True, 'jfr': False}),
+        ('diag-5-fallback', {'vaos': True, 'fallback': True, 'skipQuery': False, 'noGlBind': False, 'jfr': False}),
+        ('diag-6-jfr', {'vaos': True, 'fallback': False, 'skipQuery': False, 'noGlBind': False, 'jfr': True}),
+    ]
+
+    existing_labels = {r['label']: r for r in RECEIPTS}
+    for i, (label, arm) in enumerate(configs, 1):
+        if label in existing_labels:
+            print(f'ALREADY RECORDED [{i}/6] {label}: {existing_labels[label].get("status")}', flush=True)
+            continue
+        launch_client(i, label, arm, frozen)
+
+    archive()
+    results = [parse_metrics(r) for r in RECEIPTS if r.get('status') == 'valid']
+    save('evaluation.json', {'results': results})
+    check(frozen)
+    print(f'DIAGNOSTIC SUITE FINISHED ({len(RECEIPTS)} launches total; {len(results)} valid)', flush=True)
+
+
+if __name__ == '__main__':
+    try:
+        main()
+    except Exception as error:
+        if RECEIPTS:
+            if RECEIPTS[-1]['status'] != 'valid':
+                RECEIPTS[-1]['status'] = 'failed'
+            save('launches.json', RECEIPTS)
+            archive()
+        save('failure.json', {'time_utc': now(), 'error': repr(error), 'traceback': traceback.format_exc()})
+        raise

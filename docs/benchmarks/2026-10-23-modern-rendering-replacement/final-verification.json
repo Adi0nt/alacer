@@ -1,0 +1,30 @@
+{
+  "base_source_head": "c75d1e27af89f0245284ee8ed9082dc4cc8bce7e",
+  "branch": "claude/magical-planck-7t9612",
+  "completed_native_clients": 16,
+  "all_receipts_valid": true,
+  "gates_pass": false,
+  "failed_gates": [
+    "terrain pan frame time regressed 5.21% (limit 1.0%)",
+    "terrain pan CPU/frame regressed 3.74% (limit 1.0%)",
+    "terrain pan frame time regressed 5.21% (limit 2.0%)",
+    "terrain pan terrain layers regressed 2.11% (limit 1.0%)"
+  ],
+  "no_client_or_launcher_remaining": true,
+  "primary_head": "0de17a5aa557c78f9f394800a1ef23a8dbbe08d1",
+  "primary_clean": true,
+  "replay": {
+    "raw_files_verified": 160,
+    "logs_verified": 16,
+    "evaluation_structurally_identical": true,
+    "note": "JSON numeric/structural equality; no cross-platform byte-identity claim."
+  },
+  "helper_sha256": {
+    "run_series.py": "082749e0f6c28787bbc819f4d468c1c454aa79875918c990676cbb43bcbc51da",
+    "evaluate.py": "8dcfec922c5dbe183454d273a263bcd61d69928b83ff0ca06ab480405a31fa0e",
+    "replay.py": "a76c2e60932c3c645087dda4cce92b8fcdf51bec5b43f0598bf47a4b2b5ba151"
+  },
+  "shipping_source_changes": true,
+  "unit_tests_pass": true,
+  "defaults_promoted": false
+}
