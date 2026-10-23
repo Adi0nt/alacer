@@ -5,7 +5,7 @@ textures, slider handles, bordered text field, tooltip renderer and background.
 The centered, two-column layout follows the game's existing options screens.
 Resource packs continue to supply the standard widget textures.
 
-Graphics, Details, Display and Performance organize 28 controls. Search matches
+Graphics, Details, Display and Performance organize 35 controls. Search matches
 names and descriptions across every category. Hover a setting for its full name,
 description, default and application requirements. Long button names shorten to
 fit; their values remain visible.
@@ -45,15 +45,97 @@ Reverting that preference to the currently active value clears the restart notic
 
 ## Independent quality controls
 
-| Setting | Choices | Application |
-|---|---|---|
-| Leaves | Follow Graphics, Fast, Fancy | Rebuilds terrain using Minecraft's existing leaf modes. |
-| Weather | Follow Graphics, Fast, Fancy, Off | Changes rain/snow geometry and drawing distance. |
+Minecraft 1.8.9 reads its single Graphics option (`GameOptions.fancyGraphics`)
+in five places outside its own load/save/menu code. Each read that changes what
+is drawn now has its own Details control; Graphics remains the base for every
+control set to **Follow Graphics**:
 
-Both default to **Follow Graphics**, preserving the base Graphics choice. Weather
-Off hides precipitation geometry; server weather, sounds and splash particles
-remain. These controls expose existing rendering modes independently. They do
-not introduce a new enhanced Fancy renderer or establish a performance gain.
+| Graphics read | Setting | Choices | Application |
+|---|---|---|---|
+| `WorldRenderer.reload` (2) | Leaves | Follow Graphics, Fast, Fancy | Rebuilds terrain using Minecraft's existing leaf modes. |
+| `GameRenderer.renderSnowAndRain` | Weather | Follow Graphics, Fast, Fancy, Off | Changes rain/snow geometry and drawing distance. |
+| `GameRenderer.tickRain` | Rain splashes | Follow Graphics, Fast, Fancy, Off | Fast halves the rain strength used to spawn splashes (about a quarter as many particles). Off spawns none. Immediate. |
+| `GameGui.render` (`Minecraft.isFancyGraphicsEnabled`) | Vignette | Follow Graphics, Off, On | Off skips the full-screen vignette overlay, including its red world-border warning tint, exactly as Fast Graphics does. Immediate. |
+| `Minecraft.runGame` | none | | Only the F3 debug text (" fast"); not a rendering decision. |
+
+Weather Off hides precipitation geometry; server weather, sounds and splash
+particles remain (use Rain splashes for those particles). Rain splashes Off
+still samples splash positions, so rain sounds keep vanilla's behaviour. The
+Particles setting continues to scale or disable splashes as before.
+
+Additional Details controls are independent of Graphics and default to vanilla:
+
+| Setting | Choices | Default | Application |
+|---|---|---|---|
+| Stars | Off, On | On | Off reports zero star brightness to the sky pass, which skips the star list. Sky colour, sun, moon and clouds are unchanged. Immediate. |
+| Enchantment glint | Off, On | On | Off skips the glint pass on enchanted items, potions and other glinting items (world, hand, inventory) and on worn enchanted armor. Immediate. |
+| Dropped items | Fast, Fancy | Fancy | Fast draws one model per dropped stack instead of up to five, chosen by stack size. Immediate. |
+
+These controls expose existing rendering modes, or skip an existing optional
+pass. They do not introduce a new renderer. Saved values are `quality.*`
+options in `config/alacer.properties`; every value is included in profile and
+benchmark exports (each phase's `config`), and benchmark launches use the
+defaults above.
+
+## Validation, 2026-10-22: split Graphics and new Details controls
+
+Evidence is in [validation/2026-10-22-video-settings](validation/2026-10-22-video-settings/).
+This was a Linux cloud container, not the reference Windows machine:
+Temurin 25.0.5+8, Xvfb at 1280x720, Mesa llvmpipe software OpenGL 4.5, 4 CPU
+threads. No GPU, so the timings below are not comparable to the benchmark archives.
+
+**Build and unit tests.** `clean build --offline` with `JAVA_HOME` set to that JDK:
+110 tests, no failures/errors/skips; 175 main classes at classfile version 69.
+New tests cover menu/config default agreement, persistence and live update,
+invalid values, clamping, launch-override locking, benchmark defaults, labels,
+effects and search.
+
+**Real client.** A temporary harness ([VisualCheck.java](validation/2026-10-22-video-settings/VisualCheck.java),
+not shipped) created a fresh superflat spectator world. It changed each setting
+through `VideoSettingsBackend.apply`, the menu's Apply path, and took screenshots
+in place. Four launches: `full`, `readback`, `rerun`, `vignette`. A final smoke
+launch of the shipping build (harness removed) reached the title screen without
+mixin or injection errors.
+
+| Setting | Observed |
+|---|---|
+| Rain splashes | Mean live particles in rain over 200 frames: Fancy 653.5, Fast 163.7, Off 0.0, Follow Graphics 654.7 (Graphics Fancy) and 163.4 (Graphics Fast). |
+| Vignette | Under a 31x31 roof: corner mean 0.159 Off, 0.087 On, 0.087 Follow Graphics (Fancy), 0.151 Follow Graphics (Fast); centre unchanged. At noon or night outdoors vanilla's vignette is effectively invisible (the client world keeps full sky light), so the overlay costs frame time there without visibly changing the image. |
+| Stars | Midnight sky: stars absent with Off; moon, clouds and sky colour unchanged. |
+| Enchantment glint | Off removes glint from a dropped enchanted sword and golden apple and from an armor stand's enchanted armor; On restores it. |
+| Dropped items | Fast draws one model per stack; Fancy draws the vanilla copies (up to five). A single apple looks the same in both. |
+| Persistence | Non-default values saved in one launch were read back by a fresh JVM (startup log and menu), then restored to defaults through Apply. |
+
+![Rain splashes: Fancy, Fast, Off](validation/2026-10-22-video-settings/rain-splashes-fancy-fast-off.png)
+![Vignette Off and On in shade](validation/2026-10-22-video-settings/vignette-off-vs-on-in-shade.png)
+![Dropped items Fast and Fancy](validation/2026-10-22-video-settings/dropped-items-fast-vs-fancy.png)
+![Enchantment glint Off and On](validation/2026-10-22-video-settings/enchantment-glint-off-vs-on.png)
+![Stars Off and On](validation/2026-10-22-video-settings/stars-off-vs-on.png)
+![Details page defaults](validation/2026-10-22-video-settings/menu-details.png)
+
+**Indicative frame time.** Alternating A/B blocks (ABBA order), 4 blocks of 300
+frames per choice after a settle period, FPS uncapped, VSync off, render distance 8.
+This is one session on software rendering, not a benchmark series. Leaves (an
+existing control) is included for scale.
+
+| Comparison | Scene | Mean frame time | Change | Blocks agreeing |
+|---|---|---|---|---|
+| Rain splashes Fancy -> Off | rain, ~650 splash particles | 69.39 -> 64.93 ms | -4.46 ms (-6.4%) | 4/4 |
+| Vignette On -> Off | open field, day | 39.97 -> 36.14 ms | -3.83 ms (-9.6%) | 4/4 |
+| Dropped items Fancy -> Fast | 300 dropped full stacks | 51.13 -> 42.23 ms | -8.89 ms (-17.4%) | 4/4 |
+| Enchantment glint On -> Off | 300 dropped enchanted swords | 50.92 -> 45.13 ms | -5.79 ms (-11.4%) | 4/4 |
+| Leaves Fancy -> Fast | 13x7x2 leaf wall | 46.46 -> 43.17 ms | -3.29 ms (-7.1%) | 4/4 |
+
+Stars were not timed: they are a single display list. The first run's dropped-item
+and glint blocks are excluded. 1.8.9's `ItemEntity.setNeverDespawn()` only delays
+despawning by five minutes, so the grids vanished mid-measurement; this shows
+in `results-full.txt`. The rerun pinned item age to vanilla's never-despawn value.
+Entity counts were identical before and after each series.
+
+Not checked: snow, rain-splash smoke over lava, the world-border warning tint,
+potion glint in a held item, resource packs, other GUI scales, other drivers and
+the reference hardware. On a GPU, the full-screen vignette and fill-heavy passes
+may cost proportionally less or more than under llvmpipe.
 
 ## Validation, 2026-10-21
 

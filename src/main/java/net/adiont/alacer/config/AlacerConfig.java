@@ -62,6 +62,10 @@ public final class AlacerConfig {
 	public volatile boolean fastChunkFrustum;
 	/** Also run vanilla's frustum test for every box, use its answer and log differences. Debug only. */
 	public volatile boolean verifyChunkFrustum;
+	/** Experimental allocation-free camera-section flood fill that reuses its answer within one pocket. Runtime-toggleable. */
+	public volatile boolean fastCameraSectionFaces;
+	/** Also run vanilla's camera-section flood fill, use its answer and log differences. Debug only. */
+	public volatile boolean verifyCameraSectionFaces;
 	/** Reuse each render chunk's world-chunk reference in the entity loop. Runtime-toggleable. */
 	public volatile boolean fastEntityChunkLookup;
 	/** Compare every cached entity-loop chunk lookup with vanilla's lookup. Debug only. */
@@ -131,6 +135,14 @@ public final class AlacerConfig {
 	/** Independent quality selectors: 0 follows Graphics, 1 Fast, 2 Fancy; weather also supports 3 Off. */
 	public volatile int leavesQuality;
 	public volatile int weatherQuality;
+	/** Rain splash particles: 0 follows Graphics, 1 Fast, 2 Fancy, 3 Off. Rain sounds remain. */
+	public volatile int rainSplashQuality;
+	/** HUD vignette: 0 follows Graphics, 1 Off (Fast), 2 On (Fancy). */
+	public volatile int vignetteQuality;
+	/** Visual choices independent of Graphics: 1 keeps vanilla, 0 omits stars, glint or extra dropped-item copies. */
+	public volatile int starsQuality;
+	public volatile int enchantGlintQuality;
+	public volatile int droppedItemsQuality;
 	/** 0 retains vanilla AO, 1 softens its midtones. Both use the original lightmap. */
 	public volatile int smoothLightingStyle;
 	/** Ambient-occlusion darkening only, as a percentage; 100 preserves full strength. */
@@ -142,6 +154,11 @@ public final class AlacerConfig {
 	private AlacerConfig(Properties file, Properties system) {
 		this.leavesQuality = clamp(integer(file, system, "quality.leaves", 0, "Leaves quality: 0 follows Graphics, 1 Fast, 2 Fancy."), 0, 2);
 		this.weatherQuality = clamp(integer(file, system, "quality.weather", 0, "Weather geometry: 0 follows Graphics, 1 Fast, 2 Fancy, 3 Off. Rain sounds and splash particles remain."), 0, 3);
+		this.rainSplashQuality = clamp(integer(file, system, "quality.rainSplashes", 0, "Rain splash particles: 0 follows Graphics, 1 Fast (about a quarter as many), 2 Fancy, 3 Off. Rain sounds remain."), 0, 3);
+		this.vignetteQuality = clamp(integer(file, system, "quality.vignette", 0, "HUD vignette: 0 follows Graphics, 1 Off, 2 On."), 0, 2);
+		this.starsQuality = clamp(integer(file, system, "quality.stars", 1, "Night-sky stars: 0 Off, 1 On."), 0, 1);
+		this.enchantGlintQuality = clamp(integer(file, system, "quality.enchantGlint", 1, "Enchantment glint on items and armor: 0 Off, 1 On."), 0, 1);
+		this.droppedItemsQuality = clamp(integer(file, system, "quality.droppedItems", 1, "Dropped item stacks: 0 Fast (one model per stack), 1 Fancy (up to five models by stack size)."), 0, 1);
 		this.smoothLightingStyle = clamp(integer(file, system, "quality.lightingStyle", 0, "Smooth-lighting style: 0 Vanilla, 1 Soft. Requires smooth lighting; rebuild terrain after changes."), 0, 1);
 		this.ambientOcclusionStrength = clamp(integer(file, system, "quality.aoStrength", 100, "Ambient-occlusion corner darkness, 0-100 percent. Does not change sky/block light or directional shading."), 0, 100);
 		this.profilerEnabled = bool(file, system, "profiler.enabled", true,
@@ -174,6 +191,10 @@ public final class AlacerConfig {
 			"Experimental: test chunk boxes at one corner per frustum plane (same decisions as vanilla). No dependable measured performance gain; off by default.");
 		this.verifyChunkFrustum = bool(file, system, "render.fastChunkFrustum.verify", false,
 			"Debug: also run vanilla's frustum test for every chunk box, use its answer and log any difference.");
+		this.fastCameraSectionFaces = bool(file, system, "render.fastCameraSectionFaces", false,
+			"Experimental: in Alacer's chunk search, find the camera section's open faces with an allocation-free flood fill, and reuse the answer while the camera stays in the same connected pocket of an unchanged section (same faces as vanilla). Not yet measured; off by default.");
+		this.verifyCameraSectionFaces = bool(file, system, "render.fastCameraSectionFaces.verify", false,
+			"Debug: also run vanilla's camera-section flood fill for every answer, use its result and log any difference. Use with the Alacer chunk search enabled.");
 		this.fastEntityChunkLookup = bool(file, system, "render.fastEntityChunkLookup", true,
 			"Reuse each render chunk's world-chunk reference when gathering entities instead of a hash lookup per chunk per frame.");
 		this.verifyEntityChunkLookup = bool(file, system, "render.fastEntityChunkLookup.verify", false,
@@ -294,6 +315,7 @@ public final class AlacerConfig {
 			case "render.defaults":
 				this.fastChunkVisibility = value;
 				this.fastChunkFrustum = false;
+				this.fastCameraSectionFaces = false;
 				this.fastEntityChunkLookup = value;
 				this.throttleGlErrorChecks = value;
 				this.avoidMatrixReads = value;
@@ -316,6 +338,9 @@ public final class AlacerConfig {
 				break;
 			case "render.fastChunkFrustum":
 				this.fastChunkFrustum = value;
+				break;
+			case "render.fastCameraSectionFaces":
+				this.fastCameraSectionFaces = value;
 				break;
 			case "render.fastEntityChunkLookup":
 				this.fastEntityChunkLookup = value;
@@ -396,6 +421,11 @@ public final class AlacerConfig {
 			String key = e.getKey(), value = e.getValue();
 			if ("quality.leaves".equals(key)) { this.leavesQuality = Integer.parseInt(value); }
 			else if ("quality.weather".equals(key)) { this.weatherQuality = Integer.parseInt(value); }
+			else if ("quality.rainSplashes".equals(key)) { this.rainSplashQuality = Integer.parseInt(value); }
+			else if ("quality.vignette".equals(key)) { this.vignetteQuality = Integer.parseInt(value); }
+			else if ("quality.stars".equals(key)) { this.starsQuality = Integer.parseInt(value); }
+			else if ("quality.enchantGlint".equals(key)) { this.enchantGlintQuality = Integer.parseInt(value); }
+			else if ("quality.droppedItems".equals(key)) { this.droppedItemsQuality = Integer.parseInt(value); }
 			else if ("quality.lightingStyle".equals(key)) { this.smoothLightingStyle = Integer.parseInt(value); }
 			else if ("quality.aoStrength".equals(key)) { this.ambientOcclusionStrength = Integer.parseInt(value); }
 			else if ("render.fastParticleVertices".equals(key)) {
@@ -410,6 +440,11 @@ public final class AlacerConfig {
 		Map<String, String> values = new LinkedHashMap<>();
 		values.put("quality.leaves", Integer.toString(this.leavesQuality));
 		values.put("quality.weather", Integer.toString(this.weatherQuality));
+		values.put("quality.rainSplashes", Integer.toString(this.rainSplashQuality));
+		values.put("quality.vignette", Integer.toString(this.vignetteQuality));
+		values.put("quality.stars", Integer.toString(this.starsQuality));
+		values.put("quality.enchantGlint", Integer.toString(this.enchantGlintQuality));
+		values.put("quality.droppedItems", Integer.toString(this.droppedItemsQuality));
 		values.put("quality.lightingStyle", Integer.toString(this.smoothLightingStyle));
 		values.put("quality.aoStrength", Integer.toString(this.ambientOcclusionStrength));
 		values.put("profiler.enabled", String.valueOf(this.profilerEnabled));
@@ -427,6 +462,8 @@ public final class AlacerConfig {
 		values.put("render.fastChunkVisibility.verify", String.valueOf(this.verifyChunkVisibility));
 		values.put("render.fastChunkFrustum", String.valueOf(this.fastChunkFrustum));
 		values.put("render.fastChunkFrustum.verify", String.valueOf(this.verifyChunkFrustum));
+		values.put("render.fastCameraSectionFaces", String.valueOf(this.fastCameraSectionFaces));
+		values.put("render.fastCameraSectionFaces.verify", String.valueOf(this.verifyCameraSectionFaces));
 		values.put("render.fastEntityChunkLookup", String.valueOf(this.fastEntityChunkLookup));
 		values.put("render.fastEntityChunkLookup.verify", String.valueOf(this.verifyEntityChunkLookup));
 		values.put("render.throttleGlErrorChecks", String.valueOf(this.throttleGlErrorChecks));

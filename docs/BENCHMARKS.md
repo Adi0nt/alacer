@@ -1844,3 +1844,71 @@ No candidate A/B, framebuffer identity, exact block/light update latency, lifecy
 worker/native allocation, driver trace or whole-frame GPU busy-time claim. Those correctness, lifecycle, ordering,
 throughput, latency, frame-tail, CPU and allocation gates require a separately frozen candidate series. All prior
 archives/tooling/config/defaults preserved; no commit, push, publish, stash, reset, clean or branch switch.
+
+## Session 28 - allocation-based selection (2026-10-22, Java 25, cloud container)
+Roadmap item 1 of "Next session (28)". Full protocol, freezes, per-launch records, decision and gate outputs are in the
+[session 28 archive](benchmarks/2026-10-22-allocation-selection/README.md).
+
+**Environment:** Linux container, 4 vCPU Xeon 2.1 GHz, Adoptium 25.0.4.1, Xvfb 854x480, **Mesa llvmpipe (software
+GL)**, about 16-25 FPS. Frame-time, tail and CPU numbers from this series do not represent a GPU machine and were not
+judged; allocation attribution, `.verify` and screenshots were. Not comparable with sessions 1-27 (different machine).
+
+Attribution (frozen at `b517184` before measuring; six hooks-absent JFR launches, d0/d200/terrain x2, time scale 2,
+fixed 16 KiB TLAB for allocation sampling; per-frame path outside `Minecraft.tick`; static/pan ranked):
+
+| Set | d200 static share / bytes per frame | d200 pan | Result |
+|---|---|---|---|
+| shadow `pos.down()` | 15.5-22.1% / 19,710 | 20.8-22.9% / 21,474 | named |
+| entity brightness `BlockPos` | 7.9-12.8% / 10,740 | 10.4-11.9% / 10,921 | one combination |
+| name-check regex | 8.6% / 8,812 | 8.9% / 8,709 | below 10% |
+| crosshair ray march | 1.0% / 995 | 0.8% / 732 | below |
+
+JFR/ThreadMXBean bytes-per-frame ratio 1.000-1.005 everywhere. Flood fill: 4.8 MB/s in fly, about 200-240 KB per
+open-faces cache miss (not rankable at this frame rate).
+
+Candidate `render.reuseShadowPositions` (off by default; separately frozen gate series, 26 accepted launches, three
+runner-check rejections kept and repeated):
+
+| Gate | Result |
+|---|---|
+| `.verify` (>= 10 M, 0 mismatches) | pass: 10,388,241 compared, 0 mismatched |
+| Screenshots | static and fly pass; pan fails (captures a few degrees apart) |
+| Allocation target d200 static / pan | fail (in-process median -6.0 KB, -3.4%) / pass (-13.4 KB, -6.7%) |
+| No-op scenes, allocation <= +2% | fail (d0 static +17.8%, terrain steady/pan/sort +12.3/+5.6/+7.4%) |
+| Visible-chunk counter | pass |
+| Frame/tail/CPU | reported only; in-process frame mean +1.1% static, +0.6% pan (llvmpipe) |
+
+Verdict: fails; stays off. Whole-frame allocation carries the client tick in nearly every frame here; tick-free frames
+(post hoc, not rescored) showed a 17.0-20.1 KB saving in all eight in-process launch/phase pairs. Build: 105 tests pass
+on JDK 25. Needs the reference hardware to confirm or close it.
+
+## Session 30 - `render.fastCameraSectionFaces` on the reference hardware (2026-10-22, Java 25)
+Roadmap item 1b of "Next session (29)". Gates, amendment, per-gate table, per-scene medians and every attempt are in the
+[session 30 archive](benchmarks/2026-10-22-section-faces-reference/README.md); `gates.json` there holds every pair.
+
+**Environment:** Windows 11, i7-12700F, RTX 3060 Ti (OpenGL 4.6.0 NVIDIA 616.92), Adoptium 25.0.4.1, 1920x1080, 2 GiB
+heap, view distance 12, vsync off, display lists; seed-1789 base world and shared config equal to session 29's manifest.
+Separate launches only, from a git worktree of `claude/project-thread-3lu2ch` at `7d153c0`. Build: 123 tests pass on
+JDK 25 (classfile 69).
+
+Series (frozen 2026-10-22T20:05:42Z after two passed smoke pairs; one pre-freeze amendment ported session 29's
+4,000 FPS frame buffer, which four recorded phases needed): 4 verify, 3 fixed-pose screenshot and 40 startup launches
+(four alternating off/on pairs in each of d0, d200, terrain, near and high fresh flight). All 47 scored launches passed
+the runner's checks; none was rejected or repeated.
+
+| Condition | Result |
+|---|---|
+| 1. Region: pooled moving `terrain_setup` <= -3%, 3 of 4 pairs lower per moving phase | fail: -1.65%; near and high fresh-flight 2 of 4 |
+| 2. Benefit: pooled moving frame mean <= -1% (or slow-1%/p99 <= -2%) | pass: frame mean -1.22% (slow-1% -1.24%, p99 -1.46%) |
+| 3. Allocation per tick-free frame lower, 3 of 4 pairs per moving phase | pass: pooled -28.3% (about 2-10 KB per frame) |
+| 4. No regressions in any judged phase | fail: 12, for example high still tick-frame p99 +28.0%, d0 pan +15.7%, terrain sort frame mean +2.7% |
+| 5. Still phases unchanged | fail: d0 static `terrain_setup` +8.3%, d0 pan tick-free allocation +8.4%, near still `terrain_setup` +5.9% |
+| C1 `.verify` | pass: 364,446 answers compared, 718 flood fills, 0 mismatched |
+| C2 screenshots | fail in static and pan (on vs off-1 6.76% / 6.87% of pixels against limits 5.70% / 5.82%); differences inspected: clouds, mobs and water only, terrain identical |
+| C3 counters | pass (largest median change 0.40%) |
+
+Tick-frame share 0.95-10.2% (median 2.1%); tick-free allocation resolved in every pair. Still phases, where the option
+does no work, moved by -16.6% to +1.2% in frame mean and up to +28% in tails between launches, so this series cannot
+resolve effects of about 1-2%. Verdict: **closed** under the frozen rule (not the "no demonstrated benefit" closure,
+because conditions other than 2 failed). `render.fastCameraSectionFaces` stays off by default and outside
+`render.defaults`.

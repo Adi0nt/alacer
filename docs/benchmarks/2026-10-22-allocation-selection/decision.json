@@ -1,0 +1,4270 @@
+{
+ "rule": {
+  "share_percent": 10.0,
+  "samples": 50,
+  "bytes_per_frame": 2048.0,
+  "ranked": [
+   [
+    "d0",
+    "static"
+   ],
+   [
+    "d0",
+    "pan"
+   ],
+   [
+    "d200",
+    "static"
+   ],
+   [
+    "d200",
+    "pan"
+   ],
+   [
+    "terrain",
+    "steady"
+   ],
+   [
+    "terrain",
+    "pan"
+   ]
+  ]
+ },
+ "corroboration": {
+  "alloc28-d0-r1/static": {
+   "jfr_over_csv": 1.0053878722046412,
+   "pass": true
+  },
+  "alloc28-d0-r2/static": {
+   "jfr_over_csv": 1.0038291385302853,
+   "pass": true
+  },
+  "alloc28-d0-r1/pan": {
+   "jfr_over_csv": 0.9998293163264927,
+   "pass": true
+  },
+  "alloc28-d0-r2/pan": {
+   "jfr_over_csv": 0.9999188269928831,
+   "pass": true
+  },
+  "alloc28-d200-r1/static": {
+   "jfr_over_csv": 1.0020399249531395,
+   "pass": true
+  },
+  "alloc28-d200-r2/static": {
+   "jfr_over_csv": 1.0017677378942103,
+   "pass": true
+  },
+  "alloc28-d200-r1/pan": {
+   "jfr_over_csv": 0.9999518331663129,
+   "pass": true
+  },
+  "alloc28-d200-r2/pan": {
+   "jfr_over_csv": 1.000008971056322,
+   "pass": true
+  },
+  "alloc28-terrain-r1/steady": {
+   "jfr_over_csv": 0.9997633055929589,
+   "pass": true
+  },
+  "alloc28-terrain-r2/steady": {
+   "jfr_over_csv": 0.9997901654567696,
+   "pass": true
+  },
+  "alloc28-terrain-r1/pan": {
+   "jfr_over_csv": 0.9998831390784734,
+   "pass": true
+  },
+  "alloc28-terrain-r2/pan": {
+   "jfr_over_csv": 0.9999318560914938,
+   "pass": true
+  },
+  "alloc28-d0-r1/fly": {
+   "jfr_over_csv": 0.9999680484632295,
+   "pass": true
+  },
+  "alloc28-d0-r2/fly": {
+   "jfr_over_csv": 0.9999821799152891,
+   "pass": true
+  },
+  "alloc28-d200-r1/fly": {
+   "jfr_over_csv": 1.0000232759646208,
+   "pass": true
+  },
+  "alloc28-d200-r2/fly": {
+   "jfr_over_csv": 1.0000087945349534,
+   "pass": true
+  },
+  "alloc28-terrain-r1/sort": {
+   "jfr_over_csv": 0.999993692622014,
+   "pass": true
+  },
+  "alloc28-terrain-r2/sort": {
+   "jfr_over_csv": 0.9999123540202908,
+   "pass": true
+  },
+  "alloc28-terrain-r1/fly": {
+   "jfr_over_csv": 1.0000166260920178,
+   "pass": true
+  },
+  "alloc28-terrain-r2/fly": {
+   "jfr_over_csv": 1.0000004457354161,
+   "pass": true
+  }
+ },
+ "passing_items_1_2": [
+  "shadow.offset_pos"
+ ],
+ "sets": {
+  "agg.alacer_benchmark": {
+   "selectable": false,
+   "qualifying_combinations": [],
+   "share_and_size_pass": false,
+   "min_qualifying_share": 0.0,
+   "combinations": {
+    "d0/static": {
+     "ranked": true,
+     "launches": [
+      {
+       "label": "alloc28-d0-r1",
+       "samples": 10,
+       "share_percent": 2.7090543133281932,
+       "bytes_per_frame": 384.4612326043738,
+       "bytes_per_second": 9665.47916807807,
+       "corroborated": true
+      },
+      {
+       "label": "alloc28-d0-r2",
+       "samples": 10,
+       "share_percent": 0.9129046489652626,
+       "bytes_per_frame": 382.6393442622951,
+       "bytes_per_second": 9319.669532213416,
+       "corroborated": true
+      }
+     ],
+     "qualifies": false,
+     "median_share_percent": 1.810979481146728,
+     "median_bytes_per_frame": 383.55028843333446,
+     "median_bytes_per_second": 9492.574350145744
+    },
+    "d0/pan": {
+     "ranked": true,
+     "launches": [
+      {
+       "label": "alloc28-d0-r1",
+       "samples": 2,
+       "share_percent": 0.11555932366279478,
+       "bytes_per_frame": 73.7888198757764,
+       "bytes_per_second": 1583.0964961159455,
+       "corroborated": true
+      },
+      {
+       "label": "alloc28-d0-r2",
+       "samples": 2,
+       "share_percent": 0.12060802513564979,
+       "bytes_per_frame": 48.4030534351145,
+       "bytes_per_second": 1055.5408071627571,
+       "corroborated": true
+      }
+     ],
+     "qualifies": false,
+     "median_share_percent": 0.1180836743992223,
+     "median_bytes_per_frame": 61.09593665544545,
+     "median_bytes_per_second": 1319.3186516393512
+    },
+    "d200/static": {
+     "ranked": true,
+     "launches": [
+      {
+       "label": "alloc28-d200-r1",
+       "samples": 14,
+       "share_percent": 0.6303459928368712,
+       "bytes_per_frame": 546.0045977011495,
+       "bytes_per_second": 11875.28050392785,
+       "corroborated": true
+      },
+      {
+       "label": "alloc28-d200-r2",
+       "samples": 10,
+       "share_percent": 0.34218724631730074,
+       "bytes_per_frame": 447.6190476190476,
+       "bytes_per_second": 9396.46107161325,
+       "corroborated": true
+      }
+     ],
+     "qualifies": false,
+     "median_share_percent": 0.48626661957708595,
+     "median_bytes_per_frame": 496.8118226600985,
+     "median_bytes_per_second": 10635.87078777055
+    },
+    "d200/pan": {
+     "ranked": true,
+     "launches": [
+      {
+       "label": "alloc28-d200-r1",
+       "samples": 1,
+       "share_percent": 0.026769727185503387,
+       "bytes_per_frame": 24.89308176100629,
+       "bytes_per_second": 527.6117954143799,
+       "corroborated": true
+      },
+      {
+       "label": "alloc28-d200-r2",
+       "samples": 5,
+       "share_percent": 0.11867738339739814,
+       "bytes_per_frame": 123.65571205007825,
+       "bytes_per_second": 2629.905200740265,
+       "corroborated": true
+      }
+     ],
+     "qualifies": false,
+     "median_share_percent": 0.07272355529145076,
+     "median_bytes_per_frame": 74.27439690554228,
+     "median_bytes_per_second": 1578.7584980773227
+    },
+    "terrain/steady": {
+     "ranked": true,
+     "launches": [
+      {
+       "label": "alloc28-terrain-r1",
+       "samples": 2,
+       "share_percent": 0.20527628863756206,
+       "bytes_per_frame": 66.08264462809917,
+       "bytes_per_second": 1597.9956512267242,
+       "corroborated": true
+      },
+      {
+       "label": "alloc28-terrain-r2",
+       "samples": 4,
+       "share_percent": 0.2512791120306428,
+       "bytes_per_frame": 128.60162601626016,
+       "bytes_per_second": 3160.7281435801865,
+       "corroborated": true
+      }
+     ],
+     "qualifies": false,
+     "median_share_percent": 0.22827770033410244,
+     "median_bytes_per_frame": 97.34213532217967,
+     "median_bytes_per_second": 2379.3618974034553
+    },
+    "terrain/pan": {
+     "ranked": true,
+     "launches": [
+      {
+       "label": "alloc28-terrain-r1",
+       "samples": 1,
+       "share_percent": 0.06223047625043281,
+       "bytes_per_frame": 29.452513966480446,
+       "bytes_per_second": 526.935618801221,
+       "corroborated": true
+      },
+      {
+       "label": "alloc28-terrain-r2",
+       "samples": 2,
+       "share_percent": 0.16762102806433118,
+       "bytes_per_frame": 58.34686346863469,
+       "bytes_per_second": 1053.1381315117908,
+       "corroborated": true
+      }
+     ],
+     "qualifies": false,
+     "median_share_percent": 0.114925752157382,
+     "median_bytes_per_frame": 43.89968871755757,
+     "median_bytes_per_second": 790.0368751565059
+    },
+    "d0/fly": {
+     "ranked": false,
+     "launches": [
+      {
+       "label": "alloc28-d0-r1",
+       "samples": 2,
+       "share_percent": 0.007459381179245534,
+       "bytes_per_frame": 33.7228144989339,
+       "bytes_per_second": 790.2601159360544,
+       "corroborated": true
+      },
+      {
+       "label": "alloc28-d0-r2",
+       "samples": 3,
+       "share_percent": 0.011161570921911536,
+       "bytes_per_frame": 48.60593654042989,
+       "bytes_per_second": 1186.7518968545714,
+       "corroborated": true
+      }
+     ],
+     "qualifies": false,
+     "median_share_percent": 0.009310476050578536,
+     "median_bytes_per_frame": 41.1643755196819,
+     "median_bytes_per_second": 988.5060063953129
+    },
+    "d200/fly": {
+     "ranked": false,
+     "launches": [
+      {
+       "label": "alloc28-d200-r1",
+       "samples": 1,
+       "share_percent": 0.004021807095678933,
+       "bytes_per_frame": 16.968917470525188,
+       "bytes_per_second": 395.7459834751681,
+       "corroborated": true
+      },
+      {
+       "label": "alloc28-d200-r2",
+       "samples": 3,
+       "share_percent": 0.01259939060608742,
+       "bytes_per_frame": 50.92620320855615,
+       "bytes_per_second": 1189.188963753648,
+       "corroborated": true
+      }
+     ],
+     "qualifies": false,
+     "median_share_percent": 0.008310598850883177,
+     "median_bytes_per_frame": 33.94756033954067,
+     "median_bytes_per_second": 792.467473614408
+    },
+    "terrain/sort": {
+     "ranked": false,
+     "launches": [
+      {
+       "label": "alloc28-terrain-r1",
+       "samples": 2,
+       "share_percent": 0.016731254634481465,
+       "bytes_per_frame": 59.53383458646616,
+       "bytes_per_second": 988.3122526900773,
+       "corroborated": true
+      },
+      {
+       "label": "alloc28-terrain-r2",
+       "samples": 1,
+       "share_percent": 0.008294142426577436,
+       "bytes_per_frame": 30.18320610687023,
+       "bytes_per_second": 494.23158773160634,
+       "corroborated": true
+      }
+     ],
+     "qualifies": false,
+     "median_share_percent": 0.01251269853052945,
+     "median_bytes_per_frame": 44.8585203466682,
+     "median_bytes_per_second": 741.2719202108418
+    },
+    "terrain/fly": {
+     "ranked": false,
+     "launches": [
+      {
+       "label": "alloc28-terrain-r1",
+       "samples": 2,
+       "share_percent": 0.007476210380673646,
+       "bytes_per_frame": 32.68665977249224,
+       "bytes_per_second": 789.5869472291864,
+       "corroborated": true
+      },
+      {
+       "label": "alloc28-terrain-r2",
+       "samples": 3,
+       "share_percent": 0.011000370278943471,
+       "bytes_per_frame": 47.434511434511435,
+       "bytes_per_second": 1140.7630352114627,
+       "corroborated": true
+      }
+     ],
+     "qualifies": false,
+     "median_share_percent": 0.009238290329808559,
+     "median_bytes_per_frame": 40.060585603501835,
+     "median_bytes_per_second": 965.1749912203245
+    }
+   }
+  },
+  "agg.alacer_profiler": {
+   "selectable": false,
+   "qualifying_combinations": [],
+   "share_and_size_pass": false,
+   "min_qualifying_share": 0.0,
+   "combinations": {
+    "d0/static": {
+     "ranked": true,
+     "launches": [
+      {
+       "label": "alloc28-d0-r1",
+       "samples": 8,
+       "share_percent": 2.266716276067349,
+       "bytes_per_frame": 321.6858846918489,
+       "bytes_per_second": 8087.286710526086,
+       "corroborated": true
+      },
+      {
+       "label": "alloc28-d0-r2",
+       "samples": 9,
+       "share_percent": 0.8355809485666368,
+       "bytes_per_frame": 350.2295081967213,
+       "bytes_per_second": 8530.286615235313,
+       "corroborated": true
+      }
+     ],
+     "qualifies": false,
+     "median_share_percent": 1.551148612316993,
+     "median_bytes_per_frame": 335.95769644428515,
+     "median_bytes_per_second": 8308.786662880699
+    },
+    "d0/pan": {
+     "ranked": true,
+     "launches": [
+      {
+       "label": "alloc28-d0-r1",
+       "samples": 0,
+       "share_percent": 0.0,
+       "bytes_per_frame": 0.0,
+       "bytes_per_second": 0.0,
+       "corroborated": true
+      },
+      {
+       "label": "alloc28-d0-r2",
+       "samples": 0,
+       "share_percent": 0.0,
+       "bytes_per_frame": 0.0,
+       "bytes_per_second": 0.0,
+       "corroborated": true
+      }
+     ],
+     "qualifies": false,
+     "median_share_percent": 0.0,
+     "median_bytes_per_frame": 0.0,
+     "median_bytes_per_second": 0.0
+    },
+    "d200/static": {
+     "ranked": true,
+     "launches": [
+      {
+       "label": "alloc28-d200-r1",
+       "samples": 9,
+       "share_percent": 0.4205562136182675,
+       "bytes_per_frame": 364.2850574712644,
+       "bytes_per_second": 7922.986837609985,
+       "corroborated": true
+      },
+      {
+       "label": "alloc28-d200-r2",
+       "samples": 9,
+       "share_percent": 0.313472639945483,
+       "bytes_per_frame": 410.0571428571429,
+       "bytes_per_second": 8607.958040412343,
+       "corroborated": true
+      }
+     ],
+     "qualifies": false,
+     "median_share_percent": 0.36701442678187524,
+     "median_bytes_per_frame": 387.1711001642036,
+     "median_bytes_per_second": 8265.472439011164
+    },
+    "d200/pan": {
+     "ranked": true,
+     "launches": [
+      {
+       "label": "alloc28-d200-r1",
+       "samples": 0,
+       "share_percent": 0.0,
+       "bytes_per_frame": 0.0,
+       "bytes_per_second": 0.0,
+       "corroborated": true
+      },
+      {
+       "label": "alloc28-d200-r2",
+       "samples": 0,
+       "share_percent": 0.0,
+       "bytes_per_frame": 0.0,
+       "bytes_per_second": 0.0,
+       "corroborated": true
+      }
+     ],
+     "qualifies": false,
+     "median_share_percent": 0.0,
+     "median_bytes_per_frame": 0.0,
+     "median_bytes_per_second": 0.0
+    },
+    "terrain/steady": {
+     "ranked": true,
+     "launches": [
+      {
+       "label": "alloc28-terrain-r1",
+       "samples": 0,
+       "share_percent": 0.0,
+       "bytes_per_frame": 0.0,
+       "bytes_per_second": 0.0,
+       "corroborated": true
+      },
+      {
+       "label": "alloc28-terrain-r2",
+       "samples": 0,
+       "share_percent": 0.0,
+       "bytes_per_frame": 0.0,
+       "bytes_per_second": 0.0,
+       "corroborated": true
+      }
+     ],
+     "qualifies": false,
+     "median_share_percent": 0.0,
+     "median_bytes_per_frame": 0.0,
+     "median_bytes_per_second": 0.0
+    },
+    "terrain/pan": {
+     "ranked": true,
+     "launches": [
+      {
+       "label": "alloc28-terrain-r1",
+       "samples": 0,
+       "share_percent": 0.0,
+       "bytes_per_frame": 0.0,
+       "bytes_per_second": 0.0,
+       "corroborated": true
+      },
+      {
+       "label": "alloc28-terrain-r2",
+       "samples": 0,
+       "share_percent": 0.0,
+       "bytes_per_frame": 0.0,
+       "bytes_per_second": 0.0,
+       "corroborated": true
+      }
+     ],
+     "qualifies": false,
+     "median_share_percent": 0.0,
+     "median_bytes_per_frame": 0.0,
+     "median_bytes_per_second": 0.0
+    },
+    "d0/fly": {
+     "ranked": false,
+     "launches": [
+      {
+       "label": "alloc28-d0-r1",
+       "samples": 0,
+       "share_percent": 0.0,
+       "bytes_per_frame": 0.0,
+       "bytes_per_second": 0.0,
+       "corroborated": true
+      },
+      {
+       "label": "alloc28-d0-r2",
+       "samples": 0,
+       "share_percent": 0.0,
+       "bytes_per_frame": 0.0,
+       "bytes_per_second": 0.0,
+       "corroborated": true
+      }
+     ],
+     "qualifies": false,
+     "median_share_percent": 0.0,
+     "median_bytes_per_frame": 0.0,
+     "median_bytes_per_second": 0.0
+    },
+    "d200/fly": {
+     "ranked": false,
+     "launches": [
+      {
+       "label": "alloc28-d200-r1",
+       "samples": 0,
+       "share_percent": 0.0,
+       "bytes_per_frame": 0.0,
+       "bytes_per_second": 0.0,
+       "corroborated": true
+      },
+      {
+       "label": "alloc28-d200-r2",
+       "samples": 0,
+       "share_percent": 0.0,
+       "bytes_per_frame": 0.0,
+       "bytes_per_second": 0.0,
+       "corroborated": true
+      }
+     ],
+     "qualifies": false,
+     "median_share_percent": 0.0,
+     "median_bytes_per_frame": 0.0,
+     "median_bytes_per_second": 0.0
+    },
+    "terrain/sort": {
+     "ranked": false,
+     "launches": [
+      {
+       "label": "alloc28-terrain-r1",
+       "samples": 0,
+       "share_percent": 0.0,
+       "bytes_per_frame": 0.0,
+       "bytes_per_second": 0.0,
+       "corroborated": true
+      },
+      {
+       "label": "alloc28-terrain-r2",
+       "samples": 0,
+       "share_percent": 0.0,
+       "bytes_per_frame": 0.0,
+       "bytes_per_second": 0.0,
+       "corroborated": true
+      }
+     ],
+     "qualifies": false,
+     "median_share_percent": 0.0,
+     "median_bytes_per_frame": 0.0,
+     "median_bytes_per_second": 0.0
+    },
+    "terrain/fly": {
+     "ranked": false,
+     "launches": [
+      {
+       "label": "alloc28-terrain-r1",
+       "samples": 0,
+       "share_percent": 0.0,
+       "bytes_per_frame": 0.0,
+       "bytes_per_second": 0.0,
+       "corroborated": true
+      },
+      {
+       "label": "alloc28-terrain-r2",
+       "samples": 0,
+       "share_percent": 0.0,
+       "bytes_per_frame": 0.0,
+       "bytes_per_second": 0.0,
+       "corroborated": true
+      }
+     ],
+     "qualifies": false,
+     "median_share_percent": 0.0,
+     "median_bytes_per_frame": 0.0,
+     "median_bytes_per_second": 0.0
+    }
+   }
+  },
+  "agg.render_entities": {
+   "selectable": false,
+   "qualifying_combinations": [
+    "d200/static",
+    "d200/pan"
+   ],
+   "share_and_size_pass": true,
+   "min_qualifying_share": 38.188533523793296,
+   "combinations": {
+    "d0/static": {
+     "ranked": true,
+     "launches": [
+      {
+       "label": "alloc28-d0-r1",
+       "samples": 14,
+       "share_percent": 3.105892162312396,
+       "bytes_per_frame": 440.779324055666,
+       "bytes_per_second": 11081.334119228712,
+       "corroborated": true
+      },
+      {
+       "label": "alloc28-d0-r2",
+       "samples": 21,
+       "share_percent": 1.6252839504627687,
+       "bytes_per_frame": 681.2295081967213,
+       "bytes_per_second": 16592.21401872793,
+       "corroborated": true
+      }
+     ],
+     "qualifies": false,
+     "median_share_percent": 2.3655880563875824,
+     "median_bytes_per_frame": 561.0044161261936,
+     "median_bytes_per_second": 13836.77406897832
+    },
+    "d0/pan": {
+     "ranked": true,
+     "launches": [
+      {
+       "label": "alloc28-d0-r1",
+       "samples": 65,
+       "share_percent": 2.5476356348379845,
+       "bytes_per_frame": 1626.7577639751553,
+       "bytes_per_second": 34901.14790443898,
+       "corroborated": true
+      },
+      {
+       "label": "alloc28-d0-r2",
+       "samples": 50,
+       "share_percent": 3.0161745009131575,
+       "bytes_per_frame": 1210.4671755725192,
+       "bytes_per_second": 26397.04334480934,
+       "corroborated": true
+      }
+     ],
+     "qualifies": false,
+     "median_share_percent": 2.781905067875571,
+     "median_bytes_per_frame": 1418.6124697738373,
+     "median_bytes_per_second": 30649.09562462416
+    },
+    "d200/static": {
+     "ranked": true,
+     "launches": [
+      {
+       "label": "alloc28-d200-r1",
+       "samples": 1361,
+       "share_percent": 57.922955919093035,
+       "bytes_per_frame": 50172.763218390806,
+       "bytes_per_second": 1091228.2412714385,
+       "corroborated": true
+      },
+      {
+       "label": "alloc28-d200-r2",
+       "samples": 1295,
+       "share_percent": 38.188533523793296,
+       "bytes_per_frame": 49954.857142857145,
+       "bytes_per_second": 1048657.0510742578,
+       "corroborated": true
+      }
+     ],
+     "qualifies": true,
+     "median_share_percent": 48.05574472144316,
+     "median_bytes_per_frame": 50063.81018062397,
+     "median_bytes_per_second": 1069942.646172848
+    },
+    "d200/pan": {
+     "ranked": true,
+     "launches": [
+      {
+       "label": "alloc28-d200-r1",
+       "samples": 2216,
+       "share_percent": 59.94867354581472,
+       "bytes_per_frame": 55746.07547169811,
+       "bytes_per_second": 1181544.625503178,
+       "corroborated": true
+      },
+      {
+       "label": "alloc28-d200-r2",
+       "samples": 2179,
+       "share_percent": 52.31014772732871,
+       "bytes_per_frame": 54504.47574334898,
+       "bytes_per_second": 1159199.2140484739,
+       "corroborated": true
+      }
+     ],
+     "qualifies": true,
+     "median_share_percent": 56.12941063657172,
+     "median_bytes_per_frame": 55125.275607523545,
+     "median_bytes_per_second": 1170371.919775826
+    },
+    "terrain/steady": {
+     "ranked": true,
+     "launches": [
+      {
+       "label": "alloc28-terrain-r1",
+       "samples": 32,
+       "share_percent": 3.2345135265162233,
+       "bytes_per_frame": 1041.2561983471073,
+       "bytes_per_second": 25179.423222781068,
+       "corroborated": true
+      },
+      {
+       "label": "alloc28-terrain-r2",
+       "samples": 30,
+       "share_percent": 1.8784138248309132,
+       "bytes_per_frame": 961.349593495935,
+       "bytes_per_second": 23627.73170222422,
+       "corroborated": true
+      }
+     ],
+     "qualifies": false,
+     "median_share_percent": 2.556463675673568,
+     "median_bytes_per_frame": 1001.3028959215212,
+     "median_bytes_per_second": 24403.577462502646
+    },
+    "terrain/pan": {
+     "ranked": true,
+     "launches": [
+      {
+       "label": "alloc28-terrain-r1",
+       "samples": 34,
+       "share_percent": 2.101734395165098,
+       "bytes_per_frame": 994.7113594040968,
+       "bytes_per_second": 17796.40428293249,
+       "corroborated": true
+      },
+      {
+       "label": "alloc28-terrain-r2",
+       "samples": 36,
+       "share_percent": 3.0836247867104043,
+       "bytes_per_frame": 1073.3726937269373,
+       "bytes_per_second": 19373.958528122675,
+       "corroborated": true
+      }
+     ],
+     "qualifies": false,
+     "median_share_percent": 2.592679590937751,
+     "median_bytes_per_frame": 1034.042026565517,
+     "median_bytes_per_second": 18585.181405527583
+    },
+    "d0/fly": {
+     "ranked": false,
+     "launches": [
+      {
+       "label": "alloc28-d0-r1",
+       "samples": 61,
+       "share_percent": 12.554766742660291,
+       "bytes_per_frame": 56758.3368869936,
+       "bytes_per_second": 1330074.3296521464,
+       "corroborated": true
+      },
+      {
+       "label": "alloc28-d0-r2",
+       "samples": 73,
+       "share_percent": 12.321834646366046,
+       "bytes_per_frame": 53658.603889457525,
+       "bytes_per_second": 1310116.7157928112,
+       "corroborated": true
+      }
+     ],
+     "qualifies": false,
+     "median_share_percent": 12.438300694513169,
+     "median_bytes_per_frame": 55208.47038822556,
+     "median_bytes_per_second": 1320095.522722479
+    },
+    "d200/fly": {
+     "ranked": false,
+     "launches": [
+      {
+       "label": "alloc28-d200-r1",
+       "samples": 68,
+       "share_percent": 4.567805513456531,
+       "bytes_per_frame": 19272.608788853162,
+       "bytes_per_second": 449472.2502201436,
+       "corroborated": true
+      },
+      {
+       "label": "alloc28-d200-r2",
+       "samples": 45,
+       "share_percent": 0.19190573826882848,
+       "bytes_per_frame": 775.6748663101604,
+       "bytes_per_second": 18112.954282092483,
+       "corroborated": true
+      }
+     ],
+     "qualifies": false,
+     "median_share_percent": 2.37985562586268,
+     "median_bytes_per_frame": 10024.141827581661,
+     "median_bytes_per_second": 233792.60225111805
+    },
+    "terrain/sort": {
+     "ranked": false,
+     "launches": [
+      {
+       "label": "alloc28-terrain-r1",
+       "samples": 8,
+       "share_percent": 0.06654466670233522,
+       "bytes_per_frame": 236.78195488721803,
+       "bytes_per_second": 3930.7816950891533,
+       "corroborated": true
+      },
+      {
+       "label": "alloc28-terrain-r2",
+       "samples": 15,
+       "share_percent": 0.12557004399083926,
+       "bytes_per_frame": 456.9618320610687,
+       "bytes_per_second": 7482.471245520845,
+       "corroborated": true
+      }
+     ],
+     "qualifies": false,
+     "median_share_percent": 0.09605735534658724,
+     "median_bytes_per_frame": 346.87189347414335,
+     "median_bytes_per_second": 5706.626470304999
+    },
+    "terrain/fly": {
+     "ranked": false,
+     "launches": [
+      {
+       "label": "alloc28-terrain-r1",
+       "samples": 70,
+       "share_percent": 12.393446971983417,
+       "bytes_per_frame": 54185.257497414685,
+       "bytes_per_second": 1308912.3315137967,
+       "corroborated": true
+      },
+      {
+       "label": "alloc28-terrain-r2",
+       "samples": 82,
+       "share_percent": 12.659920004319922,
+       "bytes_per_frame": 54590.62785862786,
+       "bytes_per_second": 1312862.0585896664,
+       "corroborated": true
+      }
+     ],
+     "qualifies": false,
+     "median_share_percent": 12.526683488151669,
+     "median_bytes_per_frame": 54387.94267802127,
+     "median_bytes_per_second": 1310887.1950517315
+    }
+   }
+  },
+  "agg.setup_render": {
+   "selectable": false,
+   "qualifying_combinations": [
+    "d0/static",
+    "d0/pan",
+    "d200/static",
+    "d200/pan",
+    "terrain/steady",
+    "terrain/pan"
+   ],
+   "share_and_size_pass": true,
+   "min_qualifying_share": 27.29611102276392,
+   "combinations": {
+    "d0/static": {
+     "ranked": true,
+     "launches": [
+      {
+       "label": "alloc28-d0-r1",
+       "samples": 205,
+       "share_percent": 46.73127095698327,
+       "bytes_per_frame": 6631.968190854871,
+       "bytes_per_second": 166729.81553390287,
+       "corroborated": true
+      },
+      {
+       "label": "alloc28-d0-r2",
+       "samples": 1009,
+       "share_percent": 80.01176477950425,
+       "bytes_per_frame": 33536.524590163935,
+       "bytes_per_second": 816824.8538107146,
+       "corroborated": true
+      }
+     ],
+     "qualifies": true,
+     "median_share_percent": 63.37151786824376,
+     "median_bytes_per_frame": 20084.246390509405,
+     "median_bytes_per_second": 491777.3346723087
+    },
+    "d0/pan": {
+     "ranked": true,
+     "launches": [
+      {
+       "label": "alloc28-d0-r1",
+       "samples": 1848,
+       "share_percent": 73.20200684134541,
+       "bytes_per_frame": 46742.13664596273,
+       "bytes_per_second": 1002825.5346781658,
+       "corroborated": true
+      },
+      {
+       "label": "alloc28-d0-r2",
+       "samples": 1282,
+       "share_percent": 79.49627052474382,
+       "bytes_per_frame": 31903.86564885496,
+       "bytes_per_second": 695737.7625721035,
+       "corroborated": true
+      }
+     ],
+     "qualifies": true,
+     "median_share_percent": 76.34913868304461,
+     "median_bytes_per_frame": 39323.001147408846,
+     "median_bytes_per_second": 849281.6486251347
+    },
+    "d200/static": {
+     "ranked": true,
+     "launches": [
+      {
+       "label": "alloc28-d200-r1",
+       "samples": 634,
+       "share_percent": 27.29611102276392,
+       "bytes_per_frame": 23643.84367816092,
+       "bytes_per_second": 514239.7647407045,
+       "corroborated": true
+      },
+      {
+       "label": "alloc28-d200-r2",
+       "samples": 1849,
+       "share_percent": 54.58512708615911,
+       "bytes_per_frame": 71403.42857142857,
+       "bytes_per_second": 1498907.4761674535,
+       "corroborated": true
+      }
+     ],
+     "qualifies": true,
+     "median_share_percent": 40.940619054461514,
+     "median_bytes_per_frame": 47523.63612479474,
+     "median_bytes_per_second": 1006573.620454079
+    },
+    "d200/pan": {
+     "ranked": true,
+     "launches": [
+      {
+       "label": "alloc28-d200-r1",
+       "samples": 1095,
+       "share_percent": 30.26762016854783,
+       "bytes_per_frame": 28145.761006289307,
+       "bytes_per_second": 596552.7145415217,
+       "corroborated": true
+      },
+      {
+       "label": "alloc28-d200-r2",
+       "samples": 1209,
+       "share_percent": 29.58784451376337,
+       "bytes_per_frame": 30829.007824726134,
+       "bytes_per_second": 655670.220709859,
+       "corroborated": true
+      }
+     ],
+     "qualifies": true,
+     "median_share_percent": 29.927732341155597,
+     "median_bytes_per_frame": 29487.38441550772,
+     "median_bytes_per_second": 626111.4676256904
+    },
+    "terrain/steady": {
+     "ranked": true,
+     "launches": [
+      {
+       "label": "alloc28-terrain-r1",
+       "samples": 809,
+       "share_percent": 84.86428813849115,
+       "bytes_per_frame": 27319.553719008265,
+       "bytes_per_second": 660635.3042031067,
+       "corroborated": true
+      },
+      {
+       "label": "alloc28-terrain-r2",
+       "samples": 682,
+       "share_percent": 45.07220978199813,
+       "bytes_per_frame": 23067.414634146342,
+       "bytes_per_second": 566943.2719657931,
+       "corroborated": true
+      }
+     ],
+     "qualifies": true,
+     "median_share_percent": 64.96824896024464,
+     "median_bytes_per_frame": 25193.4841765773,
+     "median_bytes_per_second": 613789.28808445
+    },
+    "terrain/pan": {
+     "ranked": true,
+     "launches": [
+      {
+       "label": "alloc28-terrain-r1",
+       "samples": 1368,
+       "share_percent": 87.63316440555258,
+       "bytes_per_frame": 41475.12849162011,
+       "bytes_per_second": 742032.4975132715,
+       "corroborated": true
+      },
+      {
+       "label": "alloc28-terrain-r2",
+       "samples": 958,
+       "share_percent": 84.24451383541337,
+       "bytes_per_frame": 29324.50184501845,
+       "bytes_per_second": 529295.8223397617,
+       "corroborated": true
+      }
+     ],
+     "qualifies": true,
+     "median_share_percent": 85.93883912048298,
+     "median_bytes_per_frame": 35399.815168319285,
+     "median_bytes_per_second": 635664.1599265166
+    },
+    "d0/fly": {
+     "ranked": false,
+     "launches": [
+      {
+       "label": "alloc28-d0-r1",
+       "samples": 15154,
+       "share_percent": 57.4842552158789,
+       "bytes_per_frame": 259878.24307036249,
+       "bytes_per_second": 6089984.289553747,
+       "corroborated": true
+      },
+      {
+       "label": "alloc28-d0-r2",
+       "samples": 15336,
+       "share_percent": 58.63591200094136,
+       "bytes_per_frame": 255345.18730808597,
+       "bytes_per_second": 6234452.146364852,
+       "corroborated": true
+      }
+     ],
+     "qualifies": false,
+     "median_share_percent": 58.06008360841013,
+     "median_bytes_per_frame": 257611.71518922423,
+     "median_bytes_per_second": 6162218.2179593
+    },
+    "d200/fly": {
+     "ranked": false,
+     "launches": [
+      {
+       "label": "alloc28-d200-r1",
+       "samples": 15261,
+       "share_percent": 63.19004576934345,
+       "bytes_per_frame": 266613.1532690246,
+       "bytes_per_second": 6217903.100250054,
+       "corroborated": true
+      },
+      {
+       "label": "alloc28-d200-r2",
+       "samples": 15605,
+       "share_percent": 66.83460209253185,
+       "bytes_per_frame": 270142.6310160428,
+       "bytes_per_second": 6308159.949172854,
+       "corroborated": true
+      }
+     ],
+     "qualifies": false,
+     "median_share_percent": 65.01232393093765,
+     "median_bytes_per_frame": 268377.8921425337,
+     "median_bytes_per_second": 6263031.524711454
+    },
+    "terrain/sort": {
+     "ranked": false,
+     "launches": [
+      {
+       "label": "alloc28-terrain-r1",
+       "samples": 8827,
+       "share_percent": 75.80637336130694,
+       "bytes_per_frame": 269737.3383458647,
+       "bytes_per_second": 4477869.0696975505,
+       "corroborated": true
+      },
+      {
+       "label": "alloc28-terrain-r2",
+       "samples": 8997,
+       "share_percent": 76.40230895164515,
+       "bytes_per_frame": 278035.572519084,
+       "bytes_per_second": 4552662.893578268,
+       "corroborated": true
+      }
+     ],
+     "qualifies": false,
+     "median_share_percent": 76.10434115647604,
+     "median_bytes_per_frame": 273886.4554324743,
+     "median_bytes_per_second": 4515265.981637909
+    },
+    "terrain/fly": {
+     "ranked": false,
+     "launches": [
+      {
+       "label": "alloc28-terrain-r1",
+       "samples": 15525,
+       "share_percent": 59.156787163397865,
+       "bytes_per_frame": 258638.75904860394,
+       "bytes_per_second": 6247741.1156031815,
+       "corroborated": true
+      },
+      {
+       "label": "alloc28-terrain-r2",
+       "samples": 15492,
+       "share_percent": 60.596602304986426,
+       "bytes_per_frame": 261297.58835758836,
+       "bytes_per_second": 6284003.375891585,
+       "corroborated": true
+      }
+     ],
+     "qualifies": false,
+     "median_share_percent": 59.87669473419214,
+     "median_bytes_per_frame": 259968.17370309617,
+     "median_bytes_per_second": 6265872.245747384
+    }
+   }
+  },
+  "entity_light.all": {
+   "selectable": false,
+   "qualifying_combinations": [
+    "d200/pan"
+   ],
+   "share_and_size_pass": false,
+   "min_qualifying_share": 10.376779364722141,
+   "combinations": {
+    "d0/static": {
+     "ranked": true,
+     "launches": [
+      {
+       "label": "alloc28-d0-r1",
+       "samples": 4,
+       "share_percent": 0.8873657408237551,
+       "bytes_per_frame": 125.9324055666004,
+       "bytes_per_second": 3165.9812209010947,
+       "corroborated": true
+      },
+      {
+       "label": "alloc28-d0-r2",
+       "samples": 3,
+       "share_percent": 0.2322057709998185,
+       "bytes_per_frame": 97.32786885245902,
+       "bytes_per_second": 2370.5444502271134,
+       "corroborated": true
+      }
+     ],
+     "qualifies": false,
+     "median_share_percent": 0.5597857559117868,
+     "median_bytes_per_frame": 111.6301372095297,
+     "median_bytes_per_second": 2768.262835564104
+    },
+    "d0/pan": {
+     "ranked": true,
+     "launches": [
+      {
+       "label": "alloc28-d0-r1",
+       "samples": 4,
+       "share_percent": 0.1541374615118389,
+       "bytes_per_frame": 98.4223602484472,
+       "bytes_per_second": 2111.594871839501,
+       "corroborated": true
+      },
+      {
+       "label": "alloc28-d0-r2",
+       "samples": 5,
+       "share_percent": 0.3012005109178718,
+       "bytes_per_frame": 120.8793893129771,
+       "bytes_per_second": 2636.0553541483246,
+       "corroborated": true
+      }
+     ],
+     "qualifies": false,
+     "median_share_percent": 0.22766898621485537,
+     "median_bytes_per_frame": 109.65087478071214,
+     "median_bytes_per_second": 2373.8251129939126
+    },
+    "d200/static": {
+     "ranked": true,
+     "launches": [
+      {
+       "label": "alloc28-d200-r1",
+       "samples": 302,
+       "share_percent": 12.843801201413262,
+       "bytes_per_frame": 11125.27816091954,
+       "bytes_per_second": 241968.29001329115,
+       "corroborated": true
+      },
+      {
+       "label": "alloc28-d200-r2",
+       "samples": 270,
+       "share_percent": 7.916145195145019,
+       "bytes_per_frame": 10355.2,
+       "bytes_per_second": 217377.33058129365,
+       "corroborated": true
+      }
+     ],
+     "qualifies": false,
+     "median_share_percent": 10.37997319827914,
+     "median_bytes_per_frame": 10740.23908045977,
+     "median_bytes_per_second": 229672.8102972924
+    },
+    "d200/pan": {
+     "ranked": true,
+     "launches": [
+      {
+       "label": "alloc28-d200-r1",
+       "samples": 440,
+       "share_percent": 11.862222071322183,
+       "bytes_per_frame": 11030.641509433963,
+       "bytes_per_second": 233795.74402400438,
+       "corroborated": true
+      },
+      {
+       "label": "alloc28-d200-r2",
+       "samples": 436,
+       "share_percent": 10.376779364722141,
+       "bytes_per_frame": 10812.068857589984,
+       "bytes_per_second": 229950.68847140865,
+       "corroborated": true
+      }
+     ],
+     "qualifies": true,
+     "median_share_percent": 11.119500718022163,
+     "median_bytes_per_frame": 10921.355183511972,
+     "median_bytes_per_second": 231873.2162477065
+    },
+    "terrain/steady": {
+     "ranked": true,
+     "launches": [
+      {
+       "label": "alloc28-terrain-r1",
+       "samples": 0,
+       "share_percent": 0.0,
+       "bytes_per_frame": 0.0,
+       "bytes_per_second": 0.0,
+       "corroborated": true
+      },
+      {
+       "label": "alloc28-terrain-r2",
+       "samples": 18,
+       "share_percent": 1.1240046055658213,
+       "bytes_per_frame": 575.2520325203252,
+       "bytes_per_second": 14138.353807507881,
+       "corroborated": true
+      }
+     ],
+     "qualifies": false,
+     "median_share_percent": 0.5620023027829106,
+     "median_bytes_per_frame": 287.6260162601626,
+     "median_bytes_per_second": 7069.176903753941
+    },
+    "terrain/pan": {
+     "ranked": true,
+     "launches": [
+      {
+       "label": "alloc28-terrain-r1",
+       "samples": 0,
+       "share_percent": 0.0,
+       "bytes_per_frame": 0.0,
+       "bytes_per_second": 0.0,
+       "corroborated": true
+      },
+      {
+       "label": "alloc28-terrain-r2",
+       "samples": 15,
+       "share_percent": 1.2926706401571304,
+       "bytes_per_frame": 449.9630996309963,
+       "bytes_per_second": 8121.6584718282165,
+       "corroborated": true
+      }
+     ],
+     "qualifies": false,
+     "median_share_percent": 0.6463353200785652,
+     "median_bytes_per_frame": 224.98154981549814,
+     "median_bytes_per_second": 4060.8292359141083
+    },
+    "d0/fly": {
+     "ranked": false,
+     "launches": [
+      {
+       "label": "alloc28-d0-r1",
+       "samples": 7,
+       "share_percent": 0.02612481299195553,
+       "bytes_per_frame": 118.10660980810235,
+       "bytes_per_second": 2767.709176905028,
+       "corroborated": true
+      },
+      {
+       "label": "alloc28-d0-r2",
+       "samples": 7,
+       "share_percent": 0.05154141181612485,
+       "bytes_per_frame": 224.4503582395087,
+       "bytes_per_second": 5480.130768982591,
+       "corroborated": true
+      }
+     ],
+     "qualifies": false,
+     "median_share_percent": 0.03883311240404019,
+     "median_bytes_per_frame": 171.2784840238055,
+     "median_bytes_per_second": 4123.91997294381
+    },
+    "d200/fly": {
+     "ranked": false,
+     "launches": [
+      {
+       "label": "alloc28-d200-r1",
+       "samples": 8,
+       "share_percent": 0.03218665021797016,
+       "bytes_per_frame": 135.80278670953913,
+       "bytes_per_second": 3167.1677040321947,
+       "corroborated": true
+      },
+      {
+       "label": "alloc28-d200-r2",
+       "samples": 12,
+       "share_percent": 0.049538128186098415,
+       "bytes_per_frame": 200.23101604278074,
+       "bytes_per_second": 4675.638462661773,
+       "corroborated": true
+      }
+     ],
+     "qualifies": false,
+     "median_share_percent": 0.04086238920203429,
+     "median_bytes_per_frame": 168.01690137615992,
+     "median_bytes_per_second": 3921.4030833469837
+    },
+    "terrain/sort": {
+     "ranked": false,
+     "launches": [
+      {
+       "label": "alloc28-terrain-r1",
+       "samples": 0,
+       "share_percent": 0.0,
+       "bytes_per_frame": 0.0,
+       "bytes_per_second": 0.0,
+       "corroborated": true
+      },
+      {
+       "label": "alloc28-terrain-r2",
+       "samples": 7,
+       "share_percent": 0.05483279793392367,
+       "bytes_per_frame": 199.54198473282443,
+       "bytes_per_second": 3267.378276000048,
+       "corroborated": true
+      }
+     ],
+     "qualifies": false,
+     "median_share_percent": 0.027416398966961835,
+     "median_bytes_per_frame": 99.77099236641222,
+     "median_bytes_per_second": 1633.689138000024
+    },
+    "terrain/fly": {
+     "ranked": false,
+     "launches": [
+      {
+       "label": "alloc28-terrain-r1",
+       "samples": 10,
+       "share_percent": 0.0374434955739737,
+       "bytes_per_frame": 163.7063081695967,
+       "bytes_per_second": 3954.529615735546,
+       "corroborated": true
+      },
+      {
+       "label": "alloc28-terrain-r2",
+       "samples": 7,
+       "share_percent": 0.030536441619353247,
+       "bytes_per_frame": 131.67567567567568,
+       "bytes_per_second": 3166.6973877170935,
+       "corroborated": true
+      }
+     ],
+     "qualifies": false,
+     "median_share_percent": 0.03398996859666348,
+     "median_bytes_per_frame": 147.6909919226362,
+     "median_bytes_per_second": 3560.6135017263196
+    }
+   }
+  },
+  "entity_light.pos": {
+   "selectable": true,
+   "qualifying_combinations": [
+    "d200/pan"
+   ],
+   "share_and_size_pass": false,
+   "min_qualifying_share": 10.376779364722141,
+   "combinations": {
+    "d0/static": {
+     "ranked": true,
+     "launches": [
+      {
+       "label": "alloc28-d0-r1",
+       "samples": 4,
+       "share_percent": 0.8873657408237551,
+       "bytes_per_frame": 125.9324055666004,
+       "bytes_per_second": 3165.9812209010947,
+       "corroborated": true
+      },
+      {
+       "label": "alloc28-d0-r2",
+       "samples": 3,
+       "share_percent": 0.2322057709998185,
+       "bytes_per_frame": 97.32786885245902,
+       "bytes_per_second": 2370.5444502271134,
+       "corroborated": true
+      }
+     ],
+     "qualifies": false,
+     "median_share_percent": 0.5597857559117868,
+     "median_bytes_per_frame": 111.6301372095297,
+     "median_bytes_per_second": 2768.262835564104
+    },
+    "d0/pan": {
+     "ranked": true,
+     "launches": [
+      {
+       "label": "alloc28-d0-r1",
+       "samples": 4,
+       "share_percent": 0.1541374615118389,
+       "bytes_per_frame": 98.4223602484472,
+       "bytes_per_second": 2111.594871839501,
+       "corroborated": true
+      },
+      {
+       "label": "alloc28-d0-r2",
+       "samples": 5,
+       "share_percent": 0.3012005109178718,
+       "bytes_per_frame": 120.8793893129771,
+       "bytes_per_second": 2636.0553541483246,
+       "corroborated": true
+      }
+     ],
+     "qualifies": false,
+     "median_share_percent": 0.22766898621485537,
+     "median_bytes_per_frame": 109.65087478071214,
+     "median_bytes_per_second": 2373.8251129939126
+    },
+    "d200/static": {
+     "ranked": true,
+     "launches": [
+      {
+       "label": "alloc28-d200-r1",
+       "samples": 302,
+       "share_percent": 12.843801201413262,
+       "bytes_per_frame": 11125.27816091954,
+       "bytes_per_second": 241968.29001329115,
+       "corroborated": true
+      },
+      {
+       "label": "alloc28-d200-r2",
+       "samples": 270,
+       "share_percent": 7.916145195145019,
+       "bytes_per_frame": 10355.2,
+       "bytes_per_second": 217377.33058129365,
+       "corroborated": true
+      }
+     ],
+     "qualifies": false,
+     "median_share_percent": 10.37997319827914,
+     "median_bytes_per_frame": 10740.23908045977,
+     "median_bytes_per_second": 229672.8102972924
+    },
+    "d200/pan": {
+     "ranked": true,
+     "launches": [
+      {
+       "label": "alloc28-d200-r1",
+       "samples": 440,
+       "share_percent": 11.862222071322183,
+       "bytes_per_frame": 11030.641509433963,
+       "bytes_per_second": 233795.74402400438,
+       "corroborated": true
+      },
+      {
+       "label": "alloc28-d200-r2",
+       "samples": 436,
+       "share_percent": 10.376779364722141,
+       "bytes_per_frame": 10812.068857589984,
+       "bytes_per_second": 229950.68847140865,
+       "corroborated": true
+      }
+     ],
+     "qualifies": true,
+     "median_share_percent": 11.119500718022163,
+     "median_bytes_per_frame": 10921.355183511972,
+     "median_bytes_per_second": 231873.2162477065
+    },
+    "terrain/steady": {
+     "ranked": true,
+     "launches": [
+      {
+       "label": "alloc28-terrain-r1",
+       "samples": 0,
+       "share_percent": 0.0,
+       "bytes_per_frame": 0.0,
+       "bytes_per_second": 0.0,
+       "corroborated": true
+      },
+      {
+       "label": "alloc28-terrain-r2",
+       "samples": 18,
+       "share_percent": 1.1240046055658213,
+       "bytes_per_frame": 575.2520325203252,
+       "bytes_per_second": 14138.353807507881,
+       "corroborated": true
+      }
+     ],
+     "qualifies": false,
+     "median_share_percent": 0.5620023027829106,
+     "median_bytes_per_frame": 287.6260162601626,
+     "median_bytes_per_second": 7069.176903753941
+    },
+    "terrain/pan": {
+     "ranked": true,
+     "launches": [
+      {
+       "label": "alloc28-terrain-r1",
+       "samples": 0,
+       "share_percent": 0.0,
+       "bytes_per_frame": 0.0,
+       "bytes_per_second": 0.0,
+       "corroborated": true
+      },
+      {
+       "label": "alloc28-terrain-r2",
+       "samples": 15,
+       "share_percent": 1.2926706401571304,
+       "bytes_per_frame": 449.9630996309963,
+       "bytes_per_second": 8121.6584718282165,
+       "corroborated": true
+      }
+     ],
+     "qualifies": false,
+     "median_share_percent": 0.6463353200785652,
+     "median_bytes_per_frame": 224.98154981549814,
+     "median_bytes_per_second": 4060.8292359141083
+    },
+    "d0/fly": {
+     "ranked": false,
+     "launches": [
+      {
+       "label": "alloc28-d0-r1",
+       "samples": 7,
+       "share_percent": 0.02612481299195553,
+       "bytes_per_frame": 118.10660980810235,
+       "bytes_per_second": 2767.709176905028,
+       "corroborated": true
+      },
+      {
+       "label": "alloc28-d0-r2",
+       "samples": 7,
+       "share_percent": 0.05154141181612485,
+       "bytes_per_frame": 224.4503582395087,
+       "bytes_per_second": 5480.130768982591,
+       "corroborated": true
+      }
+     ],
+     "qualifies": false,
+     "median_share_percent": 0.03883311240404019,
+     "median_bytes_per_frame": 171.2784840238055,
+     "median_bytes_per_second": 4123.91997294381
+    },
+    "d200/fly": {
+     "ranked": false,
+     "launches": [
+      {
+       "label": "alloc28-d200-r1",
+       "samples": 8,
+       "share_percent": 0.03218665021797016,
+       "bytes_per_frame": 135.80278670953913,
+       "bytes_per_second": 3167.1677040321947,
+       "corroborated": true
+      },
+      {
+       "label": "alloc28-d200-r2",
+       "samples": 12,
+       "share_percent": 0.049538128186098415,
+       "bytes_per_frame": 200.23101604278074,
+       "bytes_per_second": 4675.638462661773,
+       "corroborated": true
+      }
+     ],
+     "qualifies": false,
+     "median_share_percent": 0.04086238920203429,
+     "median_bytes_per_frame": 168.01690137615992,
+     "median_bytes_per_second": 3921.4030833469837
+    },
+    "terrain/sort": {
+     "ranked": false,
+     "launches": [
+      {
+       "label": "alloc28-terrain-r1",
+       "samples": 0,
+       "share_percent": 0.0,
+       "bytes_per_frame": 0.0,
+       "bytes_per_second": 0.0,
+       "corroborated": true
+      },
+      {
+       "label": "alloc28-terrain-r2",
+       "samples": 7,
+       "share_percent": 0.05483279793392367,
+       "bytes_per_frame": 199.54198473282443,
+       "bytes_per_second": 3267.378276000048,
+       "corroborated": true
+      }
+     ],
+     "qualifies": false,
+     "median_share_percent": 0.027416398966961835,
+     "median_bytes_per_frame": 99.77099236641222,
+     "median_bytes_per_second": 1633.689138000024
+    },
+    "terrain/fly": {
+     "ranked": false,
+     "launches": [
+      {
+       "label": "alloc28-terrain-r1",
+       "samples": 10,
+       "share_percent": 0.0374434955739737,
+       "bytes_per_frame": 163.7063081695967,
+       "bytes_per_second": 3954.529615735546,
+       "corroborated": true
+      },
+      {
+       "label": "alloc28-terrain-r2",
+       "samples": 7,
+       "share_percent": 0.030536441619353247,
+       "bytes_per_frame": 131.67567567567568,
+       "bytes_per_second": 3166.6973877170935,
+       "corroborated": true
+      }
+     ],
+     "qualifies": false,
+     "median_share_percent": 0.03398996859666348,
+     "median_bytes_per_frame": 147.6909919226362,
+     "median_bytes_per_second": 3560.6135017263196
+    }
+   }
+  },
+  "flood.all": {
+   "selectable": false,
+   "qualifying_combinations": [],
+   "share_and_size_pass": false,
+   "min_qualifying_share": 0.0,
+   "combinations": {
+    "d0/static": {
+     "ranked": true,
+     "launches": [
+      {
+       "label": "alloc28-d0-r1",
+       "samples": 14,
+       "share_percent": 3.1043231903028565,
+       "bytes_per_frame": 440.5566600397614,
+       "bytes_per_second": 11075.73627418039,
+       "corroborated": true
+      },
+      {
+       "label": "alloc28-d0-r2",
+       "samples": 56,
+       "share_percent": 4.337049981539309,
+       "bytes_per_frame": 1817.8524590163934,
+       "bytes_per_second": 44276.11647991147,
+       "corroborated": true
+      }
+     ],
+     "qualifies": false,
+     "median_share_percent": 3.720686585921083,
+     "median_bytes_per_frame": 1129.2045595280774,
+     "median_bytes_per_second": 27675.92637704593
+    },
+    "d0/pan": {
+     "ranked": true,
+     "launches": [
+      {
+       "label": "alloc28-d0-r1",
+       "samples": 27,
+       "share_percent": 1.0392168268382445,
+       "bytes_per_frame": 663.5776397515529,
+       "bytes_per_second": 14236.674853454813,
+       "corroborated": true
+      },
+      {
+       "label": "alloc28-d0-r2",
+       "samples": 14,
+       "share_percent": 0.8427649336503694,
+       "bytes_per_frame": 338.2229007633588,
+       "bytes_per_second": 7375.734552599312,
+       "corroborated": true
+      }
+     ],
+     "qualifies": false,
+     "median_share_percent": 0.940990880244307,
+     "median_bytes_per_frame": 500.9002702574558,
+     "median_bytes_per_second": 10806.204703027062
+    },
+    "d200/static": {
+     "ranked": true,
+     "launches": [
+      {
+       "label": "alloc28-d200-r1",
+       "samples": 27,
+       "share_percent": 1.1344062244357853,
+       "bytes_per_frame": 982.6206896551724,
+       "bytes_per_second": 21371.425016836707,
+       "corroborated": true
+      },
+      {
+       "label": "alloc28-d200-r2",
+       "samples": 69,
+       "share_percent": 1.987904044871669,
+       "bytes_per_frame": 2600.4,
+       "bytes_per_second": 54587.840934370746,
+       "corroborated": true
+      }
+     ],
+     "qualifies": false,
+     "median_share_percent": 1.5611551346537271,
+     "median_bytes_per_frame": 1791.5103448275863,
+     "median_bytes_per_second": 37979.63297560373
+    },
+    "d200/pan": {
+     "ranked": true,
+     "launches": [
+      {
+       "label": "alloc28-d200-r1",
+       "samples": 0,
+       "share_percent": 0.0,
+       "bytes_per_frame": 0.0,
+       "bytes_per_second": 0.0,
+       "corroborated": true
+      },
+      {
+       "label": "alloc28-d200-r2",
+       "samples": 0,
+       "share_percent": 0.0,
+       "bytes_per_frame": 0.0,
+       "bytes_per_second": 0.0,
+       "corroborated": true
+      }
+     ],
+     "qualifies": false,
+     "median_share_percent": 0.0,
+     "median_bytes_per_frame": 0.0,
+     "median_bytes_per_second": 0.0
+    },
+    "terrain/steady": {
+     "ranked": true,
+     "launches": [
+      {
+       "label": "alloc28-terrain-r1",
+       "samples": 27,
+       "share_percent": 2.7313863748505227,
+       "bytes_per_frame": 879.2892561983471,
+       "bytes_per_second": 21262.775052103065,
+       "corroborated": true
+      },
+      {
+       "label": "alloc28-terrain-r2",
+       "samples": 28,
+       "share_percent": 1.7602564069978166,
+       "bytes_per_frame": 900.8780487804878,
+       "bytes_per_second": 22141.48211745058,
+       "corroborated": true
+      }
+     ],
+     "qualifies": false,
+     "median_share_percent": 2.2458213909241698,
+     "median_bytes_per_frame": 890.0836524894174,
+     "median_bytes_per_second": 21702.128584776823
+    },
+    "terrain/pan": {
+     "ranked": true,
+     "launches": [
+      {
+       "label": "alloc28-terrain-r1",
+       "samples": 41,
+       "share_percent": 2.544650445402751,
+       "bytes_per_frame": 1204.3351955307262,
+       "bytes_per_second": 21546.789256201067,
+       "corroborated": true
+      },
+      {
+       "label": "alloc28-terrain-r2",
+       "samples": 0,
+       "share_percent": 0.0,
+       "bytes_per_frame": 0.0,
+       "bytes_per_second": 0.0,
+       "corroborated": true
+      }
+     ],
+     "qualifies": false,
+     "median_share_percent": 1.2723252227013755,
+     "median_bytes_per_frame": 602.1675977653631,
+     "median_bytes_per_second": 10773.394628100534
+    },
+    "d0/fly": {
+     "ranked": false,
+     "launches": [
+      {
+       "label": "alloc28-d0-r1",
+       "samples": 11828,
+       "share_percent": 44.91211343511521,
+       "bytes_per_frame": 203041.35607675905,
+       "bytes_per_second": 4758069.217446423,
+       "corroborated": true
+      },
+      {
+       "label": "alloc28-d0-r2",
+       "samples": 11946,
+       "share_percent": 45.77656573279643,
+       "bytes_per_frame": 199345.8505629478,
+       "bytes_per_second": 4867184.610029817,
+       "corroborated": true
+      }
+     ],
+     "qualifies": false,
+     "median_share_percent": 45.344339583955815,
+     "median_bytes_per_frame": 201193.60331985343,
+     "median_bytes_per_second": 4812626.91373812
+    },
+    "d200/fly": {
+     "ranked": false,
+     "launches": [
+      {
+       "label": "alloc28-d200-r1",
+       "samples": 11760,
+       "share_percent": 48.26744045774546,
+       "bytes_per_frame": 203651.29260450162,
+       "bytes_per_second": 4749518.124402978,
+       "corroborated": true
+      },
+      {
+       "label": "alloc28-d200-r2",
+       "samples": 12018,
+       "share_percent": 51.6331536706521,
+       "bytes_per_frame": 208699.0203208556,
+       "bytes_per_second": 4873376.691668671,
+       "corroborated": true
+      }
+     ],
+     "qualifies": false,
+     "median_share_percent": 49.95029706419878,
+     "median_bytes_per_frame": 206175.15646267863,
+     "median_bytes_per_second": 4811447.408035824
+    },
+    "terrain/sort": {
+     "ranked": false,
+     "launches": [
+      {
+       "label": "alloc28-terrain-r1",
+       "samples": 4001,
+       "share_percent": 33.343611285157294,
+       "bytes_per_frame": 118644.6015037594,
+       "bytes_per_second": 1969601.2225013513,
+       "corroborated": true
+      },
+      {
+       "label": "alloc28-terrain-r2",
+       "samples": 4041,
+       "share_percent": 33.35210178477611,
+       "bytes_per_frame": 121371.60305343512,
+       "bytes_per_second": 1987385.9612606138,
+       "corroborated": true
+      }
+     ],
+     "qualifies": false,
+     "median_share_percent": 33.3478565349667,
+     "median_bytes_per_frame": 120008.10227859726,
+     "median_bytes_per_second": 1978493.5918809825
+    },
+    "terrain/fly": {
+     "ranked": false,
+     "launches": [
+      {
+       "label": "alloc28-terrain-r1",
+       "samples": 12029,
+       "share_percent": 45.91835244078116,
+       "bytes_per_frame": 200759.13960703206,
+       "bytes_per_second": 4849586.873482734,
+       "corroborated": true
+      },
+      {
+       "label": "alloc28-terrain-r2",
+       "samples": 11864,
+       "share_percent": 46.23345894532214,
+       "bytes_per_frame": 199362.51975051974,
+       "bytes_per_second": 4794513.2406811835,
+       "corroborated": true
+      }
+     ],
+     "qualifies": false,
+     "median_share_percent": 46.07590569305165,
+     "median_bytes_per_frame": 200060.82967877592,
+     "median_bytes_per_second": 4822050.057081958
+    }
+   }
+  },
+  "flood.direction_values": {
+   "selectable": false,
+   "qualifying_combinations": [],
+   "share_and_size_pass": false,
+   "min_qualifying_share": 0.0,
+   "combinations": {
+    "d0/static": {
+     "ranked": true,
+     "launches": [
+      {
+       "label": "alloc28-d0-r1",
+       "samples": 9,
+       "share_percent": 1.9953961878462945,
+       "bytes_per_frame": 283.18091451292247,
+       "bytes_per_second": 7119.259363241222,
+       "corroborated": true
+      },
+      {
+       "label": "alloc28-d0-r2",
+       "samples": 37,
+       "share_percent": 2.8629324964486638,
+       "bytes_per_frame": 1199.983606557377,
+       "bytes_per_second": 29227.132088963193,
+       "corroborated": true
+      }
+     ],
+     "qualifies": false,
+     "median_share_percent": 2.4291643421474793,
+     "median_bytes_per_frame": 741.5822605351498,
+     "median_bytes_per_second": 18173.195726102207
+    },
+    "d0/pan": {
+     "ranked": true,
+     "launches": [
+      {
+       "label": "alloc28-d0-r1",
+       "samples": 19,
+       "share_percent": 0.7311559025620903,
+       "bytes_per_frame": 466.8695652173913,
+       "bytes_per_second": 10016.416769953801,
+       "corroborated": true
+      },
+      {
+       "label": "alloc28-d0-r2",
+       "samples": 9,
+       "share_percent": 0.5417165903140465,
+       "bytes_per_frame": 217.40458015267177,
+       "bytes_per_second": 4741.010943097926,
+       "corroborated": true
+      }
+     ],
+     "qualifies": false,
+     "median_share_percent": 0.6364362464380684,
+     "median_bytes_per_frame": 342.1370726850315,
+     "median_bytes_per_second": 7378.713856525864
+    },
+    "d200/static": {
+     "ranked": true,
+     "launches": [
+      {
+       "label": "alloc28-d200-r1",
+       "samples": 17,
+       "share_percent": 0.7141260220643391,
+       "bytes_per_frame": 618.5747126436781,
+       "bytes_per_second": 13453.638039328142,
+       "corroborated": true
+      },
+      {
+       "label": "alloc28-d200-r2",
+       "samples": 38,
+       "share_percent": 1.094606036911083,
+       "bytes_per_frame": 1431.8666666666666,
+       "bytes_per_second": 30057.87949516523,
+       "corroborated": true
+      }
+     ],
+     "qualifies": false,
+     "median_share_percent": 0.904366029487711,
+     "median_bytes_per_frame": 1025.2206896551725,
+     "median_bytes_per_second": 21755.758767246687
+    },
+    "d200/pan": {
+     "ranked": true,
+     "launches": [
+      {
+       "label": "alloc28-d200-r1",
+       "samples": 0,
+       "share_percent": 0.0,
+       "bytes_per_frame": 0.0,
+       "bytes_per_second": 0.0,
+       "corroborated": true
+      },
+      {
+       "label": "alloc28-d200-r2",
+       "samples": 0,
+       "share_percent": 0.0,
+       "bytes_per_frame": 0.0,
+       "bytes_per_second": 0.0,
+       "corroborated": true
+      }
+     ],
+     "qualifies": false,
+     "median_share_percent": 0.0,
+     "median_bytes_per_frame": 0.0,
+     "median_bytes_per_second": 0.0
+    },
+    "terrain/steady": {
+     "ranked": true,
+     "launches": [
+      {
+       "label": "alloc28-terrain-r1",
+       "samples": 14,
+       "share_percent": 1.4219926998042225,
+       "bytes_per_frame": 457.7685950413223,
+       "bytes_per_second": 11069.657218790428,
+       "corroborated": true
+      },
+      {
+       "label": "alloc28-terrain-r2",
+       "samples": 17,
+       "share_percent": 1.0683095387571582,
+       "bytes_per_frame": 546.7479674796748,
+       "bytes_per_second": 13437.790343644427,
+       "corroborated": true
+      }
+     ],
+     "qualifies": false,
+     "median_share_percent": 1.2451511192806903,
+     "median_bytes_per_frame": 502.25828126049856,
+     "median_bytes_per_second": 12253.723781217428
+    },
+    "terrain/pan": {
+     "ranked": true,
+     "launches": [
+      {
+       "label": "alloc28-terrain-r1",
+       "samples": 26,
+       "share_percent": 1.6100601215020933,
+       "bytes_per_frame": 762.0111731843575,
+       "bytes_per_second": 13633.15978840792,
+       "corroborated": true
+      },
+      {
+       "label": "alloc28-terrain-r2",
+       "samples": 0,
+       "share_percent": 0.0,
+       "bytes_per_frame": 0.0,
+       "bytes_per_second": 0.0,
+       "corroborated": true
+      }
+     ],
+     "qualifies": false,
+     "median_share_percent": 0.8050300607510467,
+     "median_bytes_per_frame": 381.00558659217876,
+     "median_bytes_per_second": 6816.57989420396
+    },
+    "d0/fly": {
+     "ranked": false,
+     "launches": [
+      {
+       "label": "alloc28-d0-r1",
+       "samples": 7449,
+       "share_percent": 28.197341871966607,
+       "bytes_per_frame": 127476.22174840086,
+       "bytes_per_second": 2987276.5744735263,
+       "corroborated": true
+      },
+      {
+       "label": "alloc28-d0-r2",
+       "samples": 7332,
+       "share_percent": 27.991382800929284,
+       "bytes_per_frame": 121895.68884339815,
+       "bytes_per_second": 2976178.4310640907,
+       "corroborated": true
+      }
+     ],
+     "qualifies": false,
+     "median_share_percent": 28.094362336447944,
+     "median_bytes_per_frame": 124685.9552958995,
+     "median_bytes_per_second": 2981727.5027688085
+    },
+    "d200/fly": {
+     "ranked": false,
+     "launches": [
+      {
+       "label": "alloc28-d200-r1",
+       "samples": 7377,
+       "share_percent": 30.372632316030877,
+       "bytes_per_frame": 128149.0332261522,
+       "bytes_per_second": 2988668.2679414307,
+       "corroborated": true
+      },
+      {
+       "label": "alloc28-d200-r2",
+       "samples": 7456,
+       "share_percent": 31.610499322825092,
+       "bytes_per_frame": 127768.29946524065,
+       "bytes_per_second": 2983545.641904591,
+       "corroborated": true
+      }
+     ],
+     "qualifies": false,
+     "median_share_percent": 30.991565819427983,
+     "median_bytes_per_frame": 127958.66634569643,
+     "median_bytes_per_second": 2986106.954923011
+    },
+    "terrain/sort": {
+     "ranked": false,
+     "launches": [
+      {
+       "label": "alloc28-terrain-r1",
+       "samples": 2478,
+       "share_percent": 20.662820548905174,
+       "bytes_per_frame": 73523.2932330827,
+       "bytes_per_second": 1220549.1560407532,
+       "corroborated": true
+      },
+      {
+       "label": "alloc28-terrain-r2",
+       "samples": 2423,
+       "share_percent": 20.003445194618465,
+       "bytes_per_frame": 72794.51908396947,
+       "bytes_per_second": 1191965.8441069277,
+       "corroborated": true
+      }
+     ],
+     "qualifies": false,
+     "median_share_percent": 20.33313287176182,
+     "median_bytes_per_frame": 73158.90615852608,
+     "median_bytes_per_second": 1206257.5000738404
+    },
+    "terrain/fly": {
+     "ranked": false,
+     "launches": [
+      {
+       "label": "alloc28-terrain-r1",
+       "samples": 7474,
+       "share_percent": 28.15836017622739,
+       "bytes_per_frame": 123110.86659772492,
+       "bytes_per_second": 2973896.201209353,
+       "corroborated": true
+      },
+      {
+       "label": "alloc28-terrain-r2",
+       "samples": 7401,
+       "share_percent": 28.562447929523575,
+       "bytes_per_frame": 123163.65072765073,
+       "bytes_per_second": 2961989.8209719267,
+       "corroborated": true
+      }
+     ],
+     "qualifies": false,
+     "median_share_percent": 28.36040405287548,
+     "median_bytes_per_frame": 123137.25866268782,
+     "median_bytes_per_second": 2967943.01109064
+    }
+   }
+  },
+  "name_check.all": {
+   "selectable": false,
+   "qualifying_combinations": [
+    "d200/pan"
+   ],
+   "share_and_size_pass": false,
+   "min_qualifying_share": 12.520926546305507,
+   "combinations": {
+    "d0/static": {
+     "ranked": true,
+     "launches": [
+      {
+       "label": "alloc28-d0-r1",
+       "samples": 0,
+       "share_percent": 0.0,
+       "bytes_per_frame": 0.0,
+       "bytes_per_second": 0.0,
+       "corroborated": true
+      },
+      {
+       "label": "alloc28-d0-r2",
+       "samples": 0,
+       "share_percent": 0.0,
+       "bytes_per_frame": 0.0,
+       "bytes_per_second": 0.0,
+       "corroborated": true
+      }
+     ],
+     "qualifies": false,
+     "median_share_percent": 0.0,
+     "median_bytes_per_frame": 0.0,
+     "median_bytes_per_second": 0.0
+    },
+    "d0/pan": {
+     "ranked": true,
+     "launches": [
+      {
+       "label": "alloc28-d0-r1",
+       "samples": 6,
+       "share_percent": 0.2313521005047063,
+       "bytes_per_frame": 147.72670807453417,
+       "bytes_per_second": 3169.39116697152,
+       "corroborated": true
+      },
+      {
+       "label": "alloc28-d0-r2",
+       "samples": 5,
+       "share_percent": 0.30117007740156204,
+       "bytes_per_frame": 120.86717557251909,
+       "bytes_per_second": 2635.789005218937,
+       "corroborated": true
+      }
+     ],
+     "qualifies": false,
+     "median_share_percent": 0.26626108895313416,
+     "median_bytes_per_frame": 134.29694182352662,
+     "median_bytes_per_second": 2902.5900860952283
+    },
+    "d200/static": {
+     "ranked": true,
+     "launches": [
+      {
+       "label": "alloc28-d200-r1",
+       "samples": 336,
+       "share_percent": 14.276554352028565,
+       "bytes_per_frame": 12366.32643678161,
+       "bytes_per_second": 268960.36381052446,
+       "corroborated": true
+      },
+      {
+       "label": "alloc28-d200-r2",
+       "samples": 305,
+       "share_percent": 9.090459018708906,
+       "bytes_per_frame": 11891.333333333334,
+       "bytes_per_second": 249623.9857320338,
+       "corroborated": true
+      }
+     ],
+     "qualifies": false,
+     "median_share_percent": 11.683506685368735,
+     "median_bytes_per_frame": 12128.829885057472,
+     "median_bytes_per_second": 259292.17477127913
+    },
+    "d200/pan": {
+     "ranked": true,
+     "launches": [
+      {
+       "label": "alloc28-d200-r1",
+       "samples": 498,
+       "share_percent": 13.631472433741543,
+       "bytes_per_frame": 12675.861635220126,
+       "bytes_per_second": 268666.37807212153,
+       "corroborated": true
+      },
+      {
+       "label": "alloc28-d200-r2",
+       "samples": 525,
+       "share_percent": 12.520926546305507,
+       "bytes_per_frame": 13046.159624413145,
+       "bytes_per_second": 277465.2499031894,
+       "corroborated": true
+      }
+     ],
+     "qualifies": true,
+     "median_share_percent": 13.076199490023525,
+     "median_bytes_per_frame": 12861.010629816636,
+     "median_bytes_per_second": 273065.81398765545
+    },
+    "terrain/steady": {
+     "ranked": true,
+     "launches": [
+      {
+       "label": "alloc28-terrain-r1",
+       "samples": 0,
+       "share_percent": 0.0,
+       "bytes_per_frame": 0.0,
+       "bytes_per_second": 0.0,
+       "corroborated": true
+      },
+      {
+       "label": "alloc28-terrain-r2",
+       "samples": 0,
+       "share_percent": 0.0,
+       "bytes_per_frame": 0.0,
+       "bytes_per_second": 0.0,
+       "corroborated": true
+      }
+     ],
+     "qualifies": false,
+     "median_share_percent": 0.0,
+     "median_bytes_per_frame": 0.0,
+     "median_bytes_per_second": 0.0
+    },
+    "terrain/pan": {
+     "ranked": true,
+     "launches": [
+      {
+       "label": "alloc28-terrain-r1",
+       "samples": 6,
+       "share_percent": 0.3743901287418553,
+       "bytes_per_frame": 177.19180633147113,
+       "bytes_per_second": 3170.1427668294,
+       "corroborated": true
+      },
+      {
+       "label": "alloc28-terrain-r2",
+       "samples": 7,
+       "share_percent": 0.6095502854603493,
+       "bytes_per_frame": 212.1771217712177,
+       "bytes_per_second": 3829.7143031828973,
+       "corroborated": true
+      }
+     ],
+     "qualifies": false,
+     "median_share_percent": 0.4919702071011023,
+     "median_bytes_per_frame": 194.68446405134443,
+     "median_bytes_per_second": 3499.9285350061486
+    },
+    "d0/fly": {
+     "ranked": false,
+     "launches": [
+      {
+       "label": "alloc28-d0-r1",
+       "samples": 23,
+       "share_percent": 0.10449736542731143,
+       "bytes_per_frame": 472.4179104477612,
+       "bytes_per_second": 11070.636844161352,
+       "corroborated": true
+      },
+      {
+       "label": "alloc28-d0-r2",
+       "samples": 33,
+       "share_percent": 0.31872527639648535,
+       "bytes_per_frame": 1387.971340839304,
+       "bytes_per_second": 33888.40414896075,
+       "corroborated": true
+      }
+     ],
+     "qualifies": false,
+     "median_share_percent": 0.21161132091189838,
+     "median_bytes_per_frame": 930.1946256435326,
+     "median_bytes_per_second": 22479.52049656105
+    },
+    "d200/fly": {
+     "ranked": false,
+     "launches": [
+      {
+       "label": "alloc28-d200-r1",
+       "samples": 29,
+       "share_percent": 0.14069618435979986,
+       "bytes_per_frame": 593.6291532690246,
+       "bytes_per_second": 13844.510322361211,
+       "corroborated": true
+      },
+      {
+       "label": "alloc28-d200-r2",
+       "samples": 26,
+       "share_percent": 0.11306428949132077,
+       "bytes_per_frame": 457.0010695187166,
+       "bytes_per_second": 10671.532414652193,
+       "corroborated": true
+      }
+     ],
+     "qualifies": false,
+     "median_share_percent": 0.12688023692556033,
+     "median_bytes_per_frame": 525.3151113938707,
+     "median_bytes_per_second": 12258.021368506703
+    },
+    "terrain/sort": {
+     "ranked": false,
+     "launches": [
+      {
+       "label": "alloc28-terrain-r1",
+       "samples": 0,
+       "share_percent": 0.0,
+       "bytes_per_frame": 0.0,
+       "bytes_per_second": 0.0,
+       "corroborated": true
+      },
+      {
+       "label": "alloc28-terrain-r2",
+       "samples": 0,
+       "share_percent": 0.0,
+       "bytes_per_frame": 0.0,
+       "bytes_per_second": 0.0,
+       "corroborated": true
+      }
+     ],
+     "qualifies": false,
+     "median_share_percent": 0.0,
+     "median_bytes_per_frame": 0.0,
+     "median_bytes_per_second": 0.0
+    },
+    "terrain/fly": {
+     "ranked": false,
+     "launches": [
+      {
+       "label": "alloc28-terrain-r1",
+       "samples": 28,
+       "share_percent": 0.1079367229902268,
+       "bytes_per_frame": 471.90899689762153,
+       "bytes_per_second": 11399.549137901104,
+       "corroborated": true
+      },
+      {
+       "label": "alloc28-terrain-r2",
+       "samples": 31,
+       "share_percent": 0.3347745926931622,
+       "bytes_per_frame": 1443.5758835758836,
+       "bytes_per_second": 34716.87504950172,
+       "corroborated": true
+      }
+     ],
+     "qualifies": false,
+     "median_share_percent": 0.22135565784169448,
+     "median_bytes_per_frame": 957.7424402367526,
+     "median_bytes_per_second": 23058.21209370141
+    }
+   }
+  },
+  "name_check.get_name": {
+   "selectable": false,
+   "qualifying_combinations": [],
+   "share_and_size_pass": false,
+   "min_qualifying_share": 0.0,
+   "combinations": {
+    "d0/static": {
+     "ranked": true,
+     "launches": [
+      {
+       "label": "alloc28-d0-r1",
+       "samples": 0,
+       "share_percent": 0.0,
+       "bytes_per_frame": 0.0,
+       "bytes_per_second": 0.0,
+       "corroborated": true
+      },
+      {
+       "label": "alloc28-d0-r2",
+       "samples": 0,
+       "share_percent": 0.0,
+       "bytes_per_frame": 0.0,
+       "bytes_per_second": 0.0,
+       "corroborated": true
+      }
+     ],
+     "qualifies": false,
+     "median_share_percent": 0.0,
+     "median_bytes_per_frame": 0.0,
+     "median_bytes_per_second": 0.0
+    },
+    "d0/pan": {
+     "ranked": true,
+     "launches": [
+      {
+       "label": "alloc28-d0-r1",
+       "samples": 2,
+       "share_percent": 0.07703954910852985,
+       "bytes_per_frame": 49.192546583850934,
+       "bytes_per_second": 1055.397664077297,
+       "corroborated": true
+      },
+      {
+       "label": "alloc28-d0-r2",
+       "samples": 2,
+       "share_percent": 0.12036455700517157,
+       "bytes_per_frame": 48.30534351145038,
+       "bytes_per_second": 1053.410015727657,
+       "corroborated": true
+      }
+     ],
+     "qualifies": false,
+     "median_share_percent": 0.0987020530568507,
+     "median_bytes_per_frame": 48.74894504765066,
+     "median_bytes_per_second": 1054.403839902477
+    },
+    "d200/static": {
+     "ranked": true,
+     "launches": [
+      {
+       "label": "alloc28-d200-r1",
+       "samples": 82,
+       "share_percent": 3.4814147826952837,
+       "bytes_per_frame": 3015.595402298851,
+       "bytes_per_second": 65587.43541616629,
+       "corroborated": true
+      },
+      {
+       "label": "alloc28-d200-r2",
+       "samples": 93,
+       "share_percent": 2.766591167055086,
+       "bytes_per_frame": 3619.0095238095237,
+       "bytes_per_second": 75970.58768869679,
+       "corroborated": true
+      }
+     ],
+     "qualifies": false,
+     "median_share_percent": 3.124002974875185,
+     "median_bytes_per_frame": 3317.3024630541872,
+     "median_bytes_per_second": 70779.01155243153
+    },
+    "d200/pan": {
+     "ranked": true,
+     "launches": [
+      {
+       "label": "alloc28-d200-r1",
+       "samples": 159,
+       "share_percent": 4.327010546515005,
+       "bytes_per_frame": 4023.672955974843,
+       "bytes_per_second": 85282.22149608018,
+       "corroborated": true
+      },
+      {
+       "label": "alloc28-d200-r2",
+       "samples": 173,
+       "share_percent": 4.1073164600856735,
+       "bytes_per_frame": 4279.611893583725,
+       "bytes_per_second": 91018.63059530706,
+       "corroborated": true
+      }
+     ],
+     "qualifies": false,
+     "median_share_percent": 4.217163503300339,
+     "median_bytes_per_frame": 4151.642424779284,
+     "median_bytes_per_second": 88150.42604569362
+    },
+    "terrain/steady": {
+     "ranked": true,
+     "launches": [
+      {
+       "label": "alloc28-terrain-r1",
+       "samples": 0,
+       "share_percent": 0.0,
+       "bytes_per_frame": 0.0,
+       "bytes_per_second": 0.0,
+       "corroborated": true
+      },
+      {
+       "label": "alloc28-terrain-r2",
+       "samples": 0,
+       "share_percent": 0.0,
+       "bytes_per_frame": 0.0,
+       "bytes_per_second": 0.0,
+       "corroborated": true
+      }
+     ],
+     "qualifies": false,
+     "median_share_percent": 0.0,
+     "median_bytes_per_frame": 0.0,
+     "median_bytes_per_second": 0.0
+    },
+    "terrain/pan": {
+     "ranked": true,
+     "launches": [
+      {
+       "label": "alloc28-terrain-r1",
+       "samples": 3,
+       "share_percent": 0.18738392772828857,
+       "bytes_per_frame": 88.6852886405959,
+       "bytes_per_second": 1586.6705810438386,
+       "corroborated": true
+      },
+      {
+       "label": "alloc28-terrain-r2",
+       "samples": 2,
+       "share_percent": 0.18967084708620122,
+       "bytes_per_frame": 66.02214022140221,
+       "bytes_per_second": 1191.673883696494,
+       "corroborated": true
+      }
+     ],
+     "qualifies": false,
+     "median_share_percent": 0.1885273874072449,
+     "median_bytes_per_frame": 77.35371443099905,
+     "median_bytes_per_second": 1389.1722323701663
+    },
+    "d0/fly": {
+     "ranked": false,
+     "launches": [
+      {
+       "label": "alloc28-d0-r1",
+       "samples": 7,
+       "share_percent": 0.02613047261348758,
+       "bytes_per_frame": 118.13219616204691,
+       "bytes_per_second": 2768.3087672813076,
+       "corroborated": true
+      },
+      {
+       "label": "alloc28-d0-r2",
+       "samples": 21,
+       "share_percent": 0.27408651398304534,
+       "bytes_per_frame": 1193.5803480040943,
+       "bytes_per_second": 29142.196259586162,
+       "corroborated": true
+      }
+     ],
+     "qualifies": false,
+     "median_share_percent": 0.15010849329826645,
+     "median_bytes_per_frame": 655.8562720830706,
+     "median_bytes_per_second": 15955.252513433736
+    },
+    "d200/fly": {
+     "ranked": false,
+     "launches": [
+      {
+       "label": "alloc28-d200-r1",
+       "samples": 9,
+       "share_percent": 0.03619829610320018,
+       "bytes_per_frame": 152.7288317256163,
+       "bytes_per_second": 3561.9138239816543,
+       "corroborated": true
+      },
+      {
+       "label": "alloc28-d200-r2",
+       "samples": 6,
+       "share_percent": 0.025133159386101465,
+       "bytes_per_frame": 101.58716577540108,
+       "bytes_per_second": 2372.1842349877456,
+       "corroborated": true
+      }
+     ],
+     "qualifies": false,
+     "median_share_percent": 0.030665727744650824,
+     "median_bytes_per_frame": 127.15799875050868,
+     "median_bytes_per_second": 2967.0490294847
+    },
+    "terrain/sort": {
+     "ranked": false,
+     "launches": [
+      {
+       "label": "alloc28-terrain-r1",
+       "samples": 0,
+       "share_percent": 0.0,
+       "bytes_per_frame": 0.0,
+       "bytes_per_second": 0.0,
+       "corroborated": true
+      },
+      {
+       "label": "alloc28-terrain-r2",
+       "samples": 0,
+       "share_percent": 0.0,
+       "bytes_per_frame": 0.0,
+       "bytes_per_second": 0.0,
+       "corroborated": true
+      }
+     ],
+     "qualifies": false,
+     "median_share_percent": 0.0,
+     "median_bytes_per_frame": 0.0,
+     "median_bytes_per_second": 0.0
+    },
+    "terrain/fly": {
+     "ranked": false,
+     "launches": [
+      {
+       "label": "alloc28-terrain-r1",
+       "samples": 11,
+       "share_percent": 0.040573248034017795,
+       "bytes_per_frame": 177.38986556359876,
+       "bytes_per_second": 4285.072974560419,
+       "corroborated": true
+      },
+      {
+       "label": "alloc28-terrain-r2",
+       "samples": 17,
+       "share_percent": 0.14458621328067145,
+       "bytes_per_frame": 623.4677754677755,
+       "bytes_per_second": 14993.914143736638,
+       "corroborated": true
+      }
+     ],
+     "qualifies": false,
+     "median_share_percent": 0.09257973065734462,
+     "median_bytes_per_frame": 400.4288205156871,
+     "median_bytes_per_second": 9639.493559148528
+    }
+   }
+  },
+  "name_check.strip": {
+   "selectable": true,
+   "qualifying_combinations": [],
+   "share_and_size_pass": false,
+   "min_qualifying_share": 0.0,
+   "combinations": {
+    "d0/static": {
+     "ranked": true,
+     "launches": [
+      {
+       "label": "alloc28-d0-r1",
+       "samples": 0,
+       "share_percent": 0.0,
+       "bytes_per_frame": 0.0,
+       "bytes_per_second": 0.0,
+       "corroborated": true
+      },
+      {
+       "label": "alloc28-d0-r2",
+       "samples": 0,
+       "share_percent": 0.0,
+       "bytes_per_frame": 0.0,
+       "bytes_per_second": 0.0,
+       "corroborated": true
+      }
+     ],
+     "qualifies": false,
+     "median_share_percent": 0.0,
+     "median_bytes_per_frame": 0.0,
+     "median_bytes_per_second": 0.0
+    },
+    "d0/pan": {
+     "ranked": true,
+     "launches": [
+      {
+       "label": "alloc28-d0-r1",
+       "samples": 4,
+       "share_percent": 0.15431255139617647,
+       "bytes_per_frame": 98.53416149068323,
+       "bytes_per_second": 2113.9935028942223,
+       "corroborated": true
+      },
+      {
+       "label": "alloc28-d0-r2",
+       "samples": 3,
+       "share_percent": 0.18080552039639047,
+       "bytes_per_frame": 72.5618320610687,
+       "bytes_per_second": 1582.3789894912798,
+       "corroborated": true
+      }
+     ],
+     "qualifies": false,
+     "median_share_percent": 0.16755903589628346,
+     "median_bytes_per_frame": 85.54799677587596,
+     "median_bytes_per_second": 1848.186246192751
+    },
+    "d200/static": {
+     "ranked": true,
+     "launches": [
+      {
+       "label": "alloc28-d200-r1",
+       "samples": 254,
+       "share_percent": 10.795139569333282,
+       "bytes_per_frame": 9350.731034482758,
+       "bytes_per_second": 203372.92839435814,
+       "corroborated": true
+      },
+      {
+       "label": "alloc28-d200-r2",
+       "samples": 212,
+       "share_percent": 6.32386785165382,
+       "bytes_per_frame": 8272.32380952381,
+       "bytes_per_second": 173653.39804333705,
+       "corroborated": true
+      }
+     ],
+     "qualifies": false,
+     "median_share_percent": 8.559503710493551,
+     "median_bytes_per_frame": 8811.527422003284,
+     "median_bytes_per_second": 188513.1632188476
+    },
+    "d200/pan": {
+     "ranked": true,
+     "launches": [
+      {
+       "label": "alloc28-d200-r1",
+       "samples": 339,
+       "share_percent": 9.30446188722654,
+       "bytes_per_frame": 8652.188679245282,
+       "bytes_per_second": 183384.15657604134,
+       "corroborated": true
+      },
+      {
+       "label": "alloc28-d200-r2",
+       "samples": 352,
+       "share_percent": 8.413610086219833,
+       "bytes_per_frame": 8766.547730829421,
+       "bytes_per_second": 186446.61930788239,
+       "corroborated": true
+      }
+     ],
+     "qualifies": false,
+     "median_share_percent": 8.859035986723185,
+     "median_bytes_per_frame": 8709.368205037352,
+     "median_bytes_per_second": 184915.38794196188
+    },
+    "terrain/steady": {
+     "ranked": true,
+     "launches": [
+      {
+       "label": "alloc28-terrain-r1",
+       "samples": 0,
+       "share_percent": 0.0,
+       "bytes_per_frame": 0.0,
+       "bytes_per_second": 0.0,
+       "corroborated": true
+      },
+      {
+       "label": "alloc28-terrain-r2",
+       "samples": 0,
+       "share_percent": 0.0,
+       "bytes_per_frame": 0.0,
+       "bytes_per_second": 0.0,
+       "corroborated": true
+      }
+     ],
+     "qualifies": false,
+     "median_share_percent": 0.0,
+     "median_bytes_per_frame": 0.0,
+     "median_bytes_per_second": 0.0
+    },
+    "terrain/pan": {
+     "ranked": true,
+     "launches": [
+      {
+       "label": "alloc28-terrain-r1",
+       "samples": 3,
+       "share_percent": 0.1870062010135667,
+       "bytes_per_frame": 88.50651769087523,
+       "bytes_per_second": 1583.4721857855611,
+       "corroborated": true
+      },
+      {
+       "label": "alloc28-terrain-r2",
+       "samples": 5,
+       "share_percent": 0.4198794383741481,
+       "bytes_per_frame": 146.1549815498155,
+       "bytes_per_second": 2638.0404194864036,
+       "corroborated": true
+      }
+     ],
+     "qualifies": false,
+     "median_share_percent": 0.3034428196938574,
+     "median_bytes_per_frame": 117.33074962034536,
+     "median_bytes_per_second": 2110.756302635982
+    },
+    "d0/fly": {
+     "ranked": false,
+     "launches": [
+      {
+       "label": "alloc28-d0-r1",
+       "samples": 16,
+       "share_percent": 0.07836689281382385,
+       "bytes_per_frame": 354.2857142857143,
+       "bytes_per_second": 8302.328076880045,
+       "corroborated": true
+      },
+      {
+       "label": "alloc28-d0-r2",
+       "samples": 12,
+       "share_percent": 0.04463876241344,
+       "bytes_per_frame": 194.39099283520983,
+       "bytes_per_second": 4746.207889374583,
+       "corroborated": true
+      }
+     ],
+     "qualifies": false,
+     "median_share_percent": 0.061502827613631926,
+     "median_bytes_per_frame": 274.33835356046205,
+     "median_bytes_per_second": 6524.267983127314
+    },
+    "d200/fly": {
+     "ranked": false,
+     "launches": [
+      {
+       "label": "alloc28-d200-r1",
+       "samples": 20,
+       "share_percent": 0.10449788825659967,
+       "bytes_per_frame": 440.9003215434084,
+       "bytes_per_second": 10282.596498379557,
+       "corroborated": true
+      },
+      {
+       "label": "alloc28-d200-r2",
+       "samples": 20,
+       "share_percent": 0.0879311301052193,
+       "bytes_per_frame": 355.41390374331553,
+       "bytes_per_second": 8299.348179664446,
+       "corroborated": true
+      }
+     ],
+     "qualifies": false,
+     "median_share_percent": 0.09621450918090949,
+     "median_bytes_per_frame": 398.157112643362,
+     "median_bytes_per_second": 9290.972339022002
+    },
+    "terrain/sort": {
+     "ranked": false,
+     "launches": [
+      {
+       "label": "alloc28-terrain-r1",
+       "samples": 0,
+       "share_percent": 0.0,
+       "bytes_per_frame": 0.0,
+       "bytes_per_second": 0.0,
+       "corroborated": true
+      },
+      {
+       "label": "alloc28-terrain-r2",
+       "samples": 0,
+       "share_percent": 0.0,
+       "bytes_per_frame": 0.0,
+       "bytes_per_second": 0.0,
+       "corroborated": true
+      }
+     ],
+     "qualifies": false,
+     "median_share_percent": 0.0,
+     "median_bytes_per_frame": 0.0,
+     "median_bytes_per_second": 0.0
+    },
+    "terrain/fly": {
+     "ranked": false,
+     "launches": [
+      {
+       "label": "alloc28-terrain-r1",
+       "samples": 17,
+       "share_percent": 0.06736347495620901,
+       "bytes_per_frame": 294.51913133402275,
+       "bytes_per_second": 7114.476163340683,
+       "corroborated": true
+      },
+      {
+       "label": "alloc28-terrain-r2",
+       "samples": 14,
+       "share_percent": 0.19018837941249075,
+       "bytes_per_frame": 820.1081081081081,
+       "bytes_per_second": 19722.96090576508,
+       "corroborated": true
+      }
+     ],
+     "qualifies": false,
+     "median_share_percent": 0.12877592718434988,
+     "median_bytes_per_frame": 557.3136197210654,
+     "median_bytes_per_second": 13418.718534552881
+    }
+   }
+  },
+  "pick.all": {
+   "selectable": false,
+   "qualifying_combinations": [],
+   "share_and_size_pass": false,
+   "min_qualifying_share": 0.0,
+   "combinations": {
+    "d0/static": {
+     "ranked": true,
+     "launches": [
+      {
+       "label": "alloc28-d0-r1",
+       "samples": 54,
+       "share_percent": 11.970808155068228,
+       "bytes_per_frame": 1698.8628230616303,
+       "bytes_per_second": 42709.95833439901,
+       "corroborated": true
+      },
+      {
+       "label": "alloc28-d0-r2",
+       "samples": 43,
+       "share_percent": 3.3273049268143104,
+       "bytes_per_frame": 1394.622950819672,
+       "bytes_per_second": 33967.821706201954,
+       "corroborated": true
+      }
+     ],
+     "qualifies": false,
+     "median_share_percent": 7.649056540941269,
+     "median_bytes_per_frame": 1546.7428869406513,
+     "median_bytes_per_second": 38338.89002030048
+    },
+    "d0/pan": {
+     "ranked": true,
+     "launches": [
+      {
+       "label": "alloc28-d0-r1",
+       "samples": 54,
+       "share_percent": 2.0771885700545325,
+       "bytes_per_frame": 1326.3602484472049,
+       "bytes_per_second": 28456.292774964935,
+       "corroborated": true
+      },
+      {
+       "label": "alloc28-d0-r2",
+       "samples": 51,
+       "share_percent": 3.0711374313686166,
+       "bytes_per_frame": 1232.5251908396947,
+       "bytes_per_second": 26878.069511283204,
+       "corroborated": true
+      }
+     ],
+     "qualifies": false,
+     "median_share_percent": 2.5741630007115743,
+     "median_bytes_per_frame": 1279.44271964345,
+     "median_bytes_per_second": 27667.18114312407
+    },
+    "d200/static": {
+     "ranked": true,
+     "launches": [
+      {
+       "label": "alloc28-d200-r1",
+       "samples": 60,
+       "share_percent": 2.512254368568009,
+       "bytes_per_frame": 2176.1103448275862,
+       "bytes_per_second": 47329.12664312596,
+       "corroborated": true
+      },
+      {
+       "label": "alloc28-d200-r2",
+       "samples": 52,
+       "share_percent": 1.4879757585818014,
+       "bytes_per_frame": 1946.4380952380952,
+       "bytes_per_second": 40859.81123344744,
+       "corroborated": true
+      }
+     ],
+     "qualifies": false,
+     "median_share_percent": 2.0001150635749054,
+     "median_bytes_per_frame": 2061.2742200328407,
+     "median_bytes_per_second": 44094.4689382867
+    },
+    "d200/pan": {
+     "ranked": true,
+     "launches": [
+      {
+       "label": "alloc28-d200-r1",
+       "samples": 68,
+       "share_percent": 1.819069920390159,
+       "bytes_per_frame": 1691.5471698113208,
+       "bytes_per_second": 35852.54119440878,
+       "corroborated": true
+      },
+      {
+       "label": "alloc28-d200-r2",
+       "samples": 73,
+       "share_percent": 1.7348501897792783,
+       "bytes_per_frame": 1807.6244131455398,
+       "bytes_per_second": 38444.49048331299,
+       "corroborated": true
+      }
+     ],
+     "qualifies": false,
+     "median_share_percent": 1.7769600550847187,
+     "median_bytes_per_frame": 1749.5857914784303,
+     "median_bytes_per_second": 37148.51583886088
+    },
+    "terrain/steady": {
+     "ranked": true,
+     "launches": [
+      {
+       "label": "alloc28-terrain-r1",
+       "samples": 35,
+       "share_percent": 3.5538778375031255,
+       "bytes_per_frame": 1144.0661157024792,
+       "bytes_per_second": 27665.54952358903,
+       "corroborated": true
+      },
+      {
+       "label": "alloc28-terrain-r2",
+       "samples": 48,
+       "share_percent": 2.9623548369878785,
+       "bytes_per_frame": 1516.0975609756097,
+       "bytes_per_second": 37262.14339453997,
+       "corroborated": true
+      }
+     ],
+     "qualifies": false,
+     "median_share_percent": 3.258116337245502,
+     "median_bytes_per_frame": 1330.0818383390445,
+     "median_bytes_per_second": 32463.8464590645
+    },
+    "terrain/pan": {
+     "ranked": true,
+     "launches": [
+      {
+       "label": "alloc28-terrain-r1",
+       "samples": 20,
+       "share_percent": 1.2332147691145456,
+       "bytes_per_frame": 583.657355679702,
+       "bytes_per_second": 10442.227452399717,
+       "corroborated": true
+      },
+      {
+       "label": "alloc28-terrain-r2",
+       "samples": 31,
+       "share_percent": 2.6012001886107594,
+       "bytes_per_frame": 905.4464944649446,
+       "bytes_per_second": 16342.956119266202,
+       "corroborated": true
+      }
+     ],
+     "qualifies": false,
+     "median_share_percent": 1.9172074788626525,
+     "median_bytes_per_frame": 744.5519250723233,
+     "median_bytes_per_second": 13392.59178583296
+    },
+    "d0/fly": {
+     "ranked": false,
+     "launches": [
+      {
+       "label": "alloc28-d0-r1",
+       "samples": 78,
+       "share_percent": 0.33340641791271725,
+       "bytes_per_frame": 1507.2835820895523,
+       "bytes_per_second": 35321.669203151985,
+       "corroborated": true
+      },
+      {
+       "label": "alloc28-d0-r2",
+       "samples": 87,
+       "share_percent": 0.8637149250548273,
+       "bytes_per_frame": 3761.2691914022516,
+       "bytes_per_second": 91834.32447113597,
+       "corroborated": true
+      }
+     ],
+     "qualifies": false,
+     "median_share_percent": 0.5985606714837722,
+     "median_bytes_per_frame": 2634.276386745902,
+     "median_bytes_per_second": 63577.996837143975
+    },
+    "d200/fly": {
+     "ranked": false,
+     "launches": [
+      {
+       "label": "alloc28-d200-r1",
+       "samples": 77,
+       "share_percent": 0.3445239692386831,
+       "bytes_per_frame": 1453.62486602358,
+       "bytes_per_second": 33901.17272994531,
+       "corroborated": true
+      },
+      {
+       "label": "alloc28-d200-r2",
+       "samples": 70,
+       "share_percent": 0.3220274688730277,
+       "bytes_per_frame": 1301.6213903743314,
+       "bytes_per_second": 30394.447158761966,
+       "corroborated": true
+      }
+     ],
+     "qualifies": false,
+     "median_share_percent": 0.3332757190558554,
+     "median_bytes_per_frame": 1377.6231281989558,
+     "median_bytes_per_second": 32147.80994435364
+    },
+    "terrain/sort": {
+     "ranked": false,
+     "launches": [
+      {
+       "label": "alloc28-terrain-r1",
+       "samples": 48,
+       "share_percent": 0.40125005589058915,
+       "bytes_per_frame": 1427.7443609022557,
+       "bytes_per_second": 23701.769848865722,
+       "corroborated": true
+      },
+      {
+       "label": "alloc28-terrain-r2",
+       "samples": 44,
+       "share_percent": 0.38332614745391014,
+       "bytes_per_frame": 1394.9618320610687,
+       "bytes_per_second": 22841.649049588705,
+       "corroborated": true
+      }
+     ],
+     "qualifies": false,
+     "median_share_percent": 0.39228810167224965,
+     "median_bytes_per_frame": 1411.3530964816623,
+     "median_bytes_per_second": 23271.709449227215
+    },
+    "terrain/fly": {
+     "ranked": false,
+     "launches": [
+      {
+       "label": "alloc28-terrain-r1",
+       "samples": 59,
+       "share_percent": 0.2405557259615994,
+       "bytes_per_frame": 1051.7311271975182,
+       "bytes_per_second": 25405.874317224003,
+       "corroborated": true
+      },
+      {
+       "label": "alloc28-terrain-r2",
+       "samples": 72,
+       "share_percent": 1.0877599666748952,
+       "bytes_per_frame": 4690.511434511434,
+       "bytes_per_second": 112803.14477602772,
+       "corroborated": true
+      }
+     ],
+     "qualifies": false,
+     "median_share_percent": 0.6641578463182473,
+     "median_bytes_per_frame": 2871.121280854476,
+     "median_bytes_per_second": 69104.50954662586
+    }
+   }
+  },
+  "pick.block_trace": {
+   "selectable": true,
+   "qualifying_combinations": [],
+   "share_and_size_pass": false,
+   "min_qualifying_share": 0.0,
+   "combinations": {
+    "d0/static": {
+     "ranked": true,
+     "launches": [
+      {
+       "label": "alloc28-d0-r1",
+       "samples": 39,
+       "share_percent": 8.64593232799584,
+       "bytes_per_frame": 1227.0059642147116,
+       "bytes_per_second": 30847.324984854466,
+       "corroborated": true
+      },
+      {
+       "label": "alloc28-d0-r2",
+       "samples": 27,
+       "share_percent": 2.089265264488514,
+       "bytes_per_frame": 875.7049180327868,
+       "bytes_per_second": 21328.910803812018,
+       "corroborated": true
+      }
+     ],
+     "qualifies": false,
+     "median_share_percent": 5.367598796242177,
+     "median_bytes_per_frame": 1051.3554411237492,
+     "median_bytes_per_second": 26088.11789433324
+    },
+    "d0/pan": {
+     "ranked": true,
+     "launches": [
+      {
+       "label": "alloc28-d0-r1",
+       "samples": 31,
+       "share_percent": 1.1925177477915816,
+       "bytes_per_frame": 761.4658385093168,
+       "bytes_per_second": 16336.809599143977,
+       "corroborated": true
+      },
+      {
+       "label": "alloc28-d0-r2",
+       "samples": 31,
+       "share_percent": 1.866913624507015,
+       "bytes_per_frame": 749.2396946564885,
+       "bytes_per_second": 16338.908724348266,
+       "corroborated": true
+      }
+     ],
+     "qualifies": false,
+     "median_share_percent": 1.5297156861492982,
+     "median_bytes_per_frame": 755.3527665829026,
+     "median_bytes_per_second": 16337.85916174612
+    },
+    "d200/static": {
+     "ranked": true,
+     "launches": [
+      {
+       "label": "alloc28-d200-r1",
+       "samples": 29,
+       "share_percent": 1.2178253158789483,
+       "bytes_per_frame": 1054.8781609195403,
+       "bytes_per_second": 22942.982735181296,
+       "corroborated": true
+      },
+      {
+       "label": "alloc28-d200-r2",
+       "samples": 25,
+       "share_percent": 0.7151567836437408,
+       "bytes_per_frame": 935.504761904762,
+       "bytes_per_second": 19638.20379026439,
+       "corroborated": true
+      }
+     ],
+     "qualifies": false,
+     "median_share_percent": 0.9664910497613446,
+     "median_bytes_per_frame": 995.191461412151,
+     "median_bytes_per_second": 21290.593262722843
+    },
+    "d200/pan": {
+     "ranked": true,
+     "launches": [
+      {
+       "label": "alloc28-d200-r1",
+       "samples": 33,
+       "share_percent": 0.8829275557615852,
+       "bytes_per_frame": 821.0314465408806,
+       "bytes_per_second": 17401.85806482436,
+       "corroborated": true
+      },
+      {
+       "label": "alloc28-d200-r2",
+       "samples": 26,
+       "share_percent": 0.6177423949809692,
+       "bytes_per_frame": 643.6557120500783,
+       "bytes_per_second": 13689.246348127823,
+       "corroborated": true
+      }
+     ],
+     "qualifies": false,
+     "median_share_percent": 0.7503349753712771,
+     "median_bytes_per_frame": 732.3435792954795,
+     "median_bytes_per_second": 15545.552206476092
+    },
+    "terrain/steady": {
+     "ranked": true,
+     "launches": [
+      {
+       "label": "alloc28-terrain-r1",
+       "samples": 26,
+       "share_percent": 2.6398386953505795,
+       "bytes_per_frame": 849.8181818181819,
+       "bytes_per_second": 20550.11215912226,
+       "corroborated": true
+      },
+      {
+       "label": "alloc28-terrain-r2",
+       "samples": 30,
+       "share_percent": 1.8856259070702552,
+       "bytes_per_frame": 965.040650406504,
+       "bytes_per_second": 23718.449275696556,
+       "corroborated": true
+      }
+     ],
+     "qualifies": false,
+     "median_share_percent": 2.2627323012104172,
+     "median_bytes_per_frame": 907.429416112343,
+     "median_bytes_per_second": 22134.28071740941
+    },
+    "terrain/pan": {
+     "ranked": true,
+     "launches": [
+      {
+       "label": "alloc28-terrain-r1",
+       "samples": 15,
+       "share_percent": 0.9219050017312475,
+       "bytes_per_frame": 436.32029795158286,
+       "bytes_per_second": 7806.216693702662,
+       "corroborated": true
+      },
+      {
+       "label": "alloc28-terrain-r2",
+       "samples": 17,
+       "share_percent": 1.4252239752770643,
+       "bytes_per_frame": 496.1033210332103,
+       "bytes_per_second": 8954.471474384722,
+       "corroborated": true
+      }
+     ],
+     "qualifies": false,
+     "median_share_percent": 1.1735644885041558,
+     "median_bytes_per_frame": 466.2118094923966,
+     "median_bytes_per_second": 8380.344084043692
+    },
+    "d0/fly": {
+     "ranked": false,
+     "launches": [
+      {
+       "label": "alloc28-d0-r1",
+       "samples": 49,
+       "share_percent": 0.2040029446633523,
+       "bytes_per_frame": 922.2686567164179,
+       "bytes_per_second": 21612.434976444405,
+       "corroborated": true
+      },
+      {
+       "label": "alloc28-d0-r2",
+       "samples": 50,
+       "share_percent": 0.6899208419735537,
+       "bytes_per_frame": 3004.4380757420677,
+       "bytes_per_second": 73355.70177530135,
+       "corroborated": true
+      }
+     ],
+     "qualifies": false,
+     "median_share_percent": 0.44696189331845304,
+     "median_bytes_per_frame": 1963.3533662292427,
+     "median_bytes_per_second": 47484.06837587288
+    },
+    "d200/fly": {
+     "ranked": false,
+     "launches": [
+      {
+       "label": "alloc28-d200-r1",
+       "samples": 49,
+       "share_percent": 0.20503900116439341,
+       "bytes_per_frame": 865.1061093247588,
+       "bytes_per_second": 20175.846139848476,
+       "corroborated": true
+      },
+      {
+       "label": "alloc28-d200-r2",
+       "samples": 39,
+       "share_percent": 0.16673447588694248,
+       "bytes_per_frame": 673.9336898395721,
+       "bytes_per_second": 15737.173709512743,
+       "corroborated": true
+      }
+     ],
+     "qualifies": false,
+     "median_share_percent": 0.18588673852566795,
+     "median_bytes_per_frame": 769.5198995821654,
+     "median_bytes_per_second": 17956.50992468061
+    },
+    "terrain/sort": {
+     "ranked": false,
+     "launches": [
+      {
+       "label": "alloc28-terrain-r1",
+       "samples": 35,
+       "share_percent": 0.2925962148568639,
+       "bytes_per_frame": 1041.1278195488721,
+       "bytes_per_second": 17283.606672138798,
+       "corroborated": true
+      },
+      {
+       "label": "alloc28-terrain-r2",
+       "samples": 34,
+       "share_percent": 0.29388198127554344,
+       "bytes_per_frame": 1069.4656488549617,
+       "bytes_per_second": 17511.84760778909,
+       "corroborated": true
+      }
+     ],
+     "qualifies": false,
+     "median_share_percent": 0.29323909806620363,
+     "median_bytes_per_frame": 1055.296734201917,
+     "median_bytes_per_second": 17397.727139963943
+    },
+    "terrain/fly": {
+     "ranked": false,
+     "launches": [
+      {
+       "label": "alloc28-terrain-r1",
+       "samples": 40,
+       "share_percent": 0.1587431640737721,
+       "bytes_per_frame": 694.0392967942089,
+       "bytes_per_second": 16765.38298581395,
+       "corroborated": true
+      },
+      {
+       "label": "alloc28-terrain-r2",
+       "samples": 38,
+       "share_percent": 0.16386193223895335,
+       "bytes_per_frame": 706.5862785862786,
+       "bytes_per_second": 16992.849371110162,
+       "corroborated": true
+      }
+     ],
+     "qualifies": false,
+     "median_share_percent": 0.16130254815636272,
+     "median_bytes_per_frame": 700.3127876902438,
+     "median_bytes_per_second": 16879.116178462056
+    }
+   }
+  },
+  "pick.other": {
+   "selectable": false,
+   "qualifying_combinations": [],
+   "share_and_size_pass": false,
+   "min_qualifying_share": 0.0,
+   "combinations": {
+    "d0/static": {
+     "ranked": true,
+     "launches": [
+      {
+       "label": "alloc28-d0-r1",
+       "samples": 15,
+       "share_percent": 3.324875827072388,
+       "bytes_per_frame": 471.8568588469185,
+       "bytes_per_second": 11862.633349544541,
+       "corroborated": true
+      },
+      {
+       "label": "alloc28-d0-r2",
+       "samples": 16,
+       "share_percent": 1.2380396623257968,
+       "bytes_per_frame": 518.9180327868852,
+       "bytes_per_second": 12638.910902389935,
+       "corroborated": true
+      }
+     ],
+     "qualifies": false,
+     "median_share_percent": 2.2814577446990922,
+     "median_bytes_per_frame": 495.38744581690185,
+     "median_bytes_per_second": 12250.772125967238
+    },
+    "d0/pan": {
+     "ranked": true,
+     "launches": [
+      {
+       "label": "alloc28-d0-r1",
+       "samples": 23,
+       "share_percent": 0.8846708222629511,
+       "bytes_per_frame": 564.8944099378882,
+       "bytes_per_second": 12119.48317582096,
+       "corroborated": true
+      },
+      {
+       "label": "alloc28-d0-r2",
+       "samples": 20,
+       "share_percent": 1.2042238068616014,
+       "bytes_per_frame": 483.28549618320613,
+       "bytes_per_second": 10539.160786934934,
+       "corroborated": true
+      }
+     ],
+     "qualifies": false,
+     "median_share_percent": 1.0444473145622761,
+     "median_bytes_per_frame": 524.0899530605471,
+     "median_bytes_per_second": 11329.321981377947
+    },
+    "d200/static": {
+     "ranked": true,
+     "launches": [
+      {
+       "label": "alloc28-d200-r1",
+       "samples": 31,
+       "share_percent": 1.2944290526890607,
+       "bytes_per_frame": 1121.232183908046,
+       "bytes_per_second": 24386.143907944665,
+       "corroborated": true
+      },
+      {
+       "label": "alloc28-d200-r2",
+       "samples": 27,
+       "share_percent": 0.7728189749380605,
+       "bytes_per_frame": 1010.9333333333333,
+       "bytes_per_second": 21221.60744318305,
+       "corroborated": true
+      }
+     ],
+     "qualifies": false,
+     "median_share_percent": 1.0336240138135606,
+     "median_bytes_per_frame": 1066.0827586206897,
+     "median_bytes_per_second": 22803.875675563857
+    },
+    "d200/pan": {
+     "ranked": true,
+     "launches": [
+      {
+       "label": "alloc28-d200-r1",
+       "samples": 35,
+       "share_percent": 0.9361423646285738,
+       "bytes_per_frame": 870.5157232704403,
+       "bytes_per_second": 18450.683129584424,
+       "corroborated": true
+      },
+      {
+       "label": "alloc28-d200-r2",
+       "samples": 47,
+       "share_percent": 1.117107794798309,
+       "bytes_per_frame": 1163.9687010954617,
+       "bytes_per_second": 24755.24413518517,
+       "corroborated": true
+      }
+     ],
+     "qualifies": false,
+     "median_share_percent": 1.0266250797134413,
+     "median_bytes_per_frame": 1017.242212182951,
+     "median_bytes_per_second": 21602.963632384795
+    },
+    "terrain/steady": {
+     "ranked": true,
+     "launches": [
+      {
+       "label": "alloc28-terrain-r1",
+       "samples": 9,
+       "share_percent": 0.9140391421525462,
+       "bytes_per_frame": 294.24793388429754,
+       "bytes_per_second": 7115.437364466769,
+       "corroborated": true
+      },
+      {
+       "label": "alloc28-terrain-r2",
+       "samples": 18,
+       "share_percent": 1.0767289299176235,
+       "bytes_per_frame": 551.0569105691056,
+       "bytes_per_second": 13543.694118843408,
+       "corroborated": true
+      }
+     ],
+     "qualifies": false,
+     "median_share_percent": 0.9953840360350849,
+     "median_bytes_per_frame": 422.65242222670156,
+     "median_bytes_per_second": 10329.56574165509
+    },
+    "terrain/pan": {
+     "ranked": true,
+     "launches": [
+      {
+       "label": "alloc28-terrain-r1",
+       "samples": 5,
+       "share_percent": 0.3113097673832982,
+       "bytes_per_frame": 147.3370577281192,
+       "bytes_per_second": 2636.0107586970544,
+       "corroborated": true
+      },
+      {
+       "label": "alloc28-terrain-r2",
+       "samples": 14,
+       "share_percent": 1.1759762133336953,
+       "bytes_per_frame": 409.34317343173433,
+       "bytes_per_second": 7388.4846448814815,
+       "corroborated": true
+      }
+     ],
+     "qualifies": false,
+     "median_share_percent": 0.7436429903584967,
+     "median_bytes_per_frame": 278.34011557992676,
+     "median_bytes_per_second": 5012.247701789268
+    },
+    "d0/fly": {
+     "ranked": false,
+     "launches": [
+      {
+       "label": "alloc28-d0-r1",
+       "samples": 29,
+       "share_percent": 0.12940347324936494,
+       "bytes_per_frame": 585.0149253731344,
+       "bytes_per_second": 13709.234226707582,
+       "corroborated": true
+      },
+      {
+       "label": "alloc28-d0-r2",
+       "samples": 37,
+       "share_percent": 0.1737940830812735,
+       "bytes_per_frame": 756.8311156601842,
+       "bytes_per_second": 18478.622695834623,
+       "corroborated": true
+      }
+     ],
+     "qualifies": false,
+     "median_share_percent": 0.15159877816531922,
+     "median_bytes_per_frame": 670.9230205166593,
+     "median_bytes_per_second": 16093.928461271102
+    },
+    "d200/fly": {
+     "ranked": false,
+     "launches": [
+      {
+       "label": "alloc28-d200-r1",
+       "samples": 28,
+       "share_percent": 0.13948496807428967,
+       "bytes_per_frame": 588.518756698821,
+       "bytes_per_second": 13725.326590096834,
+       "corroborated": true
+      },
+      {
+       "label": "alloc28-d200-r2",
+       "samples": 31,
+       "share_percent": 0.1552929929860852,
+       "bytes_per_frame": 627.6877005347594,
+       "bytes_per_second": 14657.273449249224,
+       "corroborated": true
+      }
+     ],
+     "qualifies": false,
+     "median_share_percent": 0.14738898053018745,
+     "median_bytes_per_frame": 608.1032286167901,
+     "median_bytes_per_second": 14191.300019673028
+    },
+    "terrain/sort": {
+     "ranked": false,
+     "launches": [
+      {
+       "label": "alloc28-terrain-r1",
+       "samples": 13,
+       "share_percent": 0.10865384103372529,
+       "bytes_per_frame": 386.61654135338347,
+       "bytes_per_second": 6418.163176726923,
+       "corroborated": true
+      },
+      {
+       "label": "alloc28-terrain-r2",
+       "samples": 10,
+       "share_percent": 0.08944416617836669,
+       "bytes_per_frame": 325.4961832061069,
+       "bytes_per_second": 5329.801441799619,
+       "corroborated": true
+      }
+     ],
+     "qualifies": false,
+     "median_share_percent": 0.09904900360604599,
+     "median_bytes_per_frame": 356.05636227974514,
+     "median_bytes_per_second": 5873.9823092632705
+    },
+    "terrain/fly": {
+     "ranked": false,
+     "launches": [
+      {
+       "label": "alloc28-terrain-r1",
+       "samples": 19,
+       "share_percent": 0.08181256188782733,
+       "bytes_per_frame": 357.6918304033092,
+       "bytes_per_second": 8640.49133141005,
+       "corroborated": true
+      },
+      {
+       "label": "alloc28-terrain-r2",
+       "samples": 34,
+       "share_percent": 0.9238980344359418,
+       "bytes_per_frame": 3983.925155925156,
+       "bytes_per_second": 95810.29540491758,
+       "corroborated": true
+      }
+     ],
+     "qualifies": false,
+     "median_share_percent": 0.5028552981618846,
+     "median_bytes_per_frame": 2170.8084931642325,
+     "median_bytes_per_second": 52225.393368163815
+    }
+   }
+  },
+  "shadow.all": {
+   "selectable": false,
+   "qualifying_combinations": [
+    "d200/static",
+    "d200/pan"
+   ],
+   "share_and_size_pass": true,
+   "min_qualifying_share": 21.153243825886392,
+   "combinations": {
+    "d0/static": {
+     "ranked": true,
+     "launches": [
+      {
+       "label": "alloc28-d0-r1",
+       "samples": 5,
+       "share_percent": 1.1084787247395507,
+       "bytes_per_frame": 157.31212723658052,
+       "bytes_per_second": 3954.8775266396474,
+       "corroborated": true
+      },
+      {
+       "label": "alloc28-d0-r2",
+       "samples": 7,
+       "share_percent": 0.5416179074962922,
+       "bytes_per_frame": 227.01639344262296,
+       "bytes_per_second": 5529.273967785931,
+       "corroborated": true
+      }
+     ],
+     "qualifies": false,
+     "median_share_percent": 0.8250483161179214,
+     "median_bytes_per_frame": 192.16426033960175,
+     "median_bytes_per_second": 4742.075747212789
+    },
+    "d0/pan": {
+     "ranked": true,
+     "launches": [
+      {
+       "label": "alloc28-d0-r1",
+       "samples": 4,
+       "share_percent": 0.15415691594343195,
+       "bytes_per_frame": 98.43478260869566,
+       "bytes_per_second": 2111.8613864011368,
+       "corroborated": true
+      },
+      {
+       "label": "alloc28-d0-r2",
+       "samples": 1,
+       "share_percent": 0.06038009635859934,
+       "bytes_per_frame": 24.23206106870229,
+       "bytes_per_second": 528.4362759048474,
+       "corroborated": true
+      }
+     ],
+     "qualifies": false,
+     "median_share_percent": 0.10726850615101564,
+     "median_bytes_per_frame": 61.333421838698975,
+     "median_bytes_per_second": 1320.148831152992
+    },
+    "d200/static": {
+     "ranked": true,
+     "launches": [
+      {
+       "label": "alloc28-d200-r1",
+       "samples": 716,
+       "share_percent": 30.508669619420832,
+       "bytes_per_frame": 26426.55632183908,
+       "bytes_per_second": 574762.1364288491,
+       "corroborated": true
+      },
+      {
+       "label": "alloc28-d200-r2",
+       "samples": 719,
+       "share_percent": 21.153243825886392,
+       "bytes_per_frame": 27670.8,
+       "bytes_per_second": 580868.0314285441,
+       "corroborated": true
+      }
+     ],
+     "qualifies": true,
+     "median_share_percent": 25.83095672265361,
+     "median_bytes_per_frame": 27048.67816091954,
+     "median_bytes_per_second": 577815.0839286966
+    },
+    "d200/pan": {
+     "ranked": true,
+     "launches": [
+      {
+       "label": "alloc28-d200-r1",
+       "samples": 1183,
+       "share_percent": 31.8892109342229,
+       "bytes_per_frame": 29653.672955974842,
+       "bytes_per_second": 628513.0856493947,
+       "corroborated": true
+      },
+      {
+       "label": "alloc28-d200-r2",
+       "samples": 1158,
+       "share_percent": 28.00598805920724,
+       "bytes_per_frame": 29180.794992175273,
+       "bytes_per_second": 620616.0899431631,
+       "corroborated": true
+      }
+     ],
+     "qualifies": true,
+     "median_share_percent": 29.94759949671507,
+     "median_bytes_per_frame": 29417.233974075058,
+     "median_bytes_per_second": 624564.5877962789
+    },
+    "terrain/steady": {
+     "ranked": true,
+     "launches": [
+      {
+       "label": "alloc28-terrain-r1",
+       "samples": 15,
+       "share_percent": 1.5077384231720885,
+       "bytes_per_frame": 485.3719008264463,
+       "bytes_per_second": 11737.154151644012,
+       "corroborated": true
+      },
+      {
+       "label": "alloc28-terrain-r2",
+       "samples": 14,
+       "share_percent": 0.8712004717400753,
+       "bytes_per_frame": 445.869918699187,
+       "bytes_per_second": 10958.443093325615,
+       "corroborated": true
+      }
+     ],
+     "qualifies": false,
+     "median_share_percent": 1.1894694474560819,
+     "median_bytes_per_frame": 465.6209097628166,
+     "median_bytes_per_second": 11347.798622484814
+    },
+    "terrain/pan": {
+     "ranked": true,
+     "launches": [
+      {
+       "label": "alloc28-terrain-r1",
+       "samples": 9,
+       "share_percent": 0.5607038307784318,
+       "bytes_per_frame": 265.3705772811918,
+       "bytes_per_second": 4747.751227974785,
+       "corroborated": true
+      },
+      {
+       "label": "alloc28-terrain-r2",
+       "samples": 6,
+       "share_percent": 0.5033719261704214,
+       "bytes_per_frame": 175.21771217712177,
+       "bytes_per_second": 3162.6113734319424,
+       "corroborated": true
+      }
+     ],
+     "qualifies": false,
+     "median_share_percent": 0.5320378784744266,
+     "median_bytes_per_frame": 220.29414472915678,
+     "median_bytes_per_second": 3955.181300703364
+    },
+    "d0/fly": {
+     "ranked": false,
+     "launches": [
+      {
+       "label": "alloc28-d0-r1",
+       "samples": 0,
+       "share_percent": 0.0,
+       "bytes_per_frame": 0.0,
+       "bytes_per_second": 0.0,
+       "corroborated": true
+      },
+      {
+       "label": "alloc28-d0-r2",
+       "samples": 0,
+       "share_percent": 0.0,
+       "bytes_per_frame": 0.0,
+       "bytes_per_second": 0.0,
+       "corroborated": true
+      }
+     ],
+     "qualifies": false,
+     "median_share_percent": 0.0,
+     "median_bytes_per_frame": 0.0,
+     "median_bytes_per_second": 0.0
+    },
+    "d200/fly": {
+     "ranked": false,
+     "launches": [
+      {
+       "label": "alloc28-d200-r1",
+       "samples": 0,
+       "share_percent": 0.0,
+       "bytes_per_frame": 0.0,
+       "bytes_per_second": 0.0,
+       "corroborated": true
+      },
+      {
+       "label": "alloc28-d200-r2",
+       "samples": 0,
+       "share_percent": 0.0,
+       "bytes_per_frame": 0.0,
+       "bytes_per_second": 0.0,
+       "corroborated": true
+      }
+     ],
+     "qualifies": false,
+     "median_share_percent": 0.0,
+     "median_bytes_per_frame": 0.0,
+     "median_bytes_per_second": 0.0
+    },
+    "terrain/sort": {
+     "ranked": false,
+     "launches": [
+      {
+       "label": "alloc28-terrain-r1",
+       "samples": 0,
+       "share_percent": 0.0,
+       "bytes_per_frame": 0.0,
+       "bytes_per_second": 0.0,
+       "corroborated": true
+      },
+      {
+       "label": "alloc28-terrain-r2",
+       "samples": 2,
+       "share_percent": 0.01661345675733265,
+       "bytes_per_frame": 60.458015267175576,
+       "bytes_per_second": 989.9631195837942,
+       "corroborated": true
+      }
+     ],
+     "qualifies": false,
+     "median_share_percent": 0.008306728378666325,
+     "median_bytes_per_frame": 30.229007633587788,
+     "median_bytes_per_second": 494.9815597918971
+    },
+    "terrain/fly": {
+     "ranked": false,
+     "launches": [
+      {
+       "label": "alloc28-terrain-r1",
+       "samples": 0,
+       "share_percent": 0.0,
+       "bytes_per_frame": 0.0,
+       "bytes_per_second": 0.0,
+       "corroborated": true
+      },
+      {
+       "label": "alloc28-terrain-r2",
+       "samples": 0,
+       "share_percent": 0.0,
+       "bytes_per_frame": 0.0,
+       "bytes_per_second": 0.0,
+       "corroborated": true
+      }
+     ],
+     "qualifies": false,
+     "median_share_percent": 0.0,
+     "median_bytes_per_frame": 0.0,
+     "median_bytes_per_second": 0.0
+    }
+   }
+  },
+  "shadow.offset_pos": {
+   "selectable": true,
+   "qualifying_combinations": [
+    "d200/static",
+    "d200/pan"
+   ],
+   "share_and_size_pass": true,
+   "min_qualifying_share": 15.533175053530462,
+   "combinations": {
+    "d0/static": {
+     "ranked": true,
+     "launches": [
+      {
+       "label": "alloc28-d0-r1",
+       "samples": 1,
+       "share_percent": 0.2221216087790708,
+       "bytes_per_frame": 31.52286282306163,
+       "bytes_per_second": 792.4949204124741,
+       "corroborated": true
+      },
+      {
+       "label": "alloc28-d0-r2",
+       "samples": 1,
+       "share_percent": 0.07732370039862578,
+       "bytes_per_frame": 32.40983606557377,
+       "bytes_per_second": 789.382916978104,
+       "corroborated": true
+      }
+     ],
+     "qualifies": false,
+     "median_share_percent": 0.1497226545888483,
+     "median_bytes_per_frame": 31.9663494443177,
+     "median_bytes_per_second": 790.9389186952891
+    },
+    "d0/pan": {
+     "ranked": true,
+     "launches": [
+      {
+       "label": "alloc28-d0-r1",
+       "samples": 2,
+       "share_percent": 0.07715627569808824,
+       "bytes_per_frame": 49.267080745341616,
+       "bytes_per_second": 1056.9967514471111,
+       "corroborated": true
+      },
+      {
+       "label": "alloc28-d0-r2",
+       "samples": 0,
+       "share_percent": 0.0,
+       "bytes_per_frame": 0.0,
+       "bytes_per_second": 0.0,
+       "corroborated": true
+      }
+     ],
+     "qualifies": false,
+     "median_share_percent": 0.03857813784904412,
+     "median_bytes_per_frame": 24.633540372670808,
+     "median_bytes_per_second": 528.4983757235556
+    },
+    "d200/static": {
+     "ranked": true,
+     "launches": [
+      {
+       "label": "alloc28-d200-r1",
+       "samples": 516,
+       "share_percent": 22.05013510750532,
+       "bytes_per_frame": 19099.788505747125,
+       "bytes_per_second": 415409.22370692075,
+       "corroborated": true
+      },
+      {
+       "label": "alloc28-d200-r2",
+       "samples": 527,
+       "share_percent": 15.533175053530462,
+       "bytes_per_frame": 20319.123809523808,
+       "bytes_per_second": 426540.9546377754,
+       "corroborated": true
+      }
+     ],
+     "qualifies": true,
+     "median_share_percent": 18.79165508051789,
+     "median_bytes_per_frame": 19709.456157635468,
+     "median_bytes_per_second": 420975.08917234803
+    },
+    "d200/pan": {
+     "ranked": true,
+     "launches": [
+      {
+       "label": "alloc28-d200-r1",
+       "samples": 847,
+       "share_percent": 22.923881856631404,
+       "bytes_per_frame": 21316.8427672956,
+       "bytes_per_second": 451812.9893678626,
+       "corroborated": true
+      },
+      {
+       "label": "alloc28-d200-r2",
+       "samples": 859,
+       "share_percent": 20.760888202348244,
+       "bytes_per_frame": 21631.774647887323,
+       "bytes_per_second": 460063.79895076016,
+       "corroborated": true
+      }
+     ],
+     "qualifies": true,
+     "median_share_percent": 21.842385029489826,
+     "median_bytes_per_frame": 21474.30870759146,
+     "median_bytes_per_second": 455938.39415931137
+    },
+    "terrain/steady": {
+     "ranked": true,
+     "launches": [
+      {
+       "label": "alloc28-terrain-r1",
+       "samples": 3,
+       "share_percent": 0.3048337482844437,
+       "bytes_per_frame": 98.13223140495867,
+       "bytes_per_second": 2373.0115511088197,
+       "corroborated": true
+      },
+      {
+       "label": "alloc28-terrain-r2",
+       "samples": 5,
+       "share_percent": 0.3143768888030358,
+       "bytes_per_frame": 160.89430894308944,
+       "bytes_per_second": 3954.4070022412375,
+       "corroborated": true
+      }
+     ],
+     "qualifies": false,
+     "median_share_percent": 0.30960531854373974,
+     "median_bytes_per_frame": 129.51327017402406,
+     "median_bytes_per_second": 3163.7092766750284
+    },
+    "terrain/pan": {
+     "ranked": true,
+     "launches": [
+      {
+       "label": "alloc28-terrain-r1",
+       "samples": 5,
+       "share_percent": 0.3117189713242469,
+       "bytes_per_frame": 147.53072625698323,
+       "bytes_per_second": 2639.4756868935215,
+       "corroborated": true
+      },
+      {
+       "label": "alloc28-terrain-r2",
+       "samples": 2,
+       "share_percent": 0.16796025604928305,
+       "bytes_per_frame": 58.464944649446494,
+       "bytes_per_second": 1055.269450776171,
+       "corroborated": true
+      }
+     ],
+     "qualifies": false,
+     "median_share_percent": 0.23983961368676499,
+     "median_bytes_per_frame": 102.99783545321486,
+     "median_bytes_per_second": 1847.3725688348463
+    },
+    "d0/fly": {
+     "ranked": false,
+     "launches": [
+      {
+       "label": "alloc28-d0-r1",
+       "samples": 0,
+       "share_percent": 0.0,
+       "bytes_per_frame": 0.0,
+       "bytes_per_second": 0.0,
+       "corroborated": true
+      },
+      {
+       "label": "alloc28-d0-r2",
+       "samples": 0,
+       "share_percent": 0.0,
+       "bytes_per_frame": 0.0,
+       "bytes_per_second": 0.0,
+       "corroborated": true
+      }
+     ],
+     "qualifies": false,
+     "median_share_percent": 0.0,
+     "median_bytes_per_frame": 0.0,
+     "median_bytes_per_second": 0.0
+    },
+    "d200/fly": {
+     "ranked": false,
+     "launches": [
+      {
+       "label": "alloc28-d200-r1",
+       "samples": 0,
+       "share_percent": 0.0,
+       "bytes_per_frame": 0.0,
+       "bytes_per_second": 0.0,
+       "corroborated": true
+      },
+      {
+       "label": "alloc28-d200-r2",
+       "samples": 0,
+       "share_percent": 0.0,
+       "bytes_per_frame": 0.0,
+       "bytes_per_second": 0.0,
+       "corroborated": true
+      }
+     ],
+     "qualifies": false,
+     "median_share_percent": 0.0,
+     "median_bytes_per_frame": 0.0,
+     "median_bytes_per_second": 0.0
+    },
+    "terrain/sort": {
+     "ranked": false,
+     "launches": [
+      {
+       "label": "alloc28-terrain-r1",
+       "samples": 0,
+       "share_percent": 0.0,
+       "bytes_per_frame": 0.0,
+       "bytes_per_second": 0.0,
+       "corroborated": true
+      },
+      {
+       "label": "alloc28-terrain-r2",
+       "samples": 0,
+       "share_percent": 0.0,
+       "bytes_per_frame": 0.0,
+       "bytes_per_second": 0.0,
+       "corroborated": true
+      }
+     ],
+     "qualifies": false,
+     "median_share_percent": 0.0,
+     "median_bytes_per_frame": 0.0,
+     "median_bytes_per_second": 0.0
+    },
+    "terrain/fly": {
+     "ranked": false,
+     "launches": [
+      {
+       "label": "alloc28-terrain-r1",
+       "samples": 0,
+       "share_percent": 0.0,
+       "bytes_per_frame": 0.0,
+       "bytes_per_second": 0.0,
+       "corroborated": true
+      },
+      {
+       "label": "alloc28-terrain-r2",
+       "samples": 0,
+       "share_percent": 0.0,
+       "bytes_per_frame": 0.0,
+       "bytes_per_second": 0.0,
+       "corroborated": true
+      }
+     ],
+     "qualifies": false,
+     "median_share_percent": 0.0,
+     "median_bytes_per_frame": 0.0,
+     "median_bytes_per_second": 0.0
+    }
+   }
+  }
+ }
+}

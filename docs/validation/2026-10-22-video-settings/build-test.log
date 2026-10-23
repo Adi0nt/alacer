@@ -1,0 +1,48 @@
+Picked up JAVA_TOOL_OPTIONS: [container proxy settings redacted]
+To honour the JVM settings for this build a single-use Daemon process will be forked. For more on this, please refer to https://docs.gradle.org/9.7.1/userguide/gradle_daemon.html#sec:disabling_the_daemon in the Gradle documentation.
+Daemon will be stopped at the end of the build 
+
+> Configure project :
+Fabric Loom: 1.18.4
+Ploceus: 1.18.2
+
+> Task :clean
+
+> Task :compileJava
+/home/user/alacer/src/main/java/net/adiont/alacer/render/ThreadCycles.java:110: warning: [removal] ThreadDeath in java.lang has been deprecated and marked for removal
+		if (failure instanceof ThreadDeath death) { throw death; }
+		                       ^
+Note: /home/user/alacer/src/main/java/net/adiont/alacer/profiler/FrameProfiler.java uses or overrides a deprecated API.
+Note: Recompile with -Xlint:deprecation for details.
+1 warning
+
+> Task :processResources
+> Task :classes
+> Task :jar
+> Task :processIncludeJars
+> Task :sourcesJar
+> Task :compileTestJava
+> Task :processTestResources NO-SOURCE
+> Task :testClasses
+> Task :remapJar
+
+> Task :test
+Picked up JAVA_TOOL_OPTIONS: [container proxy settings redacted]
+
+> Task :remapSourcesJar
+> Task :assemble
+> Task :validateAccessWidener UP-TO-DATE
+> Task :check
+> Task :build
+
+[Incubating] Problems report is available at: file:///home/user/alacer/build/reports/problems/problems-report.html
+
+Deprecated Gradle features were used in this build, making it incompatible with Gradle 10.
+
+You can use '--warning-mode all' to show the individual deprecation warnings and determine if they come from your own scripts or plugins.
+
+For more on this, please refer to https://docs.gradle.org/9.7.1/userguide/command_line_interface.html#sec:command_line_warnings in the Gradle documentation.
+
+BUILD SUCCESSFUL in 22s
+11 actionable tasks: 10 executed, 1 up-to-date
+Consider enabling configuration cache to speed up this build: https://docs.gradle.org/9.7.1/userguide/configuration_cache_enabling.html

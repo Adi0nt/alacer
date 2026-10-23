@@ -1,0 +1,1725 @@
+{
+ "label": "alloc28-terrain-r2",
+ "scene": "terrain",
+ "threads": {
+  "AWT-XAWT": {
+   "samples": 55,
+   "weight": 88376
+  },
+  "Alacer benchmark watchdog": {
+   "samples": 26,
+   "weight": 2536
+  },
+  "C1 CompilerThread0": {
+   "samples": 33,
+   "weight": 43360
+  },
+  "C2 CompilerThread0": {
+   "samples": 1,
+   "weight": 56
+  },
+  "Chunk Batcher 0": {
+   "samples": 136706,
+   "weight": 2470814960
+  },
+  "Chunk Batcher 1": {
+   "samples": 138029,
+   "weight": 2490584232
+  },
+  "Common-Cleaner": {
+   "samples": 1,
+   "weight": 6400
+  },
+  "Downloader 2": {
+   "samples": 1,
+   "weight": 848
+  },
+  "Downloader 3": {
+   "samples": 1,
+   "weight": 15832
+  },
+  "File IO Thread": {
+   "samples": 3187,
+   "weight": 63871304
+  },
+  "ForkJoinPool-1-worker-1": {
+   "samples": 16,
+   "weight": 307792
+  },
+  "ForkJoinPool-1-worker-2": {
+   "samples": 15,
+   "weight": 248856
+  },
+  "ForkJoinPool-1-worker-3": {
+   "samples": 7,
+   "weight": 835232
+  },
+  "ForkJoinPool-1-worker-4": {
+   "samples": 5,
+   "weight": 84256
+  },
+  "JFR Periodic Tasks": {
+   "samples": 199,
+   "weight": 3000904
+  },
+  "Log4j2-TF-1-RollingFileManager-1": {
+   "samples": 1,
+   "weight": 16416
+  },
+  "Log4j2-TF-2-RollingFileManager-2": {
+   "samples": 1,
+   "weight": 16416
+  },
+  "Netty Local Client IO #0": {
+   "samples": 640,
+   "weight": 11506424
+  },
+  "Netty Server IO #0": {
+   "samples": 74,
+   "weight": 374368
+  },
+  "Netty Server IO #1": {
+   "samples": 191,
+   "weight": 2748712
+  },
+  "Server thread": {
+   "samples": 377904,
+   "weight": 7659293992
+  },
+  "Snooper Timer": {
+   "samples": 18,
+   "weight": 321600
+  },
+  "Sound Library Loader": {
+   "samples": 25,
+   "weight": 448104
+  },
+  "Thread-4": {
+   "samples": 70,
+   "weight": 1279640
+  },
+  "Thread-5": {
+   "samples": 1,
+   "weight": 40
+  },
+  "Thread-6": {
+   "samples": 328,
+   "weight": 5413816
+  },
+  "Thread-7": {
+   "samples": 1,
+   "weight": 1824
+  },
+  "main": {
+   "samples": 119340,
+   "weight": 3086306288
+  },
+  "pool-1-thread-1": {
+   "samples": 7,
+   "weight": 111544
+  },
+  "process reaper": {
+   "samples": 1,
+   "weight": 6152
+  }
+ },
+ "phases": {
+  "warmup-pan": {
+   "start_ms": 1792643528652.8179,
+   "end_ms": 1792643558668.5742,
+   "frames": 660,
+   "ticking_frames": 575,
+   "csv_alloc_mean_bytes": 135877.46666666667,
+   "frame_mean_ms": 45.47841863484848,
+   "truncated_samples": 0,
+   "samples": {
+    "frame": 3180,
+    "tick": 2363
+   },
+   "jfr_bytes_per_frame": {
+    "frame": 78855.84242424242,
+    "tick": 57273.61212121212
+   },
+   "jfr_total_bytes_per_frame": 136129.45454545456,
+   "sets": {
+    "agg.alacer_benchmark": {
+     "samples": 12,
+     "share_percent": 0.41310518757127507,
+     "bytes_per_frame": 325.75757575757575
+    },
+    "agg.alacer_profiler": {
+     "samples": 9,
+     "share_percent": 0.32195304757880394,
+     "bytes_per_frame": 253.87878787878788
+    },
+    "agg.render_entities": {
+     "samples": 74,
+     "share_percent": 2.2480915308902,
+     "bytes_per_frame": 1772.7515151515152
+    },
+    "agg.setup_render": {
+     "samples": 2710,
+     "share_percent": 85.82590371659401,
+     "bytes_per_frame": 67678.7393939394
+    },
+    "entity_light.all": {
+     "samples": 22,
+     "share_percent": 0.6696377447946056,
+     "bytes_per_frame": 528.0484848484848
+    },
+    "entity_light.pos": {
+     "samples": 22,
+     "share_percent": 0.6696377447946056,
+     "bytes_per_frame": 528.0484848484848
+    },
+    "flood.all": {
+     "samples": 40,
+     "share_percent": 1.2167350410192315,
+     "bytes_per_frame": 959.4666666666667
+    },
+    "flood.direction_values": {
+     "samples": 29,
+     "share_percent": 0.8820391394684616,
+     "bytes_per_frame": 695.5393939393939
+    },
+    "name_check.all": {
+     "samples": 6,
+     "share_percent": 0.18273467794780718,
+     "bytes_per_frame": 144.0969696969697
+    },
+    "name_check.get_name": {
+     "samples": 3,
+     "share_percent": 0.09142882439717001,
+     "bytes_per_frame": 72.0969696969697
+    },
+    "name_check.strip": {
+     "samples": 3,
+     "share_percent": 0.09130585355063717,
+     "bytes_per_frame": 72.0
+    },
+    "pick.all": {
+     "samples": 55,
+     "share_percent": 1.6731567092817012,
+     "bytes_per_frame": 1319.3818181818183
+    },
+    "pick.block_trace": {
+     "samples": 35,
+     "share_percent": 1.0644817616557534,
+     "bytes_per_frame": 839.4060606060606
+    },
+    "pick.other": {
+     "samples": 20,
+     "share_percent": 0.6086749476259479,
+     "bytes_per_frame": 479.9757575757576
+    },
+    "shadow.all": {
+     "samples": 6,
+     "share_percent": 0.1780771571353757,
+     "bytes_per_frame": 140.42424242424244
+    },
+    "shadow.offset_pos": {
+     "samples": 1,
+     "share_percent": 0.030481398584328873,
+     "bytes_per_frame": 24.036363636363635
+    }
+   },
+   "top_sites": [
+    {
+     "site": "net.minecraft.util.math.BlockPos @ net.minecraft.util.math.BlockPos.offset < net.minecraft.util.math.BlockPos.offset < net.minecraft.client.render.block.BlockModelRenderer.tesselateWithAmbientOcclusion",
+     "samples": 539,
+     "share_percent": 16.35921136951556,
+     "bytes_per_frame": 12900.19393939394
+    },
+    {
+     "site": "net.minecraft.util.math.BlockPos @ net.minecraft.util.math.BlockPos.offset < net.minecraft.util.math.BlockPos.offset < net.minecraft.client.render.block.BlockModelRenderer$AmbientOcclusionFace.compute",
+     "samples": 378,
+     "share_percent": 11.489089334784595,
+     "bytes_per_frame": 9059.818181818182
+    },
+    {
+     "site": "[F @ net.minecraft.client.render.block.BlockModelRenderer.tesselateWithAmbientOcclusion < net.minecraft.client.render.block.BlockModelRenderer.render < net.minecraft.client.render.block.BlockModelRenderer.render",
+     "samples": 201,
+     "share_percent": 6.100414611580441,
+     "bytes_per_frame": 4810.533333333334
+    },
+    {
+     "site": "[Lnet.minecraft.util.math.Direction; @ net.minecraft.util.math.Direction.values < net.minecraft.client.render.world.ChunkOcclusionGraph.getFaces < net.minecraft.client.render.world.ChunkOcclusionGraph.resolve",
+     "samples": 192,
+     "share_percent": 5.849016087199857,
+     "bytes_per_frame": 4612.290909090909
+    },
+    {
+     "site": "java.util.LinkedHashMap$Entry @ net.minecraft.client.render.world.WorldRenderer.setupRender < net.minecraft.client.render.GameRenderer.render < net.minecraft.client.render.GameRenderer.renderWorld",
+     "samples": 161,
+     "share_percent": 4.935819209491136,
+     "bytes_per_frame": 3892.181818181818
+    },
+    {
+     "site": "[I @ net.minecraft.client.render.block.BlockModelRenderer$AmbientOcclusionFace.<init> < net.minecraft.client.render.block.BlockModelRenderer.tesselateWithAmbientOcclusion < net.minecraft.client.render.block.BlockModelRenderer.render",
+     "samples": 122,
+     "share_percent": 3.696580503556394,
+     "bytes_per_frame": 2914.969696969697
+    },
+    {
+     "site": "[Lnet.minecraft.util.math.Direction; @ net.minecraft.util.math.Direction.values < net.minecraft.client.render.block.BlockModelRenderer.tesselateWithAmbientOcclusion < net.minecraft.client.render.block.BlockModelRenderer.render",
+     "samples": 121,
+     "share_percent": 3.674983748634063,
+     "bytes_per_frame": 2897.939393939394
+    },
+    {
+     "site": "[F @ net.minecraft.client.render.block.BlockModelRenderer$AmbientOcclusionFace.<init> < net.minecraft.client.render.block.BlockModelRenderer.tesselateWithAmbientOcclusion < net.minecraft.client.render.block.BlockModelRenderer.render",
+     "samples": 107,
+     "share_percent": 3.2538700846823363,
+     "bytes_per_frame": 2565.866666666667
+    },
+    {
+     "site": "java.util.BitSet @ net.minecraft.client.render.block.BlockModelRenderer.tesselateWithAmbientOcclusion < net.minecraft.client.render.block.BlockModelRenderer.render < net.minecraft.client.render.block.BlockModelRenderer.render",
+     "samples": 97,
+     "share_percent": 2.9785691020069303,
+     "bytes_per_frame": 2348.775757575758
+    },
+    {
+     "site": "java.util.LinkedList$Node @ net.minecraft.client.render.world.ChunkOcclusionGraph.getFaces < net.minecraft.client.render.world.ChunkOcclusionGraph.resolve < net.minecraft.client.render.world.RenderChunk.compile",
+     "samples": 91,
+     "share_percent": 2.767766328338001,
+     "bytes_per_frame": 2182.5454545454545
+    },
+    {
+     "site": "[J @ net.minecraft.client.render.block.BlockModelRenderer.tesselateWithAmbientOcclusion < net.minecraft.client.render.block.BlockModelRenderer.render < net.minecraft.client.render.block.BlockModelRenderer.render",
+     "samples": 88,
+     "share_percent": 2.648453864489509,
+     "bytes_per_frame": 2088.460606060606
+    },
+    {
+     "site": "java.util.ArrayList$Itr @ net.minecraft.util.WeightedPicker.pick < net.minecraft.client.render.model.block.WeightedBakedModel.pick < net.minecraft.client.render.block.BlockRenderDispatcher.getModel",
+     "samples": 85,
+     "share_percent": 2.582203320919939,
+     "bytes_per_frame": 2036.2181818181818
+    },
+    {
+     "site": "net.minecraft.client.render.block.BlockModelRenderer$AmbientOcclusionFace @ net.minecraft.client.render.block.BlockModelRenderer.tesselateWithAmbientOcclusion < net.minecraft.client.render.block.BlockModelRenderer.render < net.minecraft.client.render.block.BlockModelRenderer.render",
+     "samples": 81,
+     "share_percent": 2.437297549636798,
+     "bytes_per_frame": 1921.9515151515152
+    },
+    {
+     "site": "[I @ net.minecraft.client.render.world.RenderChunkRegion.<init> < net.minecraft.client.render.world.RenderChunk.compile < net.minecraft.client.render.world.ChunkRenderWorker.runTask",
+     "samples": 38,
+     "share_percent": 2.3376143071661106,
+     "bytes_per_frame": 1843.3454545454545
+    },
+    {
+     "site": "[Lnet.minecraft.block.state.BlockState; @ net.minecraft.client.render.world.RenderChunkRegion.<init> < net.minecraft.client.render.world.RenderChunk.compile < net.minecraft.client.render.world.ChunkRenderWorker.runTask",
+     "samples": 38,
+     "share_percent": 2.3376143071661106,
+     "bytes_per_frame": 1843.3454545454545
+    },
+    {
+     "site": "net.minecraft.util.math.BlockPos @ net.minecraft.util.math.BlockPos.offset < net.minecraft.util.math.BlockPos.offset < net.minecraft.world.WorldRegion.getBrightness",
+     "samples": 62,
+     "share_percent": 1.915455391018855,
+     "bytes_per_frame": 1510.448484848485
+    },
+    {
+     "site": "net.minecraft.util.math.BlockPos @ net.minecraft.util.math.BlockPos.offset < net.minecraft.util.math.BlockPos.offset < net.minecraft.world.World.findLight",
+     "samples": 52,
+     "share_percent": 1.5814819431914655,
+     "bytes_per_frame": 1247.090909090909
+    },
+    {
+     "site": "[I @ net.minecraft.client.render.vertex.BufferBuilder.getState < net.minecraft.client.render.world.RenderChunk.endLayer < net.minecraft.client.render.world.RenderChunk.compile",
+     "samples": 11,
+     "share_percent": 1.3513112611936136,
+     "bytes_per_frame": 1065.5878787878787
+    },
+    {
+     "site": "com.llamalad7.mixinextras.sugar.impl.ref.generated.LocalRefImpl @ net.minecraft.client.render.world.WorldRenderer.renderEntities < net.minecraft.client.render.GameRenderer.render < net.minecraft.client.render.GameRenderer.renderWorld",
+     "samples": 35,
+     "share_percent": 1.0653271862256666,
+     "bytes_per_frame": 840.0727272727273
+    },
+    {
+     "site": "[Lnet.minecraft.util.math.Direction; @ net.minecraft.util.math.Direction.values < net.minecraft.world.WorldRegion.getBrightness < net.minecraft.world.WorldRegion.getLightColor",
+     "samples": 31,
+     "share_percent": 0.9413418302089259,
+     "bytes_per_frame": 742.3030303030303
+    },
+    {
+     "site": "[Lnet.minecraft.util.math.Direction; @ net.minecraft.util.math.Direction.values < net.minecraft.client.render.world.ChunkOcclusionGraph.getFaces < net.minecraft.client.render.world.ChunkOcclusionGraph.getFaces",
+     "samples": 29,
+     "share_percent": 0.8820391394684616,
+     "bytes_per_frame": 695.5393939393939
+    },
+    {
+     "site": "java.util.concurrent.locks.ReentrantLock$NonfairSync @ net.minecraft.client.render.world.ChunkCompileTask.<init> < net.minecraft.client.render.world.RenderChunk.startCompile < net.minecraft.client.render.world.ChunkRenderDispatcher.rebuildAsync",
+     "samples": 28,
+     "share_percent": 0.851819053933015,
+     "bytes_per_frame": 671.709090909091
+    },
+    {
+     "site": "[Ljava.util.HashMap$Node; @ net.minecraft.client.render.world.WorldRenderer.setupRender < net.minecraft.client.render.GameRenderer.render < net.minecraft.client.render.GameRenderer.renderWorld",
+     "samples": 28,
+     "share_percent": 0.8482682707393792,
+     "bytes_per_frame": 668.9090909090909
+    },
+    {
+     "site": "net.minecraft.util.math.BlockPos$Mutable @ net.minecraft.util.math.BlockPos$15871338$62238112.computeNext < net.minecraft.util.math.BlockPos$15871338$62238112.computeNext < com.google.common.collect.AbstractIterator.tryToComputeNext",
+     "samples": 28,
+     "share_percent": 0.8468079919368016,
+     "bytes_per_frame": 667.7575757575758
+    },
+    {
+     "site": "net.minecraft.client.render.world.ChunkCompileTask @ net.minecraft.client.render.world.RenderChunk.startCompile < net.minecraft.client.render.world.ChunkRenderDispatcher.rebuildAsync < net.minecraft.client.render.world.WorldRenderer.compileChunksUntil",
+     "samples": 25,
+     "share_percent": 0.7891807789803472,
+     "bytes_per_frame": 622.3151515151516
+    },
+    {
+     "site": "net.minecraft.util.math.BlockPos @ net.minecraft.util.math.BlockPos.iterateRegionMutable < net.minecraft.client.world.color.BiomeColors.getColor < net.minecraft.client.world.color.BiomeColors.getGrassColor",
+     "samples": 24,
+     "share_percent": 0.7288943214676201,
+     "bytes_per_frame": 574.7757575757576
+    },
+    {
+     "site": "[Ljava.lang.Object; @ net.minecraft.client.render.world.ChunkCompileTask.registerCancelListener < net.minecraft.client.render.world.ChunkRenderDispatcher.rebuildAsync < net.minecraft.client.render.world.WorldRenderer.compileChunksUntil",
+     "samples": 24,
+     "share_percent": 0.7057296882519956,
+     "bytes_per_frame": 556.5090909090909
+    },
+    {
+     "site": "net.minecraft.util.math.BlockPos$15871338$62238112 @ net.minecraft.util.math.BlockPos$15871338.iterator < net.minecraft.client.world.color.BiomeColors.getColor < net.minecraft.client.world.color.BiomeColors.getGrassColor",
+     "samples": 23,
+     "share_percent": 0.6994735464346371,
+     "bytes_per_frame": 551.5757575757576
+    },
+    {
+     "site": "net.minecraft.util.math.BlockPos @ net.minecraft.util.math.BlockPos.offset < net.minecraft.util.math.BlockPos.offset < net.minecraft.block.TransparentBlock.shouldRenderFace",
+     "samples": 22,
+     "share_percent": 0.6690690046293912,
+     "bytes_per_frame": 527.6
+    },
+    {
+     "site": "net.minecraft.util.math.BlockPos @ net.minecraft.util.math.BlockPos.offset < net.minecraft.util.math.BlockPos.up < net.minecraft.util.math.BlockPos.up",
+     "samples": 19,
+     "share_percent": 0.5781013209067194,
+     "bytes_per_frame": 455.8666666666667
+    }
+   ]
+  },
+  "warmup-sort": {
+   "start_ms": 1792643561742.4602,
+   "end_ms": 1792643593748.8818,
+   "frames": 535,
+   "ticking_frames": 522,
+   "csv_alloc_mean_bytes": 428807.5663551402,
+   "frame_mean_ms": 59.825087323364485,
+   "truncated_samples": 0,
+   "samples": {
+    "tick": 2212,
+    "frame": 11421
+   },
+   "jfr_bytes_per_frame": {
+    "tick": 67497.52523364486,
+    "frame": 361327.92523364484
+   },
+   "jfr_total_bytes_per_frame": 428825.4504672897,
+   "sets": {
+    "agg.alacer_benchmark": {
+     "samples": 2,
+     "share_percent": 0.01634262484736986,
+     "bytes_per_frame": 59.05046728971963
+    },
+    "agg.render_entities": {
+     "samples": 68,
+     "share_percent": 0.560764333266222,
+     "bytes_per_frame": 2026.1981308411214
+    },
+    "agg.setup_render": {
+     "samples": 8822,
+     "share_percent": 74.09850807850833,
+     "bytes_per_frame": 267738.60186915885
+    },
+    "entity_light.all": {
+     "samples": 16,
+     "share_percent": 0.131742496680469,
+     "bytes_per_frame": 476.0224299065421
+    },
+    "entity_light.pos": {
+     "samples": 16,
+     "share_percent": 0.131742496680469,
+     "bytes_per_frame": 476.0224299065421
+    },
+    "flood.all": {
+     "samples": 4063,
+     "share_percent": 33.17125758960561,
+     "bytes_per_frame": 119857.01682242991
+    },
+    "flood.direction_values": {
+     "samples": 2504,
+     "share_percent": 20.457361744145842,
+     "bytes_per_frame": 73918.16074766355
+    },
+    "pick.all": {
+     "samples": 37,
+     "share_percent": 0.3161132942431873,
+     "bytes_per_frame": 1142.2056074766356
+    },
+    "pick.block_trace": {
+     "samples": 25,
+     "share_percent": 0.21792511568438827,
+     "bytes_per_frame": 787.4242990654205
+    },
+    "pick.other": {
+     "samples": 12,
+     "share_percent": 0.098188178558799,
+     "bytes_per_frame": 354.781308411215
+    },
+    "shadow.all": {
+     "samples": 24,
+     "share_percent": 0.19661638554027397,
+     "bytes_per_frame": 710.4299065420561
+    },
+    "shadow.offset_pos": {
+     "samples": 5,
+     "share_percent": 0.04097450711922233,
+     "bytes_per_frame": 148.05233644859814
+    }
+   },
+   "top_sites": [
+    {
+     "site": "[Lnet.minecraft.util.math.Direction; @ net.minecraft.util.math.Direction.values < net.minecraft.client.render.world.ChunkOcclusionGraph.getFaces < net.minecraft.client.render.world.ChunkOcclusionGraph.getFaces",
+     "samples": 2504,
+     "share_percent": 20.457361744145842,
+     "bytes_per_frame": 73918.16074766355
+    },
+    {
+     "site": "java.util.LinkedHashMap$Entry @ net.minecraft.client.render.world.WorldRenderer.setupRender < net.minecraft.client.render.GameRenderer.render < net.minecraft.client.render.GameRenderer.renderWorld",
+     "samples": 2148,
+     "share_percent": 19.317698516438117,
+     "bytes_per_frame": 69800.23925233645
+    },
+    {
+     "site": "java.util.LinkedList$Node @ net.minecraft.client.render.world.ChunkOcclusionGraph.getFaces < net.minecraft.client.render.world.ChunkOcclusionGraph.getFaces < net.minecraft.client.render.world.WorldRenderer.getOpenChunkFaces",
+     "samples": 1552,
+     "share_percent": 12.656715281388838,
+     "bytes_per_frame": 45732.246728971964
+    },
+    {
+     "site": "net.minecraft.util.math.BlockPos @ net.minecraft.client.render.world.RenderChunkStorage.updateCameraPos < net.minecraft.client.render.world.WorldRenderer.setupRender < net.minecraft.client.render.GameRenderer.render",
+     "samples": 1278,
+     "share_percent": 10.402703547723547,
+     "bytes_per_frame": 37587.87289719626
+    },
+    {
+     "site": "[C @ net.minecraft.world.chunk.WorldChunkSection.<init> < net.minecraft.world.chunk.WorldChunk.update < net.minecraft.client.network.handler.ClientPlayNetworkHandler.handleWorldChunks",
+     "samples": 985,
+     "share_percent": 9.91648045496146,
+     "bytes_per_frame": 35831.01308411215
+    },
+    {
+     "site": "[I @ net.minecraft.world.chunk.WorldChunk.<init> < net.minecraft.client.world.chunk.ClientChunkCache.loadChunk < net.minecraft.client.world.ClientWorld.updateChunk",
+     "samples": 371,
+     "share_percent": 5.451620719501751,
+     "bytes_per_frame": 19698.228037383178
+    },
+    {
+     "site": "[Ljava.util.HashMap$Node; @ net.minecraft.client.render.world.WorldRenderer.setupRender < net.minecraft.client.render.GameRenderer.render < net.minecraft.client.render.GameRenderer.renderWorld",
+     "samples": 466,
+     "share_percent": 3.9223665312644265,
+     "bytes_per_frame": 14172.605607476635
+    },
+    {
+     "site": "[B @ net.minecraft.world.chunk.ChunkNibbleStorage.<init> < net.minecraft.world.chunk.WorldChunkSection.<init> < net.minecraft.world.chunk.WorldChunk.update",
+     "samples": 343,
+     "share_percent": 2.9738818037970427,
+     "bytes_per_frame": 10745.465420560748
+    },
+    {
+     "site": "net.minecraft.util.math.BlockPos @ net.minecraft.util.math.BlockPos.offset < net.minecraft.util.math.BlockPos.offset < net.minecraft.world.World.findLight",
+     "samples": 194,
+     "share_percent": 1.5856691444083413,
+     "bytes_per_frame": 5729.465420560748
+    },
+    {
+     "site": "net.minecraft.util.math.BlockPos @ net.minecraft.util.math.BlockPos.offset < net.minecraft.util.math.BlockPos.offset < net.minecraft.client.render.block.BlockModelRenderer.tesselateWithAmbientOcclusion",
+     "samples": 160,
+     "share_percent": 1.3093343535920772,
+     "bytes_per_frame": 4730.990654205608
+    },
+    {
+     "site": "net.minecraft.util.math.BlockPos @ net.minecraft.util.math.BlockPos.offset < net.minecraft.client.render.world.RenderChunk.setOrigin < net.minecraft.client.render.world.RenderChunkStorage.updateCameraPos",
+     "samples": 108,
+     "share_percent": 0.88175268754238,
+     "bytes_per_frame": 3186.0186915887853
+    },
+    {
+     "site": "net.minecraft.util.math.BlockPos @ net.minecraft.util.math.BlockPos.offset < net.minecraft.util.math.BlockPos.offset < net.minecraft.client.render.block.BlockModelRenderer$AmbientOcclusionFace.compute",
+     "samples": 86,
+     "share_percent": 0.702807360016355,
+     "bytes_per_frame": 2539.4392523364486
+    },
+    {
+     "site": "[Ljava.lang.Object; @ com.google.common.collect.Maps.newIdentityHashMap < com.google.common.collect.Sets.newIdentityHashSet < net.minecraft.util.TypeInstanceMultiMap.<init>",
+     "samples": 65,
+     "share_percent": 0.6611251828923467,
+     "bytes_per_frame": 2388.829906542056
+    },
+    {
+     "site": "[F @ net.minecraft.client.render.block.BlockModelRenderer.tesselateWithAmbientOcclusion < net.minecraft.client.render.block.BlockModelRenderer.render < net.minecraft.client.render.block.BlockModelRenderer.render",
+     "samples": 58,
+     "share_percent": 0.47216901477230094,
+     "bytes_per_frame": 1706.0785046728972
+    },
+    {
+     "site": "net.minecraft.util.math.Box @ net.minecraft.client.render.world.RenderChunk.setOrigin < net.minecraft.client.render.world.RenderChunkStorage.updateCameraPos < net.minecraft.client.render.world.WorldRenderer.setupRender",
+     "samples": 56,
+     "share_percent": 0.45784180099119326,
+     "bytes_per_frame": 1654.3102803738318
+    },
+    {
+     "site": "[Lnet.minecraft.util.math.Direction; @ net.minecraft.util.math.Direction.values < net.minecraft.world.World.findLight < net.minecraft.world.World.updateLight",
+     "samples": 52,
+     "share_percent": 0.4185930154625896,
+     "bytes_per_frame": 1512.4934579439253
+    },
+    {
+     "site": "[Lnet.minecraft.util.math.Direction; @ net.minecraft.util.math.Direction.values < net.minecraft.client.render.world.RenderChunk.setOrigin < net.minecraft.client.render.world.RenderChunkStorage.updateCameraPos",
+     "samples": 39,
+     "share_percent": 0.31718928372414856,
+     "bytes_per_frame": 1146.0934579439252
+    },
+    {
+     "site": "[Lnet.minecraft.util.math.Direction; @ net.minecraft.util.math.Direction.values < net.minecraft.client.render.block.BlockModelRenderer.tesselateWithAmbientOcclusion < net.minecraft.client.render.block.BlockModelRenderer.render",
+     "samples": 38,
+     "share_percent": 0.3110230363140242,
+     "bytes_per_frame": 1123.8130841121495
+    },
+    {
+     "site": "net.minecraft.util.math.BlockPos @ net.minecraft.world.World.updateLight < net.minecraft.world.World.checkLight < net.minecraft.world.World.setBlockState",
+     "samples": 35,
+     "share_percent": 0.28656910614863845,
+     "bytes_per_frame": 1035.4542056074765
+    },
+    {
+     "site": "[I @ net.minecraft.client.render.block.BlockModelRenderer$AmbientOcclusionFace.<init> < net.minecraft.client.render.block.BlockModelRenderer.tesselateWithAmbientOcclusion < net.minecraft.client.render.block.BlockModelRenderer.render",
+     "samples": 34,
+     "share_percent": 0.2783915860933326,
+     "bytes_per_frame": 1005.9065420560747
+    },
+    {
+     "site": "[Lnet.minecraft.util.math.Direction; @ net.minecraft.util.math.Direction.values < net.minecraft.client.render.world.ChunkOcclusionGraph.getFaces < net.minecraft.client.render.world.ChunkOcclusionGraph.resolve",
+     "samples": 34,
+     "share_percent": 0.2610516017655332,
+     "bytes_per_frame": 943.2523364485982
+    },
+    {
+     "site": "java.util.BitSet @ net.minecraft.client.render.block.BlockModelRenderer.tesselateWithAmbientOcclusion < net.minecraft.client.render.block.BlockModelRenderer.render < net.minecraft.client.render.block.BlockModelRenderer.render",
+     "samples": 30,
+     "share_percent": 0.24588428850505953,
+     "bytes_per_frame": 888.4485981308411
+    },
+    {
+     "site": "java.util.ArrayList$Itr @ net.minecraft.util.WeightedPicker.pick < net.minecraft.client.render.model.block.WeightedBakedModel.pick < net.minecraft.client.render.block.BlockRenderDispatcher.getModel",
+     "samples": 30,
+     "share_percent": 0.24560287587157734,
+     "bytes_per_frame": 887.4317757009346
+    },
+    {
+     "site": "[J @ net.minecraft.client.render.block.BlockModelRenderer.tesselateWithAmbientOcclusion < net.minecraft.client.render.block.BlockModelRenderer.render < net.minecraft.client.render.block.BlockModelRenderer.render",
+     "samples": 30,
+     "share_percent": 0.24086438373426702,
+     "bytes_per_frame": 870.3102803738318
+    },
+    {
+     "site": "[F @ net.minecraft.client.render.block.BlockModelRenderer$AmbientOcclusionFace.<init> < net.minecraft.client.render.block.BlockModelRenderer.tesselateWithAmbientOcclusion < net.minecraft.client.render.block.BlockModelRenderer.render",
+     "samples": 29,
+     "share_percent": 0.23742121739519087,
+     "bytes_per_frame": 857.8691588785047
+    },
+    {
+     "site": "net.minecraft.client.render.block.BlockModelRenderer$AmbientOcclusionFace @ net.minecraft.client.render.block.BlockModelRenderer.tesselateWithAmbientOcclusion < net.minecraft.client.render.block.BlockModelRenderer.render < net.minecraft.client.render.block.BlockModelRenderer.render",
+     "samples": 24,
+     "share_percent": 0.19644257185488792,
+     "bytes_per_frame": 709.8018691588785
+    },
+    {
+     "site": "net.minecraft.util.math.BlockPos @ net.minecraft.util.math.BlockPos.offset < net.minecraft.util.math.BlockPos.up < net.minecraft.util.math.BlockPos.up",
+     "samples": 24,
+     "share_percent": 0.1954410739533778,
+     "bytes_per_frame": 706.1831775700934
+    },
+    {
+     "site": "[C @ net.minecraft.world.chunk.WorldChunkSection.<init> < net.minecraft.world.chunk.WorldChunk.update < net.minecraft.client.network.handler.ClientPlayNetworkHandler.handleWorldChunk",
+     "samples": 17,
+     "share_percent": 0.17639606014036283,
+     "bytes_per_frame": 637.3682242990654
+    },
+    {
+     "site": "[J @ com.google.common.util.concurrent.Uninterruptibles.getUninterruptibly < com.google.common.util.concurrent.Futures$CombinedFuture.setOneValue < com.google.common.util.concurrent.Futures$CombinedFuture.access$400",
+     "samples": 20,
+     "share_percent": 0.16266477899486442,
+     "bytes_per_frame": 587.7532710280374
+    },
+    {
+     "site": "java.util.LinkedList$Node @ net.minecraft.client.render.world.ChunkOcclusionGraph.getFaces < net.minecraft.client.render.world.ChunkOcclusionGraph.resolve < net.minecraft.client.render.world.RenderChunk.compile",
+     "samples": 19,
+     "share_percent": 0.15562532473672916,
+     "bytes_per_frame": 562.3177570093458
+    }
+   ]
+  },
+  "steady": {
+   "start_ms": 1792643602851.9146,
+   "end_ms": 1792643622870.0867,
+   "frames": 492,
+   "ticking_frames": 400,
+   "csv_alloc_mean_bytes": 101977.36585365854,
+   "frame_mean_ms": 40.687341808943096,
+   "truncated_samples": 0,
+   "samples": {
+    "tick": 1564,
+    "frame": 1558
+   },
+   "jfr_bytes_per_frame": {
+    "tick": 50777.170731707316,
+    "frame": 51178.79674796748
+   },
+   "jfr_total_bytes_per_frame": 101955.9674796748,
+   "sets": {
+    "agg.alacer_benchmark": {
+     "samples": 4,
+     "share_percent": 0.2512791120306428,
+     "bytes_per_frame": 128.60162601626016
+    },
+    "agg.render_entities": {
+     "samples": 30,
+     "share_percent": 1.8784138248309132,
+     "bytes_per_frame": 961.349593495935
+    },
+    "agg.setup_render": {
+     "samples": 682,
+     "share_percent": 45.07220978199813,
+     "bytes_per_frame": 23067.414634146342
+    },
+    "entity_light.all": {
+     "samples": 18,
+     "share_percent": 1.1240046055658213,
+     "bytes_per_frame": 575.2520325203252
+    },
+    "entity_light.pos": {
+     "samples": 18,
+     "share_percent": 1.1240046055658213,
+     "bytes_per_frame": 575.2520325203252
+    },
+    "flood.all": {
+     "samples": 28,
+     "share_percent": 1.7602564069978166,
+     "bytes_per_frame": 900.8780487804878
+    },
+    "flood.direction_values": {
+     "samples": 17,
+     "share_percent": 1.0683095387571582,
+     "bytes_per_frame": 546.7479674796748
+    },
+    "pick.all": {
+     "samples": 48,
+     "share_percent": 2.9623548369878785,
+     "bytes_per_frame": 1516.0975609756097
+    },
+    "pick.block_trace": {
+     "samples": 30,
+     "share_percent": 1.8856259070702552,
+     "bytes_per_frame": 965.040650406504
+    },
+    "pick.other": {
+     "samples": 18,
+     "share_percent": 1.0767289299176235,
+     "bytes_per_frame": 551.0569105691056
+    },
+    "shadow.all": {
+     "samples": 14,
+     "share_percent": 0.8712004717400753,
+     "bytes_per_frame": 445.869918699187
+    },
+    "shadow.offset_pos": {
+     "samples": 5,
+     "share_percent": 0.3143768888030358,
+     "bytes_per_frame": 160.89430894308944
+    }
+   },
+   "top_sites": [
+    {
+     "site": "net.minecraft.util.math.BlockPos @ net.minecraft.util.math.BlockPos.offset < net.minecraft.util.math.BlockPos.offset < net.minecraft.world.World.findLight",
+     "samples": 382,
+     "share_percent": 23.96587636648307,
+     "bytes_per_frame": 12265.447154471545
+    },
+    {
+     "site": "net.minecraft.util.math.BlockPos @ net.minecraft.util.math.BlockPos.offset < net.minecraft.util.math.BlockPos.offset < net.minecraft.client.render.block.BlockModelRenderer$AmbientOcclusionFace.compute",
+     "samples": 146,
+     "share_percent": 9.176882194608032,
+     "bytes_per_frame": 4696.617886178862
+    },
+    {
+     "site": "net.minecraft.util.math.BlockPos @ net.minecraft.util.math.BlockPos.offset < net.minecraft.util.math.BlockPos.offset < net.minecraft.client.render.block.BlockModelRenderer.tesselateWithAmbientOcclusion",
+     "samples": 113,
+     "share_percent": 7.101645244346617,
+     "bytes_per_frame": 3634.5365853658536
+    },
+    {
+     "site": "[Lnet.minecraft.util.math.Direction; @ net.minecraft.util.math.Direction.values < net.minecraft.world.World.findLight < net.minecraft.world.World.updateLight",
+     "samples": 105,
+     "share_percent": 6.58888843703058,
+     "bytes_per_frame": 3372.1138211382113
+    },
+    {
+     "site": "net.minecraft.util.math.BlockPos @ net.minecraft.world.World.updateLight < net.minecraft.world.World.checkLight < net.minecraft.world.World.setBlockState",
+     "samples": 85,
+     "share_percent": 5.335034579869204,
+     "bytes_per_frame": 2730.4065040650407
+    },
+    {
+     "site": "[Lnet.minecraft.util.math.Direction; @ net.minecraft.util.math.Direction.values < net.minecraft.client.render.world.ChunkOcclusionGraph.getFaces < net.minecraft.client.render.world.ChunkOcclusionGraph.resolve",
+     "samples": 51,
+     "share_percent": 3.1695671733975197,
+     "bytes_per_frame": 1622.1463414634147
+    },
+    {
+     "site": "java.util.LinkedList$Node @ net.minecraft.client.render.world.ChunkOcclusionGraph.getFaces < net.minecraft.client.render.world.ChunkOcclusionGraph.resolve < net.minecraft.client.render.world.RenderChunk.compile",
+     "samples": 43,
+     "share_percent": 2.7036730149935058,
+     "bytes_per_frame": 1383.7073170731708
+    },
+    {
+     "site": "[F @ net.minecraft.client.render.block.BlockModelRenderer.tesselateWithAmbientOcclusion < net.minecraft.client.render.block.BlockModelRenderer.render < net.minecraft.client.render.block.BlockModelRenderer.render",
+     "samples": 43,
+     "share_percent": 2.699638061493962,
+     "bytes_per_frame": 1381.6422764227643
+    },
+    {
+     "site": "[F @ net.minecraft.client.render.block.BlockModelRenderer$AmbientOcclusionFace.<init> < net.minecraft.client.render.block.BlockModelRenderer.tesselateWithAmbientOcclusion < net.minecraft.client.render.block.BlockModelRenderer.render",
+     "samples": 31,
+     "share_percent": 1.9486283699804543,
+     "bytes_per_frame": 997.2845528455284
+    },
+    {
+     "site": "[Lnet.minecraft.util.math.Direction; @ net.minecraft.util.math.Direction.values < net.minecraft.client.render.block.BlockModelRenderer.tesselateWithAmbientOcclusion < net.minecraft.client.render.block.BlockModelRenderer.render",
+     "samples": 26,
+     "share_percent": 1.631646235610784,
+     "bytes_per_frame": 835.0569105691056
+    },
+    {
+     "site": "java.util.BitSet @ net.minecraft.client.render.block.BlockModelRenderer.tesselateWithAmbientOcclusion < net.minecraft.client.render.block.BlockModelRenderer.render < net.minecraft.client.render.block.BlockModelRenderer.render",
+     "samples": 25,
+     "share_percent": 1.5689297142871668,
+     "bytes_per_frame": 802.959349593496
+    },
+    {
+     "site": "[I @ net.minecraft.client.render.vertex.BufferBuilder.getState < net.minecraft.client.render.world.RenderChunk.endLayer < net.minecraft.client.render.world.RenderChunk.compile",
+     "samples": 5,
+     "share_percent": 1.4814951313679192,
+     "bytes_per_frame": 758.2113821138212
+    },
+    {
+     "site": "net.minecraft.util.math.BlockPos @ net.minecraft.world.chunk.WorldChunk.populateHeightMap < net.minecraft.world.chunk.WorldChunk.setLight < net.minecraft.world.World.setLight",
+     "samples": 22,
+     "share_percent": 1.414584800107768,
+     "bytes_per_frame": 723.9674796747968
+    },
+    {
+     "site": "net.minecraft.util.math.BlockPos @ net.minecraft.util.math.BlockPos.offset < net.minecraft.util.math.BlockPos.north < net.minecraft.util.math.BlockPos.north",
+     "samples": 22,
+     "share_percent": 1.384211449355297,
+     "bytes_per_frame": 708.4227642276422
+    },
+    {
+     "site": "[Lnet.minecraft.util.math.Direction; @ net.minecraft.util.math.Direction.values < net.minecraft.world.WorldRegion.getBrightness < net.minecraft.world.WorldRegion.getLightColor",
+     "samples": 21,
+     "share_percent": 1.319175624051627,
+     "bytes_per_frame": 675.1382113821138
+    },
+    {
+     "site": "net.minecraft.util.math.BlockPos @ net.minecraft.util.math.BlockPos.offset < net.minecraft.util.math.BlockPos.up < net.minecraft.util.math.BlockPos.up",
+     "samples": 21,
+     "share_percent": 1.3112963447769275,
+     "bytes_per_frame": 671.1056910569106
+    },
+    {
+     "site": "net.minecraft.util.math.BlockPos @ net.minecraft.util.math.BlockPos.offset < net.minecraft.util.math.BlockPos.west < net.minecraft.util.math.BlockPos.west",
+     "samples": 20,
+     "share_percent": 1.2500730739610153,
+     "bytes_per_frame": 639.7723577235772
+    },
+    {
+     "site": "net.minecraft.util.math.BlockPos @ net.minecraft.util.math.BlockPos.offset < net.minecraft.util.math.BlockPos.offset < net.minecraft.world.WorldRegion.getBrightness",
+     "samples": 17,
+     "share_percent": 1.1960301140970473,
+     "bytes_per_frame": 612.1138211382114
+    },
+    {
+     "site": "[I @ net.minecraft.client.render.block.BlockModelRenderer$AmbientOcclusionFace.<init> < net.minecraft.client.render.block.BlockModelRenderer.tesselateWithAmbientOcclusion < net.minecraft.client.render.block.BlockModelRenderer.render",
+     "samples": 19,
+     "share_percent": 1.1943144645775563,
+     "bytes_per_frame": 611.2357723577236
+    },
+    {
+     "site": "[B @ net.minecraft.client.render.TextRenderer.insertLineBreaks < net.minecraft.client.render.TextRenderer.split < net.minecraft.client.render.TextRenderer.splitAndDrawLayers",
+     "samples": 17,
+     "share_percent": 1.070565300162415,
+     "bytes_per_frame": 547.9024390243902
+    },
+    {
+     "site": "net.minecraft.client.render.block.BlockModelRenderer$AmbientOcclusionFace @ net.minecraft.client.render.block.BlockModelRenderer.tesselateWithAmbientOcclusion < net.minecraft.client.render.block.BlockModelRenderer.render < net.minecraft.client.render.block.BlockModelRenderer.render",
+     "samples": 17,
+     "share_percent": 1.0691991348043015,
+     "bytes_per_frame": 547.2032520325204
+    },
+    {
+     "site": "[Lnet.minecraft.util.math.Direction; @ net.minecraft.util.math.Direction.values < net.minecraft.client.render.world.ChunkOcclusionGraph.getFaces < net.minecraft.client.render.world.ChunkOcclusionGraph.getFaces",
+     "samples": 17,
+     "share_percent": 1.0683095387571582,
+     "bytes_per_frame": 546.7479674796748
+    },
+    {
+     "site": "[Lnet.minecraft.block.state.BlockState; @ net.minecraft.client.render.world.RenderChunkRegion.<init> < net.minecraft.client.render.world.RenderChunk.compile < net.minecraft.client.render.world.ChunkRenderWorker.runTask",
+     "samples": 8,
+     "share_percent": 1.0171895373338045,
+     "bytes_per_frame": 520.5853658536586
+    },
+    {
+     "site": "net.minecraft.util.math.BlockPos @ net.minecraft.util.math.BlockPos.offset < net.minecraft.util.math.BlockPos.down < net.minecraft.util.math.BlockPos.down",
+     "samples": 16,
+     "share_percent": 1.0055612461461427,
+     "bytes_per_frame": 514.6341463414634
+    },
+    {
+     "site": "[I @ net.minecraft.client.render.world.RenderChunkRegion.<init> < net.minecraft.client.render.world.RenderChunk.compile < net.minecraft.client.render.world.ChunkRenderWorker.runTask",
+     "samples": 8,
+     "share_percent": 0.9521854833175324,
+     "bytes_per_frame": 487.3170731707317
+    },
+    {
+     "site": "net.minecraft.util.math.BlockPos @ net.minecraft.util.math.BlockPos.offset < net.minecraft.util.math.BlockPos.south < net.minecraft.util.math.BlockPos.south",
+     "samples": 14,
+     "share_percent": 0.8799375757745205,
+     "bytes_per_frame": 450.3414634146341
+    },
+    {
+     "site": "net.minecraft.util.math.BlockPos @ net.minecraft.util.math.BlockPos.offset < net.minecraft.util.math.BlockPos.offset < net.minecraft.block.TransparentBlock.shouldRenderFace",
+     "samples": 14,
+     "share_percent": 0.8798422619123265,
+     "bytes_per_frame": 450.2926829268293
+    },
+    {
+     "site": "net.minecraft.util.math.BlockPos$Mutable @ net.minecraft.world.World.updateLight < net.minecraft.world.World.checkLight < net.minecraft.world.World.setBlockState",
+     "samples": 13,
+     "share_percent": 0.8182695069350366,
+     "bytes_per_frame": 418.780487804878
+    },
+    {
+     "site": "net.minecraft.util.math.BlockPos @ net.minecraft.util.math.BlockPos.offset < net.minecraft.util.math.BlockPos.east < net.minecraft.util.math.BlockPos.east",
+     "samples": 13,
+     "share_percent": 0.8169033415769233,
+     "bytes_per_frame": 418.0813008130081
+    },
+    {
+     "site": "[J @ net.minecraft.client.render.block.BlockModelRenderer.tesselateWithAmbientOcclusion < net.minecraft.client.render.block.BlockModelRenderer.render < net.minecraft.client.render.block.BlockModelRenderer.render",
+     "samples": 13,
+     "share_percent": 0.8101360573611531,
+     "bytes_per_frame": 414.6178861788618
+    }
+   ]
+  },
+  "pan": {
+   "start_ms": 1792643632006.1392,
+   "end_ms": 1792643662034.4888,
+   "frames": 542,
+   "ticking_frames": 513,
+   "csv_alloc_mean_bytes": 103319.43911439115,
+   "frame_mean_ms": 55.40285938376383,
+   "truncated_samples": 0,
+   "samples": {
+    "tick": 2325,
+    "frame": 1146
+   },
+   "jfr_bytes_per_frame": {
+    "tick": 68503.60147601477,
+    "frame": 34808.79704797048
+   },
+   "jfr_total_bytes_per_frame": 103312.39852398523,
+   "sets": {
+    "agg.alacer_benchmark": {
+     "samples": 2,
+     "share_percent": 0.16762102806433118,
+     "bytes_per_frame": 58.34686346863469
+    },
+    "agg.render_entities": {
+     "samples": 36,
+     "share_percent": 3.0836247867104043,
+     "bytes_per_frame": 1073.3726937269373
+    },
+    "agg.setup_render": {
+     "samples": 958,
+     "share_percent": 84.24451383541337,
+     "bytes_per_frame": 29324.50184501845
+    },
+    "entity_light.all": {
+     "samples": 15,
+     "share_percent": 1.2926706401571304,
+     "bytes_per_frame": 449.9630996309963
+    },
+    "entity_light.pos": {
+     "samples": 15,
+     "share_percent": 1.2926706401571304,
+     "bytes_per_frame": 449.9630996309963
+    },
+    "name_check.all": {
+     "samples": 7,
+     "share_percent": 0.6095502854603493,
+     "bytes_per_frame": 212.1771217712177
+    },
+    "name_check.get_name": {
+     "samples": 2,
+     "share_percent": 0.18967084708620122,
+     "bytes_per_frame": 66.02214022140221
+    },
+    "name_check.strip": {
+     "samples": 5,
+     "share_percent": 0.4198794383741481,
+     "bytes_per_frame": 146.1549815498155
+    },
+    "pick.all": {
+     "samples": 31,
+     "share_percent": 2.6012001886107594,
+     "bytes_per_frame": 905.4464944649446
+    },
+    "pick.block_trace": {
+     "samples": 17,
+     "share_percent": 1.4252239752770643,
+     "bytes_per_frame": 496.1033210332103
+    },
+    "pick.other": {
+     "samples": 14,
+     "share_percent": 1.1759762133336953,
+     "bytes_per_frame": 409.34317343173433
+    },
+    "shadow.all": {
+     "samples": 6,
+     "share_percent": 0.5033719261704214,
+     "bytes_per_frame": 175.21771217712177
+    },
+    "shadow.offset_pos": {
+     "samples": 2,
+     "share_percent": 0.16796025604928305,
+     "bytes_per_frame": 58.464944649446494
+    }
+   },
+   "top_sites": [
+    {
+     "site": "java.util.LinkedHashMap$Entry @ net.minecraft.client.render.world.WorldRenderer.setupRender < net.minecraft.client.render.GameRenderer.render < net.minecraft.client.render.GameRenderer.renderWorld",
+     "samples": 244,
+     "share_percent": 21.081026300345673,
+     "bytes_per_frame": 7338.051660516605
+    },
+    {
+     "site": "net.minecraft.util.math.BlockPos @ net.minecraft.util.math.BlockPos.offset < net.minecraft.util.math.BlockPos.offset < net.minecraft.client.render.block.BlockModelRenderer$AmbientOcclusionFace.compute",
+     "samples": 154,
+     "share_percent": 12.912628440195803,
+     "bytes_per_frame": 4494.730627306273
+    },
+    {
+     "site": "net.minecraft.util.math.BlockPos @ net.minecraft.util.math.BlockPos.offset < net.minecraft.util.math.BlockPos.offset < net.minecraft.client.render.block.BlockModelRenderer.tesselateWithAmbientOcclusion",
+     "samples": 100,
+     "share_percent": 8.390125751814022,
+     "bytes_per_frame": 2920.5018450184502
+    },
+    {
+     "site": "[Lnet.minecraft.util.math.Direction; @ net.minecraft.util.math.Direction.values < net.minecraft.client.render.world.ChunkOcclusionGraph.getFaces < net.minecraft.client.render.world.ChunkOcclusionGraph.resolve",
+     "samples": 61,
+     "share_percent": 5.117169346002368,
+     "bytes_per_frame": 1781.2250922509224
+    },
+    {
+     "site": "[F @ net.minecraft.client.render.block.BlockModelRenderer.tesselateWithAmbientOcclusion < net.minecraft.client.render.block.BlockModelRenderer.render < net.minecraft.client.render.block.BlockModelRenderer.render",
+     "samples": 49,
+     "share_percent": 4.103047284988823,
+     "bytes_per_frame": 1428.2214022140222
+    },
+    {
+     "site": "net.minecraft.util.math.BlockPos @ net.minecraft.util.math.BlockPos.offset < net.minecraft.util.math.BlockPos.offset < net.minecraft.world.WorldRegion.getBrightness",
+     "samples": 37,
+     "share_percent": 3.10503855326049,
+     "bytes_per_frame": 1080.8265682656827
+    },
+    {
+     "site": "[I @ net.minecraft.client.render.block.BlockModelRenderer$AmbientOcclusionFace.<init> < net.minecraft.client.render.block.BlockModelRenderer.tesselateWithAmbientOcclusion < net.minecraft.client.render.block.BlockModelRenderer.render",
+     "samples": 32,
+     "share_percent": 2.684565465912676,
+     "bytes_per_frame": 934.4649446494465
+    },
+    {
+     "site": "java.util.LinkedList$Node @ net.minecraft.client.render.world.ChunkOcclusionGraph.getFaces < net.minecraft.client.render.world.ChunkOcclusionGraph.resolve < net.minecraft.client.render.world.RenderChunk.compile",
+     "samples": 32,
+     "share_percent": 2.676211976783237,
+     "bytes_per_frame": 931.5571955719557
+    },
+    {
+     "site": "[I @ net.minecraft.client.render.vertex.BufferBuilder.getState < net.minecraft.client.render.world.RenderChunk.endLayer < net.minecraft.client.render.world.RenderChunk.compile",
+     "samples": 6,
+     "share_percent": 2.372730140745691,
+     "bytes_per_frame": 825.9188191881918
+    },
+    {
+     "site": "[Ljava.util.HashMap$Node; @ net.minecraft.client.render.world.WorldRenderer.setupRender < net.minecraft.client.render.GameRenderer.render < net.minecraft.client.render.GameRenderer.renderWorld",
+     "samples": 27,
+     "share_percent": 2.2119784793766346,
+     "bytes_per_frame": 769.9630996309963
+    },
+    {
+     "site": "[F @ net.minecraft.client.render.block.BlockModelRenderer$AmbientOcclusionFace.<init> < net.minecraft.client.render.block.BlockModelRenderer.tesselateWithAmbientOcclusion < net.minecraft.client.render.block.BlockModelRenderer.render",
+     "samples": 24,
+     "share_percent": 2.09486001757201,
+     "bytes_per_frame": 729.1955719557195
+    },
+    {
+     "site": "[Lnet.minecraft.util.math.Direction; @ net.minecraft.util.math.Direction.values < net.minecraft.client.render.block.BlockModelRenderer.tesselateWithAmbientOcclusion < net.minecraft.client.render.block.BlockModelRenderer.render",
+     "samples": 24,
+     "share_percent": 2.010307442322762,
+     "bytes_per_frame": 699.7638376383763
+    },
+    {
+     "site": "java.util.ArrayList$Itr @ net.minecraft.util.WeightedPicker.pick < net.minecraft.client.render.model.block.WeightedBakedModel.pick < net.minecraft.client.render.block.BlockRenderDispatcher.getModel",
+     "samples": 23,
+     "share_percent": 1.9293591644136274,
+     "bytes_per_frame": 671.5867158671587
+    },
+    {
+     "site": "net.minecraft.util.math.BlockPos @ net.minecraft.util.math.BlockPos.offset < net.minecraft.util.math.BlockPos.offset < net.minecraft.block.TransparentBlock.shouldRenderFace",
+     "samples": 20,
+     "share_percent": 1.6779912275643092,
+     "bytes_per_frame": 584.0885608856089
+    },
+    {
+     "site": "java.util.BitSet @ net.minecraft.client.render.block.BlockModelRenderer.tesselateWithAmbientOcclusion < net.minecraft.client.render.block.BlockModelRenderer.render < net.minecraft.client.render.block.BlockModelRenderer.render",
+     "samples": 18,
+     "share_percent": 1.5112606729604765,
+     "bytes_per_frame": 526.0516605166051
+    },
+    {
+     "site": "[Lnet.minecraft.block.state.BlockState; @ net.minecraft.client.render.world.RenderChunkRegion.<init> < net.minecraft.client.render.world.RenderChunk.compile < net.minecraft.client.render.world.ChunkRenderWorker.runTask",
+     "samples": 8,
+     "share_percent": 1.3575903957772901,
+     "bytes_per_frame": 472.5608856088561
+    },
+    {
+     "site": "[I @ net.minecraft.client.render.world.RenderChunkRegion.<init> < net.minecraft.client.render.world.RenderChunk.compile < net.minecraft.client.render.world.ChunkRenderWorker.runTask",
+     "samples": 8,
+     "share_percent": 1.3575903957772901,
+     "bytes_per_frame": 472.5608856088561
+    },
+    {
+     "site": "[J @ net.minecraft.client.render.block.BlockModelRenderer.tesselateWithAmbientOcclusion < net.minecraft.client.render.block.BlockModelRenderer.render < net.minecraft.client.render.block.BlockModelRenderer.render",
+     "samples": 16,
+     "share_percent": 1.3320634899096635,
+     "bytes_per_frame": 463.6752767527675
+    },
+    {
+     "site": "[Lnet.minecraft.util.math.Direction; @ net.minecraft.util.math.Direction.values < net.minecraft.world.WorldRegion.getBrightness < net.minecraft.world.WorldRegion.getLightColor",
+     "samples": 14,
+     "share_percent": 1.174280073408936,
+     "bytes_per_frame": 408.7527675276753
+    },
+    {
+     "site": "net.minecraft.util.math.BlockPos$Mutable @ net.minecraft.util.math.BlockPos$15871338$62238112.computeNext < net.minecraft.util.math.BlockPos$15871338$62238112.computeNext < com.google.common.collect.AbstractIterator.tryToComputeNext",
+     "samples": 13,
+     "share_percent": 1.0908299891107818,
+     "bytes_per_frame": 379.7047970479705
+    },
+    {
+     "site": "java.util.ArrayList$Itr @ net.minecraft.util.TypeInstanceMultiMap.iterator < net.minecraft.client.render.world.WorldRenderer.renderEntities < net.minecraft.client.render.GameRenderer.render",
+     "samples": 12,
+     "share_percent": 1.0362566870316534,
+     "bytes_per_frame": 360.70848708487085
+    },
+    {
+     "site": "net.minecraft.client.render.block.BlockModelRenderer$AmbientOcclusionFace @ net.minecraft.client.render.block.BlockModelRenderer.tesselateWithAmbientOcclusion < net.minecraft.client.render.block.BlockModelRenderer.render < net.minecraft.client.render.block.BlockModelRenderer.render",
+     "samples": 12,
+     "share_percent": 1.0069134663333186,
+     "bytes_per_frame": 350.49446494464945
+    },
+    {
+     "site": "net.minecraft.util.math.BlockPos @ net.minecraft.util.math.BlockPos.iterateRegionMutable < net.minecraft.client.world.color.BiomeColors.getColor < net.minecraft.client.world.color.BiomeColors.getGrassColor",
+     "samples": 11,
+     "share_percent": 0.9233785750389264,
+     "bytes_per_frame": 321.4169741697417
+    },
+    {
+     "site": "net.minecraft.client.render.world.ChunkCompileTask @ net.minecraft.client.render.world.RenderChunk.startCompile < net.minecraft.client.render.world.ChunkRenderDispatcher.rebuildAsync < net.minecraft.client.render.world.WorldRenderer.compileChunksUntil",
+     "samples": 11,
+     "share_percent": 0.9229121365596176,
+     "bytes_per_frame": 321.2546125461255
+    },
+    {
+     "site": "[Ljava.lang.Object; @ net.minecraft.client.render.world.ChunkCompileTask.registerCancelListener < net.minecraft.client.render.world.ChunkRenderDispatcher.rebuildAsync < net.minecraft.client.render.world.WorldRenderer.compileChunksUntil",
+     "samples": 9,
+     "share_percent": 0.7535949685705272,
+     "bytes_per_frame": 262.3173431734317
+    },
+    {
+     "site": "net.minecraft.util.math.BlockPos @ net.minecraft.entity.Entity.getLightLevel < net.minecraft.client.entity.particle.Particle.render < net.minecraft.client.ParticleManager.render",
+     "samples": 8,
+     "share_percent": 0.672180252182084,
+     "bytes_per_frame": 233.97785977859778
+    },
+    {
+     "site": "net.minecraft.util.math.BlockPos$15871338$62238112 @ net.minecraft.util.math.BlockPos$15871338.iterator < net.minecraft.client.world.color.BiomeColors.getColor < net.minecraft.client.world.color.BiomeColors.getGrassColor",
+     "samples": 8,
+     "share_percent": 0.6710777612309905,
+     "bytes_per_frame": 233.59409594095942
+    },
+    {
+     "site": "[B @ net.minecraft.client.render.TextRenderer.insertLineBreaks < net.minecraft.client.render.TextRenderer.split < net.minecraft.client.render.TextRenderer.splitAndDrawLayers",
+     "samples": 7,
+     "share_percent": 0.5897478518387853,
+     "bytes_per_frame": 205.28413284132841
+    },
+    {
+     "site": "java.lang.Integer @ net.minecraft.client.render.vertex.BufferBuilder.sortQuads < net.minecraft.client.render.world.RenderChunk.endLayer < net.minecraft.client.render.world.RenderChunk.compile",
+     "samples": 6,
+     "share_percent": 0.5319942874007334,
+     "bytes_per_frame": 185.18081180811808
+    },
+    {
+     "site": "java.lang.String @ net.minecraft.client.render.TextRenderer.insertLineBreaks < net.minecraft.client.render.TextRenderer.split < net.minecraft.client.render.TextRenderer.splitAndDrawLayers",
+     "samples": 5,
+     "share_percent": 0.46334302394610344,
+     "bytes_per_frame": 161.28413284132841
+    }
+   ]
+  },
+  "sort": {
+   "start_ms": 1792643665118.0322,
+   "end_ms": 1792643697119.2244,
+   "frames": 524,
+   "ticking_frames": 507,
+   "csv_alloc_mean_bytes": 432517.2366412214,
+   "frame_mean_ms": 61.07097702290076,
+   "truncated_samples": 0,
+   "samples": {
+    "tick": 2210,
+    "frame": 11225
+   },
+   "jfr_bytes_per_frame": {
+    "tick": 68569.41984732824,
+    "frame": 363909.90839694656
+   },
+   "jfr_total_bytes_per_frame": 432479.32824427483,
+   "sets": {
+    "agg.alacer_benchmark": {
+     "samples": 1,
+     "share_percent": 0.008294142426577436,
+     "bytes_per_frame": 30.18320610687023
+    },
+    "agg.render_entities": {
+     "samples": 15,
+     "share_percent": 0.12557004399083926,
+     "bytes_per_frame": 456.9618320610687
+    },
+    "agg.setup_render": {
+     "samples": 8997,
+     "share_percent": 76.40230895164515,
+     "bytes_per_frame": 278035.572519084
+    },
+    "entity_light.all": {
+     "samples": 7,
+     "share_percent": 0.05483279793392367,
+     "bytes_per_frame": 199.54198473282443
+    },
+    "entity_light.pos": {
+     "samples": 7,
+     "share_percent": 0.05483279793392367,
+     "bytes_per_frame": 199.54198473282443
+    },
+    "flood.all": {
+     "samples": 4041,
+     "share_percent": 33.35210178477611,
+     "bytes_per_frame": 121371.60305343512
+    },
+    "flood.direction_values": {
+     "samples": 2423,
+     "share_percent": 20.003445194618465,
+     "bytes_per_frame": 72794.51908396947
+    },
+    "pick.all": {
+     "samples": 44,
+     "share_percent": 0.38332614745391014,
+     "bytes_per_frame": 1394.9618320610687
+    },
+    "pick.block_trace": {
+     "samples": 34,
+     "share_percent": 0.29388198127554344,
+     "bytes_per_frame": 1069.4656488549617
+    },
+    "pick.other": {
+     "samples": 10,
+     "share_percent": 0.08944416617836669,
+     "bytes_per_frame": 325.4961832061069
+    },
+    "shadow.all": {
+     "samples": 2,
+     "share_percent": 0.01661345675733265,
+     "bytes_per_frame": 60.458015267175576
+    }
+   },
+   "top_sites": [
+    {
+     "site": "java.util.LinkedHashMap$Entry @ net.minecraft.client.render.world.WorldRenderer.setupRender < net.minecraft.client.render.GameRenderer.render < net.minecraft.client.render.GameRenderer.renderWorld",
+     "samples": 2432,
+     "share_percent": 21.928101574003364,
+     "bytes_per_frame": 79798.53435114503
+    },
+    {
+     "site": "[Lnet.minecraft.util.math.Direction; @ net.minecraft.util.math.Direction.values < net.minecraft.client.render.world.ChunkOcclusionGraph.getFaces < net.minecraft.client.render.world.ChunkOcclusionGraph.getFaces",
+     "samples": 2423,
+     "share_percent": 20.003445194618465,
+     "bytes_per_frame": 72794.51908396947
+    },
+    {
+     "site": "java.util.LinkedList$Node @ net.minecraft.client.render.world.ChunkOcclusionGraph.getFaces < net.minecraft.client.render.world.ChunkOcclusionGraph.getFaces < net.minecraft.client.render.world.WorldRenderer.getOpenChunkFaces",
+     "samples": 1613,
+     "share_percent": 13.307383057940815,
+     "bytes_per_frame": 48426.885496183204
+    },
+    {
+     "site": "net.minecraft.util.math.BlockPos @ net.minecraft.client.render.world.RenderChunkStorage.updateCameraPos < net.minecraft.client.render.world.WorldRenderer.setupRender < net.minecraft.client.render.GameRenderer.render",
+     "samples": 1331,
+     "share_percent": 10.98697400107291,
+     "bytes_per_frame": 39982.68702290076
+    },
+    {
+     "site": "[C @ net.minecraft.world.chunk.WorldChunkSection.<init> < net.minecraft.world.chunk.WorldChunk.update < net.minecraft.client.network.handler.ClientPlayNetworkHandler.handleWorldChunks",
+     "samples": 1054,
+     "share_percent": 10.719942050920329,
+     "bytes_per_frame": 39010.931297709925
+    },
+    {
+     "site": "[I @ net.minecraft.world.chunk.WorldChunk.<init> < net.minecraft.client.world.chunk.ClientChunkCache.loadChunk < net.minecraft.client.world.ClientWorld.updateChunk",
+     "samples": 404,
+     "share_percent": 6.072440796625321,
+     "bytes_per_frame": 22098.213740458013
+    },
+    {
+     "site": "[Ljava.util.HashMap$Node; @ net.minecraft.client.render.world.WorldRenderer.setupRender < net.minecraft.client.render.GameRenderer.render < net.minecraft.client.render.GameRenderer.renderWorld",
+     "samples": 480,
+     "share_percent": 4.119075860525667,
+     "bytes_per_frame": 14989.725190839694
+    },
+    {
+     "site": "[B @ net.minecraft.world.chunk.ChunkNibbleStorage.<init> < net.minecraft.world.chunk.WorldChunkSection.<init> < net.minecraft.world.chunk.WorldChunk.update",
+     "samples": 351,
+     "share_percent": 3.0675615166726735,
+     "bytes_per_frame": 11163.160305343512
+    },
+    {
+     "site": "net.minecraft.util.math.BlockPos @ net.minecraft.util.math.BlockPos.offset < net.minecraft.client.render.world.RenderChunk.setOrigin < net.minecraft.client.render.world.RenderChunkStorage.updateCameraPos",
+     "samples": 118,
+     "share_percent": 0.9707922424722267,
+     "bytes_per_frame": 3532.8091603053435
+    },
+    {
+     "site": "net.minecraft.util.math.BlockPos @ net.minecraft.util.math.BlockPos.offset < net.minecraft.util.math.BlockPos.offset < net.minecraft.client.render.block.BlockModelRenderer.tesselateWithAmbientOcclusion",
+     "samples": 104,
+     "share_percent": 0.8579675726300684,
+     "bytes_per_frame": 3122.2290076335876
+    },
+    {
+     "site": "[Ljava.lang.Object; @ com.google.common.collect.Maps.newIdentityHashMap < com.google.common.collect.Sets.newIdentityHashSet < net.minecraft.util.TypeInstanceMultiMap.<init>",
+     "samples": 63,
+     "share_percent": 0.7050021062590821,
+     "bytes_per_frame": 2565.5725190839694
+    },
+    {
+     "site": "[F @ net.minecraft.client.render.block.BlockModelRenderer.tesselateWithAmbientOcclusion < net.minecraft.client.render.block.BlockModelRenderer.render < net.minecraft.client.render.block.BlockModelRenderer.render",
+     "samples": 55,
+     "share_percent": 0.4562323725874775,
+     "bytes_per_frame": 1660.2748091603053
+    },
+    {
+     "site": "net.minecraft.util.math.Box @ net.minecraft.client.render.world.RenderChunk.setOrigin < net.minecraft.client.render.world.RenderChunkStorage.updateCameraPos < net.minecraft.client.render.world.WorldRenderer.setupRender",
+     "samples": 54,
+     "share_percent": 0.43690035017894496,
+     "bytes_per_frame": 1589.9236641221373
+    },
+    {
+     "site": "net.minecraft.util.math.BlockPos @ net.minecraft.util.math.BlockPos.offset < net.minecraft.util.math.BlockPos.offset < net.minecraft.client.render.block.BlockModelRenderer$AmbientOcclusionFace.compute",
+     "samples": 49,
+     "share_percent": 0.401949161228102,
+     "bytes_per_frame": 1462.7328244274809
+    },
+    {
+     "site": "[Lnet.minecraft.util.math.Direction; @ net.minecraft.util.math.Direction.values < net.minecraft.client.render.world.RenderChunk.setOrigin < net.minecraft.client.render.world.RenderChunkStorage.updateCameraPos",
+     "samples": 38,
+     "share_percent": 0.31555499077260923,
+     "bytes_per_frame": 1148.3358778625955
+    },
+    {
+     "site": "[Lnet.minecraft.util.math.Direction; @ net.minecraft.util.math.Direction.values < net.minecraft.client.render.world.ChunkOcclusionGraph.getFaces < net.minecraft.client.render.world.ChunkOcclusionGraph.resolve",
+     "samples": 38,
+     "share_percent": 0.309715109003365,
+     "bytes_per_frame": 1127.0839694656488
+    },
+    {
+     "site": "[I @ net.minecraft.client.render.block.BlockModelRenderer$AmbientOcclusionFace.<init> < net.minecraft.client.render.block.BlockModelRenderer.tesselateWithAmbientOcclusion < net.minecraft.client.render.block.BlockModelRenderer.render",
+     "samples": 31,
+     "share_percent": 0.2573239857746857,
+     "bytes_per_frame": 936.4274809160305
+    },
+    {
+     "site": "[Lnet.minecraft.util.math.Direction; @ net.minecraft.util.math.Direction.values < net.minecraft.client.render.block.BlockModelRenderer.tesselateWithAmbientOcclusion < net.minecraft.client.render.block.BlockModelRenderer.render",
+     "samples": 28,
+     "share_percent": 0.2323954100039608,
+     "bytes_per_frame": 845.7099236641221
+    },
+    {
+     "site": "[F @ net.minecraft.client.render.block.BlockModelRenderer$AmbientOcclusionFace.<init> < net.minecraft.client.render.block.BlockModelRenderer.tesselateWithAmbientOcclusion < net.minecraft.client.render.block.BlockModelRenderer.render",
+     "samples": 28,
+     "share_percent": 0.2323954100039608,
+     "bytes_per_frame": 845.7099236641221
+    },
+    {
+     "site": "net.minecraft.client.render.block.BlockModelRenderer$AmbientOcclusionFace @ net.minecraft.client.render.block.BlockModelRenderer.tesselateWithAmbientOcclusion < net.minecraft.client.render.block.BlockModelRenderer.render < net.minecraft.client.render.block.BlockModelRenderer.render",
+     "samples": 22,
+     "share_percent": 0.1819173514927925,
+     "bytes_per_frame": 662.0152671755725
+    },
+    {
+     "site": "java.util.ArrayList$Itr @ net.minecraft.util.WeightedPicker.pick < net.minecraft.client.render.model.block.WeightedBakedModel.pick < net.minecraft.client.render.block.BlockRenderDispatcher.getModel",
+     "samples": 22,
+     "share_percent": 0.17814576118348896,
+     "bytes_per_frame": 648.2900763358779
+    },
+    {
+     "site": "[J @ net.minecraft.client.render.block.BlockModelRenderer.tesselateWithAmbientOcclusion < net.minecraft.client.render.block.BlockModelRenderer.render < net.minecraft.client.render.block.BlockModelRenderer.render",
+     "samples": 21,
+     "share_percent": 0.16739316278221533,
+     "bytes_per_frame": 609.1603053435115
+    },
+    {
+     "site": "java.util.BitSet @ net.minecraft.client.render.block.BlockModelRenderer.tesselateWithAmbientOcclusion < net.minecraft.client.render.block.BlockModelRenderer.render < net.minecraft.client.render.block.BlockModelRenderer.render",
+     "samples": 20,
+     "share_percent": 0.16621847392058575,
+     "bytes_per_frame": 604.8854961832061
+    },
+    {
+     "site": "net.minecraft.util.math.BlockPos @ net.minecraft.util.math.BlockPos.offset < net.minecraft.util.math.BlockPos.offset < net.minecraft.world.WorldRegion.getBrightness",
+     "samples": 15,
+     "share_percent": 0.12455477718900228,
+     "bytes_per_frame": 453.2671755725191
+    },
+    {
+     "site": "java.util.LinkedList$Node @ net.minecraft.client.render.world.ChunkOcclusionGraph.getFaces < net.minecraft.client.render.world.ChunkOcclusionGraph.resolve < net.minecraft.client.render.world.RenderChunk.compile",
+     "samples": 15,
+     "share_percent": 0.11967562309587655,
+     "bytes_per_frame": 435.51145038167937
+    },
+    {
+     "site": "[C @ net.minecraft.world.chunk.WorldChunkSection.<init> < net.minecraft.world.chunk.WorldChunk.update < net.minecraft.client.network.handler.ClientPlayNetworkHandler.handleWorldChunk",
+     "samples": 11,
+     "share_percent": 0.11861840312040993,
+     "bytes_per_frame": 431.6641221374046
+    },
+    {
+     "site": "[J @ com.google.common.util.concurrent.AbstractFuture$Sync.complete < com.google.common.util.concurrent.AbstractFuture$Sync.cancel < com.google.common.util.concurrent.AbstractFuture.cancel",
+     "samples": 14,
+     "share_percent": 0.11529151645158044,
+     "bytes_per_frame": 419.55725190839695
+    },
+    {
+     "site": "[J @ com.google.common.util.concurrent.AbstractFuture.cancellationExceptionWithCause < com.google.common.util.concurrent.AbstractFuture$Sync.getValue < com.google.common.util.concurrent.AbstractFuture$Sync.get",
+     "samples": 12,
+     "share_percent": 0.10309992419481057,
+     "bytes_per_frame": 375.19083969465646
+    },
+    {
+     "site": "[I @ net.minecraft.client.render.world.RenderChunkRegion.<init> < net.minecraft.client.render.world.RenderChunk.compile < net.minecraft.client.render.world.ChunkRenderWorker.runTask",
+     "samples": 6,
+     "share_percent": 0.10073796051946252,
+     "bytes_per_frame": 366.59541984732823
+    },
+    {
+     "site": "[Lnet.minecraft.block.state.BlockState; @ net.minecraft.client.render.world.RenderChunkRegion.<init> < net.minecraft.client.render.world.RenderChunk.compile < net.minecraft.client.render.world.ChunkRenderWorker.runTask",
+     "samples": 6,
+     "share_percent": 0.10073796051946252,
+     "bytes_per_frame": 366.59541984732823
+    }
+   ]
+  },
+  "fly": {
+   "start_ms": 1792643719579.5945,
+   "end_ms": 1792643759580.8906,
+   "frames": 962,
+   "ticking_frames": 779,
+   "csv_alloc_mean_bytes": 485077.48856548854,
+   "frame_mean_ms": 41.58138885031185,
+   "truncated_samples": 0,
+   "samples": {
+    "frame": 20412,
+    "tick": 2234
+   },
+   "jfr_bytes_per_frame": {
+    "frame": 431208.316008316,
+    "tick": 53869.388773388775
+   },
+   "jfr_total_bytes_per_frame": 485077.70478170476,
+   "sets": {
+    "agg.alacer_benchmark": {
+     "samples": 3,
+     "share_percent": 0.011000370278943471,
+     "bytes_per_frame": 47.434511434511435
+    },
+    "agg.render_entities": {
+     "samples": 82,
+     "share_percent": 12.659920004319922,
+     "bytes_per_frame": 54590.62785862786
+    },
+    "agg.setup_render": {
+     "samples": 15492,
+     "share_percent": 60.596602304986426,
+     "bytes_per_frame": 261297.58835758836
+    },
+    "entity_light.all": {
+     "samples": 7,
+     "share_percent": 0.030536441619353247,
+     "bytes_per_frame": 131.67567567567568
+    },
+    "entity_light.pos": {
+     "samples": 7,
+     "share_percent": 0.030536441619353247,
+     "bytes_per_frame": 131.67567567567568
+    },
+    "flood.all": {
+     "samples": 11864,
+     "share_percent": 46.23345894532214,
+     "bytes_per_frame": 199362.51975051974
+    },
+    "flood.direction_values": {
+     "samples": 7401,
+     "share_percent": 28.562447929523575,
+     "bytes_per_frame": 123163.65072765073
+    },
+    "name_check.all": {
+     "samples": 31,
+     "share_percent": 0.3347745926931622,
+     "bytes_per_frame": 1443.5758835758836
+    },
+    "name_check.get_name": {
+     "samples": 17,
+     "share_percent": 0.14458621328067145,
+     "bytes_per_frame": 623.4677754677755
+    },
+    "name_check.strip": {
+     "samples": 14,
+     "share_percent": 0.19018837941249075,
+     "bytes_per_frame": 820.1081081081081
+    },
+    "pick.all": {
+     "samples": 72,
+     "share_percent": 1.0877599666748952,
+     "bytes_per_frame": 4690.511434511434
+    },
+    "pick.block_trace": {
+     "samples": 38,
+     "share_percent": 0.16386193223895335,
+     "bytes_per_frame": 706.5862785862786
+    },
+    "pick.other": {
+     "samples": 34,
+     "share_percent": 0.9238980344359418,
+     "bytes_per_frame": 3983.925155925156
+    }
+   },
+   "top_sites": [
+    {
+     "site": "[Lnet.minecraft.util.math.Direction; @ net.minecraft.util.math.Direction.values < net.minecraft.client.render.world.ChunkOcclusionGraph.getFaces < net.minecraft.client.render.world.ChunkOcclusionGraph.getFaces",
+     "samples": 7401,
+     "share_percent": 28.562447929523575,
+     "bytes_per_frame": 123163.65072765073
+    },
+    {
+     "site": "java.util.LinkedList$Node @ net.minecraft.client.render.world.ChunkOcclusionGraph.getFaces < net.minecraft.client.render.world.ChunkOcclusionGraph.getFaces < net.minecraft.client.render.world.WorldRenderer.getOpenChunkFaces",
+     "samples": 4447,
+     "share_percent": 17.61006541594668,
+     "bytes_per_frame": 75936.06652806653
+    },
+    {
+     "site": "[I @ net.minecraft.client.render.texture.TextureUtil.upload < net.minecraft.client.render.texture.TextureUtil.upload < net.minecraft.client.render.texture.TextureUtil.upload",
+     "samples": 3,
+     "share_percent": 12.133311990866453,
+     "bytes_per_frame": 52319.850311850314
+    },
+    {
+     "site": "net.minecraft.util.math.BlockPos @ net.minecraft.client.render.world.RenderChunkStorage.updateCameraPos < net.minecraft.client.render.world.WorldRenderer.setupRender < net.minecraft.client.render.GameRenderer.render",
+     "samples": 2796,
+     "share_percent": 10.998794664897556,
+     "bytes_per_frame": 47427.71725571725
+    },
+    {
+     "site": "[C @ net.minecraft.world.chunk.WorldChunkSection.<init> < net.minecraft.world.chunk.WorldChunk.update < net.minecraft.client.network.handler.ClientPlayNetworkHandler.handleWorldChunks",
+     "samples": 1784,
+     "share_percent": 8.667109587138977,
+     "bytes_per_frame": 37373.2972972973
+    },
+    {
+     "site": "[I @ net.minecraft.world.chunk.WorldChunk.<init> < net.minecraft.client.world.chunk.ClientChunkCache.loadChunk < net.minecraft.client.world.ClientWorld.updateChunk",
+     "samples": 690,
+     "share_percent": 4.5327484725993585,
+     "bytes_per_frame": 19545.588357588356
+    },
+    {
+     "site": "[B @ net.minecraft.world.chunk.ChunkNibbleStorage.<init> < net.minecraft.world.chunk.WorldChunkSection.<init> < net.minecraft.world.chunk.WorldChunk.update",
+     "samples": 785,
+     "share_percent": 3.9318841026906934,
+     "bytes_per_frame": 16954.611226611225
+    },
+    {
+     "site": "net.minecraft.util.math.BlockPos @ net.minecraft.util.math.BlockPos.offset < net.minecraft.util.math.BlockPos.offset < net.minecraft.world.World.findLight",
+     "samples": 360,
+     "share_percent": 1.4185752746235498,
+     "bytes_per_frame": 6117.014553014553
+    },
+    {
+     "site": "java.util.LinkedHashMap$Entry @ net.minecraft.client.render.world.WorldRenderer.setupRender < net.minecraft.client.render.GameRenderer.render < net.minecraft.client.render.GameRenderer.renderWorld",
+     "samples": 233,
+     "share_percent": 0.9027979202666009,
+     "bytes_per_frame": 3892.939708939709
+    },
+    {
+     "site": "[Ljava.lang.Object; @ com.google.common.collect.Maps.newIdentityHashMap < com.google.common.collect.Sets.newIdentityHashSet < net.minecraft.util.TypeInstanceMultiMap.<init>",
+     "samples": 115,
+     "share_percent": 0.8215679770427055,
+     "bytes_per_frame": 3542.6694386694385
+    },
+    {
+     "site": "net.minecraft.util.math.BlockPos @ net.minecraft.network.packet.s2c.play.BlocksUpdateS2CPacket$BlockUpdate.getBlockPos < net.minecraft.client.network.handler.ClientPlayNetworkHandler.handleBlocksUpdate < net.minecraft.network.packet.s2c.play.BlocksUpdateS2CPacket.handle",
+     "samples": 9,
+     "share_percent": 0.7688822975808443,
+     "bytes_per_frame": 3315.4844074844077
+    },
+    {
+     "site": "[Lcom.google.common.base.Predicate; @ com.google.common.base.Predicates.asList < com.google.common.base.Predicates.and < net.minecraft.client.render.GameRenderer.pick",
+     "samples": 4,
+     "share_percent": 0.7549177672179709,
+     "bytes_per_frame": 3255.2681912681915
+    },
+    {
+     "site": "java.util.ArrayList$Itr @ net.minecraft.util.TypeInstanceMultiMap.addType < net.minecraft.util.TypeInstanceMultiMap.<init> < net.minecraft.world.chunk.WorldChunk.<init>",
+     "samples": 20,
+     "share_percent": 0.6203811558874353,
+     "bytes_per_frame": 2675.135135135135
+    },
+    {
+     "site": "net.minecraft.util.math.BlockPos @ net.minecraft.util.math.BlockPos.offset < net.minecraft.client.render.world.RenderChunk.setOrigin < net.minecraft.client.render.world.RenderChunkStorage.updateCameraPos",
+     "samples": 155,
+     "share_percent": 0.6017187114292767,
+     "bytes_per_frame": 2594.6611226611226
+    },
+    {
+     "site": "net.minecraft.util.math.BlockPos @ net.minecraft.util.math.BlockPos.offset < net.minecraft.util.math.BlockPos.offset < net.minecraft.client.render.block.BlockModelRenderer$AmbientOcclusionFace.compute",
+     "samples": 120,
+     "share_percent": 0.53790344976549,
+     "bytes_per_frame": 2319.4844074844077
+    },
+    {
+     "site": "net.minecraft.world.chunk.ChunkNibbleStorage @ net.minecraft.world.chunk.WorldChunkSection.<init> < net.minecraft.world.chunk.WorldChunk.update < net.minecraft.client.network.handler.ClientPlayNetworkHandler.handleWorldChunks",
+     "samples": 69,
+     "share_percent": 0.4188105560355468,
+     "bytes_per_frame": 1805.945945945946
+    },
+    {
+     "site": "net.minecraft.util.math.BlockPos @ net.minecraft.world.World.updateLight < net.minecraft.world.World.checkLight < net.minecraft.world.World.setBlockState",
+     "samples": 97,
+     "share_percent": 0.38225322451246607,
+     "bytes_per_frame": 1648.3076923076924
+    },
+    {
+     "site": "[Lnet.minecraft.util.math.Direction; @ net.minecraft.util.math.Direction.values < net.minecraft.world.World.findLight < net.minecraft.world.World.updateLight",
+     "samples": 94,
+     "share_percent": 0.3776420945445569,
+     "bytes_per_frame": 1628.4241164241164
+    },
+    {
+     "site": "java.util.HashMap @ com.google.common.collect.Maps.newHashMap < net.minecraft.util.TypeInstanceMultiMap.<init> < net.minecraft.world.chunk.WorldChunk.<init>",
+     "samples": 6,
+     "share_percent": 0.258134565539373,
+     "bytes_per_frame": 1113.097713097713
+    },
+    {
+     "site": "net.minecraft.util.math.Box @ net.minecraft.client.render.world.RenderChunk.setOrigin < net.minecraft.client.render.world.RenderChunkStorage.updateCameraPos < net.minecraft.client.render.world.WorldRenderer.setupRender",
+     "samples": 60,
+     "share_percent": 0.23634596395951618,
+     "bytes_per_frame": 1019.1434511434511
+    },
+    {
+     "site": "[Lnet.minecraft.util.math.Direction; @ net.minecraft.util.math.Direction.values < net.minecraft.client.render.world.RenderChunk.setOrigin < net.minecraft.client.render.world.RenderChunkStorage.updateCameraPos",
+     "samples": 59,
+     "share_percent": 0.22486345963959517,
+     "bytes_per_frame": 969.6299376299377
+    },
+    {
+     "site": "[J @ com.google.common.util.concurrent.AbstractFuture.cancellationExceptionWithCause < com.google.common.util.concurrent.AbstractFuture$Sync.getValue < com.google.common.util.concurrent.AbstractFuture$Sync.get",
+     "samples": 8,
+     "share_percent": 0.17181714391508268,
+     "bytes_per_frame": 740.8898128898129
+    },
+    {
+     "site": "[Ljava.lang.Object; @ com.google.common.util.concurrent.Uninterruptibles.getUninterruptibly < com.google.common.util.concurrent.Futures$CombinedFuture.setOneValue < com.google.common.util.concurrent.Futures$CombinedFuture.access$400",
+     "samples": 13,
+     "share_percent": 0.17111901382374722,
+     "bytes_per_frame": 737.8794178794179
+    },
+    {
+     "site": "java.util.regex.Matcher @ net.minecraft.text.Formatting.strip < net.minecraft.client.render.entity.LivingEntityRenderer.applyRotation < net.minecraft.client.render.entity.LivingEntityRenderer.render",
+     "samples": 8,
+     "share_percent": 0.16727929832140212,
+     "bytes_per_frame": 721.3222453222453
+    },
+    {
+     "site": "[Ljava.util.HashMap$Node; @ net.minecraft.client.render.world.WorldRenderer.setupRender < net.minecraft.client.render.GameRenderer.render < net.minecraft.client.render.GameRenderer.renderWorld",
+     "samples": 40,
+     "share_percent": 0.15129559059491485,
+     "bytes_per_frame": 652.3991683991684
+    },
+    {
+     "site": "net.minecraft.util.math.BlockPos @ net.minecraft.util.math.BlockPos.offset < net.minecraft.util.math.BlockPos.offset < net.minecraft.client.render.block.BlockModelRenderer.tesselateWithAmbientOcclusion",
+     "samples": 37,
+     "share_percent": 0.14840471488521353,
+     "bytes_per_frame": 639.9334719334719
+    },
+    {
+     "site": "[C @ net.minecraft.world.chunk.WorldChunkSection.<init> < net.minecraft.world.chunk.WorldChunk.update < net.minecraft.client.network.handler.ClientPlayNetworkHandler.handleWorldChunk",
+     "samples": 31,
+     "share_percent": 0.14709331029375464,
+     "bytes_per_frame": 634.2785862785863
+    },
+    {
+     "site": "java.util.Collections$SetFromMap @ com.google.common.collect.Platform.newSetFromMap < com.google.common.collect.Sets.newSetFromMap < com.google.common.collect.Sets.newIdentityHashSet",
+     "samples": 4,
+     "share_percent": 0.12207826771167613,
+     "bytes_per_frame": 526.4116424116424
+    },
+    {
+     "site": "[F @ net.minecraft.client.render.block.BlockModelRenderer.tesselateWithAmbientOcclusion < net.minecraft.client.render.block.BlockModelRenderer.render < net.minecraft.client.render.block.BlockModelRenderer.render",
+     "samples": 29,
+     "share_percent": 0.11057069242162429,
+     "bytes_per_frame": 476.7900207900208
+    },
+    {
+     "site": "[Ljava.lang.Object; @ net.minecraft.client.render.world.ChunkCompileTask.registerCancelListener < net.minecraft.client.render.world.ChunkRenderDispatcher.rebuildAsync < net.minecraft.client.render.world.WorldRenderer.compileChunksUntil",
+     "samples": 28,
+     "share_percent": 0.10699518637373488,
+     "bytes_per_frame": 461.37214137214136
+    }
+   ]
+  }
+ }
+}

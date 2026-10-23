@@ -112,8 +112,14 @@ Keys (rebindable under Controls → Alacer):
 
 Open **Options -> Video Settings** for categorized controls, global search,
 contextual help and staged Apply/Cancel. The menu uses Minecraft's native widgets
-and formatting colors. Details adds independent Fast/Fancy leaves and weather;
-both default to following Graphics. Existing optimization defaults stay unchanged.
+and formatting colors. Minecraft 1.8.9's single Graphics option is split into
+per-feature Details controls: leaves, weather, rain splashes and the vignette
+each default to **Follow Graphics**, so the base Graphics option keeps today's
+behaviour until a feature is overridden. Details also adds Stars (Off/On),
+Enchantment glint (Off/On) and Dropped items (Fast/Fancy); each defaults to
+vanilla's appearance. New choices are saved to `config/alacer.properties` as
+`quality.*` options, are recorded in profile and benchmark exports, and use their
+defaults during benchmark launches. Existing optimization defaults stay unchanged.
 See [the settings guide and validation](docs/VIDEO_SETTINGS.md).
 
 ## Configuration
@@ -148,6 +154,8 @@ Normal launches continue to use saved settings, so an existing explicit `false` 
 | `render.fastChunkVisibility.verify` | `false` | Debug: run vanilla's and Alacer's searches side by side and log differences. Slower. |
 | `render.fastChunkFrustum` | `false` | Experimental: in Alacer's chunk search, test one corner per frustum plane with vanilla's exact arithmetic/boundary rules. Unknown/modified cullers and unsafe inputs use vanilla. No dependable measured gain; see session 12. |
 | `render.fastChunkFrustum.verify` | `false` | Debug: compare every eligible chunk predicate with vanilla, return vanilla's answer and log differences. Use with the Alacer chunk search enabled. |
+| `render.fastCameraSectionFaces` | `false` | Experimental (session 28b, not yet measured; reference series prepared as session 30): in Alacer's chunk search, find the camera section's open faces with an allocation-free flood fill instead of vanilla's (which copies `Direction.values()` per visited block), reading the section's blocks with vanilla's own calls and reusing the answer while the camera stays in the same connected pocket of an unchanged, populated section. Same faces as vanilla; only matters when the camera moves between blocks. Runtime-toggleable; not in `render.defaults`. |
+| `render.fastCameraSectionFaces.verify` | `false` | Debug: also run vanilla's camera-section flood fill for every answer, use its result and log any difference (`Camera section faces final:` in the benchmark log). Use with the Alacer chunk search enabled. |
 | `render.fastEntityChunkLookup` | `true` | Reuse each render chunk's world-chunk reference when gathering entities. |
 | `render.fastEntityChunkLookup.verify` | `false` | Debug: also do vanilla's lookup for every cached one and log differences. |
 | `render.throttleGlErrorChecks` | `true` | Check for OpenGL errors about once per second instead of twice per frame. Errors are still logged, with a note that they may come from any frame since the previous check; after the first error, checks return to every frame. Saves about 2-3% of frame time when the NVIDIA driver runs threaded; no measurable effect otherwise (see BENCHMARKS.md). |
