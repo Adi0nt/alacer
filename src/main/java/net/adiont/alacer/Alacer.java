@@ -133,6 +133,9 @@ public final class Alacer implements ClientModInitializer, FrameProfiler.ChunkCo
 			if (this.config.profilerChunkDetail) {
 				net.adiont.alacer.render.ChunkPipelineTimings.frameBoundary(this.profiler);
 			}
+			if (this.config.profilerChunkLatency) {
+				net.adiont.alacer.render.ChunkUpdateLatency.frameBoundary(this.profiler);
+			}
 			this.profiler.frameBoundary();
 		}
 		if (this.benchmark != null) {

@@ -48,6 +48,8 @@ public final class AlacerConfig {
 	public final boolean profilerFrustumTiming;
 	/** Chunk pipeline attribution, including worker wall times. Startup only; intrusive. */
 	public final boolean profilerChunkDetail;
+	/** Visible-update latency (dirty and visible to published) and terrain holes. Startup only; light attribution. */
+	public final boolean profilerChunkLatency;
 	/** Per-particle update, movement, light and removal timers. Startup only; intrusive. */
 	public final boolean profilerParticleDetail;
 	/** Count particle light queries and their distinct positions per render pass. Startup only; attribution. */
@@ -122,6 +124,10 @@ public final class AlacerConfig {
 	public volatile boolean scalarParticleEntityQuery;
 	/** Compare scalar bounds and ordered entity lists, returning the candidate. */
 	public volatile boolean verifyScalarParticleEntityQuery;
+	/** Keep queueing chunk rebuilds for the workers after vanilla's frame deadline stops its loop. Runtime-toggleable. */
+	public volatile boolean feedChunkWorkers;
+	/** Give chunk uploads and rebuild queueing at least 1/32 of the previous frame. Runtime-toggleable. */
+	public volatile boolean chunkTimeFloor;
 	/** Session 28 candidate: one reused position for entity shadows' block-below query. Runtime-toggleable when installed. */
 	public volatile boolean reuseShadowPositions;
 	/** Also make vanilla's position, use it, and compare coordinates and the block state answered for both. Debug only. */
@@ -219,6 +225,8 @@ public final class AlacerConfig {
 			"After each chunk visibility search, repeat its frustum tests through vanilla's test and Alacer's, timing each. Adds frame time; for attribution only.");
 		this.profilerChunkDetail = bool(file, system, "profiler.chunkDetail", false,
 			"Attribute chunk build, queue, buffer wait and GL upload wall times. Intrusive; startup only, not performance selection.");
+		this.profilerChunkLatency = bool(file, system, "profiler.chunkLatency", false,
+			"Measure how long each visible chunk update waits from the frame it is found dirty and visible until its rebuild is published, and count never-built chunks in view. Startup only; attribution.");
 		this.profilerParticleDetail = bool(file, system, "profiler.particleDetail", false,
 			"Time particle updates, their movement, dead-particle removal and light queries individually. Intrusive; startup only, not performance selection.");
 		this.profilerParticleLightRepeats = bool(file, system, "profiler.particleLightRepeats", false,
@@ -297,6 +305,10 @@ public final class AlacerConfig {
 			"Experimental: pass one reused position instead of a new BlockPos to each entity shadow's block-below query (same query and answer). Off by default; its hook is installed only when on at startup (or verified, or benchmark-toggled).");
 		this.verifyReuseShadowPositions = bool(file, system, "render.reuseShadowPositions.verify", false,
 			"Debug: keep vanilla's new position, compare the reused one's coordinates and the block state answered for each, and log any difference.");
+		this.feedChunkWorkers = bool(file, system, "render.feedChunkWorkers", false,
+			"Experimental: after Minecraft's per-frame chunk deadline stops queueing rebuilds, keep queueing visible dirty chunks (same order and calls) until the builder threads have about one frame of work. Uploads keep Minecraft's deadline. Off by default.");
+		this.chunkTimeFloor = bool(file, system, "render.chunkTimeFloor", false,
+			"Experimental: when Minecraft's per-frame chunk deadline leaves less than 1/32 of the previous frame's time (at most 4.2 ms), allow that much for uploading built chunks and queueing rebuilds. Off by default.");
 		this.batchModelLists = bool(file, system, "render.batchModelLists", false,
 			"Combine vanilla model-part face uploads in an alternate display list; experimental, off by default.");
 		this.verifyBatchModelLists = bool(file, system, "render.batchModelLists.verify", false,
@@ -372,6 +384,8 @@ public final class AlacerConfig {
 				this.reuseParticleBoxes = false;
 				this.scalarParticleEntityQuery = false;
 				this.reuseShadowPositions = false;
+				this.feedChunkWorkers = false;
+				this.chunkTimeFloor = false;
 				this.skipZeroTranslates = false;
 				this.batchModelLists = false;
 				break;
@@ -431,6 +445,12 @@ public final class AlacerConfig {
 				break;
 			case "render.reuseShadowPositions":
 				this.reuseShadowPositions = value;
+				break;
+			case "render.feedChunkWorkers":
+				this.feedChunkWorkers = value;
+				break;
+			case "render.chunkTimeFloor":
+				this.chunkTimeFloor = value;
 				break;
 			default:
 				throw new IllegalArgumentException("Not a runtime-toggleable option: " + key);
@@ -542,6 +562,7 @@ public final class AlacerConfig {
 		values.put("profiler.shadowTiming", String.valueOf(this.profilerShadowTiming));
 		values.put("profiler.frustumTiming", String.valueOf(this.profilerFrustumTiming));
 		values.put("profiler.chunkDetail", String.valueOf(this.profilerChunkDetail));
+		values.put("profiler.chunkLatency", String.valueOf(this.profilerChunkLatency));
 		values.put("profiler.particleDetail", String.valueOf(this.profilerParticleDetail));
 		values.put("profiler.particleLightRepeats", String.valueOf(this.profilerParticleLightRepeats));
 		values.put("profiler.hud", String.valueOf(this.hudVisible));
@@ -581,6 +602,8 @@ public final class AlacerConfig {
 		values.put("render.reuseShadowPositions.verify", String.valueOf(this.verifyReuseShadowPositions));
 		values.put("render.reuseParticleBoxes", String.valueOf(this.reuseParticleBoxes));
 		values.put("render.reuseParticleBoxes.verify", String.valueOf(this.verifyReuseParticleBoxes));
+		values.put("render.feedChunkWorkers", String.valueOf(this.feedChunkWorkers));
+		values.put("render.chunkTimeFloor", String.valueOf(this.chunkTimeFloor));
 		values.put("render.batchModelLists", String.valueOf(this.batchModelLists));
 		values.put("render.batchModelLists.verify", String.valueOf(this.verifyBatchModelLists));
 		return values;
