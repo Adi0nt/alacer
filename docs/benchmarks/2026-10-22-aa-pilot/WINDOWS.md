@@ -137,3 +137,24 @@ Linux-only tests skip. Fresh d0 and terrain smoke both pass every environmental 
 [windows2/validation.json](windows2/validation.json) records coverage, processor counts, stillness and
 checksums of the retained setup/test logs. No client source or compiled artifact changed for the
 configuration-scope correction. Fresh calibration and the full pilot are pending the new freeze.
+
+
+## Fresh aa31w2: terminal calibration failure
+
+The new freeze (`6b75fc5`, after fixes `39a0a5a`) completed 12 calibration launches: 7 accepted
+(3 d0, 4 terrain), 5 rejected for background CPU. d0 slot 4 exhausted all retries; terrain slot 4
+passed on its third attempt. Every attempt is preserved. Calibration FAILS the unchanged 5% rule:
+terrain/reference-pre robust frame-mean spread is **12.7093%**. This measured failure is distinct
+from the original aa31 validator defect. No source/tooling changed during these measurements.
+
+The runner stopped before any pilot pair. Full pilot: NOT RUN; 3% paired stability, paired confidence
+intervals and 2% power: UNRESOLVED. The monitor correctly rejected observed disturbances, but
+the system is not yet qualified for 1–2% A/B claims. See the complete [outcome](windows2/RESULTS.md)
+for scenario medians and descriptive variation, every acceptance/rejection, CPU attribution and limits.
+
+Across all 126 calibration phases, critical telemetry and foreground were 100%, all 4,328,653 processor
+samples were known P-core samples, and there were no monitor errors. All frozen hashes and 308 raw
+result-file hashes were verified after scoring. The client and runner exited, foreground automation
+stopped, and the original Ultimate Performance plan was restored. Raw data remain locally preserved.
+A new separately frozen series requires diagnosis of the terrain timing groups and fresh calibration;
+this failed archive is never rescored. No rendering defaults or candidate selections changed.

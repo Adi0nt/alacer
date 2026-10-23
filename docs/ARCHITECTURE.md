@@ -1369,7 +1369,10 @@ and 105 Python tests pass, with 2 Linux-only skips. The original aa31 calibratio
 but failed a validator defect requiring one configuration hash across distinct scenes. Its failed calibration,
 manifest, source ZIP and attempts are preserved without rescoring. The correction scopes configuration identity
 to each scene and keeps all numerical gates unchanged. The [fresh aa31w2 protocol](benchmarks/2026-10-22-aa-pilot/windows2/README.md)
-has passed smoke and is awaiting its new freeze and full scored series; 1-2% measurement power remains unresolved.
+completed 12 calibration launches (7 accepted, 5 background-CPU rejections) and failed the unchanged 5%
+calibration gate: terrain/reference-pre robust frame-mean spread was 12.7093%. The runner stopped before
+any A/A pair. The 3% paired stability gate and 2% power remain unresolved; attribution of the terrain
+timing groups is required before a new frozen series. See the [terminal outcome](benchmarks/2026-10-22-aa-pilot/windows2/RESULTS.md).
 See [Windows findings](benchmarks/2026-10-22-aa-pilot/WINDOWS.md). No rendering default or candidate selection changed.
 
 **Frame-time mechanisms already in the archives: none qualifies.** The visibility search is still the largest
