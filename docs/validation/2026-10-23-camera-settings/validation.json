@@ -1,0 +1,59 @@
+{
+  "unit_tests": {
+    "tests": 162,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  "build": "bash ./gradlew clean build --offline --console=plain",
+  "java_container": "Temurin 25.0.5+8",
+  "local_initial_tests": "162 passed on Temurin 25.0.4.1",
+  "classfile_major": 69,
+  "jars": [
+    {
+      "file": "alacer-0.1.0+mc1.8.9-sources.jar",
+      "sha256": "a07931cffaa63da0aa431bf8bab435fee1a664a12b39a3f3112f5b133356ddbf",
+      "bytes": 263643,
+      "temporary_harness_absent": true
+    },
+    {
+      "file": "alacer-0.1.0+mc1.8.9.jar",
+      "sha256": "1588152f96256abdd95c2397fcdae49a0237bfa1ba8779b25cacfb726d772c25",
+      "bytes": 430265,
+      "temporary_harness_absent": true
+    }
+  ],
+  "live_readouts": {
+    "readouts_pass": true,
+    "screenshots": 18,
+    "fov_repeated_observations": 1,
+    "limits": "Synthetic walking/effect/key state; visual inspection separate; no pixel-equivalence or performance claim"
+  },
+  "source_state": "Shipping src matches rerun-freeze.json byte-for-byte; devcheck removed",
+  "visual_review": "Menu/category/search/tooltip, bobbing, distortion strengths, rear/front views, wall collision and zoom reviewed from screenshots",
+  "attempts": [
+    {
+      "full": "attempt1/camera-full-1.log",
+      "readback": "attempt1/camera-readback-1.log",
+      "result": "Completed; front-distance sample collision-limited by downward view/floor"
+    },
+    {
+      "full": "camera-full-2.log",
+      "readback": "camera-readback-2.log",
+      "result": "Completed; level front view confirms distance change; saved values survived restart and defaults restored"
+    }
+  ],
+  "shipping_smoke": {
+    "completed": true,
+    "phases": [
+      "static",
+      "pan",
+      "fly"
+    ],
+    "dropped_frames": 0,
+    "camera_defaults_restored": true,
+    "experiments_off": true,
+    "temporary_harness_absent": true,
+    "kind": "Development client from shipping sources, not external-launcher jar test"
+  }
+}

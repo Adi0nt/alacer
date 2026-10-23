@@ -199,9 +199,12 @@ public final class CameraCheck {
 		}
 		set("quality.thirdPersonDistance", 8); wait(5); shot("third-person-8");
 		set("quality.thirdPersonDistance", 4); wait(5); shot("third-person-4");
+		// Level the front view after landing: a downward pitch can hit the floor and shorten the collision-limited offset.
+		tp(20, 4, 0, -90, 0);
 		add("front view", () -> this.mc.options.perspective = 2, () -> this.waited >= 5);
 		set("quality.thirdPersonDistance", 8); wait(5); offsets("front view thirdPersonDistance=8", 10);
-		set("quality.thirdPersonDistance", 4);
+		shot("third-person-front-8");
+		set("quality.thirdPersonDistance", 4); wait(5); offsets("front view thirdPersonDistance=4", 10);
 		add("back view", () -> this.mc.options.perspective = 1, () -> this.waited >= 5);
 		// Facing east 0.5 blocks from the wall's east face at x0-2.5.. stand at x0 + 0.5, wall at x0-3 (face at x0-2).
 		add("tp wall", () -> this.mc.player.sendChat(String.format(Locale.ROOT, "/tp @p %.1f 5 %.1f -90 0", this.x0 + 0.5, this.z0 + 0.5)), () -> this.waited >= 20);

@@ -1,0 +1,36 @@
+
+> Configure project :
+Fabric Loom: 1.18.4
+Ploceus: 1.18.2
+
+> Task :clean
+
+> Task :compileJava
+/workspace/src/main/java/net/adiont/alacer/render/ThreadCycles.java:110: warning: [removal] ThreadDeath in java.lang has been deprecated and marked for removal
+		if (failure instanceof ThreadDeath death) { throw death; }
+		                       ^
+Note: /workspace/src/main/java/net/adiont/alacer/profiler/FrameProfiler.java uses or overrides a deprecated API.
+Note: Recompile with -Xlint:deprecation for details.
+1 warning
+
+> Task :processResources
+> Task :classes
+> Task :jar
+> Task :processIncludeJars
+> Task :sourcesJar
+> Task :compileTestJava
+> Task :processTestResources NO-SOURCE
+> Task :testClasses
+> Task :remapJar
+> Task :remapSourcesJar
+> Task :test
+> Task :assemble
+> Task :validateAccessWidener
+> Task :check
+> Task :build
+
+[Incubating] Problems report is available at: file:///workspace/build/reports/problems/problems-report.html
+
+BUILD SUCCESSFUL in 1m
+11 actionable tasks: 11 executed
+Consider enabling configuration cache to speed up this build: https://docs.gradle.org/9.7.1/userguide/configuration_cache_enabling.html

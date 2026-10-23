@@ -27,6 +27,10 @@ net.adiont.alacer
 │   ├── ChunkFrustum        Exact one-corner-per-plane chunk predicate (session 12)
 │   ├── SectionFaces        Allocation-free camera-section flood fill with pocket reuse (session 28b, unmeasured, off)
 │   ├── ChunkPipelineTimings Opt-in build, queue, scheduling and upload attribution (session 13)
+│   ├── ChunkUpdateLatency Dirty-and-visible to published rebuild latency and visible never-built chunks (startup diagnostic)
+│   ├── ChunkTimeFloor      Pure bounded minimum upload/queueing time slice (experiment, off by default)
+│   ├── FeedTarget          Pure worker-feed target from observed queue starts (experiment, off by default)
+│   ├── ChunkSchedulingExperiments Client-thread worker-feed and minimum-deadline hooks
 │   ├── EntityRendering     renderEntities phase timing and world-chunk lookup cache (optimization 2)
 │   ├── EntityDrawDetails   Optional per-class draw-stage times and call counts
 │   ├── EntityChunkSlot     Per-render-chunk cache fields (added to RenderChunk by a mixin)
@@ -59,6 +63,7 @@ net.adiont.alacer
 │   └── AtlasPadding        Edge borders around atlas sprites while anisotropic filtering is on (unit tested)
 ├── settings/               Video settings catalog, staged draft, presets, backend and menu screen
 └── mixin/                  One-line hooks, wrappers and accessors only
+    └── CameraControlsMixin Bobbing, distortion, third-person distance/collision, FOV transitions and held zoom
 ```
 
 Rules the code follows:
@@ -1289,6 +1294,57 @@ mob's pose (terrain identical on inspection). Still phases varied by up to 17% i
 launches, so four pairs per scene cannot resolve 1-2% effects on this machine. **Closed under the frozen rule (not the
 "no demonstrated benefit" closure, since conditions other than the benefit gate failed); off by default and outside
 `render.defaults`.** See the [session 30 archive](benchmarks/2026-10-22-section-faces-reference/README.md).
+
+### 2026-10-23: chunk responsiveness and camera settings
+
+Added startup-only `profiler.chunkLatency`: dirty-and-visible to published rebuild
+latency, phase percentiles and overflow, plus a visible never-built-chunk gauge.
+The stamp is frame-resolution and excludes synchronous same-setup builds; moved
+slots drop their pending sample, and percentiles cover published updates. This
+is a responsiveness diagnostic, not exact edit-to-pixel latency. A new
+`benchmark.chunkEdit` scene makes 28 bursts of 16 edits after a discarded pan
+warmup and still control, complementing the retained fresh near-flight scene.
+
+Two runtime-toggleable experiments remain **off by default and outside
+`render.defaults`**. `FeedTarget` and `ChunkSchedulingExperiments` continue
+queueing rebuilds after the deadline in vanilla order, to a bounded target based
+on observed worker starts; uploads retain the deadline. `ChunkTimeFloor` allows
+at least 1/32 of the preceding frame for uploads and queueing, capped at 4.167 ms,
+with gap guards and world/renderer resets. No third-party mod code was copied.
+
+Exploratory intrusive cloud-container attribution found upload/buffer starvation:
+the deadline had expired in 72-83% of frames, with only 0.2-0.6 of five buffers
+free. Feeding workers had no material effect; a time floor reduced edit latency
+p50 from 1.96 s to 0.29 s but raised flight frame p50 from 38 ms to 59 ms while
+drawing more terrain on the CPU renderer. These were not scored comparisons.
+
+The complete frozen 16-launch rerun used local Docker/llvmpipe (four-CPU quota,
+Java 25.0.5+8, 854x480, view distance 8, display lists). The original three partial
+cloud launches remain an aborted attempt. All new launches completed, with zero
+dropped frames or latency overflow and unchanged runtime sources throughout.
+G1, G2 and G6 failed: paired edit p90 -10.72% (needed -25%), flight p90 -0.17%
+(lower in only 2/4 pairs), edit still-frame mean +6.81% (limit +/-5%). G3-G5 and
+G7 passed. No gate was changed or waived. This different CPU/driver environment
+is indicative only and is not pooled with the exploratory cloud host. See the
+[complete protocol, archive and limitations](benchmarks/2026-10-23-chunk-scheduling/README.md).
+The Windows/RTX 3060 Ti follow-up remains deferred: 1920x1080, distance 12,
+near/high and static/pan/fly controls, with worker feeding as a third arm.
+Automatic thread-count selection is also deferred; four shared software-rendering
+CPU threads cannot select a policy for reference hardware.
+
+Six immediate Display settings now cover bobbing strength, nausea/portal
+distortion, third-person distance and collision, FOV transition rate and held
+zoom (`CameraEffects`, `CameraControlsMixin`). Defaults pass vanilla's values
+through unchanged; zoom defaults to 4x and its key is unbound. Config/menu and
+pure rules are unit tested (162 tests passed on local and container Java 25).
+The temporary live harness exercises settings through `VideoSettingsBackend.apply`,
+records camera/FOV readouts and screenshots, then relaunches to check persistence
+and restore defaults. Its source and attempts are archived, and it is removed
+from shipping sources before the final build/smoke. See the [camera validation](validation/2026-10-23-camera-settings/README.md).
+These are user-facing camera choices; no camera performance change was pursued
+because profiling found no qualifying cost. The separate session 30 camera-section
+experiment remains closed. Unit/build, software-client correctness and
+reference-hardware performance evidence remain distinct.
 
 ### Next session (31): recommended order
 

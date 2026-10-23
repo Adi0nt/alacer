@@ -5,7 +5,7 @@ textures, slider handles, bordered text field, tooltip renderer and background.
 The centered, two-column layout follows the game's existing options screens.
 Resource packs continue to supply the standard widget textures.
 
-Graphics, Details, Display, Performance and Advanced organize 52 controls, and
+Graphics, Details, Display, Performance and Advanced organize 58 controls, and
 **Presets...** stages a group of appearance choices. Search matches names and
 descriptions across every category. Hover a setting for its full name,
 description, default and application requirements. Long button names shorten to
@@ -77,6 +77,39 @@ pass. They do not introduce a new renderer. Saved values are `quality.*`
 options in `config/alacer.properties`; every value is included in profile and
 benchmark exports (each phase's `config`), and benchmark launches use the
 defaults above.
+
+## Camera settings
+
+Six Display controls apply immediately and save with the other `quality.*`
+settings. Their defaults preserve vanilla's inputs; zoom is unbound until chosen
+under **Controls -> Alacer**. The existing View bobbing toggle still controls
+whether bobbing runs at all.
+
+| Setting | Values (default **bold**) | Effect |
+|---|---|---|
+| View bobbing strength | 0-100%, step 5, **100%** | Scales bobbing translation and angles while View bobbing is on. |
+| Distortion effects | 0-100%, step 5, **100%** | Scales the nausea/portal stretch towards no stretch at 0%. |
+| Third-person distance | 1-16 blocks, **4** | Changes the camera offset in rear and front third-person views. |
+| Camera collision | Off, **On** | On keeps the camera in front of blocks; Off allows it behind them. |
+| FOV transitions | Instant, **Vanilla**, Smooth, Very smooth | Changes the approach rate to the current FOV-effects target: 1, 0.5, 0.25 or 0.125 per tick. FOV effects strength remains independent. |
+| Zoom magnification | 2x, 3x, **4x**, 6x, 8x | Divides the configured world FOV while the zoom key is held. The hand projection is unchanged; release restores the world FOV. |
+
+The pure rules, default-value parity, config and menu paths have unit coverage.
+The temporary real-client harness and its full/readback results, logs and
+screenshots are archived in the [camera validation](validation/2026-10-23-camera-settings/README.md).
+Live readouts confirmed bobbing 100/50/0% (offset component 0.05/0.025/0),
+level front-view distance changes, wall collision, FOV approach rates and zoom
+changing world FOV while keeping hand FOV at 70. All six saved values survived
+relaunch without a restart notice, then defaults were restored. Screenshots
+cover the menu, tooltip/search and effect comparisons. The harness simulates
+walking/effect/key state; physical rebinding, other mods/drivers and full
+keyboard-only operation remain separate checks. It is absent from shipping
+sources and jars.
+
+Camera settings are implemented; no camera performance change was pursued,
+because profiling found no qualifying camera cost. Camera matrices already use
+optimization 4; the separate camera-section open-faces experiment failed its
+session 30 gates.
 
 ## Expanded settings (2026-10-23)
 
@@ -204,8 +237,8 @@ ignore min and mag filters. We always use linear.") and is not changed.
 | Translucent geometry sorting options | Turning resorting off makes water and stained glass draw incorrectly while moving; no safe user-facing benefit was found. |
 | GPU memory / resource management | 1.8.9 has no user-visible GPU budget to expose; the VBO backend is already a setting. |
 | Frame-time-adaptive budgets | The fixed-ratio chunk update budget is offered; an adaptive controller would be a scheduling change that session 13's evidence did not select. |
-| Chunk handling improvements (deferred at the user's direction) | Session 13's attribution points at scheduling: dirty chunks averaged 66-93 entries per frame against 4.6-4.8 queued builds, accepted rebuilds waited 41-61 ms before being queued, and the deadline had already expired on entry in 14-22% of frames, when vanilla queues just one rebuild. Candidates are keeping idle workers fed regardless of the deadline, nearest-first rebuild order and smaller upload batches. Each changes scheduling, so it needs a visible-update-latency metric, a block-edit scenario and frame-tail gates on the reference machine (sessions 13 and 27 found no qualifying candidate). Meanwhile Chunk update budget and Chunk builder threads offer user-chosen trade-offs. |
-| Camera handling improvements (deferred at the user's direction) | Settings candidates: view-bobbing strength, distortion-effect (nausea and portal) strength, third-person camera distance and block clipping, smoother FOV transitions and a zoom key; each is a small hook like FOV effects and Damage tilt but needs its own vanilla-parity design and checks. Performance candidates are limited: camera matrices are already tracked on the CPU (optimization 4), and the camera-section open-faces experiment failed its gates (session 30). |
+| Chunk handling improvements | `profiler.chunkLatency` and the 16-chunk edit-burst scenario now measure responsiveness. Exploratory llvmpipe runs found uploads/buffer starvation, rather than idle workers, limiting updates: the deadline expired in 72-83% of frames and only 0.2-0.6 of five buffers were free. Feeding workers had no measurable effect; a minimum chunk time slice improved edit latency but increased flight frame cost as more terrain was drawn. Both experiments remain off by default and outside `render.defaults`; see the [frozen series and gates](benchmarks/2026-10-23-chunk-scheduling/README.md). Reference-hardware validation, ordering/cancellation stress and exact change-to-pixel latency remain open. |
+| Auto chunk builder thread count | A four-thread llvmpipe container shares CPU time between rasterization, chunk builders and the client, so it cannot select a useful automatic policy. Keep the explicit startup-only 1-6 choice (vanilla 2); revisit on reference hardware with responsiveness and frame-tail gates. |
 
 ### Independent implementation and licensing
 
