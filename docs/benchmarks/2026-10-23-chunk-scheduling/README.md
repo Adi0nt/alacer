@@ -1,151 +1,119 @@
-# Chunk responsiveness and scheduling experiments, 2026-10-23
+# Chunk scheduling series (2026-10-23): results
 
-**The frozen series failed. Both experiments remain off by default and outside
-`render.defaults`.** All 16 new launches completed on their first attempt with
-zero dropped frames and zero latency overflow. G1, G2 and G6 failed; the other
-four gates passed. This is indicative software-rendering evidence, not a default
-selection or a reference-hardware result.
+**Verdict: fails on this machine. `render.chunkTimeFloor` stays off by default and outside `render.defaults`.** The
+frozen series in [protocol.md](protocol.md) ran once in full (16 of 16 launches completed and valid). Gates G1, G2,
+G4, G6 and G7 pass; **G3 (visible holes in the fresh flight) and G5 (flight frame cost) fail**. The floor makes visible
+terrain updates much faster, above all after block edits, but in the fresh flight it costs about a fifth more frame
+time and leaves slightly more never-built chunks in view. `render.feedChunkWorkers` was not scored here (it changed
+nothing in the exploratory launches) and also stays off. Neither option was ever a default candidate on this machine:
+llvmpipe evidence cannot select a default (AGENTS.md).
 
-## What was implemented
+Scored with `python3 -I evaluate.py run/alacer/benchmarks` (unchanged since the freeze in `7ad4d2f`); its output is
+[evaluation.json](evaluation.json). The gates were not changed.
 
-Commits `a737afb` and `9b087aa` added:
+## Environment (indicative only)
 
-- `profiler.chunkLatency` (off, startup-only): stamps a chunk when terrain setup
-  first finds it dirty and visible, records elapsed time when a completed rebuild
-  is published, and counts never-built chunks in the visible set. Phase summaries
-  include count, mean, p50/p90/p99/max and overflow.
-- `benchmark.chunkEdit=true`: a fixed 16-cell edit burst each second, after an
-  unscored pan warmup and a still control. The scored 30-second edit phase makes
-  28 bursts. `benchmark.chunkFlight=near` is the retained fresh-flight control.
-- `render.feedChunkWorkers` (off): after vanilla's deadline, continue queueing
-  dirty chunks in the same order and through the same calls until the queue
-  reaches a bounded target derived from observed worker starts. Uploads retain
-  vanilla's deadline. The pure `FeedTarget` caps its target at 64 tasks.
-- `render.chunkTimeFloor` (off): give uploads and rebuild queueing at least 1/32
-  of the preceding frame, capped at 4.167 ms. Keep a later vanilla deadline;
-  ignore gaps over 250 ms and reset on world/renderer replacement or disable.
+Linux cloud container, 4 CPU threads (Xeon @ 2.80 GHz), no GPU: Xvfb, Mesa 25.2.8 llvmpipe (software OpenGL 4.5),
+Temurin 25.0.5+8 for Gradle, tests and the client. Window 854x480, 2 GiB heap, view distance 8, display lists
+(`vboActive=false` in every launch), `profiler.chunkLatency=true` and `profiler.chunkDetail=false` in both arms.
+llvmpipe rasterizes on the same 4 threads that run the two chunk workers and the client thread, so drawing cost
+grows with the amount of built terrain and competes with chunk building. **Times here are indicative only**; they
+are not comparable with the benchmark archives or the reference machine.
 
-The experiments preserve vanilla's build/upload/publication operations, but can
-change when terrain becomes available. This series is not lifecycle, cancellation,
-mod-compatibility or pixel-equivalence certification. Defaults were not changed.
-
-## Complete frozen rerun
-
-[protocol.md](protocol.md) and [evaluate.py](evaluate.py) are unchanged. Source
-under test was `5030c5f`, whose `src/` is identical to `9b087aa`. A generated base
-world (seed 1789) was retained; its generation launch is unscored. Every subsequent
-launch verified a byte-identical fresh copy (excluding `session.lock`).
-
-Both arms used 854x480, view distance 8, display lists (requested and active),
-2 GiB heap, `profiler.chunkLatency=true`, `profiler.chunkDetail=false`, build
-defaults plus explicit JVM overrides, and the protocol's durations. A disables
-`chunkTimeFloor`; B enables it. Order was `ABBABAAB` for edit, then `ABBABAAB`
-for near flight, with labels `cs-<scene>-<n><a|b>`. No builds, tests or metric
-analysis overlapped the scored clients. The temporary camera harness was installed
-only after all 16 launches and the final hash check completed.
-
-The original cloud host was unavailable. This complete rerun used local Docker
-on an i7-12700F, a four-CPU quota (not four dedicated physical cores), 8 GiB memory,
-Temurin 25.0.5+8 for Gradle/compiler/tests/client, Xvfb 1280x720x24, and Mesa
-26.0.8 / llvmpipe LLVM 21.1.8. The original cloud measurements used a Xeon and
-Mesa 25.2.8 / LLVM 20.1.2. This environment difference was recorded before the
-rerun in [rerun-note.md](rerun-note.md); exact environment and JVM details are in
-[rerun-environment.txt](rerun-environment.txt) and every launch summary. Do not
-pool the hosts or compare their absolute times as a treatment effect.
-
-The three `raw/*-cs-edit-*.summary.json` files remain byte-for-byte evidence of
-an **aborted original attempt**, not scored pairs. See
-[raw/ABORTED-ATTEMPT.md](raw/ABORTED-ATTEMPT.md). No new launch aborted or repeated.
+The code under test is `9b087aa`'s `src/` (unchanged at the branch head `5030c5f`; nothing in `src/` changed during
+the series). The seed-1789 base world was generated in this container by one discarded benchmark launch
+(`-Palacer.benchmark=true -Palacer.benchmark.viewDistance=8`) before the series; each launch played a fresh copy,
+and both scenes logged the byte-identical world-copy check. Launches were serial (07:26-07:51 UTC) with no builds or
+analysis while a client ran. [run_series.sh](run_series.sh) is the exact command sequence; [logs/](logs/) holds each
+launch's client log (proxy settings removed) and [raw/](raw/) each summary.
 
 ## Results
 
-Values below are the median of four paired `B / A - 1` changes, not ratios of
-pooled medians. Negative time changes are improvements. The unchanged command was:
+Paired change is B / A - 1 within a launch pair; the gate uses the median of the four pairs. A = floor off, B = on.
 
-```bash
-python3 -I docs/benchmarks/2026-10-23-chunk-scheduling/evaluate.py run/alacer/benchmarks
-```
+| Gate | Metric | A (four pairs) | B | Paired changes | Median | Rule | Result |
+|---|---|---|---|---|---:|---|---|
+| G1 | edit latency p90 (ms) | 1461, 870, 1779, 2020 | 384, 404, 375, 386 | -74, -54, -79, -81% | -76.3% | 4/4 lower, <= -25% | pass |
+| G2 | flight latency p90 (ms) | 1492, 1420, 1456, 1449 | 1161, 1205, 1180, 1262 | -22, -15, -19, -13% | -17.1% | >= 3/4 lower, <= -10% | pass |
+| G3 | flight visible never-built chunks | 39.6, 39.0, 38.2, 36.5 | 43.5, 43.1, 43.6, 42.2 | +10, +10, +14, +16% | **+12.2%** | <= +5% | **fail** |
+| G4 | edit frame mean (ms) | 62.1, 58.0, 61.8, 63.6 | 59.6, 63.1, 59.2, 60.2 | -4, +9, -4, -5% | -4.2% | <= +5% | pass |
+| G4 | edit frame p99 (ms) | 87.6, 75.0, 88.8, 91.4 | 76.4, 90.4, 85.6, 83.2 | -13, +21, -4, -9% | -6.3% | <= +10% | pass |
+| G5 | flight frame mean (ms) | 41.2, 40.6, 41.1, 41.8 | 48.4, 51.3, 49.7, 50.1 | +17, +26, +21, +20% | **+20.3%** | <= +5% | **fail** |
+| G5 | flight frame p99 (ms) | 69.0, 83.2, 67.8, 79.1 | 84.9, 100.8, 84.7, 92.0 | +23, +21, +25, +16% | **+22.0%** | <= +10% | **fail** |
+| G6 | still frame mean, edit / flight launches | | | -4, +7, -10, +5% / -6, +4, +2, +4% | +0.6% / +3.1% | within +/-5% | pass |
+| G7 | validity | 16 completed launches, 0 dropped frames, 0 latency overflow | | | | | pass |
 
-| Gate | Observed | Frozen requirement | Result |
-|---|---|---|---|
-| G1 edit latency p90 | Lower in 4/4 pairs; median -10.72% | Lower in 4/4; <= -25% | Fail |
-| G2 flight latency p90 | Lower in 2/4 pairs; median -0.17% | Lower in >=3/4; <= -10% | Fail |
-| G3 flight visible never-built chunks | +0.10% | <= +5% | Pass |
-| G4 edit frame mean / p99 | +1.99% / +9.17% | <= +5% / +10% | Pass |
-| G5 flight frame mean / p99 | +2.02% / +3.00% | <= +5% / +10% | Pass |
-| G6 still frame mean | Edit +6.81%; flight -2.34% | Both within +/-5% | Fail |
-| G7 validity | 16 completed; 0 dropped frames; 0 latency overflow | All required | Pass |
+Other recorded metrics (not gated):
 
-Edit latency p50 changed -24.54%, but its p99 changed +1.74%; flight p50 changed
-+7.60% and p99 +5.32%. Edit p90 was 109-131 ms in A and 108-112 ms in B; flight
-p90 was 596-673 ms in A and 599-628 ms in B. Individual flight maxima remained
-4.16-4.84 seconds. A p50 improvement does not rescue the failed p90 rule.
+| Metric | A | B | Median change |
+|---|---|---|---:|
+| edit latency p50 (ms) | 729, 484, 635, 804 | 226, 239, 223, 235 | -66.9% |
+| edit latency p99 (ms) | 12430, 1902, 7064, 13928 | 467, 470, 445, 505 | -95.0% |
+| edit updates published in the 30 s phase | 402, 501, 378, 339 | 525, 516, 523, 514 | +34.5% |
+| flight latency p50 (ms) | 577, 616, 602, 653 | 478, 493, 499, 482 | -18.6% |
+| flight latency p99 (ms) | 2707, 2972, 2977, 3103 | 2646, 2983, 2539, 2388 | -8.5% |
+| flight updates published in the 40 s phase | 2130, 2122, 2050, 1772 | 2982, 2825, 2995, 2736 | +43.0% |
+| flight frame max (ms) | 238, 125, 207, 475 | 115, 118, 284, 118 | -28.8% |
+| edit frame max (ms) | 115, 86, 131, 102 | 81, 106, 273, 95 | +8.4% |
 
-Supplemental, not new gates: client-thread CPU per frame changed +1.97% in edit
-and +2.73% in flight; process CPU stayed around 3.5-3.9 cores (near the quota).
-Allocation per frame changed +1.61% / +0.89%. Still-frame drift and launch-to-launch
-variation limit small-effect interpretation. In particular, G6 fails independently
-of the two responsiveness failures; it is not waived as noise.
+Reading: with the floor, an edited chunk is visible again in about a quarter of a second instead of 0.5-0.8 s (p50)
+and its worst case falls from several seconds to half a second. In the fresh flight the floor publishes 43% more
+updates, but every published chunk is drawn by llvmpipe on the CPU threads the workers also need, so frames get about
+8 ms slower and the never-built count in view does not fall (it rises 12%). The frame-cost failure is therefore
+partly the software-rendering confound the protocol anticipated, but it is the frozen result and it stands.
 
-[results.json](results.json) is the evaluator's verbatim output. Its unscored edit
-hole-count ratios contain `Infinity` because both arms have zero holes and the
-unchanged evaluator maps a zero denominator to infinity. The actual G3 uses the
-nonzero **flight** hole counts; this does not affect a gate. [validity.json](validity.json)
-additionally checks settings, phase consistency, fresh-world logs and backend.
+## Exploratory attribution (before the freeze, not scored)
 
-## Exploratory attribution (original cloud host, not scored)
+One launch per arm and scene in [raw/](raw/) (`diag-*` with `profiler.chunkDetail=true`, `x-*` without). These came
+from an earlier container with its own base world, so their absolute values are not comparable with the series.
 
-The six `raw/*-x-*.summary.json` launches used intrusive chunk-detail probes,
-one launch per scene/arm. They motivated the frozen candidate; they cannot judge
-its repeatability or be mixed into the new pairs.
+- **Uploads, not idle workers, limit visible updates on llvmpipe.** With vanilla scheduling the frame deadline had
+  already passed at `compileChunksUntil` in 72% (flight) to 83% (edit) of frames, 11-17 chunk layers were waiting to
+  upload, and only 0.2-0.6 of the 5 shared buffer sets were free, so workers waited for buffers (mean wait 50-129 ms).
+- `render.feedChunkWorkers` (queue more rebuilds after the deadline) changed nothing measurable: edit latency p50
+  1.96 -> 1.92 s, flight p50 813 -> 812 ms. More queued work cannot help when workers are waiting for buffers.
+- `render.chunkTimeFloor` (at least 1/32 of the previous frame for uploads and queueing) cut edit latency p50 from
+  1.96 to 0.29 s; flight frame p50 went from 38 to 59 ms, mostly from drawing more terrain. It was therefore the only
+  arm scored.
 
-| Arm | Edit update latency p50 | Edit frame p50 | Flight update latency p50 | Flight frame p50 |
-|---|---:|---:|---:|---:|
-| Vanilla scheduling | 1963 ms | 73.51 ms | 812.94 ms | 38.42 ms |
-| Feed workers | 1924 ms | 72.59 ms | 812.38 ms | 38.84 ms |
-| Chunk time floor | 293 ms | 76.20 ms | 581.89 ms | 58.69 ms |
+## Aborted attempt (recorded, not scored)
 
-The vanilla deadline had expired in 83% / 72% of edit / flight frames. About
-17 / 10 per-layer uploads waited, and 0.23 / 0.59 of the five shared buffers
-were free. Workers were waiting for buffers rather than simply lacking queued
-work. Feeding them showed no material benefit there. A chunk time floor drained
-uploads sooner, improving edit responsiveness, but flight drew more terrain and
-slowed substantially. CPU rasterization competes with the client and workers,
-so that flight cost is a software-rendering confound, not a hardware-GPU prediction.
-The complete rerun did not reproduce the exploratory effect size.
+`raw/20261023-070409-cs-edit-1a`, `20261023-070538-cs-edit-2b` and `20261023-070710-cs-edit-3b` are the first three launches of an attempt that was interrupted with the
+earlier container. They are kept as evidence and not scored: the series was rerun from launch 1 in this container,
+with a regenerated base world. Their edit-phase values (A p50 1.95 s, B 0.31-0.32 s) agree in direction with the
+series; the A arm's absolute latency is higher than here (0.48-0.80 s), which matches the other runs from that
+container and is not explained further (different base world and container).
 
-## Evidence and limits
+## Limitations
 
-- Archive-local `.gitattributes` preserves evidence bytes across Git checkouts.
-- [series/](series/) retains every new summary, phase JSON, gzipped per-frame CSV,
-  command/attempt record and log, plus the discarded generation summary/log.
-- [rerun-freeze.json](rerun-freeze.json) records pre-launch source/protocol/evaluator
-  hashes; [sources-frozen.zip](sources-frozen.zip) contains those exact bytes.
-  `sources-5030c5f.zip` also retains the canonical Git snapshot.
-  [base-world-hashes.json](base-world-hashes.json) identifies the generated control.
-- `run-series.py` executes the frozen order serially and checks hashes between
-  clients and at completion. [setup.log](setup.log) records the online setup and
-  Linux test run. All 162 tests passed on both local Java 25.0.4.1 and container
-  Java 25.0.5; unit/build evidence is separate from these real-client measurements.
-- llvmpipe timings are indicative only. This is a different CPU, driver and kernel
-  from the exploratory host, and Docker/host scheduling adds noise. The container
-  has no audio device; startup OpenAL fallback, legacy Twitch/Realms and log4j
-  appender warnings remain in the logs. No selected launch logged an injection
-  failure, GL error or benchmark abort.
-- The latency start has frame resolution. Same-setup synchronous near-camera
-  rebuilds are unstamped; edits arriving during a build can start later; moved
-  slots discard their pending stamp. Percentiles describe published updates,
-  rather than all outstanding edits. The never-built gauge does not count stale
-  already-built geometry. Exact block/light-change-to-visible-pixel latency,
-  cancellation/order stress, backend/reload transitions and other mods remain gaps.
+- Software rendering only: llvmpipe makes drawing a CPU cost shared with the chunk workers, which inflates the frame
+  cost of showing more terrain. The reference machine (GPU rendering, 20 threads) may differ in either direction.
+- Four pairs per scene; launch-to-launch variation in still phases was up to 10% in frame mean, so effects of a few
+  percent are not resolvable here. The failing G3 and G5 changes (+10 to +26% in every pair) are well outside that.
+- One edit pattern (16 chunks per second from a fixed view) and one flight (`chunkFlight=near`) at view distance 8.
+- Latency starts at frame resolution and is a lower bound for updates that arrive while their chunk rebuilds
+  (see `ChunkUpdateLatency`).
 
-## Deferred reference-hardware follow-up
+## Reference-hardware follow-up (not run)
 
-Run the protocol's same scenes and gates at **1920x1080, render distance 12 on
-Windows / RTX 3060 Ti**, adding session 27's near/high flights and the default
-static/pan/fly path as no-regression controls. Include **feedChunkWorkers as a
-third arm**: session 13 found 2.4-2.9 of five buffers available there, with the
-deadline expired in only 14-22% of frames. Freeze the extended schedule before
-measuring; this local software series does not stand in for it. Keep both options
-off by default. An automatic thread-count policy is also deferred: this four-CPU
-software renderer cannot select a policy for reference hardware.
+As in protocol.md: the same scenes and gates at 1920x1080 and render distance 12 on the Windows/RTX 3060 Ti machine,
+adding the session 27 near/high flights and the default static/pan/fly path as no-regression controls, and
+`render.feedChunkWorkers` as a third arm, because session 13 found 2.4-2.9 of 5 buffer sets free there and the deadline
+expired in only 14-22% of frames, so idle workers rather than uploads may be the limit on that machine. Freeze the
+protocol and gates before measuring; both options stay off by default until a reference series passes.
+
+## Independent local Docker rerun
+
+While the cloud completion was being published as `c702e87`, a separate local
+Docker rerun completed all 16 launches from the same `5030c5f` sources. Keep the
+cloud series above and the local series independent; their CPU, kernel, Mesa and
+base-world environments differ. Neither is reference-hardware evidence.
+
+The local unchanged evaluator output is [results.json](results.json), with full
+phase data and logs in [series/](series/). G1, G2 and G6 failed there: edit p90
+-10.72% (needed -25%), flight p90 -0.17% (lower in 2/4 pairs), and edit still mean
++6.81%. G3-G5 and G7 passed. No local attempt aborted, dropped frames or overflowed
+latency storage. Both series fail their own unchanged frozen rule, for different
+reasons, and neither changes a default. The [local report](local-docker-rerun.md)
+retains its environment, pre-launch freeze, source snapshot, exploratory context,
+CPU/tail limits and reference-hardware follow-up. Do not pool the two series.

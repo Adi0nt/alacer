@@ -1,6 +1,6 @@
 """Check archived live readouts; screenshot appearance is reviewed separately.
 
-Usage: python3 -I docs/validation/2026-10-23-camera-settings/verify-readouts.py
+Usage: python3 -I docs/validation/2026-10-23-camera-settings/local-docker-rerun/verify-readouts.py
 """
 from pathlib import Path
 import json

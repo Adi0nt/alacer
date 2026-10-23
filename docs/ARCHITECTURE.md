@@ -21,16 +21,17 @@ net.adiont.alacer
 ├── benchmark/
 │   ├── BenchmarkRunner     Scripted camera paths in a fresh copy of a fixed-seed world; optional
 │   │                       mob/chest population or particle scenario; optional in-process A/B segments
+│   ├── ChunkEditScenario   Block-edit bursts for benchmark.chunkEdit (16 render chunks per second)
 │   └── ParticleProbes      Verification-only particles for the removal diagnostic (session 16)
 ├── render/
 │   ├── ChunkVisibility     Allocation-free chunk visibility search (optimization 1)
 │   ├── ChunkFrustum        Exact one-corner-per-plane chunk predicate (session 12)
 │   ├── SectionFaces        Allocation-free camera-section flood fill with pocket reuse (session 28b, unmeasured, off)
 │   ├── ChunkPipelineTimings Opt-in build, queue, scheduling and upload attribution (session 13)
-│   ├── ChunkUpdateLatency Dirty-and-visible to published rebuild latency and visible never-built chunks (startup diagnostic)
-│   ├── ChunkTimeFloor      Pure bounded minimum upload/queueing time slice (experiment, off by default)
-│   ├── FeedTarget          Pure worker-feed target from observed queue starts (experiment, off by default)
-│   ├── ChunkSchedulingExperiments Client-thread worker-feed and minimum-deadline hooks
+│   ├── ChunkUpdateLatency  Opt-in dirty-and-visible to published latency per chunk, never-built chunks in view (2026-10-23)
+│   ├── ChunkSchedulingExperiments  Off-by-default render.feedChunkWorkers and render.chunkTimeFloor hooks (2026-10-23)
+│   ├── FeedTarget          Queue depth rule for render.feedChunkWorkers (pure, unit tested)
+│   ├── ChunkTimeFloor      Minimum chunk-work budget rule for render.chunkTimeFloor (pure, unit tested)
 │   ├── EntityRendering     renderEntities phase timing and world-chunk lookup cache (optimization 2)
 │   ├── EntityDrawDetails   Optional per-class draw-stage times and call counts
 │   ├── EntityChunkSlot     Per-render-chunk cache fields (added to RenderChunk by a mixin)
@@ -63,7 +64,8 @@ net.adiont.alacer
 │   └── AtlasPadding        Edge borders around atlas sprites while anisotropic filtering is on (unit tested)
 ├── settings/               Video settings catalog, staged draft, presets, backend and menu screen
 └── mixin/                  One-line hooks, wrappers and accessors only
-    └── CameraControlsMixin Bobbing, distortion, third-person distance/collision, FOV transitions and held zoom
+    └── CameraControlsMixin Camera settings hooks (bobbing, distortion, third-person distance/collision,
+                            FOV transition, zoom) forwarding to CameraEffects; vanilla values at defaults
 ```
 
 Rules the code follows:
@@ -1116,6 +1118,37 @@ than 2% / 5% in the pooled medians; static and pan unchanged within noise; `terr
 not higher; 0 mismatches in a separate verify launch. A hooks-absent control is not needed (no hooks
 are added), but A must run the same build with the option false.
 
+## 2026-10-23: chunk-update latency, scheduling experiments and camera settings
+
+**Measurement.** `profiler.chunkLatency` (startup-only; its three mixins are absent unless set) stamps a render chunk
+at the end of the first terrain setup that finds it dirty and visible and records the wait until a completed rebuild
+is published, on whichever thread publishes it (`render/ChunkUpdateLatency`, `profiler/LatencyLog`). It also counts
+never-built chunks in view. Summaries report `update_latency_p50/p90/p99/max_ms`. `benchmark.chunkEdit=true` adds a
+block-edit scene (`benchmark/ChunkEditScenario`: warmup pan, 10 s still, 30 s of 16-chunk edit bursts every second)
+beside session 27's fresh `benchmark.chunkFlight=near|high`.
+
+**Experiments, both off by default and kept off by `render.defaults`.** `render.feedChunkWorkers` keeps queueing dirty
+chunks after vanilla's `compileChunksUntil` stops at the frame deadline, with vanilla's own calls and order, up to
+`FeedTarget`'s depth. `render.chunkTimeFloor` gives uploads and rebuild queueing at least 1/32 of the previous frame
+when vanilla's deadline leaves less (`ChunkTimeFloor`). Both live in `ChunkSchedulingExperiments` and are runtime
+toggles.
+
+**Result (software rendering, indicative only).** In a 4-thread llvmpipe container, uploads were the limit, not idle
+workers: the deadline had already passed in 72-83% of frames and 0.2-0.6 of 5 buffer sets were free, so
+`render.feedChunkWorkers` changed nothing. The frozen 16-launch series of `render.chunkTimeFloor` passed its latency
+gates (edit p90 -76%, flight p90 -17%) and failed G3 (visible never-built chunks +12%) and G5 (flight frame mean +20%,
+p99 +22%), partly because llvmpipe draws the extra terrain on the workers' CPU threads. Both options stay off; see
+the [archive](benchmarks/2026-10-23-chunk-scheduling/README.md). Next: the same series on the reference machine with
+`render.feedChunkWorkers` as a third arm (protocol.md).
+
+**Camera settings.** Six Display settings (`quality.viewBobbing`, `quality.distortion`, `quality.thirdPersonDistance`,
+`quality.cameraCollision`, `quality.fovTransition`, `quality.zoom`) and a `key.alacer.zoom` key that is unbound by
+default. `mixin/CameraControlsMixin` changes one argument, field read, ray trace or constant each and forwards to the
+pure rules in `render/CameraEffects`, which return vanilla's float untouched at every default. Unit tests check the
+defaults bit-for-bit; a live-client harness (not shipped) checked each setting, persistence and the menu
+([VIDEO_SETTINGS.md](VIDEO_SETTINGS.md#validation-2026-10-23-camera-settings)). No camera performance change was
+pursued: profiling found no camera cost left to remove.
+
 ## Roadmap (recommended order)
 
 Done in session 11: nearby-mob shadow queries (optimization 6). With it on, shadows still cost
@@ -1295,9 +1328,9 @@ launches, so four pairs per scene cannot resolve 1-2% effects on this machine. *
 "no demonstrated benefit" closure, since conditions other than the benefit gate failed); off by default and outside
 `render.defaults`.** See the [session 30 archive](benchmarks/2026-10-22-section-faces-reference/README.md).
 
-### 2026-10-23: chunk responsiveness and camera settings
+### 2026-10-23: independent local rerun and camera follow-up
 
-Added startup-only `profiler.chunkLatency`: dirty-and-visible to published rebuild
+This local follow-up validated the existing startup-only `profiler.chunkLatency`: dirty-and-visible to published rebuild
 latency, phase percentiles and overflow, plus a visible never-built-chunk gauge.
 The stamp is frame-resolution and excludes synchronous same-setup builds; moved
 slots drop their pending sample, and percentiles cover published updates. This
@@ -1318,7 +1351,7 @@ free. Feeding workers had no material effect; a time floor reduced edit latency
 p50 from 1.96 s to 0.29 s but raised flight frame p50 from 38 ms to 59 ms while
 drawing more terrain on the CPU renderer. These were not scored comparisons.
 
-The complete frozen 16-launch rerun used local Docker/llvmpipe (four-CPU quota,
+Separately from the cloud series above, the complete frozen 16-launch rerun used local Docker/llvmpipe (four-CPU quota,
 Java 25.0.5+8, 854x480, view distance 8, display lists). The original three partial
 cloud launches remain an aborted attempt. All new launches completed, with zero
 dropped frames or latency overflow and unchanged runtime sources throughout.
@@ -1326,7 +1359,7 @@ G1, G2 and G6 failed: paired edit p90 -10.72% (needed -25%), flight p90 -0.17%
 (lower in only 2/4 pairs), edit still-frame mean +6.81% (limit +/-5%). G3-G5 and
 G7 passed. No gate was changed or waived. This different CPU/driver environment
 is indicative only and is not pooled with the exploratory cloud host. See the
-[complete protocol, archive and limitations](benchmarks/2026-10-23-chunk-scheduling/README.md).
+[complete protocol, archive and limitations](benchmarks/2026-10-23-chunk-scheduling/local-docker-rerun.md).
 The Windows/RTX 3060 Ti follow-up remains deferred: 1920x1080, distance 12,
 near/high and static/pan/fly controls, with worker feeding as a third arm.
 Automatic thread-count selection is also deferred; four shared software-rendering
@@ -1340,7 +1373,7 @@ pure rules are unit tested (162 tests passed on local and container Java 25).
 The temporary live harness exercises settings through `VideoSettingsBackend.apply`,
 records camera/FOV readouts and screenshots, then relaunches to check persistence
 and restore defaults. Its source and attempts are archived, and it is removed
-from shipping sources before the final build/smoke. See the [camera validation](validation/2026-10-23-camera-settings/README.md).
+from shipping sources before the final build/smoke. See the [camera validation](validation/2026-10-23-camera-settings/local-docker-rerun/README.md).
 These are user-facing camera choices; no camera performance change was pursued
 because profiling found no qualifying cost. The separate session 30 camera-section
 experiment remains closed. Unit/build, software-client correctness and
@@ -1400,6 +1433,13 @@ frame rate made the allocation target unresolvable; session 29 then closed it on
    as a whole (spread over renderers, models, layers and shadows). Also checked on 2026-10-21: the 35,241 exception
    events in a 130 s recording are almost all `InterruptedException`s on paulscode's sound `CommandThread` (34,394),
    off the client thread, so they are not a frame-time target.
+
+4. **Chunk scheduling on the reference hardware.** `render.chunkTimeFloor` failed its frozen llvmpipe series on
+   2026-10-23 (flight frame cost and visible holes; latency gates passed) and `render.feedChunkWorkers` did nothing
+   there because uploads, not idle workers, were the limit. Run the
+   [protocol's](benchmarks/2026-10-23-chunk-scheduling/protocol.md) reference-hardware follow-up with both options as
+   arms (1920x1080, render distance 12, session 27 flights and the default path as controls), with gates frozen first.
+   Both stay off by default until then.
 
 When ranking with JFR again, keep session 26's CSV corroboration test: in this client, 14-16% of Java samples can land
 on a cheap line right after native GL calls (and move between such lines across launches), so a region's share needs an

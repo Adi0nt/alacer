@@ -124,7 +124,9 @@ defaults during benchmark launches. Existing optimization defaults stay unchange
 
 The menu also offers entity and block-entity draw distances, biome blend, a
 particle limit, anisotropic filtering, distance fog, sun and moon, per-group
-texture animations, FOV effects and damage tilt, six [camera controls](docs/VIDEO_SETTINGS.md#camera-settings), and an **Advanced** page with
+texture animations, FOV effects and damage tilt, camera settings (bobbing strength, distortion effects,
+third-person distance and collision, FOV transitions, and a zoom factor for a Zoom key that is unbound by
+default), and an **Advanced** page with
 the chunk update budget, chunk builder threads (experimental, restart) and the
 performance overlay. **Presets...** stages Performance, Vanilla or Enhanced
 appearance choices; Apply is still required. Every new default is vanilla's
@@ -156,13 +158,11 @@ Normal launches continue to use saved settings, so an existing explicit `false` 
 | `profiler.shadowTiming` | `false` | Time all of entity shadow rendering as one section (`shadows`) and count shadows drawn: two `nanoTime` calls per shadow. Its hook is only installed when this is on at startup. |
 | `profiler.frustumTiming` | `false` | Replay each search's tested boxes through the vanilla and candidate frustum predicates, alternating order and timing each batch. Adds work; for attribution only, excluded from warmed A/B selection. |
 | `profiler.chunkDetail` | `false` | Chunk pipeline and backend submission attribution, including per-layer submitted chunks, worker completion totals and sampled dirty-set ages. Hooks are installed only at startup; intrusive, excluded from selection. Worker/latency/age columns are not client render work. See sessions 13–14. |
-| `profiler.chunkLatency` | `false` | Startup-only measurement of dirty-and-visible to published chunk rebuild latency, plus visible never-built chunks. Exports `update_latency_p50/p90/p99/max_ms`, sample count and overflow. Frame-resolution eligibility is a lower bound, not exact block-edit-to-pixel latency; see the [scheduling archive](docs/benchmarks/2026-10-23-chunk-scheduling/README.md). |
+| `profiler.chunkLatency` | `false` | Visible chunk-update latency: from the end of the first terrain setup that finds a chunk dirty and visible until a completed rebuild is published (on whichever thread publishes it), plus a count of never-built chunks in view. Benchmark summaries add `update_latency_p50/p90/p99/max_ms`. Measurement only; its hooks are installed only when this is on at startup. See the [2026-10-23 chunk scheduling archive](docs/benchmarks/2026-10-23-chunk-scheduling/README.md). |
 | `profiler.particleDetail` | `false` | Time each particle's update, its movement, the removal of dead particles and the light query each particle makes while drawn, and count removed particles: two `nanoTime` calls per particle and operation. Intrusive, for attribution only; its hooks are only installed when this is on at startup. See session 15. |
 | `profiler.particleLightRepeats` | `false` | Count, per unlit particle render pass, the particle light queries, their distinct (x, y, z, blockLight) arguments and positions, and those equal to the previous query (`particle_light_*` counters, final log line). Read once at first use and folded away when off; two hash-set inserts per query when on, so attribution only. Startup only. |
 | `profiler.hud` | `false` | Show the overlay at startup. |
 | `benchmark.chunkEdit` | `false` | JVM-only benchmark scenario selector (not read from the config file): use with `benchmark=true`, an explicit `benchmark.vbo=false` or `true`, and `profiler.chunkLatency=true` for the 16-cell edit-burst responsiveness scenario described below. |
-| `render.feedChunkWorkers` | `false` | Experimental: continue queueing visible dirty chunks in vanilla order after the deadline, until workers have about one frame of work. Uploads retain the deadline. No measurable benefit in the exploratory llvmpipe runs; outside `render.defaults`. |
-| `render.chunkTimeFloor` | `false` | Experimental: reserve at least 1/32 of the previous frame (capped at about 4.2 ms) for uploads and rebuild queueing when the deadline has expired. Responsiveness/frame-cost trade-off; outside `render.defaults`. See the [frozen series](docs/benchmarks/2026-10-23-chunk-scheduling/README.md). |
 | `quality.viewBobbing` | `100` | Bobbing strength, 0-100% in steps of 5, while vanilla View bobbing is on. Immediate; 100 returns vanilla's values untouched. |
 | `quality.distortion` | `100` | Nausea/portal view stretch, 0-100% in steps of 5. Immediate; 0 removes the stretch, 100 preserves vanilla. |
 | `quality.thirdPersonDistance` | `4` | Third-person camera distance, 1-16 blocks. Immediate; 4 preserves vanilla. |
@@ -199,6 +199,8 @@ Normal launches continue to use saved settings, so an existing explicit `false` 
 | `render.reuseParticleLight.verify` | `false` | Debug: also run vanilla's light query for every reused or computed answer, use its result and log any difference. Enable the option as well. |
 | `render.fastParticleMovement` | `false` | Experimental: fetch block states for particle movement and collision gathering through the existing chunk-reference cache. Collision loops, shapes, callbacks and movement calculations remain vanilla. Startup hooks are absent unless this option, its verification, or its benchmark toggle is requested. See the session 17 archive. |
 | `render.fastParticleMovement.verify` | `false` | Debug: compare each cached movement block-state read with vanilla, returning vanilla's state. Enable the movement option as well. |
+| `render.feedChunkWorkers` | `false` | Experimental: after vanilla's per-frame chunk deadline stops queueing rebuilds, keep queueing visible dirty chunks (same order and calls) until the builder threads have about one frame of work; uploads keep vanilla's deadline. No measurable effect in a software-rendering container, where uploads rather than idle workers were the limit (2026-10-23); unmeasured on the reference hardware. Runtime-toggleable; not in `render.defaults`. |
+| `render.chunkTimeFloor` | `false` | Experimental: when vanilla's chunk deadline leaves less than 1/32 of the previous frame (at most 4.2 ms), allow that much for uploading built chunks and queueing rebuilds. On llvmpipe it cut edit-update latency p90 by 76% but failed its frozen gates on flight frame cost (+20% mean) and visible holes (+12%) (2026-10-23); unmeasured on the reference hardware. Runtime-toggleable; not in `render.defaults`. |
 | `render.batchModelLists` | `false` | Experimental: combine face draws inside eligible vanilla model-part display lists. |
 | `render.batchModelLists.verify` | `false` | Debug: compare native feedback from vanilla and alternate lists at compilation; reject differing lists. |
 
@@ -280,6 +282,14 @@ uses `-Palacer.render.fastChunkFrustum.verify=true`; to compare the complete can
 instead use `-Palacer.render.fastChunkFrustum=true -Palacer.render.fastChunkVisibility.verify=true`
 with frustum verification off. See [session 12 evidence](docs/benchmarks/2026-10-19-chunk-frustum/README.md).
 
+For the **chunk-edit scenario**, add `-Palacer.benchmark.chunkEdit=true` (best with
+`-Palacer.profiler.chunkLatency=true`). From the `benchmark.chunkFlight=near` pose (24 blocks above the
+anchor, facing east) it records an unscored `warmup-pan` (10 s), `still` (10 s) and `edit` (30 s), in which one
+block in each of 16 render chunks ahead of the camera is placed or removed every second (28 bursts), on a schedule
+that follows phase time so a slower scheduler builds a backlog. Each launch plays a fresh, byte-identical world
+copy; compare separate launches in alternating order. See the
+[2026-10-23 chunk scheduling archive](docs/benchmarks/2026-10-23-chunk-scheduling/README.md).
+
 For the dedicated **particle scenario**, add `-Palacer.benchmark.particles=true`. Instead of the
 usual paths it records `static` (10 s) and `pan` (15 s) at the anchor, without added mobs, while 16
 stationary emitters around the camera emit a fixed, seeded schedule every client tick: one stone
@@ -323,14 +333,6 @@ can leave the initial spawn outside the loaded area). This generates chunks and 
 performance comparison. Screenshots
 can be saved with `-Palacer.benchmark.screenshots=true` (also useful with verification off to
 inspect the cached drawing).
-
-For the **chunk-edit responsiveness scenario**, use
-`-Palacer.benchmark.chunkEdit=true -Palacer.benchmark.vbo=false` with
-`-Palacer.profiler.chunkLatency=true`. It runs a discarded 10 s pan warmup,
-a 10 s still control and a 30 s edit phase with 28 bursts of 16 block edits,
-starting from a fresh verified world copy. Do not combine it with other scenarios,
-populations or in-process toggles. The paired edit/near-flight protocol and its
-unchanged gates are in the [scheduling archive](docs/benchmarks/2026-10-23-chunk-scheduling/README.md).
 
 For the dedicated **display-list versus VBO investigation**, use
 `-Palacer.benchmark.backendScenario=true -Palacer.benchmark.vbo=false` (display lists) or

@@ -78,39 +78,6 @@ options in `config/alacer.properties`; every value is included in profile and
 benchmark exports (each phase's `config`), and benchmark launches use the
 defaults above.
 
-## Camera settings
-
-Six Display controls apply immediately and save with the other `quality.*`
-settings. Their defaults preserve vanilla's inputs; zoom is unbound until chosen
-under **Controls -> Alacer**. The existing View bobbing toggle still controls
-whether bobbing runs at all.
-
-| Setting | Values (default **bold**) | Effect |
-|---|---|---|
-| View bobbing strength | 0-100%, step 5, **100%** | Scales bobbing translation and angles while View bobbing is on. |
-| Distortion effects | 0-100%, step 5, **100%** | Scales the nausea/portal stretch towards no stretch at 0%. |
-| Third-person distance | 1-16 blocks, **4** | Changes the camera offset in rear and front third-person views. |
-| Camera collision | Off, **On** | On keeps the camera in front of blocks; Off allows it behind them. |
-| FOV transitions | Instant, **Vanilla**, Smooth, Very smooth | Changes the approach rate to the current FOV-effects target: 1, 0.5, 0.25 or 0.125 per tick. FOV effects strength remains independent. |
-| Zoom magnification | 2x, 3x, **4x**, 6x, 8x | Divides the configured world FOV while the zoom key is held. The hand projection is unchanged; release restores the world FOV. |
-
-The pure rules, default-value parity, config and menu paths have unit coverage.
-The temporary real-client harness and its full/readback results, logs and
-screenshots are archived in the [camera validation](validation/2026-10-23-camera-settings/README.md).
-Live readouts confirmed bobbing 100/50/0% (offset component 0.05/0.025/0),
-level front-view distance changes, wall collision, FOV approach rates and zoom
-changing world FOV while keeping hand FOV at 70. All six saved values survived
-relaunch without a restart notice, then defaults were restored. Screenshots
-cover the menu, tooltip/search and effect comparisons. The harness simulates
-walking/effect/key state; physical rebinding, other mods/drivers and full
-keyboard-only operation remain separate checks. It is absent from shipping
-sources and jars.
-
-Camera settings are implemented; no camera performance change was pursued,
-because profiling found no qualifying camera cost. Camera matrices already use
-optimization 4; the separate camera-section open-faces experiment failed its
-session 30 gates.
-
 ## Expanded settings (2026-10-23)
 
 Seventeen settings, staged presets and an Advanced page were added. Each one
@@ -237,8 +204,8 @@ ignore min and mag filters. We always use linear.") and is not changed.
 | Translucent geometry sorting options | Turning resorting off makes water and stained glass draw incorrectly while moving; no safe user-facing benefit was found. |
 | GPU memory / resource management | 1.8.9 has no user-visible GPU budget to expose; the VBO backend is already a setting. |
 | Frame-time-adaptive budgets | The fixed-ratio chunk update budget is offered; an adaptive controller would be a scheduling change that session 13's evidence did not select. |
-| Chunk handling improvements | `profiler.chunkLatency` and the 16-chunk edit-burst scenario now measure responsiveness. Exploratory llvmpipe runs found uploads/buffer starvation, rather than idle workers, limiting updates: the deadline expired in 72-83% of frames and only 0.2-0.6 of five buffers were free. Feeding workers had no measurable effect; a minimum chunk time slice improved edit latency but increased flight frame cost as more terrain was drawn. Both experiments remain off by default and outside `render.defaults`; see the [frozen series and gates](benchmarks/2026-10-23-chunk-scheduling/README.md). Reference-hardware validation, ordering/cancellation stress and exact change-to-pixel latency remain open. |
-| Auto chunk builder thread count | A four-thread llvmpipe container shares CPU time between rasterization, chunk builders and the client, so it cannot select a useful automatic policy. Keep the explicit startup-only 1-6 choice (vanilla 2); revisit on reference hardware with responsiveness and frame-tail gates. |
+| Chunk handling improvements (deferred at the user's direction) | Session 13's attribution on the reference machine points at scheduling: dirty chunks averaged 66-93 entries per frame against 4.6-4.8 queued builds, accepted rebuilds waited 41-61 ms before being queued, and the deadline had already expired on entry in 14-22% of frames, when vanilla queues just one rebuild. On 2026-10-23 Alacer added the missing measurement (`profiler.chunkLatency`, the `benchmark.chunkEdit` block-edit scenario) and two off-by-default experiments, `render.feedChunkWorkers` (keep idle workers fed after the deadline) and `render.chunkTimeFloor` (a minimum chunk-work budget of 1/32 of the frame). In a software-rendering (llvmpipe) container, uploads rather than idle workers were the limit (deadline already passed in 72-83% of frames, 0.2-0.6 of 5 buffer sets free), so feeding workers changed nothing; the time floor cut edit-update latency p90 by 76% and flight latency p90 by 17% but failed its frozen gates on flight frame cost (+20% mean, +22% p99) and visible holes (+12%) ([archive](benchmarks/2026-10-23-chunk-scheduling/README.md)). Both stay off and out of the menu; the next step is the same frozen series on the reference machine with `render.feedChunkWorkers` as a third arm. Meanwhile Chunk update budget and Chunk builder threads offer user-chosen trade-offs. |
+| "Auto" chunk builder thread count | Choosing a thread count from the processor needs frame-time and update-latency evidence across thread counts on real GPUs; this 4-thread container with software rendering, where drawing competes with the workers for the same threads, cannot judge it. Chunk builder threads stays a manual, experimental, restart-only setting with vanilla's 2 as the default. |
 
 ### Independent implementation and licensing
 
@@ -252,6 +219,94 @@ existing screen. Anisotropic filtering uses the public
 `EXT_texture_filter_anisotropic` OpenGL extension through LWJGL 2, which
 Minecraft already ships; no dependency was added and `THIRD_PARTY.md` is
 unchanged. This is a record of how the code was written, not a legal opinion.
+
+## Camera settings (2026-10-23)
+
+Six Display settings change one number vanilla's camera code already uses and
+pass vanilla's value through untouched (bit-for-bit) at their defaults. They
+are saved as `quality.*` integers, appear in profile and benchmark exports,
+use their defaults in benchmark launches, and no preset changes them.
+
+| Setting | Values (default **bold**) | Applies | Effect |
+|---|---|---|---|
+| Bobbing strength | 0-100% in steps of 5, **100%** | Immediately | Scales the walking sway's offset and three tilt angles (also the held item's sway). Only matters while vanilla's View bobbing (Details) is on; 0% matches View bobbing Off. |
+| Distortion effects | 0-100% in steps of 5, **100%** | Immediately | Moves the nausea and Nether-portal stretch towards none; the portal's purple overlay is unchanged. |
+| Third-person distance | 1-16 blocks, **4** | Immediately | Camera distance in both third-person views (F5). |
+| Third-person collision | Off, **On** | Immediately | On stops the camera in front of blocks, as vanilla does; Off lets it pass into walls (the tooltip notes that some servers forbid that). |
+| FOV transitions | Instant, **Vanilla**, Smooth, Very smooth | Immediately | How far the field of view moves towards its target each tick (1, vanilla's 0.5, 0.25, 0.125). |
+| Zoom | 2x, 3x, **4x**, 6x, 8x | Immediately | Magnification while the new Zoom key (Controls, Alacer category) is held. The key is **unbound by default**, so the camera is vanilla's until a key is assigned. Only the world projection narrows; the hand and mouse sensitivity are unchanged. |
+
+No camera performance change was pursued: profiling found no camera cost to
+remove (camera matrices are already tracked on the CPU by optimization 4, and
+the camera-section open-faces experiment failed its gates in session 30).
+
+### Validation, 2026-10-23: camera settings
+
+Evidence is in [validation/2026-10-23-camera-settings](validation/2026-10-23-camera-settings/),
+from the same kind of Linux container as below (Temurin 25.0.5+8, Xvfb, Mesa
+llvmpipe, 4 CPU threads, no GPU, window 854x480). No timing was measured.
+
+**Build and unit tests.** `clean build --offline`: 162 tests, no failures,
+errors or skips; the shipped jar contains no harness class. Tests cover each
+value rule at and away from its default (vanilla floats bit-for-bit at
+defaults), config/menu agreement, clamping and step rounding, persistence,
+benchmark defaults and presets leaving the camera settings alone.
+
+**Real client.** A temporary harness ([CameraCheck.java](validation/2026-10-23-camera-settings/CameraCheck.java),
+not shipped) changed settings through `VideoSettingsBackend.apply`, the menu's
+Apply path, in a fresh superflat creative world, and read `Camera.offset()`
+(the eye-to-camera vector vanilla derives from the view matrix, median of 10-20
+frames) and the field of view. Launches: `mode=full`, then `mode=readback` in
+a new JVM; both ran to `DONE` ([full](validation/2026-10-23-camera-settings/results-full.txt),
+[readback](validation/2026-10-23-camera-settings/results-readback.txt)). A final
+launch of the shipping build (harness removed) reached the title screen with no
+mixin or injection errors.
+
+| Setting | Observed |
+|---|---|
+| Defaults | All six at their defaults on first launch; the Zoom key saved as unbound (`key_key.alacer.zoom:0`). |
+| Bobbing strength | With a fixed walking phase held, the bob's sideways offset was 0.050 at 100%, 0.025 at 50% and 0 at 0%; 0% gave exactly the offset of vanilla View bobbing Off, and 100% returned the original value. |
+| Distortion effects | Nausea plus a held portal time: 100% and 50% visibly stretch the view; 0% differs from an undistorted frame in 0.04% of pixels (26% at 100%). |
+| Third-person distance | Behind the player at 20 degrees pitch, the camera's distance from the eye was 0.95, 3.95, 7.95 and 15.95 blocks at 1, 4, 8 and 16 (vanilla's 4 restored exactly), along the same direction. |
+| Third-person collision | Wall 3 blocks behind: On stopped the camera 2.45 blocks back, in front of the wall; Off placed it at the full 3.95 blocks, inside the stone (screenshot all stone); On again restored 2.45. |
+| FOV transitions | Per-tick FOV modifier after starting to fly: Vanilla 1.050, 1.075, 1.0875 ... (halving the gap each tick; identical before and after the other choices), Instant 1.10 from the first tick, Smooth and Very smooth slower (1.094 and 1.071 after 10 ticks). |
+| Zoom | Key unbound: world FOV 70. Key bound for the run and held: 17.5 at 4x, 35 at 2x, 8.75 at 8x, hand FOV 70 throughout; released: 70. The harness unbound the key again. |
+| Persistence | A non-default combination (35%, 20%, 9 blocks, collision Off, Very smooth, 8x) was read back by the new JVM with no restart notice and shown in the menu, then restored to defaults through Apply. |
+| Menu | The Display page lists the six controls with tooltips; search "zoom" finds Zoom. |
+
+![Display page with the camera settings](validation/2026-10-23-camera-settings/menu-display-camera.png)
+![Third-person collision On and Off](validation/2026-10-23-camera-settings/collision-on.png)
+![Zoom key held at 4x](validation/2026-10-23-camera-settings/zoom-4x.png)
+
+Harness limitations: the front-view (second F5 view) reading at 8 blocks was
+4.0 blocks, because the player had landed on the floor before that step and
+the camera, which looks down at 20 degrees in front of the player, was stopped
+by the ground; this is collision working, but it means front-view distance
+was not checked in open air. `third-person-8.png` shows one unbuilt or culled
+terrain section at the right edge, taken about 4 s after a teleport; it was not
+investigated further. Not checked: hardware GPUs and Windows, a real
+Nether portal and potion (the portal time and nausea were set directly), mouse
+and keyboard input for zoom (the key state was set directly), multiplayer
+servers, other mods.
+
+## Local camera and scheduling follow-up, 2026-10-23
+
+An independent local Docker/llvmpipe run preserved the cloud evidence above.
+Its refined temporary camera harness leveled the front view after landing:
+8 and 4 blocks produced x offsets +7.95 and +3.95, closing the earlier
+front-distance validation gap in this local scene. Both full/readback attempts,
+35 screenshots, numeric verification and a complete harness-free static/pan/fly
+smoke are archived in the [local camera report](validation/2026-10-23-camera-settings/local-docker-rerun/README.md).
+All 162 tests and a clean Java 25 build passed; shipping sources match the
+pre-launch freeze, and binary/source jars contain no temporary harness.
+Physical key input, other mods and hardware-driver validation remain open.
+
+The independent 16-launch local scheduling series failed G1, G2 and G6, while
+the cloud series failed G3 and G5. The two environments and their results are
+kept separate; see the [local results and limitations](benchmarks/2026-10-23-chunk-scheduling/local-docker-rerun.md).
+Both experiments remain off by default and outside `render.defaults`. The
+reference-hardware series with worker feeding as a third arm, and an automatic
+thread-count policy, remain deferred.
 
 ## Validation, 2026-10-23: expanded settings
 
