@@ -97,7 +97,7 @@ and benchmark exports.
 | Graphics | Block entity distance | 25-500% in steps of 25, **100%** | Immediately | Scales the squared limit each block entity reports (64 blocks; beacon beams 256). Chests, signs, banners, heads, enchanting-table books, pistons in motion. |
 | Graphics | Biome blend | Off (1x1), **3x3**, 5x5, 7x7 | Rebuilds terrain | Widens or narrows vanilla's grass, foliage and water color averaging square and its divisor together. Off gives hard borders and the cheapest chunk builds; 5x5/7x7 sample 25/49 columns per tinted face, so chunk building is slower. |
 | Graphics | Particle limit | 250, 500, 1000, 2000, **4000** | Immediately | Replaces vanilla's per-list cap in `ParticleManager.add` (eight lists). When a list is full its oldest particle is removed, as in vanilla. A list above a newly lowered cap is cut back to it at its next addition. |
-| Graphics | Anisotropic filtering (experimental) | **Off**, 2x, 4x, 8x, 16x | Immediately; reapplied after resource reloads | Sets `GL_TEXTURE_MAX_ANISOTROPY_EXT` on the block/item atlas. Off makes no call at atlas creation (driver default 1). Limited to the driver's maximum (the tooltip says so); disabled with an explanation where the extension is missing. Most visible with mipmaps on; costs GPU texture bandwidth. Marked experimental because under Mesa llvmpipe it also blurred nearby (magnified) textures and showed lines at block edges from neighboring atlas sprites (see validation); not yet checked on a hardware GPU, and not part of any preset. |
+| Graphics | Anisotropic filtering | **Off**, 2x, 4x, 8x, 16x | Turning it on or off reloads textures; a level change is immediate; kept across resource reloads | Sets `GL_TEXTURE_MAX_ANISOTROPY_EXT` on the block/item atlas, whose sprites get edge borders while it is on (see [Anisotropic filtering and atlas borders](#anisotropic-filtering-and-atlas-borders)). Off makes no call and adds no borders, so the atlas is vanilla's. Limited to the driver's maximum (the tooltip says so); disabled with an explanation where the extension is missing. Most visible with mipmaps on; costs GPU texture bandwidth and a larger atlas. Not part of any preset. |
 | Details | Distance fog | 10-95% in steps of 5, **75%**, or Off | Immediately | Overworld air fog start as a fraction of the render distance. Off moves the fog band past the far plane, revealing the edge of loaded terrain. The sky pass, blindness, water, lava and the Nether's thick fog are separate branches and are unchanged. |
 | Details | Sun and moon | Off, **On** | Immediately | Off draws the sun and moon quads with zero alpha under the sky's additive blend, which adds nothing to the image. Sky color, sunrise, stars (their own brightness factor) and clouds are unchanged. |
 | Details | Water / Lava / Fire / Portal animation | Off, **On** | Immediately | Off skips that group's atlas sprite tick, so its current frame stays and its sub-image uploads stop. |
@@ -117,8 +117,9 @@ settings only: Graphics, Smooth lighting, Clouds, Particles, Leaves, Weather,
 Rain splashes, Vignette, Entity distance, Block entity distance, Biome blend,
 Particle limit, Anisotropic filtering, Dropped items and Entity shadows. They
 never change render distance, brightness, display, camera, Performance or
-Advanced settings, and never select an experimental value (they only return
-Anisotropic filtering to Off).
+Advanced settings, and never select an experimental value. They only return
+Anisotropic filtering to Off: turning it on reloads textures and enlarges the
+block atlas, which is left to the user.
 
 | Preset | Values |
 |---|---|
@@ -156,6 +157,38 @@ Alacer's existing optimizations or profiling hooks. If another mod also
 changes the same values, the results combine; Alacer does not try to detect or
 override another mod's configuration.
 
+### Anisotropic filtering and atlas borders
+
+Minecraft packs every block and item texture into one atlas. Anisotropic
+filtering samples several points along a surface's long axis, and drivers may
+also filter within a mip level (Mesa's llvmpipe always filters linearly once
+anisotropy is on); near a sprite's edge those samples land in the neighboring
+sprite and draw lines between blocks. While filtering is on, Alacer therefore
+gives every sprite a border that repeats its own edge texels:
+
+- The border is 2^mip-levels texels wide (16 at the default 4 levels): the
+  smallest width that keeps sprites aligned at every mip level, with one border
+  texel left at the coarsest level. Texture coordinates still cover only the
+  sprite.
+- Vanilla's stitcher places the larger cells; borders are filled at every mip
+  level when the atlas is built and whenever an animated sprite, prismarine's
+  interpolated frame, a clock or a compass uploads a new frame (each sprite
+  reuses one buffer for this).
+- The default atlas grows from 512x512 to 2048x1024 (about 11 MB with
+  mipmaps instead of about 1.4 MB). If the bordered atlas would exceed the
+  driver's maximum texture size, Alacer logs a warning and stitches vanilla's
+  layout instead of failing the reload; filtering still applies, with seams.
+- Turning filtering on or off reloads textures to change the layout. Changing
+  between 2x and 16x only updates the sampling parameter. With filtering off
+  no border is added and the atlas is identical to vanilla's.
+
+Borders remove sampling across sprites in the near and middle distance; very
+long anisotropic footprints at coarse mip levels can still reach past a
+one-texel border on some drivers. llvmpipe's linear filtering of nearby
+(magnified) textures under anisotropy is that driver's permitted behavior
+(Mesa 25.2.8 `lp_bld_sample_soa.c`: "Anisotropic filtering is allowed to
+ignore min and mag filters. We always use linear.") and is not changed.
+
 ### Deferred features
 
 | Feature | Why it is not included |
@@ -171,6 +204,8 @@ override another mod's configuration.
 | Translucent geometry sorting options | Turning resorting off makes water and stained glass draw incorrectly while moving; no safe user-facing benefit was found. |
 | GPU memory / resource management | 1.8.9 has no user-visible GPU budget to expose; the VBO backend is already a setting. |
 | Frame-time-adaptive budgets | The fixed-ratio chunk update budget is offered; an adaptive controller would be a scheduling change that session 13's evidence did not select. |
+| Chunk handling improvements (deferred at the user's direction) | Session 13's attribution points at scheduling: dirty chunks averaged 66-93 entries per frame against 4.6-4.8 queued builds, accepted rebuilds waited 41-61 ms before being queued, and the deadline had already expired on entry in 14-22% of frames, when vanilla queues just one rebuild. Candidates are keeping idle workers fed regardless of the deadline, nearest-first rebuild order and smaller upload batches. Each changes scheduling, so it needs a visible-update-latency metric, a block-edit scenario and frame-tail gates on the reference machine (sessions 13 and 27 found no qualifying candidate). Meanwhile Chunk update budget and Chunk builder threads offer user-chosen trade-offs. |
+| Camera handling improvements (deferred at the user's direction) | Settings candidates: view-bobbing strength, distortion-effect (nausea and portal) strength, third-person camera distance and block clipping, smoother FOV transitions and a zoom key; each is a small hook like FOV effects and Damage tilt but needs its own vanilla-parity design and checks. Performance candidates are limited: camera matrices are already tracked on the CPU (optimization 4), and the camera-section open-faces experiment failed its gates (session 30). |
 
 ### Independent implementation and licensing
 
@@ -201,8 +236,11 @@ floats and doubles at defaults), menu/config default agreement, persistence and
 live update, relaunch read-back, restart-only chunk threads, invalid menu
 values (rejected, file unchanged), clamped and step-rounded file values,
 launch-override locking, benchmark defaults, labels, categories, search, the
-experimental markers and the presets (validity, scope, staging only editable
-settings, never selecting an experimental value).
+experimental markers, the presets (validity, scope, staging only editable
+settings, never selecting an experimental value) and the atlas-border rules
+(width, edge repetition at every mip level, buffer reuse, when a layout change
+needs a texture reload). After the anisotropic-filtering follow-up: 141 tests, no failures, errors
+or skips; 205 main classes at classfile version 69, none from the harness.
 
 **Real client.** A temporary harness ([ExpansionCheck.java](validation/2026-10-23-video-settings-expansion/ExpansionCheck.java),
 not shipped) changed settings through `VideoSettingsBackend.apply`, the menu's
@@ -221,7 +259,7 @@ reached the title screen without mixin or injection errors.
 | Sun and moon | Off removes the sun (noon) and moon (midnight) including the sun's halo; sky color, stars and clouds unchanged. |
 | Animations | With each group Off, frame and frame-tick counters of water, lava, fire, portal, sea lantern and prismarine sprites were unchanged over 80 frames; with On they advanced. With Other animations Off the clock sprite still moved (frame 0 to 31 after `/time set 18000`). |
 | Particle limit | Per-list census while spraying 400 redstone particles per frame: lists held exactly 4000, 250, 1000 and 4000. |
-| Anisotropic filtering | Driver reports the extension, maximum 16. Atlas parameter read back: 1.0 at Off, 16.0 at 16x, still 16.0 after a full resource reload, 1.0 after returning to Off. See the llvmpipe artifacts below. |
+| Anisotropic filtering | Driver reports the extension, maximum 16. Atlas parameter read back: 1.0 at Off, 16.0 at 16x, still 16.0 after a full resource reload, 1.0 after returning to Off. The first build showed seams; see the atlas-border fix below. |
 | FOV effects | Flying spectator's interpolated FOV multiplier: 1.0999999 at 100%, 1.05 at 50%, 1.0 at 0%, back to 1.0999999. |
 | Damage tilt | With the hurt timer held, 100% tilts the horizon; 0% leaves it level. |
 | Chunk update budget | Time to rebuild all terrain after `WorldRenderer.reload()` at render distance 8: 25% took 8.1-10.9 s; 400% took 0.06-0.86 s (two runs each, two launches). Mean frame time while settling was about 30 ms for both; the 25% runs had the larger worst frames (48-101 ms vs 18-51 ms), so this scene did not show the extra spikes a higher budget can cause. |
@@ -243,12 +281,38 @@ reached the title screen without mixin or injection errors.
   indexed past the preset list. The check now uses the exact id range
   ([before](validation/2026-10-23-video-settings-expansion/menu-presets-before-fix.png), [after](validation/2026-10-23-video-settings-expansion/menu-presets-fixed.png)).
 
-**Anisotropic filtering on llvmpipe.** At 16x, Mesa's software renderer also
-blurred magnified textures (Minecraft uses nearest-neighbor magnification) and
-drew dark lines at block edges, where samples reach neighboring sprites in the
-atlas. Hardware GPUs normally apply anisotropy only to minification, but that
-was not checked here, so the setting is marked experimental, defaults to Off
-and is in no preset.
+**Anisotropic filtering: seams found, then fixed with atlas borders.** The
+first build drew dark lines at block edges and sparkle at the horizon at 16x,
+where samples reached neighboring sprites in the atlas, so it shipped marked
+experimental. The follow-up adds sprite borders (described above). A
+same-scene comparison (water pool, stone and grass at a grazing angle) used the
+bordered build and a control build identical except for borders forced off
+(not committed):
+
+| Build | Atlas | Dark-seam pixels below the horizon |
+|---|---|---:|
+| Filtering Off | 512x512 | 0.157% |
+| 16x, control without borders | 512x512 | 1.794% |
+| 16x, with borders | 2048x1024 | 0.148% |
+| 4x, control without borders | 512x512 | 1.679% |
+| 4x, with borders | 2048x1024 | 0.146% |
+
+The metric counts pixels darker than 70% of their 9x9 median. Read-backs in the
+bordered build: atlas 512x512 with filtering Off, 2048x1024 after turning it
+on (texture reload), the stone sprite moved inside its 16-texel border with
+coordinates covering only the sprite; 16x to 4x changed only the parameter
+(no reload); a full resource reload kept the border and 4x; water kept
+animating with its border; turning filtering Off restored the 512x512 vanilla
+layout. A stitcher limited to 256x256 holding 40 bordered 16x16 sprites fell
+back to an unbordered 128x128 layout with the warning instead of failing.
+llvmpipe still smooths nearby textures under anisotropy, which is that driver's
+documented choice. The fix was not checked on a hardware GPU. Mean frame time
+at 16x was the same with and without borders (52.5 and 52.4 ms over two
+alternating blocks each; about 40 ms with filtering off); llvmpipe's software
+filtering dominates that cost.
+
+![Filtering Off, 16x without borders, 16x with borders](validation/2026-10-23-video-settings-expansion/anisotropic-fix-off-control-bordered.png)
+![Detail: Off, 16x without borders, 16x with borders](validation/2026-10-23-video-settings-expansion/anisotropic-fix-zoom-off-control-bordered.png)
 
 ![Biome blend Off, 3x3, 7x7](validation/2026-10-23-video-settings-expansion/biome-blend-off-3x3-7x7.png)
 ![Distance fog 75%, 30%, Off](validation/2026-10-23-video-settings-expansion/fog-75-30-off.png)
@@ -256,8 +320,8 @@ and is in no preset.
 ![Moon On and Off](validation/2026-10-23-video-settings-expansion/moon-on-vs-off.png)
 ![Block entity distance 25%, 100%, 300%](validation/2026-10-23-video-settings-expansion/block-entity-distance-25-100-300.png)
 ![Damage tilt 100% and Off](validation/2026-10-23-video-settings-expansion/damage-tilt-100-vs-off.png)
-![Anisotropic filtering Off and 16x under llvmpipe](validation/2026-10-23-video-settings-expansion/anisotropic-off-vs-16x-llvmpipe.png)
-![Anisotropic filtering detail under llvmpipe](validation/2026-10-23-video-settings-expansion/anisotropic-zoom-llvmpipe.png)
+![Anisotropic filtering Off and 16x before the border fix](validation/2026-10-23-video-settings-expansion/anisotropic-off-vs-16x-llvmpipe.png)
+![Anisotropic filtering detail before the border fix](validation/2026-10-23-video-settings-expansion/anisotropic-zoom-llvmpipe.png)
 ![Advanced page tooltip](validation/2026-10-23-video-settings-expansion/menu-advanced-tooltip-threads.png)
 ![Preset dialog](validation/2026-10-23-video-settings-expansion/menu-presets-fixed.png)
 

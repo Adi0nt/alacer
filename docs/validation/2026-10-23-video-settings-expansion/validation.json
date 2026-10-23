@@ -73,20 +73,44 @@
       "mode": "shipping smoke",
       "outcome": "title screen reached, atlas created, no mixin or injection errors; stopped by timeout",
       "log": "client-smoke-shipping-build.log"
+    },
+    {
+      "mode": "af",
+      "build": "atlas borders",
+      "outcome": "atlas 512x512 off, 2048x1024 on; parameter 16 then 4 without reload; kept after resource reload; water animated; off restored 512x512; stitcher fallback logged and stitched 128x128",
+      "results": "results-af-bordered.txt",
+      "log": "client-af-bordered.log"
+    },
+    {
+      "mode": "af",
+      "build": "control: AtlasPadding.border forced to 0 (temporary, not committed)",
+      "outcome": "seams reproduced in the same scene",
+      "results": "results-af-control-no-borders.txt",
+      "log": "client-af-control-no-borders.log"
+    },
+    {
+      "mode": "shipping smoke after AF fix",
+      "outcome": "title screen, 512x512 atlas at default, no mixin or injection errors; stopped by timeout",
+      "log": "client-smoke-shipping-build-af-fix.log"
     }
   ],
   "logs_redacted": "container proxy JVM flags replaced with '[container proxy flags removed]'",
   "sha256": {
-    "ExpansionCheck.java": "a66d31bc492d06860f2ebafeb7270d2d0c8d3ee6d71246e206f469936a90780b",
+    "ExpansionCheck.java": "ea8730e4d95171de1042a771b21d4fec75552a490ac7d1bd48675574e5f356a6",
+    "anisotropic-fix-off-control-bordered.png": "72385ad489a11e93c076892e6f492614c153805398a1165e1b1251f4124e4c87",
+    "anisotropic-fix-zoom-off-control-bordered.png": "3b3a35cb5cc4d246c0d36e883db52e5970dce1cbcd5a4640f9712f7d90c07115",
     "anisotropic-off-vs-16x-llvmpipe.png": "5565145ac7268d7bc8d720bd8f2c51f9ee46e102794ec660f95dd2f626b02807",
     "anisotropic-zoom-llvmpipe.png": "eb586397cdcb75bb9e65fb7a4987ff5193a05c1956f0710e66cd5f708517780e",
     "biome-blend-off-3x3-7x7.png": "e1ddf7180c97b3131a4c01e42d54bb15aa47904d4409dbfcef63d9577da73f34",
     "block-entity-distance-25-100-300.png": "6d139484fed490c59dac0c40cf56a9592d72b610976f51bf9866570f2535c5ee",
+    "client-af-bordered.log": "3c89605ca33456506253c650818fefb925e7eb424e821fc0b35a72fbbe45323f",
+    "client-af-control-no-borders.log": "61221fb54037dce72727ee832373eea973d216be70967ca656067498d3fe3bc0",
     "client-full-run1.log": "9fdef95c2fb9e0565058fdb0e9343978c9e8b1e9db155234b924067c31abe75f",
     "client-full-run2.log": "00fd5151406a988d29b1584c9cc7af3074231808a775d197332359897c801cf6",
     "client-particles-fixed.log": "2b18956736c7a053abfe88a361cb188726dc0e4ec0e3f236733820b3f1462374",
     "client-readback-run1.log": "e0fd5ef25e1b98c981febed57b3aba61e5758b0747d36c2488f6bc21617d60c0",
     "client-readback-run2.log": "9f67a17c652424355e09886d057df1e892207a83dc2c85e77fd129751239317b",
+    "client-smoke-shipping-build-af-fix.log": "54cdc0348550c10f88cc8df2860dcd52a511cffa9e61fe889cb8f1fb30f297b0",
     "client-smoke-shipping-build.log": "3cc7f2ed525dbde01808b0d241b29e6dc5e50a83a2dad3de61688d9d2d472601",
     "damage-tilt-100-vs-off.png": "81b2dc37417bd8c31dd3a07cb6ec5ccf33599901338b91fc209eb73b30486ee4",
     "fog-75-30-off.png": "23b1019364e82df76e1ba38305a8be3adcdb2405b0a7b2a20d3edc0e953dffbf",
@@ -97,11 +121,31 @@
     "menu-presets-before-fix.png": "ec39fb625103933a60cf523d37080a22223a85e0369b95213e4a1f00b2c8e464",
     "menu-presets-fixed.png": "1fc42d8a2034d34596f3d31e4e530e4431eccd704d019f98d6f1ed7184a5a8ef",
     "moon-on-vs-off.png": "26def016d17fa6f352740233edbdfb0349408b14c9a65a0c79213b667eebe7a1",
+    "results-af-bordered.txt": "ea1877d172030e2aa53e83b8907e31f4fe466df9a951f9cd4c74d1306ed0bf8c",
+    "results-af-control-no-borders.txt": "82a1ccb9630aca0115e420f1e0966633a2beec62db087ac6283a7d2bba4fb035",
     "results-full-run1.txt": "e137c3daf98d82905e6823c1e9e6ac56beef36483ec6f0fcb164639fab80ee39",
     "results-full-run2.txt": "d8580056713ca93cf135a569e85f8aa618cd4d0130ae01305bdde94b9fcaf9d2",
     "results-particles-fixed.txt": "a6efd76f7a03fa8138a487e29dd2fc74cd9099966abdfcecd04f51d1ad437531",
     "results-readback-run1.txt": "36c1945adba0519fe56693e21e55023deb497f67682914ccb4579e1bb1d76df6",
     "results-readback-run2.txt": "2d9b9ddb4c1f2bd2957f59527e1190d5a9a703835b6a7f2ab996e7f5bf7a92ba",
     "sun-on-vs-off.png": "ddb9f23b78ec9e7aea09c62d66823a6c79ef1525b02678cd0af1964fe3800233"
+  },
+  "build_result_after_af_fix": {
+    "tests": 141,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0,
+    "main_classes": 205,
+    "classfile_version": 69,
+    "harness_classes_in_build": 0
+  },
+  "seam_metric": {
+    "definition": "share of pixels below the horizon (y>=380 of 720) darker than 70% of their 9x9 median luminance",
+    "off": 0.157,
+    "16x_control_no_borders": 1.794,
+    "16x_borders": 0.148,
+    "4x_control_no_borders": 1.679,
+    "4x_borders": 0.146,
+    "unit": "percent"
   }
 }

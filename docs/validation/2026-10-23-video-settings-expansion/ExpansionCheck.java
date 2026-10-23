@@ -42,7 +42,7 @@ import net.minecraft.world.gen.WorldGeneratorType;
  * Temporary live-client harness for the 2026-10-23 video settings expansion (not shipped, not built).
  * For the runs it lived at src/main/java/net/adiont/alacer/devcheck/ and was called from the end of
  * Alacer.onFrameStart(): if (ExpansionCheck.ACTIVE) ExpansionCheck.frame(Minecraft.getInstance());
- * Launch: runClient -Pwindow=1280x720 -Palacer.expansionCheck=true -Palacer.expansionCheck.mode=full|readback|particles (particles was added after full run 1 to diagnose the particle-limit fix)
+ * Launch: runClient -Pwindow=1280x720 -Palacer.expansionCheck=true -Palacer.expansionCheck.mode=full|readback|particles|af (particles was added after full run 1 to diagnose the particle-limit fix; af for the atlas-border fix)
  * Settings change through VideoSettingsBackend.apply, the same path as the menu's Apply.
  */
 public final class ExpansionCheck {
@@ -68,7 +68,7 @@ public final class ExpansionCheck {
 		Files.createDirectories(this.out.toPath());
 		mc.options.pauseOnUnfocus = false; // Xvfb never focuses the window; a paused server would freeze the scene.
 		this.log = new PrintWriter(Files.newBufferedWriter(this.out.toPath().resolve("results-" + MODE + ".txt")), true);
-		if (MODE.equals("readback")) { readback(); } else if (MODE.equals("particles")) { particles(); } else { plan(); }
+		if (MODE.equals("readback")) { readback(); } else if (MODE.equals("particles")) { particles(); } else if (MODE.equals("af")) { anisotropy(); } else { plan(); }
 	}
 
 	public static void frame(Minecraft mc) {
@@ -386,6 +386,70 @@ public final class ExpansionCheck {
 			}
 			now("spray off", () -> this.everyFrame = null);
 		}
+	}
+
+	/** Atlas borders for anisotropic filtering: layout, parameter, reloads, seams, animated borders and the fallback. */
+	private void anisotropy() {
+		WorldSettings world = new WorldSettings(2203L, WorldSettings.GameMode.SPECTATOR, false, false, WorldGeneratorType.FLAT).enableCommands();
+		add("title", () -> { }, () -> this.mc.screen instanceof TitleScreen);
+		set(new LinkedHashMap<>(Map.of("distance", 8, "fps", 260, "vsync", 0)));
+		now("atlas start", () -> this.log.println("start " + atlasState()));
+		now("fallback", this::fallbackCheck);
+		add("load world", () -> { String name = "alacer-af-" + System.currentTimeMillis(); this.mc.startGame(name, name, world); },
+			() -> this.mc.world != null && this.mc.player != null && this.waited > 60);
+		now("origin", () -> { this.x0 = (int) Math.floor(this.mc.player.x); this.z0 = (int) Math.floor(this.mc.player.z); });
+		cmd("/gamerule doDaylightCycle false");
+		cmd("/time set 6000");
+		cmd("/weather clear 1000000");
+		add("water", () -> this.mc.player.sendChat("/fill " + (this.x0 - 6) + " 3 " + (this.z0 + 12) + " " + (this.x0 + 6) + " 3 " + (this.z0 + 30) + " minecraft:water"), () -> this.waited >= 20);
+		add("stone", () -> this.mc.player.sendChat("/fill " + (this.x0 + 7) + " 3 " + (this.z0 + 12) + " " + (this.x0 + 12) + " 3 " + (this.z0 + 40) + " minecraft:stonebrick"), () -> this.waited >= 20);
+		tp(0, 4.7, 8, 0, 4);
+		wait(150);
+		shot("af2-off");
+		set("quality.anisotropicFiltering", 4);
+		add("reload", () -> { }, () -> this.waited >= 200);
+		now("atlas 16x", () -> this.log.println("16x " + atlasState()));
+		wait(20);
+		shot("af2-16x");
+		set("quality.anisotropicFiltering", 2);
+		now("atlas 4x", () -> this.log.println("4x (no reload expected) " + atlasState()));
+		wait(20);
+		shot("af2-4x");
+		add("reload resources", () -> this.mc.reloadResources(), () -> this.waited >= 40);
+		now("atlas 4x reload", () -> this.log.println("4x after resource reload " + atlasState()));
+		int[] water = new int[1];
+		now("water before", () -> water[0] = frame("minecraft:blocks/water_still")[0]);
+		wait(60);
+		now("water after", () -> this.log.println("water animates with border: frame " + water[0] + "->" + frame("minecraft:blocks/water_still")[0]));
+		timeAb("quality.anisotropicFiltering", 0, 4, 2, 250, 300, null);
+		set("quality.anisotropicFiltering", 0);
+		add("reload off", () -> { }, () -> this.waited >= 200);
+		now("atlas off", () -> this.log.println("off " + atlasState()));
+		wait(20);
+		shot("af2-off-again");
+	}
+
+	private String atlasState() {
+		GlStateManager.bindTexture(this.mc.getBlocksAtlas().getGlId());
+		int w = GL11.glGetTexLevelParameteri(GL11.GL_TEXTURE_2D, 0, GL11.GL_TEXTURE_WIDTH), h = GL11.glGetTexLevelParameteri(GL11.GL_TEXTURE_2D, 0, GL11.GL_TEXTURE_HEIGHT);
+		TextureAtlasSprite stone = this.mc.getBlocksAtlas().getSprite("minecraft:blocks/stone");
+		return "atlas=" + w + "x" + h + " anisotropy=" + atlasAnisotropy() + " stone x,y=" + stone.getX() + "," + stone.getY()
+			+ " border=" + ((net.adiont.alacer.render.AtlasPadding.Bordered) stone).alacer$border() + " u=" + stone.getUMin() + ".." + stone.getUMax();
+	}
+
+	private void fallbackCheck() {
+		TextureAtlasSprite[] some = this.mc.getBlocksAtlas().getSprite("minecraft:blocks/stone") == null ? new TextureAtlasSprite[0] : new TextureAtlasSprite[40];
+		Map<String,?> stitched = (Map<String,?>) field(net.minecraft.client.render.texture.TextureAtlas.class, "stitchedSprites", this.mc.getBlocksAtlas());
+		int n = 0;
+		for (Object o : stitched.values()) { TextureAtlasSprite s = (TextureAtlasSprite) o; if (s.getWidth() == 16 && s.getHeight() == 16 && n < 40) { some[n++] = s; } }
+		net.minecraft.client.render.texture.Stitcher stitcher = new net.minecraft.client.render.texture.Stitcher(256, 256, true, 0, 4);
+		net.adiont.alacer.render.AtlasPadding.stitching = 16;
+		for (int i = 0; i < n; i++) { stitcher.registerSprite(some[i]); }
+		try {
+			net.adiont.alacer.render.AtlasPadding.stitch(stitcher, args -> { ((net.minecraft.client.render.texture.Stitcher) args[0]).stitch(); return null; });
+			this.log.println("fallback: " + n + " sprites, bordered cells would need >256x256; stitched " + stitcher.getWidth() + "x" + stitcher.getHeight()
+				+ " border now " + net.adiont.alacer.render.AtlasPadding.stitching);
+		} finally { net.adiont.alacer.render.AtlasPadding.stitching = 0; }
 	}
 
 	private void readback() {

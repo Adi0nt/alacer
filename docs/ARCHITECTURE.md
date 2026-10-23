@@ -55,7 +55,8 @@ net.adiont.alacer
 │   ├── IndependentQuality, SmoothLighting  Per-feature Graphics overrides and AO shaping (video settings)
 │   ├── RenderDistances, FogDistance, BiomeBlend, ParticleLimit, CameraEffects, TextureAnimations,
 │   │   ChunkScheduling     Pure value rules for the 2026-10-23 video settings; vanilla at defaults (unit tested)
-│   └── TextureFiltering    Anisotropic filtering parameter on the block/item atlas
+│   ├── TextureFiltering    Anisotropic filtering parameter on the block/item atlas
+│   └── AtlasPadding        Edge borders around atlas sprites while anisotropic filtering is on (unit tested)
 ├── settings/               Video settings catalog, staged draft, presets, backend and menu screen
 └── mixin/                  One-line hooks, wrappers and accessors only
 ```
