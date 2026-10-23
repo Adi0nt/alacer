@@ -405,7 +405,8 @@ public final class BenchmarkRunner implements FrameProfiler.FrameListener {
 
 	/** Toggles measured with the Phase 10 protocol: both paths warmed, detail and verification off. */
 	private static boolean warmsBothPaths(String key) {
-		return "render.defaults".equals(key) || "render.fastEntityShadows".equals(key)
+		return "render.modernPipeline".equals(key) || "render.fastChunkNeighbours".equals(key) || "render.terrainVaos".equals(key) || "render.directBufferUploads".equals(key)
+			|| "render.defaults".equals(key) || "render.fastEntityShadows".equals(key)
 			|| "render.fastChunkFrustum".equals(key) || "render.fastParticleLight".equals(key)
 			|| "render.fastCameraSectionFaces".equals(key)
 			|| "render.fastParticleRemoval".equals(key)

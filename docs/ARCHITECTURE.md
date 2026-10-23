@@ -25,6 +25,11 @@ net.adiont.alacer
 │   └── ParticleProbes      Verification-only particles for the removal diagnostic (session 16)
 ├── render/
 │   ├── ChunkVisibility     Allocation-free chunk visibility search (optimization 1)
+│   ├── ChunkNeighbours     Exact toroidal neighbor addresses; opt-in culling math, pure/unit tested (2026-10-23)
+│   ├── ModernGl            Capability gates, named VBO uploads, byte verification and exported counters
+│   ├── TerrainVertexArray  Lazy terrain VAO, layout verification, context guard and world lifecycle cleanup
+│   ├── ModernVertexBuffer  Mixin bridge to the vanilla buffer ID and its optional VAO
+│   ├── RenderCompatibility Conservative fallback for external mixins on affected storage/buffer classes
 │   ├── ChunkFrustum        Exact one-corner-per-plane chunk predicate (session 12)
 │   ├── SectionFaces        Allocation-free camera-section flood fill with pocket reuse (session 28b, unmeasured, off)
 │   ├── ChunkPipelineTimings Opt-in build, queue, scheduling and upload attribution (session 13)
@@ -64,6 +69,9 @@ net.adiont.alacer
 │   └── AtlasPadding        Edge borders around atlas sprites while anisotropic filtering is on (unit tested)
 ├── settings/               Video settings catalog, staged draft, presets, backend and menu screen
 └── mixin/                  One-line hooks, wrappers and accessors only
+    ├── ModernVertexBufferMixin Optional named buffer operations and per-buffer VAO ownership
+    ├── TerrainVaoMixin     Optional reuse of vanilla terrain pointer setup; original draws/order
+    ├── ModernWorldLifecycleMixin Retires extra VAOs on renderer world transitions
     └── CameraControlsMixin Camera settings hooks (bobbing, distortion, third-person distance/collision,
                             FOV transition, zoom) forwarding to CameraEffects; vanilla values at defaults
 ```
@@ -1379,7 +1387,45 @@ because profiling found no qualifying cost. The separate session 30 camera-secti
 experiment remains closed. Unit/build, software-client correctness and
 reference-hardware performance evidence remain distinct.
 
-### Next session (31): recommended order
+### 2026-10-23: exact neighbor math and modern OpenGL trials
+
+The new control starts at d8abd3f on native Windows/RTX 3060 Ti with Java 25,
+explicit vanilla VBOs, distance 12 and 1920x1080. Fresh attribution finds moving
+visibility at 0.17-0.23 ms/frame, with repeated slot math in 3-6% of client Java
+samples and terrain pointer setup in roughly 1-3%. This motivates two different
+mechanisms: exact precomputed neighbor addresses, and retaining existing vertex
+input state with VAOs/named uploads. It does not reopen the previously closed
+frustum or camera-section experiments or change chunk scheduling.
+
+`ChunkNeighbours` replaces repeated edge address division/remainder with a table
+allocated per chunk storage (240 KB at distance 12). `ModernGl` and
+`TerrainVertexArray` preserve vanilla buffer contents/layout, draw order and
+matrices while using capability-gated core OpenGL 3.0 VAOs and 4.5 named buffer
+operations. `ModernVertexBufferMixin`, `TerrainVaoMixin` and
+`ModernWorldLifecycleMixin` are installed only for an enabled GL option or its
+verification. Original paths remain for unsupported APIs, affected foreign
+mixins, buffer subclasses and nonzero incoming VAOs. Context guards avoid deleting
+an old context's numeric VAO name in a new context; this is not context recovery.
+
+All three independent options remain off, including under `render.defaults`.
+Address, whole-visibility, pointer-layout, upload-readback and lifecycle checks
+are distinct from ordinary performance runs. The temporary lifecycle harness is
+archived and removed from shipping source. The frozen 16-launch ABBABAAB series,
+individual ablations, image comparisons, results and limitations are in the
+[modern-rendering archive](benchmarks/2026-10-23-modern-rendering/README.md).
+
+**Outcome: not selected.** All 16 native launches completed with frozen sources.
+Moving frame means regressed 59-65% and CPU/frame 107-116%; pan visibility changed
+-2.6% in the ordinary scene and -6.7% in terrain. Correctness and fixed-pose image
+checks passed, but frame, CPU, allocation, tail and still-control gates failed.
+A separate VAO-only attribution launch reproduced the large regression. A
+predeclared query-bypass diagnostic helped static frames but missed its pan
+threshold and regressed flight, so a private LWJGL-state replacement was not
+pursued. The temporary bypass was removed; final sources/classes match the
+scored manifests. Individual options have attribution only, not independent
+selection evidence. No optimization or backend default changed.
+
+### Earlier session 31 recommendation (historical)
 
 Sessions 29 and 30 closed both remaining measured candidates on the reference hardware (items 1 and 1b below). Both
 were exact and cut allocation substantially, yet neither showed a frame-time benefit that survived its frozen gates;

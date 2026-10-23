@@ -47,6 +47,7 @@ public class AlacerMixinPlugin implements IMixinConfigPlugin {
 	private boolean particleLightEntry;
 	private boolean particleLightReuse;
 	private boolean shadowPositions;
+	private boolean modernGl;
 
 	@Override
 	public void onLoad(String mixinPackage) {
@@ -76,6 +77,14 @@ public class AlacerMixinPlugin implements IMixinConfigPlugin {
 		this.particleLightEntry = particleLightEntryEnabled(file);
 		this.particleLightReuse = particleLightReuseEnabled(file);
 		this.shadowPositions = shadowPositionsEnabled(file);
+		this.modernGl = modernGlEnabled(file);
+	}
+
+	static boolean modernGlEnabled(Properties file) {
+		String toggle = System.getProperty("alacer.benchmark.toggle", "").trim();
+		return flag(file, "render.terrainVaos", false) || flag(file, "render.directBufferUploads", false)
+			|| flag(file, "render.modernGl.verify", false) || toggle.equals("render.modernPipeline")
+			|| toggle.equals("render.terrainVaos") || toggle.equals("render.directBufferUploads");
 	}
 
 	static boolean shadowPositionsEnabled(Properties file) {
@@ -175,6 +184,7 @@ public class AlacerMixinPlugin implements IMixinConfigPlugin {
 	@Override
 	public boolean shouldApplyMixin(String targetClassName, String mixinClassName) {
 		String name = mixinClassName.substring(mixinClassName.lastIndexOf('.') + 1);
+		if (name.equals("TerrainVaoMixin") || name.equals("ModernVertexBufferMixin") || name.equals("ModernWorldLifecycleMixin")) { return this.modernGl; }
 		if (name.equals("ParticleDrawDiagnosticMixin")) { return this.particleDrawDiagnostics; }
 		if (name.equals("EntityParticleMovementCensusMixin") || name.equals("WorldParticleMovementCensusMixin")) {
 			return this.particleMovementCensus;

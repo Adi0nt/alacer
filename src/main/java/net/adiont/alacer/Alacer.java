@@ -270,6 +270,8 @@ public final class Alacer implements ClientModInitializer, FrameProfiler.ChunkCo
 		env.put("gl.vendor", GL11.glGetString(GL11.GL_VENDOR));
 		env.put("gl.renderer", GL11.glGetString(GL11.GL_RENDERER));
 		env.put("gl.version", GL11.glGetString(GL11.GL_VERSION));
+		net.adiont.alacer.render.ModernGl.describe(env);
+		env.put("chunkNeighbours.verification", net.adiont.alacer.render.ChunkVisibility.neighbourSummary());
 		env.put("window", minecraft.width + "x" + minecraft.height);
 		env.put("options.renderDistance", String.valueOf(options.viewDistance));
 		env.put("options.fancyGraphics", String.valueOf(options.fancyGraphics));

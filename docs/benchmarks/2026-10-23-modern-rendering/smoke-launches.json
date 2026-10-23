@@ -1,0 +1,24 @@
+[
+  {
+    "label": "mg-shipping-smoke",
+    "command": [
+      "C:\\Users\\CodyJ\\.codex\\worktrees\\alacer-chunk-camera\\alacer\\gradlew.bat",
+      "--offline",
+      "--console=plain",
+      "runClient",
+      "-Pwindow=1920x1080",
+      "-Pxmx=2G",
+      "-Palacer.benchmark=true",
+      "-Palacer.benchmark.vbo=true",
+      "-Palacer.benchmark.viewDistance=12",
+      "-Palacer.benchmark.label=mg-shipping-smoke",
+      "-Palacer.benchmark.vbo=false",
+      "-Palacer.render.fastChunkNeighbours=false",
+      "-Palacer.render.terrainVaos=false",
+      "-Palacer.render.directBufferUploads=false"
+    ],
+    "summary": "run/alacer/benchmarks/20261023-135319-mg-shipping-smoke-vis_on-ecl_on-ent0/summary.json",
+    "exit": 0,
+    "log_sha256": "967e66b5c8a8ff355a4999dd2f4cd825b12fc0aea383989bd218986379c0ccf1"
+  }
+]

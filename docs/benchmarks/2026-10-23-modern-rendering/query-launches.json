@@ -1,0 +1,40 @@
+[
+  {
+    "label": "mg-query-original",
+    "command": [
+      "runClient",
+      "--offline",
+      "--console=plain",
+      "-Pwindow=1920x1080",
+      "-Pxmx=2G",
+      "-Palacer.benchmark=true",
+      "-Palacer.benchmark.vbo=true",
+      "-Palacer.benchmark.viewDistance=12",
+      "-Palacer.benchmark.label=mg-query-original",
+      "-Palacer.modernGl.skipVaoQuery=false",
+      "-Palacer.render.fastChunkNeighbours=true",
+      "-Palacer.render.terrainVaos=true",
+      "-Palacer.render.directBufferUploads=true"
+    ],
+    "summary": "run/alacer/benchmarks/20261023-134913-mg-query-original-vis_on-ecl_on-ent0/summary.json"
+  },
+  {
+    "label": "mg-query-skip",
+    "command": [
+      "runClient",
+      "--offline",
+      "--console=plain",
+      "-Pwindow=1920x1080",
+      "-Pxmx=2G",
+      "-Palacer.benchmark=true",
+      "-Palacer.benchmark.vbo=true",
+      "-Palacer.benchmark.viewDistance=12",
+      "-Palacer.benchmark.label=mg-query-skip",
+      "-Palacer.modernGl.skipVaoQuery=true",
+      "-Palacer.render.fastChunkNeighbours=true",
+      "-Palacer.render.terrainVaos=true",
+      "-Palacer.render.directBufferUploads=true"
+    ],
+    "summary": "run/alacer/benchmarks/20261023-135031-mg-query-skip-vis_on-ecl_on-ent0/summary.json"
+  }
+]

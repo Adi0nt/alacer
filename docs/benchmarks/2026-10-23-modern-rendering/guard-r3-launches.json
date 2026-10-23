@@ -1,0 +1,25 @@
+[
+  {
+    "label": "mg-verify-guard-r3",
+    "command": [
+      "C:\\Users\\CodyJ\\.codex\\worktrees\\alacer-chunk-camera\\alacer\\gradlew.bat",
+      "--offline",
+      "--console=plain",
+      "runClient",
+      "-Pwindow=1920x1080",
+      "-Pxmx=2G",
+      "-Palacer.benchmark=true",
+      "-Palacer.benchmark.vbo=true",
+      "-Palacer.benchmark.viewDistance=12",
+      "-Palacer.benchmark.label=mg-verify-guard-r3",
+      "-Palacer.benchmark.backendScenario=true",
+      "-Palacer.render.fastChunkNeighbours=true",
+      "-Palacer.render.fastChunkNeighbours.verify=true",
+      "-Palacer.render.fastChunkVisibility.verify=true",
+      "-Palacer.render.modernGl.verify=true"
+    ],
+    "summary": "run/alacer/benchmarks/20261023-130728-mg-verify-guard-r3-vis_on-ecl_on-ent0/summary.json",
+    "exit": 0,
+    "log_sha256": "a6b32b4299bf278e4fe06e61f638800a13c119732bef606b0165694c3de0255e"
+  }
+]

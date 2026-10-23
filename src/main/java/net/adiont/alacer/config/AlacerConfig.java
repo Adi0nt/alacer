@@ -128,6 +128,7 @@ public final class AlacerConfig {
 	public volatile boolean feedChunkWorkers;
 	/** Give chunk uploads and rebuild queueing at least 1/32 of the previous frame. Runtime-toggleable. */
 	public volatile boolean chunkTimeFloor;
+	public volatile boolean fastChunkNeighbours, verifyChunkNeighbours, terrainVaos, directBufferUploads, verifyModernGl;
 	/** Session 28 candidate: one reused position for entity shadows' block-below query. Runtime-toggleable when installed. */
 	public volatile boolean reuseShadowPositions;
 	/** Also make vanilla's position, use it, and compare coordinates and the block state answered for both. Debug only. */
@@ -320,6 +321,11 @@ public final class AlacerConfig {
 			"Experimental: pass one reused position instead of a new BlockPos to each entity shadow's block-below query (same query and answer). Off by default; its hook is installed only when on at startup (or verified, or benchmark-toggled).");
 		this.verifyReuseShadowPositions = bool(file, system, "render.reuseShadowPositions.verify", false,
 			"Debug: keep vanilla's new position, compare the reused one's coordinates and the block state answered for each, and log any difference.");
+		this.fastChunkNeighbours = bool(file, system, "render.fastChunkNeighbours", false, "Experimental exact precomputed chunk storage adjacency; avoids per-edge integer division.");
+		this.verifyChunkNeighbours = bool(file, system, "render.fastChunkNeighbours.verify", false, "Compare every adjacency result with the original slot math and use the original result.");
+		this.terrainVaos = bool(file, system, "render.terrainVaos", false, "Experimental OpenGL 3.0 compatibility VAOs for vanilla terrain VBO input state; startup hooks.");
+		this.directBufferUploads = bool(file, system, "render.directBufferUploads", false, "Experimental OpenGL 4.5 named VBO creation/uploads; startup hooks, preserves vanilla buffer bytes and final unbind.");
+		this.verifyModernGl = bool(file, system, "render.modernGl.verify", false, "Intrusive: validate terrain VAO state and read back every named VBO upload byte. Enables both GL experiments when supported.");
 		this.feedChunkWorkers = bool(file, system, "render.feedChunkWorkers", false,
 			"Experimental: after Minecraft's per-frame chunk deadline stops queueing rebuilds, keep queueing visible dirty chunks (same order and calls) until the builder threads have about one frame of work. Uploads keep Minecraft's deadline. Off by default.");
 		this.chunkTimeFloor = bool(file, system, "render.chunkTimeFloor", false,
@@ -401,6 +407,9 @@ public final class AlacerConfig {
 				this.reuseShadowPositions = false;
 				this.feedChunkWorkers = false;
 				this.chunkTimeFloor = false;
+				this.fastChunkNeighbours = false;
+				this.terrainVaos = false;
+				this.directBufferUploads = false;
 				this.skipZeroTranslates = false;
 				this.batchModelLists = false;
 				break;
@@ -461,6 +470,10 @@ public final class AlacerConfig {
 			case "render.reuseShadowPositions":
 				this.reuseShadowPositions = value;
 				break;
+			case "render.fastChunkNeighbours": this.fastChunkNeighbours = value; break;
+			case "render.terrainVaos": this.terrainVaos = value; break;
+			case "render.directBufferUploads": this.directBufferUploads = value; break;
+			case "render.modernPipeline": this.fastChunkNeighbours = value; this.terrainVaos = value; this.directBufferUploads = value; break;
 			case "render.feedChunkWorkers":
 				this.feedChunkWorkers = value;
 				break;
@@ -629,6 +642,11 @@ public final class AlacerConfig {
 		values.put("render.reuseShadowPositions.verify", String.valueOf(this.verifyReuseShadowPositions));
 		values.put("render.reuseParticleBoxes", String.valueOf(this.reuseParticleBoxes));
 		values.put("render.reuseParticleBoxes.verify", String.valueOf(this.verifyReuseParticleBoxes));
+		values.put("render.fastChunkNeighbours", String.valueOf(this.fastChunkNeighbours));
+		values.put("render.fastChunkNeighbours.verify", String.valueOf(this.verifyChunkNeighbours));
+		values.put("render.terrainVaos", String.valueOf(this.terrainVaos));
+		values.put("render.directBufferUploads", String.valueOf(this.directBufferUploads));
+		values.put("render.modernGl.verify", String.valueOf(this.verifyModernGl));
 		values.put("render.feedChunkWorkers", String.valueOf(this.feedChunkWorkers));
 		values.put("render.chunkTimeFloor", String.valueOf(this.chunkTimeFloor));
 		values.put("render.batchModelLists", String.valueOf(this.batchModelLists));

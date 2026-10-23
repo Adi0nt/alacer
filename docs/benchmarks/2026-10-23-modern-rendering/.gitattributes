@@ -1,0 +1,12 @@
+# Preserve measured records and hashes verbatim across checkouts.
+.gitattributes text eol=lf
+*.md text eol=lf
+*.py text eol=lf
+*.json -text whitespace=blank-at-eol,blank-at-eof,space-before-tab,cr-at-eol
+*.log -text -diff
+*.csv.gz -text -diff
+*.png -text -diff
+*.zip -text -diff
+validation/*.java -text whitespace=blank-at-eol,blank-at-eof,space-before-tab,cr-at-eol
+validation/*.py -text whitespace=blank-at-eol,blank-at-eof,space-before-tab,cr-at-eol
+validation/*.txt -text whitespace=blank-at-eol,blank-at-eof,space-before-tab,cr-at-eol

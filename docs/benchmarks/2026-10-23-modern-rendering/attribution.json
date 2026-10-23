@@ -1,0 +1,1117 @@
+{
+  "default": {
+    "label": "mg-attrib-vbo-default-r2",
+    "phase_sample_counts": {
+      "static": {
+        "samples": 1058,
+        "methods": {
+          "net/minecraft/client/render/world/VboRenderChunkList.prepareDrawState": 14,
+          "net/minecraft/client/render/world/VboRenderChunkList.render": 34,
+          "net/minecraft/client/render/vertex/VertexBuffer.bind": 5,
+          "net/minecraft/client/render/vertex/VertexBuffer.draw": 3,
+          "net/adiont/alacer/render/ChunkVisibility.inFrustum": 1,
+          "net/adiont/alacer/render/ChunkVisibility.search": 1,
+          "net/adiont/alacer/render/ChunkVisibility.beforeVanillaSearch": 1,
+          "net/adiont/alacer/render/MatrixTracker$Stack.multiply": 1,
+          "net/adiont/alacer/render/MatrixTracker.rotate": 1
+        },
+        "lines": [
+          {
+            "method": "net/minecraft/client/render/world/VboRenderChunkList.render",
+            "line": 28,
+            "samples": 14
+          },
+          {
+            "method": "net/minecraft/client/render/world/VboRenderChunkList.prepareDrawState",
+            "line": 47,
+            "samples": 8
+          },
+          {
+            "method": "net/minecraft/client/render/vertex/VertexBuffer.bind",
+            "line": 20,
+            "samples": 5
+          },
+          {
+            "method": "net/minecraft/client/render/world/VboRenderChunkList.render",
+            "line": 26,
+            "samples": 4
+          },
+          {
+            "method": "net/minecraft/client/render/world/VboRenderChunkList.prepareDrawState",
+            "line": 45,
+            "samples": 4
+          },
+          {
+            "method": "net/minecraft/client/render/vertex/VertexBuffer.draw",
+            "line": 31,
+            "samples": 3
+          },
+          {
+            "method": "net/minecraft/client/render/world/VboRenderChunkList.render",
+            "line": 30,
+            "samples": 3
+          },
+          {
+            "method": "net/minecraft/client/render/world/VboRenderChunkList.render",
+            "line": 19,
+            "samples": 3
+          },
+          {
+            "method": "net/minecraft/client/render/world/VboRenderChunkList.render",
+            "line": 20,
+            "samples": 3
+          },
+          {
+            "method": "net/minecraft/client/render/world/VboRenderChunkList.render",
+            "line": 32,
+            "samples": 2
+          },
+          {
+            "method": "net/minecraft/client/render/world/VboRenderChunkList.render",
+            "line": 23,
+            "samples": 2
+          },
+          {
+            "method": "net/minecraft/client/render/world/VboRenderChunkList.prepareDrawState",
+            "line": 46,
+            "samples": 2
+          },
+          {
+            "method": "net/minecraft/client/render/world/VboRenderChunkList.render",
+            "line": 22,
+            "samples": 2
+          },
+          {
+            "method": "net/adiont/alacer/render/ChunkVisibility.inFrustum",
+            "line": 445,
+            "samples": 1
+          },
+          {
+            "method": "net/adiont/alacer/render/ChunkVisibility.search",
+            "line": 417,
+            "samples": 1
+          },
+          {
+            "method": "net/adiont/alacer/render/ChunkVisibility.beforeVanillaSearch",
+            "line": 201,
+            "samples": 1
+          },
+          {
+            "method": "net/minecraft/client/render/world/VboRenderChunkList.render",
+            "line": 24,
+            "samples": 1
+          },
+          {
+            "method": "net/adiont/alacer/render/MatrixTracker$Stack.multiply",
+            "line": 264,
+            "samples": 1
+          },
+          {
+            "method": "net/adiont/alacer/render/MatrixTracker.rotate",
+            "line": 126,
+            "samples": 1
+          }
+        ]
+      },
+      "pan": {
+        "samples": 2917,
+        "methods": {
+          "net/adiont/alacer/render/ChunkVisibility.inFrustum": 554,
+          "net/adiont/alacer/render/ChunkVisibility.search": 1444,
+          "net/adiont/alacer/render/ChunkVisibility.beforeVanillaSearch": 1399,
+          "net/adiont/alacer/render/ChunkVisibility.visit": 329,
+          "net/adiont/alacer/render/ChunkVisibility.slot": 104,
+          "java/lang/Math.floorMod": 53,
+          "net/minecraft/client/render/world/VboRenderChunkList.prepareDrawState": 21,
+          "net/minecraft/client/render/world/VboRenderChunkList.render": 43,
+          "net/minecraft/client/render/vertex/VertexBuffer.bind": 6,
+          "net/adiont/alacer/render/ChunkVisibility.info": 29,
+          "net/minecraft/client/render/vertex/VertexBuffer.upload": 1,
+          "net/minecraft/client/render/vertex/VertexBufferUploader.end": 1,
+          "java/lang/Math.floorDiv": 22,
+          "java/lang/Math.floor": 1,
+          "net/adiont/alacer/render/ChunkVisibility.floor16": 1,
+          "net/minecraft/client/render/vertex/VertexBuffer.draw": 1,
+          "net/adiont/alacer/render/MatrixTracker.rotate": 1,
+          "net/adiont/alacer/render/MatrixTracker.translate": 1
+        },
+        "lines": [
+          {
+            "method": "net/adiont/alacer/render/ChunkVisibility.beforeVanillaSearch",
+            "line": 201,
+            "samples": 1399
+          },
+          {
+            "method": "net/adiont/alacer/render/ChunkVisibility.search",
+            "line": 417,
+            "samples": 832
+          },
+          {
+            "method": "net/adiont/alacer/render/ChunkVisibility.inFrustum",
+            "line": 445,
+            "samples": 488
+          },
+          {
+            "method": "net/adiont/alacer/render/ChunkVisibility.search",
+            "line": 405,
+            "samples": 322
+          },
+          {
+            "method": "net/adiont/alacer/render/ChunkVisibility.visit",
+            "line": 456,
+            "samples": 270
+          },
+          {
+            "method": "net/adiont/alacer/render/ChunkVisibility.search",
+            "line": 414,
+            "samples": 104
+          },
+          {
+            "method": "net/adiont/alacer/render/ChunkVisibility.inFrustum",
+            "line": 434,
+            "samples": 57
+          },
+          {
+            "method": "net/adiont/alacer/render/ChunkVisibility.search",
+            "line": 399,
+            "samples": 54
+          },
+          {
+            "method": "net/adiont/alacer/render/ChunkVisibility.visit",
+            "line": 451,
+            "samples": 54
+          },
+          {
+            "method": "net/adiont/alacer/render/ChunkVisibility.slot",
+            "line": 474,
+            "samples": 51
+          },
+          {
+            "method": "net/adiont/alacer/render/ChunkVisibility.search",
+            "line": 390,
+            "samples": 47
+          },
+          {
+            "method": "java/lang/Math.floorMod",
+            "line": 1587,
+            "samples": 44
+          },
+          {
+            "method": "net/adiont/alacer/render/ChunkVisibility.info",
+            "line": 484,
+            "samples": 28
+          },
+          {
+            "method": "net/adiont/alacer/render/ChunkVisibility.slot",
+            "line": 476,
+            "samples": 21
+          },
+          {
+            "method": "net/adiont/alacer/render/ChunkVisibility.slot",
+            "line": 475,
+            "samples": 20
+          },
+          {
+            "method": "net/minecraft/client/render/world/VboRenderChunkList.render",
+            "line": 28,
+            "samples": 20
+          },
+          {
+            "method": "java/lang/Math.floorDiv",
+            "line": 1476,
+            "samples": 19
+          },
+          {
+            "method": "net/adiont/alacer/render/ChunkVisibility.search",
+            "line": 401,
+            "samples": 16
+          },
+          {
+            "method": "net/adiont/alacer/render/ChunkVisibility.search",
+            "line": 411,
+            "samples": 12
+          },
+          {
+            "method": "java/lang/Math.floorMod",
+            "line": 1589,
+            "samples": 9
+          }
+        ]
+      },
+      "fly": {
+        "samples": 3793,
+        "methods": {
+          "net/adiont/alacer/render/ChunkVisibility.inFrustum": 742,
+          "net/adiont/alacer/render/ChunkVisibility.search": 1915,
+          "net/adiont/alacer/render/ChunkVisibility.beforeVanillaSearch": 1851,
+          "net/adiont/alacer/render/ChunkVisibility.openFaces": 12,
+          "net/adiont/alacer/render/ChunkVisibility.visit": 440,
+          "net/adiont/alacer/render/ChunkVisibility.info": 26,
+          "java/lang/Math.floorMod": 70,
+          "net/adiont/alacer/render/ChunkVisibility.slot": 129,
+          "net/minecraft/client/render/vertex/VertexBuffer.bind": 4,
+          "net/minecraft/client/render/world/VboRenderChunkList.prepareDrawState": 18,
+          "net/minecraft/client/render/world/VboRenderChunkList.render": 53,
+          "java/lang/Math.floorDiv": 26,
+          "net/minecraft/client/render/vertex/VertexBuffer.draw": 1,
+          "net/minecraft/client/render/vertex/VertexBufferUploader.end": 1,
+          "net/adiont/alacer/render/MatrixTracker.reset": 1
+        },
+        "lines": [
+          {
+            "method": "net/adiont/alacer/render/ChunkVisibility.beforeVanillaSearch",
+            "line": 201,
+            "samples": 1851
+          },
+          {
+            "method": "net/adiont/alacer/render/ChunkVisibility.search",
+            "line": 417,
+            "samples": 1118
+          },
+          {
+            "method": "net/adiont/alacer/render/ChunkVisibility.inFrustum",
+            "line": 445,
+            "samples": 664
+          },
+          {
+            "method": "net/adiont/alacer/render/ChunkVisibility.search",
+            "line": 405,
+            "samples": 399
+          },
+          {
+            "method": "net/adiont/alacer/render/ChunkVisibility.visit",
+            "line": 456,
+            "samples": 353
+          },
+          {
+            "method": "net/adiont/alacer/render/ChunkVisibility.search",
+            "line": 414,
+            "samples": 129
+          },
+          {
+            "method": "net/adiont/alacer/render/ChunkVisibility.visit",
+            "line": 451,
+            "samples": 86
+          },
+          {
+            "method": "net/adiont/alacer/render/ChunkVisibility.search",
+            "line": 399,
+            "samples": 82
+          },
+          {
+            "method": "net/adiont/alacer/render/ChunkVisibility.inFrustum",
+            "line": 434,
+            "samples": 70
+          },
+          {
+            "method": "java/lang/Math.floorMod",
+            "line": 1587,
+            "samples": 67
+          },
+          {
+            "method": "net/adiont/alacer/render/ChunkVisibility.search",
+            "line": 390,
+            "samples": 49
+          },
+          {
+            "method": "net/adiont/alacer/render/ChunkVisibility.slot",
+            "line": 474,
+            "samples": 48
+          },
+          {
+            "method": "net/adiont/alacer/render/ChunkVisibility.slot",
+            "line": 475,
+            "samples": 42
+          },
+          {
+            "method": "net/adiont/alacer/render/ChunkVisibility.search",
+            "line": 393,
+            "samples": 32
+          },
+          {
+            "method": "net/adiont/alacer/render/ChunkVisibility.info",
+            "line": 484,
+            "samples": 26
+          },
+          {
+            "method": "java/lang/Math.floorDiv",
+            "line": 1476,
+            "samples": 26
+          },
+          {
+            "method": "net/adiont/alacer/render/ChunkVisibility.slot",
+            "line": 476,
+            "samples": 24
+          },
+          {
+            "method": "net/adiont/alacer/render/ChunkVisibility.search",
+            "line": 323,
+            "samples": 16
+          },
+          {
+            "method": "net/minecraft/client/render/world/VboRenderChunkList.render",
+            "line": 28,
+            "samples": 16
+          },
+          {
+            "method": "net/minecraft/client/render/world/VboRenderChunkList.render",
+            "line": 20,
+            "samples": 15
+          }
+        ]
+      }
+    },
+    "epoch_uncertainty_ns": "1002100"
+  },
+  "terrain": {
+    "label": "mg-attrib-vbo-terrain",
+    "phase_sample_counts": {
+      "warmup-pan": {
+        "samples": 4460,
+        "methods": {
+          "net/adiont/alacer/render/ChunkVisibility.search": 2269,
+          "net/adiont/alacer/render/ChunkVisibility.beforeVanillaSearch": 2174,
+          "net/adiont/alacer/render/ChunkVisibility.visit": 561,
+          "java/lang/Math.floorDiv": 58,
+          "net/adiont/alacer/render/ChunkVisibility.slot": 256,
+          "net/adiont/alacer/render/ChunkVisibility.inFrustum": 753,
+          "net/minecraft/client/render/vertex/VertexBuffer.bind": 26,
+          "net/minecraft/client/render/world/VboRenderChunkList.render": 165,
+          "java/lang/Math.floorMod": 113,
+          "net/minecraft/client/render/world/VboRenderChunkList.prepareDrawState": 79,
+          "net/adiont/alacer/render/ChunkVisibility.info": 19,
+          "net/minecraft/client/render/vertex/VertexBuffer.draw": 7,
+          "net/minecraft/client/render/vertex/VertexBuffer.upload": 1,
+          "net/minecraft/client/render/vertex/VertexBufferUploader.end": 1,
+          "net/adiont/alacer/render/MatrixTracker$Stack.loadIdentity": 1,
+          "net/adiont/alacer/render/MatrixTracker.loadIdentity": 1,
+          "net/adiont/alacer/render/MatrixTracker$Stack.multiply": 2,
+          "net/adiont/alacer/render/MatrixTracker.rotate": 1,
+          "net/adiont/alacer/render/MatrixTracker.perspective": 1
+        },
+        "lines": [
+          {
+            "method": "net/adiont/alacer/render/ChunkVisibility.beforeVanillaSearch",
+            "line": 201,
+            "samples": 2173
+          },
+          {
+            "method": "net/adiont/alacer/render/ChunkVisibility.search",
+            "line": 417,
+            "samples": 1226
+          },
+          {
+            "method": "net/adiont/alacer/render/ChunkVisibility.inFrustum",
+            "line": 445,
+            "samples": 678
+          },
+          {
+            "method": "net/adiont/alacer/render/ChunkVisibility.visit",
+            "line": 456,
+            "samples": 472
+          },
+          {
+            "method": "net/adiont/alacer/render/ChunkVisibility.search",
+            "line": 405,
+            "samples": 449
+          },
+          {
+            "method": "net/adiont/alacer/render/ChunkVisibility.search",
+            "line": 414,
+            "samples": 258
+          },
+          {
+            "method": "net/adiont/alacer/render/ChunkVisibility.search",
+            "line": 399,
+            "samples": 125
+          },
+          {
+            "method": "net/adiont/alacer/render/ChunkVisibility.slot",
+            "line": 474,
+            "samples": 105
+          },
+          {
+            "method": "java/lang/Math.floorMod",
+            "line": 1587,
+            "samples": 105
+          },
+          {
+            "method": "net/adiont/alacer/render/ChunkVisibility.visit",
+            "line": 451,
+            "samples": 82
+          },
+          {
+            "method": "net/adiont/alacer/render/ChunkVisibility.slot",
+            "line": 475,
+            "samples": 73
+          },
+          {
+            "method": "net/minecraft/client/render/world/VboRenderChunkList.render",
+            "line": 28,
+            "samples": 73
+          },
+          {
+            "method": "net/adiont/alacer/render/ChunkVisibility.inFrustum",
+            "line": 434,
+            "samples": 64
+          },
+          {
+            "method": "net/adiont/alacer/render/ChunkVisibility.slot",
+            "line": 476,
+            "samples": 61
+          },
+          {
+            "method": "java/lang/Math.floorDiv",
+            "line": 1476,
+            "samples": 56
+          },
+          {
+            "method": "net/adiont/alacer/render/ChunkVisibility.search",
+            "line": 390,
+            "samples": 49
+          },
+          {
+            "method": "net/minecraft/client/render/vertex/VertexBuffer.bind",
+            "line": 20,
+            "samples": 26
+          },
+          {
+            "method": "net/adiont/alacer/render/ChunkVisibility.search",
+            "line": 411,
+            "samples": 25
+          },
+          {
+            "method": "net/adiont/alacer/render/ChunkVisibility.search",
+            "line": 401,
+            "samples": 25
+          },
+          {
+            "method": "net/minecraft/client/render/world/VboRenderChunkList.render",
+            "line": 26,
+            "samples": 22
+          }
+        ]
+      },
+      "warmup-sort": {
+        "samples": 4710,
+        "methods": {
+          "net/adiont/alacer/render/ChunkVisibility.inFrustum": 851,
+          "net/adiont/alacer/render/ChunkVisibility.search": 2431,
+          "net/adiont/alacer/render/ChunkVisibility.beforeVanillaSearch": 2334,
+          "net/minecraft/client/render/vertex/VertexBuffer.draw": 8,
+          "net/minecraft/client/render/world/VboRenderChunkList.render": 165,
+          "net/adiont/alacer/render/ChunkVisibility.visit": 623,
+          "net/minecraft/client/render/vertex/VertexBuffer.bind": 18,
+          "java/lang/Math.floorMod": 114,
+          "net/adiont/alacer/render/ChunkVisibility.slot": 241,
+          "java/lang/Math.floorDiv": 47,
+          "net/adiont/alacer/render/ChunkVisibility.info": 14,
+          "net/minecraft/client/render/world/VboRenderChunkList.prepareDrawState": 66,
+          "net/adiont/alacer/render/ChunkVisibility.openFaces": 10,
+          "net/adiont/alacer/render/MatrixTracker.rotate": 1,
+          "net/adiont/alacer/render/MatrixTracker.translate": 1,
+          "net/adiont/alacer/render/MatrixTracker$Stack.loadIdentity": 1,
+          "net/adiont/alacer/render/MatrixTracker.loadIdentity": 1
+        },
+        "lines": [
+          {
+            "method": "net/adiont/alacer/render/ChunkVisibility.beforeVanillaSearch",
+            "line": 201,
+            "samples": 2332
+          },
+          {
+            "method": "net/adiont/alacer/render/ChunkVisibility.search",
+            "line": 417,
+            "samples": 1383
+          },
+          {
+            "method": "net/adiont/alacer/render/ChunkVisibility.inFrustum",
+            "line": 445,
+            "samples": 763
+          },
+          {
+            "method": "net/adiont/alacer/render/ChunkVisibility.visit",
+            "line": 456,
+            "samples": 520
+          },
+          {
+            "method": "net/adiont/alacer/render/ChunkVisibility.search",
+            "line": 405,
+            "samples": 462
+          },
+          {
+            "method": "net/adiont/alacer/render/ChunkVisibility.search",
+            "line": 414,
+            "samples": 241
+          },
+          {
+            "method": "net/adiont/alacer/render/ChunkVisibility.search",
+            "line": 399,
+            "samples": 126
+          },
+          {
+            "method": "net/adiont/alacer/render/ChunkVisibility.slot",
+            "line": 474,
+            "samples": 98
+          },
+          {
+            "method": "net/adiont/alacer/render/ChunkVisibility.visit",
+            "line": 451,
+            "samples": 96
+          },
+          {
+            "method": "java/lang/Math.floorMod",
+            "line": 1587,
+            "samples": 93
+          },
+          {
+            "method": "net/adiont/alacer/render/ChunkVisibility.inFrustum",
+            "line": 434,
+            "samples": 80
+          },
+          {
+            "method": "net/adiont/alacer/render/ChunkVisibility.slot",
+            "line": 476,
+            "samples": 70
+          },
+          {
+            "method": "net/minecraft/client/render/world/VboRenderChunkList.render",
+            "line": 28,
+            "samples": 62
+          },
+          {
+            "method": "net/adiont/alacer/render/ChunkVisibility.slot",
+            "line": 475,
+            "samples": 53
+          },
+          {
+            "method": "java/lang/Math.floorDiv",
+            "line": 1476,
+            "samples": 44
+          },
+          {
+            "method": "net/adiont/alacer/render/ChunkVisibility.search",
+            "line": 390,
+            "samples": 42
+          },
+          {
+            "method": "net/adiont/alacer/render/ChunkVisibility.search",
+            "line": 323,
+            "samples": 28
+          },
+          {
+            "method": "net/adiont/alacer/render/ChunkVisibility.search",
+            "line": 411,
+            "samples": 23
+          },
+          {
+            "method": "net/minecraft/client/render/world/VboRenderChunkList.render",
+            "line": 23,
+            "samples": 22
+          },
+          {
+            "method": "java/lang/Math.floorMod",
+            "line": 1589,
+            "samples": 21
+          }
+        ]
+      },
+      "steady": {
+        "samples": 1364,
+        "methods": {
+          "net/minecraft/client/render/world/VboRenderChunkList.render": 89,
+          "net/adiont/alacer/render/ChunkVisibility.afterVanillaSearch": 1,
+          "net/adiont/alacer/render/ChunkVisibility.inFrustum": 2,
+          "net/adiont/alacer/render/ChunkVisibility.search": 3,
+          "net/adiont/alacer/render/ChunkVisibility.beforeVanillaSearch": 3,
+          "net/minecraft/client/render/world/VboRenderChunkList.prepareDrawState": 37,
+          "net/minecraft/client/render/vertex/VertexBuffer.draw": 3,
+          "net/minecraft/client/render/vertex/VertexBuffer.bind": 6,
+          "net/adiont/alacer/render/ChunkVisibility.visit": 1
+        },
+        "lines": [
+          {
+            "method": "net/minecraft/client/render/world/VboRenderChunkList.render",
+            "line": 28,
+            "samples": 34
+          },
+          {
+            "method": "net/minecraft/client/render/world/VboRenderChunkList.render",
+            "line": 23,
+            "samples": 20
+          },
+          {
+            "method": "net/minecraft/client/render/world/VboRenderChunkList.prepareDrawState",
+            "line": 43,
+            "samples": 9
+          },
+          {
+            "method": "net/minecraft/client/render/world/VboRenderChunkList.render",
+            "line": 19,
+            "samples": 8
+          },
+          {
+            "method": "net/minecraft/client/render/world/VboRenderChunkList.prepareDrawState",
+            "line": 45,
+            "samples": 7
+          },
+          {
+            "method": "net/minecraft/client/render/world/VboRenderChunkList.prepareDrawState",
+            "line": 46,
+            "samples": 6
+          },
+          {
+            "method": "net/minecraft/client/render/vertex/VertexBuffer.bind",
+            "line": 20,
+            "samples": 6
+          },
+          {
+            "method": "net/minecraft/client/render/world/VboRenderChunkList.render",
+            "line": 26,
+            "samples": 6
+          },
+          {
+            "method": "net/minecraft/client/render/world/VboRenderChunkList.render",
+            "line": 24,
+            "samples": 5
+          },
+          {
+            "method": "net/minecraft/client/render/world/VboRenderChunkList.prepareDrawState",
+            "line": 47,
+            "samples": 5
+          },
+          {
+            "method": "net/minecraft/client/render/world/VboRenderChunkList.render",
+            "line": 32,
+            "samples": 5
+          },
+          {
+            "method": "net/minecraft/client/render/world/VboRenderChunkList.prepareDrawState",
+            "line": 48,
+            "samples": 5
+          },
+          {
+            "method": "net/minecraft/client/render/world/VboRenderChunkList.prepareDrawState",
+            "line": 44,
+            "samples": 5
+          },
+          {
+            "method": "net/minecraft/client/render/world/VboRenderChunkList.render",
+            "line": 22,
+            "samples": 4
+          },
+          {
+            "method": "net/minecraft/client/render/world/VboRenderChunkList.render",
+            "line": 20,
+            "samples": 4
+          },
+          {
+            "method": "net/adiont/alacer/render/ChunkVisibility.search",
+            "line": 417,
+            "samples": 3
+          },
+          {
+            "method": "net/adiont/alacer/render/ChunkVisibility.beforeVanillaSearch",
+            "line": 201,
+            "samples": 3
+          },
+          {
+            "method": "net/minecraft/client/render/vertex/VertexBuffer.draw",
+            "line": 31,
+            "samples": 3
+          },
+          {
+            "method": "net/adiont/alacer/render/ChunkVisibility.inFrustum",
+            "line": 445,
+            "samples": 2
+          },
+          {
+            "method": "net/minecraft/client/render/world/VboRenderChunkList.render",
+            "line": 30,
+            "samples": 2
+          }
+        ]
+      },
+      "pan": {
+        "samples": 4042,
+        "methods": {
+          "java/lang/Math.floorMod": 89,
+          "net/adiont/alacer/render/ChunkVisibility.slot": 203,
+          "net/adiont/alacer/render/ChunkVisibility.search": 2125,
+          "net/adiont/alacer/render/ChunkVisibility.beforeVanillaSearch": 2047,
+          "net/adiont/alacer/render/ChunkVisibility.visit": 538,
+          "net/adiont/alacer/render/ChunkVisibility.inFrustum": 769,
+          "java/lang/Math.floorDiv": 33,
+          "net/minecraft/client/render/vertex/VertexBuffer.draw": 10,
+          "net/minecraft/client/render/world/VboRenderChunkList.render": 147,
+          "net/adiont/alacer/render/ChunkVisibility.info": 14,
+          "net/minecraft/client/render/world/VboRenderChunkList.prepareDrawState": 61,
+          "net/minecraft/client/render/vertex/VertexBuffer.bind": 15,
+          "net/adiont/alacer/render/ChunkVisibility.openFaces": 3,
+          "net/adiont/alacer/render/MatrixTracker.perspective": 1,
+          "net/adiont/alacer/render/MatrixTracker$Stack.known": 1,
+          "net/adiont/alacer/render/MatrixTracker.translate": 1,
+          "net/adiont/alacer/render/ChunkVisibility.afterVanillaSearch": 1
+        },
+        "lines": [
+          {
+            "method": "net/adiont/alacer/render/ChunkVisibility.beforeVanillaSearch",
+            "line": 201,
+            "samples": 2046
+          },
+          {
+            "method": "net/adiont/alacer/render/ChunkVisibility.search",
+            "line": 417,
+            "samples": 1220
+          },
+          {
+            "method": "net/adiont/alacer/render/ChunkVisibility.inFrustum",
+            "line": 445,
+            "samples": 700
+          },
+          {
+            "method": "net/adiont/alacer/render/ChunkVisibility.visit",
+            "line": 456,
+            "samples": 460
+          },
+          {
+            "method": "net/adiont/alacer/render/ChunkVisibility.search",
+            "line": 405,
+            "samples": 383
+          },
+          {
+            "method": "net/adiont/alacer/render/ChunkVisibility.search",
+            "line": 414,
+            "samples": 203
+          },
+          {
+            "method": "net/adiont/alacer/render/ChunkVisibility.search",
+            "line": 399,
+            "samples": 118
+          },
+          {
+            "method": "java/lang/Math.floorMod",
+            "line": 1587,
+            "samples": 79
+          },
+          {
+            "method": "net/adiont/alacer/render/ChunkVisibility.visit",
+            "line": 451,
+            "samples": 74
+          },
+          {
+            "method": "net/adiont/alacer/render/ChunkVisibility.slot",
+            "line": 474,
+            "samples": 73
+          },
+          {
+            "method": "net/adiont/alacer/render/ChunkVisibility.inFrustum",
+            "line": 434,
+            "samples": 62
+          },
+          {
+            "method": "net/adiont/alacer/render/ChunkVisibility.slot",
+            "line": 476,
+            "samples": 61
+          },
+          {
+            "method": "net/minecraft/client/render/world/VboRenderChunkList.render",
+            "line": 28,
+            "samples": 58
+          },
+          {
+            "method": "net/adiont/alacer/render/ChunkVisibility.slot",
+            "line": 475,
+            "samples": 42
+          },
+          {
+            "method": "net/adiont/alacer/render/ChunkVisibility.search",
+            "line": 390,
+            "samples": 38
+          },
+          {
+            "method": "java/lang/Math.floorDiv",
+            "line": 1476,
+            "samples": 31
+          },
+          {
+            "method": "net/adiont/alacer/render/ChunkVisibility.search",
+            "line": 401,
+            "samples": 23
+          },
+          {
+            "method": "net/adiont/alacer/render/ChunkVisibility.search",
+            "line": 393,
+            "samples": 23
+          },
+          {
+            "method": "net/adiont/alacer/render/ChunkVisibility.search",
+            "line": 411,
+            "samples": 23
+          },
+          {
+            "method": "net/adiont/alacer/render/ChunkVisibility.search",
+            "line": 323,
+            "samples": 18
+          }
+        ]
+      },
+      "sort": {
+        "samples": 4438,
+        "methods": {
+          "net/adiont/alacer/render/ChunkVisibility.inFrustum": 799,
+          "net/adiont/alacer/render/ChunkVisibility.search": 2318,
+          "net/adiont/alacer/render/ChunkVisibility.beforeVanillaSearch": 2208,
+          "java/lang/Math.floorDiv": 69,
+          "net/adiont/alacer/render/ChunkVisibility.slot": 253,
+          "net/adiont/alacer/render/ChunkVisibility.visit": 586,
+          "net/minecraft/client/render/world/VboRenderChunkList.render": 146,
+          "java/lang/Math.floorMod": 103,
+          "net/minecraft/client/render/vertex/VertexBuffer.draw": 7,
+          "net/minecraft/client/render/world/VboRenderChunkList.prepareDrawState": 61,
+          "net/adiont/alacer/render/ChunkVisibility.info": 23,
+          "net/adiont/alacer/render/ChunkVisibility.openFaces": 5,
+          "net/minecraft/client/render/vertex/VertexBuffer.bind": 13,
+          "net/adiont/alacer/render/MatrixTracker.rotate": 1,
+          "net/adiont/alacer/render/MatrixTracker$Stack.loadIdentity": 2,
+          "net/adiont/alacer/render/MatrixTracker.loadIdentity": 2,
+          "net/minecraft/client/render/vertex/VertexBuffer.upload": 1,
+          "net/adiont/alacer/render/MatrixTracker$Stack.multiply": 1,
+          "net/adiont/alacer/render/MatrixTracker.perspective": 1
+        },
+        "lines": [
+          {
+            "method": "net/adiont/alacer/render/ChunkVisibility.beforeVanillaSearch",
+            "line": 201,
+            "samples": 2208
+          },
+          {
+            "method": "net/adiont/alacer/render/ChunkVisibility.search",
+            "line": 417,
+            "samples": 1288
+          },
+          {
+            "method": "net/adiont/alacer/render/ChunkVisibility.inFrustum",
+            "line": 445,
+            "samples": 706
+          },
+          {
+            "method": "net/adiont/alacer/render/ChunkVisibility.visit",
+            "line": 456,
+            "samples": 486
+          },
+          {
+            "method": "net/adiont/alacer/render/ChunkVisibility.search",
+            "line": 405,
+            "samples": 436
+          },
+          {
+            "method": "net/adiont/alacer/render/ChunkVisibility.search",
+            "line": 414,
+            "samples": 253
+          },
+          {
+            "method": "net/adiont/alacer/render/ChunkVisibility.search",
+            "line": 399,
+            "samples": 124
+          },
+          {
+            "method": "net/adiont/alacer/render/ChunkVisibility.slot",
+            "line": 474,
+            "samples": 97
+          },
+          {
+            "method": "net/adiont/alacer/render/ChunkVisibility.visit",
+            "line": 451,
+            "samples": 90
+          },
+          {
+            "method": "java/lang/Math.floorMod",
+            "line": 1587,
+            "samples": 90
+          },
+          {
+            "method": "net/adiont/alacer/render/ChunkVisibility.inFrustum",
+            "line": 434,
+            "samples": 82
+          },
+          {
+            "method": "net/adiont/alacer/render/ChunkVisibility.slot",
+            "line": 476,
+            "samples": 69
+          },
+          {
+            "method": "java/lang/Math.floorDiv",
+            "line": 1476,
+            "samples": 62
+          },
+          {
+            "method": "net/minecraft/client/render/world/VboRenderChunkList.render",
+            "line": 28,
+            "samples": 57
+          },
+          {
+            "method": "net/adiont/alacer/render/ChunkVisibility.slot",
+            "line": 475,
+            "samples": 55
+          },
+          {
+            "method": "net/adiont/alacer/render/ChunkVisibility.search",
+            "line": 390,
+            "samples": 39
+          },
+          {
+            "method": "net/minecraft/client/render/world/VboRenderChunkList.render",
+            "line": 23,
+            "samples": 29
+          },
+          {
+            "method": "net/adiont/alacer/render/ChunkVisibility.slot",
+            "line": 470,
+            "samples": 26
+          },
+          {
+            "method": "net/adiont/alacer/render/ChunkVisibility.search",
+            "line": 401,
+            "samples": 26
+          },
+          {
+            "method": "net/adiont/alacer/render/ChunkVisibility.search",
+            "line": 411,
+            "samples": 26
+          }
+        ]
+      },
+      "fly": {
+        "samples": 5654,
+        "methods": {
+          "net/adiont/alacer/render/ChunkVisibility.search": 2954,
+          "net/adiont/alacer/render/ChunkVisibility.beforeVanillaSearch": 2833,
+          "java/lang/Math.floorMod": 118,
+          "net/adiont/alacer/render/ChunkVisibility.slot": 265,
+          "net/adiont/alacer/render/ChunkVisibility.inFrustum": 1075,
+          "net/adiont/alacer/render/ChunkVisibility.visit": 675,
+          "net/minecraft/client/render/vertex/VertexBuffer.bind": 20,
+          "net/minecraft/client/render/world/VboRenderChunkList.render": 175,
+          "net/minecraft/client/render/world/VboRenderChunkList.prepareDrawState": 68,
+          "net/adiont/alacer/render/ChunkVisibility.info": 35,
+          "java/lang/Math.floorDiv": 59,
+          "net/minecraft/client/render/vertex/VertexBuffer.draw": 17,
+          "net/adiont/alacer/render/ChunkVisibility.openFaces": 19,
+          "net/adiont/alacer/render/MatrixTracker.perspective": 1,
+          "net/adiont/alacer/render/MatrixTracker$Stack.known": 2,
+          "net/adiont/alacer/render/MatrixTracker.rotate": 3,
+          "net/adiont/alacer/render/MatrixTracker$Stack.multiply": 1,
+          "net/adiont/alacer/render/ChunkVisibility.afterVanillaSearch": 1,
+          "net/minecraft/client/render/vertex/VertexBuffer.unbind": 2,
+          "net/minecraft/client/render/vertex/VertexBuffer.upload": 2,
+          "net/minecraft/client/render/vertex/VertexBufferUploader.end": 1,
+          "net/adiont/alacer/render/MatrixTracker.translate": 1
+        },
+        "lines": [
+          {
+            "method": "net/adiont/alacer/render/ChunkVisibility.beforeVanillaSearch",
+            "line": 201,
+            "samples": 2832
+          },
+          {
+            "method": "net/adiont/alacer/render/ChunkVisibility.search",
+            "line": 417,
+            "samples": 1643
+          },
+          {
+            "method": "net/adiont/alacer/render/ChunkVisibility.inFrustum",
+            "line": 445,
+            "samples": 967
+          },
+          {
+            "method": "net/adiont/alacer/render/ChunkVisibility.visit",
+            "line": 456,
+            "samples": 567
+          },
+          {
+            "method": "net/adiont/alacer/render/ChunkVisibility.search",
+            "line": 405,
+            "samples": 559
+          },
+          {
+            "method": "net/adiont/alacer/render/ChunkVisibility.search",
+            "line": 414,
+            "samples": 264
+          },
+          {
+            "method": "net/adiont/alacer/render/ChunkVisibility.search",
+            "line": 399,
+            "samples": 141
+          },
+          {
+            "method": "java/lang/Math.floorMod",
+            "line": 1587,
+            "samples": 113
+          },
+          {
+            "method": "net/adiont/alacer/render/ChunkVisibility.visit",
+            "line": 451,
+            "samples": 98
+          },
+          {
+            "method": "net/adiont/alacer/render/ChunkVisibility.slot",
+            "line": 474,
+            "samples": 95
+          },
+          {
+            "method": "net/adiont/alacer/render/ChunkVisibility.inFrustum",
+            "line": 434,
+            "samples": 92
+          },
+          {
+            "method": "net/adiont/alacer/render/ChunkVisibility.slot",
+            "line": 475,
+            "samples": 80
+          },
+          {
+            "method": "net/adiont/alacer/render/ChunkVisibility.search",
+            "line": 390,
+            "samples": 71
+          },
+          {
+            "method": "net/adiont/alacer/render/ChunkVisibility.slot",
+            "line": 476,
+            "samples": 69
+          },
+          {
+            "method": "net/minecraft/client/render/world/VboRenderChunkList.render",
+            "line": 28,
+            "samples": 63
+          },
+          {
+            "method": "net/adiont/alacer/render/ChunkVisibility.search",
+            "line": 393,
+            "samples": 58
+          },
+          {
+            "method": "java/lang/Math.floorDiv",
+            "line": 1476,
+            "samples": 57
+          },
+          {
+            "method": "net/adiont/alacer/render/ChunkVisibility.search",
+            "line": 401,
+            "samples": 36
+          },
+          {
+            "method": "net/adiont/alacer/render/ChunkVisibility.search",
+            "line": 411,
+            "samples": 36
+          },
+          {
+            "method": "net/adiont/alacer/render/ChunkVisibility.info",
+            "line": 484,
+            "samples": 35
+          }
+        ]
+      }
+    },
+    "epoch_uncertainty_ns": "1001600"
+  }
+}

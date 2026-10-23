@@ -12,6 +12,9 @@ removal (session 16) and particle vertex writing (session 20). Session 21's part
 experiment verified exactly but did not save dependable time and stays off. Session 22's per-pass
 particle light reuse verified exactly and saved 9-14% of the particle pass in three of four measured
 groups, but failed at the lightest load and stays off pending a confirmation.
+The 2026-10-23 exact-neighbor/modern-GL combination passed its live correctness checks
+but regressed native frame/CPU/tail metrics; its three options remain off. See the
+[complete measured result](docs/benchmarks/2026-10-23-modern-rendering/README.md).
 Session 12 completed the chunk frustum investigation; its exact plane test remains an opt-in
 experiment because warmed repeated runs did not establish a dependable performance gain.
 Session 13 investigates chunk-build responsiveness and adds opt-in pipeline attribution;
@@ -171,6 +174,11 @@ Normal launches continue to use saved settings, so an existing explicit `false` 
 | `quality.zoom` | `2` | Hold-to-zoom magnification: 0=2x, 1=3x, 2=4x, 3=6x, 4=8x. Bind `key.alacer.zoom` under Controls -> Alacer; unbound by default. Changes the world FOV; the hand projection is unchanged. |
 | `render.fastChunkVisibility` | `true` | Use Alacer's chunk visibility search. |
 | `render.fastChunkVisibility.verify` | `false` | Debug: run vanilla's and Alacer's searches side by side and log differences. Slower. |
+| `render.fastChunkNeighbours` | `false` | Experimental exact culling math: precompute six neighbor addresses per chunk-storage slot instead of repeating division and modulo on each traversal edge. Keeps the existing traversal, frustum predicate and draw order. Requires Alacer visibility; guarded fallback for unsupported storage/camera inputs. Outside `render.defaults`. |
+| `render.fastChunkNeighbours.verify` | `false` | Debug: compare every precomputed address with the original world-coordinate calculation. Use with `render.fastChunkNeighbours=true`; whole-search verification remains separate. |
+| `render.terrainVaos` | `false` | Experimental OpenGL 3.0 compatibility VAOs retaining vanilla's terrain vertex layout. Reuses pointer setup per VBO, preserves draw calls/order and retires VAOs on buffer deletion, reload and world removal. Startup hooks, capability/compatibility fallback; outside `render.defaults`. |
+| `render.directBufferUploads` | `false` | Experimental OpenGL 4.5 buffer creation/named-data uploads, retaining vanilla's upload bytes, usage and final ARRAY_BUFFER=0. Startup hooks, capability/compatibility fallback; outside `render.defaults`. |
+| `render.modernGl.verify` | `false` | Debug: exercises supported VAO/named-upload paths, checks all four terrain pointer layouts and reads back every uploaded byte. Intrusive; excluded from performance selection. |
 | `render.fastChunkFrustum` | `false` | Experimental: in Alacer's chunk search, test one corner per frustum plane with vanilla's exact arithmetic/boundary rules. Unknown/modified cullers and unsafe inputs use vanilla. No dependable measured gain; see session 12. |
 | `render.fastChunkFrustum.verify` | `false` | Debug: compare every eligible chunk predicate with vanilla, return vanilla's answer and log differences. Use with the Alacer chunk search enabled. |
 | `render.fastCameraSectionFaces` | `false` | Experimental (session 28b, not yet measured; reference series prepared as session 30): in Alacer's chunk search, find the camera section's open faces with an allocation-free flood fill instead of vanilla's (which copies `Direction.values()` per visited block), reading the section's blocks with vanilla's own calls and reusing the answer while the camera stays in the same connected pocket of an unchanged, populated section. Same faces as vanilla; only matters when the camera moves between blocks. Runtime-toggleable; not in `render.defaults`. |
@@ -345,6 +353,13 @@ through vanilla reload after export, before automatic exit. No backend is forced
 play. `profiler.chunkDetail=true`
 adds opt-in terrain submission/chunk counts to the existing upload/build/sort diagnostics;
 leave it off for selection. See the [Session 14 protocol and evidence](docs/benchmarks/2026-10-19-display-lists-vbo/README.md).
+
+The independent culling-math/modern-OpenGL trials use this same retained scene
+and the ordinary route on Java 25. Each option stays off by default. See the
+[mechanisms, gates and native-GPU results](docs/benchmarks/2026-10-23-modern-rendering/README.md).
+`-Palacer.benchmark.toggle=render.modernPipeline` toggles their combination for
+diagnostics; it is not a saved preset. `-Palacer.modernGl.forceFallback=true`
+forces the original GL path for compatibility checks.
 
 On the measured Java 8 profile, VBO reduced paired mean frame time by 51–61%, but rare fly
 maxima, allocation per second and one queue-wait proxy worsened. This is a throughput

@@ -1,0 +1,85 @@
+{
+  "static": {
+    "client_samples": 989,
+    "top_leaf": {
+      "net/minecraft/util/TypeInstanceMultiMap.size": 179,
+      "net/minecraft/client/render/world/CompiledChunk.hasBlock": 133,
+      "net/adiont/alacer/render/EntityRendering.cachedLookup": 80,
+      "net/minecraft/client/render/world/CompiledChunk.getRenderableBlockEntities": 76,
+      "net/minecraft/client/render/world/WorldRenderer.renderEntities": 61,
+      "net/minecraft/client/render/world/WorldRenderer.setupRender": 36,
+      "net/minecraft/client/render/world/WorldRenderer.render": 31,
+      "net/minecraft/client/render/world/RenderChunk.getOrigin": 16,
+      "java/util/HashMap.hash": 15,
+      "net/minecraft/client/render/world/RenderChunk.getCompiledChunk": 12,
+      "java/util/ArrayList$Itr.next": 11,
+      "org/lwjgl/opengl/FastIntMap.containsKey": 10,
+      "java/util/ArrayList.elementData": 9,
+      "org/lwjgl/opengl/GLContext.getCapabilitiesImpl": 8,
+      "net/minecraft/util/Long2ObjectHashMap.get": 8
+    },
+    "selected": {
+      "net/minecraft/client/render/world/VboRenderChunkList.render": 29,
+      "net/minecraft/client/render/world/VboRenderChunkList.wrapWithCondition$zdh000$alacer$bind": 18,
+      "net/adiont/alacer/render/ModernGl.beginArrays": 2,
+      "net/minecraft/client/render/world/VboRenderChunkList.handler$zdh000$alacer$begin": 2,
+      "org/lwjgl/opengl/GL11.nglGetIntegerv": 1,
+      "org/lwjgl/opengl/GL30.glBindVertexArray": 13,
+      "org/lwjgl/opengl/GL30.nglBindVertexArray": 2
+    }
+  },
+  "pan": {
+    "client_samples": 2426,
+    "top_leaf": {
+      "net/adiont/alacer/render/ChunkVisibility.search": 271,
+      "net/adiont/alacer/render/ChunkVisibility.inFrustum": 258,
+      "net/minecraft/util/TypeInstanceMultiMap.size": 251,
+      "net/minecraft/client/render/world/RenderChunk.setFrame": 218,
+      "net/minecraft/client/render/world/CompiledChunk.hasBlock": 192,
+      "java/util/BitSet.get": 84,
+      "net/minecraft/client/render/FrustumData.contains": 74,
+      "net/minecraft/client/render/world/WorldRenderer.render": 69,
+      "net/minecraft/client/render/FrustumCuller.isVisible": 68,
+      "net/minecraft/client/render/FrustumData.discriminant": 66,
+      "net/minecraft/client/render/world/WorldRenderer.setupRender": 61,
+      "net/minecraft/client/render/world/CompiledChunk.getRenderableBlockEntities": 59,
+      "net/minecraft/client/render/world/WorldRenderer.renderEntities": 58,
+      "net/minecraft/client/render/world/OcclusionData.isVisible": 56,
+      "net/adiont/alacer/render/EntityRendering.cachedLookup": 54
+    },
+    "selected": {
+      "net/minecraft/client/render/world/VboRenderChunkList.render": 33,
+      "net/minecraft/client/render/world/VboRenderChunkList.wrapWithCondition$zdh000$alacer$bind": 27,
+      "org/lwjgl/opengl/GL30.glBindVertexArray": 18
+    }
+  },
+  "fly": {
+    "client_samples": 3441,
+    "top_leaf": {
+      "java/util/HashMap.getNode": 495,
+      "net/adiont/alacer/render/ChunkVisibility.inFrustum": 418,
+      "net/adiont/alacer/render/ChunkVisibility.search": 321,
+      "net/minecraft/client/render/world/RenderChunk.setFrame": 286,
+      "net/minecraft/client/render/world/CompiledChunk.hasBlock": 262,
+      "net/minecraft/client/render/world/OcclusionData.isVisible": 147,
+      "net/minecraft/client/render/FrustumCuller.isVisible": 117,
+      "java/util/BitSet.get": 113,
+      "net/minecraft/client/render/world/WorldRenderer.render": 105,
+      "net/minecraft/client/render/FrustumData.contains": 87,
+      "net/minecraft/client/render/FrustumData.discriminant": 82,
+      "net/minecraft/client/render/world/WorldRenderer.setupRender": 79,
+      "net/adiont/alacer/render/ChunkVisibility.visit": 68,
+      "net/adiont/alacer/render/ChunkNeighbours.next": 40,
+      "net/adiont/alacer/render/ChunkVisibility.info": 34
+    },
+    "selected": {
+      "net/minecraft/client/render/world/VboRenderChunkList.render": 72,
+      "net/minecraft/client/render/world/VboRenderChunkList.wrapWithCondition$zdh000$alacer$bind": 54,
+      "org/lwjgl/opengl/GL30.glBindVertexArray": 37,
+      "net/adiont/alacer/render/ModernGl.beginArrays": 2,
+      "net/minecraft/client/render/world/VboRenderChunkList.handler$zdh000$alacer$begin": 2,
+      "org/lwjgl/opengl/GL30.nglBindVertexArray": 4,
+      "net/minecraft/client/render/world/VboRenderChunkList.handler$zdh000$alacer$end": 1
+    }
+  }
+}
