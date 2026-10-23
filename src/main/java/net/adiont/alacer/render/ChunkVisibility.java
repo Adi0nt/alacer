@@ -499,7 +499,9 @@ public final class ChunkVisibility {
 		WorldChunk chunk = world.getChunk(eye);
 		// Block changes in a chunk that is not yet "populated" (it has not had its first client
 		// tick) do not notify render listeners, so markDirty would not invalidate the cache.
-		// Recompute every time for such chunks, exactly like vanilla.
+		// Recompute every time for such chunks, exactly like vanilla, and keep the result only if
+		// the chunk was populated when it was computed: a change made before the first tick would
+		// otherwise survive in the cache once the chunk becomes populated.
 		if (!this.facesValid || !chunk.isPopulated() || this.facesChunk != chunk || this.facesX != eye.getX() || this.facesY != eye.getY() || this.facesZ != eye.getZ()) {
 			Set<Direction> open = this.access.alacer$getOpenChunkFaces(eye);
 			int mask = 0;
@@ -511,7 +513,7 @@ public final class ChunkVisibility {
 			this.facesX = eye.getX();
 			this.facesY = eye.getY();
 			this.facesZ = eye.getZ();
-			this.facesValid = true;
+			this.facesValid = chunk.isPopulated();
 		}
 		return this.faces;
 	}

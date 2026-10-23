@@ -74,6 +74,7 @@ Useful project properties (all optional):
 | `-Pjfr=name` | Record a Java Flight Recorder profile to `run/name.jfr`. |
 | `-PjfrSettings=path` | Optional JFR settings file, resolved from the game directory (`run/`). Default `profile`. |
 | `-PjfrDebugNonSafepoints=true` | With `-Pjfr`, also pass `-XX:+UnlockDiagnosticVMOptions -XX:+DebugNonSafepoints` so inlined-frame lines are recorded between safepoints. Attribution launches only (session 25). |
+| `-PjfrTlab=16k` | With `-Pjfr`, fix the TLAB size (`-XX:TLABSize=16k -XX:-ResizeTLAB`) so allocation samples, which are taken at TLAB refills, reach a high-allocating thread more often. Allocation attribution launches only (session 28). |
 | `-Palacer.<option>=<value>` | Override any config option for this launch (see below). |
 
 ## In-game profiler
@@ -211,7 +212,8 @@ camera), `alacer.benchmark.chests`, `alacer.benchmark.viewDistance` (default 12)
 `alacer.benchmark.vbo` (true/false; default leaves the option alone), `alacer.benchmark.seed`,
 `alacer.benchmark.timeScale` (scales phase durations), `alacer.benchmark.exit`,
 `alacer.benchmark.screenshots` (saves `screenshots/alacer-<label>-<phase>.png` at the end of each
-phase), and `alacer.benchmark.timeout` (seconds, default 600, 0 = off: if the benchmark has not
+phase; with `alacer.benchmark.screenshotEndPose=true` it first renders one unrecorded frame at the
+phase's exact end pose, so pan captures have the same yaw at any frame rate), and `alacer.benchmark.timeout` (seconds, default 600, 0 = off: if the benchmark has not
 finished by then, the game exits with code 3, so a scripted series of launches cannot hang).
 
 To compare an option on and off, prefer **in-process A/B**: with

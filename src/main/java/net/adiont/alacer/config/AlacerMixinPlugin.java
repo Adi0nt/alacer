@@ -45,6 +45,7 @@ public class AlacerMixinPlugin implements IMixinConfigPlugin {
 	private boolean particleVertices;
 	private boolean particleLightEntry;
 	private boolean particleLightReuse;
+	private boolean shadowPositions;
 
 	@Override
 	public void onLoad(String mixinPackage) {
@@ -72,6 +73,12 @@ public class AlacerMixinPlugin implements IMixinConfigPlugin {
 		this.particleVertices = particleVerticesEnabled(file);
 		this.particleLightEntry = particleLightEntryEnabled(file);
 		this.particleLightReuse = particleLightReuseEnabled(file);
+		this.shadowPositions = shadowPositionsEnabled(file);
+	}
+
+	static boolean shadowPositionsEnabled(Properties file) {
+		return flag(file, "render.reuseShadowPositions", false) || flag(file, "render.reuseShadowPositions.verify", false)
+			|| "render.reuseShadowPositions".equals(System.getProperty("alacer.benchmark.toggle", "").trim());
 	}
 
 	static boolean particleMovementCensusEnabled() {
@@ -176,6 +183,7 @@ public class AlacerMixinPlugin implements IMixinConfigPlugin {
 		}
 		if (name.equals("ParticleManagerLightReuseMixin")) { return this.particleLightReuse; }
 		if (name.equals("EntityParticleBoxMixin")) { return this.particleBoxes; }
+		if (name.equals("EntityShadowPositionMixin")) { return this.shadowPositions; }
 		if (name.equals("EntityParticleMovementMixin") || name.equals("ParticleCollisionMixin")) {
 			return this.particleMovement;
 		}

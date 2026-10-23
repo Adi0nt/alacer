@@ -86,6 +86,11 @@ tasks.withType(net.fabricmc.loom.task.AbstractRunTask).configureEach {
 		if (project.findProperty('jfrDebugNonSafepoints') == 'true') {
 			jvmArgs '-XX:+UnlockDiagnosticVMOptions', '-XX:+DebugNonSafepoints'
 		}
+		// -PjfrTlab=16k (allocation attribution only) fixes the TLAB size: allocation samples are taken at TLAB
+		// refills, so a high-allocating thread's large adaptive TLABs otherwise yield only a few samples per second.
+		if (project.hasProperty('jfrTlab')) {
+			jvmArgs "-XX:TLABSize=${project.property('jfrTlab')}", '-XX:-ResizeTLAB'
+		}
 	}
 
 	// -Pwindow=1920x1080 sets the initial window size, which drives fill-rate (GPU) load.
