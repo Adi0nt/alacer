@@ -175,6 +175,15 @@ public final class AlacerConfig {
 	/** Camera effect strengths as percentages; 100 is vanilla. */
 	public volatile int fovEffects;
 	public volatile int damageTilt;
+	/** View-bobbing and nausea/portal distortion strengths as percentages; 100 is vanilla. */
+	public volatile int viewBobbing;
+	public volatile int distortion;
+	/** Third-person camera distance in blocks (vanilla 4) and whether it stops in front of blocks (1, vanilla). */
+	public volatile int thirdPersonDistance;
+	public volatile int cameraCollision;
+	/** Choice index into CameraEffects' field-of-view approach rates (1 is vanilla's) and zoom factors (2 is 4x). */
+	public volatile int fovTransition;
+	public volatile int zoom;
 	/** Choice index into ChunkScheduling's frame budgets; 2 is vanilla. */
 	public volatile int chunkUpdateBudget;
 	/** Chunk builder threads, read when the renderer is created at startup; 2 is vanilla. */
@@ -207,6 +216,12 @@ public final class AlacerConfig {
 		this.anisotropicFiltering = clamp(integer(file, system, "quality.anisotropicFiltering", 0, "Anisotropic filtering for block and item textures: 0 Off, 1=2x, 2=4x, 3=8x, 4=16x (limited by the driver)."), 0, 4);
 		this.fovEffects = step(integer(file, system, "quality.fovEffects", 100, "Field-of-view changes from sprinting, flying, speed effects and bows, 0-100 percent (multiples of 5)."), 0, 100, 5, 100);
 		this.damageTilt = step(integer(file, system, "quality.damageTilt", 100, "Camera tilt when taking damage, 0-100 percent (multiples of 5)."), 0, 100, 5, 100);
+		this.viewBobbing = step(integer(file, system, "quality.viewBobbing", 100, "View-bobbing strength while View bobbing is on, 0-100 percent (multiples of 5)."), 0, 100, 5, 100);
+		this.distortion = step(integer(file, system, "quality.distortion", 100, "Nausea and Nether portal view distortion, 0-100 percent (multiples of 5)."), 0, 100, 5, 100);
+		this.thirdPersonDistance = clamp(integer(file, system, "quality.thirdPersonDistance", 4, "Third-person camera distance, 1-16 blocks (vanilla 4)."), 1, 16);
+		this.cameraCollision = clamp(integer(file, system, "quality.cameraCollision", 1, "Third-person camera stops in front of blocks: 0 Off, 1 On (vanilla)."), 0, 1);
+		this.fovTransition = clamp(integer(file, system, "quality.fovTransition", 1, "Field-of-view transitions: 0 Instant, 1 Vanilla, 2 Smooth, 3 Very smooth."), 0, 3);
+		this.zoom = clamp(integer(file, system, "quality.zoom", 2, "Zoom key magnification: 0=2x, 1=3x, 2=4x, 3=6x, 4=8x. The key is unbound by default."), 0, 4);
 		this.chunkUpdateBudget = clamp(integer(file, system, "advanced.chunkUpdateBudget", 2, "Client-thread time for chunk uploads and rebuild scheduling: 0=25%, 1=50%, 2=100% (vanilla), 3=200%, 4=400% of vanilla's budget."), 0, 4);
 		this.chunkThreads = clamp(integer(file, system, "advanced.chunkThreads", 2, "Chunk builder threads, 1-6 (vanilla 2). Read at startup."), 1, 6);
 		this.profilerEnabled = bool(file, system, "profiler.enabled", true,
@@ -516,6 +531,12 @@ public final class AlacerConfig {
 			case "quality.anisotropicFiltering" -> this.anisotropicFiltering = value;
 			case "quality.fovEffects" -> this.fovEffects = value;
 			case "quality.damageTilt" -> this.damageTilt = value;
+			case "quality.viewBobbing" -> this.viewBobbing = value;
+			case "quality.distortion" -> this.distortion = value;
+			case "quality.thirdPersonDistance" -> this.thirdPersonDistance = value;
+			case "quality.cameraCollision" -> this.cameraCollision = value;
+			case "quality.fovTransition" -> this.fovTransition = value;
+			case "quality.zoom" -> this.zoom = value;
 			case "advanced.chunkUpdateBudget" -> this.chunkUpdateBudget = value;
 			case "advanced.chunkThreads" -> {
 				// The chunk dispatcher and its threads exist from startup; keep the running count truthful.
@@ -552,6 +573,12 @@ public final class AlacerConfig {
 		values.put("quality.anisotropicFiltering", Integer.toString(this.anisotropicFiltering));
 		values.put("quality.fovEffects", Integer.toString(this.fovEffects));
 		values.put("quality.damageTilt", Integer.toString(this.damageTilt));
+		values.put("quality.viewBobbing", Integer.toString(this.viewBobbing));
+		values.put("quality.distortion", Integer.toString(this.distortion));
+		values.put("quality.thirdPersonDistance", Integer.toString(this.thirdPersonDistance));
+		values.put("quality.cameraCollision", Integer.toString(this.cameraCollision));
+		values.put("quality.fovTransition", Integer.toString(this.fovTransition));
+		values.put("quality.zoom", Integer.toString(this.zoom));
 		values.put("advanced.chunkUpdateBudget", Integer.toString(this.chunkUpdateBudget));
 		values.put("advanced.chunkThreads", Integer.toString(this.chunkThreads));
 		values.put("profiler.enabled", String.valueOf(this.profilerEnabled));

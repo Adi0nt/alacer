@@ -57,6 +57,7 @@ public final class Alacer implements ClientModInitializer, FrameProfiler.ChunkCo
 	private BenchmarkRunner benchmark;
 	private KeyBinding hudKey;
 	private KeyBinding exportKey;
+	private KeyBinding zoomKey;
 	private long nextLog;
 
 	public static Alacer get() {
@@ -103,6 +104,9 @@ public final class Alacer implements ClientModInitializer, FrameProfiler.ChunkCo
 			LOGGER.error("Benchmark mode requires profiler.enabled=true; ignoring");
 		}
 
+		// Unbound by default (key code 0), so the camera is vanilla's until the user assigns it.
+		KeybindEvents.REGISTER_KEYBINDS.register(() -> this.zoomKey = KeybindRegistry.register("key.alacer.zoom", Keyboard.KEY_NONE, "key.categories.alacer"));
+
 		EntityRendering.init(this.profiler, this.config.profilerEntityDetail, this.config.profilerEntityStages);
 		EntityShadows.init(this.profiler);
 		ParticleTimings.init(this.profiler);
@@ -141,6 +145,11 @@ public final class Alacer implements ClientModInitializer, FrameProfiler.ChunkCo
 		if (this.benchmark != null) {
 			this.benchmark.onFrameStart();
 		}
+	}
+
+	/** True while the zoom key is held. */
+	public boolean zooming() {
+		return this.zoomKey != null && this.zoomKey.isPressed();
 	}
 
 	public void begin(FrameProfiler.Section section) {

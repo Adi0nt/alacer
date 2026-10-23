@@ -35,7 +35,8 @@ public record VideoSetting(String key, Category category, String title, String d
 			case "fps" -> value == 260 ? "Unlimited" : value + " FPS";
 			case "gamma", "quality.aoStrength", "quality.entityDistance", "quality.blockEntityDistance" -> value + "%";
 			case "quality.fogStart" -> value == 100 ? "Off" : value + "%";
-			case "quality.fovEffects", "quality.damageTilt" -> value == 0 ? "Off" : value + "%";
+			case "quality.fovEffects", "quality.damageTilt", "quality.viewBobbing", "quality.distortion" -> value == 0 ? "Off" : value + "%";
+			case "quality.thirdPersonDistance" -> value + (value == 1 ? " block" : " blocks");
 			case "advanced.chunkThreads" -> value + (value == 1 ? " thread" : " threads");
 			case "fov" -> value + " degrees";
 			default -> Integer.toString(value);
