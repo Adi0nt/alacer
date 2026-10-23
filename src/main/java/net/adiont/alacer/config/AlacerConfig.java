@@ -147,6 +147,32 @@ public final class AlacerConfig {
 	public volatile int smoothLightingStyle;
 	/** Ambient-occlusion darkening only, as a percentage; 100 preserves full strength. */
 	public volatile int ambientOcclusionStrength;
+	/** Entity and block-entity draw distances as a percentage of vanilla's; 100 is vanilla. */
+	public volatile int entityDistance;
+	public volatile int blockEntityDistance;
+	/** Overworld fog start as a percentage of the render distance (vanilla 75); 100 moves the fog out of view. */
+	public volatile int fogStart;
+	/** 0 hides the sun and moon, 1 draws them. */
+	public volatile int sunMoonQuality;
+	/** Texture animation groups: 0 freezes the current frame, 1 animates. */
+	public volatile int waterAnimation;
+	public volatile int lavaAnimation;
+	public volatile int fireAnimation;
+	public volatile int portalAnimation;
+	public volatile int otherAnimations;
+	/** Choice index into ParticleLimit; 4 is vanilla's 4000 per list. */
+	public volatile int particleLimit;
+	/** Choice index into BiomeBlend; 1 is vanilla's 3x3. */
+	public volatile int biomeBlend;
+	/** Choice index into TextureFiltering; 0 is off. */
+	public volatile int anisotropicFiltering;
+	/** Camera effect strengths as percentages; 100 is vanilla. */
+	public volatile int fovEffects;
+	public volatile int damageTilt;
+	/** Choice index into ChunkScheduling's frame budgets; 2 is vanilla. */
+	public volatile int chunkUpdateBudget;
+	/** Chunk builder threads, read when the renderer is created at startup; 2 is vanilla. */
+	public volatile int chunkThreads;
 	private Path settingsFile;
 	private final Map<String, String> pendingRestart = new LinkedHashMap<>();
 	private final Map<String, String> effective = new LinkedHashMap<>();
@@ -161,6 +187,22 @@ public final class AlacerConfig {
 		this.droppedItemsQuality = clamp(integer(file, system, "quality.droppedItems", 1, "Dropped item stacks: 0 Fast (one model per stack), 1 Fancy (up to five models by stack size)."), 0, 1);
 		this.smoothLightingStyle = clamp(integer(file, system, "quality.lightingStyle", 0, "Smooth-lighting style: 0 Vanilla, 1 Soft. Requires smooth lighting; rebuild terrain after changes."), 0, 1);
 		this.ambientOcclusionStrength = clamp(integer(file, system, "quality.aoStrength", 100, "Ambient-occlusion corner darkness, 0-100 percent. Does not change sky/block light or directional shading."), 0, 100);
+		this.entityDistance = step(integer(file, system, "quality.entityDistance", 100, "Entity draw distance, 25-500 percent of vanilla's (multiples of 25). Entities still need visible terrain."), 25, 500, 25, 100);
+		this.blockEntityDistance = step(integer(file, system, "quality.blockEntityDistance", 100, "Block entity (chests, signs, banners, heads) draw distance, 25-500 percent of vanilla's (multiples of 25)."), 25, 500, 25, 100);
+		this.fogStart = step(integer(file, system, "quality.fogStart", 75, "Overworld distance fog start, 10-95 percent of the render distance (multiples of 5), or 100 for no distance fog. Blindness, water, lava and Nether fog are unchanged."), 10, 100, 5, 75);
+		this.sunMoonQuality = clamp(integer(file, system, "quality.sunMoon", 1, "Sun and moon: 0 Off, 1 On."), 0, 1);
+		this.waterAnimation = clamp(integer(file, system, "quality.waterAnimation", 1, "Water texture animation: 0 Off (frozen frame), 1 On."), 0, 1);
+		this.lavaAnimation = clamp(integer(file, system, "quality.lavaAnimation", 1, "Lava texture animation: 0 Off (frozen frame), 1 On."), 0, 1);
+		this.fireAnimation = clamp(integer(file, system, "quality.fireAnimation", 1, "Fire texture animation: 0 Off (frozen frame), 1 On."), 0, 1);
+		this.portalAnimation = clamp(integer(file, system, "quality.portalAnimation", 1, "Nether portal texture animation: 0 Off (frozen frame), 1 On."), 0, 1);
+		this.otherAnimations = clamp(integer(file, system, "quality.otherAnimations", 1, "Other block and item texture animations (clocks and compasses always update): 0 Off, 1 On."), 0, 1);
+		this.particleLimit = clamp(integer(file, system, "quality.particleLimit", 4, "Particles kept per particle list before the oldest is removed: 0=250, 1=500, 2=1000, 3=2000, 4=4000 (vanilla)."), 0, 4);
+		this.biomeBlend = clamp(integer(file, system, "quality.biomeBlend", 1, "Biome color blending: 0 Off (1x1), 1 3x3 (vanilla), 2 5x5, 3 7x7. Rebuild terrain after changes."), 0, 3);
+		this.anisotropicFiltering = clamp(integer(file, system, "quality.anisotropicFiltering", 0, "Anisotropic filtering for block and item textures: 0 Off, 1=2x, 2=4x, 3=8x, 4=16x (limited by the driver)."), 0, 4);
+		this.fovEffects = step(integer(file, system, "quality.fovEffects", 100, "Field-of-view changes from sprinting, flying, speed effects and bows, 0-100 percent (multiples of 5)."), 0, 100, 5, 100);
+		this.damageTilt = step(integer(file, system, "quality.damageTilt", 100, "Camera tilt when taking damage, 0-100 percent (multiples of 5)."), 0, 100, 5, 100);
+		this.chunkUpdateBudget = clamp(integer(file, system, "advanced.chunkUpdateBudget", 2, "Client-thread time for chunk uploads and rebuild scheduling: 0=25%, 1=50%, 2=100% (vanilla), 3=200%, 4=400% of vanilla's budget."), 0, 4);
+		this.chunkThreads = clamp(integer(file, system, "advanced.chunkThreads", 2, "Chunk builder threads, 1-6 (vanilla 2). Read at startup."), 1, 6);
 		this.profilerEnabled = bool(file, system, "profiler.enabled", true,
 			"Collect frame-time, tick-time and memory statistics.");
 		this.profilerHistory = clamp(integer(file, system, "profiler.history", 8192,
@@ -408,10 +450,10 @@ public final class AlacerConfig {
 			String key = e.getKey(), value = e.getValue();
 			net.adiont.alacer.settings.VideoSetting option = net.adiont.alacer.settings.VideoSettingsCatalog.byKey(key);
 			if (System.getProperty(SYSTEM_PREFIX + key) != null) { throw new IOException("A launch override controls " + key); }
-			if (key.startsWith("quality.")) {
+			if (key.startsWith("quality.") || key.startsWith("advanced.")) {
 				int number = Integer.parseInt(value);
 				if (option.normalize(number) != number) { throw new IllegalArgumentException("Invalid quality: " + value); }
-			} else if (!key.startsWith("render.") || !("true".equals(value) || "false".equals(value))) {
+			} else if (!(key.startsWith("render.") || key.equals("profiler.hud")) || !("true".equals(value) || "false".equals(value))) {
 				throw new IllegalArgumentException("Not a menu configuration option: " + key);
 			}
 		}
@@ -419,19 +461,48 @@ public final class AlacerConfig {
 		SettingsFile.update(this.settingsFile, changes);
 		for (Map.Entry<String,String> e : changes.entrySet()) {
 			String key = e.getKey(), value = e.getValue();
-			if ("quality.leaves".equals(key)) { this.leavesQuality = Integer.parseInt(value); }
-			else if ("quality.weather".equals(key)) { this.weatherQuality = Integer.parseInt(value); }
-			else if ("quality.rainSplashes".equals(key)) { this.rainSplashQuality = Integer.parseInt(value); }
-			else if ("quality.vignette".equals(key)) { this.vignetteQuality = Integer.parseInt(value); }
-			else if ("quality.stars".equals(key)) { this.starsQuality = Integer.parseInt(value); }
-			else if ("quality.enchantGlint".equals(key)) { this.enchantGlintQuality = Integer.parseInt(value); }
-			else if ("quality.droppedItems".equals(key)) { this.droppedItemsQuality = Integer.parseInt(value); }
-			else if ("quality.lightingStyle".equals(key)) { this.smoothLightingStyle = Integer.parseInt(value); }
-			else if ("quality.aoStrength".equals(key)) { this.ambientOcclusionStrength = Integer.parseInt(value); }
+			if (key.startsWith("quality.") || key.startsWith("advanced.")) { setVideoInt(key, Integer.parseInt(value)); }
+			else if ("profiler.hud".equals(key)) { this.hudVisible = Boolean.parseBoolean(value); }
 			else if ("render.fastParticleVertices".equals(key)) {
 				if (Boolean.parseBoolean(value) == this.fastParticleVertices) { this.pendingRestart.remove(key); }
 				else { this.pendingRestart.put(key,value); }
 			} else { setToggle(key,Boolean.parseBoolean(value)); }
+		}
+	}
+
+	/** Live update of a validated integer menu option. Startup-only options are recorded as pending instead. */
+	private void setVideoInt(String key, int value) {
+		switch (key) {
+			case "quality.leaves" -> this.leavesQuality = value;
+			case "quality.weather" -> this.weatherQuality = value;
+			case "quality.rainSplashes" -> this.rainSplashQuality = value;
+			case "quality.vignette" -> this.vignetteQuality = value;
+			case "quality.stars" -> this.starsQuality = value;
+			case "quality.enchantGlint" -> this.enchantGlintQuality = value;
+			case "quality.droppedItems" -> this.droppedItemsQuality = value;
+			case "quality.lightingStyle" -> this.smoothLightingStyle = value;
+			case "quality.aoStrength" -> this.ambientOcclusionStrength = value;
+			case "quality.entityDistance" -> this.entityDistance = value;
+			case "quality.blockEntityDistance" -> this.blockEntityDistance = value;
+			case "quality.fogStart" -> this.fogStart = value;
+			case "quality.sunMoon" -> this.sunMoonQuality = value;
+			case "quality.waterAnimation" -> this.waterAnimation = value;
+			case "quality.lavaAnimation" -> this.lavaAnimation = value;
+			case "quality.fireAnimation" -> this.fireAnimation = value;
+			case "quality.portalAnimation" -> this.portalAnimation = value;
+			case "quality.otherAnimations" -> this.otherAnimations = value;
+			case "quality.particleLimit" -> this.particleLimit = value;
+			case "quality.biomeBlend" -> this.biomeBlend = value;
+			case "quality.anisotropicFiltering" -> this.anisotropicFiltering = value;
+			case "quality.fovEffects" -> this.fovEffects = value;
+			case "quality.damageTilt" -> this.damageTilt = value;
+			case "advanced.chunkUpdateBudget" -> this.chunkUpdateBudget = value;
+			case "advanced.chunkThreads" -> {
+				// The chunk dispatcher and its threads exist from startup; keep the running count truthful.
+				if (value == this.chunkThreads) { this.pendingRestart.remove(key); }
+				else { this.pendingRestart.put(key, Integer.toString(value)); }
+			}
+			default -> throw new IllegalArgumentException("Not a menu configuration option: " + key);
 		}
 	}
 
@@ -447,6 +518,22 @@ public final class AlacerConfig {
 		values.put("quality.droppedItems", Integer.toString(this.droppedItemsQuality));
 		values.put("quality.lightingStyle", Integer.toString(this.smoothLightingStyle));
 		values.put("quality.aoStrength", Integer.toString(this.ambientOcclusionStrength));
+		values.put("quality.entityDistance", Integer.toString(this.entityDistance));
+		values.put("quality.blockEntityDistance", Integer.toString(this.blockEntityDistance));
+		values.put("quality.fogStart", Integer.toString(this.fogStart));
+		values.put("quality.sunMoon", Integer.toString(this.sunMoonQuality));
+		values.put("quality.waterAnimation", Integer.toString(this.waterAnimation));
+		values.put("quality.lavaAnimation", Integer.toString(this.lavaAnimation));
+		values.put("quality.fireAnimation", Integer.toString(this.fireAnimation));
+		values.put("quality.portalAnimation", Integer.toString(this.portalAnimation));
+		values.put("quality.otherAnimations", Integer.toString(this.otherAnimations));
+		values.put("quality.particleLimit", Integer.toString(this.particleLimit));
+		values.put("quality.biomeBlend", Integer.toString(this.biomeBlend));
+		values.put("quality.anisotropicFiltering", Integer.toString(this.anisotropicFiltering));
+		values.put("quality.fovEffects", Integer.toString(this.fovEffects));
+		values.put("quality.damageTilt", Integer.toString(this.damageTilt));
+		values.put("advanced.chunkUpdateBudget", Integer.toString(this.chunkUpdateBudget));
+		values.put("advanced.chunkThreads", Integer.toString(this.chunkThreads));
 		values.put("profiler.enabled", String.valueOf(this.profilerEnabled));
 		values.put("profiler.history", String.valueOf(this.profilerHistory));
 		values.put("profiler.logInterval", String.valueOf(this.profilerLogInterval));
@@ -536,5 +623,12 @@ public final class AlacerConfig {
 
 	private static int clamp(int value, int min, int max) {
 		return Math.max(min, Math.min(max, value));
+	}
+
+	/** Clamps, then rounds an off-grid hand-edited value to the menu's nearest step. */
+	private static int step(int value, int min, int max, int step, int def) {
+		int bounded = clamp(value, min, max);
+		int snapped = min + Math.round((bounded - min) / (float) step) * step;
+		return snapped > max ? def : snapped;
 	}
 }
