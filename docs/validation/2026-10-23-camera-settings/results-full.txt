@@ -1,0 +1,83 @@
+applied {fps=260, vsync=0, distance=6}
+screenshot menu-display-camera
+screenshot menu-display-tooltip-collision
+screenshot menu-search-zoom
+world alacer-camera-check-1792741854342
+origin -150,-810
+defaults {quality.viewBobbing=100 (100%), quality.distortion=100 (100%), quality.thirdPersonDistance=4 (4 blocks), quality.cameraCollision=1 (On), quality.fovTransition=1 (Vanilla), quality.zoom=2 (4x)}
+bobbing option true
+applied {quality.viewBobbing=100}
+viewBobbing=100 offset=(-0.05000, 1.62017, 0.05000) length=1.62172 frames=20
+screenshot bobbing-100pct
+applied {quality.viewBobbing=50}
+viewBobbing=50 offset=(-0.05000, 1.62002, 0.02500) length=1.62099 frames=20
+screenshot bobbing-50pct
+applied {quality.viewBobbing=0}
+viewBobbing=0 offset=(-0.05000, 1.62000, 0.00000) length=1.62077 frames=20
+screenshot bobbing-Off
+applied {quality.viewBobbing=100}
+viewBobbing=100 offset=(-0.05000, 1.62017, 0.05000) length=1.62172 frames=20
+vanilla View bobbing Off offset=(-0.05000, 1.62000, 0.00000) length=1.62077 frames=20
+applied {quality.distortion=100}
+distortion=100 portalTime=0.8
+screenshot distortion-100pct
+applied {quality.distortion=50}
+distortion=50 portalTime=0.8
+screenshot distortion-50pct
+applied {quality.distortion=0}
+distortion=0 portalTime=0.8
+screenshot distortion-Off
+screenshot distortion-none
+applied {quality.distortion=100}
+applied {quality.thirdPersonDistance=4}
+open air thirdPersonDistance=4 offset=(-3.71179, 2.97098, 0.00000) length=4.75437 frames=10
+applied {quality.thirdPersonDistance=1}
+open air thirdPersonDistance=1 offset=(-0.89271, 1.94492, 0.00000) length=2.14001 frames=10
+applied {quality.thirdPersonDistance=8}
+open air thirdPersonDistance=8 offset=(-7.47056, 4.33906, 0.00000) length=8.63925 frames=10
+applied {quality.thirdPersonDistance=16}
+open air thirdPersonDistance=16 offset=(-14.98810, 7.07522, 0.00000) length=16.57413 frames=10
+applied {quality.thirdPersonDistance=4}
+open air thirdPersonDistance=4 offset=(-3.71179, 2.97098, 0.00000) length=4.75437 frames=10
+applied {quality.thirdPersonDistance=8}
+screenshot third-person-8
+applied {quality.thirdPersonDistance=4}
+screenshot third-person-4
+applied {quality.thirdPersonDistance=8}
+front view thirdPersonDistance=8 offset=(4.02835, 0.15380, -0.00000) length=4.03128 frames=10
+applied {quality.thirdPersonDistance=4}
+applied {quality.cameraCollision=1}
+wall behind collision=1 distance=4 offset=(-2.45400, 1.62000, 0.00000) length=2.94049 frames=10
+applied {quality.cameraCollision=0}
+wall behind collision=0 distance=4 offset=(-3.95000, 1.62000, 0.00000) length=4.26930 frames=10
+applied {quality.cameraCollision=1}
+wall behind collision=1 distance=4 offset=(-2.45400, 1.62000, 0.00000) length=2.94049 frames=10
+applied {quality.cameraCollision=1}
+screenshot collision-on
+applied {quality.cameraCollision=0}
+screenshot collision-off
+applied {quality.cameraCollision=1}
+applied {quality.fovTransition=1}
+fovTransition=Vanilla per-tick fov 1.05000 1.07500 1.08750 1.09375 1.09687 1.09844 1.09922 1.09961 1.09980 1.09990
+applied {quality.fovTransition=0}
+fovTransition=Instant per-tick fov 1.00000 1.10000 1.10000 1.10000 1.10000 1.10000 1.10000 1.10000 1.10000 1.10000
+applied {quality.fovTransition=2}
+fovTransition=Smooth per-tick fov 1.02502 1.04376 1.05782 1.06837 1.07628 1.08221 1.08665 1.08999 1.09249 1.09437
+applied {quality.fovTransition=3}
+fovTransition=Very_smooth per-tick fov 1.00228 1.01449 1.02518 1.03453 1.04272 1.04988 1.05614 1.06162 1.06642 1.07062
+applied {quality.fovTransition=1}
+fovTransition=Vanilla per-tick fov 1.05000 1.07500 1.08750 1.09375 1.09687 1.09844 1.09922 1.09961 1.09980 1.09990
+zoom key unbound: world=70.0 hand=70.0 pressed=false
+screenshot zoom-off
+applied {quality.zoom=2}
+zoom=4x held: world=17.5 hand=70.0 pressed=true
+screenshot zoom-4x
+applied {quality.zoom=0}
+zoom=2x held: world=35.0 hand=70.0 pressed=true
+applied {quality.zoom=4}
+zoom=8x held: world=8.75 hand=70.0 pressed=true
+released: world=70.0 hand=70.0 pressed=false
+applied {quality.zoom=2}
+applied {quality.distortion=20, quality.cameraCollision=0, quality.viewBobbing=35, quality.thirdPersonDistance=9, quality.fovTransition=3, quality.zoom=4}
+saved {quality.viewBobbing=35 (35%), quality.distortion=20 (20%), quality.thirdPersonDistance=9 (9 blocks), quality.cameraCollision=0 (Off), quality.fovTransition=3 (Very smooth), quality.zoom=4 (8x)}
+DONE
