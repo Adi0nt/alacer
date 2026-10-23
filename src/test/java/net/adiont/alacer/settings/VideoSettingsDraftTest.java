@@ -85,8 +85,9 @@ class VideoSettingsDraftTest {
 		assertEquals(VideoSetting.Effect.REBUILD,VideoSettingsCatalog.byKey("quality.biomeBlend").effect());
 		assertEquals(VideoSetting.Effect.RESTART,VideoSettingsCatalog.byKey("advanced.chunkThreads").effect());
 		assertTrue(VideoSettingsCatalog.byKey("advanced.chunkThreads").experimental());
-		assertTrue(VideoSettingsCatalog.byKey("quality.anisotropicFiltering").experimental());
-		assertEquals(2,VideoSettingsCatalog.ALL.stream().filter(VideoSetting::experimental).count());
+		assertFalse(VideoSettingsCatalog.byKey("quality.anisotropicFiltering").experimental());
+		assertEquals(VideoSetting.Effect.RESOURCES,VideoSettingsCatalog.byKey("quality.anisotropicFiltering").effect());
+		assertEquals(1,VideoSettingsCatalog.ALL.stream().filter(VideoSetting::experimental).count());
 		for (VideoSetting.Category c : VideoSetting.Category.values()) {
 			assertFalse(new VideoSettingsDraft(Map.of()).matching(c,"").isEmpty(),c.title);
 		}

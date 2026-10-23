@@ -7,6 +7,7 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 import net.adiont.alacer.Alacer;
 import net.adiont.alacer.config.AlacerConfig;
+import net.adiont.alacer.render.AtlasPadding;
 import net.adiont.alacer.render.TextureFiltering;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.options.GameOptions;
@@ -96,8 +97,12 @@ public final class VideoSettingsBackend {
 			applyVanilla(e.getKey(),e.getValue());
 		}
 		if (terrainReload) { this.minecraft.worldRenderer.reload(); }
-		// The atlas keeps its sampling parameter across frames; later resource reloads reapply it at creation.
-		if (edits.containsKey("quality.anisotropicFiltering")) { TextureFiltering.applyToBlocksAtlas(this.minecraft,this.config.anisotropicFiltering); }
+		// Turning filtering on or off adds or removes sprite borders, so the atlas is rebuilt (which also sets the level);
+		// a level change alone only updates the existing atlas's sampling parameter.
+		if (edits.containsKey("quality.anisotropicFiltering")) {
+			if (AtlasPadding.layoutChanges(this.config.anisotropicFiltering)) { this.minecraft.submitResourceReload(); }
+			else { TextureFiltering.applyToBlocksAtlas(this.minecraft,this.config.anisotropicFiltering); }
+		}
 		if (vanilla) { this.minecraft.options.save(); }
 	}
 	private void applyVanilla(String key, int value) {

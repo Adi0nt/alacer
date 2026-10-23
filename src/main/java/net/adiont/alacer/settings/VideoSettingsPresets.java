@@ -7,7 +7,8 @@ import java.util.Map;
 /**
  * Staged groups of world-appearance choices. Render distance, brightness, display, camera, Performance and
  * Advanced settings are never part of a preset, so a preset cannot change hardware-dependent or diagnostic choices.
- * Presets never select an experimental value; anisotropic filtering is only reset to its default.
+ * Presets never select an experimental value. Anisotropic filtering is only reset to Off: turning it on reloads
+ * textures and enlarges the block atlas, which is the user's choice to make.
  */
 public enum VideoSettingsPresets {
 	PERFORMANCE("Performance", "Fast graphics, no smooth lighting or entity shadows, shorter entity distances and fewer particles.",
