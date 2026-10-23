@@ -7,6 +7,7 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 import net.adiont.alacer.Alacer;
 import net.adiont.alacer.config.AlacerConfig;
+import net.adiont.alacer.render.TextureFiltering;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.options.GameOptions;
 import net.minecraft.client.render.platform.GLX;
@@ -23,17 +24,29 @@ public final class VideoSettingsBackend {
 	}
 	public String lockedReason(VideoSetting s) {
 		if (Boolean.getBoolean("alacer.benchmark")) { return "Read-only during a benchmark launch"; }
-		if ((s.key().startsWith("render.") || s.key().startsWith("quality.")) && System.getProperty("alacer."+s.key()) != null) {
+		if (alacerOption(s.key()) && System.getProperty("alacer."+s.key()) != null) {
 			return "Controlled by a launch override";
 		}
 		if (s.key().equals("vbo") && !GLX.useVbos) { return "VBOs are not supported by this graphics driver"; }
+		if (s.key().equals("quality.anisotropicFiltering") && !TextureFiltering.supported()) { return "Anisotropic filtering is not supported by this graphics driver"; }
+		if (s.key().equals("profiler.hud") && !this.config.profilerEnabled) { return "The profiler is disabled (profiler.enabled=false in config/alacer.properties)"; }
 		return null;
 	}
+	/** Extra information about how the current system applies a setting, or null. */
+	public String note(VideoSetting s) {
+		if (s.key().equals("quality.anisotropicFiltering") && TextureFiltering.supported() && TextureFiltering.maximum() < 16) {
+			return "This graphics driver supports up to " + Math.round(TextureFiltering.maximum()) + "x; higher choices use that level.";
+		}
+		return null;
+	}
+	/** Vanilla option keys have no namespace; Alacer's are stored in config/alacer.properties. */
+	private static boolean alacerOption(String key) { return key.indexOf('.') >= 0; }
+	private static boolean integerOption(String key) { return key.startsWith("quality.") || key.startsWith("advanced."); }
 	public boolean restartRequired() { return this.config.videoRestartRequired(); }
 	private int read(VideoSetting s) {
 		String key = s.key();
-		if (key.startsWith("render.")) { return Boolean.parseBoolean(this.config.videoValue(key)) ? 1 : 0; }
-		if (key.startsWith("quality.")) { return Integer.parseInt(this.config.videoValue(key)); }
+		if (integerOption(key)) { return Integer.parseInt(this.config.videoValue(key)); }
+		if (alacerOption(key)) { return Boolean.parseBoolean(this.config.videoValue(key)) ? 1 : 0; }
 		GameOptions o = this.minecraft.options;
 		return switch (key) {
 			case "graphics" -> o.fancyGraphics ? 1 : 0;
@@ -64,8 +77,8 @@ public final class VideoSettingsBackend {
 			VideoSetting s = VideoSettingsCatalog.byKey(e.getKey());
 			if (lockedReason(s) != null) { throw new IOException(lockedReason(s)); }
 			if (s.normalize(e.getValue()) != e.getValue()) { throw new IllegalArgumentException("Invalid setting value"); }
-			if (s.key().startsWith("quality.")) { mod.put(s.key(),Integer.toString(e.getValue())); }
-			else if (s.key().startsWith("render.")) { mod.put(s.key(),Boolean.toString(e.getValue()!=0)); }
+			if (integerOption(s.key())) { mod.put(s.key(),Integer.toString(e.getValue())); }
+			else if (alacerOption(s.key())) { mod.put(s.key(),Boolean.toString(e.getValue()!=0)); }
 			else { vanilla = true; }
 		}
 		// Fail before modifying live options if Minecraft's settings directory cannot accept writes.
@@ -76,12 +89,15 @@ public final class VideoSettingsBackend {
 			Files.delete(probe);
 		}
 		this.config.saveVideoChanges(mod); // Atomic Alacer file update, with no JVM override leakage.
-		boolean terrainReload = edits.containsKey("quality.leaves") || edits.containsKey("quality.lightingStyle") || edits.containsKey("quality.aoStrength");
+		boolean terrainReload = edits.containsKey("quality.leaves") || edits.containsKey("quality.lightingStyle") || edits.containsKey("quality.aoStrength")
+			|| edits.containsKey("quality.biomeBlend");
 		for (Map.Entry<String,Integer> e : edits.entrySet()) {
-			if (e.getKey().startsWith("render.") || e.getKey().startsWith("quality.")) { continue; }
+			if (alacerOption(e.getKey())) { continue; }
 			applyVanilla(e.getKey(),e.getValue());
 		}
 		if (terrainReload) { this.minecraft.worldRenderer.reload(); }
+		// The atlas keeps its sampling parameter across frames; later resource reloads reapply it at creation.
+		if (edits.containsKey("quality.anisotropicFiltering")) { TextureFiltering.applyToBlocksAtlas(this.minecraft,this.config.anisotropicFiltering); }
 		if (vanilla) { this.minecraft.options.save(); }
 	}
 	private void applyVanilla(String key, int value) {

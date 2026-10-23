@@ -32,6 +32,13 @@ public final class VideoSettingsDraft {
 	public void reset(VideoSetting.Category category, Predicate<VideoSetting> editable) {
 		for (VideoSetting s : VideoSettingsCatalog.ALL) { if (s.category()==category && editable.test(s)) { set(s,s.defaultValue()); } }
 	}
+	/** Stages a preset's values for editable settings only; Apply is still required. */
+	public void applyPreset(VideoSettingsPresets preset, Predicate<VideoSetting> editable) {
+		for (Map.Entry<String,Integer> e : preset.settings().entrySet()) {
+			VideoSetting s = VideoSettingsCatalog.byKey(e.getKey());
+			if (editable.test(s)) { set(s,e.getValue()); }
+		}
+	}
 	public List<VideoSetting> matching(VideoSetting.Category category, String query) {
 		String q = query.strip().toLowerCase(Locale.ROOT);
 		return VideoSettingsCatalog.ALL.stream().filter(s -> (q.isEmpty() ? s.category()==category : true)

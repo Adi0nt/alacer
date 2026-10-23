@@ -14,8 +14,8 @@ import net.minecraft.client.render.Window;
 
 /** Staged video controls built from Minecraft's own menu widgets and textures. */
 public final class VideoSettingsScreen extends Screen {
-	private static final int TEXT = 0xffffff, MUTED = 0xaaaaaa;
-	private static final int ROW_HEIGHT = 24;
+	private static final int TEXT = 0xffffff, MUTED = 0xaaaaaa, PRESET_BUTTONS = 20;
+	private static final int ROW_HEIGHT = 24, PRESETS_WIDTH = 64, TAB_ROW_WIDTH = 410;
 	private final Screen parent;
 	private VideoSettingsBackend backend;
 	private VideoSettingsDraft draft;
@@ -41,7 +41,7 @@ public final class VideoSettingsScreen extends Screen {
 		this.top = 92;
 		this.bottom = this.height-60;
 		this.pageSize = Math.max(1,(this.bottom-this.top)/ROW_HEIGHT)*2;
-		this.search = new TextFieldWidget(90,this.textRenderer,this.left,this.top-26,this.contentWidth-24,20);
+		this.search = new TextFieldWidget(90,this.textRenderer,this.left+PRESETS_WIDTH+4,this.top-26,this.contentWidth-28-PRESETS_WIDTH,20);
 		this.search.setMaxLength(80);
 		this.search.setHasBorder(true);
 		this.search.setText(this.query);
@@ -50,9 +50,11 @@ public final class VideoSettingsScreen extends Screen {
 	}
 	private void rebuild() {
 		this.buttons.clear(); this.rows.clear();
+		// The tab row may be wider than the settings columns so every category name fits at common GUI scales.
+		int tabs = VideoSetting.Category.values().length, tabWidth = Math.min(TAB_ROW_WIDTH,this.width-20), tabLeft = (this.width-tabWidth)/2;
 		for (VideoSetting.Category c : VideoSetting.Category.values()) {
-			int x = this.left+c.ordinal()*(this.contentWidth+2)/4;
-			int w = (this.contentWidth+2)/4-2;
+			int x = tabLeft+c.ordinal()*(tabWidth+2)/tabs;
+			int w = (tabWidth+2)/tabs-2;
 			this.buttons.add(new MenuButton(10+c.ordinal(),x,37,w,20,c.title,this.category==c && this.query.isEmpty()));
 		}
 		this.matches = this.draft.matching(this.category,this.query);
@@ -75,11 +77,22 @@ public final class VideoSettingsScreen extends Screen {
 		reset.active = this.query.isEmpty() && VideoSettingsCatalog.ALL.stream().anyMatch(s -> s.category()==this.category && this.backend.lockedReason(s)==null);
 		this.buttons.add(reset);
 		this.buttons.add(new MenuButton(4,this.left+this.contentWidth-20,this.top-26,20,20,"x",false));
+		MenuButton presets = new MenuButton(5,this.left,this.top-26,PRESETS_WIDTH,20,"Presets...",false);
+		presets.active = VideoSettingsPresets.KEYS.stream().anyMatch(k -> this.backend.lockedReason(VideoSettingsCatalog.byKey(k))==null);
+		this.buttons.add(presets);
 		if (this.modal != null) {
 			for (ButtonWidget b : this.buttons) { b.active = false; }
 			int cy = this.height/2+29;
-			this.buttons.add(new MenuButton(6,this.width/2-117,cy,110,20,this.modal.equals("reset")?"Reset page":"Discard",false));
-			this.buttons.add(new MenuButton(7,this.width/2+7,cy,110,20,"Keep editing",false));
+			if (this.modal.equals("preset")) {
+				VideoSettingsPresets[] choices = VideoSettingsPresets.values();
+				for (int i = 0; i < choices.length; i++) {
+					this.buttons.add(new MenuButton(PRESET_BUTTONS+i,this.width/2-117+i%2*124,cy+i/2*24,110,20,choices[i].title,false));
+				}
+				this.buttons.add(new MenuButton(7,this.width/2+7,cy+24,110,20,"Keep editing",false));
+			} else {
+				this.buttons.add(new MenuButton(6,this.width/2-117,cy,110,20,this.modal.equals("reset")?"Reset page":"Discard",false));
+				this.buttons.add(new MenuButton(7,this.width/2+7,cy,110,20,"Keep editing",false));
+			}
 		}
 	}
 	@Override protected void buttonClicked(ButtonWidget button) {
@@ -99,6 +112,7 @@ public final class VideoSettingsScreen extends Screen {
 			case 2 -> leave();
 			case 3 -> { this.modal="reset"; rebuild(); }
 			case 4 -> { this.query=""; this.search.setText(""); this.offset=0; rebuild(); this.search.setFocused(true); }
+			case 5 -> { this.modal="preset"; rebuild(); }
 			case 6 -> {
 				if ("reset".equals(this.modal)) {
 					this.draft.reset(this.category,s -> this.backend.lockedReason(s)==null);
@@ -107,7 +121,13 @@ public final class VideoSettingsScreen extends Screen {
 			}
 			case 7 -> { this.modal=null; rebuild(); }
 			default -> {
-				if (button.id>=10 && button.id<14) {
+				if (presetButton(button.id)) {
+					VideoSettingsPresets preset=VideoSettingsPresets.values()[button.id-PRESET_BUTTONS];
+					this.draft.applyPreset(preset,s -> this.backend.lockedReason(s)==null);
+					this.modal=null; this.status=this.draft.changes().isEmpty()?"\u00a77"+preset.title+" preset already matches.":"\u00a7e"+preset.title+" preset staged. Apply to save.";
+					rebuild(); return;
+				}
+				if (button.id>=10 && button.id<10+VideoSetting.Category.values().length) {
 					this.category=VideoSetting.Category.values()[button.id-10]; this.query="";
 					this.search.setText(""); this.offset=0; this.focusId=button.id; rebuild();
 				}
@@ -215,7 +235,7 @@ public final class VideoSettingsScreen extends Screen {
 		this.drawCenteredString(this.textRenderer,trim(subtitle,this.width-20),this.width/2,23,MUTED);
 		this.search.render();
 		if (this.search.getText().isEmpty() && !this.search.isFocused()) {
-			this.textRenderer.drawWithShadow("Search settings...",this.left+4,this.top-20,0x808080);
+			this.textRenderer.drawWithShadow("Search settings...",this.left+PRESETS_WIDTH+8,this.top-20,0x808080);
 		}
 		if (this.matches.isEmpty()) {
 			this.drawCenteredString(this.textRenderer,"No settings found",this.left+this.contentWidth/2,this.top+22,TEXT);
@@ -248,6 +268,9 @@ public final class VideoSettingsScreen extends Screen {
 				help.addAll(this.textRenderer.split("\u00a77"+hovered.setting.description(),Math.min(260,this.width-50)));
 				help.add("\u00a78Default: \u00a77"+hovered.setting.valueLabel(hovered.setting.defaultValue()));
 				help.add((hovered.setting.effect()==VideoSetting.Effect.RESTART?"\u00a76":"\u00a77")+hovered.setting.effect().label);
+				if (hovered.setting.experimental()) { help.add("\u00a7c! Experimental: change only if you can test the result"); }
+				String note=this.backend.note(hovered.setting);
+				if (note!=null) { help.addAll(this.textRenderer.split("\u00a77"+note,Math.min(260,this.width-50))); }
 				String locked=this.backend.lockedReason(hovered.setting);
 				if (locked!=null) { help.addAll(this.textRenderer.split("\u00a7e"+locked,Math.min(260,this.width-50))); }
 				drawHelp(help,mouseX,mouseY);
@@ -266,12 +289,26 @@ public final class VideoSettingsScreen extends Screen {
 	private void renderModal(int mouseX,int mouseY) {
 		fill(0,0,this.width,this.height,0xb0000000);
 		int x=this.width/2-134,y=this.height/2-54;
-		this.drawCenteredString(this.textRenderer,"\u00a7e"+("reset".equals(this.modal)?"Reset "+this.category.title+"?":"Discard unsaved changes?"),this.width/2,y+15,TEXT);
-		List<String> lines=this.textRenderer.split("reset".equals(this.modal)?"Only this page's settings will return to defaults. Apply to save the changes.":"Your pending edits will be discarded. Settings already applied will stay saved.",238);
+		String title=switch (this.modal) { case "reset" -> "Reset "+this.category.title+"?"; case "preset" -> "Stage a preset?"; default -> "Discard unsaved changes?"; };
+		String body=switch (this.modal) {
+			case "reset" -> "Only this page's settings will return to defaults. Apply to save the changes.";
+			case "preset" -> "Stages graphics and detail choices only. Distance, display and advanced settings are kept. Apply to save.";
+			default -> "Your pending edits will be discarded. Settings already applied will stay saved.";
+		};
+		this.drawCenteredString(this.textRenderer,"\u00a7e"+title,this.width/2,y+15,TEXT);
+		List<String> lines=this.textRenderer.split(body,238);
 		int cy=y+33;
 		for (String line : lines) { this.drawCenteredString(this.textRenderer,line,this.width/2,cy,MUTED); cy+=11; }
-		for (ButtonWidget b : this.buttons) { if (b.id==6 || b.id==7) { b.render(this.minecraft,mouseX,mouseY); } }
+		for (ButtonWidget b : this.buttons) { if (b.id==6 || b.id==7 || presetButton(b.id)) { b.render(this.minecraft,mouseX,mouseY); } }
+		if ("preset".equals(this.modal)) {
+			for (ButtonWidget b : this.buttons) {
+				if (presetButton(b.id) && mouseX>=b.x && mouseX<b.x+b.getWidth() && mouseY>=b.y && mouseY<b.y+20) {
+					drawHelp(this.textRenderer.split("\u00a77"+VideoSettingsPresets.values()[b.id-PRESET_BUTTONS].description,Math.min(260,this.width-50)),mouseX,mouseY);
+				}
+			}
+		}
 	}
+	private static boolean presetButton(int id) { return id>=PRESET_BUTTONS && id<PRESET_BUTTONS+VideoSettingsPresets.values().length; }
 	private String trim(String text, int width) {
 		if (this.textRenderer.getWidth(text)<=width) { return text; }
 		while (!text.isEmpty() && this.textRenderer.getWidth(text+"...")>width) { text=text.substring(0,text.length()-1); }
@@ -294,7 +331,7 @@ public final class VideoSettingsScreen extends Screen {
 		boolean contains(int x,int y) { return x>=this.x && x<this.x+this.width && y>=this.y && y<this.y+this.height; }
 		@Override public void render(Minecraft mc,int mx,int my) {
 			String value=": "+(this.active?"\u00a7f":"\u00a78")+this.setting.valueLabel(draft.value(this.setting));
-			String marker=draft.changed(this.setting)?"\u00a7e* \u00a7r":"";
+			String marker=(draft.changed(this.setting)?"\u00a7e* \u00a7r":"")+(this.setting.experimental()?"\u00a7c! \u00a7r":"");
 			this.message=marker+trim(this.setting.title(),this.width-8-mc.textRenderer.getWidth(value+marker))+value;
 			super.render(mc,keyboardFocus && this.id==focusId?this.x:mx,keyboardFocus && this.id==focusId?this.y:my);
 		}
