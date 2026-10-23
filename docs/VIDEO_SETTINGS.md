@@ -5,8 +5,9 @@ textures, slider handles, bordered text field, tooltip renderer and background.
 The centered, two-column layout follows the game's existing options screens.
 Resource packs continue to supply the standard widget textures.
 
-Graphics, Details, Display and Performance organize 35 controls. Search matches
-names and descriptions across every category. Hover a setting for its full name,
+Graphics, Details, Display, Performance and Advanced organize 52 controls, and
+**Presets...** stages a group of appearance choices. Search matches names and
+descriptions across every category. Hover a setting for its full name,
 description, default and application requirements. Long button names shorten to
 fit; their values remain visible.
 
@@ -76,6 +77,212 @@ pass. They do not introduce a new renderer. Saved values are `quality.*`
 options in `config/alacer.properties`; every value is included in profile and
 benchmark exports (each phase's `config`), and benchmark launches use the
 defaults above.
+
+## Expanded settings (2026-10-23)
+
+Seventeen settings, staged presets and an Advanced page were added. Each one
+changes a decision Minecraft 1.8.9 already makes (a distance test, a constant,
+an optional draw or texture update), so every default reproduces vanilla's
+value exactly: the hooks return the original value untouched rather than
+recomputing it. Saved values are `quality.*` or `advanced.*` integers in
+`config/alacer.properties` (the overlay is `profiler.hud`). Out-of-range file
+values are clamped and off-step slider values are rounded to the nearest
+menu step; invalid menu values are rejected before anything is written.
+Benchmark launches use the defaults below, and every value appears in profile
+and benchmark exports.
+
+| Page | Setting | Values (default **bold**) | Applies | Effect and trade-off |
+|---|---|---|---|---|
+| Graphics | Entity distance | 25-500% in steps of 25, **100%** | Immediately | Scales the camera distance passed to each entity's own draw-distance rule (vanilla: 64 blocks times the entity's average size; items 16 blocks). Lower skips distant entities; higher only helps up to the visible terrain, because entities are gathered from visible chunks. |
+| Graphics | Block entity distance | 25-500% in steps of 25, **100%** | Immediately | Scales the squared limit each block entity reports (64 blocks; beacon beams 256). Chests, signs, banners, heads, enchanting-table books, pistons in motion. |
+| Graphics | Biome blend | Off (1x1), **3x3**, 5x5, 7x7 | Rebuilds terrain | Widens or narrows vanilla's grass, foliage and water color averaging square and its divisor together. Off gives hard borders and the cheapest chunk builds; 5x5/7x7 sample 25/49 columns per tinted face, so chunk building is slower. |
+| Graphics | Particle limit | 250, 500, 1000, 2000, **4000** | Immediately | Replaces vanilla's per-list cap in `ParticleManager.add` (eight lists). When a list is full its oldest particle is removed, as in vanilla. A list above a newly lowered cap is cut back to it at its next addition. |
+| Graphics | Anisotropic filtering (experimental) | **Off**, 2x, 4x, 8x, 16x | Immediately; reapplied after resource reloads | Sets `GL_TEXTURE_MAX_ANISOTROPY_EXT` on the block/item atlas. Off makes no call at atlas creation (driver default 1). Limited to the driver's maximum (the tooltip says so); disabled with an explanation where the extension is missing. Most visible with mipmaps on; costs GPU texture bandwidth. Marked experimental because under Mesa llvmpipe it also blurred nearby (magnified) textures and showed lines at block edges from neighboring atlas sprites (see validation); not yet checked on a hardware GPU, and not part of any preset. |
+| Details | Distance fog | 10-95% in steps of 5, **75%**, or Off | Immediately | Overworld air fog start as a fraction of the render distance. Off moves the fog band past the far plane, revealing the edge of loaded terrain. The sky pass, blindness, water, lava and the Nether's thick fog are separate branches and are unchanged. |
+| Details | Sun and moon | Off, **On** | Immediately | Off draws the sun and moon quads with zero alpha under the sky's additive blend, which adds nothing to the image. Sky color, sunrise, stars (their own brightness factor) and clouds are unchanged. |
+| Details | Water / Lava / Fire / Portal animation | Off, **On** | Immediately | Off skips that group's atlas sprite tick, so its current frame stays and its sub-image uploads stop. |
+| Details | Other animations | Off, **On** | Immediately | Every other animated sprite (sea lantern, prismarine, command blocks, resource-pack animations). Clock and compass sprites always tick because they show game state. |
+| Display | FOV effects | 0-100% in steps of 5, **100%** | Immediately | Scales how far sprinting, flying, Speed/Slowness and bows move the field-of-view modifier from 1. The configured FOV, underwater narrowing and the death zoom are unchanged. |
+| Display | Damage tilt | 0-100% in steps of 5, **100%** | Immediately | Scales the hurt-camera roll (vanilla 14 degrees). The death rotation is unchanged. |
+| Advanced | Chunk update budget | 25%, 50%, **Vanilla**, 200%, 400% | Immediately | Rescales the time left in vanilla's quarter-frame deadline for uploading built chunks and queueing rebuilds (`compileChunksUntil`, its only use). Higher shows terrain changes sooner with more frame-time spikes; lower smooths frames while terrain fills in more slowly. A frame already over budget keeps vanilla's deadline, so at least one rebuild is still queued. |
+| Advanced | Chunk builder threads (experimental) | 1-6, **2** | After restart | Worker threads in `ChunkRenderDispatcher`, with buffer sets kept at workers + 3 as in vanilla (about 10 MB of direct memory per set). Marked with a red `!` and an "Experimental" tooltip line. Saved for the next launch; the running count is shown truthfully and the restart notice clears if the running value is selected again. |
+| Advanced | Performance overlay | **Off**, On | Immediately | The existing `profiler.hud` startup option, also toggled with F7. Shows Alacer's overlay; measurement does not change. Disabled with an explanation when `profiler.enabled=false`. |
+
+### Presets
+
+**Presets...** (next to search) opens a confirmation with three choices. A
+preset only stages values; Apply or Done is still required, Cancel discards it,
+and locked settings are skipped. Presets cover fifteen world-appearance
+settings only: Graphics, Smooth lighting, Clouds, Particles, Leaves, Weather,
+Rain splashes, Vignette, Entity distance, Block entity distance, Biome blend,
+Particle limit, Anisotropic filtering, Dropped items and Entity shadows. They
+never change render distance, brightness, display, camera, Performance or
+Advanced settings, and never select an experimental value (they only return
+Anisotropic filtering to Off).
+
+| Preset | Values |
+|---|---|
+| Performance | Graphics Fast, Smooth lighting Off, Clouds Fast, Particles Decreased, entity and block entity distance 75%, Biome blend Off, Particle limit 1000, Dropped items Fast, Entity shadows Off; the rest at defaults. |
+| Vanilla | Every preset setting at its default (Minecraft's Fancy appearance). |
+| Enhanced | Vanilla plus entity and block entity distance 150% and Biome blend 5x5. |
+
+### Menu changes
+
+- A fifth tab, **Advanced**. The tab row may be up to 410 GUI pixels wide,
+  wider than the setting columns, so all five names fit at common scales;
+  narrow windows shorten names as before.
+- Experimental settings show a red `!` before their name and an
+  "Experimental" tooltip line, in addition to color, so the marking is not
+  carried by color alone.
+- Tooltips can show a gray driver note (for example the anisotropy maximum).
+- Search, keyboard focus, staged Apply/Cancel, Reset page and the discard
+  confirmation are unchanged and cover the new controls. Reset page stages the
+  new settings' vanilla defaults.
+
+### Compatibility
+
+All hooks are chainable injectors (`@ModifyArg`, `@ModifyConstant`,
+`@ModifyExpressionValue`, `@WrapOperation`, `@WrapWithCondition`, one
+`@Inject`); no method is overwritten or redirected, so another mod changing the
+same value composes with Alacer instead of failing to apply. Each target
+(`Entity.shouldRender(DDD)`, `BlockEntityRenderDispatcher.render`,
+`GameRenderer.setupFog/tickFov/applyHurtCam/render`, `WorldRenderer.renderSky`,
+`TextureAtlas.bindAndTick/loadAndStitch`, `ParticleManager.add`,
+`BiomeColors.getColor`, `ChunkRenderDispatcher.<init>`) was checked against the
+mapped 1.8.9 bytecode; ordinal-based targets (fog end, sun/moon color) were
+confirmed by disassembly and the default `require = 1` makes a missing target
+fail at startup instead of silently doing nothing. None of the targets overlap
+Alacer's existing optimizations or profiling hooks. If another mod also
+changes the same values, the results combine; Alacer does not try to detect or
+override another mod's configuration.
+
+### Deferred features
+
+| Feature | Why it is not included |
+|---|---|
+| Connected textures (CTM-style) | Needs a resource-pack property format, per-block neighbor matching during chunk builds and model/quad substitution: a substantial independent subsystem with its own correctness and performance gates. |
+| Custom entity models (CEM-style) | Needs a model file format, parser, renderer replacement and animation system. |
+| FXAA or other post-process anti-aliasing | Needs an independently written shader, framebuffer management and resize/reload handling, and visual validation on real GPUs; llvmpipe alone is not adequate evidence. 1.8.9's `PostChain` could host it later. |
+| Shader packs | A separate major project. No independently developed foundation exists in Alacer, and third-party shader runtimes and packs were not reviewed for licensing. |
+| Cloud height | Alacer's verified cloud cache reads the cloud height itself; changing it safely needs the cache and its verification mode extended, plus vanilla's fixed 128-block "clouds before or after terrain" test. |
+| Sky dome Off | Low value: it would draw the fog color in place of the sky gradient. |
+| Particle frustum culling, entity/block-entity occlusion culling, translucency sort controls | These are new optimizations or appearance-changing shortcuts, not settings. Under AGENTS.md they need profiling, correctness gates and benchmarks against the vanilla control before being offered. |
+| Particle types toggles (block-break, explosions, footsteps) | Possible with small hooks, but Particles/Particle limit already give budget control; left for a follow-up if requested. |
+| Translucent geometry sorting options | Turning resorting off makes water and stained glass draw incorrectly while moving; no safe user-facing benefit was found. |
+| GPU memory / resource management | 1.8.9 has no user-visible GPU budget to expose; the VBO backend is already a setting. |
+| Frame-time-adaptive budgets | The fixed-ratio chunk update budget is offered; an adaptive controller would be a scheduling change that session 13's evidence did not select. |
+
+### Independent implementation and licensing
+
+Every new class and hook was written for Alacer from the behavior described
+above and from Minecraft 1.8.9's own (decompiled, mapped) code paths. No code,
+algorithm description, configuration format, class structure, asset or UI
+design from Krasis, OptiFine, Sodium, Iris, Angelica or other mods was
+consulted or used; "Krasis" served only as a list of broad feature categories
+named in the task. The menu reuses Minecraft's own widgets and Alacer's
+existing screen. Anisotropic filtering uses the public
+`EXT_texture_filter_anisotropic` OpenGL extension through LWJGL 2, which
+Minecraft already ships; no dependency was added and `THIRD_PARTY.md` is
+unchanged. This is a record of how the code was written, not a legal opinion.
+
+## Validation, 2026-10-23: expanded settings
+
+Evidence is in [validation/2026-10-23-video-settings-expansion](validation/2026-10-23-video-settings-expansion/). This was a Linux cloud container, not the
+reference Windows machine: Temurin 25.0.5+8, Xvfb at 1280x720, Mesa 25.2.8
+llvmpipe (software OpenGL 4.5), 4 CPU threads, no GPU. Timings below are
+indicative only and not comparable to the benchmark archives. No frozen
+benchmark protocol, threshold, baseline or archive was changed.
+
+**Build and unit tests.** `clean build --offline` with `JAVA_HOME` set to that
+JDK: 138 tests (123 before this change), no failures, errors or skips; 196 main
+classes at classfile version 69, none from the temporary harness. New tests
+cover every new value rule at and away from its default (bit-for-bit vanilla
+floats and doubles at defaults), menu/config default agreement, persistence and
+live update, relaunch read-back, restart-only chunk threads, invalid menu
+values (rejected, file unchanged), clamped and step-rounded file values,
+launch-override locking, benchmark defaults, labels, categories, search, the
+experimental markers and the presets (validity, scope, staging only editable
+settings, never selecting an experimental value).
+
+**Real client.** A temporary harness ([ExpansionCheck.java](validation/2026-10-23-video-settings-expansion/ExpansionCheck.java),
+not shipped) changed settings through `VideoSettingsBackend.apply`, the menu's
+Apply path, in a fresh superflat spectator world. Launches: `full` (twice; the
+first run's screenshots were lost to a missing folder and its particle-limit
+result exposed a bug, below), `particles` (twice, before and after the fix) and
+`readback` (twice). A final launch of the shipping build (harness removed)
+reached the title screen without mixin or injection errors.
+
+| Setting | Observed |
+|---|---|
+| Entity distance | Dropped items every 4 blocks (vanilla limit 16 blocks for items). Items drawn: 25% 0, 50% 1, 100% 3, 200% 7, 500% 15 (all loaded). Exactly the expected thresholds; 100% matched before and after. |
+| Block entity distance | Chests every 8 blocks: 25% shows only the nearest chest, 100% shows chests to 64 blocks, 300% shows the rest of the lane. |
+| Biome blend | Client chunks split into jungle and ice plains: Off gives a hard edge, 3x3 a narrow gradient, 7x7 a wide one. Terrain rebuilt after each Apply. |
+| Distance fog | 30% visibly hazier horizon; Off shows a crisp terrain edge and unfogged distant clouds. |
+| Sun and moon | Off removes the sun (noon) and moon (midnight) including the sun's halo; sky color, stars and clouds unchanged. |
+| Animations | With each group Off, frame and frame-tick counters of water, lava, fire, portal, sea lantern and prismarine sprites were unchanged over 80 frames; with On they advanced. With Other animations Off the clock sprite still moved (frame 0 to 31 after `/time set 18000`). |
+| Particle limit | Per-list census while spraying 400 redstone particles per frame: lists held exactly 4000, 250, 1000 and 4000. |
+| Anisotropic filtering | Driver reports the extension, maximum 16. Atlas parameter read back: 1.0 at Off, 16.0 at 16x, still 16.0 after a full resource reload, 1.0 after returning to Off. See the llvmpipe artifacts below. |
+| FOV effects | Flying spectator's interpolated FOV multiplier: 1.0999999 at 100%, 1.05 at 50%, 1.0 at 0%, back to 1.0999999. |
+| Damage tilt | With the hurt timer held, 100% tilts the horizon; 0% leaves it level. |
+| Chunk update budget | Time to rebuild all terrain after `WorldRenderer.reload()` at render distance 8: 25% took 8.1-10.9 s; 400% took 0.06-0.86 s (two runs each, two launches). Mean frame time while settling was about 30 ms for both; the 25% runs had the larger worst frames (48-101 ms vs 18-51 ms), so this scene did not show the extra spikes a higher budget can cause. |
+| Chunk builder threads | Saved 4: running count stayed 2 with the gold restart notice; after relaunch 4 "Chunk Batcher" threads and 7 buffer sets (vanilla 2 and 5). Restoring 2 was saved and again marked restart-required. |
+| Performance overlay | On shows the overlay immediately; Off hides it. |
+| Presets | Performance, Enhanced and Vanilla applied through the draft and Apply; every preset key matched live values afterwards, and render distance stayed 8. |
+| Persistence | Non-default values saved in one launch were read back by a fresh JVM, then restored to defaults through Apply in that JVM. |
+
+**Bugs found and fixed during validation.**
+
+- *Particle limit did not shrink full lists.* After lowering the limit,
+  continuous spawning kept a list at its old size (2250 at a 250 limit):
+  vanilla's one-for-one eviction removes the oldest particles before they can
+  expire. A list above the limit is now cut back to it in one step at its next
+  addition; at the vanilla limit lists never exceed 4000, so vanilla's single
+  removal is unchanged. The fixed census is above.
+- *Preset dialog drew setting rows over its text.* Setting-row ids passed the
+  dialog's button check, so rows were drawn on top and hovering one could have
+  indexed past the preset list. The check now uses the exact id range
+  ([before](validation/2026-10-23-video-settings-expansion/menu-presets-before-fix.png), [after](validation/2026-10-23-video-settings-expansion/menu-presets-fixed.png)).
+
+**Anisotropic filtering on llvmpipe.** At 16x, Mesa's software renderer also
+blurred magnified textures (Minecraft uses nearest-neighbor magnification) and
+drew dark lines at block edges, where samples reach neighboring sprites in the
+atlas. Hardware GPUs normally apply anisotropy only to minification, but that
+was not checked here, so the setting is marked experimental, defaults to Off
+and is in no preset.
+
+![Biome blend Off, 3x3, 7x7](validation/2026-10-23-video-settings-expansion/biome-blend-off-3x3-7x7.png)
+![Distance fog 75%, 30%, Off](validation/2026-10-23-video-settings-expansion/fog-75-30-off.png)
+![Sun On and Off](validation/2026-10-23-video-settings-expansion/sun-on-vs-off.png)
+![Moon On and Off](validation/2026-10-23-video-settings-expansion/moon-on-vs-off.png)
+![Block entity distance 25%, 100%, 300%](validation/2026-10-23-video-settings-expansion/block-entity-distance-25-100-300.png)
+![Damage tilt 100% and Off](validation/2026-10-23-video-settings-expansion/damage-tilt-100-vs-off.png)
+![Anisotropic filtering Off and 16x under llvmpipe](validation/2026-10-23-video-settings-expansion/anisotropic-off-vs-16x-llvmpipe.png)
+![Anisotropic filtering detail under llvmpipe](validation/2026-10-23-video-settings-expansion/anisotropic-zoom-llvmpipe.png)
+![Advanced page tooltip](validation/2026-10-23-video-settings-expansion/menu-advanced-tooltip-threads.png)
+![Preset dialog](validation/2026-10-23-video-settings-expansion/menu-presets-fixed.png)
+
+**Indicative frame time.** Alternating A/B blocks (ABBA), 4 blocks per choice
+after a settle period, FPS uncapped, VSync off, render distance 8. One session
+on software rendering, not a benchmark series.
+
+| Comparison | Scene | Mean frame time | Change | Blocks agreeing |
+|---|---|---|---|---|
+| Particle limit 4000 -> 250 (fixed build) | 400 redstone particles spawned per frame | 47.23 -> 35.19 ms | -12.0 ms (-25%) | 4/4 |
+| Particle limit 4000 -> 250 (before the fix; lists not trimmed) | same | 49.94 -> 44.00 ms | -5.9 ms | 4/4 |
+| Anisotropic filtering Off -> 16x, launch 1 | flat ground at a grazing angle | 38.00 -> 52.01 ms | +14.0 ms (+37%) | 4/4 |
+| Anisotropic filtering Off -> 16x, launch 2 | same | 36.66 -> 50.33 ms | +13.7 ms (+37%) | 4/4 |
+
+Anisotropic filtering is far more expensive in software than on GPUs with
+texture units built for it; treat its cost here as an upper bound for this
+renderer only. Biome blend rebuild times in a superflat world were all
+0.3-0.5 s and do not measure its chunk-build cost; a terrain-heavy chunk-build
+timing on the reference machine is the follow-up if that cost matters.
+
+Not checked: hardware GPUs and the reference machine, Windows, other GUI
+scales and window sizes for the five-tab row, complete keyboard-only operation
+of the preset dialog, the Nether's thick fog with Distance fog Off, beacons,
+resource packs with custom animations, other mods, non-English localization,
+and the frame-time effect of more than two chunk builder threads.
 
 ## Validation, 2026-10-22: split Graphics and new Details controls
 

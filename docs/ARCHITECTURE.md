@@ -51,7 +51,12 @@ net.adiont.alacer
 │   ├── RenderPasses        Timing for the world render passes (terrain layers, sky, clouds, ...)
 │   ├── MatrixTracker       CPU copy of GL's modelview and projection stacks (pure, unit tested)
 │   ├── ZeroTranslates      Skips model parts' translations by zero (measured, off by default)
-│   └── GlCallStats         Counts GL calls made while drawing entities (profiling only)
+│   ├── GlCallStats         Counts GL calls made while drawing entities (profiling only)
+│   ├── IndependentQuality, SmoothLighting  Per-feature Graphics overrides and AO shaping (video settings)
+│   ├── RenderDistances, FogDistance, BiomeBlend, ParticleLimit, CameraEffects, TextureAnimations,
+│   │   ChunkScheduling     Pure value rules for the 2026-10-23 video settings; vanilla at defaults (unit tested)
+│   └── TextureFiltering    Anisotropic filtering parameter on the block/item atlas
+├── settings/               Video settings catalog, staged draft, presets, backend and menu screen
 └── mixin/                  One-line hooks, wrappers and accessors only
 ```
 

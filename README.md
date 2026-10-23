@@ -120,6 +120,14 @@ Enchantment glint (Off/On) and Dropped items (Fast/Fancy); each defaults to
 vanilla's appearance. New choices are saved to `config/alacer.properties` as
 `quality.*` options, are recorded in profile and benchmark exports, and use their
 defaults during benchmark launches. Existing optimization defaults stay unchanged.
+
+The menu also offers entity and block-entity draw distances, biome blend, a
+particle limit, anisotropic filtering, distance fog, sun and moon, per-group
+texture animations, FOV effects and damage tilt, and an **Advanced** page with
+the chunk update budget, chunk builder threads (experimental, restart) and the
+performance overlay. **Presets...** stages Performance, Vanilla or Enhanced
+appearance choices; Apply is still required. Every new default is vanilla's
+behaviour, stored as `quality.*`/`advanced.*` options.
 See [the settings guide and validation](docs/VIDEO_SETTINGS.md).
 
 ## Configuration
