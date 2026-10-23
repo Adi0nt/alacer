@@ -257,4 +257,3 @@ window once per newly observed client, before the reference phase. It never recl
 unchanged 95% foreground rule still rejects subsequent interference. Activation events are preserved under
 `run/alacer/stability/aa31w2/foreground-helper.jsonl`. The helper source is included in the freeze. Its file watcher
 is idle during recording; UI enumeration is performed only while waiting for a new client window.
-
