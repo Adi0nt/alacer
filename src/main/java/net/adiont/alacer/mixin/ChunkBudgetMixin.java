@@ -12,6 +12,9 @@ import net.minecraft.client.render.GameRenderer;
 public class ChunkBudgetMixin {
 	@ModifyArg(method = "render(FJ)V", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/render/GameRenderer;renderWorld(FJ)V"), index = 1)
 	private long alacer$chunkBudget(long deadline) {
+		if (Alacer.get() == null) {
+			return deadline;
+		}
 		int choice = Alacer.get().config().chunkUpdateBudget;
 		return choice == ChunkScheduling.VANILLA_BUDGET ? deadline : ChunkScheduling.deadline(deadline, System.nanoTime(), choice);
 	}

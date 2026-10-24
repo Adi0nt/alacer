@@ -129,6 +129,10 @@ public final class AlacerConfig {
 	/** Give chunk uploads and rebuild queueing at least 1/32 of the previous frame. Runtime-toggleable. */
 	public volatile boolean chunkTimeFloor;
 	public volatile boolean fastChunkNeighbours, verifyChunkNeighbours, terrainShader, terrainVaos, directBufferUploads, verifyModernGl;
+	/** Vectorized block state unpacking and linear block counter scan during chunk packet handling. */
+	public volatile boolean fastChunkUnpack;
+	/** Debug: compare fast chunk unpacking and block counters with vanilla's scalar logic. */
+	public volatile boolean verifyChunkUnpack;
 	/** Session 28 candidate: one reused position for entity shadows' block-below query. Runtime-toggleable when installed. */
 	public volatile boolean reuseShadowPositions;
 	/** Also make vanilla's position, use it, and compare coordinates and the block state answered for both. Debug only. */
@@ -253,6 +257,10 @@ public final class AlacerConfig {
 			"Replace the per-frame chunk visibility search with an allocation-free equivalent.");
 		this.verifyChunkVisibility = bool(file, system, "render.fastChunkVisibility.verify", false,
 			"Debug: run vanilla and Alacer visibility searches side by side and log differences. Slower.");
+		this.fastChunkUnpack = bool(file, system, "render.fastChunkUnpack", true,
+			"Vectorized block state unpacking and linear block counter scan during chunk packet handling.");
+		this.verifyChunkUnpack = bool(file, system, "render.fastChunkUnpack.verify", false,
+			"Debug: compare fast chunk unpacking and block counters with vanilla's scalar logic.");
 		this.fastChunkFrustum = bool(file, system, "render.fastChunkFrustum", false,
 			"Experimental: test chunk boxes at one corner per frustum plane (same decisions as vanilla). No dependable measured performance gain; off by default.");
 		this.verifyChunkFrustum = bool(file, system, "render.fastChunkFrustum.verify", false,
@@ -393,6 +401,7 @@ public final class AlacerConfig {
 			// Benchmark preset: vanilla paths vs the shipped defaults, not every experiment on.
 			case "render.defaults":
 				this.fastChunkVisibility = value;
+				this.fastChunkUnpack = value;
 				this.fastChunkFrustum = false;
 				this.fastCameraSectionFaces = false;
 				this.fastEntityChunkLookup = value;
@@ -420,6 +429,12 @@ public final class AlacerConfig {
 				break;
 			case "render.fastChunkVisibility":
 				this.fastChunkVisibility = value;
+				break;
+			case "render.fastChunkUnpack":
+				this.fastChunkUnpack = value;
+				break;
+			case "render.fastChunkUnpack.verify":
+				this.verifyChunkUnpack = value;
 				break;
 			case "render.fastChunkFrustum":
 				this.fastChunkFrustum = value;
@@ -622,6 +637,8 @@ public final class AlacerConfig {
 		values.put("profiler.hud", String.valueOf(this.hudVisible));
 		values.put("render.fastChunkVisibility", String.valueOf(this.fastChunkVisibility));
 		values.put("render.fastChunkVisibility.verify", String.valueOf(this.verifyChunkVisibility));
+		values.put("render.fastChunkUnpack", String.valueOf(this.fastChunkUnpack));
+		values.put("render.fastChunkUnpack.verify", String.valueOf(this.verifyChunkUnpack));
 		values.put("render.fastChunkFrustum", String.valueOf(this.fastChunkFrustum));
 		values.put("render.fastChunkFrustum.verify", String.valueOf(this.verifyChunkFrustum));
 		values.put("render.fastCameraSectionFaces", String.valueOf(this.fastCameraSectionFaces));

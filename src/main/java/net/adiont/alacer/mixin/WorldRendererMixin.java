@@ -86,6 +86,14 @@ public class WorldRendererMixin {
 		}
 	}
 
+	@Inject(method = "reload()V", at = @At("HEAD"))
+	private void alacer$reloadReset(CallbackInfo ci) {
+		ChunkSchedulingExperiments.reset();
+		if (this.alacer$visibility != null) {
+			this.alacer$visibility.reset();
+		}
+	}
+
 	// Its only caller passes the frame's chunk deadline; uploads and rebuild queueing both stop at it.
 	@ModifyVariable(method = "compileChunksUntil", at = @At("HEAD"), argsOnly = true)
 	private long alacer$chunkTimeFloor(long deadline) {

@@ -30,8 +30,12 @@ public final class ChunkSchedulingExperiments {
 
 	/** Terrain setup is about to cancel the rebuilds no worker started. */
 	public static void beforeClear(ChunkRenderDispatcher dispatcher) {
+		Alacer alacer = Alacer.get();
+		if (alacer == null) {
+			return;
+		}
 		int unstarted = ((ChunkRenderDispatcherAccessor) dispatcher).alacer$getPendingTasks().size();
-		FrameProfiler profiler = Alacer.get().profiler();
+		FrameProfiler profiler = alacer.profiler();
 		if (profiler != null) {
 			profiler.count(Counter.CHUNK_UNSTARTED_TASKS, unstarted);
 		}
@@ -42,15 +46,20 @@ public final class ChunkSchedulingExperiments {
 
 	/** End of compileChunksUntil, inside its timer. */
 	public static void afterCompile(ChunkRenderDispatcher dispatcher, Set<RenderChunk> dirty) {
-		AlacerConfig config = Alacer.get().config();
+		Alacer alacer = Alacer.get();
+		if (alacer == null) {
+			return;
+		}
+		AlacerConfig config = alacer.config();
 		if (!config.feedChunkWorkers) {
 			if (feed != null) {
 				feed.afterFeed(-1);
 			}
 			return;
 		}
-		if (feed == null) {
-			feed = new FeedTarget(ChunkScheduling.threads(config.chunkThreads));
+		int configuredWorkers = ChunkScheduling.threads(config.chunkThreads);
+		if (feed == null || feed.workers() != configuredWorkers) {
+			feed = new FeedTarget(configuredWorkers);
 		}
 		int queued = ((ChunkRenderDispatcherAccessor) dispatcher).alacer$getPendingTasks().size();
 		int added = 0;
@@ -67,7 +76,7 @@ public final class ChunkSchedulingExperiments {
 			added++;
 		}
 		feed.afterFeed(((ChunkRenderDispatcherAccessor) dispatcher).alacer$getPendingTasks().size());
-		FrameProfiler profiler = Alacer.get().profiler();
+		FrameProfiler profiler = alacer.profiler();
 		if (profiler != null) {
 			profiler.count(Counter.CHUNK_FED_TASKS, added);
 		}
@@ -75,7 +84,8 @@ public final class ChunkSchedulingExperiments {
 
 	/** Start of compileChunksUntil: {@code render.chunkTimeFloor}, or vanilla's deadline unchanged. */
 	public static long deadline(long vanilla) {
-		if (!Alacer.get().config().chunkTimeFloor) {
+		Alacer alacer = Alacer.get();
+		if (alacer == null || !alacer.config().chunkTimeFloor) {
 			FLOOR.reset();
 			return vanilla;
 		}

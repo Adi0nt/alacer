@@ -22,6 +22,8 @@ public final class FeedTarget {
 
 	public int target() { return this.target; }
 
+	public int workers() { return this.workers; }
+
 	/** Called with the queue's size right before terrain setup clears it. */
 	public void beforeClear(int unstarted) {
 		if (this.queuedAfterFeed < 0) {
