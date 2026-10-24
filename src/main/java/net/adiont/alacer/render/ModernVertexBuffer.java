@@ -4,5 +4,4 @@ package net.adiont.alacer.render;
 public interface ModernVertexBuffer {
 	int alacer$bufferId();
 	int alacer$vertexCount();
-	TerrainVertexArray alacer$vertexArray();
 }

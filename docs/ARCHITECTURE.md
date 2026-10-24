@@ -27,8 +27,8 @@ net.adiont.alacer
 │   ├── ChunkVisibility     Allocation-free chunk visibility search (optimization 1)
 │   ├── ChunkNeighbours     Exact toroidal neighbor addresses; opt-in culling math, pure/unit tested (2026-10-23)
 │   ├── ModernGl            Capability gates, named VBO uploads, byte verification and exported counters
-│   ├── TerrainVertexArray  Lazy terrain VAO, layout verification, context guard and world lifecycle cleanup
-│   ├── ModernVertexBuffer  Mixin bridge to the vanilla buffer ID and its optional VAO
+│   ├── TerrainShader       Compatibility vertex shader evaluating origin translation and scaling on GPU
+│   ├── ModernVertexBuffer  Mixin bridge to the vanilla buffer ID and vertex count
 │   ├── RenderCompatibility Conservative fallback for external mixins on affected storage/buffer classes
 │   ├── ChunkFrustum        Exact one-corner-per-plane chunk predicate (session 12)
 │   ├── SectionFaces        Allocation-free camera-section flood fill with pocket reuse (session 28b, unmeasured, off)
@@ -69,9 +69,9 @@ net.adiont.alacer
 │   └── AtlasPadding        Edge borders around atlas sprites while anisotropic filtering is on (unit tested)
 ├── settings/               Video settings catalog, staged draft, presets, backend and menu screen
 └── mixin/                  One-line hooks, wrappers and accessors only
-    ├── ModernVertexBufferMixin Optional named buffer operations and per-buffer VAO ownership
-    ├── TerrainVaoMixin     Optional reuse of vanilla terrain pointer setup; original draws/order
-    ├── ModernWorldLifecycleMixin Retires extra VAOs on renderer world transitions
+    ├── ModernVertexBufferMixin Optional OpenGL 4.5 named buffer creation and direct uploads
+    ├── TerrainVaoMixin     Delegates terrain chunk rendering to TerrainShader when enabled
+    ├── ModernWorldLifecycleMixin World transition receipts and verification logging
     └── CameraControlsMixin Camera settings hooks (bobbing, distortion, third-person distance/collision,
                             FOV transition, zoom) forwarding to CameraEffects; vanilla values at defaults
 ```
