@@ -77,6 +77,8 @@ public final class ChunkVisibility {
 	private static final int FRUSTUM_CULLER = 0;
 	private static final int FRUSTUM_PLANES = 1;
 	private static final int FRUSTUM_VERIFY = 2;
+	private static final int FRUSTUM_VECTOR = 3;
+	private static final int FRUSTUM_VECTOR_VERIFY = 4;
 
 	static {
 		for (int d = 0; d < DIRECTIONS.length; d++) {
@@ -105,8 +107,16 @@ public final class ChunkVisibility {
 	private int sizeY;
 	private int sizeZ;
 
-	// Frustum test for the current search (render.fastChunkFrustum).
+	// Frustum test for the current search (render.fastChunkFrustum and render.vectorFrustum).
 	private final ChunkFrustum frustum = new ChunkFrustum();
+	private final VectorFrustum vectorFrustum = new VectorFrustum();
+
+	// render.flatOcclusion: dense 36-bit packed occlusion bitmask per chunk slot.
+	private long[] flatOcclusion = new long[0];
+	private CompiledChunk[] compiledOcclusion = new CompiledChunk[0];
+	private static long flatOcclusionHits;
+	private static long flatOcclusionUpdates;
+	private static long flatOcclusionMismatches;
 	private int frustumMode;
 	private int frustumTests;
 
@@ -362,7 +372,9 @@ public final class ChunkVisibility {
 		out.clear();
 		nextStamp();
 		AlacerConfig config = Alacer.get().config();
-		if ((config.fastChunkFrustum || config.verifyChunkFrustum) && this.frustum.prepare(culler)) {
+		if ((config.vectorFrustum || config.verifyVectorFrustum) && this.vectorFrustum.prepare(culler)) {
+			this.frustumMode = config.verifyVectorFrustum ? FRUSTUM_VECTOR_VERIFY : FRUSTUM_VECTOR;
+		} else if ((config.fastChunkFrustum || config.verifyChunkFrustum) && this.frustum.prepare(culler)) {
 			this.frustumMode = config.verifyChunkFrustum ? FRUSTUM_VERIFY : FRUSTUM_PLANES;
 		} else {
 			this.frustumMode = FRUSTUM_CULLER;
@@ -442,14 +454,38 @@ public final class ChunkVisibility {
 			int y = origin.getY();
 			int z = origin.getZ();
 
+			long occlusionMask = 0L;
+			int allowedFaces = 0x3F;
+			if (smartCull && from != NO_DIRECTION && config.flatOcclusion) {
+				occlusionMask = getOcclusionMask(current, chunk);
+				allowedFaces = (int) ((occlusionMask >>> (OPPOSITE[from] * 6)) & 0x3F);
+			}
+
 			for (int d = 0; d < 6; d++) {
 				// Never step back against a direction already travelled on this path.
 				if (smartCull && (mask & (1 << OPPOSITE[d])) != 0) {
 					continue;
 				}
 				// Only continue through faces connected to the face this chunk was entered by.
-				if (smartCull && from != NO_DIRECTION && !chunk.getCompiledChunk().isVisible(DIRECTIONS[OPPOSITE[from]], DIRECTIONS[d])) {
-					continue;
+				if (smartCull && from != NO_DIRECTION) {
+					if (config.flatOcclusion) {
+						boolean visible = (allowedFaces & (1 << d)) != 0;
+						if (config.verifyFlatOcclusion) {
+							boolean vanillaVis = chunk.getCompiledChunk().isVisible(DIRECTIONS[OPPOSITE[from]], DIRECTIONS[d]);
+							if (visible != vanillaVis) {
+								flatOcclusionMismatches++;
+								if (flatOcclusionMismatches <= 10) {
+									Alacer.LOGGER.warn("render.flatOcclusion mismatch for face {} -> {}: flat {}, vanilla {}",
+										OPPOSITE[from], d, visible, vanillaVis);
+								}
+							}
+						}
+						if (!visible) {
+							continue;
+						}
+					} else if (!chunk.getCompiledChunk().isVisible(DIRECTIONS[OPPOSITE[from]], DIRECTIONS[d])) {
+						continue;
+					}
 				}
 				int nx = x + OFFSET_X[d];
 				int ny = y + OFFSET_Y[d];
@@ -489,6 +525,10 @@ public final class ChunkVisibility {
 			this.tested[this.testedCount++] = slot;
 		}
 		switch (this.frustumMode) {
+			case FRUSTUM_VECTOR:
+				return this.vectorFrustum.isVisible(bounds);
+			case FRUSTUM_VECTOR_VERIFY:
+				return this.vectorFrustum.verify(bounds, culler);
 			case FRUSTUM_PLANES:
 				return this.frustum.isVisible(bounds);
 			case FRUSTUM_VERIFY:
@@ -560,6 +600,8 @@ public final class ChunkVisibility {
 		this.travelled = new byte[n];
 		this.sourceDir = new byte[n];
 		this.queue = new int[n];
+		this.flatOcclusion = new long[n];
+		this.compiledOcclusion = new CompiledChunk[n];
 		if (this.frustumTiming) {
 			this.tested = new int[n];
 		}
@@ -719,4 +761,33 @@ public final class ChunkVisibility {
 	public long hysteresisSkips() {
 		return this.hysteresisSkips;
 	}
+
+	private long getOcclusionMask(int slot, RenderChunk chunk) {
+		CompiledChunk compiled = chunk.getCompiledChunk();
+		if (this.compiledOcclusion[slot] == compiled) {
+			flatOcclusionHits++;
+			return this.flatOcclusion[slot];
+		}
+		flatOcclusionUpdates++;
+		long mask = packOcclusion(compiled);
+		this.compiledOcclusion[slot] = compiled;
+		this.flatOcclusion[slot] = mask;
+		return mask;
+	}
+
+	public static long packOcclusion(CompiledChunk compiled) {
+		if (compiled == null || compiled == CompiledChunk.UNCOMPILED) {
+			return 0L;
+		}
+		long mask = 0L;
+		for (int f = 0; f < 6; f++) {
+			for (int t = 0; t < 6; t++) {
+				if (compiled.isVisible(DIRECTIONS[f], DIRECTIONS[t])) {
+					mask |= (1L << (f * 6 + t));
+				}
+			}
+		}
+		return mask;
+	}
+
 }

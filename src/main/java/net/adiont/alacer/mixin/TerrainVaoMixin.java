@@ -62,19 +62,23 @@ public abstract class TerrainVaoMixin extends RenderChunkList {
 			int fast = 0;
 			for (int i = 0; i < count; i++) {
 				RenderChunk chunk = list.get(i);
+				BlockPos origin = chunk.getOrigin();
+				int ox = origin.getX();
+				int oy = origin.getY();
+				int oz = origin.getZ();
 				VertexBuffer buffer = chunk.getBuffer(layerOrdinal);
 
 				if (((Object) buffer).getClass() == VertexBuffer.class) {
 					ModernVertexBuffer mvb = (ModernVertexBuffer) buffer;
 					int vCount = mvb.alacer$vertexCount();
 					if (vCount > 0) {
-						TerrainShader.setOrigin(chunk.getOrigin());
+						TerrainShader.setOrigin(ox, oy, oz);
 						ARBVertexAttribBinding.glBindVertexBuffer(0, mvb.alacer$bufferId(), 0L, 28);
 						GL11.glDrawArrays(GL11.GL_QUADS, 0, vCount);
 					}
 					fast++;
 				} else {
-					TerrainShader.setOrigin(chunk.getOrigin());
+					TerrainShader.setOrigin(ox, oy, oz);
 					buffer.bind();
 					this.prepareDrawState();
 					buffer.draw(7);
@@ -89,9 +93,10 @@ public abstract class TerrainVaoMixin extends RenderChunkList {
 		} else {
 			for (int i = 0; i < count; i++) {
 				RenderChunk chunk = list.get(i);
+				BlockPos origin = chunk.getOrigin();
 				VertexBuffer buffer = chunk.getBuffer(layerOrdinal);
 
-				TerrainShader.setOrigin(chunk.getOrigin());
+				TerrainShader.setOrigin(origin.getX(), origin.getY(), origin.getZ());
 
 				buffer.bind();
 				this.prepareDrawState();

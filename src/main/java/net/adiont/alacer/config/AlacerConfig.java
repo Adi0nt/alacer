@@ -116,6 +116,22 @@ public final class AlacerConfig {
 	public volatile boolean fastSoundThread;
 	/** Reuse visibility search result when camera translation and rotation jitter are sub-threshold and no chunks are dirty. Runtime-toggleable. */
 	public volatile boolean cameraHysteresis;
+	/** Dense 36-bit packed occlusion bitmask per chunk slot to accelerate graph traversal. Runtime-toggleable. */
+	public volatile boolean flatOcclusion;
+	/** Also test chunk occlusion via vanilla CompiledChunk.isVisible and log differences. Debug only. */
+	public volatile boolean verifyFlatOcclusion;
+	/** SIMD vectorized frustum plane-box evaluation. Runtime-toggleable. */
+	public volatile boolean vectorFrustum;
+	/** Also run vanilla frustum culler and log differences. Debug only. */
+	public volatile boolean verifyVectorFrustum;
+	/** Pre-populated thread-local block state cache for worker ambient occlusion. Runtime-toggleable. */
+	public volatile boolean fastWorkerAo;
+	/** Also verify worker block state queries against vanilla chunk lookups. Debug only. */
+	public volatile boolean verifyWorkerAo;
+	/** Flatten static model part transformations and skip redundant matrix stack pushes. Runtime-toggleable. */
+	public volatile boolean fastModelTransforms;
+	/** Also verify model part transformations against vanilla. Debug only. */
+	public volatile boolean verifyFastModelTransforms;
 	/** Answer particles' light queries through cached chunk references. Runtime-toggleable. */
 	public volatile boolean fastParticleLight;
 	/** Also run vanilla's particle light query, use its result and log differences. Debug only. */
@@ -350,6 +366,22 @@ public final class AlacerConfig {
 			"Wake paulscode sound threads via lock-free parking instead of Thread.sleep and thread interruption.");
 		this.cameraHysteresis = bool(file, system, "render.cameraHysteresis", true,
 			"Reuse visibility search result when camera translation and rotation jitter are sub-threshold and no chunks are dirty.");
+		this.flatOcclusion = bool(file, system, "render.flatOcclusion", true,
+			"Pack section connectivity flags into a dense 36-bit bitmask per chunk section.");
+		this.verifyFlatOcclusion = bool(file, system, "render.flatOcclusion.verify", false,
+			"Debug: also test chunk occlusion via vanilla CompiledChunk.isVisible and log differences.");
+		this.vectorFrustum = bool(file, system, "render.vectorFrustum", true,
+			"Vectorized frustum testing of chunk bounding boxes against the 6 frustum planes.");
+		this.verifyVectorFrustum = bool(file, system, "render.vectorFrustum.verify", false,
+			"Debug: also run vanilla frustum culler and log differences.");
+		this.fastWorkerAo = bool(file, system, "render.fastWorkerAo", true,
+			"Cache chunk block states in thread-local flat memory during chunk compilation and ambient occlusion.");
+		this.verifyWorkerAo = bool(file, system, "render.fastWorkerAo.verify", false,
+			"Debug: also verify worker block state queries against vanilla chunk lookups.");
+		this.fastModelTransforms = bool(file, system, "render.fastModelTransforms", true,
+			"Flatten static model part transformations and skip redundant matrix stack pushes.");
+		this.verifyFastModelTransforms = bool(file, system, "render.fastModelTransforms.verify", false,
+			"Debug: also verify model part transformations against vanilla.");
 		this.fastParticleLight = bool(file, system, "render.fastParticleLight", true,
 			"Answer particles' per-frame light queries from cached chunk references instead of chunk hash lookups, without allocating neighbor positions.");
 		this.verifyFastParticleLight = bool(file, system, "render.fastParticleLight.verify", false,
@@ -473,6 +505,10 @@ public final class AlacerConfig {
 				this.fastRandomDisplayTicks = value;
 				this.fastSoundThread = value;
 				this.cameraHysteresis = value;
+				this.flatOcclusion = value;
+				this.vectorFrustum = value;
+				this.fastWorkerAo = value;
+				this.fastModelTransforms = value;
 				this.fastParticleLight = value;
 				this.fastParticleRemoval = value;
 				this.fastParticleVertices = value;
@@ -562,6 +598,30 @@ public final class AlacerConfig {
 				break;
 			case "render.cameraHysteresis":
 				this.cameraHysteresis = value;
+				break;
+			case "render.flatOcclusion":
+				this.flatOcclusion = value;
+				break;
+			case "render.flatOcclusion.verify":
+				this.verifyFlatOcclusion = value;
+				break;
+			case "render.vectorFrustum":
+				this.vectorFrustum = value;
+				break;
+			case "render.vectorFrustum.verify":
+				this.verifyVectorFrustum = value;
+				break;
+			case "render.fastWorkerAo":
+				this.fastWorkerAo = value;
+				break;
+			case "render.fastWorkerAo.verify":
+				this.verifyWorkerAo = value;
+				break;
+			case "render.fastModelTransforms":
+				this.fastModelTransforms = value;
+				break;
+			case "render.fastModelTransforms.verify":
+				this.verifyFastModelTransforms = value;
 				break;
 			case "render.fastParticleLight":
 				this.fastParticleLight = value;
@@ -775,6 +835,14 @@ public final class AlacerConfig {
 		values.put("render.fastRandomDisplayTicks.verify", String.valueOf(this.verifyFastRandomDisplayTicks));
 		values.put("render.fastSoundThread", String.valueOf(this.fastSoundThread));
 		values.put("render.cameraHysteresis", String.valueOf(this.cameraHysteresis));
+		values.put("render.flatOcclusion", String.valueOf(this.flatOcclusion));
+		values.put("render.flatOcclusion.verify", String.valueOf(this.verifyFlatOcclusion));
+		values.put("render.vectorFrustum", String.valueOf(this.vectorFrustum));
+		values.put("render.vectorFrustum.verify", String.valueOf(this.verifyVectorFrustum));
+		values.put("render.fastWorkerAo", String.valueOf(this.fastWorkerAo));
+		values.put("render.fastWorkerAo.verify", String.valueOf(this.verifyWorkerAo));
+		values.put("render.fastModelTransforms", String.valueOf(this.fastModelTransforms));
+		values.put("render.fastModelTransforms.verify", String.valueOf(this.verifyFastModelTransforms));
 		values.put("render.fastParticleLight", String.valueOf(this.fastParticleLight));
 		values.put("render.fastParticleLight.verify", String.valueOf(this.verifyFastParticleLight));
 		values.put("render.fastParticleRemoval", String.valueOf(this.fastParticleRemoval));

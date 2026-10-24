@@ -46,6 +46,7 @@ processResources {
 tasks.withType(JavaCompile).configureEach {
 	it.options.encoding = 'UTF-8'
 	it.options.release = 25
+	it.options.compilerArgs += ['--add-modules', 'jdk.incubator.vector']
 }
 
 java {
@@ -59,6 +60,7 @@ java {
 
 test {
 	useJUnitPlatform()
+	jvmArgs '--add-modules', 'jdk.incubator.vector'
 }
 
 // Minecraft's JVM is independent of the JVM running Gradle and the bytecode target.
@@ -68,7 +70,7 @@ tasks.withType(net.fabricmc.loom.task.AbstractRunTask).configureEach {
 		languageVersion = JavaLanguageVersion.of(25)
 	}
 	// LWJGL 2 loads native OpenGL/OpenAL/JInput libraries on the classpath.
-	jvmArgs '--enable-native-access=ALL-UNNAMED'
+	jvmArgs '--enable-native-access=ALL-UNNAMED', '--add-modules=jdk.incubator.vector'
 
 	// Forward -Palacer.<key>=<value> to the game as -Dalacer.<key>=<value>, e.g.
 	//   ./gradlew runClient -Palacer.benchmark=true -Palacer.render.fastChunkVisibility=false

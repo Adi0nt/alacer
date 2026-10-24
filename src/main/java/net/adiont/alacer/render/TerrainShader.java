@@ -27,6 +27,9 @@ public final class TerrainShader {
 	private static int singleVaoId;
 	private static int originUniformLocation;
 	private static double cameraX, cameraY, cameraZ;
+	private static int lastOriginX = Integer.MIN_VALUE;
+	private static int lastOriginY = Integer.MIN_VALUE;
+	private static int lastOriginZ = Integer.MIN_VALUE;
 
 	private static final String GENERIC_ATTRIB_VERTEX_SOURCE =
 		"#version 120\n" +
@@ -232,6 +235,9 @@ public final class TerrainShader {
 		cameraX = x;
 		cameraY = y;
 		cameraZ = z;
+		lastOriginX = Integer.MIN_VALUE;
+		lastOriginY = Integer.MIN_VALUE;
+		lastOriginZ = Integer.MIN_VALUE;
 		GL20.glUseProgram(programId);
 		if (attribBindingSupported) {
 			GL30.glBindVertexArray(singleVaoId);
@@ -239,13 +245,16 @@ public final class TerrainShader {
 	}
 
 	public static void setOrigin(BlockPos pos) {
-		float relX = (float) (pos.getX() - cameraX);
-		float relY = (float) (pos.getY() - cameraY);
-		float relZ = (float) (pos.getZ() - cameraZ);
-		GL20.glUniform3f(originUniformLocation, relX, relY, relZ);
+		setOrigin(pos.getX(), pos.getY(), pos.getZ());
 	}
 
 	public static void setOrigin(int blockX, int blockY, int blockZ) {
+		if (blockX == lastOriginX && blockY == lastOriginY && blockZ == lastOriginZ) {
+			return;
+		}
+		lastOriginX = blockX;
+		lastOriginY = blockY;
+		lastOriginZ = blockZ;
 		float relX = (float) (blockX - cameraX);
 		float relY = (float) (blockY - cameraY);
 		float relZ = (float) (blockZ - cameraZ);
