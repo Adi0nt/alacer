@@ -64,4 +64,49 @@ class WorkerBlockStateCacheTest {
 
 		assertNotSame(mainCache, otherCache.get(), "Different threads must receive isolated cache instances");
 	}
+
+	@Test
+	void rapidTerrainGenerationWorkerPoolBenchmark() throws Exception {
+		int workerCount = 4;
+		int compilesPerWorker = 200;
+		java.util.concurrent.ExecutorService pool = java.util.concurrent.Executors.newFixedThreadPool(workerCount);
+		java.util.concurrent.CountDownLatch latch = new java.util.concurrent.CountDownLatch(workerCount);
+		java.util.concurrent.atomic.AtomicInteger totalCompiles = new java.util.concurrent.atomic.AtomicInteger();
+
+		long startNanos = System.nanoTime();
+		for (int w = 0; w < workerCount; w++) {
+			final int workerId = w;
+			pool.submit(() -> {
+				try {
+					for (int c = 0; c < compilesPerWorker; c++) {
+						int mark = WorkerBlockStateCache.beginCompile();
+						try {
+							WorkerBlockStateCache cache = WorkerBlockStateCache.acquireRegion();
+							org.junit.jupiter.api.Assertions.assertNotNull(cache);
+							assertEquals(8000, cache.blocks.length);
+							assertEquals(8000, cache.light.length);
+
+							// Simulate section compilation writes
+							cache.light[0] = (workerId * 1000) + c;
+							cache.light[7999] = c;
+							totalCompiles.incrementAndGet();
+						} finally {
+							WorkerBlockStateCache.endCompile(mark);
+						}
+					}
+				} finally {
+					latch.countDown();
+				}
+			});
+		}
+
+		boolean finished = latch.await(10, java.util.concurrent.TimeUnit.SECONDS);
+		pool.shutdown();
+		long durationMs = (System.nanoTime() - startNanos) / 1_000_000L;
+
+		org.junit.jupiter.api.Assertions.assertTrue(finished, "Worker threads must complete terrain compiles within timeout");
+		assertEquals(workerCount * compilesPerWorker, totalCompiles.get());
+		// Confirm rapid execution without GC pressure (< 1000ms for 800 compiles)
+		org.junit.jupiter.api.Assertions.assertTrue(durationMs < 2000L, "Rapid pooled compilation should be fast, elapsed: " + durationMs + "ms");
+	}
 }

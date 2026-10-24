@@ -62,4 +62,22 @@ class FastRandomDisplayTicksTest {
 		assertEquals(0, FastRandomDisplayTicks.airSkipped());
 		assertEquals(0, FastRandomDisplayTicks.mismatches());
 	}
+
+	@Test
+	void standardBlocksDisplayTickClassification() {
+		// Verify known blocks with display ticks
+		assertTrue(FastRandomDisplayTicks.hasRandomDisplayTick(Blocks.TORCH));
+		assertTrue(FastRandomDisplayTicks.hasRandomDisplayTick(Blocks.REDSTONE_ORE));
+		assertTrue(FastRandomDisplayTicks.hasRandomDisplayTick(Blocks.LIT_REDSTONE_ORE));
+
+		// Verify known blocks without display ticks
+		assertFalse(FastRandomDisplayTicks.hasRandomDisplayTick(Blocks.AIR));
+		assertFalse(FastRandomDisplayTicks.hasRandomDisplayTick(Blocks.STONE));
+		assertFalse(FastRandomDisplayTicks.hasRandomDisplayTick(Blocks.DIRT));
+		assertFalse(FastRandomDisplayTicks.hasRandomDisplayTick(Blocks.GRASS));
+		assertFalse(FastRandomDisplayTicks.hasRandomDisplayTick(Blocks.BEDROCK));
+		assertFalse(FastRandomDisplayTicks.hasRandomDisplayTick(Blocks.BARRIER));
+
+		assertEquals(0, FastRandomDisplayTicks.mismatches());
+	}
 }

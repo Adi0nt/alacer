@@ -16,15 +16,18 @@ class ModernRenderingConfigTest {
 	}
 	@Test void allExperimentsDefaultOffAndStayOutsideTheDefaultsPreset() throws Exception {
 		AlacerConfig c = AlacerConfig.load(this.dir.resolve("alacer.properties"), LogManager.getLogger());
-		for (String key : new String[] {"render.fastChunkNeighbours", "render.terrainShader", "render.terrainVaos", "render.directBufferUploads", "render.modernGl.verify", "render.fastChunkNeighbours.verify"}) {
+		for (String key : new String[] {"render.fastChunkNeighbours", "render.directBufferUploads", "render.modernGl.verify", "render.fastChunkNeighbours.verify"}) {
 			assertEquals("false", c.describe().get(key));
 		}
+		assertEquals("true", c.describe().get("render.terrainShader"));
+		assertEquals("true", c.describe().get("render.terrainVaos"));
 		c.setToggle("render.modernPipeline", true);
 		assertTrue(c.fastChunkNeighbours && c.terrainShader && c.terrainVaos && c.directBufferUploads);
-		for (boolean defaults : new boolean[] {true, false}) {
-			c.setToggle("render.defaults", defaults);
-			assertFalse(c.fastChunkNeighbours || c.terrainShader || c.terrainVaos || c.directBufferUploads);
-		}
+		c.setToggle("render.defaults", false);
+		assertFalse(c.fastChunkNeighbours || c.terrainShader || c.terrainVaos || c.directBufferUploads);
+		c.setToggle("render.defaults", true);
+		assertTrue(c.terrainShader && c.terrainVaos);
+		assertFalse(c.fastChunkNeighbours || c.directBufferUploads);
 	}
 	@Test void startupGatingAndBenchmarkFileIsolationAgree() throws Exception {
 		Properties p = new Properties(); p.setProperty("render.terrainShader", "true");

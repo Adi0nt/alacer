@@ -139,6 +139,7 @@ public final class ChunkVisibility {
 	private int facesZ;
 	private WorldChunk facesChunk;
 	private int faces;
+	private final BlockPos.Mutable searchEye = new BlockPos.Mutable();
 
 	// render.fastCameraSectionFaces: the camera section's opaque blocks and last flood fill.
 	private final SectionFaces section = new SectionFaces();
@@ -411,7 +412,10 @@ public final class ChunkVisibility {
 		double camX = camera.prevX + (camera.x - camera.prevX) * tickDelta;
 		double camY = camera.prevY + (camera.y - camera.prevY) * tickDelta;
 		double camZ = camera.prevZ + (camera.z - camera.prevZ) * tickDelta;
-		BlockPos eye = new BlockPos(camX, camY + camera.getEyeHeight(), camZ);
+		int eyeX = (int) Math.floor(camX);
+		int eyeY = (int) Math.floor(camY + camera.getEyeHeight());
+		int eyeZ = (int) Math.floor(camZ);
+		this.searchEye.set(eyeX, eyeY, eyeZ);
 		// Range checks are relative to the chunk containing the camera's feet, as in vanilla.
 		int originX = floor16(camX);
 		int originZ = floor16(camZ);
@@ -420,9 +424,9 @@ public final class ChunkVisibility {
 
 		int head = 0;
 		int tail = 0;
-		int cameraSlot = slot(eye.getX(), eye.getY(), eye.getZ());
+		int cameraSlot = slot(eyeX, eyeY, eyeZ);
 		if (cameraSlot >= 0) {
-			int open = openFaces(eye);
+			int open = openFaces(this.searchEye);
 			if (Integer.bitCount(open) == 1) {
 				Vector3f look = this.access.alacer$getLookVector(camera, tickDelta);
 				open &= ~(1 << Direction.getNearest(look.x, look.y, look.z).getOpposite().ordinal());
@@ -433,7 +437,7 @@ public final class ChunkVisibility {
 				out.add(info(cameraSlot));
 				return out;
 			}
-			if (loadChunks && this.access.alacer$getWorld().getBlockState(eye).getBlock().isSolidRender()) {
+			if (loadChunks && this.access.alacer$getWorld().getBlockState(this.searchEye).getBlock().isSolidRender()) {
 				smartCull = false;
 			}
 			visit(cameraSlot, frame, markFrames);
@@ -443,7 +447,7 @@ public final class ChunkVisibility {
 		} else {
 			// Camera above or below the world: seed with the top or bottom layer. Like vanilla,
 			// this layer is centred on the world origin rather than on the camera.
-			int y = eye.getY() > 0 ? 248 : 8;
+			int y = eyeY > 0 ? 248 : 8;
 			int distance = this.access.alacer$getLastViewDistance();
 			for (int cx = -distance; cx <= distance; cx++) {
 				for (int cz = -distance; cz <= distance; cz++) {
@@ -613,6 +617,9 @@ public final class ChunkVisibility {
 		this.sizeZ = dims.alacer$getSizeZ();
 		int n = this.chunks.length;
 		this.infos = new WorldRenderer.RenderChunkInfo[n];
+		for (int i = 0; i < n; i++) {
+			this.infos[i] = this.renderer.new RenderChunkInfo(this.chunks[i], null, 0);
+		}
 		this.visited = new int[n];
 		this.travelled = new byte[n];
 		this.sourceDir = new byte[n];
@@ -622,6 +629,16 @@ public final class ChunkVisibility {
 		if (this.frustumTiming) {
 			this.tested = new int[n];
 		}
+		if (this.expected.length < n) {
+			this.expected = new RenderChunk[n];
+		}
+		if (this.compiledSnapshot.length < n) {
+			this.compiledSnapshot = new CompiledChunk[n];
+		}
+		if (this.reuseCompiled.length < n) {
+			this.reuseCompiled = new CompiledChunk[n];
+		}
+		((ArrayList<?>) this.result).ensureCapacity(n);
 		this.stamp = 0;
 		this.facesValid = false;
 		this.sectionValid = false;

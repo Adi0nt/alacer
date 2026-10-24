@@ -449,7 +449,8 @@ public final class AlacerConfig {
 			"Debug: keep vanilla's new position, compare the reused one's coordinates and the block state answered for each, and log any difference.");
 		this.fastChunkNeighbours = bool(file, system, "render.fastChunkNeighbours", false, "Experimental exact precomputed chunk storage adjacency; avoids per-edge integer division.");
 		this.verifyChunkNeighbours = bool(file, system, "render.fastChunkNeighbours.verify", false, "Compare every adjacency result with the original slot math and use the original result.");
-		this.terrainShader = bool(file, system, "render.terrainShader", false, "Modern OpenGL terrain vertex shader pipeline; evaluates chunk translation and scaling on GPU, startup hooks.");
+		boolean defTerrainShader = !Boolean.getBoolean("alacer.benchmark");
+		this.terrainShader = bool(file, system, "render.terrainShader", defTerrainShader, "Modern OpenGL terrain vertex shader pipeline; evaluates chunk translation and scaling on GPU, startup hooks.");
 		this.terrainVaos = bool(file, system, "render.terrainVaos", this.terrainShader, "Legacy alias for render.terrainShader.");
 		if (this.terrainVaos && !this.terrainShader) {
 			this.terrainShader = true;
@@ -553,8 +554,8 @@ public final class AlacerConfig {
 				this.feedChunkWorkers = false;
 				this.chunkTimeFloor = false;
 				this.fastChunkNeighbours = false;
-				this.terrainShader = false;
-				this.terrainVaos = false;
+				this.terrainShader = value;
+				this.terrainVaos = value;
 				this.directBufferUploads = false;
 				this.skipZeroTranslates = false;
 				this.batchModelLists = false;

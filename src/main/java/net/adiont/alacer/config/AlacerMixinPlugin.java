@@ -89,7 +89,8 @@ public class AlacerMixinPlugin implements IMixinConfigPlugin {
 
 	static boolean modernGlEnabled(Properties file) {
 		String toggle = System.getProperty("alacer.benchmark.toggle", "").trim();
-		return flag(file, "render.terrainShader", false) || flag(file, "render.terrainVaos", false)
+		boolean defaultShader = !Boolean.getBoolean("alacer.benchmark");
+		return flag(file, "render.terrainShader", defaultShader) || flag(file, "render.terrainVaos", defaultShader)
 			|| flag(file, "render.directBufferUploads", false) || flag(file, "render.modernGl.verify", false)
 			|| toggle.equals("render.modernPipeline") || toggle.equals("render.terrainShader")
 			|| toggle.equals("render.terrainVaos") || toggle.equals("render.directBufferUploads");

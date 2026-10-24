@@ -124,4 +124,66 @@ class EntityCullingTest {
 		assertEquals(0, EntityCulling.culledFrustum());
 		assertEquals(0, EntityCulling.visible());
 	}
+
+	@Test
+	void denseScene200EntitiesVerificationGate() {
+		java.util.Random random = new java.util.Random(20261024);
+		BaseRenderer baseRenderer = new BaseRenderer();
+		CustomRenderer customAccept = new CustomRenderer(true);
+		CustomRenderer customReject = new CustomRenderer(false);
+
+		int expectedCulledDist = 0;
+		int expectedCulledFrust = 0;
+		int expectedVisible = 0;
+
+		for (int i = 0; i < 200; i++) {
+			DummyEntity entity = new DummyEntity();
+			entity.x = random.nextDouble() * 100.0 - 50.0;
+			entity.y = random.nextDouble() * 30.0;
+			entity.z = random.nextDouble() * 100.0 - 50.0;
+
+			int type = i % 5;
+			boolean inDistance = (type != 0); // type 0: culled by distance
+			boolean inFrustum = (type == 1 || type == 3); // type 1 & 3: in frustum
+			boolean ignoreFrustum = (type == 3);
+			boolean isCustom = (type == 4);
+
+			entity.distanceResult = inDistance;
+			entity.ignoreCameraFrustum = ignoreFrustum;
+			DummyCuller culler = new DummyCuller(inFrustum);
+
+			net.minecraft.client.render.entity.EntityRenderer<Entity> renderer;
+			if (isCustom) {
+				renderer = (i % 2 == 0) ? customAccept : customReject;
+			} else {
+				renderer = baseRenderer;
+			}
+
+			boolean actual = EntityCulling.shouldRenderWithRenderer(renderer, entity, culler, 0.0, 0.0, 0.0);
+
+			boolean expected;
+			if (isCustom) {
+				expected = ((CustomRenderer) renderer).decision;
+			} else if (!inDistance) {
+				expected = false;
+				expectedCulledDist++;
+			} else if (ignoreFrustum) {
+				expected = true;
+				expectedVisible++;
+			} else if (inFrustum) {
+				expected = true;
+				expectedVisible++;
+			} else {
+				expected = false;
+				expectedCulledFrust++;
+			}
+
+			assertEquals(expected, actual, "Decision mismatch on entity " + i + " (type " + type + ")");
+		}
+
+		assertEquals(200, EntityCulling.tested());
+		assertEquals(expectedCulledDist, EntityCulling.culledDistance());
+		assertEquals(expectedCulledFrust, EntityCulling.culledFrustum());
+		assertEquals(expectedVisible, EntityCulling.visible());
+	}
 }

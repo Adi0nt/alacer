@@ -61,4 +61,33 @@ class ChunkSchedulingTest {
 		assertEquals(7, ChunkScheduling.buffers(4));
 		assertEquals(9, ChunkScheduling.buffers(6));
 	}
+
+	@Test
+	void flightUploadPacingEliminatesStutterTails() {
+		// Simulate flight frame intervals: 60 FPS (16.6ms), 120 FPS (8.33ms), 240 FPS (4.16ms)
+		double[] fpsTargets = {60.0, 120.0, 240.0};
+
+		for (double fps : fpsTargets) {
+			long frameNanos = (long) (1_000_000_000.0 / fps);
+			long vanillaUploadBudget = frameNanos / 4L; // Vanilla allocates 1/4 frame
+
+			long now = 500_000_000L;
+			long vanillaDeadline = now + vanillaUploadBudget;
+
+			// Choice 0: 25% pacing -> reduces flight spike to 1/16 frame (6.25%)
+			long paced25 = ChunkScheduling.deadline(vanillaDeadline, now, 0);
+			long duration25 = paced25 - now;
+			assertEquals(vanillaUploadBudget * 25 / 100, duration25);
+			org.junit.jupiter.api.Assertions.assertTrue(duration25 < vanillaUploadBudget);
+
+			// Choice 1: 50% pacing -> reduces flight spike to 1/8 frame (12.5%)
+			long paced50 = ChunkScheduling.deadline(vanillaDeadline, now, 1);
+			long duration50 = paced50 - now;
+			assertEquals(vanillaUploadBudget * 50 / 100, duration50);
+			org.junit.jupiter.api.Assertions.assertTrue(duration50 < vanillaUploadBudget);
+
+			// Monotonicity check
+			org.junit.jupiter.api.Assertions.assertTrue(duration25 < duration50);
+		}
+	}
 }

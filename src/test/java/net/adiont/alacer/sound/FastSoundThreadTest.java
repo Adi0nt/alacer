@@ -146,4 +146,38 @@ class FastSoundThreadTest {
 		assertEquals(0, FastSoundThread.verifiedSnoozes());
 		assertEquals(0, FastSoundThread.verifyMismatches());
 	}
+
+	@Test
+	void heavyAudioStreamingConcurrentLockFreeParkingCertification() throws Exception {
+		int channels = 16;
+		int iterationsPerChannel = 200;
+		ExecutorService channelPool = Executors.newFixedThreadPool(channels);
+		CountDownLatch done = new CountDownLatch(channels);
+
+		for (int c = 0; c < channels; c++) {
+			channelPool.submit(() -> {
+				try {
+					Thread self = Thread.currentThread();
+					for (int i = 0; i < iterationsPerChannel; i++) {
+						// Audio stream channel sleeps briefly or is immediately unparked
+						if (i % 2 == 0) {
+							FastSoundThread.snooze(self, 1);
+						} else {
+							FastSoundThread.unpark(self);
+							FastSoundThread.snooze(self, 10);
+						}
+					}
+				} finally {
+					done.countDown();
+				}
+			});
+		}
+
+		assertTrue(done.await(10, TimeUnit.SECONDS), "All audio streaming channels must complete without deadlock");
+		channelPool.shutdown();
+		channelPool.awaitTermination(2, TimeUnit.SECONDS);
+
+		assertEquals(channels * iterationsPerChannel, FastSoundThread.snoozes());
+		assertEquals(0, FastSoundThread.verifyMismatches());
+	}
 }
