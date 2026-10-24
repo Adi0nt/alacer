@@ -33,8 +33,6 @@ public final class ModernGl {
 
 	public static void upload(int id, ByteBuffer data) {
 		GL45.glNamedBufferData(id, data, GL15.GL_STATIC_DRAW);
-		// Vanilla upload always ends with ARRAY_BUFFER=0, even if a different buffer was bound on entry.
-		net.minecraft.client.render.platform.GLX.bindBuffer(net.minecraft.client.render.platform.GLX.GL_ARRAY_BUFFER, 0);
 		namedUploads++;
 		if (!verify()) { return; }
 		int n = data.remaining();
