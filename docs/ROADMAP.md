@@ -100,12 +100,14 @@ flowchart TD
 ### Phase 2: Entity Subsystem Overhaul & Allocation Elimination (Highest Untackled CPU Opportunity)
 *Target: 26%–40% of client CPU samples and 89% of heap allocations when mobs are present.*
 
-1. **Allocation-Free Entity Lighting & Brightness (`BlockPos` Elimination)**:
+1. **Allocation-Free Entity Lighting & Brightness (`BlockPos` Elimination)** [COMPLETED - commit `46f5711`]:
    - *Problem*: In `d200`, entity drawing allocates **53–58 KB per frame**, with 61% coming directly from `BlockPos` and `BlockPos.offset` in `Entity.getBrightnessForRender` and shadow calculations.
    - *Mechanism*: Implement scalar primitive overloads `World.getCombinedLight(int x, int y, int z)` and `World.getBlockState(int x, int y, int z)` via chunk reference caches, eliminating heap allocations for entity lighting.
-2. **Frustum Culling of Entity Renderers**:
-   - *Problem*: Vanilla gathers entity render lists and executes matrix pushes, interpolation, and state setup before verifying if individual model bounds or limb parts lie within the camera frustum.
-   - *Mechanism*: Fast sphere or bounding-box frustum test before `RenderManager.doRenderEntity`. Skip matrix pushes, name tag evaluation, and shadow passes entirely for entities outside view.
+   - *Status*: Merged into `main` with full test coverage and runtime verification (`render.fastEntityLighting`).
+2. **Frustum Culling & Renderer Cache (`EntityRendererCache`, `EntityCulling`)** [COMPLETED - commit `2c2dc70`]:
+   - *Problem*: Vanilla gathers entity render lists and executes matrix pushes, interpolation, and state setup before verifying if individual model bounds or limb parts lie within the camera frustum. In addition, vanilla executes repeated `Map.get(entity.getClass())` hash lookups per entity.
+   - *Mechanism*: Evaluates `entity.shouldRender` distance first, culls off-screen entities before shape validation or renderer querying, provides zero-allocation `pooledEntityPos` in `WorldRenderer.renderEntities`, and caches renderer lookups in a 4-slot MRU reference cache.
+   - *Status*: Merged into `main` with full test coverage and runtime verification (`render.fastEntityRendererLookup`, `render.fastEntityCulling`).
 3. **Model Part Transformation Flattening**:
    - *Problem*: Vanilla entity models execute recursive matrix pushes and pops per cuboid (`ModelRenderer.render`), issuing immediate mode or tiny client vertex arrays.
    - *Mechanism*: Pre-transform static model parts into a single buffer per entity, or stream model matrices into uniform buffers.
