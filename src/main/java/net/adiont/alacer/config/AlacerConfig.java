@@ -112,6 +112,8 @@ public final class AlacerConfig {
 	public volatile boolean fastRandomDisplayTicks;
 	/** Also run vanilla verification on display tick block lookups. Debug only. */
 	public volatile boolean verifyFastRandomDisplayTicks;
+	/** Wake paulscode sound threads via lock-free parking instead of Thread.sleep and thread interruption. Runtime-toggleable. */
+	public volatile boolean fastSoundThread;
 	/** Answer particles' light queries through cached chunk references. Runtime-toggleable. */
 	public volatile boolean fastParticleLight;
 	/** Also run vanilla's particle light query, use its result and log differences. Debug only. */
@@ -342,6 +344,8 @@ public final class AlacerConfig {
 			"Execute client ambient display ticks without per-tick Random and BlockPos allocations.");
 		this.verifyFastRandomDisplayTicks = bool(file, system, "render.fastRandomDisplayTicks.verify", false,
 			"Debug: also verify fast display tick block queries against vanilla, logging differences.");
+		this.fastSoundThread = bool(file, system, "render.fastSoundThread", true,
+			"Wake paulscode sound threads via lock-free parking instead of Thread.sleep and thread interruption.");
 		this.fastParticleLight = bool(file, system, "render.fastParticleLight", true,
 			"Answer particles' per-frame light queries from cached chunk references instead of chunk hash lookups, without allocating neighbor positions.");
 		this.verifyFastParticleLight = bool(file, system, "render.fastParticleLight.verify", false,
@@ -463,6 +467,7 @@ public final class AlacerConfig {
 				this.fastEntityCulling = value;
 				this.fastRayTrace = value;
 				this.fastRandomDisplayTicks = value;
+				this.fastSoundThread = value;
 				this.fastParticleLight = value;
 				this.fastParticleRemoval = value;
 				this.fastParticleVertices = value;
@@ -546,6 +551,9 @@ public final class AlacerConfig {
 				break;
 			case "render.fastRandomDisplayTicks.verify":
 				this.verifyFastRandomDisplayTicks = value;
+				break;
+			case "render.fastSoundThread":
+				this.fastSoundThread = value;
 				break;
 			case "render.fastParticleLight":
 				this.fastParticleLight = value;
@@ -757,6 +765,7 @@ public final class AlacerConfig {
 		values.put("render.fastRayTrace.verify", String.valueOf(this.verifyFastRayTrace));
 		values.put("render.fastRandomDisplayTicks", String.valueOf(this.fastRandomDisplayTicks));
 		values.put("render.fastRandomDisplayTicks.verify", String.valueOf(this.verifyFastRandomDisplayTicks));
+		values.put("render.fastSoundThread", String.valueOf(this.fastSoundThread));
 		values.put("render.fastParticleLight", String.valueOf(this.fastParticleLight));
 		values.put("render.fastParticleLight.verify", String.valueOf(this.verifyFastParticleLight));
 		values.put("render.fastParticleRemoval", String.valueOf(this.fastParticleRemoval));

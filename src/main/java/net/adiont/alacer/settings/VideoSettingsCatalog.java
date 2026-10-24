@@ -78,6 +78,7 @@ public final class VideoSettingsCatalog {
 		optimization("fastEntityCulling","Fast entity culling","Evaluates distance and frustum before entity state preparation and renderer invocation.",Effect.IMMEDIATE),
 		optimization("fastRayTrace","Crosshair raycast","Traces targeting and entity rays without intermediate vector and position allocations.",Effect.IMMEDIATE),
 		optimization("fastRandomDisplayTicks","Random display ticks","Avoids allocations and redundant block queries during client ambient particle ticks.",Effect.IMMEDIATE),
+		optimization("fastSoundThread","Sound command thread","Avoids thousands of InterruptedExceptions in the sound engine using lock-free parking.",Effect.IMMEDIATE),
 		optimization("fastParticleLight","Particle lighting cache","Avoids repeated chunk lookups for particle lighting, preserving the light values.",Effect.IMMEDIATE),
 		optimization("fastParticleRemoval","Particle cleanup","Removes expired particles in a single ordered pass.",Effect.IMMEDIATE),
 		optimization("fastParticleVertices","Particle vertex writing","Writes the original particle geometry more directly. Hooks are selected at startup; changes take effect after restarting Minecraft.",Effect.RESTART),

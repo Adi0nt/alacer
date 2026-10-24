@@ -45,7 +45,7 @@ class VideoSettingsDraftTest {
 			assertTrue(!s.key().startsWith("profiler.") || s.key().equals("profiler.hud"),s.key());
 			if (s.key().startsWith("render.")) { assertEquals(1,s.defaultValue()); }
 		}
-		assertEquals(14,keys.stream().filter(k -> k.startsWith("render.")).count());
+		assertEquals(15,keys.stream().filter(k -> k.startsWith("render.")).count());
 		assertFalse(keys.contains("render.reuseParticleLight"));
 		assertEquals(VideoSetting.Effect.RESTART,VideoSettingsCatalog.byKey("render.fastParticleVertices").effect());
 	}
