@@ -175,7 +175,7 @@ public final class ChunkFrustum {
 	}
 
 	/** True unless another mod's mixin targets one of the classes whose test this reproduces. */
-	private static boolean compatible() {
+	static boolean compatible() {
 		if (compatibility == 0) {
 			compatibility = 1;
 			try {

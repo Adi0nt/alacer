@@ -11,6 +11,27 @@ import org.junit.jupiter.api.Test;
 import net.minecraft.client.render.FrustumData;
 
 class VectorFrustumTest {
+	@Test
+	void preservesVanillaRoundingAtCancellationBoundariesOnEveryPlane() {
+		FrustumData vanilla = new FrustumData();
+		VectorFrustum fast = new VectorFrustum();
+		for (int selected = 0; selected < 6; selected++) {
+			for (float[] plane : vanilla.frustum) { java.util.Arrays.fill(plane, 0); plane[3] = 1; }
+			vanilla.frustum[selected] = new float[] {1, 1, 0x1p-55f, 0};
+			assertTrue(fast.load(vanilla.frustum, 0, 0, 0));
+			assertTrue(vanilla.contains(1, -1, 1, 1, -1, 1));
+			assertEquals(VectorFrustum.VISIBLE, fast.test(1, -1, 1, 1, -1, 1));
+		}
+	}
+
+	@Test
+	void exceptionalCoordinatesDelegateInsteadOfAnswering() {
+		VectorFrustum fast = new VectorFrustum();
+		assertTrue(fast.load(cube(), 0, 0, 0));
+		for (double x : new double[] {Double.NaN, Double.POSITIVE_INFINITY, 0x1p900}) {
+			assertEquals(VectorFrustum.UNDECIDED, fast.test(x, 0, 0, x, 16, 16));
+		}
+	}
 
 	private static float[][] cube() {
 		return new float[][]{

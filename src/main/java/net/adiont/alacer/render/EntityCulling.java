@@ -6,30 +6,12 @@ import net.minecraft.client.render.Culler;
 import net.minecraft.client.render.entity.EntityRenderDispatcher;
 import net.minecraft.client.render.entity.EntityRenderer;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.living.mob.MobEntity;
-import net.minecraft.entity.living.mob.monster.GuardianEntity;
 import net.minecraft.util.math.Box;
 
 /**
- * Fast entity distance and frustum culling (optimization Phase 2).
- *
- * <p>In vanilla Minecraft, {@link EntityRenderDispatcher#shouldRender} evaluates the renderer
- * map lookup and bounding-box validation/allocation before checking whether the entity is within
- * render distance. In scenes with 200 mobs, hundreds of off-screen or out-of-range entities waste
- * CPU time calculating shapes and looking up renderers.
- *
- * <p>With {@code render.fastEntityCulling}:
- * <ol>
- *   <li>{@link Entity#shouldRender(double, double, double)} is evaluated first, immediately rejecting
- *       out-of-range entities without shape calculations or renderer lookups (except leashed mobs or
- *       attacking guardians whose attachment may remain visible).</li>
- *   <li>If {@link Entity#ignoreCameraFrustum} is true, the entity is accepted immediately.</li>
- *   <li>Frustum visibility is tested on the entity's bounding box.</li>
- *   <li>Only visible entities query {@link EntityRenderDispatcher#getRenderer}.</li>
- * </ol>
- *
- * <p>Verification mode ({@code render.fastEntityCulling.verify}) executes vanilla's exact
- * decision and confirms identical visibility results.
+ * Distance-first evaluation for renderers that inherit the unchanged base predicate.
+ * Renderer lookup happens first so leashes, guardian beams and custom policies keep
+ * their virtual dispatch. Verification evaluates that reference policy and uses it.
  */
 public final class EntityCulling {
 
@@ -44,7 +26,7 @@ public final class EntityCulling {
 
 	public static boolean isEnabled() {
 		AlacerConfig config = Alacer.get().config();
-		return config != null && config.fastEntityCulling;
+		return config != null && (config.fastEntityCulling || config.verifyEntityCulling);
 	}
 
 	public static boolean isVerifying() {
@@ -52,56 +34,49 @@ public final class EntityCulling {
 		return config != null && config.verifyEntityCulling;
 	}
 
-	public static boolean shouldRender(EntityRenderDispatcher dispatcher, Entity entity, Culler culler, double camX, double camY, double camZ) {
-		tested++;
-		boolean inDistance = entity.shouldRender(camX, camY, camZ);
-		if (!inDistance) {
-			if (entity instanceof MobEntity) {
-				MobEntity mob = (MobEntity) entity;
-				if (mob.isLeashed() && mob.getLeashHolder() != null) {
-					return culler.isVisible(mob.getLeashHolder().getShape());
+	private static final ClassValue<Boolean> BASE_POLICY = new ClassValue<>() {
+		@Override protected Boolean computeValue(Class<?> type) {
+			try {
+				Class<?>[] params = {Entity.class, Culler.class, double.class, double.class, double.class};
+				for (java.lang.reflect.Method method : EntityRenderer.class.getDeclaredMethods()) {
+					if (method.getReturnType() == boolean.class && java.util.Arrays.equals(method.getParameterTypes(), params))
+						return type.getMethod(method.getName(), params).getDeclaringClass() == EntityRenderer.class;
 				}
-			}
-			if (entity instanceof GuardianEntity) {
-				GuardianEntity guardian = (GuardianEntity) entity;
-				if (guardian.hasBeamTarget() && guardian.getLaserTarget() != null) {
-					EntityRenderer<?> renderer = dispatcher.getRenderer(entity);
-					return renderer != null && invokeShouldRender(renderer, entity, culler, camX, camY, camZ);
-				}
-			}
-			culledDistance++;
+			} catch (ReflectiveOperationException | LinkageError unavailable) { }
 			return false;
 		}
+	};
+	private static Boolean baseUnchanged;
 
-		if (entity.ignoreCameraFrustum) {
-			visible++;
-			return dispatcher.getRenderer(entity) != null;
+	private static boolean compatibleBase() {
+		if (baseUnchanged == null) {
+			baseUnchanged = true;
+			try {
+				for (org.spongepowered.asm.mixin.extensibility.IMixinInfo mixin : org.spongepowered.asm.mixin.Mixins.getMixinsForClass(EntityRenderer.class.getName())) {
+					if (!mixin.getClassName().startsWith("net.adiont.alacer.")) baseUnchanged = false;
+				}
+			} catch (RuntimeException | LinkageError unavailable) { baseUnchanged = false; }
 		}
+		return baseUnchanged;
+	}
 
+	public static boolean shouldRender(EntityRenderDispatcher dispatcher, Entity entity, Culler culler, double x, double y, double z) {
+		EntityRenderer<?> renderer = dispatcher.getRenderer(entity);
+		if (!compatibleBase()) { tested++; return renderer != null && invokeShouldRender(renderer, entity, culler, x, y, z); }
+		return shouldRenderWithRenderer(renderer, entity, culler, x, y, z);
+	}
+
+	static boolean shouldRenderWithRenderer(EntityRenderer<?> renderer, Entity entity, Culler culler, double x, double y, double z) {
+		tested++;
+		if (renderer == null) return false;
+		// Leashes, guardian beams and all foreign/subclass policies retain virtual dispatch.
+		if (!BASE_POLICY.get(renderer.getClass())) return invokeShouldRender(renderer, entity, culler, x, y, z);
+		if (!entity.shouldRender(x, y, z)) { culledDistance++; return false; }
+		if (entity.ignoreCameraFrustum) { visible++; return true; }
 		Box box = entity.getShape();
-		if (box == null || box.isInvalid() || box.getAverageSideLength() == 0.0) {
+		if (box.isInvalid() || box.getAverageSideLength() == 0.0)
 			box = new Box(entity.x - 2.0, entity.y - 2.0, entity.z - 2.0, entity.x + 2.0, entity.y + 2.0, entity.z + 2.0);
-		}
-
-		if (culler.isVisible(box)) {
-			visible++;
-			return dispatcher.getRenderer(entity) != null;
-		}
-
-		if (entity instanceof MobEntity) {
-			MobEntity mob = (MobEntity) entity;
-			if (mob.isLeashed() && mob.getLeashHolder() != null) {
-				return culler.isVisible(mob.getLeashHolder().getShape());
-			}
-		}
-		if (entity instanceof GuardianEntity) {
-			GuardianEntity guardian = (GuardianEntity) entity;
-			if (guardian.hasBeamTarget() && guardian.getLaserTarget() != null) {
-				EntityRenderer<?> renderer = dispatcher.getRenderer(entity);
-				return renderer != null && invokeShouldRender(renderer, entity, culler, camX, camY, camZ);
-			}
-		}
-
+		if (culler.isVisible(box)) { visible++; return true; }
 		culledFrustum++;
 		return false;
 	}
@@ -111,7 +86,7 @@ public final class EntityCulling {
 		return ((EntityRenderer<Entity>) renderer).shouldRender(entity, culler, camX, camY, camZ);
 	}
 
-	public static void verify(EntityRenderDispatcher dispatcher, Entity entity, Culler culler, double camX, double camY, double camZ, boolean fastResult) {
+	public static boolean verify(EntityRenderDispatcher dispatcher, Entity entity, Culler culler, double camX, double camY, double camZ, boolean fastResult) {
 		EntityRenderer<?> renderer = dispatcher.getRenderer(entity);
 		boolean vanilla = renderer != null && invokeShouldRender(renderer, entity, culler, camX, camY, camZ);
 		if (vanilla != fastResult) {
@@ -121,6 +96,7 @@ public final class EntityCulling {
 					entity, fastResult, vanilla);
 			}
 		}
+		return vanilla;
 	}
 
 	public static void clear() {

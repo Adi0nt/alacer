@@ -18,10 +18,9 @@ import net.minecraft.util.math.Box;
  *
  * <p>Vanilla evaluates the 6 frustum planes sequentially in double precision. This class packs
  * the plane equations into 256-bit SIMD registers (4-wide double vectors) and evaluates the
- * planes via vectorized fused multiply-add (FMA) while maintaining 100% bit-exact double-precision
- * parity with vanilla's boundary rules.
+ * planes with separate multiply/add operations in vanilla's left-to-right order.
  */
-public final class VectorFrustum {
+public final class VectorFrustum implements VectorFrustumAccess.Predicate {
 
 	private static final VectorSpecies<Double> SPECIES = DoubleVector.SPECIES_256;
 	static final double COORDINATE_LIMIT = 0x1p800;
@@ -69,7 +68,7 @@ public final class VectorFrustum {
 	 */
 	public boolean prepare(Culler culler) {
 		this.culler = null;
-		if (culler == null || culler.getClass() != FrustumCuller.class) {
+		if (culler == null || culler.getClass() != FrustumCuller.class || !ChunkFrustum.compatible()) {
 			return false;
 		}
 		FrustumCullerAccessor access = (FrustumCullerAccessor) culler;
@@ -156,7 +155,7 @@ public final class VectorFrustum {
 	}
 
 	/**
-	 * Tests a bounding box against all 6 planes using SIMD vector FMA in double precision.
+	 * Tests all six planes in two batches, preserving vanilla's rounding order.
 	 */
 	public int test(double minX, double minY, double minZ, double maxX, double maxY, double maxZ) {
 		double x0 = minX - this.offsetX;
@@ -204,7 +203,7 @@ public final class VectorFrustum {
 		DoubleVector vz0 = DoubleVector.fromArray(SPECIES, this.cornerZ0, 0);
 
 		// dot0 = va * vx + vb * vy + vc * vz + vd
-		DoubleVector dot0 = va0.fma(vx0, vb0.fma(vy0, vc0.fma(vz0, vd0)));
+		DoubleVector dot0 = va0.mul(vx0).add(vb0.mul(vy0)).add(vc0.mul(vz0)).add(vd0);
 		VectorMask<Double> mask0 = dot0.compare(VectorOperators.LE, 0.0);
 		if (mask0.anyTrue()) {
 			return OUTSIDE;
@@ -232,7 +231,7 @@ public final class VectorFrustum {
 		DoubleVector vy1 = DoubleVector.fromArray(SPECIES, this.cornerY1, 0);
 		DoubleVector vz1 = DoubleVector.fromArray(SPECIES, this.cornerZ1, 0);
 
-		DoubleVector dot1 = va1.fma(vx1, vb1.fma(vy1, vc1.fma(vz1, vd1)));
+		DoubleVector dot1 = va1.mul(vx1).add(vb1.mul(vy1)).add(vc1.mul(vz1)).add(vd1);
 		VectorMask<Double> mask1 = dot1.compare(VectorOperators.LE, 0.0);
 		// Lanes 0 & 1 are planes 4 & 5
 		if (mask1.laneIsSet(0) || mask1.laneIsSet(1)) {
@@ -245,4 +244,5 @@ public final class VectorFrustum {
 	public static String summary() {
 		return compared + " boxes compared, " + mismatches + " mismatched, " + undecided + " outside exact limit";
 	}
+	@Override public String verificationSummary() { return summary(); }
 }

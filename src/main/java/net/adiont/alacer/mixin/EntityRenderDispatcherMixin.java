@@ -54,7 +54,7 @@ public abstract class EntityRenderDispatcherMixin {
 			EntityRenderDispatcher dispatcher = (EntityRenderDispatcher) (Object) this;
 			boolean visible = EntityCulling.shouldRender(dispatcher, entity, culler, camX, camY, camZ);
 			if (EntityCulling.isVerifying()) {
-				EntityCulling.verify(dispatcher, entity, culler, camX, camY, camZ, visible);
+				visible = EntityCulling.verify(dispatcher, entity, culler, camX, camY, camZ, visible);
 			}
 			cir.setReturnValue(visible);
 		}

@@ -1,0 +1,94 @@
+{
+  "target_commit": "91efebe9ff6beb010234794c9863db6e40b2a8d1",
+  "branch": "main",
+  "production_sources_unchanged": true,
+  "source_file_count": 264,
+  "source_tree_sha256": "fd476478ad8342c51c4e1723ec490cdb802deec192d53e8558b2dd858b6aa456",
+  "main_class_count": 252,
+  "main_classfile_major_versions": [
+    69
+  ],
+  "java_tests": {
+    "command": "gradlew.bat test --rerun-tasks --console=plain; gradlew.bat test --rerun --info",
+    "suites": 52,
+    "tests": 215,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0,
+    "executor": "Starting process 'Gradle Test Executor 22'. Working directory: C:\\Users\\CodyJ\\OneDrive\\Documents\\GitLab\\adiont\\aevum\\alacer Command: C:\\Users\\CodyJ\\.jdks\\ms-25.0.3\\bin\\java.exe -Dorg.gradle.internal.worker.tmpdir=C:\\Users\\CodyJ\\OneDrive\\Documents\\GitLab\\adiont\\aevum\\alacer\\build\\tmp\\test\\work --add-modules jdk.incubator.vector @C:\\Users\\CodyJ\\.gradle\\.tmp\\gradle-worker-classpath6447400083970080282txt -Xmx512m -Dfile.encoding=UTF-8 -Duser.country=US -Duser.language=en -Duser.variant -ea worker.org.gradle.process.internal.worker.GradleWorkerMain 'Gradle Test Executor 22'",
+    "named_suites": {
+      "net.adiont.alacer.config.AlacerConfigTest": 11,
+      "net.adiont.alacer.render.ChunkFrustumTest": 5,
+      "net.adiont.alacer.render.FastRandomDisplayTicksTest": 6,
+      "net.adiont.alacer.render.FastRayTraceTest": 2,
+      "net.adiont.alacer.render.VectorFrustumTest": 2,
+      "net.adiont.alacer.render.WorkerBlockStateCacheTest": 1,
+      "net.adiont.alacer.sound.FastSoundThreadTest": 3
+    },
+    "log_sha256": "1e39b18d8b70ae1fa1720abe4b55b7bf8b776bcd722de2ef97e6ebf29e487790"
+  },
+  "runner_tests": {
+    "command": "python -B -m unittest discover -s tools/tests -p test_chunk_scheduling_reference.py -v",
+    "tests": 8,
+    "result": "OK",
+    "log_sha256": "ecd96a1556df7f9dfe45764b0bb5cb2407a661126a7c3b3e4d97b49d6b5ad1aa"
+  },
+  "packaging": {
+    "command": "gradlew.bat remapJar --offline --console=plain",
+    "result": "BUILD SUCCESSFUL",
+    "jar_sha256": "6934d5dd494fe229e817d51ba1da25426455735741ea15e875b8c54b933ab586",
+    "handler_literal_retained": true,
+    "mapping_row": "m\t(Lnet/minecraft/world/World;Lnet/minecraft/util/math/BlockPos;Lnet/minecraft/block/state/BlockState;Ljava/util/Random;)V\trandomDisplayTick\tc\tm_41538657"
+  },
+  "native_attempts": [
+    {
+      "archive": "build/csr-audit-20261024-smoke",
+      "status": "failed",
+      "job": {
+        "label": "csr-smoke-e018ae83",
+        "scene": "near",
+        "option": "render.chunkTimeFloor",
+        "arm": "A",
+        "scale": 0.1
+      },
+      "launcher": {
+        "ProcessId": 14724,
+        "ExecutablePath": "C:\\Users\\CodyJ\\.jdks\\ms-25.0.3\\bin\\java.exe",
+        "CommandLine": "C:\\Users\\CodyJ\\.jdks\\ms-25.0.3\\bin\\java.exe -Dalacer.benchmark=true -Dalacer.benchmark.backendScenario=false -Dalacer.benchmark.chests=0 -Dalacer.benchmark.chunkEdit=false -Dalacer.benchmark.chunkFlight=near -Dalacer.benchmark.chunkUploadGpu=false -Dalacer.benchmark.cloudSweep=false -Dalacer.benchmark.entities=0 -Dalacer.benchmark.exit=true -Dalacer.benchmark.label=csr-smoke-e018ae83 -Dalacer.benchmark.particles=false -Dalacer.benchmark.screenshots=false -Dalacer.benchmark.timeScale=0.1 -Dalacer.benchmark.timeout=600 -Dalacer.benchmark.toggle -Dalacer.benchmark.vbo=false -Dalacer.benchmark.viewDistance=12 -Dalacer.profiler.chunkDetail=false -Dalacer.profiler.chunkLatency=true -Dalacer.profiler.enabled=true -Dalacer.profiler.entityDetail=false -Dalacer.profiler.frustumTiming=false -Dalacer.profiler.hud=false -Dalacer.profiler.particleDetail=false -Dalacer.profiler.shadowTiming=false -Dalacer.render.chunkTimeFloor=false -Dalacer.render.feedChunkWorkers=false -Dfabric.dli.config=C:\\Users\\CodyJ\\OneDrive\\Documents\\GitLab\\adiont\\aevum\\alacer\\.gradle\\loom-cache\\launch.cfg -Dfabric.dli.env=client -Dfabric.dli.main=net.fabricmc.loader.impl.launch.knot.KnotClient -Dfabric.gameVersion=1.8.9 --enable-native-access=ALL-UNNAMED --add-modules=jdk.incubator.vector @C:\\Users\\CodyJ\\OneDrive\\Documents\\GitLab\\adiont\\aevum\\alacer\\build\\loom-cache\\argFiles\\runClient -XX:StackShadowPages=32 -Xmx2G -Dfile.encoding=UTF-8 -Duser.country=US -Duser.language=en -Duser.variant net.fabricmc.devlaunchinjector.Main --width 1920 --height 1080"
+      },
+      "exit_code": 1,
+      "attempt_sha256": "f9ac9a6efcc0eec5ceed983dfd3f67ce631351aafca8b5aa52e595779ab33208",
+      "log_sha256": "ca5e46b8db572800c532fb6b3a7449ef6ccaf64c464b849ec8e4643dfce389cb"
+    },
+    {
+      "archive": "build/csr-audit-20261024-smoke2",
+      "status": "failed",
+      "job": {
+        "label": "csr-smoke-a27d0991",
+        "scene": "near",
+        "option": "render.chunkTimeFloor",
+        "arm": "A",
+        "scale": 0.1
+      },
+      "launcher": {
+        "ProcessId": 28332,
+        "ExecutablePath": "C:\\Program Files\\Eclipse Adoptium\\jdk-25.0.4.101-hotspot\\bin\\java.exe",
+        "CommandLine": "\"C:\\Program Files\\Eclipse Adoptium\\jdk-25.0.4.101-hotspot\\bin\\java.exe\" -Dalacer.benchmark=true -Dalacer.benchmark.backendScenario=false -Dalacer.benchmark.chests=0 -Dalacer.benchmark.chunkEdit=false -Dalacer.benchmark.chunkFlight=near -Dalacer.benchmark.chunkUploadGpu=false -Dalacer.benchmark.cloudSweep=false -Dalacer.benchmark.entities=0 -Dalacer.benchmark.exit=true -Dalacer.benchmark.label=csr-smoke-a27d0991 -Dalacer.benchmark.particles=false -Dalacer.benchmark.screenshots=false -Dalacer.benchmark.timeScale=0.1 -Dalacer.benchmark.timeout=600 -Dalacer.benchmark.toggle -Dalacer.benchmark.vbo=false -Dalacer.benchmark.viewDistance=12 -Dalacer.profiler.chunkDetail=false -Dalacer.profiler.chunkLatency=true -Dalacer.profiler.enabled=true -Dalacer.profiler.entityDetail=false -Dalacer.profiler.frustumTiming=false -Dalacer.profiler.hud=false -Dalacer.profiler.particleDetail=false -Dalacer.profiler.shadowTiming=false -Dalacer.render.chunkTimeFloor=false -Dalacer.render.feedChunkWorkers=false -Dfabric.dli.config=C:\\Users\\CodyJ\\OneDrive\\Documents\\GitLab\\adiont\\aevum\\alacer\\.gradle\\loom-cache\\launch.cfg -Dfabric.dli.env=client -Dfabric.dli.main=net.fabricmc.loader.impl.launch.knot.KnotClient -Dfabric.gameVersion=1.8.9 --enable-native-access=ALL-UNNAMED --add-modules=jdk.incubator.vector @C:\\Users\\CodyJ\\OneDrive\\Documents\\GitLab\\adiont\\aevum\\alacer\\build\\loom-cache\\argFiles\\runClient -XX:StackShadowPages=32 -Xmx2G -Dfile.encoding=UTF-8 -Duser.country=US -Duser.language=en -Duser.variant net.fabricmc.devlaunchinjector.Main --width 1920 --height 1080"
+      },
+      "exit_code": 1,
+      "attempt_sha256": "cca5f602ab57ecb47889418c571690d88a69f3138f2feac67989608017e9d10f",
+      "log_sha256": "4d52a6fd41583b35d9cb9131906bf148ddbe43368dc02769a6553e2359572a15"
+    }
+  ],
+  "initial_native_crash_log_sha256": "d0af44ee41338dbe6548ef4fedd74795e25ba4afd3d9001b2c9d9a23f4e22d6e",
+  "probes": "frustum-results.json",
+  "scored_reference_launches": 0,
+  "production_fixes_applied": false,
+  "limits": [
+    "No successful world-load smoke at audited source",
+    "No sound listening/lifecycle certification",
+    "No scored scheduling series",
+    "No staging or MDI implementation/performance evidence",
+    "No independent shader-archive replay in this audit"
+  ]
+}

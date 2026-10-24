@@ -3,11 +3,23 @@
 This roadmap establishes the development priorities and technical specifications for **Alacer** on Minecraft 1.8.9 (Java 25).
 In accordance with [AGENTS.md](file:///c:/Users/CodyJ/OneDrive/Documents/GitLab/adiont/aevum/alacer/AGENTS.md), every priority and candidate is derived directly from empirical measurements gathered by the in-game profiler, Java Flight Recorder (JFR) sampling, native GPU diagnostics, and reproducible benchmark archives.
 
+> **October 24 recovery:** The [audit's](audits/2026-10-24/subsystems.md) world-load crash
+> and frustum counterexample are repaired locally. All 225 Java tests pass; native
+> display-list and VBO verifier smokes complete. The frozen **16/16 native Phase 3.1
+> core series fails selection**: chunkTimeFloor improves flight latency but regresses
+> flight frame mean +10.74%, p99 +20.59%, and CPU/frame +10.97%. It stays off; no default
+> was promoted. See the [recovery/result report](benchmarks/2026-10-24-roadmap-recovery/README.md)
+> for exact evidence and remaining coverage limits. Completed implementation labels
+> do not certify every subsystem, vendor or foreign mod.
+
 ---
 
 ## 1. Executive Summary & Empirical Feature Profile
 
 Whole-client attribution (Session 26, [docs/benchmarks/2026-10-21-whole-client-attribution](file:///c:/Users/CodyJ/OneDrive/Documents/GitLab/adiont/aevum/alacer/docs/benchmarks/2026-10-21-whole-client-attribution/README.md)) and dedicated subsystem benchmarks have classified where the Minecraft client thread and GPU spend their execution time, allocation budgets, and tail latencies.
+
+The profile percentages below are historical, from their archived source/runtime
+snapshots. They are not a fresh whole-client attribution of the repaired baseline.
 
 ### Empirical Performance Profile by Minecraft Feature
 
@@ -16,10 +28,10 @@ Whole-client attribution (Session 26, [docs/benchmarks/2026-10-21-whole-client-a
 | **Terrain Setup & Visibility Culling** (`WorldRenderer.setupRender`, BFS culling) | **41% – 60%** (moving phases: pan, fly, sort) | **18% – 29%** of frame time (0.21–0.34 ms/frame) | +0.28 – 0.54 ms in slow-1% frames | ~7% in static; 200–240 KB per unhit block boundary | **Active**: `render.fastChunkVisibility` (allocation-free BFS), `render.cameraHysteresis` (delta caching); `fastCameraSectionFaces` and `fastChunkFrustum` closed |
 | **Terrain Layer Drawing & GL Submission** (`VboRenderChunkList`, `glDrawArrays`) | **12% – 13%** (steady, pan, fly) | **30% – 40%** of total terrain layer time | Major contributor to draw overhead across ~950 passes | Negligible in steady state (<3 KB/frame) | **`TerrainShader` Accepted** (Oct 23, -11% to -34% frame time); `directBufferUploads` rejected |
 | **Entity Processing & Rendering** (`RenderManager`, `ModelRenderer`, layers) | **26% – 40%** (when mobs are in view: `d200`) | 6.6 – 10.5 µs per drawn entity; dominates mob scenes | +0.27 – 0.29 ms in slow-1% frames | **89% of frame allocation** (53–58 KB/frame in `d200`, mostly `BlockPos`) | **Active**: `render.fastEntityChunkLookup`, `render.fastEntityShadows`, `render.fastEntityLighting` (scalar lighting), `render.fastEntityRendererLookup`, `render.fastEntityCulling` |
-| **Chunk Upload & Compilation Pipeline** (`ChunkCompileTaskGenerator`, worker queues) | <1% in steady state; spikes during flights | 0.16–0.18 ms/frame mean; **1.23–1.32 ms** in slow-1% | **Dominates flight tail frames** (16%–18% of slow-1% time) | 26–29 KB/frame in flight | **`FastChunkUnpack` Added** (vectorized unpack); reference hardware scheduling benchmark pending |
-| **Client Tick Execution** (`Minecraft.runTick`, `World.tick`, random display ticks) | 1.7% – 2.6% of all frames (20 ticks/sec) | Spikes frames by **+0.9 to +1.9 ms** (+3.5 ms with particles) | **Primary driver of p99 frame stutters** and tick-frame lows | 13% of static allocation; heavy `BlockPos` in void/barrier checks | **Phase 5 Complete**: `render.fastRandomDisplayTicks` (zero-allocation display ticks, chunk caching), `render.fastSoundThread` (lock-free parking eliminating 34k+ exceptions) |
+| **Chunk Upload & Compilation Pipeline** (`ChunkCompileTaskGenerator`, worker queues) | <1% in steady state; spikes during flights | 0.16–0.18 ms/frame mean; **1.23–1.32 ms** in slow-1% | **Dominates flight tail frames** (16%–18% of slow-1% time) | 26–29 KB/frame in flight | Bulk little-endian chunk decode; native scheduling core complete, floor rejected |
+| **Client Tick Execution** (`Minecraft.runTick`, `World.tick`, random display ticks) | 1.7% – 2.6% of all frames (20 ticks/sec) | Spikes frames by **+0.9 to +1.9 ms** (+3.5 ms with particles) | **Primary driver of p99 frame stutters** and tick-frame lows | 13% of static allocation; heavy `BlockPos` in void/barrier checks | Implemented: ambient query checks pass with per-tick Random preserved; sound audio/lifecycle certification pending |
 | **Particle Simulation & Rendering** (`EffectRenderer`) | 0.7% – 1.1% (default); **55.8%** in heavy particle scenes | Dominates in combat/explosions (up to 3.5 ms/frame) | +1.73 – 1.78 ms in particle tick frames | **58% of allocation** in particle scenes (`Box`, `BlockPos`) | **Optimizations 7, 8, 9 Active** (`fastParticleLight`, `fastParticleRemoval`, `fastParticleVertices`) |
-| **HUD, GUI & World Picking** (`world.pick`, `FontRenderer`) | ~1% – 2% CPU | ~0.05 ms/frame | Low | **23% of steady-state allocation** (`world.pick` crosshair raycast) | **Phase 5 Complete**: `render.fastRayTrace` (scalar primitive DDA stepping eliminating 15–20 allocations per step) |
+| **HUD, GUI & World Picking** (`world.pick`, `FontRenderer`) | ~1% – 2% CPU | ~0.05 ms/frame | Low | **23% of steady-state allocation** (`world.pick` crosshair raycast) | Implemented: scalar DDA reduces intermediate allocations; actual vanilla hit-coordinate verification exercised |
 | **Driver Sync & Buffer Swap** (`Display.update`, `swap`) | 82.7% – 84.4% of native samples | **20% – 61% of total frame time** (median ~35%) | Varies with GPU workload and VSync/driver thread state | 0 | **Optimizations 3 & 4 Active** (`throttleGlErrorChecks`, `avoidMatrixReads`) |
 
 ```mermaid
@@ -40,18 +52,19 @@ pie title Client-Thread Java CPU Time Breakdown (Moving Camera with Mobs)
 |---|---|---|---|---|---|
 | **Phase 1.1** | `TerrainShader` Promotion Pipeline | Pending Benchmark | `render.terrainShader` | `render.modernGl.verify` | `Option B series` |
 | **Phase 1.2** | Terrain Draw Loop Streamlining | **Completed** | `render.terrainShader` | N/A | `ebb44be` |
+| **Phase 1.3** | Texture Pipeline & Fast LUT Mipmaps | **Completed** | `render.fastMipmaps` | `render.fastMipmaps.verify` | Local recovery |
 | **Phase 2.1** | Allocation-Free Entity Lighting | **Completed** | `render.fastEntityLighting` | `render.fastEntityLighting.verify` | `46f5711` |
 | **Phase 2.2** | Frustum Culling & Renderer Cache | **Completed** | `render.fastEntityCulling`, `render.fastEntityRendererLookup` | `render.fastEntityCulling.verify`, `render.fastEntityRendererLookup.verify` | `2c2dc70` |
-| **Phase 2.3** | Model Part Transformation Flattening | **Completed** | `render.fastModelTransforms` | `render.fastModelTransforms.verify` | `ebb44be` |
-| **Phase 3.1** | Reference Hardware Chunk Scheduling | In Progress | `render.feedChunkWorkers`, `render.chunkTimeFloor` | N/A | Protocol established |
-| **Phase 3.2** | Worker Ambient Occlusion & Culling Cache | **Completed** | `render.fastWorkerAo` | `render.fastWorkerAo.verify` | `ebb44be` |
+| **Phase 2.3** | Model Part Zero-Translation Skipping | Implemented; flattening absent | `render.fastModelTransforms` | Sampled raw-matrix verifier wired and exercised | `ebb44be` + local recovery |
+| **Phase 3.1** | Reference Hardware Chunk Scheduling | **Native core complete: floor fails six gates**; feed/full controls unscored | `render.feedChunkWorkers`, `render.chunkTimeFloor` | Frozen receipts/latency/frame/CPU gates | October 24 native-core-01 |
+| **Phase 3.2** | Worker Ambient Occlusion & Culling Cache | Repaired; native correctness smokes pass | `render.fastWorkerAo` | Independent unpooled block/light reference | `ebb44be` + local recovery |
 | **Phase 3.3** | Ring-Buffered PBO Chunk Staging | Backlog | `render.pboChunkUploads` | N/A | Pending |
-| **Phase 4.1** | Camera Movement Hysteresis / Delta Caching | **Completed** | `render.cameraHysteresis` | Integrated | `e364b82` |
-| **Phase 4.2** | Vectorized Frustum Testing (Vector API) | **Completed** | `render.vectorFrustum` | `render.vectorFrustum.verify` | `ebb44be` |
+| **Phase 4.1** | Exact-Input Visibility Reuse | Approximate thresholds removed; invalidation repaired; no performance promotion | `render.cameraHysteresis` | `render.cameraHysteresis.verify` | `e364b82` + local recovery |
+| **Phase 4.2** | Vectorized Frustum Testing (Vector API) | Rounding/fallback repaired; unit/probe/native checks pass | `render.vectorFrustum` | `render.vectorFrustum.verify` | `ebb44be` + local recovery |
 | **Phase 4.3** | Flat Bitset Occlusion Traversal | **Completed** | `render.flatOcclusion` | `render.flatOcclusion.verify` | `ebb44be` |
-| **Phase 5.1** | Random Display Tick Allocation Elimination | **Completed** | `render.fastRandomDisplayTicks` | `render.fastRandomDisplayTicks.verify` | `2f604b4` |
-| **Phase 5.2** | Allocation-Free Crosshair Raycast (`world.pick`) | **Completed** | `render.fastRayTrace` | `render.fastRayTrace.verify` | `1692a44` |
-| **Phase 5.3** | Sound System Thread Interruption Cleanup | **Completed** | `render.fastSoundThread` | N/A | `7a39f1e` |
+| **Phase 5.1** | Random Display Tick Allocation Reduction | Runtime mappings repaired; per-tick Random restored; production-client coverage pending | `render.fastRandomDisplayTicks` | Query checks only | `2f604b4` + local recovery |
+| **Phase 5.2** | Crosshair Raycast Allocation Reduction (`world.pick`) | Actual vanilla reference and hit-coordinate verifier wired/exercised | `render.fastRayTrace` | `render.fastRayTrace.verify` | `1692a44` + local recovery |
+| **Phase 5.3** | Sound System Sleep Replacement | Implemented; audio/lifecycle validation pending | `render.fastSoundThread` | Missing | `7a39f1e` |
 | **Phase 6.1** | Multi-Draw Indirect (`glMultiDrawArraysIndirect`) | Future Architecture | `render.multiDrawIndirect` | N/A | Pending |
 | **Phase 6.2** | Translucent Quad GPU Sorting | Future Architecture | `render.gpuTranslucentSort` | N/A | Pending |
 
@@ -77,18 +90,19 @@ To prevent regressive work or revisiting solved/exhausted avenues, the state of 
   - Replaces per-chunk CPU matrix pushes, pops, and multiplications with GPU-evaluated chunk origin translation (`u_ChunkOrigin`) and boundary expansion (`u_Scale`) in a compatibility vertex shader.
   - Retains fixed-function fragment operations (texturing, mipmapping, smooth lighting, ambient occlusion, alpha testing, distance fog).
   - Benchmark result: **Passed all 16 native GPU gates with zero regressions**; improved default gameplay pan frame times by **-12.95%** (CPU **-17.54%**, terrain layers **-32.70%**), and synthetic terrain pan by **-33.76%** (CPU **-27.42%**, terrain layers **-39.64%**).
-- **`FastChunkUnpack`**: Direct vectorized char unpacking of packet chunk data via native byte order buffers and 64k pre-resolved block flag tables, replacing 4,096-iteration 3D loops and hash lookups.
+- **`FastChunkUnpack`**: Bulk little-endian char decoding via ByteBuffer/CharBuffer and a 64k lazily resolved flag table; explicit Vector API use or SIMD lowering has not been established.
 - **Phase 2 Entity Allocation Overhaul**:
   - `EntityLighting`: Replaced `new BlockPos(entity)` and `BlockPos.offset` allocations in entity rendering and shadows with pooled/scalar primitive math (`World.getCombinedLight`).
   - `EntityCulling` & `EntityRendererCache`: Early distance/frustum culling and 4-slot MRU renderer pointer cache, eliminating state preparation for off-screen mobs.
 - **Phase 4 Camera Movement Hysteresis (`cameraHysteresis`)**:
-  - Reuses visible chunk lists when camera translation (<0.01 blocks) and rotation (<0.05 degrees) jitter are sub-threshold and no chunks are dirty, skipping 1,400+ chunk BFS traversals.
+  - Recovery removes approximate thresholds: visible lists may be reused only with exactly unchanged traversal inputs and compiled references. No retained-list performance gain is claimed.
 - **Phase 5 Client Tick Stabilization**:
   - `FastRayTrace`: Allocation-free crosshair and targeting DDA ray stepping.
   - `FastRandomDisplayTicks`: Allocation-free client ambient ticks with `WorldChunk` pointer caching and empty-section skipping.
-  - `FastSoundThread`: Lock-free `LockSupport.parkNanos` replacing `Thread.sleep` and `Thread.interrupt()` on paulscode threads, eliminating 34,000+ exceptions per run.
+  - `FastSoundThread`: `LockSupport.parkNanos` replaces the sleep wrapper; callers still interrupt to wake it. The earlier allocation claim is historical; audio/lifecycle and strict verification remain unproven in the audit.
 
 ### Closed Candidates (Do Not Reopen Without Novel Mechanisms)
+- **`render.chunkTimeFloor` (October 24 native core)**: FAILED. Six unchanged gates fail; flight frame mean +10.74%, p99 +20.59%, slow-1% +14.84%, CPU/frame +10.97%. Latency improves, but the option stays off. `feedChunkWorkers` is independently unscored. See the recovery report; do not pool with software-renderer studies.
 - **`render.directBufferUploads` (DSA Buffer Uploads via `glNamedBufferData`)**: REJECTED. Caused severe NVIDIA driver serialization stalls (+52.47% upload wall time in terrain churn; pan frame time regressed +22.85%).
 - **`render.terrainVaos` (Per-Chunk VAO Switching)**: REJECTED. Caused 61%–67% frame time regression due to NVIDIA vertex fetch descriptor invalidations across 3,848 VAO switches.
 - **`render.fastChunkFrustum` (One-Corner Frustum Predicate)**: CLOSED. Saved only 1–3 µs/frame; no dependable gain survived warmed runs.
@@ -124,6 +138,11 @@ flowchart TD
 2. **Terrain Draw Loop Streamlining** [COMPLETED - commit `ebb44be`]:
    - Cached scalar uniform coordinates (`lastOriginX/Y/Z`) in `TerrainShader` to eliminate redundant JNI `glUniform3f` submissions when chunk origins repeat across buffers.
    - Streamlined `TerrainVaoMixin` draw loops by directly dispatching primitive integer coordinates (`ox, oy, oz`) without intermediate BlockPos getter overhead.
+3. **Texture Pipeline & LUT Mipmapping (`render.fastMipmaps`)** [COMPLETED - local recovery]:
+   - Precomputes 256-entry gamma-to-linear lookup tables (`GAMMA_TO_LINEAR`), bypassing expensive `Math.pow(c / 255.0, 2.2)` operations.
+   - Parallelizes atlas sprite downsampling across `ForkJoinPool.commonPool()`.
+   - Adds trilinear filtering (`quality.mipmapFiltering`), LOD bias (`quality.lodBias`), and alpha-weighted cutout mipmaps (`quality.mipmapCutouts`).
+   - Dynamic mipmap level clamping updates `GL_TEXTURE_MAX_LEVEL` on GPU without triggering full resource pack reloads.
 
 ---
 
@@ -132,10 +151,10 @@ flowchart TD
 
 1. **Allocation-Free Entity Lighting & Brightness** [COMPLETED - commit `46f5711`].
 2. **Frustum Culling & Renderer Cache** [COMPLETED - commit `2c2dc70`].
-3. **Model Part Transformation Flattening (`render.fastModelTransforms`)** [COMPLETED - commit `ebb44be`]:
+3. **Model Part Zero-Translation Skipping (`render.fastModelTransforms`)** [IMPLEMENTED; verification incomplete - commit `ebb44be`]:
    - *Implementation*: `FastModelTransforms` and `ModelPartMixin` intercept `translatef(FFF)` during model part transformations.
    - Skips redundant `(0, 0, 0)` translations across static model hierarchies and cuboid offsets, avoiding driver matrix recomputations.
-   - Fully runtime toggleable (`render.fastModelTransforms`) with verification toggle (`render.fastModelTransforms.verify`).
+   - Runtime toggleable (`render.fastModelTransforms`); the verification toggle now retains vanilla translations and samples raw matrix bits. Native checks pass, with sampled coverage explicitly limited. Matrix flattening and push/pop elimination are not implemented by this hook.
 
 ---
 
@@ -144,28 +163,29 @@ flowchart TD
 
 1. **Reference Hardware Chunk Scheduling Benchmark**:
    - *Background*: Chunk scheduling experiments (`render.feedChunkWorkers` and `render.chunkTimeFloor`) were tested on llvmpipe in Docker; the reference Windows / RTX 3060 Ti series remains formally pending under [docs/benchmarks/2026-10-23-chunk-scheduling/protocol.md](file:///c:/Users/CodyJ/OneDrive/Documents/GitLab/adiont/aevum/alacer/docs/benchmarks/2026-10-23-chunk-scheduling/protocol.md).
-   - *Next Steps*: Execute the 16-client reference benchmark on the RTX 3060 Ti testbed across `default`, `terrain`, and `benchmark.chunkEdit` scenes.
-2. **Worker Ambient Occlusion & Face Culling Optimization (`render.fastWorkerAo`)** [COMPLETED - commit `ebb44be`]:
+   - *Result*: The October 24 16-launch native core series completed and fails six gates; floor remains off. Edit latency p90 -16.85% misses the -25% target, edit no-op drift is -6.60%, and flight frame/CPU costs regress. Full details and immutable source/raw archives are in the recovery report.
+   - *Next Steps*: Use separate bounded queue/buffer attribution before deciding whether feedChunkWorkers warrants its own series. No automatic 80-launch extension or promotion; require VBO upload-tail attribution before Phase 3.3 staging.
+2. **Worker Ambient Occlusion & Face Culling Optimization (`render.fastWorkerAo`)** [REPAIRED locally; native correctness checked]:
    - *Implementation*: `WorkerBlockStateCache` and `RenderChunkRegionMixin`.
    - Replaced per-section `new BlockState[8000]` and `new int[8000]` heap instantiations with thread-local pooled arrays across worker threads.
-   - Eliminates 64 KB of heap garbage per compiled chunk section, preventing GC pressure during world streaming and flights.
-   - Fully runtime toggleable (`render.fastWorkerAo`) with verification toggle (`render.fastWorkerAo.verify`).
+   - Supported constructor hooks avoid the large arrays inside a compile scope; multiple/nested regions receive distinct leases, released in finally. Two small temporary zero-length arrays remain; standalone regions use vanilla allocation.
+   - `render.fastWorkerAo.verify` compares block/light queries with an independent unpooled region. Native display-list and VBO smokes report zero mismatches; a separate before/after performance qualification of this repair has not run.
 3. **Ring-Buffered PBO Staging for Chunk Uploads (`render.pboChunkUploads`)**:
    - *Problem*: Main-thread `glBufferData` halts the render loop while uploading compiled chunk meshes over PCIe.
    - *Architecture*:
-     - Implement triple-buffered persistent Pixel Buffer Objects (PBOs) or staging VBOs.
-     - Transfer vertex data via asynchronous DMA (`GL30.glMapBufferRange` with `GL_MAP_UNSYNCHRONIZED_BIT`), unblocking the client thread during flights.
+     - Evaluate fenced vertex-buffer staging ranges feeding resident mesh storage. Persistent mapping requires OpenGL 4.4 or `ARB_buffer_storage`; three slots alone do not guarantee safe reuse.
+     - `GL_MAP_UNSYNCHRONIZED_BIT` removes implicit synchronization and requires proven range ownership. It does not establish persistent mapping or an asynchronous speedup. See the audit's Phase 3.3 design before implementation.
 
 ---
 
 ### Phase 4: Visibility Culling & Traversal Data-Locality
 *Target: 41%–60% of Java samples in moving frames (0.21–0.34 ms/frame).*
 
-1. **Camera Movement Hysteresis / Delta Caching (`cameraHysteresis`)** [COMPLETED - commit `e364b82`].
+1. **Exact-Input Visibility Reuse (`cameraHysteresis`)** [REPAIRED locally]: approximate thresholds removed. Reuse requires unchanged camera/frustum/storage/options and compiled references; dirty events invalidate it. A dedicated verify flag checks retained lists with a real vanilla search. No hit-rate/performance promotion is claimed.
 2. **Vectorized Frustum Testing (Java 25 Vector API, `render.vectorFrustum`)** [COMPLETED - commit `ebb44be`]:
    - *Implementation*: `VectorFrustum` using Java 25 Vector API (`DoubleVector.SPECIES_256`).
-   - Evaluates the 6 frustum plane equations simultaneously using 256-bit SIMD fused multiply-add (FMA) while maintaining 100% bit-exact double-precision parity with vanilla `FrustumData.contains`.
-   - Verified across strict plane boundaries, reversed coordinates, and random frustum orientations.
+   - Evaluates six planes in two four-double batches with separate multiply/add operations in vanilla order, repairing the cancellation-boundary failure.
+   - Unit and native verifier checks pass; normal/no-AVX/no-module probes pass. Vector classes are linked lazily so unresolved modules select the scalar/culler path. A native module-disabled launch has not been run.
    - Fully runtime toggleable (`render.vectorFrustum`) with verification toggle (`render.vectorFrustum.verify`).
 3. **Flat Bitset Occlusion Traversal (`render.flatOcclusion`)** [COMPLETED - commit `ebb44be`]:
    - *Implementation*: Dense 36-bit packed occlusion bitmask per chunk slot in `ChunkVisibility`.
@@ -178,9 +198,9 @@ flowchart TD
 ### Phase 5: Client Tick Spike Mitigation & Background Optimization
 *Target: Mitigate +0.9 to +1.9 ms tail spikes occurring every 50 ms.*
 
-1. **Random Display Tick Volume Scan Elimination (`FastRandomDisplayTicks`)** [COMPLETED - commit `2f604b4`].
-2. **Allocation-Free Crosshair Raycast (`FastRayTrace`)** [COMPLETED - commit `1692a44`].
-3. **Sound System Thread Interruption Cleanup (`FastSoundThread`)** [COMPLETED - commit `7a39f1e`].
+1. **Random Display Tick Allocation Reduction (`FastRandomDisplayTicks`)** [IMPLEMENTED; runtime-name repair local; full effect-stream replay pending].
+2. **Crosshair Raycast Allocation Reduction (`FastRayTrace`)** [IMPLEMENTED; actual vanilla reference and hit-coordinate verifier exercised].
+3. **Sound System Sleep Replacement (`FastSoundThread`)** [IMPLEMENTED; audio/lifecycle certification pending].
 
 ---
 
@@ -188,8 +208,8 @@ flowchart TD
 *Target: Transform Minecraft's 1,000+ draw-call pipeline into a modern batch submission engine.*
 
 1. **Multi-Draw Indirect (`glMultiDrawArraysIndirect`, `render.multiDrawIndirect`)**:
-   - *Concept*: In combination with `TerrainShader`, all visible chunk draw calls for a given render layer (e.g. Solid, Cutout, Translucent) are packed into a single GPU indirect command buffer (`DrawArraysIndirectCommand`: `count`, `instanceCount`, `first`, `baseInstance`).
-   - *Dispatch*: Issue a single `GL43.glMultiDrawArraysIndirect` call per terrain layer, reducing CPU OpenGL driver submission overhead from ~950 draw calls to 3–4 calls per frame.
+   - *Concept*: First introduce shared resident mesh arenas and per-command origins; separate chunk VBOs and the current per-chunk uniform cannot vary within one MDI call. Then pack ordered visible draws into 16-byte commands (`count`, `instanceCount`, `first`, `baseInstance`). See the audit's Phase 6.1 design for instanced origins, fences, translucent ordering and fallback.
+   - *Dispatch*: Target one `GL43.glMultiDrawArraysIndirect` call per compatible layer/page/pass. Three to four calls is a single-page, single-view goal, not a guarantee or measured result.
    - *Requirement*: Hardware supporting OpenGL 4.3+, retaining full fallback to `TerrainShader` direct dispatch for legacy environments.
 2. **Translucent Quad Sorting on GPU (`render.gpuTranslucentSort`)**:
    - *Concept*: Offload sorting of translucent chunk geometry from the CPU client thread to a lightweight compute shader or index buffer permutation.

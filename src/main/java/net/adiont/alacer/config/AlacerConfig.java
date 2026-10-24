@@ -108,14 +108,16 @@ public final class AlacerConfig {
 	public volatile boolean fastRayTrace;
 	/** Also run vanilla's ray trace, use its result and log differences. Debug only. */
 	public volatile boolean verifyFastRayTrace;
-	/** Execute client ambient display ticks without per-tick Random and BlockPos allocations. Runtime-toggleable. */
+	/** Reduce client ambient tick position and lookup allocations, preserving vanilla per-tick Random lifetime. Runtime-toggleable. */
 	public volatile boolean fastRandomDisplayTicks;
 	/** Also run vanilla verification on display tick block lookups. Debug only. */
 	public volatile boolean verifyFastRandomDisplayTicks;
 	/** Wake paulscode sound threads via lock-free parking instead of Thread.sleep and thread interruption. Runtime-toggleable. */
 	public volatile boolean fastSoundThread;
-	/** Reuse visibility search result when camera translation and rotation jitter are sub-threshold and no chunks are dirty. Runtime-toggleable. */
+	/** Reuse visibility only when every camera, frustum and compiled-chunk input remains unchanged. Runtime-toggleable. */
 	public volatile boolean cameraHysteresis;
+	/** Compare retained exact-input visibility against a fresh vanilla search. Debug only. */
+	public volatile boolean verifyCameraHysteresis;
 	/** Dense 36-bit packed occlusion bitmask per chunk slot to accelerate graph traversal. Runtime-toggleable. */
 	public volatile boolean flatOcclusion;
 	/** Also test chunk occlusion via vanilla CompiledChunk.isVisible and log differences. Debug only. */
@@ -128,7 +130,7 @@ public final class AlacerConfig {
 	public volatile boolean fastWorkerAo;
 	/** Also verify worker block state queries against vanilla chunk lookups. Debug only. */
 	public volatile boolean verifyWorkerAo;
-	/** Flatten static model part transformations and skip redundant matrix stack pushes. Runtime-toggleable. */
+	/** Skip zero translations in model parts; hierarchy flattening is not implemented. Runtime-toggleable. */
 	public volatile boolean fastModelTransforms;
 	/** Also verify model part transformations against vanilla. Debug only. */
 	public volatile boolean verifyFastModelTransforms;
@@ -136,6 +138,10 @@ public final class AlacerConfig {
 	public volatile boolean fastParticleLight;
 	/** Also run vanilla's particle light query, use its result and log differences. Debug only. */
 	public volatile boolean verifyFastParticleLight;
+	/** Fast LUT-based gamma mipmap generation and parallel sprite downsampling. Runtime-toggleable. */
+	public volatile boolean fastMipmaps;
+	/** Compare fast mipmap results against vanilla downsampling and log differences. Debug only. */
+	public volatile boolean verifyFastMipmaps;
 	/** Remove dead particles in one pass by network id instead of removeAll's pairwise equals. Runtime-toggleable. */
 	public volatile boolean fastParticleRemoval;
 	/** Also run vanilla's removeAll, use its result and log differences. Debug only. */
@@ -222,6 +228,12 @@ public final class AlacerConfig {
 	public volatile int biomeBlend;
 	/** Choice index into TextureFiltering; 0 is off. */
 	public volatile int anisotropicFiltering;
+	/** Mipmap minification filter: 0 Bilinear, 1 Trilinear. */
+	public volatile int mipmapFiltering;
+	/** Mipmap LOD bias percentage (-100 to 100 in steps of 25; 0 is standard). */
+	public volatile int lodBias;
+	/** Mipmap alpha cutout blending: 0 Vanilla, 1 Preserved (weighted color & coverage boost). */
+	public volatile int mipmapCutouts;
 	/** Camera effect strengths as percentages; 100 is vanilla. */
 	public volatile int fovEffects;
 	public volatile int damageTilt;
@@ -268,6 +280,9 @@ public final class AlacerConfig {
 		this.particleLimit = clamp(integer(file, system, "quality.particleLimit", 4, "Particles kept per particle list before the oldest is removed: 0=250, 1=500, 2=1000, 3=2000, 4=4000 (vanilla)."), 0, 4);
 		this.biomeBlend = clamp(integer(file, system, "quality.biomeBlend", 1, "Biome color blending: 0 Off (1x1), 1 3x3 (vanilla), 2 5x5, 3 7x7. Rebuild terrain after changes."), 0, 3);
 		this.anisotropicFiltering = clamp(integer(file, system, "quality.anisotropicFiltering", 0, "Anisotropic filtering for block and item textures: 0 Off, 1=2x, 2=4x, 3=8x, 4=16x (limited by the driver)."), 0, 4);
+		this.mipmapFiltering = clamp(integer(file, system, "quality.mipmapFiltering", 0, "Mipmap minification filter: 0 Bilinear, 1 Trilinear."), 0, 1);
+		this.lodBias = step(integer(file, system, "quality.lodBias", 0, "Mipmap level-of-detail bias, -100 to 100 percent in steps of 25. Negative sharpens, positive softens."), -100, 100, 25, 0);
+		this.mipmapCutouts = clamp(integer(file, system, "quality.mipmapCutouts", 0, "Cutout mipmap blending: 0 Vanilla, 1 Preserved (preserves edge colors and coverage)."), 0, 1);
 		this.fovEffects = step(integer(file, system, "quality.fovEffects", 100, "Field-of-view changes from sprinting, flying, speed effects and bows, 0-100 percent (multiples of 5)."), 0, 100, 5, 100);
 		this.damageTilt = step(integer(file, system, "quality.damageTilt", 100, "Camera tilt when taking damage, 0-100 percent (multiples of 5)."), 0, 100, 5, 100);
 		this.viewBobbing = step(integer(file, system, "quality.viewBobbing", 100, "View-bobbing strength while View bobbing is on, 0-100 percent (multiples of 5)."), 0, 100, 5, 100);
@@ -359,13 +374,15 @@ public final class AlacerConfig {
 		this.verifyFastRayTrace = bool(file, system, "render.fastRayTrace.verify", false,
 			"Debug: also run vanilla's ray trace, use its result and log any difference.");
 		this.fastRandomDisplayTicks = bool(file, system, "render.fastRandomDisplayTicks", true,
-			"Execute client ambient display ticks without per-tick Random and BlockPos allocations.");
+			"Reduce client ambient tick position and lookup allocations, preserving vanilla per-tick Random lifetime.");
 		this.verifyFastRandomDisplayTicks = bool(file, system, "render.fastRandomDisplayTicks.verify", false,
 			"Debug: also verify fast display tick block queries against vanilla, logging differences.");
 		this.fastSoundThread = bool(file, system, "render.fastSoundThread", true,
 			"Wake paulscode sound threads via lock-free parking instead of Thread.sleep and thread interruption.");
 		this.cameraHysteresis = bool(file, system, "render.cameraHysteresis", true,
-			"Reuse visibility search result when camera translation and rotation jitter are sub-threshold and no chunks are dirty.");
+			"Reuse visibility only when all camera, frustum, storage and compiled-chunk inputs remain exactly unchanged.");
+		this.verifyCameraHysteresis = bool(file, system, "render.cameraHysteresis.verify", false,
+			"Debug: compare retained visibility against a fresh vanilla search and use vanilla's result.");
 		this.flatOcclusion = bool(file, system, "render.flatOcclusion", true,
 			"Pack section connectivity flags into a dense 36-bit bitmask per chunk section.");
 		this.verifyFlatOcclusion = bool(file, system, "render.flatOcclusion.verify", false,
@@ -379,13 +396,17 @@ public final class AlacerConfig {
 		this.verifyWorkerAo = bool(file, system, "render.fastWorkerAo.verify", false,
 			"Debug: also verify worker block state queries against vanilla chunk lookups.");
 		this.fastModelTransforms = bool(file, system, "render.fastModelTransforms", true,
-			"Flatten static model part transformations and skip redundant matrix stack pushes.");
+			"Skip zero translations in model parts; hierarchy flattening and push/pop removal are not implemented.");
 		this.verifyFastModelTransforms = bool(file, system, "render.fastModelTransforms.verify", false,
-			"Debug: also verify model part transformations against vanilla.");
+			"Debug: retain vanilla translations and sample raw matrix bits before/after zero translations.");
 		this.fastParticleLight = bool(file, system, "render.fastParticleLight", true,
 			"Answer particles' per-frame light queries from cached chunk references instead of chunk hash lookups, without allocating neighbor positions.");
 		this.verifyFastParticleLight = bool(file, system, "render.fastParticleLight.verify", false,
 			"Debug: also run vanilla's particle light query, use its result and log any difference.");
+		this.fastMipmaps = bool(file, system, "render.fastMipmaps", true,
+			"Fast LUT-based gamma mipmap generation and parallel sprite downsampling.");
+		this.verifyFastMipmaps = bool(file, system, "render.fastMipmaps.verify", false,
+			"Debug: compare fast mipmap results against vanilla downsampling and log differences.");
 		this.fastParticleRemoval = bool(file, system, "render.fastParticleRemoval", true,
 			"Remove dead particles each tick in one pass by network id instead of comparing every live particle with every dead one (same particles, order and list).");
 		this.verifyFastParticleRemoval = bool(file, system, "render.fastParticleRemoval.verify", false,
@@ -510,6 +531,7 @@ public final class AlacerConfig {
 				this.fastWorkerAo = value;
 				this.fastModelTransforms = value;
 				this.fastParticleLight = value;
+				this.fastMipmaps = value;
 				this.fastParticleRemoval = value;
 				this.fastParticleVertices = value;
 				this.fastParticleLightEntry = false;
@@ -599,6 +621,9 @@ public final class AlacerConfig {
 			case "render.cameraHysteresis":
 				this.cameraHysteresis = value;
 				break;
+			case "render.cameraHysteresis.verify":
+				this.verifyCameraHysteresis = value;
+				break;
 			case "render.flatOcclusion":
 				this.flatOcclusion = value;
 				break;
@@ -625,6 +650,12 @@ public final class AlacerConfig {
 				break;
 			case "render.fastParticleLight":
 				this.fastParticleLight = value;
+				break;
+			case "render.fastMipmaps":
+				this.fastMipmaps = value;
+				break;
+			case "render.fastMipmaps.verify":
+				this.verifyFastMipmaps = value;
 				break;
 			case "render.fastParticleRemoval":
 				this.fastParticleRemoval = value;
@@ -731,6 +762,9 @@ public final class AlacerConfig {
 			case "quality.particleLimit" -> this.particleLimit = value;
 			case "quality.biomeBlend" -> this.biomeBlend = value;
 			case "quality.anisotropicFiltering" -> this.anisotropicFiltering = value;
+			case "quality.mipmapFiltering" -> this.mipmapFiltering = value;
+			case "quality.lodBias" -> this.lodBias = value;
+			case "quality.mipmapCutouts" -> this.mipmapCutouts = value;
 			case "quality.fovEffects" -> this.fovEffects = value;
 			case "quality.damageTilt" -> this.damageTilt = value;
 			case "quality.viewBobbing" -> this.viewBobbing = value;
@@ -781,6 +815,9 @@ public final class AlacerConfig {
 		values.put("quality.particleLimit", Integer.toString(this.particleLimit));
 		values.put("quality.biomeBlend", Integer.toString(this.biomeBlend));
 		values.put("quality.anisotropicFiltering", Integer.toString(this.anisotropicFiltering));
+		values.put("quality.mipmapFiltering", Integer.toString(this.mipmapFiltering));
+		values.put("quality.lodBias", Integer.toString(this.lodBias));
+		values.put("quality.mipmapCutouts", Integer.toString(this.mipmapCutouts));
 		values.put("quality.fovEffects", Integer.toString(this.fovEffects));
 		values.put("quality.damageTilt", Integer.toString(this.damageTilt));
 		values.put("quality.viewBobbing", Integer.toString(this.viewBobbing));
@@ -835,6 +872,7 @@ public final class AlacerConfig {
 		values.put("render.fastRandomDisplayTicks.verify", String.valueOf(this.verifyFastRandomDisplayTicks));
 		values.put("render.fastSoundThread", String.valueOf(this.fastSoundThread));
 		values.put("render.cameraHysteresis", String.valueOf(this.cameraHysteresis));
+		values.put("render.cameraHysteresis.verify", String.valueOf(this.verifyCameraHysteresis));
 		values.put("render.flatOcclusion", String.valueOf(this.flatOcclusion));
 		values.put("render.flatOcclusion.verify", String.valueOf(this.verifyFlatOcclusion));
 		values.put("render.vectorFrustum", String.valueOf(this.vectorFrustum));
@@ -845,6 +883,8 @@ public final class AlacerConfig {
 		values.put("render.fastModelTransforms.verify", String.valueOf(this.verifyFastModelTransforms));
 		values.put("render.fastParticleLight", String.valueOf(this.fastParticleLight));
 		values.put("render.fastParticleLight.verify", String.valueOf(this.verifyFastParticleLight));
+		values.put("render.fastMipmaps", String.valueOf(this.fastMipmaps));
+		values.put("render.fastMipmaps.verify", String.valueOf(this.verifyFastMipmaps));
 		values.put("render.fastParticleRemoval", String.valueOf(this.fastParticleRemoval));
 		values.put("render.fastParticleRemoval.verify", String.valueOf(this.verifyFastParticleRemoval));
 		values.put("render.fastParticleVertices", String.valueOf(this.fastParticleVertices));

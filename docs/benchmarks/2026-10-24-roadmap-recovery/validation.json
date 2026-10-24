@@ -1,0 +1,119 @@
+{
+  "base_commit": "91efebe9ff6beb010234794c9863db6e40b2a8d1",
+  "phase": "Roadmap recovery and Phase 3.1 native core",
+  "java_tests": {
+    "tests": 225,
+    "suites": 54,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0,
+    "executor": "Starting process 'Gradle Test Executor 28'. Working directory: C:\\Users\\CodyJ\\OneDrive\\Documents\\GitLab\\adiont\\aevum\\alacer Command: C:\\Users\\CodyJ\\.jdks\\ms-25.0.3\\bin\\java.exe -Dorg.gradle.internal.worker.tmpdir=C:\\Users\\CodyJ\\OneDrive\\Documents\\GitLab\\adiont\\aevum\\alacer\\build\\tmp\\test\\work --add-modules jdk.incubator.vector @C:\\Users\\CodyJ\\.gradle\\.tmp\\gradle-worker-classpath3307451937451894438txt -Xmx512m -Dfile.encoding=UTF-8 -Duser.country=US -Duser.language=en -Duser.variant -ea worker.org.gradle.process.internal.worker.GradleWorkerMain 'Gradle Test Executor 28'"
+  },
+  "runner_tests": {
+    "count": 8,
+    "status": "passed"
+  },
+  "main_classes": 259,
+  "classfile_major_versions": [
+    69
+  ],
+  "native_smokes": {
+    "repair24-worker-vector-smoke1": {
+      "raw_folder": "run\\alacer\\benchmarks\\20261024-004414-repair24-worker-vector-smoke1-vis_on-ecl_on-ent0",
+      "log_sha256": "84fcb201d434b75349c89de205c4d5bd37f0a8a0bf3df5d5b6fb90bb558a93ab",
+      "java_version": "25.0.4.1",
+      "java_vendor": "Eclipse Adoptium",
+      "vbo_active": "false",
+      "evidence": [
+        "[00:43:51] [Client thread/INFO] (Alacer) Chunk visibility verification: 1000 searches compared; 0 mismatched with stable input; 19 had compiled chunk data change mid-comparison (10 of those differed)",
+        "[00:44:03] [Client thread/INFO] (Alacer) Chunk visibility verification: 2000 searches compared; 0 mismatched with stable input; 21 had compiled chunk data change mid-comparison (12 of those differed)",
+        "[00:44:13] [Client thread/INFO] (Alacer) Chunk visibility verification: 3000 searches compared; 0 mismatched with stable input; 21 had compiled chunk data change mid-comparison (12 of those differed)",
+        "[00:44:14] [Client thread/INFO] (Alacer) Worker AO verification final: 37294890 worker block queries, 5108049 light queries compared, 0 mismatches",
+        "[00:44:14] [Client thread/INFO] (Alacer) Vector frustum verification final: 4473321 boxes compared, 0 mismatched, 0 outside exact limit",
+        "[00:44:14] [Client thread/INFO] (Alacer) Chunk frustum verification final: 0 boxes compared, 0 mismatched, 0 answered by vanilla's test (outside the exact range)"
+      ]
+    },
+    "repair24-combined-verify1": {
+      "raw_folder": "run\\alacer\\benchmarks\\20261024-005628-repair24-combined-verify1-vis_on-ecl_on-ent200",
+      "log_sha256": "d149a3e897d48f762c3277380cac61132f34c8f427f38cc8dfcdaafa282a5583",
+      "java_version": "25.0.4.1",
+      "java_vendor": "Eclipse Adoptium",
+      "vbo_active": "false",
+      "evidence": [
+        "[00:56:00] [Client thread/INFO] (Alacer) Chunk visibility verification: 1000 searches compared; 0 mismatched with stable input; 31 had compiled chunk data change mid-comparison (20 of those differed)",
+        "[00:56:03] [Client thread/INFO] (Alacer) Chunk visibility verification: 2000 searches compared; 0 mismatched with stable input; 42 had compiled chunk data change mid-comparison (29 of those differed)",
+        "[00:56:19] [Client thread/INFO] (Alacer) Chunk visibility verification: 3000 searches compared; 0 mismatched with stable input; 44 had compiled chunk data change mid-comparison (31 of those differed)",
+        "[00:56:21] [Client thread/INFO] (Alacer) Chunk visibility verification: 4000 searches compared; 0 mismatched with stable input; 60 had compiled chunk data change mid-comparison (43 of those differed)",
+        "[00:56:26] [Client thread/INFO] (Alacer) Chunk visibility verification: 5000 searches compared; 0 mismatched with stable input; 60 had compiled chunk data change mid-comparison (43 of those differed)",
+        "[00:56:28] [Client thread/INFO] (Alacer) Chunk visibility verification: 6000 searches compared; 0 mismatched with stable input; 68 had compiled chunk data change mid-comparison (46 of those differed)",
+        "[00:56:28] [Client thread/INFO] (Alacer) Worker AO verification final: 61161044 worker block queries, 8558776 light queries compared, 0 mismatches",
+        "[00:56:28] [Client thread/INFO] (Alacer) Vector frustum verification final: 9401716 boxes compared, 0 mismatched, 0 outside exact limit",
+        "[00:56:28] [Client thread/INFO] (Alacer) Model zero-translation verification final: 432 zero translations compared, 0 changed the matrix",
+        "[00:56:28] [Client thread/INFO] (Alacer) Ray trace verification final: 14665 traces, 0 mismatches",
+        "[00:56:28] [Client thread/INFO] (Alacer) Ambient tick verification final: 655 ticks, 221186 blocks, 0 mismatches",
+        "[00:56:28] [Client thread/INFO] (Alacer) Entity culling verification final: 1674070 tested, 0 mismatches",
+        "[00:56:28] [Client thread/INFO] (Alacer) Entity renderer cache final: 4094639 queries, 4094069 hits, 0 mismatches",
+        "[00:56:28] [Client thread/INFO] (Alacer) Flat occlusion verification final: 8096131 mask hits, 14798 updates, 0 mismatches",
+        "[00:56:28] [Client thread/INFO] (Alacer) Chunk frustum verification final: 0 boxes compared, 0 mismatched, 0 answered by vanilla's test (outside the exact range)"
+      ]
+    },
+    "repair24-combined-final-vbo": {
+      "raw_folder": "run\\alacer\\benchmarks\\20261024-012841-repair24-combined-final-vbo-vis_on-ecl_on-ent200",
+      "log_sha256": "ee1d4914795b2115ef0e8648c06db36f349ab5ce61dcb9aaed3c39665160433b",
+      "java_version": "25.0.4.1",
+      "java_vendor": "Eclipse Adoptium",
+      "vbo_active": "true",
+      "evidence": [
+        "[01:28:13] [Client thread/INFO] (Alacer) Chunk visibility verification: 1000 searches compared; 0 mismatched with stable input; 24 had compiled chunk data change mid-comparison (15 of those differed)",
+        "[01:28:31] [Client thread/INFO] (Alacer) Chunk visibility verification: 2000 searches compared; 0 mismatched with stable input; 37 had compiled chunk data change mid-comparison (23 of those differed)",
+        "[01:28:38] [Client thread/INFO] (Alacer) Chunk visibility verification: 3000 searches compared; 0 mismatched with stable input; 41 had compiled chunk data change mid-comparison (26 of those differed)",
+        "[01:28:41] [Client thread/INFO] (Alacer) Worker AO verification final: 54297126 worker block queries, 7523563 light queries compared, 0 mismatches",
+        "[01:28:41] [Client thread/INFO] (Alacer) Vector frustum verification final: 5524581 boxes compared, 0 mismatched, 0 outside exact limit",
+        "[01:28:41] [Client thread/INFO] (Alacer) Model zero-translation verification final: 432 zero translations compared, 0 changed the matrix",
+        "[01:28:41] [Client thread/INFO] (Alacer) Ray trace verification final: 8775 traces, 0 mismatches",
+        "[01:28:41] [Client thread/INFO] (Alacer) Ambient tick verification final: 665 ticks, 209782 blocks, 0 mismatches",
+        "[01:28:41] [Client thread/INFO] (Alacer) Entity culling verification final: 953223 tested, 0 mismatches",
+        "[01:28:41] [Client thread/INFO] (Alacer) Entity renderer cache final: 2328007 queries, 2327667 hits, 0 mismatches",
+        "[01:28:41] [Client thread/INFO] (Alacer) Flat occlusion verification final: 4777374 mask hits, 13612 updates, 0 mismatches",
+        "[01:28:41] [Client thread/INFO] (Alacer) Chunk frustum verification final: 0 boxes compared, 0 mismatched, 0 answered by vanilla's test (outside the exact range)"
+      ]
+    }
+  },
+  "probe_results_sha256": "d77ad31ddb59d5f6738cdfce03f24ba71a5d55866c5c841a1a74c520e09f7e17",
+  "core": {
+    "completed": 16,
+    "selection_pass": false,
+    "failed_gates": [
+      "render.chunkTimeFloor/edit/responsiveness",
+      "render.chunkTimeFloor/edit/still",
+      "render.chunkTimeFloor/near/fresh-flight/frame_mean_ms",
+      "render.chunkTimeFloor/near/fresh-flight/frame_p99_ms",
+      "render.chunkTimeFloor/near/fresh-flight/frame_slow1_mean_ms",
+      "render.chunkTimeFloor/near/fresh-flight/client_thread_cpu_ms_per_frame"
+    ],
+    "manifest_sha256": "b43c92ca698d3946dfcf3864183b70dd98050304880ebcf48cfa5ffd9f3cd3e4",
+    "evaluation_sha256": "2b0f1a75d61624b13a3790c20ba84d5916b16cefbeda1eccc5a4d751a7849205",
+    "sources_zip_sha256": "bc49d0779f3ad947f1187885ce857d6309a97ecd24a15653599b95b3927acde5",
+    "raw_zip_sha256": "380047a355a458307a9332e1912da24047091a67dcb9d1a95f83cee934db0ff1",
+    "post_series_frozen_state_unchanged": true
+  },
+  "current_clients": [],
+  "defaults_promoted": false,
+  "production_jar_launched": false,
+  "listening_certified": false,
+  "evidence_files_sha256": {
+    "alacer-repair24-combined-final-vbo-vis_on-ecl_on-ent200-static.png": "d93daf0bbab020f73009a24bd23e187434c48497da02ad2828d169ab26f6f817",
+    "probe-results.json": "d77ad31ddb59d5f6738cdfce03f24ba71a5d55866c5c841a1a74c520e09f7e17",
+    "README.md": "32c12ae3574a6ca04bfbe8f2371b7f7b83815803d93f926696c6530130637365",
+    "repair24-combined-final-vbo.log": "ee1d4914795b2115ef0e8648c06db36f349ab5ce61dcb9aaed3c39665160433b",
+    "repair24-combined-final-vbo.summary.json": "ea6ee5dc4689dbafac1f0280fde8a1b23cc2c5f012a0aa3f47e2fcacd7a88b28",
+    "repair24-combined-verify1.log": "d149a3e897d48f762c3277380cac61132f34c8f427f38cc8dfcdaafa282a5583",
+    "repair24-combined-verify1.summary.json": "37909fe5cdb5f483de1548a45614058bb22d1fa5caf337932ecdc2f648637924",
+    "repair24-final-test-runtime.log": "53bbd8e56d3d0b9ef941b967d093d2c28e74fe6bb089864f4ae0388de24b4e99",
+    "repair24-java-version.log": "a1e3193ff788460ec1d1f6347d66e542470674a1ec5dd30fcd9706b7050e531e",
+    "repair24-runner-tests.log": "bc3e29a4152e0da8eee17ace5cd814977f0528004fd682530a78f6d997f58517",
+    "repair24-worker-vector-smoke1.log": "84fcb201d434b75349c89de205c4d5bd37f0a8a0bf3df5d5b6fb90bb558a93ab",
+    "repair24-worker-vector-smoke1.summary.json": "7366978b42ff01dc3dcce497d7a11289aa2198742e8356028a8fc5fa9433cb4b",
+    "roadmap-repair-tests-final.log": "9535720b45c85bab5d02380438e682116e8adc0608c3dc2ae0c4b6deeced1e73"
+  }
+}

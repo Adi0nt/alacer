@@ -12,6 +12,23 @@ import net.minecraft.util.math.Box;
 
 class EntityCullingTest {
 
+	private static class BaseRenderer extends net.minecraft.client.render.entity.EntityRenderer<Entity> {
+		BaseRenderer() { super(null); }
+		@Override protected net.minecraft.resource.Identifier getTextureLocation(Entity entity) { return null; }
+	}
+	private static class CustomRenderer extends BaseRenderer {
+		final boolean decision;
+		CustomRenderer(boolean decision) { this.decision = decision; }
+		@Override public boolean shouldRender(Entity entity, Culler culler, double x, double y, double z) { return this.decision; }
+	}
+	@Test void customRendererPoliciesAreAlwaysPreserved() {
+		DummyEntity entity = new DummyEntity();
+		assertFalse(EntityCulling.shouldRenderWithRenderer(new CustomRenderer(false), entity, new DummyCuller(true), 0, 0, 0));
+		entity.distanceResult = false;
+		assertTrue(EntityCulling.shouldRenderWithRenderer(new CustomRenderer(true), entity, new DummyCuller(false), 0, 0, 0));
+	}
+
+
 	private static class DummyEntity extends Entity {
 		boolean distanceResult = true;
 		Box shapeBox = new Box(0, 0, 0, 1, 1, 1);
@@ -70,8 +87,8 @@ class EntityCullingTest {
 		DummyEntity entity = new DummyEntity();
 		entity.distanceResult = false;
 
-		// dispatcher is null; if out of distance, dispatcher must NOT be touched
-		boolean visible = EntityCulling.shouldRender(null, entity, null, 0.0, 0.0, 0.0);
+		// The known base renderer can reject distance before looking up the shape.
+		boolean visible = EntityCulling.shouldRenderWithRenderer(new BaseRenderer(), entity, null, 0.0, 0.0, 0.0);
 		assertFalse(visible);
 		assertEquals(1, EntityCulling.tested());
 		assertEquals(1, EntityCulling.culledDistance());
@@ -85,8 +102,8 @@ class EntityCullingTest {
 		entity.distanceResult = true;
 		DummyCuller culler = new DummyCuller(false);
 
-		// dispatcher is null; since culler returns false, dispatcher.getRenderer must NOT be called
-		boolean visible = EntityCulling.shouldRender(null, entity, culler, 0.0, 0.0, 0.0);
+		// Test the base predicate after resolving the renderer policy.
+		boolean visible = EntityCulling.shouldRenderWithRenderer(new BaseRenderer(), entity, culler, 0.0, 0.0, 0.0);
 		assertFalse(visible);
 		assertEquals(1, EntityCulling.tested());
 		assertEquals(0, EntityCulling.culledDistance());
@@ -98,7 +115,7 @@ class EntityCullingTest {
 	void clearResetsCounters() {
 		DummyEntity entity = new DummyEntity();
 		entity.distanceResult = false;
-		EntityCulling.shouldRender(null, entity, null, 0.0, 0.0, 0.0);
+		EntityCulling.shouldRenderWithRenderer(new BaseRenderer(), entity, null, 0.0, 0.0, 0.0);
 		assertEquals(1, EntityCulling.tested());
 
 		EntityCulling.clear();

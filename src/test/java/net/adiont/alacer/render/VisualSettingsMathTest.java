@@ -71,5 +71,14 @@ class VisualSettingsMathTest {
 		assertEquals(2001,ParticleLimit.excess(2250,250)); assertEquals(250,2250-ParticleLimit.excess(2250,250)+1);
 		assertEquals(1f,TextureFiltering.level(0)); assertEquals(2f,TextureFiltering.level(1)); assertEquals(16f,TextureFiltering.level(4));
 		assertEquals(8f,TextureFiltering.clamp(16f,8f)); assertEquals(1f,TextureFiltering.clamp(1f,16f)); assertEquals(1f,TextureFiltering.clamp(4f,0f));
+		assertEquals(0.0f, TextureFiltering.lodBiasFraction(0));
+		assertEquals(-0.5f, TextureFiltering.lodBiasFraction(-50));
+		assertEquals(0.75f, TextureFiltering.lodBiasFraction(75));
+		assertEquals(-2.0f, TextureFiltering.lodBiasFraction(-300));
+		assertEquals(2.0f, TextureFiltering.lodBiasFraction(300));
+		assertEquals(org.lwjgl.opengl.GL11.GL_NEAREST, TextureFiltering.minFilter(TextureFiltering.BILINEAR, false));
+		assertEquals(org.lwjgl.opengl.GL11.GL_NEAREST, TextureFiltering.minFilter(TextureFiltering.TRILINEAR, false));
+		assertEquals(org.lwjgl.opengl.GL11.GL_NEAREST_MIPMAP_LINEAR, TextureFiltering.minFilter(TextureFiltering.BILINEAR, true));
+		assertEquals(org.lwjgl.opengl.GL11.GL_LINEAR_MIPMAP_LINEAR, TextureFiltering.minFilter(TextureFiltering.TRILINEAR, true));
 	}
 }

@@ -1,0 +1,63 @@
+{
+  "probe_source_sha256": "9b573efc3c6c5c253d32a11e58fab801912a4919040abf6a439600e802c1405a",
+  "target_class_sha256": "6a7e379340333c57ce8690e59f1f774dff20257cf42df875e5905d125d9fc617",
+  "receipts": [
+    {
+      "name": "compile",
+      "command": [
+        "C:\\Program Files\\Eclipse Adoptium\\jdk-25.0.4.101-hotspot\\bin\\javac.exe",
+        "--release",
+        "25",
+        "--add-modules",
+        "jdk.incubator.vector",
+        "-cp",
+        "C:\\Users\\CodyJ\\OneDrive\\Documents\\GitLab\\adiont\\aevum\\alacer\\build\\classes\\java\\main;C:\\Users\\CodyJ\\OneDrive\\Documents\\GitLab\\adiont\\aevum\\alacer\\.gradle\\loom-cache\\minecraftMaven\\net\\minecraft\\minecraft-merged-293abd00c9\\1.8.9-loom.mappings.1_8_9.layered+hash.1480139456-v2\\minecraft-merged-293abd00c9-1.8.9-loom.mappings.1_8_9.layered+hash.1480139456-v2.jar",
+        "-d",
+        "build\\audit-frustum-final",
+        "C:\\Users\\CodyJ\\OneDrive\\Documents\\GitLab\\adiont\\aevum\\alacer\\docs\\audits\\2026-10-24\\FrustumAuditProbe.java"
+      ],
+      "exit_code": 0,
+      "stdout": "",
+      "stderr": "warning: unknown enum constant EnvType.CLIENT\n  reason: class file for net.fabricmc.api.EnvType not found\n1 warning\n"
+    },
+    {
+      "name": "vector",
+      "command": [
+        "C:\\Program Files\\Eclipse Adoptium\\jdk-25.0.4.101-hotspot\\bin\\java.exe",
+        "--add-modules=jdk.incubator.vector",
+        "-cp",
+        "build\\audit-frustum-final;C:\\Users\\CodyJ\\OneDrive\\Documents\\GitLab\\adiont\\aevum\\alacer\\build\\classes\\java\\main;C:\\Users\\CodyJ\\OneDrive\\Documents\\GitLab\\adiont\\aevum\\alacer\\.gradle\\loom-cache\\minecraftMaven\\net\\minecraft\\minecraft-merged-293abd00c9\\1.8.9-loom.mappings.1_8_9.layered+hash.1480139456-v2\\minecraft-merged-293abd00c9-1.8.9-loom.mappings.1_8_9.layered+hash.1480139456-v2.jar",
+        "net.adiont.alacer.render.FrustumAuditProbe"
+      ],
+      "exit_code": 0,
+      "stdout": "java=25.0.4.1+1-LTS\nvanilla=true, vector=0\nREPRODUCED: vanilla sees the boundary point; nested FMA culls it\n",
+      "stderr": "WARNING: Using incubator modules: jdk.incubator.vector\n"
+    },
+    {
+      "name": "no-avx",
+      "command": [
+        "C:\\Program Files\\Eclipse Adoptium\\jdk-25.0.4.101-hotspot\\bin\\java.exe",
+        "-XX:UseAVX=0",
+        "--add-modules=jdk.incubator.vector",
+        "-cp",
+        "build\\audit-frustum-final;C:\\Users\\CodyJ\\OneDrive\\Documents\\GitLab\\adiont\\aevum\\alacer\\build\\classes\\java\\main;C:\\Users\\CodyJ\\OneDrive\\Documents\\GitLab\\adiont\\aevum\\alacer\\.gradle\\loom-cache\\minecraftMaven\\net\\minecraft\\minecraft-merged-293abd00c9\\1.8.9-loom.mappings.1_8_9.layered+hash.1480139456-v2\\minecraft-merged-293abd00c9-1.8.9-loom.mappings.1_8_9.layered+hash.1480139456-v2.jar",
+        "net.adiont.alacer.render.FrustumAuditProbe"
+      ],
+      "exit_code": 0,
+      "stdout": "java=25.0.4.1+1-LTS\nvanilla=true, vector=0\nREPRODUCED: vanilla sees the boundary point; nested FMA culls it\n",
+      "stderr": "WARNING: Using incubator modules: jdk.incubator.vector\n"
+    },
+    {
+      "name": "no-module",
+      "command": [
+        "C:\\Program Files\\Eclipse Adoptium\\jdk-25.0.4.101-hotspot\\bin\\java.exe",
+        "-cp",
+        "build\\audit-frustum-final;C:\\Users\\CodyJ\\OneDrive\\Documents\\GitLab\\adiont\\aevum\\alacer\\build\\classes\\java\\main;C:\\Users\\CodyJ\\OneDrive\\Documents\\GitLab\\adiont\\aevum\\alacer\\.gradle\\loom-cache\\minecraftMaven\\net\\minecraft\\minecraft-merged-293abd00c9\\1.8.9-loom.mappings.1_8_9.layered+hash.1480139456-v2\\minecraft-merged-293abd00c9-1.8.9-loom.mappings.1_8_9.layered+hash.1480139456-v2.jar",
+        "net.adiont.alacer.render.FrustumAuditProbe"
+      ],
+      "exit_code": 1,
+      "stdout": "",
+      "stderr": "Exception in thread \"main\" java.lang.NoClassDefFoundError: jdk/incubator/vector/Vector\n\tat net.adiont.alacer.render.FrustumAuditProbe.main(FrustumAuditProbe.java:11)\nCaused by: java.lang.ClassNotFoundException: jdk.incubator.vector.Vector\n\tat java.base/jdk.internal.loader.BuiltinClassLoader.loadClass(BuiltinClassLoader.java:580)\n\tat java.base/java.lang.ClassLoader.loadClass(ClassLoader.java:490)\n\t... 1 more\n"
+    }
+  ]
+}

@@ -2,6 +2,7 @@ package net.adiont.alacer.render;
 
 import java.lang.reflect.Method;
 import java.util.Random;
+import net.fabricmc.loader.api.FabricLoader;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
@@ -26,18 +27,19 @@ import net.adiont.alacer.config.AlacerConfig;
  *
  * <p>Vanilla allocates a new {@link Random} instance and {@link BlockPos.Mutable} instance on every
  * client tick (20 times per second), and performs 1,000 hash-table chunk lookups and section queries.
- * This class eliminates all per-tick allocations by reusing a static {@link Random} instance, pooling
- * mutable block positions, caching chunk references across the sampling volume, and skipping empty
+ * This class retains vanilla's per-tick {@link Random}, pools mutable block positions,
+ * caches chunk references across the sampling volume, and skips empty
  * chunk sections and blocks without display tick handlers.
  */
 public final class FastRandomDisplayTicks {
 
-	private static final Random DISPLAY_RANDOM = new Random();
 	private static final int[] EMPTY_INT_ARRAY = new int[0];
 	private static final ThreadLocal<BlockPos.Mutable> POOLED_POS = ThreadLocal.withInitial(BlockPos.Mutable::new);
 
-	private static final boolean[] HAS_DISPLAY_TICK = new boolean[4096];
-	private static final boolean[] INITIALIZED = new boolean[4096];
+	private static final ClassValue<Boolean> HAS_DISPLAY_TICK = new ClassValue<>() {
+		@Override protected Boolean computeValue(Class<?> type) { return checkHasDisplayTick(type); }
+	};
+	private static final String DISPLAY_TICK_METHOD = displayTickMethod();
 
 	private static long ticks;
 	private static long blocksChecked;
@@ -54,7 +56,7 @@ public final class FastRandomDisplayTicks {
 			return false;
 		}
 		AlacerConfig config = alacer.config();
-		return config != null && config.fastRandomDisplayTicks;
+		return config != null && (config.fastRandomDisplayTicks || config.verifyFastRandomDisplayTicks) && RenderCompatibility.displayTicks();
 	}
 
 	public static boolean isVerifying() {
@@ -77,6 +79,8 @@ public final class FastRandomDisplayTicks {
 	 */
 	public static void doRandomDisplayTicks(ClientWorld world, int x, int y, int z, boolean verify) {
 		ticks++;
+		// Preserve vanilla's per-tick RNG lifetime instead of changing the effect stream.
+		Random displayRandom = new Random();
 		Minecraft mc = Minecraft.getInstance();
 		LocalClientPlayerEntity player = mc.player;
 		ClientPlayerInteractionManager interactionManager = mc.interactionManager;
@@ -146,7 +150,7 @@ public final class FastRandomDisplayTicks {
 
 			if (hasTick) {
 				pos.set(bx, by, bz);
-				block.randomDisplayTick(world, pos, state, DISPLAY_RANDOM);
+				block.randomDisplayTick(world, pos, state, displayRandom);
 				blocksTicked++;
 			}
 
@@ -160,32 +164,20 @@ public final class FastRandomDisplayTicks {
 	 * Returns {@code true} if the given block class overrides {@code randomDisplayTick}.
 	 */
 	public static boolean hasRandomDisplayTick(Block block) {
-		int id = Block.getId(block);
-		if (id >= 0 && id < 4096) {
-			if (!INITIALIZED[id]) {
-				HAS_DISPLAY_TICK[id] = checkHasDisplayTick(block);
-				INITIALIZED[id] = true;
-			}
-			return HAS_DISPLAY_TICK[id];
-		}
-		return checkHasDisplayTick(block);
+		return HAS_DISPLAY_TICK.get(block.getClass());
 	}
 
-	private static boolean checkHasDisplayTick(Block block) {
-		try {
-			Class<?> cls = block.getClass();
-			while (cls != null && cls != Block.class) {
-				try {
-					cls.getDeclaredMethod("randomDisplayTick", World.class, BlockPos.class, BlockState.class, Random.class);
-					return true;
-				} catch (NoSuchMethodException ignored) {
-					cls = cls.getSuperclass();
-				}
-			}
-			return false;
-		} catch (Throwable t) {
-			return true;
-		}
+	private static String displayTickMethod() {
+		return DisplayTickMethodResolver.resolve(Block.class, "randomDisplayTick", () ->
+				FabricLoader.getInstance().getMappingResolver().mapMethodName("intermediary",
+					"net.minecraft.unmapped.C_81592558", "m_41538657",
+					"(Lnet/minecraft/unmapped/C_64041439;Lnet/minecraft/unmapped/C_32594356;Lnet/minecraft/unmapped/C_15815210;Ljava/util/Random;)V"),
+				World.class, BlockPos.class, BlockState.class, Random.class);
+	}
+
+	private static boolean checkHasDisplayTick(Class<?> type) {
+		return DisplayTickMethodResolver.overrides(Block.class, type, DISPLAY_TICK_METHOD,
+			World.class, BlockPos.class, BlockState.class, Random.class);
 	}
 
 	private static void verifyEmpty(World world, int bx, int by, int bz) {
@@ -211,7 +203,7 @@ public final class FastRandomDisplayTicks {
 		if (!fastHasTick) {
 			Class<?> decl = null;
 			try {
-				decl = fastBlock.getClass().getMethod("randomDisplayTick", World.class, BlockPos.class, BlockState.class, Random.class).getDeclaringClass();
+				decl = fastBlock.getClass().getMethod(DISPLAY_TICK_METHOD, World.class, BlockPos.class, BlockState.class, Random.class).getDeclaringClass();
 			} catch (NoSuchMethodException ignored) {}
 			if (decl != null && decl != Block.class) {
 				mismatches++;

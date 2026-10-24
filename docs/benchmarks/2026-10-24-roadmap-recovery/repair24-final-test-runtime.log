@@ -1,0 +1,134 @@
+Initialized native services in: C:\Users\CodyJ\.gradle\native
+Initialized jansi services in: C:\Users\CodyJ\.gradle\native
+The client will now receive all logging from the daemon (pid: 11760). The daemon log file: C:\Users\CodyJ\.gradle\daemon\9.7.1\daemon-11760.out.log
+Starting 73rd build in daemon [uptime: 4 hrs 2 mins 46.822 secs, performance: 100%, GC rate: 0.00/s, heap usage: 0% of 2 GiB]
+Using 20 worker leases.
+Operational build model parameters: {cachingModelBuilding=false, configurationCache=false, configurationCacheDisabledReason=null, configurationCacheParallelLoad=false, configurationCacheParallelStore=false, configureOnDemand=false, invalidateCoupledProjects=false, isolatedProjects=false, isolatedProjectsDiagnostics=false, isolatedProjectsDangerouslyIgnoreProblems=false, modelAsProjectDependency=false, modelBuilding=false, parallelModelBuilding=false, parallelProjectConfiguration=false, parallelProjectExecution=true, vintage=true}
+Now considering [C:\Users\CodyJ\OneDrive\Documents\GitLab\adiont\aevum\alacer] as hierarchies to watch
+Watching the file system is configured to be enabled if available
+File system watching is active
+Starting Build
+Settings evaluated using settings file 'C:\Users\CodyJ\OneDrive\Documents\GitLab\adiont\aevum\alacer\settings.gradle'.
+Projects loaded. Root project using build file 'C:\Users\CodyJ\OneDrive\Documents\GitLab\adiont\aevum\alacer\build.gradle'.
+Included projects: [root project 'alacer']
+
+> Configure project :
+Evaluating root project 'alacer' using build file 'C:\Users\CodyJ\OneDrive\Documents\GitLab\adiont\aevum\alacer\build.gradle'.
+Resolved plugin [id: 'fabric-loom', version: '1.18-SNAPSHOT']
+Resolved plugin [id: 'ploceus', version: '1.18-SNAPSHOT']
+Fabric Loom: 1.18.4
+(kotlin.metadata.jvm.KotlinClassMetadata) with version (2.4.0-release-281) was loaded from (/C:/Users/CodyJ/.gradle/wrapper/dists/gradle-9.7.1-bin/1w1c7tv4s851m17nbqdsro2tv/gradle-9.7.1/lib/kotlin-build-tools-impl-2.4.0.jar)
+(org.objectweb.asm.ClassVisitor) with version (9.10.1) was loaded from (/C:/Users/CodyJ/.gradle/caches/modules-2/files-2.1/org.ow2.asm/asm/9.10.1/ada2141c0cc52ee8f5c48cd5fa4ce0e794f22236/asm-9.10.1.jar)
+(org.objectweb.asm.tree.analysis.Analyzer) with version (9.10.1) was loaded from (/C:/Users/CodyJ/.gradle/caches/modules-2/files-2.1/org.ow2.asm/asm-analysis/9.10.1/8d49f14d51f632cb1d87c88d1ceaf50db0d8af1b/asm-analysis-9.10.1.jar)
+(org.objectweb.asm.commons.ClassRemapper) with version (9.10.1) was loaded from (/C:/Users/CodyJ/.gradle/caches/modules-2/files-2.1/org.ow2.asm/asm-commons/9.10.1/4229e4c55fd8e01c23f9fe9884075cc628aacc50/asm-commons-9.10.1.jar)
+(org.objectweb.asm.tree.ClassNode) with version (9.10.1) was loaded from (/C:/Users/CodyJ/.gradle/caches/modules-2/files-2.1/org.ow2.asm/asm-tree/9.10.1/e244332a17564c1d1572449399a842de35881be2/asm-tree-9.10.1.jar)
+(org.objectweb.asm.util.ASMifier) with version (9.10.1) was loaded from (/C:/Users/CodyJ/.gradle/caches/modules-2/files-2.1/org.ow2.asm/asm-util/9.10.1/7bb9d450e8d4cbf9f9e04096c44bbfe7fba80b15/asm-util-9.10.1.jar)
+(com.google.gson.Gson) with version (null) was loaded from (/C:/Users/CodyJ/.gradle/caches/modules-2/files-2.1/com.google.code.gson/gson/2.14.0/efc0e34ede4e3204eaefb84a00e55e8c86634382/gson-2.14.0.jar)
+Project directory 'C:\Users\CodyJ\OneDrive\Documents\GitLab\adiont\aevum\alacer' is located in OneDrive. This is known to cause issues and slower performance. Consider moving the project to a different location.
+Ploceus: 1.18.2
+Using cached Minecraft jars
+Evaluating layer mapping: loom:mappings:layered+hash.1480139456
+Mod dependency options: {"__inlineRefmap__":false,"__mappings__":"loom.mappings.1_8_9.layered+hash.1480139456-v2"}
+Applying installer data from C:\Users\CodyJ\.gradle\caches\modules-2\files-2.1\net.fabricmc\fabric-loader\0.20.0\7a3a8ce24fa0150aba52f3e1f7cde5ba17195fcf\fabric-loader-0.20.0.jar
+Found another installer JSON in (C:\Users\CodyJ\.gradle\caches\modules-2\files-2.1\net.fabricmc\fabric-loader\0.20.0\7a3a8ce24fa0150aba52f3e1f7cde5ba17195fcf\fabric-loader-0.20.0.jar), ignoring
+All projects evaluated.
+Task name matched 'test'
+Selected primary task 'test' from project :
+Tasks to be executed: [task ':compileJava', task ':processResources', task ':classes', task ':compileTestJava', task ':processTestResources', task ':testClasses', task ':test']
+Tasks that were excluded: []
+Resolve mutations for :compileJava (Thread[#8130,Execution worker,5,main]) started.
+:compileJava (Thread[#8134,Execution worker Thread 5,5,main]) started.
+
+> Task :compileJava UP-TO-DATE
+Caching disabled for task ':compileJava' because:
+  Build cache is disabled
+Skipping task ':compileJava' as it is up-to-date.
+Resolve mutations for :processResources (Thread[#8134,Execution worker Thread 5,5,main]) started.
+:processResources (Thread[#8134,Execution worker Thread 5,5,main]) started.
+
+> Task :processResources UP-TO-DATE
+Caching disabled for task ':processResources' because:
+  Build cache is disabled
+  Not worth caching
+Skipping task ':processResources' as it is up-to-date.
+Resolve mutations for :classes (Thread[#8141,Execution worker Thread 12,5,main]) started.
+:classes (Thread[#8141,Execution worker Thread 12,5,main]) started.
+
+> Task :classes UP-TO-DATE
+Skipping task ':classes' as it has no actions.
+Resolve mutations for :compileTestJava (Thread[#8141,Execution worker Thread 12,5,main]) started.
+:compileTestJava (Thread[#8141,Execution worker Thread 12,5,main]) started.
+
+> Task :compileTestJava UP-TO-DATE
+Caching disabled for task ':compileTestJava' because:
+  Build cache is disabled
+Skipping task ':compileTestJava' as it is up-to-date.
+Resolve mutations for :processTestResources (Thread[#8141,Execution worker Thread 12,5,main]) started.
+:processTestResources (Thread[#8141,Execution worker Thread 12,5,main]) started.
+
+> Task :processTestResources NO-SOURCE
+Skipping task ':processTestResources' as it has no source files and no previous output files.
+Resolve mutations for :testClasses (Thread[#8146,Execution worker Thread 17,5,main]) started.
+:testClasses (Thread[#8146,Execution worker Thread 17,5,main]) started.
+
+> Task :testClasses UP-TO-DATE
+Skipping task ':testClasses' as it has no actions.
+Resolve mutations for :test (Thread[#8146,Execution worker Thread 17,5,main]) started.
+:test (Thread[#8146,Execution worker Thread 17,5,main]) started.
+Gradle Test Executor 28 started executing tests.
+WARNING: A restricted method in java.lang.foreign.SymbolLookup has been called
+WARNING: java.lang.foreign.SymbolLookup::libraryLookup has been called by net.adiont.alacer.benchmark.ProcessorSampler in an unnamed module (file:/C:/Users/CodyJ/OneDrive/Documents/GitLab/adiont/aevum/alacer/build/classes/java/main/)
+WARNING: Use --enable-native-access=ALL-UNNAMED to avoid a warning for callers in this module
+WARNING: Restricted methods will be blocked in a future release unless native access is enabled
+
+
+> Task :test
+Caching disabled for task ':test' because:
+  Build cache is disabled
+Task ':test' is not up-to-date because:
+  Input property 'stableClasspath' file C:\Users\CodyJ\OneDrive\Documents\GitLab\adiont\aevum\alacer\build\classes\java\main\net\adiont\alacer\config\AlacerConfig.class has changed.
+  Input property 'stableClasspath' file C:\Users\CodyJ\OneDrive\Documents\GitLab\adiont\aevum\alacer\build\classes\java\main\net\adiont\alacer\render\EntityCulling$1.class has changed.
+  Input property 'stableClasspath' file C:\Users\CodyJ\OneDrive\Documents\GitLab\adiont\aevum\alacer\build\classes\java\main\net\adiont\alacer\render\EntityCulling.class has changed.
+Starting process 'Gradle Test Executor 28'. Working directory: C:\Users\CodyJ\OneDrive\Documents\GitLab\adiont\aevum\alacer Command: C:\Users\CodyJ\.jdks\ms-25.0.3\bin\java.exe -Dorg.gradle.internal.worker.tmpdir=C:\Users\CodyJ\OneDrive\Documents\GitLab\adiont\aevum\alacer\build\tmp\test\work --add-modules jdk.incubator.vector @C:\Users\CodyJ\.gradle\.tmp\gradle-worker-classpath3307451937451894438txt -Xmx512m -Dfile.encoding=UTF-8 -Duser.country=US -Duser.language=en -Duser.variant -ea worker.org.gradle.process.internal.worker.GradleWorkerMain 'Gradle Test Executor 28'
+Successfully started process 'Gradle Test Executor 28'
+WARNING: Using incubator modules: jdk.incubator.vector
+
+AlacerConfigTest > benchmarkIgnoresStoredOptionsWithoutRewritingSharedFile() STANDARD_OUT
+    [01:33:11] [Test worker/INFO]: Benchmark config: build defaults plus explicit JVM overrides; ignoring C:\Users\CodyJ\AppData\Local\Temp\junit-16851006361709375524\alacer.properties (no writes)
+    [01:33:11] [Test worker/INFO]: Benchmark config: build defaults plus explicit JVM overrides; ignoring C:\Users\CodyJ\AppData\Local\Temp\junit-16851006361709375524\alacer.properties (no writes)
+
+AlacerConfigTest > benchmarkDoesNotCreateConfigAndNormalLaunchKeepsStoredOptions() STANDARD_OUT
+    [01:33:11] [Test worker/INFO]: Benchmark config: build defaults plus explicit JVM overrides; ignoring C:\Users\CodyJ\AppData\Local\Temp\junit-11514551968155930082\alacer.properties (no writes)
+
+CameraSettingsTest > defaultsAreVanillaInTheFileTheMenuAndBenchmarks() STANDARD_OUT
+    [01:33:12] [Test worker/INFO]: Benchmark config: build defaults plus explicit JVM overrides; ignoring C:\Users\CodyJ\AppData\Local\Temp\junit-13538453727778062353\alacer.properties (no writes)
+
+ModernRenderingConfigTest > startupGatingAndBenchmarkFileIsolationAgree() STANDARD_OUT
+    [01:33:12] [Test worker/INFO]: Benchmark config: build defaults plus explicit JVM overrides; ignoring C:\Users\CodyJ\AppData\Local\Temp\junit-13376295742243708582\alacer.properties (no writes)
+
+VideoSettingsPersistenceTest > benchmarkNeverWritesUserPreferences() STANDARD_OUT
+    [01:33:12] [Test worker/INFO]: Benchmark config: build defaults plus explicit JVM overrides; ignoring C:\Users\CodyJ\AppData\Local\Temp\junit-18301154633949186630\alacer.properties (no writes)
+
+VideoSettingsPersistenceTest > benchmarkUsesVanillaDefaultsForExpandedSettings() STANDARD_OUT
+    [01:33:12] [Test worker/INFO]: Benchmark config: build defaults plus explicit JVM overrides; ignoring C:\Users\CodyJ\AppData\Local\Temp\junit-16776876574728778779\alacer.properties (no writes)
+
+VideoSettingsPersistenceTest > benchmarkUsesVanillaQualityDefaultsRegardlessOfSavedPreferences() STANDARD_OUT
+    [01:33:12] [Test worker/INFO]: Benchmark config: build defaults plus explicit JVM overrides; ignoring C:\Users\CodyJ\AppData\Local\Temp\junit-6589171610601871207\alacer.properties (no writes)
+
+VideoSettingsPersistenceTest > benchmarkIgnoresSavedAtmosphereAndRetainsTheFile() STANDARD_OUT
+    [01:33:12] [Test worker/INFO]: Benchmark config: build defaults plus explicit JVM overrides; ignoring C:\Users\CodyJ\AppData\Local\Temp\junit-2434264736304917166\atmosphere.properties (no writes)
+
+EntityRendererCacheTest > verifyMatchesAndMismatches() STANDARD_OUT
+    [01:33:13] [Test worker/WARN]: EntityRendererCache verification mismatch for net.minecraft.entity.living.mob.monster.ZombieEntity: cached net.adiont.alacer.render.EntityRendererCacheTest$DummyRenderer@1980a3f, expected net.adiont.alacer.render.EntityRendererCacheTest$DummyRenderer@67f63d26
+
+Gradle Test Executor 28 finished executing tests.
+
+> Task :test
+Generating HTML test report...
+Finished generating test html results (0.099 secs) into: C:\Users\CodyJ\OneDrive\Documents\GitLab\adiont\aevum\alacer\build\reports\tests\test
+Finished generating test XML results (0.049 secs) into: C:\Users\CodyJ\OneDrive\Documents\GitLab\adiont\aevum\alacer\build\test-results\test
+
+BUILD SUCCESSFUL in 19s
+4 actionable tasks: 1 executed, 3 up-to-date
+Watched directory hierarchies: [C:\Users\CodyJ\OneDrive\Documents\GitLab\adiont\aevum\alacer]
+Consider enabling configuration cache to speed up this build: https://docs.gradle.org/9.7.1/userguide/configuration_cache_enabling.html

@@ -14,7 +14,7 @@ public abstract class ClientWorldRandomDisplayTickMixin {
 
 	@Inject(method = "doRandomDisplayTicks", at = @At("HEAD"), cancellable = true)
 	private void onDoRandomDisplayTicks(int x, int y, int z, CallbackInfo ci) {
-		if (FastRandomDisplayTicks.isEnabled()) {
+		if (((Object) this).getClass() == ClientWorld.class && FastRandomDisplayTicks.isEnabled()) {
 			FastRandomDisplayTicks.doRandomDisplayTicks((ClientWorld) (Object) this, x, y, z, FastRandomDisplayTicks.isVerifying());
 			ci.cancel();
 		}

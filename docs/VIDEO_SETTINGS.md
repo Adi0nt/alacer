@@ -119,6 +119,10 @@ and benchmark exports.
 | Graphics | Biome blend | Off (1x1), **3x3**, 5x5, 7x7 | Rebuilds terrain | Widens or narrows vanilla's grass, foliage and water color averaging square and its divisor together. Off gives hard borders and the cheapest chunk builds; 5x5/7x7 sample 25/49 columns per tinted face, so chunk building is slower. |
 | Graphics | Particle limit | 250, 500, 1000, 2000, **4000** | Immediately | Replaces vanilla's per-list cap in `ParticleManager.add` (eight lists). When a list is full its oldest particle is removed, as in vanilla. A list above a newly lowered cap is cut back to it at its next addition. |
 | Graphics | Anisotropic filtering | **Off**, 2x, 4x, 8x, 16x | Turning it on or off reloads textures; a level change is immediate; kept across resource reloads | Sets `GL_TEXTURE_MAX_ANISOTROPY_EXT` on the block/item atlas, whose sprites get edge borders while it is on (see [Anisotropic filtering and atlas borders](#anisotropic-filtering-and-atlas-borders)). Off makes no call and adds no borders, so the atlas is vanilla's. Limited to the driver's maximum (the tooltip says so); disabled with an explanation where the extension is missing. Most visible with mipmaps on; costs GPU texture bandwidth and a larger atlas. Not part of any preset. |
+| Graphics | Mipmap filtering | **Bilinear**, Trilinear | Immediately | Minification filter for mipmapped surfaces: Bilinear uses `GL_NEAREST_MIPMAP_LINEAR`; Trilinear smoothly blends between adjacent mip levels (`GL_LINEAR_MIPMAP_LINEAR`) to eliminate mip transition bands. |
+| Graphics | Mipmap LOD bias | -100% to +100% in steps of 25, **0%** | Immediately | Sets `GL_TEXTURE_LOD_BIAS` on the block atlas. Negative values pull forward sharper higher-resolution mip levels; positive values pull forward blurrier mip levels to combat shimmer. |
+| Details | Cutout mipmaps | **Vanilla**, Preserved | Reloads textures | Vanilla darkens cutout edges by 75% and thins foliage at distance. Preserved calculates alpha-weighted color blends (`sum(RGB * Alpha) / sum(Alpha)`) to retain 100% true color and boosts alpha coverage. |
+| Performance | Fast mipmaps | Off, **On** | Immediately | Calculates mipmap gamma curves using lookup tables and downsamples atlas sprites in parallel. Eliminates redundant OpenGL state calls during sprite uploads. |
 | Details | Distance fog | 10-95% in steps of 5, **75%**, or Off | Immediately | Overworld air fog start as a fraction of the render distance. Off moves the fog band past the far plane, revealing the edge of loaded terrain. The sky pass, blindness, water, lava and the Nether's thick fog are separate branches and are unchanged. |
 | Details | Sun and moon | Off, **On** | Immediately | Off draws the sun and moon quads with zero alpha under the sky's additive blend, which adds nothing to the image. Sky color, sunrise, stars (their own brightness factor) and clouds are unchanged. |
 | Details | Water / Lava / Fire / Portal animation | Off, **On** | Immediately | Off skips that group's atlas sprite tick, so its current frame stays and its sub-image uploads stop. |
@@ -240,6 +244,35 @@ existing screen. Anisotropic filtering uses the public
 `EXT_texture_filter_anisotropic` OpenGL extension through LWJGL 2, which
 Minecraft already ships; no dependency was added and `THIRD_PARTY.md` is
 unchanged. This is a record of how the code was written, not a legal opinion.
+
+## Texture pipeline and mipmapping (2026-10-24)
+
+Alacer overhauls Minecraft 1.8.9's texture mipmapping and upload pipeline:
+
+1. **Fast LUT-based mipmaps (`render.fastMipmaps`)**:
+   - Vanilla calculates gamma downsampling using expensive transcendental `Math.pow(c / 255.0, 2.2)` operations across 4 channels per texel.
+   - Alacer precomputes a 256-entry `GAMMA_TO_LINEAR` lookup table, avoiding repeated floating-point exponentiation.
+   - Transparent cutout mode retains exact floating-to-integer conversion matching vanilla's exact double-precision multiplication.
+   - Atlas sprite downsampling runs in parallel across `ForkJoinPool.commonPool()` during stitch preparation.
+   - Fast empty-block short-circuits (`0x00000000`) bypass all arithmetic.
+   - Redundant OpenGL state changes during sprite sub-image uploads (`glTexParameteri` for min/mag filter and wrap s/t) are tracked and skipped on mip levels > 0 and when unadjusted.
+   - Verification mode (`-Dalacer.render.fastMipmaps.verify=true` / `render.fastMipmaps.verify=true`) bit-checks every downsampled texel against vanilla.
+
+2. **Mipmap filtering (`quality.mipmapFiltering`)**:
+   - **Bilinear** (`GL_NEAREST_MIPMAP_LINEAR`, vanilla default): interpolates pixels within the nearest mipmap level.
+   - **Trilinear** (`GL_LINEAR_MIPMAP_LINEAR`): smoothly blends between adjacent mipmap levels to completely eliminate visible mipmap transition bands on floors and distant terrain. Immediate application.
+
+3. **Mipmap LOD bias (`quality.lodBias`)**:
+   - Adjusts `GL_TEXTURE_LOD_BIAS` on the block/item atlas from -100% (-1.0) to +100% (+1.0) in steps of 25%.
+   - Negative values sharpen textures (pulling forward higher detail mip levels); positive values blur textures (reducing shimmering and aliasing). Immediate application.
+
+4. **Cutout mipmaps (`quality.mipmapCutouts`)**:
+   - **Vanilla**: calculates unweighted average color components (`fR * 0.25f`), which causes single-pixel foliage borders and cutout edges to lose 75% of their brightness and darken into black halos under mipmap filtering, while alpha erosion erases distant leaves prematurely.
+   - **Preserved**: calculates alpha-weighted color blending (`sum(RGB * Alpha) / sum(Alpha)`), preserving 100% true vibrant color on cutout edges regardless of neighboring transparent texels, and boosts alpha coverage on downsampled levels to prevent foliage thinning and erosion. Reloads textures.
+
+5. **Dynamic Mipmap level clamping**:
+   - Lowering mipmap levels (or increasing them up to the stitched level) dynamically updates `GL_TEXTURE_MAX_LEVEL` on the GPU and adjusts minification filters immediately.
+   - Avoids vanilla's forced 5–10 second full resource pack reload when clamping downsampled textures. Full reload is only invoked when generating higher mipmap levels than currently stitched or changing cutout blending algorithms.
 
 ## Camera settings (2026-10-23)
 

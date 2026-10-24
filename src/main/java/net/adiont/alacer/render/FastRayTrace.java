@@ -44,7 +44,7 @@ public final class FastRayTrace {
 			return false;
 		}
 		AlacerConfig config = Alacer.get().config();
-		return config != null && config.fastRayTrace;
+		return config != null && (config.fastRayTrace || config.verifyFastRayTrace);
 	}
 
 	public static boolean isVerifying() {
@@ -218,127 +218,25 @@ public final class FastRayTrace {
 		return null;
 	}
 
-	public static void verify(World world, Vec3d from, Vec3d to, boolean allowLiquids, boolean ignoreBlocksWithoutCollision, boolean allowHitInStartPosition, HitResult fastResult) {
-		HitResult vanilla = vanillaRayTrace(world, from, to, allowLiquids, ignoreBlocksWithoutCollision, allowHitInStartPosition);
-		if (vanilla == null && fastResult == null) {
-			return;
-		}
-		if (vanilla == null || fastResult == null) {
+	/** Compare the candidate against the actual intercepted vanilla method's output. */
+	public static void verifyResult(HitResult fast, HitResult vanilla) {
+		if (!sameHit(fast, vanilla)) {
 			mismatches++;
-			if (mismatches <= 10) {
-				Alacer.LOGGER.warn("FastRayTrace verification mismatch: fast {}, vanilla {}", fastResult, vanilla);
-			}
-			return;
-		}
-		if (vanilla.type != fastResult.type || vanilla.face != fastResult.face || !java.util.Objects.equals(vanilla.getPos(), fastResult.getPos())) {
-			mismatches++;
-			if (mismatches <= 10) {
-				Alacer.LOGGER.warn("FastRayTrace verification mismatch: fast [{}, {}, {}], vanilla [{}, {}, {}]",
-					fastResult.type, fastResult.face, fastResult.getPos(),
-					vanilla.type, vanilla.face, vanilla.getPos());
-			}
+			if (mismatches <= 10) Alacer.LOGGER.warn("FastRayTrace verification mismatch: fast {}, vanilla {}", fast, vanilla);
 		}
 	}
 
-	private static HitResult vanillaRayTrace(World world, Vec3d from, Vec3d to, boolean allowLiquids, boolean ignoreBlocksWithoutCollision, boolean allowHitInStartPosition) {
-		if (Double.isNaN(from.x) || Double.isNaN(from.y) || Double.isNaN(from.z)) {
-			return null;
-		}
-		if (Double.isNaN(to.x) || Double.isNaN(to.y) || Double.isNaN(to.z)) {
-			return null;
-		}
-		int i = MathHelper.floor(to.x), j = MathHelper.floor(to.y), k = MathHelper.floor(to.z);
-		int l = MathHelper.floor(from.x), m = MathHelper.floor(from.y), n = MathHelper.floor(from.z);
-		BlockPos blockPos = new BlockPos(l, m, n);
-		BlockState blockState = world.getBlockState(blockPos);
-		Block block = blockState.getBlock();
-		if ((!ignoreBlocksWithoutCollision || block.getCollisionShape(world, blockPos, blockState) != null) && block.canRayTrace(blockState, allowLiquids)) {
-			HitResult hitResult = block.rayTrace(world, blockPos, from, to);
-			if (hitResult != null) {
-				return hitResult;
-			}
-		}
-		HitResult hitResult2 = null;
-		int o = 200;
-		while (o-- >= 0) {
-			if (Double.isNaN(from.x) || Double.isNaN(from.y) || Double.isNaN(from.z)) {
-				return null;
-			}
-			if (l == i && m == j && n == k) {
-				return allowHitInStartPosition ? hitResult2 : null;
-			}
-			boolean bl = true, bl2 = true, bl3 = true;
-			double d = 999.0, e = 999.0, f = 999.0;
-			if (i > l) {
-				d = l + 1.0;
-			} else if (i < l) {
-				d = l + 0.0;
-			} else {
-				bl = false;
-			}
-			if (j > m) {
-				e = m + 1.0;
-			} else if (j < m) {
-				e = m + 0.0;
-			} else {
-				bl2 = false;
-			}
-			if (k > n) {
-				f = n + 1.0;
-			} else if (k < n) {
-				f = n + 0.0;
-			} else {
-				bl3 = false;
-			}
-			double g = 999.0, h = 999.0, p = 999.0;
-			double q = to.x - from.x, r = to.y - from.y, s = to.z - from.z;
-			if (bl) {
-				g = (d - from.x) / q;
-			}
-			if (bl2) {
-				h = (e - from.y) / r;
-			}
-			if (bl3) {
-				p = (f - from.z) / s;
-			}
-			if (g == -0.0) {
-				g = -1.0E-4;
-			}
-			if (h == -0.0) {
-				h = -1.0E-4;
-			}
-			if (p == -0.0) {
-				p = -1.0E-4;
-			}
-			Direction direction;
-			if (g < h && g < p) {
-				direction = i > l ? Direction.WEST : Direction.EAST;
-				from = new Vec3d(d, from.y + r * g, from.z + s * g);
-			} else if (h < p) {
-				direction = j > m ? Direction.DOWN : Direction.UP;
-				from = new Vec3d(from.x + q * h, e, from.z + s * h);
-			} else {
-				direction = k > n ? Direction.NORTH : Direction.SOUTH;
-				from = new Vec3d(from.x + q * p, from.y + r * p, f);
-			}
-			l = MathHelper.floor(from.x) - (direction == Direction.EAST ? 1 : 0);
-			m = MathHelper.floor(from.y) - (direction == Direction.UP ? 1 : 0);
-			n = MathHelper.floor(from.z) - (direction == Direction.SOUTH ? 1 : 0);
-			blockPos = new BlockPos(l, m, n);
-			BlockState blockState2 = world.getBlockState(blockPos);
-			Block block2 = blockState2.getBlock();
-			if (!ignoreBlocksWithoutCollision || block2.getCollisionShape(world, blockPos, blockState2) != null) {
-				if (block2.canRayTrace(blockState2, allowLiquids)) {
-					HitResult hitResult3 = block2.rayTrace(world, blockPos, from, to);
-					if (hitResult3 != null) {
-						return hitResult3;
-					}
-				} else {
-					hitResult2 = new HitResult(HitResult.Type.MISS, from, direction, blockPos);
-				}
-			}
-		}
-		return allowHitInStartPosition ? hitResult2 : null;
+	static boolean sameHit(HitResult a, HitResult b) {
+		if (a == null || b == null) return a == b;
+		return a.type == b.type && a.face == b.face && a.entity == b.entity
+			&& java.util.Objects.equals(a.getPos(), b.getPos()) && sameVector(a.facePos, b.facePos);
+	}
+
+	private static boolean sameVector(Vec3d a, Vec3d b) {
+		if (a == null || b == null) return a == b;
+		return Double.doubleToRawLongBits(a.x) == Double.doubleToRawLongBits(b.x)
+			&& Double.doubleToRawLongBits(a.y) == Double.doubleToRawLongBits(b.y)
+			&& Double.doubleToRawLongBits(a.z) == Double.doubleToRawLongBits(b.z);
 	}
 
 	public static void clear() {

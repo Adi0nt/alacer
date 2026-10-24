@@ -16,15 +16,15 @@ import net.minecraft.world.World;
 @Mixin(World.class)
 public abstract class WorldRayTraceMixin {
 
-	@Inject(method = "rayTrace(Lnet/minecraft/util/math/Vec3d;Lnet/minecraft/util/math/Vec3d;ZZZ)Lnet/minecraft/world/HitResult;", at = @At("HEAD"), cancellable = true)
-	private void alacer$fastRayTrace(Vec3d from, Vec3d to, boolean allowLiquids, boolean ignoreBlocksWithoutCollision, boolean allowHitInStartPosition, CallbackInfoReturnable<HitResult> cir) {
+	@com.llamalad7.mixinextras.injector.wrapmethod.WrapMethod(method = "rayTrace(Lnet/minecraft/util/math/Vec3d;Lnet/minecraft/util/math/Vec3d;ZZZ)Lnet/minecraft/world/HitResult;")
+	private HitResult alacer$fastRayTrace(Vec3d from, Vec3d to, boolean liquids, boolean ignoreEmpty, boolean lastMiss,
+		com.llamalad7.mixinextras.injector.wrapoperation.Operation<HitResult> original) {
 		World world = (World) (Object) this;
-		if (FastRayTrace.isEnabled(world)) {
-			HitResult result = FastRayTrace.rayTrace(world, from, to, allowLiquids, ignoreBlocksWithoutCollision, allowHitInStartPosition);
-			if (FastRayTrace.isVerifying()) {
-				FastRayTrace.verify(world, from, to, allowLiquids, ignoreBlocksWithoutCollision, allowHitInStartPosition, result);
-			}
-			cir.setReturnValue(result);
-		}
+		if (!FastRayTrace.isEnabled(world)) return original.call(from, to, liquids, ignoreEmpty, lastMiss);
+		HitResult fast = FastRayTrace.rayTrace(world, from, to, liquids, ignoreEmpty, lastMiss);
+		if (!FastRayTrace.isVerifying()) return fast;
+		HitResult vanilla = original.call(from, to, liquids, ignoreEmpty, lastMiss);
+		FastRayTrace.verifyResult(fast, vanilla);
+		return vanilla;
 	}
 }

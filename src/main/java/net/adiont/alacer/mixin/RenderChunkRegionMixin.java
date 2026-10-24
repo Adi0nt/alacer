@@ -1,41 +1,70 @@
 package net.adiont.alacer.mixin;
 
-import java.util.Arrays;
+import org.objectweb.asm.Opcodes;
 import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Shadow;
+import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
-import org.spongepowered.asm.mixin.injection.Redirect;
+import org.spongepowered.asm.mixin.injection.Constant;
+import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.ModifyConstant;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+import com.llamalad7.mixinextras.injector.ModifyReturnValue;
 import net.adiont.alacer.Alacer;
 import net.adiont.alacer.config.AlacerConfig;
 import net.adiont.alacer.render.WorkerBlockStateCache;
 import net.minecraft.block.state.BlockState;
 import net.minecraft.client.render.world.RenderChunkRegion;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.World;
 
-/**
- * Replaces per-compile heap allocations of 8000-element block state and light arrays with
- * thread-local pooled arrays ({@code render.fastWorkerAo}).
- */
+/** Pool only region arrays whose complete lifetime is inside a chunk compile scope. */
 @Mixin(RenderChunkRegion.class)
 public class RenderChunkRegionMixin {
+    @Shadow private int[] light;
+    @Shadow private BlockState[] blocks;
+    @Unique private WorkerBlockStateCache alacer$cache;
+    @Unique private boolean alacer$verify;
+    @Unique private RenderChunkRegion alacer$reference;
 
-	@Redirect(method = "<init>", at = @At(value = "NEWARRAY", args = "primitiveValue=int"))
-	private int[] alacer$redirectIntArray(int size) {
-		AlacerConfig config = Alacer.get().config();
-		if (config != null && config.fastWorkerAo && size == 8000) {
-			WorkerBlockStateCache cache = WorkerBlockStateCache.get();
-			Arrays.fill(cache.light, -1);
-			return cache.light;
-		}
-		return new int[size];
-	}
+    // Capture the choice after super(), before either allocation. A concurrent live toggle
+    // cannot change the constructor's allocation/assignment decision halfway through.
+    @Inject(method = "<init>", at = @At(value = "FIELD", target = "Lnet/minecraft/client/render/world/RenderChunkRegion;center:Lnet/minecraft/util/math/BlockPos;", opcode = Opcodes.PUTFIELD, shift = At.Shift.AFTER))
+    private void alacer$lease(World world, BlockPos min, BlockPos max, int padding, CallbackInfo ci) {
+        if (Alacer.get() == null || WorkerBlockStateCache.constructingReference()) return;
+        AlacerConfig config = Alacer.get().config();
+        if (config != null && (config.fastWorkerAo || config.verifyWorkerAo)) {
+            this.alacer$cache = WorkerBlockStateCache.acquireRegion();
+            this.alacer$verify = config.verifyWorkerAo;
+        }
+    }
 
-	@Redirect(method = "<init>", at = @At(value = "ANEWARRAY", target = "net/minecraft/block/state/BlockState"))
-	private BlockState[] alacer$redirectBlockStateArray(int size) {
-		AlacerConfig config = Alacer.get().config();
-		if (config != null && config.fastWorkerAo && size == 8000) {
-			WorkerBlockStateCache cache = WorkerBlockStateCache.get();
-			Arrays.fill(cache.blocks, null);
-			return cache.blocks;
-		}
-		return new BlockState[size];
-	}
+    @ModifyConstant(method = "<init>", constant = @Constant(intValue = 8000))
+    private int alacer$arraySize(int size) { return this.alacer$cache == null ? size : 0; }
+
+    @Inject(method = "<init>", at = @At("RETURN"))
+    private void alacer$install(World world, BlockPos min, BlockPos max, int padding, CallbackInfo ci) {
+        if (this.alacer$cache == null) return;
+        // Vanilla creates two zero-length arrays and fills the empty light array. The
+        // large arrays are never allocated; install leased arrays before publication.
+        this.light = this.alacer$cache.light;
+        this.blocks = this.alacer$cache.blocks;
+        if (this.alacer$verify) this.alacer$reference = WorkerBlockStateCache.reference(world, min, max, padding);
+    }
+
+    @ModifyReturnValue(method = "getBlockState", at = @At("RETURN"))
+    private BlockState alacer$verifyBlock(BlockState actual, BlockPos pos) {
+        if (this.alacer$reference == null) return actual;
+        BlockState expected = this.alacer$reference.getBlockState(pos);
+        WorkerBlockStateCache.verifyBlockState(pos, actual, expected);
+        return expected;
+    }
+
+    @ModifyReturnValue(method = "getLightColor", at = @At("RETURN"))
+    private int alacer$verifyLight(int actual, BlockPos pos, int blockLight) {
+        if (this.alacer$reference == null) return actual;
+        int expected = this.alacer$reference.getLightColor(pos, blockLight);
+        WorkerBlockStateCache.verifyLight(pos, actual, expected);
+        return expected;
+    }
 }

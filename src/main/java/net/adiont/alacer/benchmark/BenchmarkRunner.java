@@ -493,6 +493,12 @@ public final class BenchmarkRunner implements FrameProfiler.FrameListener {
 			|| "render.defaults".equals(key) || "render.fastEntityShadows".equals(key)
 			|| "render.fastChunkFrustum".equals(key) || "render.fastParticleLight".equals(key)
 			|| "render.fastCameraSectionFaces".equals(key)
+			|| "render.fastEntityLighting".equals(key) || "render.fastEntityRendererLookup".equals(key)
+			|| "render.fastEntityCulling".equals(key) || "render.fastRayTrace".equals(key)
+			|| "render.fastRandomDisplayTicks".equals(key) || "render.fastSoundThread".equals(key)
+			|| "render.cameraHysteresis".equals(key) || "render.flatOcclusion".equals(key)
+			|| "render.vectorFrustum".equals(key) || "render.fastWorkerAo".equals(key)
+			|| "render.fastModelTransforms".equals(key)
 			|| "render.fastParticleRemoval".equals(key)
 			|| "render.fastParticleVertices".equals(key)
 			|| "render.fastParticleLightEntry".equals(key)
@@ -1362,6 +1368,14 @@ public final class BenchmarkRunner implements FrameProfiler.FrameListener {
 		Alacer.LOGGER.info("Camera section faces final: {}", net.adiont.alacer.render.ChunkVisibility.sectionFacesSummary());
 		Alacer.LOGGER.info("Entity shadow queries final: {}", EntityShadows.verificationSummary());
 		Alacer.LOGGER.info("Entity lighting queries final: {}", net.adiont.alacer.render.EntityLighting.verificationSummary());
+		Alacer.LOGGER.info("Worker AO verification final: {}", net.adiont.alacer.render.WorkerBlockStateCache.summary());
+		Alacer.LOGGER.info("Vector frustum verification final: {}", net.adiont.alacer.render.VectorFrustumAccess.summary());
+		Alacer.LOGGER.info("Model zero-translation verification final: {}", net.adiont.alacer.render.ZeroTranslates.verificationSummary());
+		Alacer.LOGGER.info("Ray trace verification final: {} traces, {} mismatches", net.adiont.alacer.render.FastRayTrace.traces(), net.adiont.alacer.render.FastRayTrace.mismatches());
+		Alacer.LOGGER.info("Ambient tick verification final: {} ticks, {} blocks, {} mismatches", net.adiont.alacer.render.FastRandomDisplayTicks.ticks(), net.adiont.alacer.render.FastRandomDisplayTicks.blocksChecked(), net.adiont.alacer.render.FastRandomDisplayTicks.mismatches());
+		Alacer.LOGGER.info("Entity culling verification final: {} tested, {} mismatches", net.adiont.alacer.render.EntityCulling.tested(), net.adiont.alacer.render.EntityCulling.mismatches());
+		Alacer.LOGGER.info("Entity renderer cache final: {} queries, {} hits, {} mismatches", net.adiont.alacer.render.EntityRendererCache.queries(), net.adiont.alacer.render.EntityRendererCache.hits(), net.adiont.alacer.render.EntityRendererCache.mismatches());
+		Alacer.LOGGER.info("Flat occlusion verification final: {}", net.adiont.alacer.render.ChunkVisibility.occlusionSummary());
 		Alacer.LOGGER.info("Shadow position reuse final: {}", net.adiont.alacer.render.ShadowPositions.verificationSummary());
 		Alacer.LOGGER.info("Particle light queries final: {}", net.adiont.alacer.render.ParticleLight.verificationSummary());
 		Alacer.LOGGER.info("Particle removal final: {}", net.adiont.alacer.render.ParticleRemoval.verificationSummary());

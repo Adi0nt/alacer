@@ -1,0 +1,15 @@
+// Reference-series override: Loom otherwise selects any installed Java 25 vendor.
+// Applied only with -I by the reference runner, preserving normal project behavior.
+gradle.projectsEvaluated {
+    allprojects { p ->
+        def toolchains = p.extensions.findByType(org.gradle.jvm.toolchain.JavaToolchainService)
+        if (toolchains != null) {
+            p.tasks.withType(JavaExec).configureEach {
+                javaLauncher = toolchains.launcherFor {
+                    languageVersion = JavaLanguageVersion.of(25)
+                    vendor = JvmVendorSpec.ADOPTIUM
+                }
+            }
+        }
+    }
+}

@@ -7,10 +7,16 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.render.platform.GlStateManager;
 
 /**
- * Anisotropic filtering for the block and item atlas through the standard EXT_texture_filter_anisotropic parameter.
- * Choice 0 issues no call at atlas creation, keeping the driver default of 1.
+ * Texture filtering parameters for the block and item atlas:
+ * - Anisotropic filtering (EXT_texture_filter_anisotropic)
+ * - Mipmap filtering mode: Bilinear (GL_NEAREST_MIPMAP_LINEAR) vs Trilinear (GL_LINEAR_MIPMAP_LINEAR)
+ * - Texture LOD bias (GL_TEXTURE_LOD_BIAS)
+ * - Max mip level clamping (GL_TEXTURE_MAX_LEVEL)
  */
 public final class TextureFiltering {
+	public static final int BILINEAR = 0;
+	public static final int TRILINEAR = 1;
+
 	private static float maximum = -1;
 	private TextureFiltering() { }
 
@@ -27,14 +33,50 @@ public final class TextureFiltering {
 		return maximum;
 	}
 
-	/** Applies to the texture bound to GL_TEXTURE_2D. */
+	public static float lodBiasFraction(int lodBiasPercent) {
+		return Math.max(-2.0f, Math.min(2.0f, lodBiasPercent / 100.0f));
+	}
+
+	public static int minFilter(int filteringMode, boolean mipmap) {
+		if (!mipmap) {
+			return GL11.GL_NEAREST;
+		}
+		return filteringMode == TRILINEAR ? GL11.GL_LINEAR_MIPMAP_LINEAR : GL11.GL_NEAREST_MIPMAP_LINEAR;
+	}
+
+	/** Applies anisotropic filtering to the texture bound to GL_TEXTURE_2D. */
 	public static void applyToBound(int choice) {
 		if (!supported()) { return; }
 		GL11.glTexParameterf(GL11.GL_TEXTURE_2D, EXTTextureFilterAnisotropic.GL_TEXTURE_MAX_ANISOTROPY_EXT, clamp(level(choice), maximum()));
 	}
 
+	/** Applies anisotropic filtering, LOD bias, and mipmap min filter to the texture bound to GL_TEXTURE_2D. */
+	public static void applyToBound(int choice, int filteringMode, int lodBiasPercent) {
+		applyToBound(choice, filteringMode, lodBiasPercent, true);
+	}
+
+	public static void applyToBound(int choice, int filteringMode, int lodBiasPercent, boolean mipmap) {
+		applyToBound(choice);
+		GL11.glTexParameterf(GL11.GL_TEXTURE_2D, 34049 /* GL_TEXTURE_LOD_BIAS */, lodBiasFraction(lodBiasPercent));
+		GL11.glTexParameteri(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_MIN_FILTER, minFilter(filteringMode, mipmap));
+	}
+
 	public static void applyToBlocksAtlas(Minecraft minecraft, int choice) {
 		GlStateManager.bindTexture(minecraft.getBlocksAtlas().getGlId());
 		applyToBound(choice);
+	}
+
+	public static void applyToBlocksAtlas(Minecraft minecraft, int choice, int filteringMode, int lodBiasPercent) {
+		applyToBlocksAtlas(minecraft, choice, filteringMode, lodBiasPercent, minecraft.options.mipmapLevels > 0);
+	}
+
+	public static void applyToBlocksAtlas(Minecraft minecraft, int choice, int filteringMode, int lodBiasPercent, boolean mipmap) {
+		GlStateManager.bindTexture(minecraft.getBlocksAtlas().getGlId());
+		applyToBound(choice, filteringMode, lodBiasPercent, mipmap);
+	}
+
+	public static void clampMaxMipLevel(Minecraft minecraft, int level) {
+		GlStateManager.bindTexture(minecraft.getBlocksAtlas().getGlId());
+		GL11.glTexParameteri(GL11.GL_TEXTURE_2D, 33085 /* GL_TEXTURE_MAX_LEVEL */, Math.max(0, level));
 	}
 }

@@ -44,7 +44,7 @@ public final class EntityRendererCache {
 
 	public static boolean isEnabled() {
 		AlacerConfig config = Alacer.get().config();
-		return config != null && config.fastEntityRendererLookup;
+		return config != null && (config.fastEntityRendererLookup || config.verifyEntityRendererLookup);
 	}
 
 	public static boolean isVerifying() {

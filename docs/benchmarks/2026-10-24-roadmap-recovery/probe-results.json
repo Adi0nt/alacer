@@ -1,0 +1,42 @@
+[
+  {
+    "name": "normal",
+    "command": [
+      "C:\\Program Files\\Eclipse Adoptium\\jdk-25.0.4.101-hotspot\\bin\\java.exe",
+      "--add-modules=jdk.incubator.vector",
+      "-cp",
+      "C:\\Users\\CodyJ\\OneDrive\\Documents\\GitLab\\adiont\\aevum\\alacer\\build\\repair24-probes;C:\\Users\\CodyJ\\OneDrive\\Documents\\GitLab\\adiont\\aevum\\alacer\\build\\classes\\java\\main;C:\\Users\\CodyJ\\OneDrive\\Documents\\GitLab\\adiont\\aevum\\alacer\\.gradle\\loom-cache\\minecraftMaven\\net\\minecraft\\minecraft-merged-5d0b48031a\\1.8.9-loom.mappings.1_8_9.layered+hash.1480139456-v2\\minecraft-merged-5d0b48031a-1.8.9-loom.mappings.1_8_9.layered+hash.1480139456-v2.jar",
+      "net.adiont.alacer.render.RecoveryProbe"
+    ],
+    "exit_code": 0,
+    "stdout": "PASS: vanilla and vector accept the cancellation boundary\n",
+    "stderr": "WARNING: Using incubator modules: jdk.incubator.vector\n"
+  },
+  {
+    "name": "no-avx",
+    "command": [
+      "C:\\Program Files\\Eclipse Adoptium\\jdk-25.0.4.101-hotspot\\bin\\java.exe",
+      "-XX:UseAVX=0",
+      "--add-modules=jdk.incubator.vector",
+      "-cp",
+      "C:\\Users\\CodyJ\\OneDrive\\Documents\\GitLab\\adiont\\aevum\\alacer\\build\\repair24-probes;C:\\Users\\CodyJ\\OneDrive\\Documents\\GitLab\\adiont\\aevum\\alacer\\build\\classes\\java\\main;C:\\Users\\CodyJ\\OneDrive\\Documents\\GitLab\\adiont\\aevum\\alacer\\.gradle\\loom-cache\\minecraftMaven\\net\\minecraft\\minecraft-merged-5d0b48031a\\1.8.9-loom.mappings.1_8_9.layered+hash.1480139456-v2\\minecraft-merged-5d0b48031a-1.8.9-loom.mappings.1_8_9.layered+hash.1480139456-v2.jar",
+      "net.adiont.alacer.render.RecoveryProbe"
+    ],
+    "exit_code": 0,
+    "stdout": "PASS: vanilla and vector accept the cancellation boundary\n",
+    "stderr": "WARNING: Using incubator modules: jdk.incubator.vector\n"
+  },
+  {
+    "name": "no-module",
+    "command": [
+      "C:\\Program Files\\Eclipse Adoptium\\jdk-25.0.4.101-hotspot\\bin\\java.exe",
+      "-cp",
+      "C:\\Users\\CodyJ\\OneDrive\\Documents\\GitLab\\adiont\\aevum\\alacer\\build\\repair24-probes;C:\\Users\\CodyJ\\OneDrive\\Documents\\GitLab\\adiont\\aevum\\alacer\\build\\classes\\java\\main;C:\\Users\\CodyJ\\OneDrive\\Documents\\GitLab\\adiont\\aevum\\alacer\\.gradle\\loom-cache\\minecraftMaven\\net\\minecraft\\minecraft-merged-5d0b48031a\\1.8.9-loom.mappings.1_8_9.layered+hash.1480139456-v2\\minecraft-merged-5d0b48031a-1.8.9-loom.mappings.1_8_9.layered+hash.1480139456-v2.jar",
+      "net.adiont.alacer.render.RecoveryProbe",
+      "no-module"
+    ],
+    "exit_code": 0,
+    "stdout": "PASS: unresolved Vector module selects fallback without linking vector classes\n",
+    "stderr": ""
+  }
+]

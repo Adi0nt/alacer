@@ -7,7 +7,9 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 import net.adiont.alacer.Alacer;
 import net.adiont.alacer.config.AlacerConfig;
+import net.adiont.alacer.render.AtlasMipmapAccess;
 import net.adiont.alacer.render.AtlasPadding;
+import net.adiont.alacer.render.FastTextureUpload;
 import net.adiont.alacer.render.TextureFiltering;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.options.GameOptions;
@@ -92,16 +94,39 @@ public final class VideoSettingsBackend {
 		this.config.saveVideoChanges(mod); // Atomic Alacer file update, with no JVM override leakage.
 		boolean terrainReload = edits.containsKey("quality.leaves") || edits.containsKey("quality.lightingStyle") || edits.containsKey("quality.aoStrength")
 			|| edits.containsKey("quality.biomeBlend");
+		boolean mipmapsChanged = edits.containsKey("mipmaps");
+		int newMip = mipmapsChanged ? edits.get("mipmaps") : this.minecraft.options.mipmapLevels;
+		int stitchedLevel = (this.minecraft.getBlocksAtlas() instanceof AtlasMipmapAccess a) ? a.alacer$getStitchedMipLevel() : 0;
+		boolean cutoutsChanged = edits.containsKey("quality.mipmapCutouts");
+		boolean dynamicMipmapClamp = mipmapsChanged && !cutoutsChanged && newMip <= stitchedLevel;
+
 		for (Map.Entry<String,Integer> e : edits.entrySet()) {
 			if (alacerOption(e.getKey())) { continue; }
+			if (e.getKey().equals("mipmaps") && dynamicMipmapClamp) {
+				// Avoid vanilla's submitResourceReload() when existing mipmap levels can be clamped dynamically.
+				this.minecraft.options.mipmapLevels = newMip;
+				continue;
+			}
 			applyVanilla(e.getKey(),e.getValue());
 		}
 		if (terrainReload) { this.minecraft.worldRenderer.reload(); }
-		// Turning filtering on or off adds or removes sprite borders, so the atlas is rebuilt (which also sets the level);
-		// a level change alone only updates the existing atlas's sampling parameter.
-		if (edits.containsKey("quality.anisotropicFiltering")) {
-			if (AtlasPadding.layoutChanges(this.config.anisotropicFiltering)) { this.minecraft.submitResourceReload(); }
-			else { TextureFiltering.applyToBlocksAtlas(this.minecraft,this.config.anisotropicFiltering); }
+		if (cutoutsChanged) {
+			this.minecraft.submitResourceReload();
+		} else if (edits.containsKey("quality.anisotropicFiltering") && AtlasPadding.layoutChanges(this.config.anisotropicFiltering)) {
+			this.minecraft.submitResourceReload();
+		} else {
+			boolean updateTextureParams = false;
+			if (dynamicMipmapClamp) {
+				TextureFiltering.clampMaxMipLevel(this.minecraft, newMip);
+				updateTextureParams = true;
+			}
+			if (edits.containsKey("quality.anisotropicFiltering") || edits.containsKey("quality.mipmapFiltering") || edits.containsKey("quality.lodBias") || dynamicMipmapClamp) {
+				updateTextureParams = true;
+			}
+			if (updateTextureParams) {
+				TextureFiltering.applyToBlocksAtlas(this.minecraft, this.config.anisotropicFiltering, this.config.mipmapFiltering, this.config.lodBias, this.minecraft.options.mipmapLevels > 0);
+				FastTextureUpload.invalidate();
+			}
 		}
 		if (vanilla) { this.minecraft.options.save(); }
 	}

@@ -10,6 +10,10 @@ import org.lwjgl.util.vector.Vector3f;
 import net.adiont.alacer.Alacer;
 import net.adiont.alacer.config.AlacerConfig;
 import net.adiont.alacer.mixin.RenderChunkStorageAccessor;
+import net.adiont.alacer.mixin.FrustumCullerAccessor;
+import net.minecraft.client.render.FrustumCuller;
+import net.minecraft.client.render.FrustumData;
+import net.minecraft.client.render.Frustum;
 import net.adiont.alacer.profiler.FrameProfiler;
 import net.adiont.alacer.profiler.FrameProfiler.Counter;
 import net.adiont.alacer.profiler.FrameProfiler.Section;
@@ -109,7 +113,8 @@ public final class ChunkVisibility {
 
 	// Frustum test for the current search (render.fastChunkFrustum and render.vectorFrustum).
 	private final ChunkFrustum frustum = new ChunkFrustum();
-	private final VectorFrustum vectorFrustum = new VectorFrustum();
+	private VectorFrustumAccess.Predicate vectorFrustum;
+	private boolean vectorAttempted;
 
 	// render.flatOcclusion: dense 36-bit packed occlusion bitmask per chunk slot.
 	private long[] flatOcclusion = new long[0];
@@ -165,12 +170,13 @@ public final class ChunkVisibility {
 	private long stableMismatches;
 	private long inconclusiveSearches;
 	private long inconclusiveMismatches;
-	private Entity lastCamera;
-	private double lastSearchCameraX = Double.NaN;
-	private double lastSearchCameraY = Double.NaN;
-	private double lastSearchCameraZ = Double.NaN;
-	private float lastSearchCameraPitch = Float.NaN;
-	private float lastSearchCameraYaw = Float.NaN;
+	private final VisibilityReuse visibilityReuse = new VisibilityReuse();
+	private final double[] reuseInputs = new double[64];
+	private CompiledChunk[] reuseCompiled = new CompiledChunk[0];
+	private List<WorldRenderer.RenderChunkInfo> reuseVisible;
+	private Entity searchCamera;
+	private boolean captureReuse;
+	private long reuseEpoch, capturedReuseEpoch;
 	private long hysteresisSkips;
 
 	public ChunkVisibility(WorldRenderer renderer) {
@@ -197,30 +203,36 @@ public final class ChunkVisibility {
 			return;
 		}
 
-		this.lastCamera = camera;
-
-		if (config.cameraHysteresis && !this.verifyPending && !Double.isNaN(this.lastSearchCameraX)) {
-			List<WorldRenderer.RenderChunkInfo> currentVisible = this.access.alacer$getVisibleChunks();
-			if (currentVisible != null && !currentVisible.isEmpty()) {
-				Set<RenderChunk> dirty = this.access.alacer$getDirtyChunks();
-				if (dirty == null || dirty.isEmpty()) {
-					double dx = Math.abs(camera.x - this.lastSearchCameraX);
-					double dy = Math.abs(camera.y - this.lastSearchCameraY);
-					double dz = Math.abs(camera.z - this.lastSearchCameraZ);
-					float dp = Math.abs(camera.pitch - this.lastSearchCameraPitch);
-					float dyaw = Math.abs(camera.yaw - this.lastSearchCameraYaw);
-					if (dx < 0.01 && dy < 0.01 && dz < 0.01 && dp < 0.05F && dyaw < 0.05F) {
-						this.hysteresisSkips++;
-						this.access.alacer$setViewChanged(false);
-						return;
-					}
+		this.captureReuse = false;
+		this.searchCamera = camera;
+		boolean verifyingVisibility = config.verifyChunkVisibility || config.verifyCameraHysteresis;
+		this.capturedReuseEpoch = this.reuseEpoch;
+		if ((config.cameraHysteresis || config.verifyCameraHysteresis) && (config.fastChunkVisibility || verifyingVisibility) && reuseInputs(camera, tickDelta, culler, loadChunks)) {
+			prepare(this.access.alacer$getChunkStorage());
+			List<WorldRenderer.RenderChunkInfo> current = this.access.alacer$getVisibleChunks();
+			if (current == this.reuseVisible && current != null && !current.isEmpty()
+				&& this.access.alacer$getDirtyChunks().isEmpty()
+				&& this.visibilityReuse.matches(camera, this.access.alacer$getChunkStorage(), this.reuseInputs)
+				&& compiledUnchanged()) {
+				if (verifyingVisibility) {
+					// Check the retained candidate list against an actual vanilla search.
+					snapshotExpected(current);
+				} else {
+					this.hysteresisSkips++;
+					this.access.alacer$setViewChanged(false);
 				}
+				return;
 			}
+			if (this.reuseCompiled.length != this.chunks.length) this.reuseCompiled = new CompiledChunk[this.chunks.length];
+			for (int i = 0; i < this.chunks.length; i++) this.reuseCompiled[i] = this.chunks[i].getCompiledChunk();
+			this.captureReuse = true;
+		} else {
+			this.visibilityReuse.invalidate();
 		}
 		if (profiler != null) {
 			profiler.count(Counter.VISIBILITY_SEARCHES);
 		}
-		if (config.verifyChunkVisibility) {
+		if (verifyingVisibility) {
 			prepare(this.access.alacer$getChunkStorage());
 			if (this.compiledSnapshot.length != this.chunks.length) {
 				this.compiledSnapshot = new CompiledChunk[this.chunks.length];
@@ -261,13 +273,13 @@ public final class ChunkVisibility {
 			}
 		}
 		this.testedCuller = null;
-		if (this.lastCamera != null) {
-			this.lastSearchCameraX = this.lastCamera.x;
-			this.lastSearchCameraY = this.lastCamera.y;
-			this.lastSearchCameraZ = this.lastCamera.z;
-			this.lastSearchCameraPitch = this.lastCamera.pitch;
-			this.lastSearchCameraYaw = this.lastCamera.yaw;
+		if (this.captureReuse) {
+			if (this.capturedReuseEpoch == this.reuseEpoch && compiledUnchanged()) {
+				this.visibilityReuse.remember(this.searchCamera, this.access.alacer$getChunkStorage(), this.reuseInputs);
+				this.reuseVisible = this.access.alacer$getVisibleChunks();
+			} else this.visibilityReuse.invalidate();
 		}
+		this.captureReuse = false;
 	}
 
 	/**
@@ -372,7 +384,11 @@ public final class ChunkVisibility {
 		out.clear();
 		nextStamp();
 		AlacerConfig config = Alacer.get().config();
-		if ((config.vectorFrustum || config.verifyVectorFrustum) && this.vectorFrustum.prepare(culler)) {
+		if ((config.vectorFrustum || config.verifyVectorFrustum) && !this.vectorAttempted) {
+			this.vectorAttempted = true;
+			this.vectorFrustum = VectorFrustumAccess.create();
+		}
+		if ((config.vectorFrustum || config.verifyVectorFrustum) && this.vectorFrustum != null && this.vectorFrustum.prepare(culler)) {
 			this.frustumMode = config.verifyVectorFrustum ? FRUSTUM_VECTOR_VERIFY : FRUSTUM_VECTOR;
 		} else if ((config.fastChunkFrustum || config.verifyChunkFrustum) && this.frustum.prepare(culler)) {
 			this.frustumMode = config.verifyChunkFrustum ? FRUSTUM_VERIFY : FRUSTUM_PLANES;
@@ -456,7 +472,7 @@ public final class ChunkVisibility {
 
 			long occlusionMask = 0L;
 			int allowedFaces = 0x3F;
-			if (smartCull && from != NO_DIRECTION && config.flatOcclusion) {
+			if (smartCull && from != NO_DIRECTION && (config.flatOcclusion || config.verifyFlatOcclusion)) {
 				occlusionMask = getOcclusionMask(current, chunk);
 				allowedFaces = (int) ((occlusionMask >>> (OPPOSITE[from] * 6)) & 0x3F);
 			}
@@ -468,7 +484,7 @@ public final class ChunkVisibility {
 				}
 				// Only continue through faces connected to the face this chunk was entered by.
 				if (smartCull && from != NO_DIRECTION) {
-					if (config.flatOcclusion) {
+					if (config.flatOcclusion || config.verifyFlatOcclusion) {
 						boolean visible = (allowedFaces & (1 << d)) != 0;
 						if (config.verifyFlatOcclusion) {
 							boolean vanillaVis = chunk.getCompiledChunk().isVisible(DIRECTIONS[OPPOSITE[from]], DIRECTIONS[d]);
@@ -479,6 +495,7 @@ public final class ChunkVisibility {
 										OPPOSITE[from], d, visible, vanillaVis);
 								}
 							}
+							visible = vanillaVis;
 						}
 						if (!visible) {
 							continue;
@@ -719,7 +736,8 @@ public final class ChunkVisibility {
 
 	/** Called for every render-dirty region; drops the cached faces if they could be affected. */
 	public void onRegionDirty(int minX, int minY, int minZ, int maxX, int maxY, int maxZ) {
-		this.lastSearchCameraX = Double.NaN;
+		this.reuseEpoch++;
+		this.visibilityReuse.invalidate();
 		if (this.sectionValid) {
 			int sx = this.sectionX;
 			int sy = this.sectionY;
@@ -749,17 +767,70 @@ public final class ChunkVisibility {
 		this.sectionValid = false;
 		this.sectionChunk = null;
 		this.testedCuller = null;
-		this.lastCamera = null;
-		this.lastSearchCameraX = Double.NaN;
-		this.lastSearchCameraY = Double.NaN;
-		this.lastSearchCameraZ = Double.NaN;
-		this.lastSearchCameraPitch = Float.NaN;
-		this.lastSearchCameraYaw = Float.NaN;
+		this.searchCamera = null;
+		this.reuseVisible = null;
+		this.captureReuse = false;
+		this.visibilityReuse.invalidate();
 		this.result.clear();
+	}
+
+	private boolean compiledUnchanged() {
+		if (this.reuseCompiled.length != this.chunks.length) return false;
+		for (int i = 0; i < this.chunks.length; i++) if (this.reuseCompiled[i] != this.chunks[i].getCompiledChunk()) return false;
+		return true;
+	}
+
+	private void snapshotExpected(List<WorldRenderer.RenderChunkInfo> list) {
+		if (this.compiledSnapshot.length != this.chunks.length) this.compiledSnapshot = new CompiledChunk[this.chunks.length];
+		for (int i = 0; i < this.chunks.length; i++) this.compiledSnapshot[i] = this.chunks[i].getCompiledChunk();
+		if (this.expected.length < list.size()) this.expected = new RenderChunk[list.size()];
+		for (int i = 0; i < list.size(); i++) this.expected[i] = list.get(i).chunk;
+		this.expectedCount = list.size();
+		this.verifyPending = true;
+	}
+
+	/** All vanilla traversal inputs, not just the camera pose. No approximate boundary reuse. */
+	private boolean reuseInputs(Entity camera, double delta, Culler culler, boolean loadChunks) {
+		if (culler == null || culler.getClass() != FrustumCuller.class || !ChunkFrustum.compatible()) return false;
+		FrustumCullerAccessor access = (FrustumCullerAccessor) culler;
+		FrustumData data = access.alacer$getFrustum();
+		if (data == null || (data.getClass() != FrustumData.class && data.getClass() != Frustum.class)) return false;
+		if (data.frustum == null || data.frustum.length != 6) return false;
+		for (float[] plane : data.frustum) {
+			if (plane == null || plane.length < 4) return false;
+			for (int i = 0; i < 4; i++) if (!Float.isFinite(plane[i])) return false;
+		}
+		int n = 0;
+		for (float[] plane : data.frustum) for (int i = 0; i < 4; i++) this.reuseInputs[n++] = plane[i];
+		this.reuseInputs[n++] = access.alacer$getOffsetX();
+		this.reuseInputs[n++] = access.alacer$getOffsetY();
+		this.reuseInputs[n++] = access.alacer$getOffsetZ();
+		this.reuseInputs[n++] = camera.x; this.reuseInputs[n++] = camera.y; this.reuseInputs[n++] = camera.z;
+		this.reuseInputs[n++] = camera.prevX; this.reuseInputs[n++] = camera.prevY; this.reuseInputs[n++] = camera.prevZ;
+		this.reuseInputs[n++] = camera.pitch; this.reuseInputs[n++] = camera.yaw;
+		this.reuseInputs[n++] = camera.lastPitch; this.reuseInputs[n++] = camera.lastYaw;
+		this.reuseInputs[n++] = camera.getEyeHeight(); this.reuseInputs[n++] = delta;
+		this.reuseInputs[n++] = loadChunks ? 1 : 0;
+		this.reuseInputs[n++] = Minecraft.getInstance().smartCull ? 1 : 0;
+		this.reuseInputs[n++] = Minecraft.getInstance().options.perspective;
+		this.reuseInputs[n++] = this.access.alacer$getLastViewDistance();
+		AlacerConfig config = Alacer.get().config();
+		this.reuseInputs[n++] = config.flatOcclusion ? 1 : 0;
+		this.reuseInputs[n++] = config.vectorFrustum ? 1 : 0;
+		this.reuseInputs[n++] = config.fastChunkFrustum ? 1 : 0;
+		this.reuseInputs[n++] = config.fastCameraSectionFaces ? 1 : 0;
+		this.reuseInputs[n++] = config.fastChunkNeighbours ? 1 : 0;
+		this.reuseInputs[n++] = config.verifyFlatOcclusion ? 1 : 0;
+		this.reuseInputs[n++] = config.verifyVectorFrustum ? 1 : 0;
+		this.reuseInputs[n++] = config.verifyChunkFrustum ? 1 : 0;
+		return true;
 	}
 
 	public long hysteresisSkips() {
 		return this.hysteresisSkips;
+	}
+	public static String occlusionSummary() {
+		return flatOcclusionHits + " mask hits, " + flatOcclusionUpdates + " updates, " + flatOcclusionMismatches + " mismatches";
 	}
 
 	private long getOcclusionMask(int slot, RenderChunk chunk) {

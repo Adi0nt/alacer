@@ -2,16 +2,13 @@ package net.adiont.alacer.render;
 
 import net.adiont.alacer.Alacer;
 import net.adiont.alacer.config.AlacerConfig;
-import net.minecraft.client.render.model.ModelPart;
-import net.minecraft.client.render.platform.GlStateManager;
 
 /**
- * Model part transformation flattening and matrix call reduction ({@code render.fastModelTransforms}).
+ * Zero-translation call reduction ({@code render.fastModelTransforms}).
  *
  * <p>Vanilla entity rendering pushes and pops OpenGL matrix state recursively per cuboid and part,
- * and executes redundant zero translations and state changes for static parts. This class provides
- * flattened matrix transformations and eliminates redundant translation inverses for non-rotating
- * child hierarchies.
+ * and executes redundant zero translations. The current implementation skips those
+ * translations; it does not flatten hierarchies or remove matrix pushes/pops.
  */
 public final class FastModelTransforms {
 

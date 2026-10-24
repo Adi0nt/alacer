@@ -8,9 +8,12 @@ import org.spongepowered.asm.mixin.injection.At;
 
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
+import com.llamalad7.mixinextras.injector.wrapmethod.WrapMethod;
 
 import net.adiont.alacer.render.EntityChunkSlot;
 import net.adiont.alacer.render.GlStateReads;
+import net.adiont.alacer.render.WorkerBlockStateCache;
+import net.minecraft.client.render.world.ChunkCompileTask;
 import net.minecraft.client.render.world.RenderChunk;
 import net.minecraft.world.chunk.WorldChunk;
 
@@ -20,6 +23,12 @@ import net.minecraft.world.chunk.WorldChunk;
  */
 @Mixin(RenderChunk.class)
 public class RenderChunkMixin implements EntityChunkSlot {
+	@WrapMethod(method = "compile")
+	private void alacer$compileScope(float x, float y, float z, ChunkCompileTask task, Operation<Void> original) {
+		int mark = WorkerBlockStateCache.beginCompile();
+		try { original.call(x, y, z, task); }
+		finally { WorkerBlockStateCache.endCompile(mark); }
+	}
 
 	@WrapOperation(method = "glTransform", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/render/platform/GlStateManager;getFloat(ILjava/nio/FloatBuffer;)V"))
 	private void alacer$chunkMatrix(int pname, FloatBuffer buffer, Operation<Void> original) {

@@ -1,0 +1,12 @@
+[23:58:07] [Client thread/ERROR] (FabricLoader/Mixin) Mixin apply for mod alacer failed alacer.mixins.json:RenderChunkRegionMixin from mod alacer -> net.minecraft.client.render.world.RenderChunkRegion: org.spongepowered.asm.mixin.injection.throwables.InvalidInjectionException NEWARRAY is not a valid injection point specifier [INJECT_PREPARE Applicator Phase -> alacer.mixins.json:RenderChunkRegionMixin from mod alacer -> Prepare Injections -> redirect$zdl000$alacer$redirectIntArray(I)[I -> Parse ->  -> Parse Injection Points]
+	Java Version: 25.0.3, Microsoft
+	OpenGL: NVIDIA GeForce RTX 3060 Ti/PCIe/SSE2 GL version 4.6.0 NVIDIA 616.92, NVIDIA Corporation
+> Process 'command 'C:\Users\CodyJ\.jdks\ms-25.0.3\bin\java.exe'' finished with non-zero exit value -1 (NTSTATUS 0xFFFFFFFF)
+BUILD FAILED in 15s
+
+Explicit Adoptium smoke:
+[00:06:01] [Client thread/ERROR] (FabricLoader/Mixin) Mixin apply for mod alacer failed alacer.mixins.json:RenderChunkRegionMixin from mod alacer -> net.minecraft.client.render.world.RenderChunkRegion: org.spongepowered.asm.mixin.injection.throwables.InvalidInjectionException NEWARRAY is not a valid injection point specifier [INJECT_PREPARE Applicator Phase -> alacer.mixins.json:RenderChunkRegionMixin from mod alacer -> Prepare Injections -> redirect$zdl000$alacer$redirectIntArray(I)[I -> Parse ->  -> Parse Injection Points]
+	Java Version: 25.0.4.1, Eclipse Adoptium
+	OpenGL: NVIDIA GeForce RTX 3060 Ti/PCIe/SSE2 GL version 4.6.0 NVIDIA 616.92, NVIDIA Corporation
+> Process 'command 'C:\Program Files\Eclipse Adoptium\jdk-25.0.4.101-hotspot\bin\java.exe'' finished with non-zero exit value -1 (NTSTATUS 0xFFFFFFFF)
+BUILD FAILED in 13s

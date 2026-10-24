@@ -8,6 +8,17 @@ import org.junit.jupiter.api.Test;
 import net.minecraft.util.math.Vec3d;
 
 class FastRayTraceTest {
+	@Test
+	void verificationRequiresExactHitCoordinates() {
+		net.minecraft.world.HitResult a = new net.minecraft.world.HitResult(new Vec3d(0.0, 1, 2), net.minecraft.util.math.Direction.UP, net.minecraft.util.math.BlockPos.ORIGIN);
+		net.minecraft.world.HitResult b = new net.minecraft.world.HitResult(new Vec3d(0.0, 1, 2), net.minecraft.util.math.Direction.UP, net.minecraft.util.math.BlockPos.ORIGIN);
+		assertTrue(FastRayTrace.sameHit(a, b));
+		b.facePos = new Vec3d(Math.nextUp(0.0), 1, 2);
+		assertFalse(FastRayTrace.sameHit(a, b));
+		b.facePos = new Vec3d(-0.0, 1, 2);
+		// Vec3d's own constructor canonicalizes signed zero before either raycaster sees it.
+		assertTrue(FastRayTrace.sameHit(a, b));
+	}
 
 	@BeforeEach
 	void setUp() {

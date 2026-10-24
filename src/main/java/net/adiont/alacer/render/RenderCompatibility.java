@@ -6,8 +6,12 @@ import org.spongepowered.asm.mixin.extensibility.IMixinInfo;
 
 /** Conservative startup check for experiments that depend on unchanged vanilla method bodies. */
 final class RenderCompatibility {
-	private static int buffers, neighbours;
+	private static int buffers, neighbours, displayTicks;
 	private RenderCompatibility() { }
+	static boolean displayTicks() {
+		if (displayTicks == 0) displayTicks = unchanged("net.minecraft.block.Block", net.minecraft.block.Blocks.AIR.getClass().getName(), "net.minecraft.client.world.ClientWorld") ? 1 : -1;
+		return displayTicks > 0;
+	}
 	static boolean buffers() {
 		if (buffers == 0) { buffers = unchanged("net.minecraft.client.render.vertex.VertexBuffer", "net.minecraft.client.render.world.VboRenderChunkList") ? 1 : -1; }
 		return buffers > 0;

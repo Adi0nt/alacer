@@ -55,9 +55,10 @@ public final class ZeroTranslates {
 			return true;
 		}
 		AlacerConfig config = Alacer.get().config();
-		if (config.verifySkipZeroTranslates) {
+		if (config.verifySkipZeroTranslates || config.verifyFastModelTransforms) {
 			return !sampled(x, y, z);
 		}
+		if (config.fastModelTransforms) return !FastModelTransforms.shouldSkipZeroTranslate(x, y, z);
 		return !config.skipZeroTranslates;
 	}
 
@@ -81,7 +82,7 @@ public final class ZeroTranslates {
 		GL11.glGetFloat(matrix, AFTER);
 		comparisons++;
 		for (int i = 0; i < 16; i++) {
-			if (BEFORE.get(i) != AFTER.get(i)) {
+			if (Float.floatToRawIntBits(BEFORE.get(i)) != Float.floatToRawIntBits(AFTER.get(i))) {
 				mismatches++;
 				if (mismatches <= 10) {
 					Alacer.LOGGER.warn("Zero translation changed the matrix (element {}: {} -> {})", i, BEFORE.get(i), AFTER.get(i));
