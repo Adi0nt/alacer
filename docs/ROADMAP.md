@@ -147,12 +147,14 @@ flowchart TD
 ### Phase 5: Client Tick Spike Mitigation & Background Optimization (Tail Stability)
 *Target: Mitigate +0.9 to +1.9 ms tail spikes occurring every 50 ms.*
 
-1. **Random Display Tick Volume Scan Elimination**:
-   - *Problem*: `World.doVoidFogParticles` scans a 32x32x32 block volume (32,768 iterations) around the player every tick to detect barrier/void blocks and spawn ambient particles.
-   - *Mechanism*: Replace the brute-force cubic scan with an active-chunk sampling strategy or maintain a coordinate set of loaded barrier/void blocks.
-2. **Allocation-Free Crosshair Raycast (`world.pick`)**:
-   - *Problem*: Crosshair target selection (`world.pick`) allocates `Vec3d` and `HitResult` objects every single frame, accounting for **23% of steady-state allocation** in empty scenes.
-   - *Mechanism*: Reusable instance caching and scalar coordinate ray-box intersection.
+1. **Random Display Tick Volume Scan Elimination (`FastRandomDisplayTicks`)** [COMPLETED - commit `2f604b4`]:
+   - *Problem*: `ClientWorld.doRandomDisplayTicks` creates new `Random` and `BlockPos.Mutable` objects every tick, executing 1,000 un-cached hash-table chunk lookups and section queries per tick (20,000/sec).
+   - *Mechanism*: Reuses static `Random` and pooled mutable block positions, caches `WorldChunk` references across iterations, skips empty chunk sections via fast bit/counter checks, and skips block types that inherit the no-op `Block.randomDisplayTick`.
+   - *Status*: Merged into `main` with unit test suite and runtime verification (`render.fastRandomDisplayTicks`).
+2. **Allocation-Free Crosshair Raycast (`FastRayTrace`)** [COMPLETED - commit `1692a44`]:
+   - *Problem*: Crosshair target selection (`World.rayTrace`) allocates `Vec3d`, `BlockPos`, and `HitResult` objects on every step (up to 200 steps per frame), accounting for **23% of steady-state allocation** in empty scenes.
+   - *Mechanism*: Scalar coordinate DDA stepping with pooled mutable block positions, eliminating intermediate vector and position allocations until terminal collision.
+   - *Status*: Merged into `main` with unit test suite and runtime verification (`render.fastRayTrace`).
 3. **Sound System Thread Interruption Cleanup**:
    - *Problem*: Profiling logs identify 34,394+ `InterruptedException` events on paulscode's sound `CommandThread` during a typical 130-second run.
    - *Mechanism*: Audit the sound manager dispatch queue to avoid using thread interruption as control flow.
