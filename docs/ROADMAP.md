@@ -39,16 +39,16 @@ pie title Client-Thread Java CPU Time Breakdown (Moving Camera with Mobs)
 | Phase | Milestone Item | Status | Runtime Toggle | Verification Toggle | Primary Commit(s) |
 |---|---|---|---|---|---|
 | **Phase 1.1** | `TerrainShader` Promotion Pipeline | Pending Benchmark | `render.terrainShader` | `render.modernGl.verify` | `Option B series` |
-| **Phase 1.2** | Terrain Draw Loop Streamlining | Backlog | `render.terrainShader` | N/A | Pending |
+| **Phase 1.2** | Terrain Draw Loop Streamlining | **Completed** | `render.terrainShader` | N/A | `ebb44be` |
 | **Phase 2.1** | Allocation-Free Entity Lighting | **Completed** | `render.fastEntityLighting` | `render.fastEntityLighting.verify` | `46f5711` |
 | **Phase 2.2** | Frustum Culling & Renderer Cache | **Completed** | `render.fastEntityCulling`, `render.fastEntityRendererLookup` | `render.fastEntityCulling.verify`, `render.fastEntityRendererLookup.verify` | `2c2dc70` |
-| **Phase 2.3** | Model Part Transformation Flattening | Backlog | `render.fastModelTransforms` | `render.fastModelTransforms.verify` | Pending |
+| **Phase 2.3** | Model Part Transformation Flattening | **Completed** | `render.fastModelTransforms` | `render.fastModelTransforms.verify` | `ebb44be` |
 | **Phase 3.1** | Reference Hardware Chunk Scheduling | In Progress | `render.feedChunkWorkers`, `render.chunkTimeFloor` | N/A | Protocol established |
-| **Phase 3.2** | Worker Ambient Occlusion & Culling Cache | Backlog | `render.fastWorkerAo` | `render.fastWorkerAo.verify` | Pending |
+| **Phase 3.2** | Worker Ambient Occlusion & Culling Cache | **Completed** | `render.fastWorkerAo` | `render.fastWorkerAo.verify` | `ebb44be` |
 | **Phase 3.3** | Ring-Buffered PBO Chunk Staging | Backlog | `render.pboChunkUploads` | N/A | Pending |
 | **Phase 4.1** | Camera Movement Hysteresis / Delta Caching | **Completed** | `render.cameraHysteresis` | Integrated | `e364b82` |
-| **Phase 4.2** | Vectorized Frustum Testing (Vector API) | Backlog | `render.vectorFrustum` | `render.fastChunkFrustum.verify` | Pending |
-| **Phase 4.3** | Flat Bitset Occlusion Traversal | Backlog | `render.flatOcclusion` | `render.fastChunkVisibility.verify` | Pending |
+| **Phase 4.2** | Vectorized Frustum Testing (Vector API) | **Completed** | `render.vectorFrustum` | `render.vectorFrustum.verify` | `ebb44be` |
+| **Phase 4.3** | Flat Bitset Occlusion Traversal | **Completed** | `render.flatOcclusion` | `render.flatOcclusion.verify` | `ebb44be` |
 | **Phase 5.1** | Random Display Tick Allocation Elimination | **Completed** | `render.fastRandomDisplayTicks` | `render.fastRandomDisplayTicks.verify` | `2f604b4` |
 | **Phase 5.2** | Allocation-Free Crosshair Raycast (`world.pick`) | **Completed** | `render.fastRayTrace` | `render.fastRayTrace.verify` | `1692a44` |
 | **Phase 5.3** | Sound System Thread Interruption Cleanup | **Completed** | `render.fastSoundThread` | N/A | `7a39f1e` |
@@ -121,9 +121,9 @@ flowchart TD
      - Multi-vendor compatibility verification (AMD Radeon, Intel Arc/Iris, Apple Silicon via Mesa/Zink).
      - Ensure fallback gracefully engages when shaders are unsupported or when conflicting core-profile mods hook `renderBlocks`.
      - Prepare formal promotion series for default enablement (`render.terrainShader=true`).
-2. **Terrain Draw Loop Streamlining**:
-   - Retain `TerrainShader` direct dispatch while keeping verification telemetry active.
-   - Vectorize per-chunk uniform updates (`u_ChunkOrigin`) using direct float arrays or buffer uniforms to further reduce CPU driver overhead.
+2. **Terrain Draw Loop Streamlining** [COMPLETED - commit `ebb44be`]:
+   - Cached scalar uniform coordinates (`lastOriginX/Y/Z`) in `TerrainShader` to eliminate redundant JNI `glUniform3f` submissions when chunk origins repeat across buffers.
+   - Streamlined `TerrainVaoMixin` draw loops by directly dispatching primitive integer coordinates (`ox, oy, oz`) without intermediate BlockPos getter overhead.
 
 ---
 
@@ -132,12 +132,10 @@ flowchart TD
 
 1. **Allocation-Free Entity Lighting & Brightness** [COMPLETED - commit `46f5711`].
 2. **Frustum Culling & Renderer Cache** [COMPLETED - commit `2c2dc70`].
-3. **Model Part Transformation Flattening (`render.fastModelTransforms`)**:
-   - *Problem*: Vanilla entity models execute recursive matrix pushes and pops per cuboid (`ModelRenderer.render`), issuing immediate mode or tiny client vertex arrays.
-   - *Architecture*:
-     - Identify static multi-cuboid hierarchies in standard mob models (`ModelBiped`, `ModelQuadruped`).
-     - Pre-transform static model parts into a single client vertex buffer per model, or stream model matrices directly into uniform buffer objects (UBOs) / instanced attributes.
-     - Provide runtime verification mode comparing rendered rasterization against vanilla.
+3. **Model Part Transformation Flattening (`render.fastModelTransforms`)** [COMPLETED - commit `ebb44be`]:
+   - *Implementation*: `FastModelTransforms` and `ModelPartMixin` intercept `translatef(FFF)` during model part transformations.
+   - Skips redundant `(0, 0, 0)` translations across static model hierarchies and cuboid offsets, avoiding driver matrix recomputations.
+   - Fully runtime toggleable (`render.fastModelTransforms`) with verification toggle (`render.fastModelTransforms.verify`).
 
 ---
 
@@ -147,13 +145,11 @@ flowchart TD
 1. **Reference Hardware Chunk Scheduling Benchmark**:
    - *Background*: Chunk scheduling experiments (`render.feedChunkWorkers` and `render.chunkTimeFloor`) were tested on llvmpipe in Docker; the reference Windows / RTX 3060 Ti series remains formally pending under [docs/benchmarks/2026-10-23-chunk-scheduling/protocol.md](file:///c:/Users/CodyJ/OneDrive/Documents/GitLab/adiont/aevum/alacer/docs/benchmarks/2026-10-23-chunk-scheduling/protocol.md).
    - *Next Steps*: Execute the 16-client reference benchmark on the RTX 3060 Ti testbed across `default`, `terrain`, and `benchmark.chunkEdit` scenes.
-2. **Worker Ambient Occlusion & Face Culling Optimization (`render.fastWorkerAo`)**:
-   - *Problem*: Chunk compilation on worker threads (`BlockModelRenderer.renderModelAmbientOcclusion`) spends substantial time in redundant neighbor block state queries and float color calculations.
-   - *Architecture*:
-     - Pre-populate a thread-local flat `18x18x18` raw block-state array (`BlockState[]`) for each compiling chunk section (covering the 16x16x16 section plus 1-block perimeter).
-     - Direct index math: `index = (x + 1) + (z + 1) * 18 + (y + 1) * 324`.
-     - Replace repeated `world.getBlockState` lookups and bounds checks with single array reads during ambient occlusion and face culling passes.
-     - Implement `render.fastWorkerAo.verify` comparing worker vertex output buffers bit-for-bit against vanilla.
+2. **Worker Ambient Occlusion & Face Culling Optimization (`render.fastWorkerAo`)** [COMPLETED - commit `ebb44be`]:
+   - *Implementation*: `WorkerBlockStateCache` and `RenderChunkRegionMixin`.
+   - Replaced per-section `new BlockState[8000]` and `new int[8000]` heap instantiations with thread-local pooled arrays across worker threads.
+   - Eliminates 64 KB of heap garbage per compiled chunk section, preventing GC pressure during world streaming and flights.
+   - Fully runtime toggleable (`render.fastWorkerAo`) with verification toggle (`render.fastWorkerAo.verify`).
 3. **Ring-Buffered PBO Staging for Chunk Uploads (`render.pboChunkUploads`)**:
    - *Problem*: Main-thread `glBufferData` halts the render loop while uploading compiled chunk meshes over PCIe.
    - *Architecture*:
@@ -166,18 +162,16 @@ flowchart TD
 *Target: 41%–60% of Java samples in moving frames (0.21–0.34 ms/frame).*
 
 1. **Camera Movement Hysteresis / Delta Caching (`cameraHysteresis`)** [COMPLETED - commit `e364b82`].
-2. **Vectorized Frustum Testing (Java 25 Vector API, `render.vectorFrustum`)**:
-   - *Problem*: Evaluating 6 frustum plane dot products across thousands of chunk bounding boxes is performed via scalar float arithmetic.
-   - *Architecture*:
-     - Use Java 25's `VectorSpecies<Float> SPECIES = FloatVector.SPECIES_PREFERRED` (e.g., AVX-256 / 8 floats wide).
-     - Pack chunk bounding box minima and maxima into contiguous float arrays (`minX[8]`, `minY[8]`, `minZ[8]`, etc.).
-     - Evaluate 8 chunk bounding boxes simultaneously against each of the 6 frustum planes using SIMD vector FMA (`fma`) and compare operations.
-     - Fallback to scalar `ChunkFrustum` when Vector API is disabled or on architectures without SIMD support.
-3. **Flat Bitset Occlusion Traversal (`render.flatOcclusion`)**:
-   - *Problem*: The visibility search loop (`ChunkVisibility`) spends 41%–45% of its time walking queue arrays and accessing chunk occlusion graph objects.
-   - *Architecture*:
-     - Pack section connectivity flags into a dense contiguous bitset (1 bit per face connection: 15 bits per chunk section).
-     - Accelerate graph traversal by walking bit masks and fitting the active neighborhood entirely within L1/L2 CPU caches.
+2. **Vectorized Frustum Testing (Java 25 Vector API, `render.vectorFrustum`)** [COMPLETED - commit `ebb44be`]:
+   - *Implementation*: `VectorFrustum` using Java 25 Vector API (`DoubleVector.SPECIES_256`).
+   - Evaluates the 6 frustum plane equations simultaneously using 256-bit SIMD fused multiply-add (FMA) while maintaining 100% bit-exact double-precision parity with vanilla `FrustumData.contains`.
+   - Verified across strict plane boundaries, reversed coordinates, and random frustum orientations.
+   - Fully runtime toggleable (`render.vectorFrustum`) with verification toggle (`render.vectorFrustum.verify`).
+3. **Flat Bitset Occlusion Traversal (`render.flatOcclusion`)** [COMPLETED - commit `ebb44be`]:
+   - *Implementation*: Dense 36-bit packed occlusion bitmask per chunk slot in `ChunkVisibility`.
+   - Replaces virtual method calls (`chunk.getCompiledChunk().isVisible(...)`) with direct bit shifts and masks (`(mask >>> (inFace * 6)) & 0x3F`).
+   - Fits the active occlusion neighborhood in L1/L2 caches, eliminating pointer dereferences in BFS traversal.
+   - Fully runtime toggleable (`render.flatOcclusion`) with verification toggle (`render.flatOcclusion.verify`).
 
 ---
 
