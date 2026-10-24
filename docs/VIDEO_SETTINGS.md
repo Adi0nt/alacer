@@ -5,7 +5,7 @@ textures, slider handles, bordered text field, tooltip renderer and background.
 The centered, two-column layout follows the game's existing options screens.
 Resource packs continue to supply the standard widget textures.
 
-Graphics, Details, Display and Performance organize 35 controls. Search matches
+Graphics, Details, Display and Performance organize the controls. Search matches
 names and descriptions across every category. Hover a setting for its full name,
 description, default and application requirements. Long button names shorten to
 fit; their values remain visible.
@@ -42,6 +42,27 @@ The nine shipped optimization defaults and the user's saved vanilla backend are
 unchanged. Particle vertex writing is selected at startup: its saved preference
 appears immediately in the menu, while the active hooks change after restart.
 Reverting that preference to the currently active value clears the restart notice.
+
+## Atmosphere controls
+
+The Graphics page now also includes the following controls. All default to the
+existing appearance; edits are staged until Apply. The wider two-column menu
+retains Minecraft's native button textures, slider handles, pixel font and
+resource-pack widgets, with a selected-tab underline and a visible settings count.
+
+| Setting | Range | Default | Effect |
+|---|---|---|---|
+| Fog start | 0–95% of render distance | 75% | Move ordinary terrain fog closer for a softer horizon, or farther for a clearer view. Water, lava, blindness, sky fog and dimension-specific thick fog keep their existing behavior. |
+| Cloud height | −64 to +128 blocks relative to the dimension's cloud layer | Default / 0 | Move Fast, Fancy and cached clouds together. The cache continues to rebuild only when its geometry/color inputs require it. |
+| Sky | Off / On | On | Hide or show the complete sky pass: sky dome, sun, moon, stars and the End sky. Clouds remain a separate control. |
+| Star brightness | 0–200% | 100% | Adjust existing night-sky stars. Requires Sky and Stars enabled; does not create daytime stars or change world lighting. |
+| Weather opacity | 0–100% | 100% | Soften rain and snow geometry independently of rain sounds, splash particles and server weather. Requires Weather enabled. |
+
+The persisted keys are `quality.fogStart`, `quality.cloudHeight`, `quality.sky`,
+`quality.starBrightness` and `quality.weatherOpacity`. Each is exported with the
+effective phase configuration. Benchmark launches retain build defaults and
+remain read-only. The sky switch skips the entire draw call, preserving the
+pairing of existing sky profiler hooks. No optimization default changes.
 
 ## Independent quality controls
 

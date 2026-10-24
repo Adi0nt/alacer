@@ -122,6 +122,12 @@ vanilla's appearance. New choices are saved to `config/alacer.properties` as
 defaults during benchmark launches. Existing optimization defaults stay unchanged.
 See [the settings guide and validation](docs/VIDEO_SETTINGS.md).
 
+Graphics also includes fog start, cloud height, sky visibility, star brightness
+and weather opacity. These controls can soften the horizon, move clouds or tune
+night/weather effects while keeping Minecraft's default appearance until edited.
+The menu retains native Minecraft buttons and sliders with a wider layout and
+clear selected-category and pending-change indicators.
+
 ## Configuration
 
 Performance percentages below describe the historical Java 8 measurements unless explicitly

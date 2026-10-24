@@ -1,0 +1,46 @@
+{
+ "started_epoch": 1792727282.2434304,
+ "original_power_plan": {
+  "status": "ok",
+  "value": {
+   "guid": "6926823e-1958-4e8c-a849-b485e20e7181",
+   "name": "Ultimate Performance"
+  },
+  "source": "windows:PowerGetActiveScheme"
+ },
+ "launches": [
+  {
+   "label": "diag32-terrain-1-mon",
+   "status": "interrupted-instrumentation"
+  },
+  {
+   "label": "diag32v2-terrain-1-mon",
+   "status": "passed-smoke",
+   "environment_rejections": []
+  },
+  {
+   "label": "diag32v2-terrain-2-nomon",
+   "status": "passed-smoke",
+   "environment_rejections": []
+  },
+  {
+   "label": "diag32v2-terrain-3-nomon",
+   "status": "failed-checks",
+   "environment_rejections": null
+  }
+ ],
+ "budget_s": 1800,
+ "stop_reason": "functional failure; no retry",
+ "ended_epoch": 1792728439.2090228,
+ "elapsed_s": 1156.9655930995941,
+ "restore_exit_code": 0,
+ "final_power_plan": {
+  "status": "ok",
+  "value": {
+   "guid": "6926823e-1958-4e8c-a849-b485e20e7181",
+   "name": "Ultimate Performance"
+  },
+  "source": "windows:PowerGetActiveScheme"
+ },
+ "clients_remaining": []
+}

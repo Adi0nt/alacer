@@ -1,0 +1,288 @@
+test_bins_follow_elapsed_time_and_keep_long_frames (test_aa_diagnose.Attribution.test_bins_follow_elapsed_time_and_keep_long_frames) ... ok
+test_distribution_hints_are_descriptive_and_missing_is_unknown (test_aa_diagnose.Attribution.test_distribution_hints_are_descriptive_and_missing_is_unknown) ... ok
+test_java_ids_and_native_origin_are_distinct (test_aa_diagnose.Attribution.test_java_ids_and_native_origin_are_distinct) ... ok
+test_real_windows_cpu_and_start_modules (test_aa_diagnose.Attribution.test_real_windows_cpu_and_start_modules) ... ok
+test_thread_identity_gaps_boundaries_and_missing_counters (test_aa_diagnose.Attribution.test_thread_identity_gaps_boundaries_and_missing_counters) ... ok
+test_both_sides_get_identical_options (test_aa_pilot.ArchiveGuards.test_both_sides_get_identical_options) ... ok
+test_label_reuse_is_refused_before_anything_runs (test_aa_pilot.ArchiveGuards.test_label_reuse_is_refused_before_anything_runs) ... ok
+test_refuses_historical_archives_and_replaced_protocols (test_aa_pilot.ArchiveGuards.test_refuses_historical_archives_and_replaced_protocols) ... ok
+Calibration passed
+Pair aa31t-pl-d0-1: rejected
+  aa31t-pl-d0-1-b rejected-env: static: background CPU 0.90 cores (mean) above 0.5
+Pair aa31t-pl-terrain-1: accepted
+Pair aa31t-pl-d0-2: accepted
+Pair aa31t-pl-terrain-2: accepted
+Pair aa31t-pl-d0-3: accepted
+Pair aa31t-pl-terrain-3: accepted
+Pair aa31t-pl-d0-4: accepted
+Pair aa31t-pl-terrain-4: accepted
+Pair aa31t-pl-d0-5: accepted
+Pair aa31t-pl-terrain-5: accepted
+Pair aa31t-pl-d0-6: accepted
+Pair aa31t-pl-terrain-6: accepted
+Pair aa31t-pl-d0-7: accepted
+Pair aa31t-pl-terrain-7: accepted
+Pair aa31t-pl-d0-8: accepted
+Pair aa31t-pl-terrain-8: accepted
+Pair aa31t-pl-d0-1-r2: accepted
+Pilot slots: {'accepted': 16}
+test_a_tampered_acceptance_is_refused (test_aa_pilot.PilotFlow.test_a_tampered_acceptance_is_refused) ... ok
+test_calibration_and_pilot_refuse_before_the_freeze (test_aa_pilot.PilotFlow.test_calibration_and_pilot_refuse_before_the_freeze) ... ok
+Calibration passed
+test_calibration_is_written_once_and_retries_failed_launches (test_aa_pilot.PilotFlow.test_calibration_is_written_once_and_retries_failed_launches) ... ok
+calibration.json exists; calibration is written once (a new series is needed to redo it).
+Calibration passed
+Pair aa31t-pl-d0-1: accepted
+Pair aa31t-pl-terrain-1: accepted
+Pair aa31t-pl-d0-2: accepted
+Pair aa31t-pl-terrain-2: accepted
+Pair aa31t-pl-d0-3: accepted
+Pair aa31t-pl-terrain-3: accepted
+Pair aa31t-pl-d0-4: accepted
+Pair aa31t-pl-terrain-4: accepted
+Pair aa31t-pl-d0-5: accepted
+Pair aa31t-pl-terrain-5: accepted
+Pair aa31t-pl-d0-6: accepted
+Pair aa31t-pl-terrain-6: accepted
+Pair aa31t-pl-d0-7: accepted
+Pair aa31t-pl-terrain-7: accepted
+Pair aa31t-pl-d0-8: accepted
+Pair aa31t-pl-terrain-8: accepted
+Pilot slots: {'accepted': 16}
+test_evaluation_distinguishes_gate_power_and_validity (test_aa_pilot.PilotFlow.test_evaluation_distinguishes_gate_power_and_validity) ... ok
+Calibration passed
+Pair aa31t-pl-d0-1: accepted
+Pair aa31t-pl-terrain-1: accepted
+Pair aa31t-pl-d0-2: accepted
+Pair aa31t-pl-terrain-2: accepted
+Pair aa31t-pl-d0-3: accepted
+Pair aa31t-pl-terrain-3: accepted
+Pair aa31t-pl-d0-4: accepted
+Pair aa31t-pl-terrain-4: accepted
+Pair aa31t-pl-d0-5: accepted
+Pair aa31t-pl-terrain-5: accepted
+Pair aa31t-pl-d0-6: accepted
+Pair aa31t-pl-terrain-6: accepted
+Pair aa31t-pl-d0-7: accepted
+Pair aa31t-pl-terrain-7: accepted
+Pair aa31t-pl-d0-8: accepted
+Pair aa31t-pl-terrain-8: accepted
+Pilot slots: {'accepted': 16}
+test_gate_passing_does_not_imply_power (test_aa_pilot.PilotFlow.test_gate_passing_does_not_imply_power) ... ok
+Calibration passed
+Pair aa31t-pl-d0-1: accepted
+Pair aa31t-pl-terrain-1: rejected
+  aa31t-pl-terrain-1-a interrupted: found unfinished when the runner resumed
+Pair aa31t-pl-d0-2: accepted
+Pilot slots: {'accepted': 2, 'retry': 1, 'pending': 13}
+test_hard_crash_leaves_a_running_attempt_that_resume_marks_interrupted (test_aa_pilot.PilotFlow.test_hard_crash_leaves_a_running_attempt_that_resume_marks_interrupted) ... ok
+Calibration passed
+Pair aa31t-pl-d0-1: accepted
+Pair aa31t-pl-terrain-1: accepted
+Pair aa31t-pl-d0-2: rejected
+  aa31t-pl-d0-2-a interrupted: interrupted by the operator (KeyboardInterrupt)
+Pair aa31t-pl-terrain-2: accepted
+Pair aa31t-pl-d0-3: accepted
+Pair aa31t-pl-terrain-3: accepted
+Pair aa31t-pl-d0-4: accepted
+Pair aa31t-pl-terrain-4: accepted
+Pair aa31t-pl-d0-5: accepted
+Pair aa31t-pl-terrain-5: accepted
+Pair aa31t-pl-d0-6: accepted
+Pair aa31t-pl-terrain-6: accepted
+Pair aa31t-pl-d0-7: accepted
+Pair aa31t-pl-terrain-7: accepted
+Pair aa31t-pl-d0-8: accepted
+Pair aa31t-pl-terrain-8: accepted
+Pair aa31t-pl-d0-2-r2: accepted
+Pilot slots: {'accepted': 16}
+test_interruption_mid_pair_rejects_and_reschedules_it (test_aa_pilot.PilotFlow.test_interruption_mid_pair_rejects_and_reschedules_it) ... ok
+Calibration passed
+Pair aa31t-pl-d0-1: accepted
+Pair aa31t-pl-terrain-1: accepted
+Pair aa31t-pl-d0-2: accepted
+Pilot slots: {'accepted': 3, 'pending': 13}
+Pair aa31t-pl-terrain-2: accepted
+Pair aa31t-pl-d0-3: accepted
+Pair aa31t-pl-terrain-3: accepted
+Pair aa31t-pl-d0-4: accepted
+Pair aa31t-pl-terrain-4: accepted
+Pair aa31t-pl-d0-5: accepted
+Pair aa31t-pl-terrain-5: accepted
+Pair aa31t-pl-d0-6: accepted
+Pair aa31t-pl-terrain-6: accepted
+Pair aa31t-pl-d0-7: accepted
+Pair aa31t-pl-terrain-7: accepted
+Pair aa31t-pl-d0-8: accepted
+Pair aa31t-pl-terrain-8: accepted
+Pilot slots: {'accepted': 16}
+test_max_pairs_splits_a_series_into_sittings (test_aa_pilot.PilotFlow.test_max_pairs_splits_a_series_into_sittings) ... ok
+Calibration passed
+Pair aa31t-pl-d0-1: rejected
+  aa31t-pl-d0-1-b never ran (pair incomplete)
+Pilot slots: {'retry': 1, 'pending': 15}
+test_one_side_complete_and_the_other_never_started_is_rejected (test_aa_pilot.PilotFlow.test_one_side_complete_and_the_other_never_started_is_rejected) ... ok
+Calibration passed
+Pair aa31t-pl-d0-1: rejected
+  aa31t-pl-d0-1-b failed-checks: client/gradle exited with 1
+Pair aa31t-pl-terrain-1: accepted
+Pair aa31t-pl-d0-2: accepted
+Pair aa31t-pl-terrain-2: accepted
+Pair aa31t-pl-d0-3: accepted
+Pair aa31t-pl-terrain-3: accepted
+Pair aa31t-pl-d0-4: accepted
+Pair aa31t-pl-terrain-4: accepted
+Pair aa31t-pl-d0-5: accepted
+Pair aa31t-pl-terrain-5: accepted
+Pair aa31t-pl-d0-6: accepted
+Pair aa31t-pl-terrain-6: accepted
+Pair aa31t-pl-d0-7: accepted
+Pair aa31t-pl-terrain-7: accepted
+Pair aa31t-pl-d0-8: accepted
+Pair aa31t-pl-terrain-8: accepted
+Pair aa31t-pl-d0-1-r2: accepted
+Pilot slots: {'accepted': 16}
+test_passed_side_of_a_rejected_pair_is_never_used (test_aa_pilot.PilotFlow.test_passed_side_of_a_rejected_pair_is_never_used) ... ok
+test_pilot_requires_a_passing_calibration (test_aa_pilot.PilotFlow.test_pilot_requires_a_passing_calibration) ... ok
+Calibration passed
+Pair aa31t-pl-d0-1: accepted
+Pair aa31t-pl-terrain-1: accepted
+Pair aa31t-pl-d0-2: accepted
+Pair aa31t-pl-terrain-2: accepted
+Pair aa31t-pl-d0-3: rejected
+  aa31t-pl-d0-3-b rejected-env: static: background CPU 0.90 cores (mean) above 0.5
+Pair aa31t-pl-terrain-3: accepted
+Pair aa31t-pl-d0-4: accepted
+Pair aa31t-pl-terrain-4: accepted
+Pair aa31t-pl-d0-5: accepted
+Pair aa31t-pl-terrain-5: accepted
+Pair aa31t-pl-d0-6: accepted
+Pair aa31t-pl-terrain-6: accepted
+Pair aa31t-pl-d0-7: accepted
+Pair aa31t-pl-terrain-7: accepted
+Pair aa31t-pl-d0-8: accepted
+Pair aa31t-pl-terrain-8: accepted
+Pair aa31t-pl-d0-3-r2: accepted
+Pilot slots: {'accepted': 16}
+test_rejected_side_rejects_the_whole_pair_and_it_is_repeated_at_the_end (test_aa_pilot.PilotFlow.test_rejected_side_rejects_the_whole_pair_and_it_is_repeated_at_the_end) ... ok
+Calibration passed
+Pair aa31t-pl-d0-1: accepted
+Pair aa31t-pl-terrain-1: accepted
+Pair aa31t-pl-d0-2: accepted
+Pair aa31t-pl-terrain-2: accepted
+Pair aa31t-pl-d0-3: accepted
+Pair aa31t-pl-terrain-3: accepted
+Pair aa31t-pl-d0-4: accepted
+Pair aa31t-pl-terrain-4: accepted
+Pair aa31t-pl-d0-5: accepted
+Pair aa31t-pl-terrain-5: rejected
+  aa31t-pl-terrain-5-a failed-checks: client/gradle exited with 1
+Pair aa31t-pl-d0-6: accepted
+Pair aa31t-pl-terrain-6: accepted
+Pair aa31t-pl-d0-7: accepted
+Pair aa31t-pl-terrain-7: accepted
+Pair aa31t-pl-d0-8: accepted
+Pair aa31t-pl-terrain-8: accepted
+Pair aa31t-pl-terrain-5-r2: rejected
+  aa31t-pl-terrain-5-a-r2 failed-checks: client/gradle exited with 1
+Pair aa31t-pl-terrain-5-r3: rejected
+  aa31t-pl-terrain-5-a-r3 failed-checks: client/gradle exited with 1
+Pilot slots: {'accepted': 15, 'exhausted': 1}
+test_retry_limit_and_unresolved_gate (test_aa_pilot.PilotFlow.test_retry_limit_and_unresolved_gate) ... ok
+test_each_runner_check (test_aa_pilot.ResultParsing.test_each_runner_check) ... ok
+test_log_checks (test_aa_pilot.ResultParsing.test_log_checks) ... ok
+test_series_binning (test_aa_pilot.ResultParsing.test_series_binning) ... ok
+test_valid_output_parses_into_metrics_and_processor_placement (test_aa_pilot.ResultParsing.test_valid_output_parses_into_metrics_and_processor_placement) ... ok
+test_monitor_samples_this_process_and_measures_itself (test_aa_platform_monitor.LiveLinux.test_monitor_samples_this_process_and_measures_itself) ... skipped 'live Linux probes'
+test_probes_answer_or_say_why_not (test_aa_platform_monitor.LiveLinux.test_probes_answer_or_say_why_not) ... skipped 'live Linux probes'
+test_client_and_gradle_command_classification (test_aa_platform_monitor.Parsers.test_client_and_gradle_command_classification) ... ok
+test_command_line_buffer (test_aa_platform_monitor.Parsers.test_command_line_buffer) ... ok
+test_frequency_summary_splits_core_classes (test_aa_platform_monitor.Parsers.test_frequency_summary_splits_core_classes) ... ok
+test_nvidia_missing_values_are_none_not_zero (test_aa_platform_monitor.Parsers.test_nvidia_missing_values_are_none_not_zero) ... ok
+test_pdh_instances_and_cpu_lists (test_aa_platform_monitor.Parsers.test_pdh_instances_and_cpu_lists) ... ok
+test_foreground_power_plan_and_affinity_sets (test_aa_platform_monitor.Summaries.test_foreground_power_plan_and_affinity_sets) ... ok
+test_gpu_samples_and_downsample (test_aa_platform_monitor.Summaries.test_gpu_samples_and_downsample) ... ok
+test_missing_telemetry_is_counted_and_never_averaged_as_zero (test_aa_platform_monitor.Summaries.test_missing_telemetry_is_counted_and_never_averaged_as_zero) ... ok
+test_truncated_jsonl_line_is_tolerated (test_aa_platform_monitor.Summaries.test_truncated_jsonl_line_is_tolerated) ... ok
+test_windowing_rolling_peak_and_step (test_aa_platform_monitor.Summaries.test_windowing_rolling_peak_and_step) ... ok
+test_core_type_comes_from_the_os_not_from_processor_numbers (test_aa_platform_monitor.Topology.test_core_type_comes_from_the_os_not_from_processor_numbers) ... ok
+test_hybrid_topology_from_windows_records (test_aa_platform_monitor.Topology.test_hybrid_topology_from_windows_records) ... ok
+test_other_relationships_are_skipped (test_aa_platform_monitor.Topology.test_other_relationships_are_skipped) ... ok
+test_uniform_topology_is_not_hybrid (test_aa_platform_monitor.Topology.test_uniform_topology_is_not_hybrid) ... ok
+test_archived_summaries_parse_and_identify_configuration_differences (test_aa_rules.Metrics.test_archived_summaries_parse_and_identify_configuration_differences) ... ok
+test_missing_process_cpu_is_none (test_aa_rules.Metrics.test_missing_process_cpu_is_none) ... ok
+test_phase_metrics_from_benchmark_csv (test_aa_rules.Metrics.test_phase_metrics_from_benchmark_csv) ... ok
+test_processor_split (test_aa_rules.Metrics.test_processor_split) ... ok
+test_each_mismatch_is_named (test_aa_rules.PairIdentity.test_each_mismatch_is_named) ... ok
+test_identical_back_to_back_launches_pass (test_aa_rules.PairIdentity.test_identical_back_to_back_launches_pass) ... ok
+test_not_back_to_back (test_aa_rules.PairIdentity.test_not_back_to_back) ... ok
+test_volatile_fields_and_the_label_are_not_differences (test_aa_rules.PairIdentity.test_volatile_fields_and_the_label_are_not_differences) ... ok
+test_accepted_pairs_are_never_repeated (test_aa_rules.ResumeState.test_accepted_pairs_are_never_repeated) ... ok
+test_calibration_state (test_aa_rules.ResumeState.test_calibration_state) ... ok
+test_fresh_series_starts_at_the_first_slot (test_aa_rules.ResumeState.test_fresh_series_starts_at_the_first_slot) ... ok
+test_interrupted_pair_is_undecided_until_finalized (test_aa_rules.ResumeState.test_interrupted_pair_is_undecided_until_finalized) ... ok
+test_rejected_pairs_are_retried_after_all_first_attempts (test_aa_rules.ResumeState.test_rejected_pairs_are_retried_after_all_first_attempts) ... ok
+test_retry_limit_exhausts_a_slot (test_aa_rules.ResumeState.test_retry_limit_exhausts_a_slot) ... ok
+test_expected_phases_follow_the_protocol (test_aa_rules.Schedule.test_expected_phases_follow_the_protocol) ... ok
+test_no_label_is_a_prefix_glob_of_another_result_folder (test_aa_rules.Schedule.test_no_label_is_a_prefix_glob_of_another_result_folder) ... ok
+test_order_alternates_and_balances (test_aa_rules.Schedule.test_order_alternates_and_balances) ... ok
+test_slots_interleave_scenes_and_labels_are_unique (test_aa_rules.Schedule.test_slots_interleave_scenes_and_labels_are_unique) ... ok
+test_backend_and_configuration_must_match_calibration (test_aa_rules.Validation.test_backend_and_configuration_must_match_calibration) ... ok
+test_background_load (test_aa_rules.Validation.test_background_load) ... ok
+test_calibration_sets_bands_from_its_own_launches (test_aa_rules.Validation.test_calibration_sets_bands_from_its_own_launches) ... ok
+test_clean_launch_passes (test_aa_rules.Validation.test_clean_launch_passes) ... ok
+test_configuration_drift_within_a_scene_still_fails (test_aa_rules.Validation.test_configuration_drift_within_a_scene_still_fails) ... ok
+test_different_scenes_can_have_distinct_constant_configurations (test_aa_rules.Validation.test_different_scenes_can_have_distinct_constant_configurations) ... ok
+test_foreground_power_plan_affinity_and_e_cores (test_aa_rules.Validation.test_foreground_power_plan_affinity_and_e_cores) ... ok
+test_missing_critical_telemetry_rejects_and_missing_optional_telemetry_flags (test_aa_rules.Validation.test_missing_critical_telemetry_rejects_and_missing_optional_telemetry_flags) ... ok
+test_missing_scene_configuration_baseline_fails_closed (test_aa_rules.Validation.test_missing_scene_configuration_baseline_fails_closed) ... ok
+test_monitor_gap_rejects (test_aa_rules.Validation.test_monitor_gap_rejects) ... ok
+test_moving_mobs_reject_a_still_scene (test_aa_rules.Validation.test_moving_mobs_reject_a_still_scene) ... ok
+test_noisy_or_short_calibration_fails (test_aa_rules.Validation.test_noisy_or_short_calibration_fails) ... ok
+test_pilot_cannot_use_another_scenes_configuration (test_aa_rules.Validation.test_pilot_cannot_use_another_scenes_configuration) ... ok
+test_power_plan_change_within_a_launch (test_aa_rules.Validation.test_power_plan_change_within_a_launch) ... ok
+test_reference_band (test_aa_rules.Validation.test_reference_band) ... ok
+test_scored_values_never_change_the_reference_decision (test_aa_rules.Validation.test_scored_values_never_change_the_reference_decision) ... ok
+test_without_calibration_only_absolute_rules_apply (test_aa_rules.Validation.test_without_calibration_only_absolute_rules_apply) ... ok
+test_pooled_resamples_pairs_and_counts_scenes_not_phases (test_aa_stats.Pooled.test_pooled_resamples_pairs_and_counts_scenes_not_phases) ... ok
+test_median_resolution_tracks_the_bulk_and_resists_a_minority_of_outliers (test_aa_stats.Resolution.test_median_resolution_tracks_the_bulk_and_resists_a_minority_of_outliers) ... ok
+test_more_pairs_never_need_less_and_targets_are_ordered (test_aa_stats.Resolution.test_more_pairs_never_need_less_and_targets_are_ordered) ... ok
+test_normal_model_matches_the_noise_floor_planning_table (test_aa_stats.Resolution.test_normal_model_matches_the_noise_floor_planning_table) ... ok
+test_session30_still_pairs_cannot_resolve_2pct_at_16_pairs (test_aa_stats.Resolution.test_session30_still_pairs_cannot_resolve_2pct_at_16_pairs) ... ok
+test_sign_flip_agrees_with_normal_for_normal_data (test_aa_stats.Resolution.test_sign_flip_agrees_with_normal_for_normal_data) ... ok
+test_log_ratio_refuses_missing_values (test_aa_stats.SpreadAndCentre.test_log_ratio_refuses_missing_values) ... ok
+test_outliers_are_flagged_not_removed (test_aa_stats.SpreadAndCentre.test_outliers_are_flagged_not_removed) ... ok
+test_reproduces_session_31_noise_floor_on_recorded_data (test_aa_stats.SpreadAndCentre.test_reproduces_session_31_noise_floor_on_recorded_data) ... ok
+test_robust_scale_around_zero (test_aa_stats.SpreadAndCentre.test_robust_scale_around_zero) ... ok
+test_drift_reduces_effective_sample_size_and_shows_as_a_trend (test_aa_stats.TimeStructure.test_drift_reduces_effective_sample_size_and_shows_as_a_trend) ... ok
+test_environmental_correlation (test_aa_stats.TimeStructure.test_environmental_correlation) ... ok
+test_independent_pairs_keep_their_sample_size (test_aa_stats.TimeStructure.test_independent_pairs_keep_their_sample_size) ... ok
+test_affinity_applies_to_a_child_and_is_observed (test_aa_windows_validation.LiveWindows.test_affinity_applies_to_a_child_and_is_observed) ... ok
+test_process_identity_cpu_topology_and_foreground (test_aa_windows_validation.LiveWindows.test_process_identity_cpu_topology_and_foreground) ... ok
+test_fresh_quiet_window_passes (test_aa_windows_validation.QuietWindow.test_fresh_quiet_window_passes) ... ok
+Failed checks: aa-quiet-test: quiet window expired
+test_launch_timeout_preserves_attempt_without_starting_client (test_aa_windows_validation.QuietWindow.test_launch_timeout_preserves_attempt_without_starting_client) ... ok
+test_missing_or_invalid_values_cannot_pass (test_aa_windows_validation.QuietWindow.test_missing_or_invalid_values_cannot_pass) ... ok
+test_noisy_timeout_fails_closed (test_aa_windows_validation.QuietWindow.test_noisy_timeout_fails_closed) ... ok
+test_nonintegral_window_rounds_up (test_aa_windows_validation.QuietWindow.test_nonintegral_window_rounds_up) ... ok
+test_stale_and_duplicate_samples_cannot_pass (test_aa_windows_validation.QuietWindow.test_stale_and_duplicate_samples_cannot_pass) ... ok
+test_telemetry_gap_requires_a_new_contiguous_window (test_aa_windows_validation.QuietWindow.test_telemetry_gap_requires_a_new_contiguous_window) ... ok
+test_temporary_missing_telemetry_requires_a_new_complete_window (test_aa_windows_validation.QuietWindow.test_temporary_missing_telemetry_requires_a_new_complete_window) ... ok
+test_timeout_wins_over_quiet_samples_at_deadline (test_aa_windows_validation.QuietWindow.test_timeout_wins_over_quiet_samples_at_deadline) ... ok
+test_command_line_failure_is_retried (test_aa_windows_validation.TelemetryFailures.test_command_line_failure_is_retried) ... ok
+test_environmentally_rejected_smoke_cannot_authorize_freeze (test_aa_windows_validation.TelemetryFailures.test_environmentally_rejected_smoke_cannot_authorize_freeze) ... ok
+test_fresh_windows_series_preserves_all_numeric_controls (test_aa_windows_validation.TelemetryFailures.test_fresh_windows_series_preserves_all_numeric_controls) ... ok
+test_health_check_fails_on_missing_critical_telemetry (test_aa_windows_validation.TelemetryFailures.test_health_check_fails_on_missing_critical_telemetry) ... ok
+test_legacy_smoke_without_environmental_decision_cannot_authorize_freeze (test_aa_windows_validation.TelemetryFailures.test_legacy_smoke_without_environmental_decision_cannot_authorize_freeze) ... ok
+test_non_windows_replace_denial_is_not_retried (test_aa_windows_validation.TelemetryFailures.test_non_windows_replace_denial_is_not_retried) ... ok
+test_permanent_atomic_replace_denial_fails_closed (test_aa_windows_validation.TelemetryFailures.test_permanent_atomic_replace_denial_fails_closed) ... ok
+test_process_enumeration_failure_is_not_an_empty_success (test_aa_windows_validation.TelemetryFailures.test_process_enumeration_failure_is_not_an_empty_success) ... ok
+test_process_probe_failure_creates_no_successful_cpu_sample (test_aa_windows_validation.TelemetryFailures.test_process_probe_failure_creates_no_successful_cpu_sample) ... ok
+test_smoke_command_stops_on_failed_launch (test_aa_windows_validation.TelemetryFailures.test_smoke_command_stops_on_failed_launch) ... ok
+test_unreadable_live_java_process_cannot_pass_as_no_clients (test_aa_windows_validation.TelemetryFailures.test_unreadable_live_java_process_cannot_pass_as_no_clients) ... ok
+test_windows_atomic_replace_retries_without_exposing_partial_json (test_aa_windows_validation.TelemetryFailures.test_windows_atomic_replace_retries_without_exposing_partial_json) ... ok
+
+----------------------------------------------------------------------
+Ran 112 tests in 40.057s
+
+OK (skipped=2)

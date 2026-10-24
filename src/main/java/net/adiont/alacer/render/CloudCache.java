@@ -148,7 +148,7 @@ public final class CloudCache {
 		double d = accessor.alacer$getTicks() + tickDelta;
 		double e = (camera.lastX + (camera.x - camera.lastX) * tickDelta + d * 0.03F) / 12.0;
 		double i = (camera.lastZ + (camera.z - camera.lastZ) * tickDelta) / 12.0 + 0.33F;
-		float j = accessor.alacer$getWorld().dimension.getCloudHeight() - f + 0.33F;
+		float j = Atmosphere.cloudHeight(accessor.alacer$getWorld().dimension.getCloudHeight(), config.cloudHeightOffset) - f + 0.33F;
 		int k = MathHelper.floor(e / 2048.0);
 		int l = MathHelper.floor(i / 2048.0);
 		e -= k * 2048;

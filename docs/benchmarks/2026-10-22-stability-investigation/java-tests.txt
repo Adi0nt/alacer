@@ -1,0 +1,21 @@
+
+> Configure project :
+Fabric Loom: 1.18.4
+Ploceus: 1.18.2
+
+> Task :compileJava UP-TO-DATE
+> Task :processResources UP-TO-DATE
+> Task :classes UP-TO-DATE
+> Task :compileTestJava UP-TO-DATE
+> Task :processTestResources NO-SOURCE
+> Task :testClasses UP-TO-DATE
+WARNING: A restricted method in java.lang.foreign.SymbolLookup has been called
+WARNING: java.lang.foreign.SymbolLookup::libraryLookup has been called by net.adiont.alacer.benchmark.ProcessorSampler in an unnamed module (file:/C:/Users/CodyJ/.codex/worktrees/alacer-session31-aa/alacer/build/classes/java/main/)
+WARNING: Use --enable-native-access=ALL-UNNAMED to avoid a warning for callers in this module
+WARNING: Restricted methods will be blocked in a future release unless native access is enabled
+
+> Task :test
+
+BUILD SUCCESSFUL in 8s
+4 actionable tasks: 1 executed, 3 up-to-date
+Consider enabling configuration cache to speed up this build: https://docs.gradle.org/9.7.1/userguide/configuration_cache_enabling.html

@@ -147,11 +147,22 @@ public final class AlacerConfig {
 	public volatile int smoothLightingStyle;
 	/** Ambient-occlusion darkening only, as a percentage; 100 preserves full strength. */
 	public volatile int ambientOcclusionStrength;
+	/** Atmosphere controls default to Minecraft's existing appearance. */
+	public volatile int fogStartPercent;
+	public volatile int cloudHeightOffset;
+	public volatile int skyQuality;
+	public volatile int starBrightness;
+	public volatile int weatherOpacity;
 	private Path settingsFile;
 	private final Map<String, String> pendingRestart = new LinkedHashMap<>();
 	private final Map<String, String> effective = new LinkedHashMap<>();
 
 	private AlacerConfig(Properties file, Properties system) {
+		this.fogStartPercent = clamp(integer(file, system, "quality.fogStart", 75, "Ordinary distance fog begins at this percent of render distance (0-95). Water, lava and blindness remain unchanged."), 0, 95);
+		this.cloudHeightOffset = clamp(integer(file, system, "quality.cloudHeight", 0, "Cloud layer height offset in blocks (-64 to 128). Zero preserves the dimension's height."), -64, 128);
+		this.skyQuality = clamp(integer(file, system, "quality.sky", 1, "Sky pass: 0 Off (including sun, moon and stars), 1 On. Clouds remain separate."), 0, 1);
+		this.starBrightness = clamp(integer(file, system, "quality.starBrightness", 100, "Star brightness, 0-200 percent. Requires Sky and Stars enabled."), 0, 200);
+		this.weatherOpacity = clamp(integer(file, system, "quality.weatherOpacity", 100, "Rain/snow geometry opacity, 0-100 percent. Does not change rain sounds or splash particles."), 0, 100);
 		this.leavesQuality = clamp(integer(file, system, "quality.leaves", 0, "Leaves quality: 0 follows Graphics, 1 Fast, 2 Fancy."), 0, 2);
 		this.weatherQuality = clamp(integer(file, system, "quality.weather", 0, "Weather geometry: 0 follows Graphics, 1 Fast, 2 Fancy, 3 Off. Rain sounds and splash particles remain."), 0, 3);
 		this.rainSplashQuality = clamp(integer(file, system, "quality.rainSplashes", 0, "Rain splash particles: 0 follows Graphics, 1 Fast (about a quarter as many), 2 Fancy, 3 Off. Rain sounds remain."), 0, 3);
@@ -428,6 +439,11 @@ public final class AlacerConfig {
 			else if ("quality.droppedItems".equals(key)) { this.droppedItemsQuality = Integer.parseInt(value); }
 			else if ("quality.lightingStyle".equals(key)) { this.smoothLightingStyle = Integer.parseInt(value); }
 			else if ("quality.aoStrength".equals(key)) { this.ambientOcclusionStrength = Integer.parseInt(value); }
+			else if ("quality.fogStart".equals(key)) { this.fogStartPercent = Integer.parseInt(value); }
+			else if ("quality.cloudHeight".equals(key)) { this.cloudHeightOffset = Integer.parseInt(value); }
+			else if ("quality.sky".equals(key)) { this.skyQuality = Integer.parseInt(value); }
+			else if ("quality.starBrightness".equals(key)) { this.starBrightness = Integer.parseInt(value); }
+			else if ("quality.weatherOpacity".equals(key)) { this.weatherOpacity = Integer.parseInt(value); }
 			else if ("render.fastParticleVertices".equals(key)) {
 				if (Boolean.parseBoolean(value) == this.fastParticleVertices) { this.pendingRestart.remove(key); }
 				else { this.pendingRestart.put(key,value); }
@@ -447,6 +463,11 @@ public final class AlacerConfig {
 		values.put("quality.droppedItems", Integer.toString(this.droppedItemsQuality));
 		values.put("quality.lightingStyle", Integer.toString(this.smoothLightingStyle));
 		values.put("quality.aoStrength", Integer.toString(this.ambientOcclusionStrength));
+		values.put("quality.fogStart", Integer.toString(this.fogStartPercent));
+		values.put("quality.cloudHeight", Integer.toString(this.cloudHeightOffset));
+		values.put("quality.sky", Integer.toString(this.skyQuality));
+		values.put("quality.starBrightness", Integer.toString(this.starBrightness));
+		values.put("quality.weatherOpacity", Integer.toString(this.weatherOpacity));
 		values.put("profiler.enabled", String.valueOf(this.profilerEnabled));
 		values.put("profiler.history", String.valueOf(this.profilerHistory));
 		values.put("profiler.logInterval", String.valueOf(this.profilerLogInterval));
