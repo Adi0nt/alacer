@@ -1912,3 +1912,40 @@ does no work, moved by -16.6% to +1.2% in frame mean and up to +28% in tails bet
 resolve effects of about 1-2%. Verdict: **closed** under the frozen rule (not the "no demonstrated benefit" closure,
 because conditions other than 2 failed). `render.fastCameraSectionFaces` stays off by default and outside
 `render.defaults`.
+
+## Session 29 - `render.reuseShadowPositions` on the reference hardware (2026-10-22, Java 25; record added in session 31)
+Roadmap item 1 of "Next session (29)". This entry was added afterwards, in session 31, from the committed archive; the
+session 30 entry above was written first. Gates, both amendments, the three freezes, per-gate table, medians and every
+attempt are in the [session 29 archive](benchmarks/2026-10-22-shadow-positions-reference/README.md); `gates.json` there
+holds every launch's metrics.
+
+**Environment:** Windows 11, i7-12700F, RTX 3060 Ti (OpenGL 4.6.0 NVIDIA 616.92), Adoptium 25.0.4.1, 1920x1080, 2 GiB
+heap, view distance 12, vsync off, display lists; seed-1789 base world. Run in the shared reference checkout, 01:40 to
+about 03:32 local. Session 28's gates, with the target and gate 5 on tick-free frames, fixed end-pose screenshots and
+frame/tail/CPU gates judged.
+
+Series: two smoke launches, then freeze 1 (08:43:46Z). The first verify launch was ended from outside the runner
+(cause not established; amendment 1 repeated it as `-r2`, freeze 2 at 08:55:29Z). A d0 static phase at about 2,255 FPS
+dropped 4,102 frames and was rejected; amendment 2 raised `BenchmarkRunner`'s frame buffer to 4,000 FPS and repeated
+the whole pair (freeze 3 at 10:08:22Z). 26 launches judged (3 verify, 3 screenshot, 4 in-process A/B, 16 startup). The
+externally ended, rejected and accepted-but-unjudged (`spr29-st-d0-2-on`) attempts are kept.
+
+| Condition | Result |
+|---|---|
+| 1. Target: tick-free allocation, d200 static / pan | pass: in-process -37.7% / -38.5% (19,968 / 21,446 B), startup -38.4% / -37.4% (20,279 / 21,233 B), lower in 4 of 4 launches |
+| 2. Frame mean: 2% saving in one in-process phase; no d200 regression above 1% | fail: saving met (static -2.54%), but in-process pan +2.35%, startup fly +6.63% |
+| 3. Tails | fail: in-process pan slow-1% +2.96%; startup fly p95 +7.09%, slow-1% +5.07% |
+| 4. CPU | fail: in-process pan client +3.50%, process +2.60%; startup fly client +8.13%, process +8.34% |
+| 5. Tick-free allocation <= +2% everywhere | fail: startup d200 fly +9.03%, d0 pan +2.07%, d0 fly +2.29% |
+| 6. Counters within 2% | fail: d0 fly `visible_chunks` -2.39% |
+| 7. Drift | pass: static median 9.59% (two launches flagged), B below A1 and A2 in 4 of 4 |
+| Startup d200 frame mean lower | fail: fly +6.63% (static -1.74%, pan -10.55%) |
+| Non-selecting frame mean <= +1% | fail: d0 +3.33% / +16.07% / +24.42%; terrain within +0.68% |
+| `.verify` | pass: 335,264,645 positions compared, 0 mismatched |
+| Screenshots | static and pan pass; fly fails (1.74% of pixels against 0.08% between the absent captures) |
+
+Tick-frame share 1.06-4.22% (median 2.27%); tick-free allocation resolved everywhere. In d200 fly, allocation and
+frame-mean changes moved together pair by pair (per-crossing work spread over more or fewer frames), and d0, with no
+mob shadows to draw, moved by up to +24% in frame mean, so this series cannot resolve frame effects of a few percent.
+Verdict: **closed** under the frozen rule. `render.reuseShadowPositions` stays off by default and outside
+`render.defaults`.

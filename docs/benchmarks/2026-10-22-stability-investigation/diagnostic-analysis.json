@@ -1,0 +1,4786 @@
+{
+ "archive": "docs\\benchmarks\\2026-10-22-stability-investigation",
+ "scoring": "none; descriptive attribution only",
+ "launches": [
+  {
+   "label": "diag32v2-terrain-1-mon",
+   "status": "passed-smoke",
+   "origin": "record",
+   "environment_assessed": true,
+   "environment_rejections": [],
+   "scene": "terrain",
+   "reference_distribution_changed": true,
+   "phases": {
+    "reference-pre": {
+     "frame_ms": 0.4743447941371786,
+     "client_cpu_ms": 0.182,
+     "process_cpu_ms": 0.6396073550896499,
+     "off_client_cpu_ms": 0.45760735508964995,
+     "cpu_distribution_hint": "low-client-cpu",
+     "sections_ms": {
+      "render": 0.1299,
+      "swap": 0.3063,
+      "tick": 0.0085,
+      "terrain_setup": 0.0094
+     },
+     "visible_chunks": {
+      "visible_mean": 1374.0,
+      "pending_mean": 0.0001,
+      "pending_max": 4
+     },
+     "allocation_bytes_per_frame": 3274.5956,
+     "bins_5s": [
+      {
+       "start_s": 0,
+       "frames": 10512,
+       "frame_ms": 0.4756569920091324,
+       "render_ms": 0.13124697488584475,
+       "swap_ms": 0.30577030060882804,
+       "tick_ms": 0.008867104261796042,
+       "visible_chunks": 1374.0,
+       "pending_chunks": 0.0
+      },
+      {
+       "start_s": 5,
+       "frames": 10562,
+       "frame_ms": 0.47340871993940536,
+       "render_ms": 0.12636953228555198,
+       "swap_ms": 0.310344432872562,
+       "tick_ms": 0.007900066275326642,
+       "visible_chunks": 1374.0,
+       "pending_chunks": 0.0003787161522438932
+      },
+      {
+       "start_s": 10,
+       "frames": 10573,
+       "frame_ms": 0.47289498723162776,
+       "render_ms": 0.12922274661874586,
+       "swap_ms": 0.30567612787288373,
+       "tick_ms": 0.008345975598221887,
+       "visible_chunks": 1374.0,
+       "pending_chunks": 0.0
+      },
+      {
+       "start_s": 15,
+       "frames": 10517,
+       "frame_ms": 0.4754308262812589,
+       "render_ms": 0.13279619663402112,
+       "swap_ms": 0.30356476181420555,
+       "tick_ms": 0.008912807834933915,
+       "visible_chunks": 1374.0,
+       "pending_chunks": 0.0
+      }
+     ],
+     "threads": {
+      "covered_s": 19.239025831222534,
+      "sampler_cpu_cores": 0.07634222298388946,
+      "cpu_cores": {
+       "native-origin:nvoglv64.dll": 0.8202728214226421,
+       "Client thread": 0.3792746609944296,
+       "Thread-4": 0.03898326280028398,
+       "JFR Periodic Tasks": 0.028425295791873736,
+       "C2 CompilerThread0": 0.023552387941838237,
+       "Server thread": 0.02192808532515974,
+       "Thread-5": 0.004872907850035498,
+       "native-origin:OpenAL-amd64.dll": 0.004872907850035498,
+       "JFR Sampler Thread": 0.002436453925017749,
+       "Netty Server IO #1": 0.002436453925017749,
+       "C1 CompilerThread0": 0.0016243026166784993,
+       "G1 Refine#0": 0.0008121513083392496,
+       "VM Periodic Task Thread": 0.0008121513083392496,
+       "Netty Local Client IO #0": 0.0008121513083392496,
+       "native-origin:java.exe": 0.0,
+       "native-origin:ntdll.dll": 0.0,
+       "GC Thread#0": 0.0,
+       "G1 Main Marker": 0.0,
+       "G1 Conc#0": 0.0,
+       "G1 Service": 0.0,
+       "VM Thread": 0.0,
+       "Reference Handler": 0.0,
+       "Finalizer": 0.0,
+       "Signal Dispatcher": 0.0,
+       "Attach Listener": 0.0,
+       "Service Thread": 0.0,
+       "Monitor Deflation Thread": 0.0,
+       "Notification Thread": 0.0,
+       "Common-Cleaner": 0.0,
+       "GC Thread#1": 0.0,
+       "GC Thread#2": 0.0,
+       "GC Thread#3": 0.0,
+       "GC Thread#4": 0.0,
+       "GC Thread#5": 0.0,
+       "GC Thread#6": 0.0,
+       "GC Thread#7": 0.0,
+       "GC Thread#8": 0.0,
+       "GC Thread#9": 0.0,
+       "GC Thread#10": 0.0,
+       "GC Thread#11": 0.0,
+       "JFR Recorder Thread": 0.0,
+       "G1 Conc#1": 0.0,
+       "G1 Conc#2": 0.0,
+       "G1 Conc#3": 0.0,
+       "Alacer benchmark watchdog": 0.0,
+       "GC Thread#12": 0.0,
+       "Snooper Timer": 0.0,
+       "GC Thread#13": 0.0,
+       "GC Thread#14": 0.0,
+       "Timer hack thread": 0.0,
+       "Java2D Disposer": 0.0,
+       "native-origin:SHCORE.dll": 0.0,
+       "native-origin:CRYPT32.dll": 0.0,
+       "native-origin:uiautomationcore.dll": 0.0,
+       "native-origin:combase.dll": 0.0,
+       "Chunk Batcher 0": 0.0,
+       "Chunk Batcher 1": 0.0,
+       "LWJGL Timer": 0.0,
+       "native-origin:ucrtbase.dll": 0.0,
+       "Netty Server IO #0": 0.0,
+       "File IO Thread": 0.0,
+       "Downloader 0": 0.0,
+       "Downloader 1": 0.0,
+       "Downloader 2": 0.0,
+       "Downloader 3": 0.0,
+       "Downloader 4": 0.0,
+       "Downloader 5": 0.0,
+       "Downloader 6": 0.0,
+       "Downloader 7": 0.0,
+       "Downloader 8": 0.0,
+       "Downloader 9": 0.0,
+       "Downloader 10": 0.0
+      }
+     },
+     "monitor": {
+      "samples": 20,
+      "expected_samples": 20,
+      "coverage": 1.0,
+      "availability": {
+       "cpu": {
+        "samples": 20,
+        "ok": 20,
+        "counts": {
+         "ok": 20
+        },
+        "reasons": [],
+        "fraction_ok": 1.0
+       },
+       "frequency": {
+        "samples": 20,
+        "ok": 20,
+        "counts": {
+         "ok": 20
+        },
+        "reasons": [],
+        "fraction_ok": 1.0
+       },
+       "foreground": {
+        "samples": 20,
+        "ok": 20,
+        "counts": {
+         "ok": 20
+        },
+        "reasons": [],
+        "fraction_ok": 1.0
+       },
+       "power_plan": {
+        "samples": 20,
+        "ok": 20,
+        "counts": {
+         "ok": 20
+        },
+        "reasons": [],
+        "fraction_ok": 1.0
+       },
+       "memory": {
+        "samples": 20,
+        "ok": 20,
+        "counts": {
+         "ok": 20
+        },
+        "reasons": [],
+        "fraction_ok": 1.0
+       },
+       "client_affinity": {
+        "samples": 20,
+        "ok": 20,
+        "counts": {
+         "ok": 20
+        },
+        "reasons": [],
+        "fraction_ok": 1.0
+       },
+       "gpu": {
+        "samples": 20,
+        "ok": 20
+       }
+      },
+      "busy_pct_mean": 13.42483860431947,
+      "client_cores_mean": 1.3447584268921635,
+      "harness_cores_mean": 0.09378994483106534,
+      "background_cores_mean": 0.13210699511709145,
+      "background_cores_max": 0.25021415829849425,
+      "background_rolling_max": 0.1533980198696863,
+      "background_step": 0.053500817402670695,
+      "unattributed_cores_mean": 1.11208549854261,
+      "unreadable_processes_max": 162,
+      "top_background_core_seconds": {
+       "iCUE.exe": 0.5312,
+       "audiodg.exe": 0.438,
+       "ChatGPT.exe": 0.40669999999999995,
+       "FxSound.exe": 0.344,
+       "codex-computer-use.exe": 0.1568,
+       "OmenCommandCenterBackground.exe": 0.15589999999999998,
+       "Cloudflare WARP.exe": 0.1252,
+       "QmlRenderer.exe": 0.12519999999999998
+      },
+      "frequency_mean_mhz": 3311.688028311998,
+      "frequency_p_mean_mhz": 3347.296975344337,
+      "frequency_e_mean_mhz": 3169.252240182638,
+      "frequency_min_mhz": 3059.785957636451,
+      "foreground_client_fraction": 1.0,
+      "foreground_other_exes": [],
+      "power_plans": [
+       {
+        "guid": "8c5e7fda-e8bf-4a96-9a85-a6e23a8c635c",
+        "name": "High performance"
+       }
+      ],
+      "client_affinities": [
+       [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15
+       ]
+      ],
+      "memory_available_mb_min": 17561.39453125,
+      "gpu_util_mean": 94.95,
+      "gpu_clock_mean_mhz": 1797.75,
+      "gpu_clock_min_mhz": 1725.0,
+      "gpu_pstates": [
+       "P0"
+      ],
+      "monitor_self_cpu_ms_mean": 11.71875,
+      "monitor_self_cpu_ms_max": 31.25,
+      "monitor_self_cores": 0.01171875
+     }
+    },
+    "warmup-pan": {
+     "frame_ms": 0.634347391791597,
+     "client_cpu_ms": 0.3766,
+     "process_cpu_ms": 1.080670931427484,
+     "off_client_cpu_ms": 0.704070931427484,
+     "cpu_distribution_hint": "mixed",
+     "sections_ms": {
+      "render": 0.329,
+      "swap": 0.2618,
+      "tick": 0.0132,
+      "terrain_setup": 0.1559
+     },
+     "visible_chunks": {
+      "visible_mean": 1484.0323,
+      "pending_mean": 0.049,
+      "pending_max": 16
+     },
+     "allocation_bytes_per_frame": 4760.1531,
+     "bins_5s": [
+      {
+       "start_s": 0,
+       "frames": 6555,
+       "frame_ms": 0.7628264073226545,
+       "render_ms": 0.4711427307398932,
+       "swap_ms": 0.24297167048054918,
+       "tick_ms": 0.017239755911517926,
+       "visible_chunks": 1513.0512585812357,
+       "pending_chunks": 0.3525553012967201
+      },
+      {
+       "start_s": 5,
+       "frames": 8666,
+       "frame_ms": 0.5769849757673667,
+       "render_ms": 0.3053110085391184,
+       "swap_ms": 0.2310012000923148,
+       "tick_ms": 0.01114558042926379,
+       "visible_chunks": 1473.9642280175399,
+       "pending_chunks": 0.00023078698361412417
+      },
+      {
+       "start_s": 10,
+       "frames": 8255,
+       "frame_ms": 0.6056374076317383,
+       "render_ms": 0.30178589945487583,
+       "swap_ms": 0.2608908540278619,
+       "tick_ms": 0.01237647486371896,
+       "visible_chunks": 1467.6754694124772,
+       "pending_chunks": 0.0
+      },
+      {
+       "start_s": 15,
+       "frames": 7549,
+       "frame_ms": 0.6623559544310504,
+       "render_ms": 0.3038710160286131,
+       "swap_ms": 0.31503367333421645,
+       "tick_ms": 0.01407393032189694,
+       "visible_chunks": 1516.9233010994833,
+       "pending_chunks": 0.0
+      },
+      {
+       "start_s": 20,
+       "frames": 8455,
+       "frame_ms": 0.5913633707865168,
+       "render_ms": 0.2973632052040213,
+       "swap_ms": 0.25324655233589594,
+       "tick_ms": 0.011237338852749851,
+       "visible_chunks": 1472.1680662329982,
+       "pending_chunks": 0.0
+      },
+      {
+       "start_s": 25,
+       "frames": 7813,
+       "frame_ms": 0.6399683988224754,
+       "render_ms": 0.32324521950595164,
+       "swap_ms": 0.2706489568667605,
+       "tick_ms": 0.014329668501215921,
+       "visible_chunks": 1469.194547548957,
+       "pending_chunks": 0.0005119672340970178
+      }
+     ],
+     "threads": {
+      "covered_s": 28.350985288619995,
+      "sampler_cpu_cores": 0.07660668501957794,
+      "cpu_cores": {
+       "native-origin:nvoglv64.dll": 0.9154223296224385,
+       "Client thread": 0.5935640270941399,
+       "Thread-4": 0.038027778894610634,
+       "C2 CompilerThread0": 0.03141425213033052,
+       "JFR Periodic Tasks": 0.028107488748190468,
+       "Chunk Batcher 1": 0.020391707523197005,
+       "Server thread": 0.014880435219630247,
+       "Chunk Batcher 0": 0.01047141737677684,
+       "Thread-5": 0.003857890612496731,
+       "G1 Conc#0": 0.0027556361517833794,
+       "G1 Conc#1": 0.0027556361517833794,
+       "G1 Conc#2": 0.0027556361517833794,
+       "G1 Conc#3": 0.0027556361517833794,
+       "native-origin:uiautomationcore.dll": 0.002204508921426703,
+       "File IO Thread": 0.002204508921426703,
+       "JFR Sampler Thread": 0.0011022544607133516,
+       "native-origin:OpenAL-amd64.dll": 0.0011022544607133516,
+       "Netty Server IO #1": 0.0011022544607133516,
+       "GC Thread#0": 0.0005511272303566758,
+       "GC Thread#2": 0.0005511272303566758,
+       "GC Thread#6": 0.0005511272303566758,
+       "GC Thread#9": 0.0005511272303566758,
+       "GC Thread#11": 0.0005511272303566758,
+       "GC Thread#12": 0.0005511272303566758,
+       "GC Thread#13": 0.0005511272303566758,
+       "native-origin:java.exe": 0.0,
+       "native-origin:ntdll.dll": 0.0,
+       "G1 Main Marker": 0.0,
+       "G1 Refine#0": 0.0,
+       "G1 Service": 0.0,
+       "VM Periodic Task Thread": 0.0,
+       "VM Thread": 0.0,
+       "Reference Handler": 0.0,
+       "Finalizer": 0.0,
+       "Signal Dispatcher": 0.0,
+       "Attach Listener": 0.0,
+       "Service Thread": 0.0,
+       "Monitor Deflation Thread": 0.0,
+       "C1 CompilerThread0": 0.0,
+       "Notification Thread": 0.0,
+       "Common-Cleaner": 0.0,
+       "GC Thread#1": 0.0,
+       "GC Thread#3": 0.0,
+       "GC Thread#4": 0.0,
+       "GC Thread#5": 0.0,
+       "GC Thread#7": 0.0,
+       "GC Thread#8": 0.0,
+       "GC Thread#10": 0.0,
+       "JFR Recorder Thread": 0.0,
+       "Alacer benchmark watchdog": 0.0,
+       "Snooper Timer": 0.0,
+       "GC Thread#14": 0.0,
+       "Timer hack thread": 0.0,
+       "Java2D Disposer": 0.0,
+       "native-origin:combase.dll": 0.0,
+       "LWJGL Timer": 0.0,
+       "native-origin:ucrtbase.dll": 0.0,
+       "Netty Server IO #0": 0.0,
+       "Netty Local Client IO #0": 0.0,
+       "Downloader 0": 0.0,
+       "Downloader 1": 0.0,
+       "Downloader 2": 0.0,
+       "Downloader 3": 0.0,
+       "Downloader 4": 0.0,
+       "Downloader 5": 0.0,
+       "Downloader 6": 0.0,
+       "Downloader 7": 0.0,
+       "Downloader 8": 0.0,
+       "Downloader 9": 0.0,
+       "Downloader 10": 0.0,
+       "C1 CompilerThread1": 0.0,
+       "C1 CompilerThread2": 0.0
+      }
+     },
+     "monitor": {
+      "samples": 30,
+      "expected_samples": 30,
+      "coverage": 1.0,
+      "availability": {
+       "cpu": {
+        "samples": 30,
+        "ok": 30,
+        "counts": {
+         "ok": 30
+        },
+        "reasons": [],
+        "fraction_ok": 1.0
+       },
+       "frequency": {
+        "samples": 30,
+        "ok": 30,
+        "counts": {
+         "ok": 30
+        },
+        "reasons": [],
+        "fraction_ok": 1.0
+       },
+       "foreground": {
+        "samples": 30,
+        "ok": 30,
+        "counts": {
+         "ok": 30
+        },
+        "reasons": [],
+        "fraction_ok": 1.0
+       },
+       "power_plan": {
+        "samples": 30,
+        "ok": 30,
+        "counts": {
+         "ok": 30
+        },
+        "reasons": [],
+        "fraction_ok": 1.0
+       },
+       "memory": {
+        "samples": 30,
+        "ok": 30,
+        "counts": {
+         "ok": 30
+        },
+        "reasons": [],
+        "fraction_ok": 1.0
+       },
+       "client_affinity": {
+        "samples": 30,
+        "ok": 30,
+        "counts": {
+         "ok": 30
+        },
+        "reasons": [],
+        "fraction_ok": 1.0
+       },
+       "gpu": {
+        "samples": 29,
+        "ok": 29
+       }
+      },
+      "busy_pct_mean": 15.875165505968312,
+      "client_cores_mean": 1.7020572550260722,
+      "harness_cores_mean": 0.10097160476474497,
+      "background_cores_mean": 0.15974206950983666,
+      "background_cores_max": 0.8768354797109362,
+      "background_rolling_max": 0.30647483216457855,
+      "background_step": 0.21254434251373094,
+      "unattributed_cores_mean": 1.2132853999188922,
+      "unreadable_processes_max": 165,
+      "top_background_core_seconds": {
+       "iCUE.exe": 0.9380000000000001,
+       "ChatGPT.exe": 0.6718,
+       "FxSound.exe": 0.4367999999999999,
+       "audiodg.exe": 0.4057,
+       "OmenCommandCenterBackground.exe": 0.29569999999999996,
+       "OverlayHelper.exe": 0.28069999999999995,
+       "codex.exe": 0.24979999999999997,
+       "bun.exe": 0.2186
+      },
+      "frequency_mean_mhz": 3427.4236405410825,
+      "frequency_p_mean_mhz": 3494.034348864226,
+      "frequency_e_mean_mhz": 3160.9808072485052,
+      "frequency_min_mhz": 3093.0585899402035,
+      "foreground_client_fraction": 1.0,
+      "foreground_other_exes": [],
+      "power_plans": [
+       {
+        "guid": "8c5e7fda-e8bf-4a96-9a85-a6e23a8c635c",
+        "name": "High performance"
+       }
+      ],
+      "client_affinities": [
+       [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15
+       ]
+      ],
+      "memory_available_mb_min": 17303.109375,
+      "gpu_util_mean": 88.20689655172414,
+      "gpu_clock_mean_mhz": 1775.6896551724137,
+      "gpu_clock_min_mhz": 1710.0,
+      "gpu_pstates": [
+       "P0"
+      ],
+      "monitor_self_cpu_ms_mean": 16.666666666666668,
+      "monitor_self_cpu_ms_max": 31.25,
+      "monitor_self_cores": 0.016666666666666666
+     }
+    },
+    "warmup-sort": {
+     "frame_ms": 0.8065822705046126,
+     "client_cpu_ms": 0.6242,
+     "process_cpu_ms": 1.320937926853859,
+     "off_client_cpu_ms": 0.696737926853859,
+     "cpu_distribution_hint": "mixed",
+     "sections_ms": {
+      "render": 0.5255,
+      "swap": 0.2231,
+      "tick": 0.0119,
+      "terrain_setup": 0.1644
+     },
+     "visible_chunks": {
+      "visible_mean": 1437.6323,
+      "pending_mean": 3.4191,
+      "pending_max": 468
+     },
+     "allocation_bytes_per_frame": 7960.8138,
+     "bins_5s": [
+      {
+       "start_s": 0,
+       "frames": 6145,
+       "frame_ms": 0.8136915866558176,
+       "render_ms": 0.4250686411716843,
+       "swap_ms": 0.33504696501220504,
+       "tick_ms": 0.01987567127746135,
+       "visible_chunks": 1484.2792514239218,
+       "pending_chunks": 5.7044751830756715
+      },
+      {
+       "start_s": 5,
+       "frames": 7648,
+       "frame_ms": 0.6538432269874477,
+       "render_ms": 0.3588084074267782,
+       "swap_ms": 0.24996682792887032,
+       "tick_ms": 0.01321689330543933,
+       "visible_chunks": 1389.5422332635983,
+       "pending_chunks": 3.8047855648535567
+      },
+      {
+       "start_s": 10,
+       "frames": 7051,
+       "frame_ms": 0.7090709686569281,
+       "render_ms": 0.37330414125655936,
+       "swap_ms": 0.28644786555098567,
+       "tick_ms": 0.015455524039143383,
+       "visible_chunks": 1473.9592965536804,
+       "pending_chunks": 2.60431144518508
+      },
+      {
+       "start_s": 15,
+       "frames": 6297,
+       "frame_ms": 0.7940190884548197,
+       "render_ms": 0.5580301254565666,
+       "swap_ms": 0.17830400190566936,
+       "tick_ms": 0.009179815785294584,
+       "visible_chunks": 1416.9047165316817,
+       "pending_chunks": 3.9414006669842783
+      },
+      {
+       "start_s": 20,
+       "frames": 5457,
+       "frame_ms": 0.9161984606926883,
+       "render_ms": 0.7067491662085396,
+       "swap_ms": 0.1375372732270478,
+       "tick_ms": 0.006285669781931464,
+       "visible_chunks": 1419.9833241707897,
+       "pending_chunks": 2.4431006047278725
+      },
+      {
+       "start_s": 25,
+       "frames": 4794,
+       "frame_ms": 1.0430943053817272,
+       "render_ms": 0.827541134751773,
+       "swap_ms": 0.1412584272006675,
+       "tick_ms": 0.006757446808510638,
+       "visible_chunks": 1462.5584063412598,
+       "pending_chunks": 2.1134751773049647
+      },
+      {
+       "start_s": 30,
+       "frames": 2282,
+       "frame_ms": 0.8763060911481156,
+       "render_ms": 0.667467134092901,
+       "swap_ms": 0.13648759859772128,
+       "tick_ms": 0.006281901840490797,
+       "visible_chunks": 1407.983347940403,
+       "pending_chunks": 2.126205083260298
+      }
+     ],
+     "threads": {
+      "covered_s": 31.367698907852173,
+      "sampler_cpu_cores": 0.07521670642564685,
+      "cpu_cores": {
+       "Client thread": 0.7696014001829429,
+       "native-origin:nvoglv64.dll": 0.47022894613119615,
+       "C2 CompilerThread0": 0.08418293633069084,
+       "Chunk Batcher 0": 0.04433302564160642,
+       "Server thread": 0.04034803457269798,
+       "JFR Periodic Tasks": 0.032378052434881094,
+       "Chunk Batcher 1": 0.032378052434881094,
+       "Thread-4": 0.026400565831518428,
+       "File IO Thread": 0.025902441947904874,
+       "G1 Conc#1": 0.008966229905043994,
+       "G1 Conc#3": 0.008966229905043994,
+       "G1 Conc#0": 0.008468106021430439,
+       "G1 Conc#2": 0.008468106021430439,
+       "C1 CompilerThread0": 0.004483114952521997,
+       "Thread-5": 0.003984991068908442,
+       "JFR Sampler Thread": 0.0029887433016813317,
+       "native-origin:OpenAL-amd64.dll": 0.001992495534454221,
+       "Netty Local Client IO #0": 0.0014943716508406658,
+       "GC Thread#0": 0.0009962477672271104,
+       "VM Periodic Task Thread": 0.0009962477672271104,
+       "GC Thread#4": 0.0009962477672271104,
+       "GC Thread#7": 0.0009962477672271104,
+       "JFR Recorder Thread": 0.0009962477672271104,
+       "VM Thread": 0.0004981238836135552,
+       "GC Thread#1": 0.0004981238836135552,
+       "GC Thread#5": 0.0004981238836135552,
+       "GC Thread#6": 0.0004981238836135552,
+       "GC Thread#8": 0.0004981238836135552,
+       "GC Thread#10": 0.0004981238836135552,
+       "GC Thread#12": 0.0004981238836135552,
+       "Netty Server IO #1": 0.0004981238836135552,
+       "native-origin:java.exe": 0.0,
+       "G1 Main Marker": 0.0,
+       "G1 Refine#0": 0.0,
+       "G1 Service": 0.0,
+       "Reference Handler": 0.0,
+       "Finalizer": 0.0,
+       "Signal Dispatcher": 0.0,
+       "Attach Listener": 0.0,
+       "Service Thread": 0.0,
+       "Monitor Deflation Thread": 0.0,
+       "Notification Thread": 0.0,
+       "Common-Cleaner": 0.0,
+       "GC Thread#2": 0.0,
+       "GC Thread#3": 0.0,
+       "GC Thread#9": 0.0,
+       "GC Thread#11": 0.0,
+       "Alacer benchmark watchdog": 0.0,
+       "Snooper Timer": 0.0,
+       "GC Thread#13": 0.0,
+       "GC Thread#14": 0.0,
+       "Timer hack thread": 0.0,
+       "Java2D Disposer": 0.0,
+       "native-origin:ntdll.dll": 0.0,
+       "native-origin:uiautomationcore.dll": 0.0,
+       "native-origin:combase.dll": 0.0,
+       "LWJGL Timer": 0.0,
+       "native-origin:ucrtbase.dll": 0.0,
+       "Netty Server IO #0": 0.0
+      }
+     },
+     "monitor": {
+      "samples": 32,
+      "expected_samples": 32,
+      "coverage": 1.0,
+      "availability": {
+       "cpu": {
+        "samples": 32,
+        "ok": 32,
+        "counts": {
+         "ok": 32
+        },
+        "reasons": [],
+        "fraction_ok": 1.0
+       },
+       "frequency": {
+        "samples": 32,
+        "ok": 32,
+        "counts": {
+         "ok": 32
+        },
+        "reasons": [],
+        "fraction_ok": 1.0
+       },
+       "foreground": {
+        "samples": 32,
+        "ok": 32,
+        "counts": {
+         "ok": 32
+        },
+        "reasons": [],
+        "fraction_ok": 1.0
+       },
+       "power_plan": {
+        "samples": 32,
+        "ok": 32,
+        "counts": {
+         "ok": 32
+        },
+        "reasons": [],
+        "fraction_ok": 1.0
+       },
+       "memory": {
+        "samples": 32,
+        "ok": 32,
+        "counts": {
+         "ok": 32
+        },
+        "reasons": [],
+        "fraction_ok": 1.0
+       },
+       "client_affinity": {
+        "samples": 32,
+        "ok": 32,
+        "counts": {
+         "ok": 32
+        },
+        "reasons": [],
+        "fraction_ok": 1.0
+       },
+       "gpu": {
+        "samples": 32,
+        "ok": 32
+       }
+      },
+      "busy_pct_mean": 15.871961818590524,
+      "client_cores_mean": 1.6440782360970219,
+      "harness_cores_mean": 0.09566698008765254,
+      "background_cores_mean": 0.1317422562426684,
+      "background_cores_max": 0.36063932936065707,
+      "background_rolling_max": 0.17794584330894364,
+      "background_step": 0.10935372024458564,
+      "unattributed_cores_mean": 1.3005510509137916,
+      "unreadable_processes_max": 165,
+      "top_background_core_seconds": {
+       "iCUE.exe": 1.0631000000000002,
+       "FxSound.exe": 0.9053999999999999,
+       "ChatGPT.exe": 0.8591000000000001,
+       "audiodg.exe": 0.3594,
+       "OmenCommandCenterBackground.exe": 0.3118,
+       "OverlayHelper.exe": 0.1717,
+       "nvcontainer.exe": 0.09290000000000001,
+       "Cloudflare WARP.exe": 0.0626
+      },
+      "frequency_mean_mhz": 3353.1566887652757,
+      "frequency_p_mean_mhz": 3415.378906487708,
+      "frequency_e_mean_mhz": 3104.2678178755477,
+      "frequency_min_mhz": 3177.265044336317,
+      "foreground_client_fraction": 1.0,
+      "foreground_other_exes": [],
+      "power_plans": [
+       {
+        "guid": "8c5e7fda-e8bf-4a96-9a85-a6e23a8c635c",
+        "name": "High performance"
+       }
+      ],
+      "client_affinities": [
+       [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15
+       ]
+      ],
+      "memory_available_mb_min": 17031.6953125,
+      "gpu_util_mean": 76.5625,
+      "gpu_clock_mean_mhz": 1759.21875,
+      "gpu_clock_min_mhz": 1665.0,
+      "gpu_pstates": [
+       "P0"
+      ],
+      "monitor_self_cpu_ms_mean": 15.13671875,
+      "monitor_self_cpu_ms_max": 31.25,
+      "monitor_self_cores": 0.01513671875
+     }
+    },
+    "steady": {
+     "frame_ms": 0.5927295267073014,
+     "client_cpu_ms": 0.5697,
+     "process_cpu_ms": 0.6272853256542227,
+     "off_client_cpu_ms": 0.0575853256542227,
+     "cpu_distribution_hint": "client-heavy",
+     "sections_ms": {
+      "render": 0.3989,
+      "swap": 0.1326,
+      "tick": 0.0041,
+      "terrain_setup": 0.0095
+     },
+     "visible_chunks": {
+      "visible_mean": 1293.0,
+      "pending_mean": 0.0001,
+      "pending_max": 4
+     },
+     "allocation_bytes_per_frame": 3673.6771,
+     "bins_5s": [
+      {
+       "start_s": 0,
+       "frames": 8450,
+       "frame_ms": 0.5917528520710059,
+       "render_ms": 0.39813662721893495,
+       "swap_ms": 0.13181310059171597,
+       "tick_ms": 0.005178840236686391,
+       "visible_chunks": 1293.0,
+       "pending_chunks": 0.00047337278106508875
+      },
+      {
+       "start_s": 5,
+       "frames": 8493,
+       "frame_ms": 0.5887080890144826,
+       "render_ms": 0.3962851053809019,
+       "swap_ms": 0.13117619215824797,
+       "tick_ms": 0.004052572706935123,
+       "visible_chunks": 1293.0,
+       "pending_chunks": 0.0
+      },
+      {
+       "start_s": 10,
+       "frames": 8452,
+       "frame_ms": 0.5916119143398012,
+       "render_ms": 0.39824713677236157,
+       "swap_ms": 0.1321732016090866,
+       "tick_ms": 0.004188558920965452,
+       "visible_chunks": 1293.0,
+       "pending_chunks": 0.0
+      },
+      {
+       "start_s": 15,
+       "frames": 8263,
+       "frame_ms": 0.6051102868207673,
+       "render_ms": 0.4102161200532494,
+       "swap_ms": 0.13308557424664166,
+       "tick_ms": 0.0043993827907539635,
+       "visible_chunks": 1293.0,
+       "pending_chunks": 0.0
+      },
+      {
+       "start_s": 20,
+       "frames": 8427,
+       "frame_ms": 0.5933137652782722,
+       "render_ms": 0.39807568529725884,
+       "swap_ms": 0.1341373086507654,
+       "tick_ms": 0.004002385190459238,
+       "visible_chunks": 1293.0,
+       "pending_chunks": 0.0
+      },
+      {
+       "start_s": 25,
+       "frames": 8417,
+       "frame_ms": 0.5940105025543543,
+       "render_ms": 0.39972335749079246,
+       "swap_ms": 0.1331257217535939,
+       "tick_ms": 0.00395961744089343,
+       "visible_chunks": 1293.0,
+       "pending_chunks": 0.0
+      },
+      {
+       "start_s": 30,
+       "frames": 8393,
+       "frame_ms": 0.5957432622423448,
+       "render_ms": 0.4009280352674848,
+       "swap_ms": 0.13315424758727512,
+       "tick_ms": 0.0038763016799714047,
+       "visible_chunks": 1293.0,
+       "pending_chunks": 0.00023829381627546765
+      },
+      {
+       "start_s": 35,
+       "frames": 8503,
+       "frame_ms": 0.5880214747736093,
+       "render_ms": 0.39532073385863814,
+       "swap_ms": 0.13206171939315536,
+       "tick_ms": 0.0038622133364694814,
+       "visible_chunks": 1293.0,
+       "pending_chunks": 0.0
+      },
+      {
+       "start_s": 40,
+       "frames": 8533,
+       "frame_ms": 0.5859477674909176,
+       "render_ms": 0.3939115902964959,
+       "swap_ms": 0.13116227587015117,
+       "tick_ms": 0.003972354388843314,
+       "visible_chunks": 1293.0,
+       "pending_chunks": 0.000351576233446619
+      },
+      {
+       "start_s": 45,
+       "frames": 8492,
+       "frame_ms": 0.5888130357983985,
+       "render_ms": 0.395847868582195,
+       "swap_ms": 0.13209003768252472,
+       "tick_ms": 0.00408942534149788,
+       "visible_chunks": 1293.0,
+       "pending_chunks": 0.0
+      },
+      {
+       "start_s": 50,
+       "frames": 8343,
+       "frame_ms": 0.5992836869231691,
+       "render_ms": 0.403245523193096,
+       "swap_ms": 0.13372133525110871,
+       "tick_ms": 0.0043412081984897525,
+       "visible_chunks": 1293.0,
+       "pending_chunks": 0.0
+      },
+      {
+       "start_s": 55,
+       "frames": 8461,
+       "frame_ms": 0.5909602292873183,
+       "render_ms": 0.3968813024465193,
+       "swap_ms": 0.13339084032620258,
+       "tick_ms": 0.003825800732773904,
+       "visible_chunks": 1293.0,
+       "pending_chunks": 0.0
+      }
+     ],
+     "threads": {
+      "covered_s": 58.69336676597595,
+      "sampler_cpu_cores": 0.07347508309064867,
+      "cpu_cores": {
+       "Client thread": 0.961565217838489,
+       "JFR Periodic Tasks": 0.02821869133191579,
+       "Thread-4": 0.025556550640225623,
+       "C2 CompilerThread0": 0.013310703458450845,
+       "Server thread": 0.011713419043436743,
+       "Thread-5": 0.004525639175873287,
+       "File IO Thread": 0.003726996968366237,
+       "JFR Sampler Thread": 0.003194568830028203,
+       "native-origin:OpenAL-amd64.dll": 0.0010648562766760676,
+       "G1 Conc#0": 0.0007986422075070507,
+       "G1 Conc#2": 0.0007986422075070507,
+       "G1 Conc#3": 0.0007986422075070507,
+       "C1 CompilerThread0": 0.0005324281383380338,
+       "G1 Conc#1": 0.0005324281383380338,
+       "Netty Server IO #1": 0.0005324281383380338,
+       "GC Thread#1": 0.0002662140691690169,
+       "GC Thread#2": 0.0002662140691690169,
+       "GC Thread#3": 0.0002662140691690169,
+       "GC Thread#4": 0.0002662140691690169,
+       "GC Thread#5": 0.0002662140691690169,
+       "native-origin:nvoglv64.dll": 0.0002662140691690169,
+       "Netty Local Client IO #0": 0.0002662140691690169,
+       "native-origin:java.exe": 0.0,
+       "GC Thread#0": 0.0,
+       "G1 Main Marker": 0.0,
+       "G1 Refine#0": 0.0,
+       "G1 Service": 0.0,
+       "VM Periodic Task Thread": 0.0,
+       "VM Thread": 0.0,
+       "Reference Handler": 0.0,
+       "Finalizer": 0.0,
+       "Signal Dispatcher": 0.0,
+       "Attach Listener": 0.0,
+       "Service Thread": 0.0,
+       "Monitor Deflation Thread": 0.0,
+       "Notification Thread": 0.0,
+       "Common-Cleaner": 0.0,
+       "GC Thread#6": 0.0,
+       "GC Thread#7": 0.0,
+       "GC Thread#8": 0.0,
+       "GC Thread#9": 0.0,
+       "GC Thread#10": 0.0,
+       "GC Thread#11": 0.0,
+       "JFR Recorder Thread": 0.0,
+       "Alacer benchmark watchdog": 0.0,
+       "GC Thread#12": 0.0,
+       "Snooper Timer": 0.0,
+       "GC Thread#13": 0.0,
+       "GC Thread#14": 0.0,
+       "Timer hack thread": 0.0,
+       "Java2D Disposer": 0.0,
+       "native-origin:ntdll.dll": 0.0,
+       "native-origin:uiautomationcore.dll": 0.0,
+       "native-origin:combase.dll": 0.0,
+       "Chunk Batcher 0": 0.0,
+       "Chunk Batcher 1": 0.0,
+       "LWJGL Timer": 0.0,
+       "native-origin:ucrtbase.dll": 0.0,
+       "Netty Server IO #0": 0.0
+      }
+     },
+     "monitor": {
+      "samples": 60,
+      "expected_samples": 60,
+      "coverage": 1.0,
+      "availability": {
+       "cpu": {
+        "samples": 60,
+        "ok": 60,
+        "counts": {
+         "ok": 60
+        },
+        "reasons": [],
+        "fraction_ok": 1.0
+       },
+       "frequency": {
+        "samples": 60,
+        "ok": 60,
+        "counts": {
+         "ok": 60
+        },
+        "reasons": [],
+        "fraction_ok": 1.0
+       },
+       "foreground": {
+        "samples": 60,
+        "ok": 60,
+        "counts": {
+         "ok": 60
+        },
+        "reasons": [],
+        "fraction_ok": 1.0
+       },
+       "power_plan": {
+        "samples": 60,
+        "ok": 60,
+        "counts": {
+         "ok": 60
+        },
+        "reasons": [],
+        "fraction_ok": 1.0
+       },
+       "memory": {
+        "samples": 60,
+        "ok": 60,
+        "counts": {
+         "ok": 60
+        },
+        "reasons": [],
+        "fraction_ok": 1.0
+       },
+       "client_affinity": {
+        "samples": 60,
+        "ok": 60,
+        "counts": {
+         "ok": 60
+        },
+        "reasons": [],
+        "fraction_ok": 1.0
+       },
+       "gpu": {
+        "samples": 59,
+        "ok": 59
+       }
+      },
+      "busy_pct_mean": 11.962788317852247,
+      "client_cores_mean": 1.0572088233801298,
+      "harness_cores_mean": 0.09580272855584777,
+      "background_cores_mean": 0.19188160614687158,
+      "background_cores_max": 1.829889196173467,
+      "background_rolling_max": 0.6572015760079262,
+      "background_step": 0.5792796228847825,
+      "unattributed_cores_mean": 1.0478552940606687,
+      "unreadable_processes_max": 164,
+      "top_background_core_seconds": {
+       "ChatGPT.exe": 3.990299999999999,
+       "iCUE.exe": 1.7668000000000006,
+       "FxSound.exe": 1.2957000000000007,
+       "OmenCommandCenterBackground.exe": 0.8402000000000002,
+       "audiodg.exe": 0.6566,
+       "OverlayHelper.exe": 0.5286,
+       "bun.exe": 0.4845999999999999,
+       "codex.exe": 0.3746
+      },
+      "frequency_mean_mhz": 3226.1927289302835,
+      "frequency_p_mean_mhz": 3246.142829597395,
+      "frequency_e_mean_mhz": 3146.3923262618378,
+      "frequency_min_mhz": 3010.5136845721913,
+      "foreground_client_fraction": 1.0,
+      "foreground_other_exes": [],
+      "power_plans": [
+       {
+        "guid": "8c5e7fda-e8bf-4a96-9a85-a6e23a8c635c",
+        "name": "High performance"
+       }
+      ],
+      "client_affinities": [
+       [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15
+       ]
+      ],
+      "memory_available_mb_min": 16713.046875,
+      "gpu_util_mean": 83.20338983050847,
+      "gpu_clock_mean_mhz": 1779.6610169491526,
+      "gpu_clock_min_mhz": 1725.0,
+      "gpu_pstates": [
+       "P0"
+      ],
+      "monitor_self_cpu_ms_mean": 15.885416666666666,
+      "monitor_self_cpu_ms_max": 46.875,
+      "monitor_self_cores": 0.015885416666666666
+     }
+    },
+    "pan": {
+     "frame_ms": 0.9347931605022902,
+     "client_cpu_ms": 0.89,
+     "process_cpu_ms": 0.9659212286168325,
+     "off_client_cpu_ms": 0.07592122861683248,
+     "cpu_distribution_hint": "client-heavy",
+     "sections_ms": {
+      "render": 0.7306,
+      "swap": 0.1345,
+      "tick": 0.0062,
+      "terrain_setup": 0.1449
+     },
+     "visible_chunks": {
+      "visible_mean": 1433.7461,
+      "pending_mean": 0.0137,
+      "pending_max": 8
+     },
+     "allocation_bytes_per_frame": 3978.4466,
+     "bins_5s": [
+      {
+       "start_s": 0,
+       "frames": 4924,
+       "frame_ms": 1.0154903330625507,
+       "render_ms": 0.8115895004061738,
+       "swap_ms": 0.13521186027619822,
+       "tick_ms": 0.006407839155158408,
+       "visible_chunks": 1487.0808285946384,
+       "pending_chunks": 0.08834281072298944
+      },
+      {
+       "start_s": 5,
+       "frames": 5869,
+       "frame_ms": 0.8519994547623105,
+       "render_ms": 0.6564316237859943,
+       "swap_ms": 0.12964932697222697,
+       "tick_ms": 0.005270540126086215,
+       "visible_chunks": 1403.8929971034247,
+       "pending_chunks": 0.0001703867779860283
+      },
+      {
+       "start_s": 10,
+       "frames": 5423,
+       "frame_ms": 0.9219189562972524,
+       "render_ms": 0.715953752535497,
+       "swap_ms": 0.1355752351097179,
+       "tick_ms": 0.0062452517056979535,
+       "visible_chunks": 1415.429098285082,
+       "pending_chunks": 0.0007375991148810622
+      },
+      {
+       "start_s": 15,
+       "frames": 4922,
+       "frame_ms": 1.0159656846810239,
+       "render_ms": 0.8074903900853312,
+       "swap_ms": 0.13611592848435594,
+       "tick_ms": 0.0070633075985371795,
+       "visible_chunks": 1487.350060950833,
+       "pending_chunks": 0.0
+      },
+      {
+       "start_s": 20,
+       "frames": 5527,
+       "frame_ms": 0.904607309571196,
+       "render_ms": 0.6984463723538991,
+       "swap_ms": 0.13555954405645015,
+       "tick_ms": 0.005972589108015198,
+       "visible_chunks": 1405.8579699656234,
+       "pending_chunks": 0.0
+      },
+      {
+       "start_s": 25,
+       "frames": 5428,
+       "frame_ms": 0.9211023397199705,
+       "render_ms": 0.7149967575534266,
+       "swap_ms": 0.13557267870302137,
+       "tick_ms": 0.0063803426676492265,
+       "visible_chunks": 1415.731761238025,
+       "pending_chunks": 0.0
+      }
+     ],
+     "threads": {
+      "covered_s": 29.356645822525024,
+      "sampler_cpu_cores": 0.07504689102831928,
+      "cpu_cores": {
+       "Client thread": 0.9511262004794792,
+       "JFR Periodic Tasks": 0.02874136252148398,
+       "Thread-4": 0.020757650709960652,
+       "native-origin:OpenAL-amd64.dll": 0.005322474541015552,
+       "File IO Thread": 0.005322474541015552,
+       "Chunk Batcher 0": 0.003725732178710886,
+       "Thread-5": 0.003193484724609331,
+       "Chunk Batcher 1": 0.003193484724609331,
+       "Server thread": 0.003193484724609331,
+       "JFR Sampler Thread": 0.002128989816406221,
+       "C2 CompilerThread0": 0.0010644949082031104,
+       "JFR Recorder Thread": 0.0010644949082031104,
+       "GC Thread#0": 0.0005322474541015552,
+       "GC Thread#1": 0.0005322474541015552,
+       "GC Thread#6": 0.0005322474541015552,
+       "GC Thread#9": 0.0005322474541015552,
+       "Netty Server IO #0": 0.0005322474541015552,
+       "native-origin:java.exe": 0.0,
+       "G1 Main Marker": 0.0,
+       "G1 Conc#0": 0.0,
+       "G1 Refine#0": 0.0,
+       "G1 Service": 0.0,
+       "VM Periodic Task Thread": 0.0,
+       "VM Thread": 0.0,
+       "Reference Handler": 0.0,
+       "Finalizer": 0.0,
+       "Signal Dispatcher": 0.0,
+       "Attach Listener": 0.0,
+       "Service Thread": 0.0,
+       "Monitor Deflation Thread": 0.0,
+       "C1 CompilerThread0": 0.0,
+       "Notification Thread": 0.0,
+       "Common-Cleaner": 0.0,
+       "GC Thread#2": 0.0,
+       "GC Thread#3": 0.0,
+       "GC Thread#4": 0.0,
+       "GC Thread#5": 0.0,
+       "GC Thread#7": 0.0,
+       "GC Thread#8": 0.0,
+       "GC Thread#10": 0.0,
+       "GC Thread#11": 0.0,
+       "G1 Conc#1": 0.0,
+       "G1 Conc#2": 0.0,
+       "G1 Conc#3": 0.0,
+       "Alacer benchmark watchdog": 0.0,
+       "GC Thread#12": 0.0,
+       "Snooper Timer": 0.0,
+       "GC Thread#13": 0.0,
+       "GC Thread#14": 0.0,
+       "Timer hack thread": 0.0,
+       "Java2D Disposer": 0.0,
+       "native-origin:nvoglv64.dll": 0.0,
+       "native-origin:uiautomationcore.dll": 0.0,
+       "native-origin:ntdll.dll": 0.0,
+       "LWJGL Timer": 0.0,
+       "native-origin:ucrtbase.dll": 0.0,
+       "Netty Local Client IO #0": 0.0,
+       "Netty Server IO #1": 0.0
+      }
+     },
+     "monitor": {
+      "samples": 30,
+      "expected_samples": 30,
+      "coverage": 1.0,
+      "availability": {
+       "cpu": {
+        "samples": 30,
+        "ok": 30,
+        "counts": {
+         "ok": 30
+        },
+        "reasons": [],
+        "fraction_ok": 1.0
+       },
+       "frequency": {
+        "samples": 30,
+        "ok": 30,
+        "counts": {
+         "ok": 30
+        },
+        "reasons": [],
+        "fraction_ok": 1.0
+       },
+       "foreground": {
+        "samples": 30,
+        "ok": 30,
+        "counts": {
+         "ok": 30
+        },
+        "reasons": [],
+        "fraction_ok": 1.0
+       },
+       "power_plan": {
+        "samples": 30,
+        "ok": 30,
+        "counts": {
+         "ok": 30
+        },
+        "reasons": [],
+        "fraction_ok": 1.0
+       },
+       "memory": {
+        "samples": 30,
+        "ok": 30,
+        "counts": {
+         "ok": 30
+        },
+        "reasons": [],
+        "fraction_ok": 1.0
+       },
+       "client_affinity": {
+        "samples": 30,
+        "ok": 30,
+        "counts": {
+         "ok": 30
+        },
+        "reasons": [],
+        "fraction_ok": 1.0
+       },
+       "gpu": {
+        "samples": 30,
+        "ok": 30
+       }
+      },
+      "busy_pct_mean": 11.372358749474806,
+      "client_cores_mean": 1.0340622921249996,
+      "harness_cores_mean": 0.09996695977540364,
+      "background_cores_mean": 0.1619026900387636,
+      "background_cores_max": 0.5162804696830774,
+      "background_rolling_max": 0.22867647263132254,
+      "background_step": 0.11330375922538194,
+      "unattributed_cores_mean": 0.9790297598038614,
+      "unreadable_processes_max": 162,
+      "top_background_core_seconds": {
+       "iCUE.exe": 0.9534000000000001,
+       "FxSound.exe": 0.9389000000000003,
+       "ChatGPT.exe": 0.5305,
+       "audiodg.exe": 0.5163,
+       "OmenCommandCenterBackground.exe": 0.3582,
+       "OverlayHelper.exe": 0.1871,
+       "MicrosoftSecurityApp.exe": 0.1721,
+       "bun.exe": 0.1712
+      },
+      "frequency_mean_mhz": 3165.6466140313646,
+      "frequency_p_mean_mhz": 3168.259826275312,
+      "frequency_e_mean_mhz": 3155.1937650555747,
+      "frequency_min_mhz": 2951.2892526051064,
+      "foreground_client_fraction": 1.0,
+      "foreground_other_exes": [],
+      "power_plans": [
+       {
+        "guid": "8c5e7fda-e8bf-4a96-9a85-a6e23a8c635c",
+        "name": "High performance"
+       }
+      ],
+      "client_affinities": [
+       [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15
+       ]
+      ],
+      "memory_available_mb_min": 16678.6875,
+      "gpu_util_mean": 67.13333333333334,
+      "gpu_clock_mean_mhz": 1807.5,
+      "gpu_clock_min_mhz": 1755.0,
+      "gpu_pstates": [
+       "P0"
+      ],
+      "monitor_self_cpu_ms_mean": 13.020833333333334,
+      "monitor_self_cpu_ms_max": 31.25,
+      "monitor_self_cores": 0.013020833333333334
+     }
+    },
+    "sort": {
+     "frame_ms": 0.9754644779759183,
+     "client_cpu_ms": 0.924,
+     "process_cpu_ms": 1.1250027535436673,
+     "off_client_cpu_ms": 0.20100275354366726,
+     "cpu_distribution_hint": "client-heavy",
+     "sections_ms": {
+      "render": 0.7645,
+      "swap": 0.1383,
+      "tick": 0.0063,
+      "terrain_setup": 0.1576
+     },
+     "visible_chunks": {
+      "visible_mean": 1430.2781,
+      "pending_mean": 2.7509,
+      "pending_max": 307
+     },
+     "allocation_bytes_per_frame": 8704.8711,
+     "bins_5s": [
+      {
+       "start_s": 0,
+       "frames": 4885,
+       "frame_ms": 1.023712569089048,
+       "render_ms": 0.8061080040941658,
+       "swap_ms": 0.14334229273285568,
+       "tick_ms": 0.006929314227226203,
+       "visible_chunks": 1437.9920163766633,
+       "pending_chunks": 3.4974411463664277
+      },
+      {
+       "start_s": 5,
+       "frames": 5675,
+       "frame_ms": 0.8809709427312775,
+       "render_ms": 0.6763089162995595,
+       "swap_ms": 0.13351624669603523,
+       "tick_ms": 0.005569268722466961,
+       "visible_chunks": 1391.2329515418503,
+       "pending_chunks": 2.8172687224669604
+      },
+      {
+       "start_s": 10,
+       "frames": 4877,
+       "frame_ms": 1.0253079352060692,
+       "render_ms": 0.8187489235185565,
+       "swap_ms": 0.1354361082632766,
+       "tick_ms": 0.00625173262251384,
+       "visible_chunks": 1470.4908755382407,
+       "pending_chunks": 1.9358212015583351
+      },
+      {
+       "start_s": 15,
+       "frames": 4828,
+       "frame_ms": 1.0356287903893953,
+       "render_ms": 0.807384424192212,
+       "swap_ms": 0.15068798674399336,
+       "tick_ms": 0.006851884838442419,
+       "visible_chunks": 1423.6168185584092,
+       "pending_chunks": 3.694076222038111
+      },
+      {
+       "start_s": 20,
+       "frames": 5336,
+       "frame_ms": 0.9370326836581708,
+       "render_ms": 0.729626311844078,
+       "swap_ms": 0.13560269865067467,
+       "tick_ms": 0.0058649550224887555,
+       "visible_chunks": 1419.0461019490256,
+       "pending_chunks": 2.6071964017991003
+      },
+      {
+       "start_s": 25,
+       "frames": 4846,
+       "frame_ms": 1.031734647131655,
+       "render_ms": 0.8219714197276105,
+       "swap_ms": 0.13637377218324392,
+       "tick_ms": 0.006615579859678085,
+       "visible_chunks": 1457.007635163021,
+       "pending_chunks": 2.2965332232769295
+      },
+      {
+       "start_s": 30,
+       "frames": 2358,
+       "frame_ms": 0.8479775657336726,
+       "render_ms": 0.6509546225614928,
+       "swap_ms": 0.12939062765055132,
+       "tick_ms": 0.005498854961832061,
+       "visible_chunks": 1409.2196776929602,
+       "pending_chunks": 2.057675996607294
+      }
+     ],
+     "threads": {
+      "covered_s": 30.32034158706665,
+      "sampler_cpu_cores": 0.07214628482065298,
+      "cpu_cores": {
+       "Client thread": 0.9476929841798631,
+       "Chunk Batcher 1": 0.03916512604549733,
+       "Chunk Batcher 0": 0.03349648938101746,
+       "File IO Thread": 0.030404505745846612,
+       "JFR Periodic Tasks": 0.029373844534123,
+       "Server thread": 0.022674546657919507,
+       "Thread-4": 0.018036571205163245,
+       "C2 CompilerThread0": 0.009791281511374332,
+       "G1 Conc#0": 0.003091983635170842,
+       "G1 Conc#1": 0.003091983635170842,
+       "G1 Conc#2": 0.003091983635170842,
+       "G1 Conc#3": 0.002576653029309035,
+       "native-origin:OpenAL-amd64.dll": 0.0020613224234472282,
+       "Netty Server IO #1": 0.0020613224234472282,
+       "Thread-5": 0.001545991817585421,
+       "JFR Sampler Thread": 0.0010306612117236141,
+       "native-origin:uiautomationcore.dll": 0.0010306612117236141,
+       "C1 CompilerThread0": 0.0005153306058618071,
+       "GC Thread#1": 0.0005153306058618071,
+       "GC Thread#2": 0.0005153306058618071,
+       "GC Thread#4": 0.0005153306058618071,
+       "GC Thread#8": 0.0005153306058618071,
+       "JFR Recorder Thread": 0.0005153306058618071,
+       "GC Thread#12": 0.0005153306058618071,
+       "Netty Local Client IO #0": 0.0005153306058618071,
+       "native-origin:java.exe": 0.0,
+       "GC Thread#0": 0.0,
+       "G1 Main Marker": 0.0,
+       "G1 Refine#0": 0.0,
+       "G1 Service": 0.0,
+       "VM Periodic Task Thread": 0.0,
+       "VM Thread": 0.0,
+       "Reference Handler": 0.0,
+       "Finalizer": 0.0,
+       "Signal Dispatcher": 0.0,
+       "Attach Listener": 0.0,
+       "Service Thread": 0.0,
+       "Monitor Deflation Thread": 0.0,
+       "Notification Thread": 0.0,
+       "Common-Cleaner": 0.0,
+       "GC Thread#3": 0.0,
+       "GC Thread#5": 0.0,
+       "GC Thread#6": 0.0,
+       "GC Thread#7": 0.0,
+       "GC Thread#9": 0.0,
+       "GC Thread#10": 0.0,
+       "GC Thread#11": 0.0,
+       "Alacer benchmark watchdog": 0.0,
+       "Snooper Timer": 0.0,
+       "GC Thread#13": 0.0,
+       "GC Thread#14": 0.0,
+       "Timer hack thread": 0.0,
+       "Java2D Disposer": 0.0,
+       "native-origin:nvoglv64.dll": 0.0,
+       "native-origin:ntdll.dll": 0.0,
+       "LWJGL Timer": 0.0,
+       "native-origin:ucrtbase.dll": 0.0,
+       "Netty Server IO #0": 0.0
+      }
+     },
+     "monitor": {
+      "samples": 32,
+      "expected_samples": 32,
+      "coverage": 1.0,
+      "availability": {
+       "cpu": {
+        "samples": 32,
+        "ok": 32,
+        "counts": {
+         "ok": 32
+        },
+        "reasons": [],
+        "fraction_ok": 1.0
+       },
+       "frequency": {
+        "samples": 32,
+        "ok": 32,
+        "counts": {
+         "ok": 32
+        },
+        "reasons": [],
+        "fraction_ok": 1.0
+       },
+       "foreground": {
+        "samples": 32,
+        "ok": 32,
+        "counts": {
+         "ok": 32
+        },
+        "reasons": [],
+        "fraction_ok": 1.0
+       },
+       "power_plan": {
+        "samples": 32,
+        "ok": 32,
+        "counts": {
+         "ok": 32
+        },
+        "reasons": [],
+        "fraction_ok": 1.0
+       },
+       "memory": {
+        "samples": 32,
+        "ok": 32,
+        "counts": {
+         "ok": 32
+        },
+        "reasons": [],
+        "fraction_ok": 1.0
+       },
+       "client_affinity": {
+        "samples": 32,
+        "ok": 32,
+        "counts": {
+         "ok": 32
+        },
+        "reasons": [],
+        "fraction_ok": 1.0
+       },
+       "gpu": {
+        "samples": 31,
+        "ok": 31
+       }
+      },
+      "busy_pct_mean": 12.415478097059186,
+      "client_cores_mean": 1.1556887097539081,
+      "harness_cores_mean": 0.09232253067940406,
+      "background_cores_mean": 0.20798303440306232,
+      "background_cores_max": 1.33268411235002,
+      "background_rolling_max": 0.4686399048440014,
+      "background_step": 0.3594198815340026,
+      "unattributed_cores_mean": 1.0279574725371332,
+      "unreadable_processes_max": 165,
+      "top_background_core_seconds": {
+       "ChatGPT.exe": 1.0927,
+       "iCUE.exe": 0.9225999999999999,
+       "audiodg.exe": 0.5155,
+       "pwsh.exe": 0.5017,
+       "backgroundTaskHost.exe": 0.4989,
+       "FxSound.exe": 0.4845,
+       "OmenCommandCenterBackground.exe": 0.4055,
+       "codex.exe": 0.2967000000000001
+      },
+      "frequency_mean_mhz": 3261.127295721731,
+      "frequency_p_mean_mhz": 3299.441873670145,
+      "frequency_e_mean_mhz": 3107.8689839280746,
+      "frequency_min_mhz": 2968.38026347681,
+      "foreground_client_fraction": 1.0,
+      "foreground_other_exes": [],
+      "power_plans": [
+       {
+        "guid": "8c5e7fda-e8bf-4a96-9a85-a6e23a8c635c",
+        "name": "High performance"
+       }
+      ],
+      "client_affinities": [
+       [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15
+       ]
+      ],
+      "memory_available_mb_min": 16151.44921875,
+      "gpu_util_mean": 66.19354838709677,
+      "gpu_clock_mean_mhz": 1814.516129032258,
+      "gpu_clock_min_mhz": 1740.0,
+      "gpu_pstates": [
+       "P0"
+      ],
+      "monitor_self_cpu_ms_mean": 13.671875,
+      "monitor_self_cpu_ms_max": 31.25,
+      "monitor_self_cores": 0.013671875
+     }
+    },
+    "fly": {
+     "frame_ms": 1.1886772993373154,
+     "client_cpu_ms": 1.152,
+     "process_cpu_ms": 2.1070504448604797,
+     "off_client_cpu_ms": 0.9550504448604797,
+     "cpu_distribution_hint": "client-heavy",
+     "sections_ms": {
+      "render": 0.9547,
+      "swap": 0.1529,
+      "tick": 0.0073,
+      "terrain_setup": 0.1763
+     },
+     "visible_chunks": {
+      "visible_mean": 1263.6478,
+      "pending_mean": 39.134,
+      "pending_max": 820
+     },
+     "allocation_bytes_per_frame": 20087.1627,
+     "bins_5s": [
+      {
+       "start_s": 0,
+       "frames": 5045,
+       "frame_ms": 0.9911632309217047,
+       "render_ms": 0.770700574826561,
+       "swap_ms": 0.14717133795837464,
+       "tick_ms": 0.0058653121902874136,
+       "visible_chunks": 1155.0348860257682,
+       "pending_chunks": 6.221605550049554
+      },
+      {
+       "start_s": 5,
+       "frames": 5193,
+       "frame_ms": 0.9628075293664549,
+       "render_ms": 0.750302060466012,
+       "swap_ms": 0.1418785095320624,
+       "tick_ms": 0.005168110918544194,
+       "visible_chunks": 1239.1068746389371,
+       "pending_chunks": 7.163104178702099
+      },
+      {
+       "start_s": 10,
+       "frames": 3881,
+       "frame_ms": 1.2885400154599331,
+       "render_ms": 1.0399752641071889,
+       "swap_ms": 0.16515699561968566,
+       "tick_ms": 0.007261169801597526,
+       "visible_chunks": 1263.5094047925793,
+       "pending_chunks": 16.33522288070085
+      },
+      {
+       "start_s": 15,
+       "frames": 4178,
+       "frame_ms": 1.1965441120153184,
+       "render_ms": 0.9766973432264241,
+       "swap_ms": 0.1429663475347056,
+       "tick_ms": 0.006549281953087602,
+       "visible_chunks": 1154.933221637147,
+       "pending_chunks": 14.714935375777884
+      },
+      {
+       "start_s": 20,
+       "frames": 3525,
+       "frame_ms": 1.4184592907801419,
+       "render_ms": 1.1542900425531915,
+       "swap_ms": 0.17106933333333335,
+       "tick_ms": 0.009746553191489362,
+       "visible_chunks": 1320.010780141844,
+       "pending_chunks": 72.51602836879432
+      },
+      {
+       "start_s": 25,
+       "frames": 4153,
+       "frame_ms": 1.2039317360943895,
+       "render_ms": 0.9688558632313989,
+       "swap_ms": 0.15292814832651094,
+       "tick_ms": 0.00771160606790272,
+       "visible_chunks": 1325.4237900313026,
+       "pending_chunks": 60.6467613773176
+      },
+      {
+       "start_s": 30,
+       "frames": 4262,
+       "frame_ms": 1.1732532379164713,
+       "render_ms": 0.9389324026278743,
+       "swap_ms": 0.15065485687470673,
+       "tick_ms": 0.007467339277334585,
+       "visible_chunks": 1335.3946503988739,
+       "pending_chunks": 62.50633505396527
+      },
+      {
+       "start_s": 35,
+       "frames": 3414,
+       "frame_ms": 1.4644153192735794,
+       "render_ms": 1.2096685998828354,
+       "swap_ms": 0.16083708260105448,
+       "tick_ms": 0.010713766842413592,
+       "visible_chunks": 1371.7668424135911,
+       "pending_chunks": 102.38693614528412
+      }
+     ],
+     "threads": {
+      "covered_s": 39.464112758636475,
+      "sampler_cpu_cores": 0.08631259546699332,
+      "cpu_cores": {
+       "Client thread": 0.9692350169871544,
+       "Server thread": 0.16312288684587728,
+       "Chunk Batcher 1": 0.10254569828418014,
+       "Chunk Batcher 0": 0.09898233425113913,
+       "C2 CompilerThread0": 0.09621082889210723,
+       "File IO Thread": 0.03563364033041009,
+       "JFR Periodic Tasks": 0.033653993645387306,
+       "Thread-4": 0.025339477568291618,
+       "G1 Conc#0": 0.013857526795159478,
+       "G1 Conc#3": 0.013857526795159478,
+       "G1 Conc#2": 0.013461597458154922,
+       "G1 Conc#1": 0.012669738784145809,
+       "native-origin:ucrtbase.dll": 0.011086021436127583,
+       "C1 CompilerThread0": 0.0063348693920729044,
+       "GC Thread#7": 0.004355222707050122,
+       "GC Thread#4": 0.003959293370045565,
+       "GC Thread#10": 0.003959293370045565,
+       "GC Thread#9": 0.003563364033041009,
+       "GC Thread#14": 0.003563364033041009,
+       "GC Thread#5": 0.002771505359031896,
+       "GC Thread#6": 0.002771505359031896,
+       "GC Thread#0": 0.002375576022027339,
+       "GC Thread#8": 0.002375576022027339,
+       "GC Thread#12": 0.002375576022027339,
+       "Netty Server IO #1": 0.002375576022027339,
+       "GC Thread#3": 0.0019796466850227827,
+       "GC Thread#2": 0.0015837173480182261,
+       "GC Thread#1": 0.0011877880110136695,
+       "JFR Sampler Thread": 0.0011877880110136695,
+       "GC Thread#13": 0.0011877880110136695,
+       "native-origin:OpenAL-amd64.dll": 0.0011877880110136695,
+       "VM Thread": 0.0007918586740091131,
+       "GC Thread#11": 0.0007918586740091131,
+       "Netty Local Client IO #0": 0.0007918586740091131,
+       "G1 Refine#0": 0.00039592933700455653,
+       "VM Periodic Task Thread": 0.00039592933700455653,
+       "JFR Recorder Thread": 0.00039592933700455653,
+       "native-origin:nvoglv64.dll": 0.00039592933700455653,
+       "native-origin:java.exe": 0.0,
+       "G1 Main Marker": 0.0,
+       "G1 Service": 0.0,
+       "Reference Handler": 0.0,
+       "Finalizer": 0.0,
+       "Signal Dispatcher": 0.0,
+       "Attach Listener": 0.0,
+       "Service Thread": 0.0,
+       "Monitor Deflation Thread": 0.0,
+       "Notification Thread": 0.0,
+       "Common-Cleaner": 0.0,
+       "Alacer benchmark watchdog": 0.0,
+       "Snooper Timer": 0.0,
+       "Timer hack thread": 0.0,
+       "Java2D Disposer": 0.0,
+       "native-origin:uiautomationcore.dll": 0.0,
+       "Thread-5": 0.0,
+       "native-origin:ntdll.dll": 0.0,
+       "LWJGL Timer": 0.0,
+       "Netty Server IO #0": 0.0
+      }
+     },
+     "monitor": {
+      "samples": 40,
+      "expected_samples": 40,
+      "coverage": 1.0,
+      "availability": {
+       "cpu": {
+        "samples": 40,
+        "ok": 40,
+        "counts": {
+         "ok": 40
+        },
+        "reasons": [],
+        "fraction_ok": 1.0
+       },
+       "frequency": {
+        "samples": 40,
+        "ok": 40,
+        "counts": {
+         "ok": 40
+        },
+        "reasons": [],
+        "fraction_ok": 1.0
+       },
+       "foreground": {
+        "samples": 40,
+        "ok": 40,
+        "counts": {
+         "ok": 40
+        },
+        "reasons": [],
+        "fraction_ok": 1.0
+       },
+       "power_plan": {
+        "samples": 40,
+        "ok": 40,
+        "counts": {
+         "ok": 40
+        },
+        "reasons": [],
+        "fraction_ok": 1.0
+       },
+       "memory": {
+        "samples": 40,
+        "ok": 40,
+        "counts": {
+         "ok": 40
+        },
+        "reasons": [],
+        "fraction_ok": 1.0
+       },
+       "client_affinity": {
+        "samples": 40,
+        "ok": 40,
+        "counts": {
+         "ok": 40
+        },
+        "reasons": [],
+        "fraction_ok": 1.0
+       },
+       "gpu": {
+        "samples": 40,
+        "ok": 40
+       }
+      },
+      "busy_pct_mean": 17.609201421381677,
+      "client_cores_mean": 1.7524516860865837,
+      "harness_cores_mean": 0.10388004442900156,
+      "background_cores_mean": 0.21862317237951862,
+      "background_cores_max": 1.0665002290577315,
+      "background_rolling_max": 0.5213660792460872,
+      "background_step": 0.40593695822067394,
+      "unattributed_cores_mean": 1.446569248587351,
+      "unreadable_processes_max": 167,
+      "top_background_core_seconds": {
+       "ChatGPT.exe": 2.4993000000000003,
+       "iCUE.exe": 1.2342,
+       "FxSound.exe": 0.9991999999999999,
+       "audiodg.exe": 0.7799999999999999,
+       "OmenCommandCenterBackground.exe": 0.6870999999999999,
+       "Codex Web GPT.exe": 0.5613999999999999,
+       "codex.exe": 0.28179999999999994,
+       "QmlRenderer.exe": 0.26489999999999997
+      },
+      "frequency_mean_mhz": 3421.476323282882,
+      "frequency_p_mean_mhz": 3493.658284704469,
+      "frequency_e_mean_mhz": 3132.748477596532,
+      "frequency_min_mhz": 3131.5187408062793,
+      "foreground_client_fraction": 1.0,
+      "foreground_other_exes": [],
+      "power_plans": [
+       {
+        "guid": "8c5e7fda-e8bf-4a96-9a85-a6e23a8c635c",
+        "name": "High performance"
+       }
+      ],
+      "client_affinities": [
+       [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15
+       ]
+      ],
+      "memory_available_mb_min": 15782.0703125,
+      "gpu_util_mean": 67.3,
+      "gpu_clock_mean_mhz": 1841.25,
+      "gpu_clock_min_mhz": 1725.0,
+      "gpu_pstates": [
+       "P0"
+      ],
+      "monitor_self_cpu_ms_mean": 16.015625,
+      "monitor_self_cpu_ms_max": 31.25,
+      "monitor_self_cores": 0.016015625
+     }
+    },
+    "reference-post": {
+     "frame_ms": 0.6126153582258707,
+     "client_cpu_ms": 0.5782,
+     "process_cpu_ms": 0.6446534137899348,
+     "off_client_cpu_ms": 0.06645341378993475,
+     "cpu_distribution_hint": "client-heavy",
+     "sections_ms": {
+      "render": 0.4165,
+      "swap": 0.1332,
+      "tick": 0.004,
+      "terrain_setup": 0.0102
+     },
+     "visible_chunks": {
+      "visible_mean": 1293.0,
+      "pending_mean": 0.0001,
+      "pending_max": 2
+     },
+     "allocation_bytes_per_frame": 3981.9531,
+     "bins_5s": [
+      {
+       "start_s": 0,
+       "frames": 8150,
+       "frame_ms": 0.6135003558282208,
+       "render_ms": 0.4171266134969325,
+       "swap_ms": 0.13402779141104293,
+       "tick_ms": 0.0039960858895705526,
+       "visible_chunks": 1293.0,
+       "pending_chunks": 0.000245398773006135
+      },
+      {
+       "start_s": 5,
+       "frames": 8144,
+       "frame_ms": 0.6139638015717093,
+       "render_ms": 0.4171699410609037,
+       "swap_ms": 0.1333832637524558,
+       "tick_ms": 0.0040904960707269155,
+       "visible_chunks": 1293.0,
+       "pending_chunks": 0.0
+      },
+      {
+       "start_s": 10,
+       "frames": 8175,
+       "frame_ms": 0.6116629847094801,
+       "render_ms": 0.41581224464831806,
+       "swap_ms": 0.13278518654434252,
+       "tick_ms": 0.004087547400611621,
+       "visible_chunks": 1293.0,
+       "pending_chunks": 0.0
+      },
+      {
+       "start_s": 15,
+       "frames": 8178,
+       "frame_ms": 0.6113425776473466,
+       "render_ms": 0.4159629493763756,
+       "swap_ms": 0.1326452433357789,
+       "tick_ms": 0.003887662020053803,
+       "visible_chunks": 1293.0,
+       "pending_chunks": 0.0
+      }
+     ],
+     "threads": {
+      "covered_s": 19.24387288093567,
+      "sampler_cpu_cores": 0.0763229942895251,
+      "cpu_cores": {
+       "Client thread": 0.9442940676459329,
+       "Thread-4": 0.03247786991043621,
+       "JFR Periodic Tasks": 0.02923008291939259,
+       "File IO Thread": 0.019486721946261727,
+       "Server thread": 0.009743360973130864,
+       "C2 CompilerThread0": 0.005683627234326337,
+       "native-origin:OpenAL-amd64.dll": 0.002435840243282716,
+       "JFR Sampler Thread": 0.0008119467477609053,
+       "native-origin:java.exe": 0.0,
+       "GC Thread#0": 0.0,
+       "G1 Main Marker": 0.0,
+       "G1 Conc#0": 0.0,
+       "G1 Refine#0": 0.0,
+       "G1 Service": 0.0,
+       "VM Periodic Task Thread": 0.0,
+       "VM Thread": 0.0,
+       "Reference Handler": 0.0,
+       "Finalizer": 0.0,
+       "Signal Dispatcher": 0.0,
+       "Attach Listener": 0.0,
+       "Service Thread": 0.0,
+       "Monitor Deflation Thread": 0.0,
+       "C1 CompilerThread0": 0.0,
+       "Notification Thread": 0.0,
+       "Common-Cleaner": 0.0,
+       "GC Thread#1": 0.0,
+       "GC Thread#2": 0.0,
+       "GC Thread#3": 0.0,
+       "GC Thread#4": 0.0,
+       "GC Thread#5": 0.0,
+       "GC Thread#6": 0.0,
+       "GC Thread#7": 0.0,
+       "GC Thread#8": 0.0,
+       "GC Thread#9": 0.0,
+       "GC Thread#10": 0.0,
+       "GC Thread#11": 0.0,
+       "JFR Recorder Thread": 0.0,
+       "G1 Conc#1": 0.0,
+       "G1 Conc#2": 0.0,
+       "G1 Conc#3": 0.0,
+       "Alacer benchmark watchdog": 0.0,
+       "GC Thread#12": 0.0,
+       "Snooper Timer": 0.0,
+       "GC Thread#13": 0.0,
+       "GC Thread#14": 0.0,
+       "Timer hack thread": 0.0,
+       "Java2D Disposer": 0.0,
+       "native-origin:nvoglv64.dll": 0.0,
+       "native-origin:uiautomationcore.dll": 0.0,
+       "Thread-5": 0.0,
+       "native-origin:ntdll.dll": 0.0,
+       "Chunk Batcher 0": 0.0,
+       "Chunk Batcher 1": 0.0,
+       "LWJGL Timer": 0.0,
+       "native-origin:ucrtbase.dll": 0.0,
+       "Netty Server IO #0": 0.0,
+       "Netty Local Client IO #0": 0.0,
+       "Netty Server IO #1": 0.0
+      }
+     },
+     "monitor": {
+      "samples": 20,
+      "expected_samples": 20,
+      "coverage": 1.0,
+      "availability": {
+       "cpu": {
+        "samples": 20,
+        "ok": 20,
+        "counts": {
+         "ok": 20
+        },
+        "reasons": [],
+        "fraction_ok": 1.0
+       },
+       "frequency": {
+        "samples": 20,
+        "ok": 20,
+        "counts": {
+         "ok": 20
+        },
+        "reasons": [],
+        "fraction_ok": 1.0
+       },
+       "foreground": {
+        "samples": 20,
+        "ok": 20,
+        "counts": {
+         "ok": 20
+        },
+        "reasons": [],
+        "fraction_ok": 1.0
+       },
+       "power_plan": {
+        "samples": 20,
+        "ok": 20,
+        "counts": {
+         "ok": 20
+        },
+        "reasons": [],
+        "fraction_ok": 1.0
+       },
+       "memory": {
+        "samples": 20,
+        "ok": 20,
+        "counts": {
+         "ok": 20
+        },
+        "reasons": [],
+        "fraction_ok": 1.0
+       },
+       "client_affinity": {
+        "samples": 20,
+        "ok": 20,
+        "counts": {
+         "ok": 20
+        },
+        "reasons": [],
+        "fraction_ok": 1.0
+       },
+       "gpu": {
+        "samples": 20,
+        "ok": 20
+       }
+      },
+      "busy_pct_mean": 11.061422398164101,
+      "client_cores_mean": 1.0574515546306178,
+      "harness_cores_mean": 0.0914166639403151,
+      "background_cores_mean": 0.09681415791123564,
+      "background_cores_max": 0.2469026067973788,
+      "background_rolling_max": 0.15584254218881635,
+      "background_step": 0.09327782923713168,
+      "unattributed_cores_mean": 0.9664193692210246,
+      "unreadable_processes_max": 167,
+      "top_background_core_seconds": {
+       "iCUE.exe": 0.6253,
+       "FxSound.exe": 0.39089999999999997,
+       "ChatGPT.exe": 0.24869999999999998,
+       "audiodg.exe": 0.20329999999999998,
+       "OmenCommandCenterBackground.exe": 0.1243,
+       "OverlayHelper.exe": 0.10919999999999999,
+       "bun.exe": 0.07830000000000001,
+       "QmlRenderer.exe": 0.0466
+      },
+      "frequency_mean_mhz": 3198.4073053248785,
+      "frequency_p_mean_mhz": 3216.767926512278,
+      "frequency_e_mean_mhz": 3124.964820575281,
+      "frequency_min_mhz": 2981.419042197066,
+      "foreground_client_fraction": 1.0,
+      "foreground_other_exes": [],
+      "power_plans": [
+       {
+        "guid": "8c5e7fda-e8bf-4a96-9a85-a6e23a8c635c",
+        "name": "High performance"
+       }
+      ],
+      "client_affinities": [
+       [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15
+       ]
+      ],
+      "memory_available_mb_min": 15791.2109375,
+      "gpu_util_mean": 80.9,
+      "gpu_clock_mean_mhz": 1775.25,
+      "gpu_clock_min_mhz": 1695.0,
+      "gpu_pstates": [
+       "P0"
+      ],
+      "monitor_self_cpu_ms_mean": 13.28125,
+      "monitor_self_cpu_ms_max": 31.25,
+      "monitor_self_cores": 0.01328125
+     }
+    }
+   }
+  },
+  {
+   "label": "diag32v2-terrain-2-nomon",
+   "status": "passed-smoke",
+   "origin": "record",
+   "environment_assessed": false,
+   "environment_rejections": [],
+   "scene": "terrain",
+   "reference_distribution_changed": false,
+   "phases": {
+    "reference-pre": {
+     "frame_ms": 0.610018462148478,
+     "client_cpu_ms": 0.5867,
+     "process_cpu_ms": 0.6652872890868055,
+     "off_client_cpu_ms": 0.07858728908680546,
+     "cpu_distribution_hint": "client-heavy",
+     "sections_ms": {
+      "render": 0.4116,
+      "swap": 0.1348,
+      "tick": 0.0048,
+      "terrain_setup": 0.0093
+     },
+     "visible_chunks": {
+      "visible_mean": 1374.0,
+      "pending_mean": 0.0,
+      "pending_max": 0
+     },
+     "allocation_bytes_per_frame": 4186.4374,
+     "bins_5s": [
+      {
+       "start_s": 0,
+       "frames": 8087,
+       "frame_ms": 0.618334376159268,
+       "render_ms": 0.4164995424755781,
+       "swap_ms": 0.13579384196859157,
+       "tick_ms": 0.005239272907134908,
+       "visible_chunks": 1374.0,
+       "pending_chunks": 0.0
+      },
+      {
+       "start_s": 5,
+       "frames": 8214,
+       "frame_ms": 0.6086812636961286,
+       "render_ms": 0.41095416362308257,
+       "swap_ms": 0.13463122717311907,
+       "tick_ms": 0.004685488190893596,
+       "visible_chunks": 1374.0,
+       "pending_chunks": 0.0
+      },
+      {
+       "start_s": 10,
+       "frames": 8257,
+       "frame_ms": 0.6055961729441686,
+       "render_ms": 0.40809539784425336,
+       "swap_ms": 0.13449894634855275,
+       "tick_ms": 0.004738355334867385,
+       "visible_chunks": 1374.0,
+       "pending_chunks": 0.0
+      },
+      {
+       "start_s": 15,
+       "frames": 8228,
+       "frame_ms": 0.6076178536703938,
+       "render_ms": 0.41092085561497327,
+       "swap_ms": 0.13416298006806027,
+       "tick_ms": 0.004714693728731162,
+       "visible_chunks": 1374.0,
+       "pending_chunks": 0.0
+      }
+     ],
+     "threads": {
+      "covered_s": 19.23483371734619,
+      "sampler_cpu_cores": 0.07229721974388156,
+      "cpu_cores": {
+       "Client thread": 0.9617967210871435,
+       "Thread-4": 0.034930117404347275,
+       "JFR Periodic Tasks": 0.02924381922224423,
+       "Server thread": 0.026806834287057213,
+       "C2 CompilerThread0": 0.017058894546309135,
+       "Thread-5": 0.0032493132469160256,
+       "G1 Refine#0": 0.0016246566234580128,
+       "JFR Sampler Thread": 0.0016246566234580128,
+       "C1 CompilerThread0": 0.0008123283117290064,
+       "native-origin:uiautomationcore.dll": 0.0008123283117290064,
+       "native-origin:java.exe": 0.0,
+       "native-origin:ntdll.dll": 0.0,
+       "GC Thread#0": 0.0,
+       "G1 Main Marker": 0.0,
+       "G1 Conc#0": 0.0,
+       "G1 Service": 0.0,
+       "VM Periodic Task Thread": 0.0,
+       "VM Thread": 0.0,
+       "Reference Handler": 0.0,
+       "Finalizer": 0.0,
+       "Signal Dispatcher": 0.0,
+       "Attach Listener": 0.0,
+       "Service Thread": 0.0,
+       "Monitor Deflation Thread": 0.0,
+       "Notification Thread": 0.0,
+       "Common-Cleaner": 0.0,
+       "JFR Recorder Thread": 0.0,
+       "GC Thread#1": 0.0,
+       "GC Thread#2": 0.0,
+       "GC Thread#3": 0.0,
+       "GC Thread#4": 0.0,
+       "GC Thread#5": 0.0,
+       "GC Thread#6": 0.0,
+       "GC Thread#7": 0.0,
+       "GC Thread#8": 0.0,
+       "GC Thread#9": 0.0,
+       "GC Thread#10": 0.0,
+       "GC Thread#11": 0.0,
+       "G1 Conc#1": 0.0,
+       "G1 Conc#2": 0.0,
+       "G1 Conc#3": 0.0,
+       "Alacer benchmark watchdog": 0.0,
+       "GC Thread#12": 0.0,
+       "Snooper Timer": 0.0,
+       "GC Thread#13": 0.0,
+       "GC Thread#14": 0.0,
+       "Timer hack thread": 0.0,
+       "Java2D Disposer": 0.0,
+       "native-origin:SHCORE.dll": 0.0,
+       "native-origin:CRYPT32.dll": 0.0,
+       "native-origin:nvoglv64.dll": 0.0,
+       "native-origin:combase.dll": 0.0,
+       "native-origin:OpenAL-amd64.dll": 0.0,
+       "Chunk Batcher 0": 0.0,
+       "Chunk Batcher 1": 0.0,
+       "LWJGL Timer": 0.0,
+       "native-origin:ucrtbase.dll": 0.0,
+       "Netty Server IO #0": 0.0,
+       "Netty Local Client IO #0": 0.0,
+       "Netty Server IO #1": 0.0,
+       "File IO Thread": 0.0,
+       "Downloader 0": 0.0,
+       "Downloader 1": 0.0,
+       "Downloader 2": 0.0,
+       "Downloader 3": 0.0,
+       "Downloader 4": 0.0,
+       "Downloader 5": 0.0,
+       "Downloader 6": 0.0,
+       "Downloader 7": 0.0
+      }
+     }
+    },
+    "warmup-pan": {
+     "frame_ms": 0.9716157916896071,
+     "client_cpu_ms": 0.9397,
+     "process_cpu_ms": 1.1542764517278232,
+     "off_client_cpu_ms": 0.21457645172782325,
+     "cpu_distribution_hint": "client-heavy",
+     "sections_ms": {
+      "render": 0.7614,
+      "swap": 0.1388,
+      "tick": 0.0074,
+      "terrain_setup": 0.1521
+     },
+     "visible_chunks": {
+      "visible_mean": 1484.6011,
+      "pending_mean": 0.0619,
+      "pending_max": 17
+     },
+     "allocation_bytes_per_frame": 5841.7867,
+     "bins_5s": [
+      {
+       "start_s": 0,
+       "frames": 4126,
+       "frame_ms": 1.2119707222491516,
+       "render_ms": 0.9798785021812894,
+       "swap_ms": 0.15147130392632088,
+       "tick_ms": 0.009935482307319438,
+       "visible_chunks": 1514.4066892874455,
+       "pending_chunks": 0.4585555016965584
+      },
+      {
+       "start_s": 5,
+       "frames": 5274,
+       "frame_ms": 0.9480981607887751,
+       "render_ms": 0.7326740424725067,
+       "swap_ms": 0.14341450511945392,
+       "tick_ms": 0.007338509670079636,
+       "visible_chunks": 1474.4235874099356,
+       "pending_chunks": 0.00018960940462646946
+      },
+      {
+       "start_s": 10,
+       "frames": 5505,
+       "frame_ms": 0.9081206902815623,
+       "render_ms": 0.7066533333333334,
+       "swap_ms": 0.13340815622161672,
+       "tick_ms": 0.006677075386012716,
+       "visible_chunks": 1467.696276112625,
+       "pending_chunks": 0.0010899182561307902
+      },
+      {
+       "start_s": 15,
+       "frames": 5007,
+       "frame_ms": 0.998705771919313,
+       "render_ms": 0.7919104054323945,
+       "swap_ms": 0.13578368284401837,
+       "tick_ms": 0.007475254643499101,
+       "visible_chunks": 1517.6738566007589,
+       "pending_chunks": 0.000798881565807869
+      },
+      {
+       "start_s": 20,
+       "frames": 5442,
+       "frame_ms": 0.9187480338110989,
+       "render_ms": 0.7100672914369718,
+       "swap_ms": 0.13862508269018745,
+       "tick_ms": 0.006984013230429988,
+       "visible_chunks": 1475.2291436971702,
+       "pending_chunks": 0.000735023888276369
+      },
+      {
+       "start_s": 25,
+       "frames": 5523,
+       "frame_ms": 0.9053356690204599,
+       "render_ms": 0.7031298750678978,
+       "swap_ms": 0.13339708491761723,
+       "tick_ms": 0.006863208401231215,
+       "visible_chunks": 1468.1544450479812,
+       "pending_chunks": 0.0009053050878145935
+      }
+     ],
+     "threads": {
+      "covered_s": 28.284825325012207,
+      "sampler_cpu_cores": 0.07402379105903481,
+      "cpu_cores": {
+       "Client thread": 0.9667286145769471,
+       "C2 CompilerThread0": 0.0430884753925725,
+       "JFR Periodic Tasks": 0.03148773201764914,
+       "Thread-4": 0.02927806661290183,
+       "Server thread": 0.026515984856967694,
+       "Chunk Batcher 0": 0.009943494321362885,
+       "Chunk Batcher 1": 0.007733828916615578,
+       "Netty Local Client IO #0": 0.007733828916615578,
+       "File IO Thread": 0.0055241635118682695,
+       "Thread-5": 0.004419330809494615,
+       "G1 Conc#0": 0.0033144981071209618,
+       "G1 Conc#1": 0.0033144981071209618,
+       "G1 Conc#2": 0.0033144981071209618,
+       "G1 Conc#3": 0.0033144981071209618,
+       "Netty Server IO #1": 0.0033144981071209618,
+       "JFR Sampler Thread": 0.0016572490535604809,
+       "G1 Refine#0": 0.0011048327023736538,
+       "native-origin:uiautomationcore.dll": 0.0011048327023736538,
+       "GC Thread#0": 0.0005524163511868269,
+       "C1 CompilerThread0": 0.0005524163511868269,
+       "GC Thread#3": 0.0005524163511868269,
+       "GC Thread#6": 0.0005524163511868269,
+       "GC Thread#7": 0.0005524163511868269,
+       "GC Thread#8": 0.0005524163511868269,
+       "GC Thread#11": 0.0005524163511868269,
+       "GC Thread#12": 0.0005524163511868269,
+       "native-origin:OpenAL-amd64.dll": 0.0005524163511868269,
+       "native-origin:java.exe": 0.0,
+       "native-origin:ntdll.dll": 0.0,
+       "G1 Main Marker": 0.0,
+       "G1 Service": 0.0,
+       "VM Periodic Task Thread": 0.0,
+       "VM Thread": 0.0,
+       "Reference Handler": 0.0,
+       "Finalizer": 0.0,
+       "Signal Dispatcher": 0.0,
+       "Attach Listener": 0.0,
+       "Service Thread": 0.0,
+       "Monitor Deflation Thread": 0.0,
+       "Notification Thread": 0.0,
+       "Common-Cleaner": 0.0,
+       "JFR Recorder Thread": 0.0,
+       "GC Thread#1": 0.0,
+       "GC Thread#2": 0.0,
+       "GC Thread#4": 0.0,
+       "GC Thread#5": 0.0,
+       "GC Thread#9": 0.0,
+       "GC Thread#10": 0.0,
+       "Alacer benchmark watchdog": 0.0,
+       "Snooper Timer": 0.0,
+       "GC Thread#13": 0.0,
+       "GC Thread#14": 0.0,
+       "Timer hack thread": 0.0,
+       "Java2D Disposer": 0.0,
+       "native-origin:nvoglv64.dll": 0.0,
+       "native-origin:combase.dll": 0.0,
+       "LWJGL Timer": 0.0,
+       "native-origin:ucrtbase.dll": 0.0,
+       "Netty Server IO #0": 0.0,
+       "Downloader 0": 0.0,
+       "Downloader 1": 0.0,
+       "Downloader 2": 0.0,
+       "Downloader 3": 0.0,
+       "Downloader 4": 0.0,
+       "Downloader 5": 0.0,
+       "Downloader 6": 0.0,
+       "Downloader 7": 0.0
+      }
+     }
+    },
+    "warmup-sort": {
+     "frame_ms": 1.028642257867498,
+     "client_cpu_ms": 1.007,
+     "process_cpu_ms": 1.3962776045517373,
+     "off_client_cpu_ms": 0.38927760455173743,
+     "cpu_distribution_hint": "client-heavy",
+     "sections_ms": {
+      "render": 0.8101,
+      "swap": 0.1439,
+      "tick": 0.0076,
+      "terrain_setup": 0.1613
+     },
+     "visible_chunks": {
+      "visible_mean": 1437.0175,
+      "pending_mean": 2.9014,
+      "pending_max": 301
+     },
+     "allocation_bytes_per_frame": 10203.4827,
+     "bins_5s": [
+      {
+       "start_s": 0,
+       "frames": 4557,
+       "frame_ms": 1.0973068685538732,
+       "render_ms": 0.8702139126618389,
+       "swap_ms": 0.14831364933070001,
+       "tick_ms": 0.008794448101821374,
+       "visible_chunks": 1482.025235900812,
+       "pending_chunks": 3.2642089093701996
+      },
+      {
+       "start_s": 5,
+       "frames": 5242,
+       "frame_ms": 0.9538076115986265,
+       "render_ms": 0.7375950591377336,
+       "swap_ms": 0.14258283098054178,
+       "tick_ms": 0.007208412819534529,
+       "visible_chunks": 1391.1104540251813,
+       "pending_chunks": 3.2943533002670735
+      },
+      {
+       "start_s": 10,
+       "frames": 4655,
+       "frame_ms": 1.074190977443609,
+       "render_ms": 0.8602943716433943,
+       "swap_ms": 0.14036829215896887,
+       "tick_ms": 0.007485435016111708,
+       "visible_chunks": 1470.7024704618689,
+       "pending_chunks": 1.8994629430719656
+      },
+      {
+       "start_s": 15,
+       "frames": 4811,
+       "frame_ms": 1.0396203907711494,
+       "render_ms": 0.817766410309707,
+       "swap_ms": 0.14582236541259616,
+       "tick_ms": 0.007689482436083974,
+       "visible_chunks": 1424.430887549366,
+       "pending_chunks": 4.059862814383704
+      },
+      {
+       "start_s": 20,
+       "frames": 4843,
+       "frame_ms": 1.0320364856493909,
+       "render_ms": 0.8026217633698121,
+       "swap_ms": 0.15275385091885194,
+       "tick_ms": 0.0077523022919677885,
+       "visible_chunks": 1416.1426801569276,
+       "pending_chunks": 2.9797646087136074
+      },
+      {
+       "start_s": 25,
+       "frames": 4771,
+       "frame_ms": 1.0481511423181722,
+       "render_ms": 0.8385042758331587,
+       "swap_ms": 0.1381709704464473,
+       "tick_ms": 0.00700553343114651,
+       "visible_chunks": 1458.2372668203732,
+       "pending_chunks": 2.0813246698805283
+      },
+      {
+       "start_s": 30,
+       "frames": 2230,
+       "frame_ms": 0.8963634977578475,
+       "render_ms": 0.692157668161435,
+       "swap_ms": 0.13395183856502244,
+       "tick_ms": 0.006810358744394619,
+       "visible_chunks": 1409.7313901345292,
+       "pending_chunks": 2.4130044843049325
+      }
+     ],
+     "threads": {
+      "covered_s": 31.37752890586853,
+      "sampler_cpu_cores": 0.07419720676488872,
+      "cpu_cores": {
+       "Client thread": 0.9800006906932953,
+       "C2 CompilerThread0": 0.07618907808743607,
+       "Server thread": 0.0363516516364891,
+       "Chunk Batcher 0": 0.03485774814457859,
+       "Chunk Batcher 1": 0.032865876822031244,
+       "JFR Periodic Tasks": 0.03186994116075757,
+       "Thread-4": 0.02589432719311553,
+       "File IO Thread": 0.02191058454802083,
+       "G1 Conc#0": 0.007967485290189393,
+       "G1 Conc#1": 0.007967485290189393,
+       "G1 Conc#2": 0.007967485290189393,
+       "G1 Conc#3": 0.007967485290189393,
+       "C1 CompilerThread0": 0.007469517459552556,
+       "Netty Server IO #1": 0.00497967830636837,
+       "Netty Local Client IO #0": 0.003983742645094697,
+       "JFR Sampler Thread": 0.002489839153184185,
+       "Thread-5": 0.0019918713225473483,
+       "GC Thread#6": 0.0014939034919105112,
+       "GC Thread#7": 0.0014939034919105112,
+       "GC Thread#1": 0.0009959356612736741,
+       "GC Thread#2": 0.0009959356612736741,
+       "GC Thread#4": 0.0009959356612736741,
+       "GC Thread#5": 0.0009959356612736741,
+       "GC Thread#9": 0.0009959356612736741,
+       "GC Thread#10": 0.0009959356612736741,
+       "GC Thread#13": 0.0009959356612736741,
+       "VM Periodic Task Thread": 0.0004979678306368371,
+       "Common-Cleaner": 0.0004979678306368371,
+       "JFR Recorder Thread": 0.0004979678306368371,
+       "GC Thread#3": 0.0004979678306368371,
+       "GC Thread#8": 0.0004979678306368371,
+       "GC Thread#11": 0.0004979678306368371,
+       "Alacer benchmark watchdog": 0.0004979678306368371,
+       "GC Thread#12": 0.0004979678306368371,
+       "GC Thread#14": 0.0004979678306368371,
+       "native-origin:uiautomationcore.dll": 0.0004979678306368371,
+       "native-origin:java.exe": 0.0,
+       "GC Thread#0": 0.0,
+       "G1 Main Marker": 0.0,
+       "G1 Refine#0": 0.0,
+       "G1 Service": 0.0,
+       "VM Thread": 0.0,
+       "Reference Handler": 0.0,
+       "Finalizer": 0.0,
+       "Signal Dispatcher": 0.0,
+       "Attach Listener": 0.0,
+       "Service Thread": 0.0,
+       "Monitor Deflation Thread": 0.0,
+       "Notification Thread": 0.0,
+       "Snooper Timer": 0.0,
+       "Timer hack thread": 0.0,
+       "Java2D Disposer": 0.0,
+       "native-origin:nvoglv64.dll": 0.0,
+       "native-origin:combase.dll": 0.0,
+       "native-origin:ntdll.dll": 0.0,
+       "native-origin:OpenAL-amd64.dll": 0.0,
+       "LWJGL Timer": 0.0,
+       "native-origin:ucrtbase.dll": 0.0,
+       "Netty Server IO #0": 0.0
+      }
+     }
+    },
+    "steady": {
+     "frame_ms": 0.6118360277772112,
+     "client_cpu_ms": 0.5924,
+     "process_cpu_ms": 0.6618840835763671,
+     "off_client_cpu_ms": 0.06948408357636704,
+     "cpu_distribution_hint": "client-heavy",
+     "sections_ms": {
+      "render": 0.4188,
+      "swap": 0.1319,
+      "tick": 0.0044,
+      "terrain_setup": 0.0098
+     },
+     "visible_chunks": {
+      "visible_mean": 1289.0,
+      "pending_mean": 0.0001,
+      "pending_max": 5
+     },
+     "allocation_bytes_per_frame": 4191.4823,
+     "bins_5s": [
+      {
+       "start_s": 0,
+       "frames": 8191,
+       "frame_ms": 0.6104437309241851,
+       "render_ms": 0.418170772799414,
+       "swap_ms": 0.13190468807227443,
+       "tick_ms": 0.004703076547430106,
+       "visible_chunks": 1289.0,
+       "pending_chunks": 0.0
+      },
+      {
+       "start_s": 5,
+       "frames": 8207,
+       "frame_ms": 0.6092679663701718,
+       "render_ms": 0.4162101255026197,
+       "swap_ms": 0.13216473741927623,
+       "tick_ms": 0.00465821859388327,
+       "visible_chunks": 1289.0,
+       "pending_chunks": 0.0004873888144267089
+      },
+      {
+       "start_s": 10,
+       "frames": 8241,
+       "frame_ms": 0.6067251304453344,
+       "render_ms": 0.41442269142094407,
+       "swap_ms": 0.13147158111879625,
+       "tick_ms": 0.004301443999514622,
+       "visible_chunks": 1289.0,
+       "pending_chunks": 0.0
+      },
+      {
+       "start_s": 15,
+       "frames": 8146,
+       "frame_ms": 0.6139623005155904,
+       "render_ms": 0.41975155904738526,
+       "swap_ms": 0.1328691259513872,
+       "tick_ms": 0.004328283820279892,
+       "visible_chunks": 1289.0,
+       "pending_chunks": 0.0007365578197888534
+      },
+      {
+       "start_s": 20,
+       "frames": 8193,
+       "frame_ms": 0.6101221286464054,
+       "render_ms": 0.4171915537654095,
+       "swap_ms": 0.1320124130355181,
+       "tick_ms": 0.0043151470767728555,
+       "visible_chunks": 1289.0,
+       "pending_chunks": 0.0
+      },
+      {
+       "start_s": 25,
+       "frames": 8055,
+       "frame_ms": 0.6207517939168218,
+       "render_ms": 0.42586052141527,
+       "swap_ms": 0.1324238485412787,
+       "tick_ms": 0.004595071384233395,
+       "visible_chunks": 1289.0,
+       "pending_chunks": 0.0
+      },
+      {
+       "start_s": 30,
+       "frames": 8153,
+       "frame_ms": 0.6132511345516988,
+       "render_ms": 0.42091604317429165,
+       "swap_ms": 0.13066506807310194,
+       "tick_ms": 0.004484925794186189,
+       "visible_chunks": 1289.0,
+       "pending_chunks": 0.0
+      },
+      {
+       "start_s": 35,
+       "frames": 8244,
+       "frame_ms": 0.6064987991266375,
+       "render_ms": 0.4155170669577875,
+       "swap_ms": 0.13037615235322658,
+       "tick_ms": 0.004489701601164484,
+       "visible_chunks": 1289.0,
+       "pending_chunks": 0.0
+      },
+      {
+       "start_s": 40,
+       "frames": 8029,
+       "frame_ms": 0.6226924274504919,
+       "render_ms": 0.4266848922655374,
+       "swap_ms": 0.13356933615643293,
+       "tick_ms": 0.00453528459334911,
+       "visible_chunks": 1289.0,
+       "pending_chunks": 0.0
+      },
+      {
+       "start_s": 45,
+       "frames": 8213,
+       "frame_ms": 0.6088236089126994,
+       "render_ms": 0.4164391696091562,
+       "swap_ms": 0.13182032144161696,
+       "tick_ms": 0.004213089005235602,
+       "visible_chunks": 1289.0,
+       "pending_chunks": 0.0
+      },
+      {
+       "start_s": 50,
+       "frames": 8212,
+       "frame_ms": 0.6088629201169021,
+       "render_ms": 0.41614335119337553,
+       "swap_ms": 0.13213857769118362,
+       "tick_ms": 0.004173648319532392,
+       "visible_chunks": 1289.0,
+       "pending_chunks": 0.0
+      },
+      {
+       "start_s": 55,
+       "frames": 8182,
+       "frame_ms": 0.6110974578342703,
+       "render_ms": 0.418235626986067,
+       "swap_ms": 0.13202765827426058,
+       "tick_ms": 0.003937961378636031,
+       "visible_chunks": 1289.0,
+       "pending_chunks": 0.0
+      }
+     ],
+     "threads": {
+      "covered_s": 58.718924045562744,
+      "sampler_cpu_cores": 0.07024992482490348,
+      "cpu_cores": {
+       "Client thread": 0.9680652519431775,
+       "Thread-4": 0.03166568581122543,
+       "JFR Periodic Tasks": 0.02980299841056511,
+       "Server thread": 0.014635401005188224,
+       "C2 CompilerThread0": 0.011974419004244912,
+       "Netty Server IO #1": 0.00798294600282994,
+       "Netty Local Client IO #0": 0.004257571201509301,
+       "File IO Thread": 0.003725374801320639,
+       "Thread-5": 0.0021287856007546507,
+       "JFR Sampler Thread": 0.0010643928003773253,
+       "G1 Conc#0": 0.0007982946002829941,
+       "C1 CompilerThread0": 0.0007982946002829941,
+       "G1 Conc#1": 0.0007982946002829941,
+       "G1 Conc#2": 0.0007982946002829941,
+       "G1 Conc#3": 0.0007982946002829941,
+       "GC Thread#0": 0.00026609820009433133,
+       "JFR Recorder Thread": 0.00026609820009433133,
+       "GC Thread#3": 0.00026609820009433133,
+       "GC Thread#5": 0.00026609820009433133,
+       "GC Thread#7": 0.00026609820009433133,
+       "GC Thread#10": 0.00026609820009433133,
+       "GC Thread#13": 0.00026609820009433133,
+       "native-origin:nvoglv64.dll": 0.00026609820009433133,
+       "native-origin:OpenAL-amd64.dll": 0.00026609820009433133,
+       "native-origin:ucrtbase.dll": 0.00026609820009433133,
+       "native-origin:java.exe": 0.0,
+       "G1 Main Marker": 0.0,
+       "G1 Refine#0": 0.0,
+       "G1 Service": 0.0,
+       "VM Periodic Task Thread": 0.0,
+       "VM Thread": 0.0,
+       "Reference Handler": 0.0,
+       "Finalizer": 0.0,
+       "Signal Dispatcher": 0.0,
+       "Attach Listener": 0.0,
+       "Service Thread": 0.0,
+       "Monitor Deflation Thread": 0.0,
+       "Notification Thread": 0.0,
+       "Common-Cleaner": 0.0,
+       "GC Thread#1": 0.0,
+       "GC Thread#2": 0.0,
+       "GC Thread#4": 0.0,
+       "GC Thread#6": 0.0,
+       "GC Thread#8": 0.0,
+       "GC Thread#9": 0.0,
+       "GC Thread#11": 0.0,
+       "Alacer benchmark watchdog": 0.0,
+       "GC Thread#12": 0.0,
+       "Snooper Timer": 0.0,
+       "GC Thread#14": 0.0,
+       "Timer hack thread": 0.0,
+       "Java2D Disposer": 0.0,
+       "native-origin:uiautomationcore.dll": 0.0,
+       "native-origin:combase.dll": 0.0,
+       "native-origin:ntdll.dll": 0.0,
+       "Chunk Batcher 0": 0.0,
+       "Chunk Batcher 1": 0.0,
+       "LWJGL Timer": 0.0,
+       "Netty Server IO #0": 0.0
+      }
+     }
+    },
+    "pan": {
+     "frame_ms": 0.9438599528079282,
+     "client_cpu_ms": 0.9227,
+     "process_cpu_ms": 1.0259761585653608,
+     "off_client_cpu_ms": 0.10327615856536088,
+     "cpu_distribution_hint": "client-heavy",
+     "sections_ms": {
+      "render": 0.741,
+      "swap": 0.1345,
+      "tick": 0.0064,
+      "terrain_setup": 0.1454
+     },
+     "visible_chunks": {
+      "visible_mean": 1430.7605,
+      "pending_mean": 0.0137,
+      "pending_max": 7
+     },
+     "allocation_bytes_per_frame": 4514.6689,
+     "bins_5s": [
+      {
+       "start_s": 0,
+       "frames": 4645,
+       "frame_ms": 1.076477954790097,
+       "render_ms": 0.8646241765339074,
+       "swap_ms": 0.13995063509149622,
+       "tick_ms": 0.007532142088266954,
+       "visible_chunks": 1479.6516684607104,
+       "pending_chunks": 0.09343379978471475
+      },
+      {
+       "start_s": 5,
+       "frames": 5571,
+       "frame_ms": 0.8975246993358463,
+       "render_ms": 0.6977847244659846,
+       "swap_ms": 0.1325059773828756,
+       "tick_ms": 0.006033225632740981,
+       "visible_chunks": 1403.4927302100161,
+       "pending_chunks": 0.0001795009872554299
+      },
+      {
+       "start_s": 10,
+       "frames": 5504,
+       "frame_ms": 0.9084810683139535,
+       "render_ms": 0.7088747456395349,
+       "swap_ms": 0.1320764898255814,
+       "tick_ms": 0.006260901162790698,
+       "visible_chunks": 1415.8880813953488,
+       "pending_chunks": 0.0
+      },
+      {
+       "start_s": 15,
+       "frames": 5047,
+       "frame_ms": 0.9906440459679017,
+       "render_ms": 0.7881432336041213,
+       "swap_ms": 0.13330709332276602,
+       "tick_ms": 0.006548563503071131,
+       "visible_chunks": 1486.1585100059442,
+       "pending_chunks": 0.0
+      },
+      {
+       "start_s": 20,
+       "frames": 5506,
+       "frame_ms": 0.908083835815474,
+       "render_ms": 0.7023681075190702,
+       "swap_ms": 0.13752751543770433,
+       "tick_ms": 0.006156338539774792,
+       "visible_chunks": 1398.6654558663276,
+       "pending_chunks": 0.0
+      },
+      {
+       "start_s": 25,
+       "frames": 5512,
+       "frame_ms": 0.9071604680696662,
+       "render_ms": 0.7079305696661828,
+       "swap_ms": 0.1325771770682148,
+       "tick_ms": 0.006056005079825834,
+       "visible_chunks": 1413.3055152394775,
+       "pending_chunks": 0.0
+      }
+     ],
+     "threads": {
+      "covered_s": 29.320237636566162,
+      "sampler_cpu_cores": 0.07407426320758699,
+      "cpu_cores": {
+       "Client thread": 0.9778868560138282,
+       "JFR Periodic Tasks": 0.03144159373559448,
+       "Thread-4": 0.028777051893594943,
+       "Server thread": 0.01012525899959822,
+       "Thread-5": 0.00586199205239897,
+       "JFR Sampler Thread": 0.004796175315599157,
+       "Chunk Batcher 0": 0.004263266947199251,
+       "Chunk Batcher 1": 0.004263266947199251,
+       "Netty Server IO #1": 0.0037303585787993444,
+       "File IO Thread": 0.0037303585787993444,
+       "C2 CompilerThread0": 0.003197450210399438,
+       "Netty Local Client IO #0": 0.0010658167367998128,
+       "GC Thread#0": 0.0005329083683999064,
+       "GC Thread#5": 0.0005329083683999064,
+       "GC Thread#7": 0.0005329083683999064,
+       "GC Thread#11": 0.0005329083683999064,
+       "native-origin:nvoglv64.dll": 0.0005329083683999064,
+       "Netty Server IO #0": 0.0005329083683999064,
+       "native-origin:java.exe": 0.0,
+       "G1 Main Marker": 0.0,
+       "G1 Conc#0": 0.0,
+       "G1 Refine#0": 0.0,
+       "G1 Service": 0.0,
+       "VM Periodic Task Thread": 0.0,
+       "VM Thread": 0.0,
+       "Reference Handler": 0.0,
+       "Finalizer": 0.0,
+       "Signal Dispatcher": 0.0,
+       "Attach Listener": 0.0,
+       "Service Thread": 0.0,
+       "Monitor Deflation Thread": 0.0,
+       "C1 CompilerThread0": 0.0,
+       "Notification Thread": 0.0,
+       "Common-Cleaner": 0.0,
+       "JFR Recorder Thread": 0.0,
+       "GC Thread#1": 0.0,
+       "GC Thread#2": 0.0,
+       "GC Thread#3": 0.0,
+       "GC Thread#4": 0.0,
+       "GC Thread#6": 0.0,
+       "GC Thread#8": 0.0,
+       "GC Thread#9": 0.0,
+       "GC Thread#10": 0.0,
+       "G1 Conc#1": 0.0,
+       "G1 Conc#2": 0.0,
+       "G1 Conc#3": 0.0,
+       "Alacer benchmark watchdog": 0.0,
+       "GC Thread#12": 0.0,
+       "Snooper Timer": 0.0,
+       "GC Thread#13": 0.0,
+       "GC Thread#14": 0.0,
+       "Timer hack thread": 0.0,
+       "Java2D Disposer": 0.0,
+       "native-origin:uiautomationcore.dll": 0.0,
+       "native-origin:ntdll.dll": 0.0,
+       "native-origin:OpenAL-amd64.dll": 0.0,
+       "LWJGL Timer": 0.0,
+       "native-origin:ucrtbase.dll": 0.0
+      }
+     }
+    },
+    "sort": {
+     "frame_ms": 1.004554537749176,
+     "client_cpu_ms": 0.9609,
+     "process_cpu_ms": 1.174726634437294,
+     "off_client_cpu_ms": 0.213826634437294,
+     "cpu_distribution_hint": "client-heavy",
+     "sections_ms": {
+      "render": 0.7944,
+      "swap": 0.1384,
+      "tick": 0.0065,
+      "terrain_setup": 0.1559
+     },
+     "visible_chunks": {
+      "visible_mean": 1430.1553,
+      "pending_mean": 2.6496,
+      "pending_max": 304
+     },
+     "allocation_bytes_per_frame": 9776.7306,
+     "bins_5s": [
+      {
+       "start_s": 0,
+       "frames": 5005,
+       "frame_ms": 0.9991646953046953,
+       "render_ms": 0.7942995004995006,
+       "swap_ms": 0.13612365634365634,
+       "tick_ms": 0.00612045954045954,
+       "visible_chunks": 1443.6937062937063,
+       "pending_chunks": 2.611188811188811
+      },
+      {
+       "start_s": 5,
+       "frames": 5602,
+       "frame_ms": 0.8923991253123884,
+       "render_ms": 0.691515155301678,
+       "swap_ms": 0.13288711174580506,
+       "tick_ms": 0.005806158514816137,
+       "visible_chunks": 1388.6265619421636,
+       "pending_chunks": 2.786147804355587
+      },
+      {
+       "start_s": 10,
+       "frames": 4551,
+       "frame_ms": 1.0988214238628873,
+       "render_ms": 0.8826346297517029,
+       "swap_ms": 0.1417761590859152,
+       "tick_ms": 0.007305009887936717,
+       "visible_chunks": 1470.4135354867062,
+       "pending_chunks": 2.18677213799165
+      },
+      {
+       "start_s": 15,
+       "frames": 4895,
+       "frame_ms": 1.0215320939734422,
+       "render_ms": 0.8056045556690501,
+       "swap_ms": 0.14193599591419817,
+       "tick_ms": 0.0069663534218590405,
+       "visible_chunks": 1422.784882533197,
+       "pending_chunks": 3.8069458631256383
+      },
+      {
+       "start_s": 20,
+       "frames": 5061,
+       "frame_ms": 0.9877155502865047,
+       "render_ms": 0.7754358032009484,
+       "swap_ms": 0.13933242442205096,
+       "tick_ms": 0.0064461371270499905,
+       "visible_chunks": 1418.1225054337087,
+       "pending_chunks": 2.3866824738194032
+      },
+      {
+       "start_s": 25,
+       "frames": 4600,
+       "frame_ms": 1.0869573260869565,
+       "render_ms": 0.8735709782608695,
+       "swap_ms": 0.14038202173913042,
+       "tick_ms": 0.006752847826086957,
+       "visible_chunks": 1457.9354347826088,
+       "pending_chunks": 2.210434782608696
+      },
+      {
+       "start_s": 30,
+       "frames": 2141,
+       "frame_ms": 0.9341791686127977,
+       "render_ms": 0.7256253152732368,
+       "swap_ms": 0.1364401681457263,
+       "tick_ms": 0.0062639420831387205,
+       "visible_chunks": 1407.2017748715552,
+       "pending_chunks": 2.285380663241476
+      }
+     ],
+     "threads": {
+      "covered_s": 30.32368755340576,
+      "sampler_cpu_cores": 0.07316887156591231,
+      "cpu_cores": {
+       "Client thread": 0.9553175203042354,
+       "Chunk Batcher 0": 0.03555388829611232,
+       "Chunk Batcher 1": 0.03349279332242465,
+       "JFR Periodic Tasks": 0.030916424605315063,
+       "File IO Thread": 0.030916424605315063,
+       "Server thread": 0.021641497223720545,
+       "Thread-4": 0.021126223480298627,
+       "C2 CompilerThread0": 0.01133602235528219,
+       "JFR Sampler Thread": 0.004122189947375341,
+       "Thread-5": 0.003606916203953424,
+       "Netty Server IO #1": 0.003606916203953424,
+       "G1 Conc#0": 0.003091642460531506,
+       "G1 Conc#1": 0.003091642460531506,
+       "G1 Conc#2": 0.003091642460531506,
+       "G1 Conc#3": 0.003091642460531506,
+       "C1 CompilerThread0": 0.001545821230265753,
+       "Netty Local Client IO #0": 0.001545821230265753,
+       "VM Periodic Task Thread": 0.0005152737434219177,
+       "GC Thread#10": 0.0005152737434219177,
+       "GC Thread#12": 0.0005152737434219177,
+       "GC Thread#14": 0.0005152737434219177,
+       "native-origin:nvoglv64.dll": 0.0005152737434219177,
+       "Netty Server IO #0": 0.0005152737434219177,
+       "native-origin:java.exe": 0.0,
+       "GC Thread#0": 0.0,
+       "G1 Main Marker": 0.0,
+       "G1 Refine#0": 0.0,
+       "G1 Service": 0.0,
+       "VM Thread": 0.0,
+       "Reference Handler": 0.0,
+       "Finalizer": 0.0,
+       "Signal Dispatcher": 0.0,
+       "Attach Listener": 0.0,
+       "Service Thread": 0.0,
+       "Monitor Deflation Thread": 0.0,
+       "Notification Thread": 0.0,
+       "Common-Cleaner": 0.0,
+       "JFR Recorder Thread": 0.0,
+       "GC Thread#1": 0.0,
+       "GC Thread#2": 0.0,
+       "GC Thread#3": 0.0,
+       "GC Thread#4": 0.0,
+       "GC Thread#5": 0.0,
+       "GC Thread#6": 0.0,
+       "GC Thread#7": 0.0,
+       "GC Thread#8": 0.0,
+       "GC Thread#9": 0.0,
+       "GC Thread#11": 0.0,
+       "Alacer benchmark watchdog": 0.0,
+       "Snooper Timer": 0.0,
+       "GC Thread#13": 0.0,
+       "Timer hack thread": 0.0,
+       "Java2D Disposer": 0.0,
+       "native-origin:uiautomationcore.dll": 0.0,
+       "native-origin:ntdll.dll": 0.0,
+       "native-origin:OpenAL-amd64.dll": 0.0,
+       "LWJGL Timer": 0.0,
+       "native-origin:ucrtbase.dll": 0.0
+      }
+     }
+    },
+    "fly": {
+     "frame_ms": 1.1895854636293346,
+     "client_cpu_ms": 1.1291,
+     "process_cpu_ms": 2.075231799797775,
+     "off_client_cpu_ms": 0.9461317997977752,
+     "cpu_distribution_hint": "client-heavy",
+     "sections_ms": {
+      "render": 0.9582,
+      "swap": 0.151,
+      "tick": 0.0076,
+      "terrain_setup": 0.1736
+     },
+     "visible_chunks": {
+      "visible_mean": 1258.1479,
+      "pending_mean": 38.7542,
+      "pending_max": 841
+     },
+     "allocation_bytes_per_frame": 19801.6849,
+     "bins_5s": [
+      {
+       "start_s": 0,
+       "frames": 5173,
+       "frame_ms": 0.9666691668277595,
+       "render_ms": 0.7528341581287454,
+       "swap_ms": 0.14070450415619562,
+       "tick_ms": 0.0059701140537405765,
+       "visible_chunks": 1149.8998646820028,
+       "pending_chunks": 5.7330369224821185
+      },
+      {
+       "start_s": 5,
+       "frames": 5288,
+       "frame_ms": 0.9455671142208774,
+       "render_ms": 0.7387607980332829,
+       "swap_ms": 0.13615510590015129,
+       "tick_ms": 0.0051221444780635405,
+       "visible_chunks": 1233.6726550680787,
+       "pending_chunks": 6.812972768532527
+      },
+      {
+       "start_s": 10,
+       "frames": 4420,
+       "frame_ms": 1.1312403393665158,
+       "render_ms": 0.9157599095022625,
+       "swap_ms": 0.14133502262443437,
+       "tick_ms": 0.006250701357466063,
+       "visible_chunks": 1255.9902714932127,
+       "pending_chunks": 12.880090497737557
+      },
+      {
+       "start_s": 15,
+       "frames": 3950,
+       "frame_ms": 1.265901012658228,
+       "render_ms": 1.0355643037974682,
+       "swap_ms": 0.15041329113924048,
+       "tick_ms": 0.007715772151898735,
+       "visible_chunks": 1149.8382278481013,
+       "pending_chunks": 15.564810126582278
+      },
+      {
+       "start_s": 20,
+       "frames": 3278,
+       "frame_ms": 1.5249795302013422,
+       "render_ms": 1.2447583282489323,
+       "swap_ms": 0.18302699816961562,
+       "tick_ms": 0.01098523489932886,
+       "visible_chunks": 1319.1479560707749,
+       "pending_chunks": 86.5927394752898
+      },
+      {
+       "start_s": 25,
+       "frames": 3943,
+       "frame_ms": 1.2682944458534111,
+       "render_ms": 1.0204248795333501,
+       "swap_ms": 0.16019198579761604,
+       "tick_ms": 0.010027821455744356,
+       "visible_chunks": 1322.6353030687294,
+       "pending_chunks": 59.66142531067715
+      },
+      {
+       "start_s": 30,
+       "frames": 4036,
+       "frame_ms": 1.238705921704658,
+       "render_ms": 0.9989947472745292,
+       "swap_ms": 0.1553076560951437,
+       "tick_ms": 0.008614990089197225,
+       "visible_chunks": 1335.0371655104063,
+       "pending_chunks": 65.49157581764123
+      },
+      {
+       "start_s": 35,
+       "frames": 3538,
+       "frame_ms": 1.4134217071791972,
+       "render_ms": 1.171892425098926,
+       "swap_ms": 0.15648468061051443,
+       "tick_ms": 0.00805952515545506,
+       "visible_chunks": 1360.5203504804974,
+       "pending_chunks": 94.86517806670436
+      }
+     ],
+     "threads": {
+      "covered_s": 38.45443630218506,
+      "sampler_cpu_cores": 0.07842073086970842,
+      "cpu_cores": {
+       "Client thread": 0.948768946014348,
+       "Server thread": 0.17431343804717572,
+       "C2 CompilerThread0": 0.11864690888059512,
+       "Chunk Batcher 0": 0.10280023269448824,
+       "Chunk Batcher 1": 0.09954963245118427,
+       "JFR Periodic Tasks": 0.03128702734180077,
+       "File IO Thread": 0.029255402189735786,
+       "Thread-4": 0.023566851763953827,
+       "native-origin:ucrtbase.dll": 0.016659326246932876,
+       "G1 Conc#0": 0.0134087260036289,
+       "G1 Conc#1": 0.0134087260036289,
+       "G1 Conc#2": 0.0134087260036289,
+       "G1 Conc#3": 0.013002400973215904,
+       "C1 CompilerThread0": 0.007720175577846943,
+       "JFR Sampler Thread": 0.005688550425781958,
+       "GC Thread#3": 0.003250600243303976,
+       "GC Thread#13": 0.003250600243303976,
+       "Thread-5": 0.003250600243303976,
+       "Netty Local Client IO #0": 0.003250600243303976,
+       "Netty Server IO #1": 0.003250600243303976,
+       "GC Thread#10": 0.002844275212890979,
+       "GC Thread#12": 0.002844275212890979,
+       "GC Thread#6": 0.002437950182477982,
+       "GC Thread#7": 0.002437950182477982,
+       "GC Thread#0": 0.002031625152064985,
+       "GC Thread#2": 0.002031625152064985,
+       "GC Thread#8": 0.002031625152064985,
+       "GC Thread#9": 0.002031625152064985,
+       "GC Thread#1": 0.001625300121651988,
+       "GC Thread#5": 0.001625300121651988,
+       "GC Thread#11": 0.001625300121651988,
+       "GC Thread#14": 0.001625300121651988,
+       "GC Thread#4": 0.001218975091238991,
+       "native-origin:OpenAL-amd64.dll": 0.001218975091238991,
+       "JFR Recorder Thread": 0.000812650060825994,
+       "G1 Refine#0": 0.000406325030412997,
+       "VM Thread": 0.000406325030412997,
+       "Service Thread": 0.000406325030412997,
+       "native-origin:java.exe": 0.0,
+       "G1 Main Marker": 0.0,
+       "G1 Service": 0.0,
+       "VM Periodic Task Thread": 0.0,
+       "Reference Handler": 0.0,
+       "Finalizer": 0.0,
+       "Signal Dispatcher": 0.0,
+       "Attach Listener": 0.0,
+       "Monitor Deflation Thread": 0.0,
+       "Notification Thread": 0.0,
+       "Common-Cleaner": 0.0,
+       "Alacer benchmark watchdog": 0.0,
+       "Snooper Timer": 0.0,
+       "Timer hack thread": 0.0,
+       "Java2D Disposer": 0.0,
+       "native-origin:nvoglv64.dll": 0.0,
+       "native-origin:uiautomationcore.dll": 0.0,
+       "native-origin:ntdll.dll": 0.0,
+       "LWJGL Timer": 0.0,
+       "Netty Server IO #0": 0.0,
+       "C1 CompilerThread1": 0.0
+      }
+     }
+    },
+    "reference-post": {
+     "frame_ms": 0.6165855042081574,
+     "client_cpu_ms": 0.5915,
+     "process_cpu_ms": 0.6551226223140242,
+     "off_client_cpu_ms": 0.06362262231402416,
+     "cpu_distribution_hint": "client-heavy",
+     "sections_ms": {
+      "render": 0.4253,
+      "swap": 0.1307,
+      "tick": 0.0041,
+      "terrain_setup": 0.0098
+     },
+     "visible_chunks": {
+      "visible_mean": 1289.0,
+      "pending_mean": 0.0001,
+      "pending_max": 2
+     },
+     "allocation_bytes_per_frame": 4124.3646,
+     "bins_5s": [
+      {
+       "start_s": 0,
+       "frames": 8277,
+       "frame_ms": 0.6041002174700978,
+       "render_ms": 0.41672563730820344,
+       "swap_ms": 0.12899139784946237,
+       "tick_ms": 0.0038733840763561676,
+       "visible_chunks": 1289.0,
+       "pending_chunks": 0.0
+      },
+      {
+       "start_s": 5,
+       "frames": 7941,
+       "frame_ms": 0.6296351089283465,
+       "render_ms": 0.43667548167737064,
+       "swap_ms": 0.13078100994836922,
+       "tick_ms": 0.004248394408764639,
+       "visible_chunks": 1289.0,
+       "pending_chunks": 0.0002518574486840448
+      },
+      {
+       "start_s": 10,
+       "frames": 8150,
+       "frame_ms": 0.6135210061349693,
+       "render_ms": 0.42426029447852764,
+       "swap_ms": 0.12893690797546012,
+       "tick_ms": 0.00411880981595092,
+       "visible_chunks": 1289.0,
+       "pending_chunks": 0.0
+      },
+      {
+       "start_s": 15,
+       "frames": 8069,
+       "frame_ms": 0.6196452968149709,
+       "render_ms": 0.42375607882017596,
+       "swap_ms": 0.13433245755360018,
+       "tick_ms": 0.0042465733052422855,
+       "visible_chunks": 1289.0,
+       "pending_chunks": 0.0
+      }
+     ],
+     "threads": {
+      "covered_s": 19.221944332122803,
+      "sampler_cpu_cores": 0.0796615562683244,
+      "cpu_cores": {
+       "Client thread": 0.9591901673124775,
+       "JFR Periodic Tasks": 0.03170204790270053,
+       "Thread-4": 0.02276044464809269,
+       "Server thread": 0.016257460462923347,
+       "Netty Local Client IO #0": 0.010567349300900176,
+       "Netty Server IO #1": 0.008128730231461673,
+       "File IO Thread": 0.008128730231461673,
+       "Monitor Deflation Thread": 0.0016257460462923347,
+       "C2 CompilerThread0": 0.0016257460462923347,
+       "JFR Sampler Thread": 0.0016257460462923347,
+       "native-origin:uiautomationcore.dll": 0.0008128730231461674,
+       "native-origin:java.exe": 0.0,
+       "GC Thread#0": 0.0,
+       "G1 Main Marker": 0.0,
+       "G1 Conc#0": 0.0,
+       "G1 Refine#0": 0.0,
+       "G1 Service": 0.0,
+       "VM Periodic Task Thread": 0.0,
+       "VM Thread": 0.0,
+       "Reference Handler": 0.0,
+       "Finalizer": 0.0,
+       "Signal Dispatcher": 0.0,
+       "Attach Listener": 0.0,
+       "Service Thread": 0.0,
+       "C1 CompilerThread0": 0.0,
+       "Notification Thread": 0.0,
+       "Common-Cleaner": 0.0,
+       "JFR Recorder Thread": 0.0,
+       "GC Thread#1": 0.0,
+       "GC Thread#2": 0.0,
+       "GC Thread#3": 0.0,
+       "GC Thread#4": 0.0,
+       "GC Thread#5": 0.0,
+       "GC Thread#6": 0.0,
+       "GC Thread#7": 0.0,
+       "GC Thread#8": 0.0,
+       "GC Thread#9": 0.0,
+       "GC Thread#10": 0.0,
+       "GC Thread#11": 0.0,
+       "G1 Conc#1": 0.0,
+       "G1 Conc#2": 0.0,
+       "G1 Conc#3": 0.0,
+       "Alacer benchmark watchdog": 0.0,
+       "GC Thread#12": 0.0,
+       "Snooper Timer": 0.0,
+       "GC Thread#13": 0.0,
+       "GC Thread#14": 0.0,
+       "Timer hack thread": 0.0,
+       "Java2D Disposer": 0.0,
+       "native-origin:nvoglv64.dll": 0.0,
+       "native-origin:ntdll.dll": 0.0,
+       "Thread-5": 0.0,
+       "native-origin:OpenAL-amd64.dll": 0.0,
+       "Chunk Batcher 0": 0.0,
+       "Chunk Batcher 1": 0.0,
+       "LWJGL Timer": 0.0,
+       "native-origin:ucrtbase.dll": 0.0,
+       "Netty Server IO #0": 0.0
+      }
+     }
+    }
+   }
+  },
+  {
+   "label": "diag32v2-terrain-3-nomon",
+   "status": "failed-checks",
+   "origin": "supplemental-raw; original failure retained",
+   "environment_assessed": false,
+   "environment_rejections": [
+    "source_sha256 changed during the launch"
+   ],
+   "scene": "terrain",
+   "reference_distribution_changed": false,
+   "phases": {
+    "reference-pre": {
+     "frame_ms": 0.5207409847163277,
+     "client_cpu_ms": 0.1932,
+     "process_cpu_ms": 0.7005528817663447,
+     "off_client_cpu_ms": 0.5073528817663446,
+     "cpu_distribution_hint": "low-client-cpu",
+     "sections_ms": {
+      "render": 0.1511,
+      "swap": 0.3281,
+      "tick": 0.0099,
+      "terrain_setup": 0.0093
+     },
+     "visible_chunks": {
+      "visible_mean": 1374.0,
+      "pending_mean": 0.0002,
+      "pending_max": 4
+     },
+     "allocation_bytes_per_frame": 3832.9013,
+     "bins_5s": [
+      {
+       "start_s": 0,
+       "frames": 9455,
+       "frame_ms": 0.5289114648334216,
+       "render_ms": 0.14983123215230038,
+       "swap_ms": 0.33719690111052353,
+       "tick_ms": 0.010388006345848756,
+       "visible_chunks": 1374.0,
+       "pending_chunks": 0.0008461131676361713
+      },
+      {
+       "start_s": 5,
+       "frames": 9719,
+       "frame_ms": 0.5143861714168124,
+       "render_ms": 0.15254122852145283,
+       "swap_ms": 0.31974691840724356,
+       "tick_ms": 0.009879946496553143,
+       "visible_chunks": 1374.0,
+       "pending_chunks": 0.0
+      },
+      {
+       "start_s": 10,
+       "frames": 9545,
+       "frame_ms": 0.5238348454688319,
+       "render_ms": 0.14667323205866947,
+       "swap_ms": 0.3366144578313253,
+       "tick_ms": 0.009796825563122053,
+       "visible_chunks": 1374.0,
+       "pending_chunks": 0.0
+      },
+      {
+       "start_s": 15,
+       "frames": 9688,
+       "frame_ms": 0.5160939616019818,
+       "render_ms": 0.15543646779521056,
+       "swap_ms": 0.31914561312964496,
+       "tick_ms": 0.009638872832369942,
+       "visible_chunks": 1374.0,
+       "pending_chunks": 0.0
+      }
+     ],
+     "threads": {
+      "covered_s": 19.20226740837097,
+      "sampler_cpu_cores": 0.08381171690684895,
+      "cpu_cores": {
+       "native-origin:nvoglv64.dll": 0.8324212271427813,
+       "Client thread": 0.3710499311604187,
+       "Thread-4": 0.0431264174375048,
+       "JFR Periodic Tasks": 0.03254823957547532,
+       "C2 CompilerThread0": 0.019528943745285195,
+       "Server thread": 0.014646707808963894,
+       "Thread-5": 0.004882235936321299,
+       "JFR Sampler Thread": 0.0024411179681606493,
+       "File IO Thread": 0.0024411179681606493,
+       "C1 CompilerThread0": 0.001627411978773766,
+       "native-origin:uiautomationcore.dll": 0.001627411978773766,
+       "Netty Server IO #1": 0.001627411978773766,
+       "G1 Refine#0": 0.000813705989386883,
+       "G1 Service": 0.000813705989386883,
+       "Service Thread": 0.000813705989386883,
+       "Netty Local Client IO #0": 0.000813705989386883,
+       "native-origin:java.exe": 0.0,
+       "native-origin:ntdll.dll": 0.0,
+       "GC Thread#0": 0.0,
+       "G1 Main Marker": 0.0,
+       "G1 Conc#0": 0.0,
+       "VM Periodic Task Thread": 0.0,
+       "VM Thread": 0.0,
+       "Reference Handler": 0.0,
+       "Finalizer": 0.0,
+       "Signal Dispatcher": 0.0,
+       "Attach Listener": 0.0,
+       "Monitor Deflation Thread": 0.0,
+       "Notification Thread": 0.0,
+       "Common-Cleaner": 0.0,
+       "JFR Recorder Thread": 0.0,
+       "GC Thread#1": 0.0,
+       "GC Thread#2": 0.0,
+       "GC Thread#3": 0.0,
+       "GC Thread#4": 0.0,
+       "GC Thread#5": 0.0,
+       "GC Thread#6": 0.0,
+       "GC Thread#7": 0.0,
+       "GC Thread#8": 0.0,
+       "GC Thread#9": 0.0,
+       "GC Thread#10": 0.0,
+       "GC Thread#11": 0.0,
+       "G1 Conc#1": 0.0,
+       "G1 Conc#2": 0.0,
+       "G1 Conc#3": 0.0,
+       "Alacer benchmark watchdog": 0.0,
+       "GC Thread#12": 0.0,
+       "Snooper Timer": 0.0,
+       "GC Thread#13": 0.0,
+       "Timer hack thread": 0.0,
+       "Java2D Disposer": 0.0,
+       "native-origin:SHCORE.dll": 0.0,
+       "native-origin:CRYPT32.dll": 0.0,
+       "native-origin:combase.dll": 0.0,
+       "native-origin:OpenAL-amd64.dll": 0.0,
+       "GC Thread#14": 0.0,
+       "Chunk Batcher 0": 0.0,
+       "Chunk Batcher 1": 0.0,
+       "LWJGL Timer": 0.0,
+       "native-origin:ucrtbase.dll": 0.0,
+       "Netty Server IO #0": 0.0,
+       "Downloader 0": 0.0,
+       "Downloader 1": 0.0,
+       "Downloader 2": 0.0,
+       "Downloader 3": 0.0,
+       "Downloader 4": 0.0,
+       "Downloader 5": 0.0,
+       "Downloader 6": 0.0,
+       "Downloader 7": 0.0,
+       "Downloader 8": 0.0
+      }
+     }
+    },
+    "warmup-pan": {
+     "frame_ms": 0.6429241674167416,
+     "client_cpu_ms": 0.376,
+     "process_cpu_ms": 1.0852549997856928,
+     "off_client_cpu_ms": 0.7092549997856928,
+     "cpu_distribution_hint": "mixed",
+     "sections_ms": {
+      "render": 0.3398,
+      "swap": 0.259,
+      "tick": 0.0134,
+      "terrain_setup": 0.1587
+     },
+     "visible_chunks": {
+      "visible_mean": 1484.9741,
+      "pending_mean": 0.0615,
+      "pending_max": 28
+     },
+     "allocation_bytes_per_frame": 4698.2466,
+     "bins_5s": [
+      {
+       "start_s": 0,
+       "frames": 6287,
+       "frame_ms": 0.7953186098298075,
+       "render_ms": 0.5018632416096708,
+       "swap_ms": 0.24109137903610625,
+       "tick_ms": 0.018069810720534436,
+       "visible_chunks": 1514.6767933831716,
+       "pending_chunks": 0.4534754254811516
+      },
+      {
+       "start_s": 5,
+       "frames": 8109,
+       "frame_ms": 0.6166456036502651,
+       "render_ms": 0.33656159822419535,
+       "swap_ms": 0.2361350228141571,
+       "tick_ms": 0.013012627944259465,
+       "visible_chunks": 1476.8187199408064,
+       "pending_chunks": 0.0006165988407941793
+      },
+      {
+       "start_s": 10,
+       "frames": 8191,
+       "frame_ms": 0.6103890489561714,
+       "render_ms": 0.30646011476010254,
+       "swap_ms": 0.2617786228787694,
+       "tick_ms": 0.012145244780857038,
+       "visible_chunks": 1468.3622268343304,
+       "pending_chunks": 0.00024417043096081065
+      },
+      {
+       "start_s": 15,
+       "frames": 7491,
+       "frame_ms": 0.6674541716726738,
+       "render_ms": 0.31160638099052196,
+       "swap_ms": 0.3118854759044186,
+       "tick_ms": 0.014213175810973167,
+       "visible_chunks": 1518.0433853958084,
+       "pending_chunks": 0.00040048057669203043
+      },
+      {
+       "start_s": 20,
+       "frames": 8291,
+       "frame_ms": 0.6030509347485224,
+       "render_ms": 0.31596071643951273,
+       "swap_ms": 0.24453618381377396,
+       "tick_ms": 0.012123302376070438,
+       "visible_chunks": 1474.3807743336147,
+       "pending_chunks": 0.0
+      },
+      {
+       "start_s": 25,
+       "frames": 8293,
+       "frame_ms": 0.6029288556614012,
+       "render_ms": 0.3023843603038707,
+       "swap_ms": 0.25911275774749787,
+       "tick_ms": 0.012130712649222237,
+       "visible_chunks": 1467.5578198480646,
+       "pending_chunks": 0.0010852526226938382
+      }
+     ],
+     "threads": {
+      "covered_s": 28.327222108840942,
+      "sampler_cpu_cores": 0.08549638191470005,
+      "cpu_cores": {
+       "native-origin:nvoglv64.dll": 0.9057100587350805,
+       "Client thread": 0.5885460613095803,
+       "Thread-4": 0.03971444837328002,
+       "JFR Periodic Tasks": 0.03309537364440002,
+       "C2 CompilerThread0": 0.029785836279960017,
+       "Chunk Batcher 1": 0.013238149457760006,
+       "Server thread": 0.011031791214800005,
+       "Chunk Batcher 0": 0.010480201654060006,
+       "File IO Thread": 0.006067485168140003,
+       "Thread-5": 0.004412716485920003,
+       "JFR Sampler Thread": 0.0027579478037000013,
+       "G1 Conc#0": 0.0022063582429600014,
+       "G1 Conc#1": 0.0022063582429600014,
+       "G1 Conc#2": 0.0022063582429600014,
+       "G1 Conc#3": 0.0022063582429600014,
+       "native-origin:OpenAL-amd64.dll": 0.0016547686822200008,
+       "GC Thread#0": 0.0005515895607400003,
+       "VM Periodic Task Thread": 0.0005515895607400003,
+       "VM Thread": 0.0005515895607400003,
+       "JFR Recorder Thread": 0.0005515895607400003,
+       "GC Thread#4": 0.0005515895607400003,
+       "GC Thread#8": 0.0005515895607400003,
+       "GC Thread#14": 0.0005515895607400003,
+       "Netty Server IO #1": 0.0005515895607400003,
+       "native-origin:java.exe": 0.0,
+       "native-origin:ntdll.dll": 0.0,
+       "G1 Main Marker": 0.0,
+       "G1 Refine#0": 0.0,
+       "G1 Service": 0.0,
+       "Reference Handler": 0.0,
+       "Finalizer": 0.0,
+       "Signal Dispatcher": 0.0,
+       "Attach Listener": 0.0,
+       "Service Thread": 0.0,
+       "Monitor Deflation Thread": 0.0,
+       "C1 CompilerThread0": 0.0,
+       "Notification Thread": 0.0,
+       "Common-Cleaner": 0.0,
+       "GC Thread#1": 0.0,
+       "GC Thread#2": 0.0,
+       "GC Thread#3": 0.0,
+       "GC Thread#5": 0.0,
+       "GC Thread#6": 0.0,
+       "GC Thread#7": 0.0,
+       "GC Thread#9": 0.0,
+       "GC Thread#10": 0.0,
+       "GC Thread#11": 0.0,
+       "Alacer benchmark watchdog": 0.0,
+       "GC Thread#12": 0.0,
+       "Snooper Timer": 0.0,
+       "GC Thread#13": 0.0,
+       "Timer hack thread": 0.0,
+       "Java2D Disposer": 0.0,
+       "native-origin:uiautomationcore.dll": 0.0,
+       "native-origin:combase.dll": 0.0,
+       "LWJGL Timer": 0.0,
+       "native-origin:ucrtbase.dll": 0.0,
+       "Netty Server IO #0": 0.0,
+       "Netty Local Client IO #0": 0.0,
+       "Downloader 0": 0.0,
+       "Downloader 1": 0.0,
+       "Downloader 2": 0.0,
+       "Downloader 3": 0.0,
+       "Downloader 4": 0.0,
+       "Downloader 5": 0.0,
+       "Downloader 6": 0.0,
+       "Downloader 7": 0.0,
+       "Downloader 8": 0.0
+      }
+     }
+    },
+    "warmup-sort": {
+     "frame_ms": 0.7138720028554856,
+     "client_cpu_ms": 0.4151,
+     "process_cpu_ms": 1.3636371748538794,
+     "off_client_cpu_ms": 0.9485371748538793,
+     "cpu_distribution_hint": "mixed",
+     "sections_ms": {
+      "render": 0.3979,
+      "swap": 0.2668,
+      "tick": 0.0158,
+      "terrain_setup": 0.1711
+     },
+     "visible_chunks": {
+      "visible_mean": 1438.7524,
+      "pending_mean": 4.201,
+      "pending_max": 445
+     },
+     "allocation_bytes_per_frame": 8047.3179,
+     "bins_5s": [
+      {
+       "start_s": 0,
+       "frames": 5426,
+       "frame_ms": 0.9216282528566163,
+       "render_ms": 0.5450889789900479,
+       "swap_ms": 0.31180246959085883,
+       "tick_ms": 0.024428455584224105,
+       "visible_chunks": 1484.690932546996,
+       "pending_chunks": 7.628824179874678
+      },
+      {
+       "start_s": 5,
+       "frames": 7338,
+       "frame_ms": 0.6813234805124012,
+       "render_ms": 0.38836298718997003,
+       "swap_ms": 0.24504604796947396,
+       "tick_ms": 0.014097383483237939,
+       "visible_chunks": 1392.6186971926957,
+       "pending_chunks": 4.346552194058327
+      },
+      {
+       "start_s": 10,
+       "frames": 6663,
+       "frame_ms": 0.7504226324478463,
+       "render_ms": 0.4017928110460754,
+       "swap_ms": 0.29819302116163887,
+       "tick_ms": 0.016973675521536846,
+       "visible_chunks": 1475.7540147080895,
+       "pending_chunks": 2.803842113162239
+      },
+      {
+       "start_s": 15,
+       "frames": 7426,
+       "frame_ms": 0.6733757608402909,
+       "render_ms": 0.3791022219229733,
+       "swap_ms": 0.24688747643415027,
+       "tick_ms": 0.014994950175060598,
+       "visible_chunks": 1426.0666576892002,
+       "pending_chunks": 5.502827901966065
+      },
+      {
+       "start_s": 20,
+       "frames": 7816,
+       "frame_ms": 0.63965411975435,
+       "render_ms": 0.35217757164790175,
+       "swap_ms": 0.24386910184237462,
+       "tick_ms": 0.012691338280450357,
+       "visible_chunks": 1422.6287103377688,
+       "pending_chunks": 2.937052200614125
+      },
+      {
+       "start_s": 25,
+       "frames": 6888,
+       "frame_ms": 0.7259394018583043,
+       "render_ms": 0.37546562137049944,
+       "swap_ms": 0.3029896631823461,
+       "tick_ms": 0.01565801393728223,
+       "visible_chunks": 1461.7896341463415,
+       "pending_chunks": 3.3826945412311265
+      },
+      {
+       "start_s": 30,
+       "frames": 3269,
+       "frame_ms": 0.611611563169165,
+       "render_ms": 0.3666563169164882,
+       "swap_ms": 0.20053205873355767,
+       "tick_ms": 0.012240134597736312,
+       "visible_chunks": 1409.4689507494647,
+       "pending_chunks": 2.820740287549709
+      }
+     ],
+     "threads": {
+      "covered_s": 31.38204050064087,
+      "sampler_cpu_cores": 0.08115708728207106,
+      "cpu_cores": {
+       "native-origin:nvoglv64.dll": 0.8733100067040039,
+       "Client thread": 0.5800491207583607,
+       "C2 CompilerThread0": 0.09161290834295138,
+       "Server thread": 0.06422861508826483,
+       "Chunk Batcher 1": 0.04082749176153268,
+       "Chunk Batcher 0": 0.03983169927954408,
+       "Thread-4": 0.033359048146618164,
+       "JFR Periodic Tasks": 0.032861151905623866,
+       "File IO Thread": 0.028877981977669456,
+       "G1 Conc#0": 0.007966339855908815,
+       "G1 Conc#1": 0.007966339855908815,
+       "G1 Conc#3": 0.007966339855908815,
+       "G1 Conc#2": 0.006472651132925913,
+       "GC Thread#7": 0.0029873774459658058,
+       "C1 CompilerThread0": 0.002489481204971505,
+       "Thread-5": 0.002489481204971505,
+       "GC Thread#3": 0.001991584963977204,
+       "GC Thread#9": 0.001991584963977204,
+       "GC Thread#10": 0.001991584963977204,
+       "GC Thread#14": 0.001991584963977204,
+       "GC Thread#6": 0.0014936887229829029,
+       "GC Thread#8": 0.0014936887229829029,
+       "native-origin:ucrtbase.dll": 0.0014936887229829029,
+       "GC Thread#1": 0.000995792481988602,
+       "GC Thread#5": 0.000995792481988602,
+       "GC Thread#11": 0.000995792481988602,
+       "JFR Sampler Thread": 0.000995792481988602,
+       "GC Thread#12": 0.000995792481988602,
+       "GC Thread#13": 0.000995792481988602,
+       "Netty Server IO #1": 0.000995792481988602,
+       "G1 Refine#0": 0.000497896240994301,
+       "G1 Service": 0.000497896240994301,
+       "VM Periodic Task Thread": 0.000497896240994301,
+       "Reference Handler": 0.000497896240994301,
+       "JFR Recorder Thread": 0.000497896240994301,
+       "GC Thread#2": 0.000497896240994301,
+       "Netty Local Client IO #0": 0.000497896240994301,
+       "native-origin:java.exe": 0.0,
+       "GC Thread#0": 0.0,
+       "G1 Main Marker": 0.0,
+       "VM Thread": 0.0,
+       "Finalizer": 0.0,
+       "Signal Dispatcher": 0.0,
+       "Attach Listener": 0.0,
+       "Service Thread": 0.0,
+       "Monitor Deflation Thread": 0.0,
+       "Notification Thread": 0.0,
+       "Common-Cleaner": 0.0,
+       "GC Thread#4": 0.0,
+       "Alacer benchmark watchdog": 0.0,
+       "Snooper Timer": 0.0,
+       "Timer hack thread": 0.0,
+       "Java2D Disposer": 0.0,
+       "native-origin:ntdll.dll": 0.0,
+       "native-origin:uiautomationcore.dll": 0.0,
+       "native-origin:combase.dll": 0.0,
+       "native-origin:OpenAL-amd64.dll": 0.0,
+       "LWJGL Timer": 0.0,
+       "Netty Server IO #0": 0.0
+      }
+     }
+    },
+    "steady": {
+     "frame_ms": 0.5153413483010959,
+     "client_cpu_ms": 0.1949,
+     "process_cpu_ms": 0.6871050491290754,
+     "off_client_cpu_ms": 0.4922050491290755,
+     "cpu_distribution_hint": "low-client-cpu",
+     "sections_ms": {
+      "render": 0.1488,
+      "swap": 0.3273,
+      "tick": 0.0096,
+      "terrain_setup": 0.0091
+     },
+     "visible_chunks": {
+      "visible_mean": 1293.0,
+      "pending_mean": 0.0,
+      "pending_max": 3
+     },
+     "allocation_bytes_per_frame": 3877.5852,
+     "bins_5s": [
+      {
+       "start_s": 0,
+       "frames": 9735,
+       "frame_ms": 0.513672645095018,
+       "render_ms": 0.14961916795069338,
+       "swap_ms": 0.3255304468412943,
+       "tick_ms": 0.008843893168977915,
+       "visible_chunks": 1293.0,
+       "pending_chunks": 0.0
+      },
+      {
+       "start_s": 5,
+       "frames": 9628,
+       "frame_ms": 0.5193020565018696,
+       "render_ms": 0.1479315849605318,
+       "swap_ms": 0.33253831533028666,
+       "tick_ms": 0.009285427918570835,
+       "visible_chunks": 1293.0,
+       "pending_chunks": 0.0
+      },
+      {
+       "start_s": 10,
+       "frames": 9822,
+       "frame_ms": 0.5090487375279984,
+       "render_ms": 0.1426175218896355,
+       "swap_ms": 0.32885947872123805,
+       "tick_ms": 0.008830625127265323,
+       "visible_chunks": 1293.0,
+       "pending_chunks": 0.0
+      },
+      {
+       "start_s": 15,
+       "frames": 9840,
+       "frame_ms": 0.5081293597560975,
+       "render_ms": 0.1464571443089431,
+       "swap_ms": 0.3210628556910569,
+       "tick_ms": 0.010880111788617886,
+       "visible_chunks": 1293.0,
+       "pending_chunks": 0.0
+      },
+      {
+       "start_s": 20,
+       "frames": 9838,
+       "frame_ms": 0.5082360540760317,
+       "render_ms": 0.14720478755844685,
+       "swap_ms": 0.3221182862370401,
+       "tick_ms": 0.00998939825167717,
+       "visible_chunks": 1293.0,
+       "pending_chunks": 0.0
+      },
+      {
+       "start_s": 25,
+       "frames": 9721,
+       "frame_ms": 0.514317950828104,
+       "render_ms": 0.14926524020162532,
+       "swap_ms": 0.32650652196276103,
+       "tick_ms": 0.009170640880567842,
+       "visible_chunks": 1293.0,
+       "pending_chunks": 0.0
+      },
+      {
+       "start_s": 30,
+       "frames": 9719,
+       "frame_ms": 0.5145364337894845,
+       "render_ms": 0.15491480605000513,
+       "swap_ms": 0.3194876633398498,
+       "tick_ms": 0.009275048873340878,
+       "visible_chunks": 1293.0,
+       "pending_chunks": 0.0
+      },
+      {
+       "start_s": 35,
+       "frames": 9403,
+       "frame_ms": 0.5316871743060725,
+       "render_ms": 0.1509476337339147,
+       "swap_ms": 0.3409709029033287,
+       "tick_ms": 0.009598511113474423,
+       "visible_chunks": 1293.0,
+       "pending_chunks": 0.0003190471126236308
+      },
+      {
+       "start_s": 40,
+       "frames": 9624,
+       "frame_ms": 0.5195146924355778,
+       "render_ms": 0.1551586450540316,
+       "swap_ms": 0.3243410016625104,
+       "tick_ms": 0.009423399833748961,
+       "visible_chunks": 1293.0,
+       "pending_chunks": 0.0
+      },
+      {
+       "start_s": 45,
+       "frames": 9583,
+       "frame_ms": 0.5217844098925181,
+       "render_ms": 0.1494715850986121,
+       "swap_ms": 0.3331145361577794,
+       "tick_ms": 0.00902123552123552,
+       "visible_chunks": 1293.0,
+       "pending_chunks": 0.0
+      },
+      {
+       "start_s": 50,
+       "frames": 9692,
+       "frame_ms": 0.5158702538175816,
+       "render_ms": 0.14735403425505572,
+       "swap_ms": 0.32962265786215433,
+       "tick_ms": 0.009478208832026413,
+       "visible_chunks": 1293.0,
+       "pending_chunks": 0.0
+      },
+      {
+       "start_s": 55,
+       "frames": 9823,
+       "frame_ms": 0.5090115443347246,
+       "render_ms": 0.14541524992364857,
+       "swap_ms": 0.3236763208795683,
+       "tick_ms": 0.010841657334826428,
+       "visible_chunks": 1293.0,
+       "pending_chunks": 0.0
+      }
+     ],
+     "threads": {
+      "covered_s": 58.674031019210815,
+      "sampler_cpu_cores": 0.07589601264215128,
+      "cpu_cores": {
+       "native-origin:nvoglv64.dll": 0.839649571441063,
+       "Client thread": 0.3794800632107564,
+       "Thread-4": 0.03648334642798149,
+       "JFR Periodic Tasks": 0.03035840505686051,
+       "Server thread": 0.021037842100806843,
+       "C2 CompilerThread0": 0.013581391735963911,
+       "Thread-5": 0.0031956215849326852,
+       "File IO Thread": 0.002396716188699514,
+       "JFR Sampler Thread": 0.0010652071949775617,
+       "Netty Server IO #1": 0.0010652071949775617,
+       "G1 Conc#0": 0.0007989053962331713,
+       "JFR Recorder Thread": 0.0007989053962331713,
+       "G1 Conc#1": 0.0007989053962331713,
+       "G1 Conc#2": 0.0007989053962331713,
+       "G1 Conc#3": 0.0007989053962331713,
+       "GC Thread#14": 0.0005326035974887809,
+       "GC Thread#0": 0.00026630179874439044,
+       "GC Thread#1": 0.00026630179874439044,
+       "GC Thread#2": 0.00026630179874439044,
+       "GC Thread#4": 0.00026630179874439044,
+       "GC Thread#5": 0.00026630179874439044,
+       "GC Thread#6": 0.00026630179874439044,
+       "GC Thread#8": 0.00026630179874439044,
+       "GC Thread#9": 0.00026630179874439044,
+       "Alacer benchmark watchdog": 0.00026630179874439044,
+       "GC Thread#12": 0.00026630179874439044,
+       "Netty Server IO #0": 0.00026630179874439044,
+       "Netty Local Client IO #0": 0.00026630179874439044,
+       "native-origin:java.exe": 0.0,
+       "G1 Main Marker": 0.0,
+       "G1 Refine#0": 0.0,
+       "G1 Service": 0.0,
+       "VM Periodic Task Thread": 0.0,
+       "VM Thread": 0.0,
+       "Reference Handler": 0.0,
+       "Finalizer": 0.0,
+       "Signal Dispatcher": 0.0,
+       "Attach Listener": 0.0,
+       "Service Thread": 0.0,
+       "Monitor Deflation Thread": 0.0,
+       "C1 CompilerThread0": 0.0,
+       "Notification Thread": 0.0,
+       "Common-Cleaner": 0.0,
+       "GC Thread#3": 0.0,
+       "GC Thread#7": 0.0,
+       "GC Thread#10": 0.0,
+       "GC Thread#11": 0.0,
+       "Snooper Timer": 0.0,
+       "GC Thread#13": 0.0,
+       "Timer hack thread": 0.0,
+       "Java2D Disposer": 0.0,
+       "native-origin:ntdll.dll": 0.0,
+       "native-origin:uiautomationcore.dll": 0.0,
+       "native-origin:combase.dll": 0.0,
+       "native-origin:OpenAL-amd64.dll": 0.0,
+       "Chunk Batcher 0": 0.0,
+       "Chunk Batcher 1": 0.0,
+       "LWJGL Timer": 0.0,
+       "native-origin:ucrtbase.dll": 0.0
+      }
+     }
+    },
+    "pan": {
+     "frame_ms": 0.633842749994718,
+     "client_cpu_ms": 0.3648,
+     "process_cpu_ms": 1.0398820274238871,
+     "off_client_cpu_ms": 0.6750820274238871,
+     "cpu_distribution_hint": "mixed",
+     "sections_ms": {
+      "render": 0.3159,
+      "swap": 0.2747,
+      "tick": 0.0128,
+      "terrain_setup": 0.1504
+     },
+     "visible_chunks": {
+      "visible_mean": 1435.5353,
+      "pending_mean": 0.0125,
+      "pending_max": 9
+     },
+     "allocation_bytes_per_frame": 3903.7651,
+     "bins_5s": [
+      {
+       "start_s": 0,
+       "frames": 7118,
+       "frame_ms": 0.7024575723517842,
+       "render_ms": 0.36553974431019953,
+       "swap_ms": 0.29205146108457436,
+       "tick_ms": 0.01492052542849115,
+       "visible_chunks": 1488.7749367799943,
+       "pending_chunks": 0.08190502950266929
+      },
+      {
+       "start_s": 5,
+       "frames": 8289,
+       "frame_ms": 0.6032585716009169,
+       "render_ms": 0.30688899746652193,
+       "swap_ms": 0.2533644468572807,
+       "tick_ms": 0.012143780914464953,
+       "visible_chunks": 1405.6518277234889,
+       "pending_chunks": 0.0008444927011702256
+      },
+      {
+       "start_s": 10,
+       "frames": 8163,
+       "frame_ms": 0.6125005635183144,
+       "render_ms": 0.3028747886806321,
+       "swap_ms": 0.2666963861325493,
+       "tick_ms": 0.012333382334925886,
+       "visible_chunks": 1416.305402425579,
+       "pending_chunks": 0.0002450079627587897
+      },
+      {
+       "start_s": 15,
+       "frames": 7403,
+       "frame_ms": 0.6753960556531137,
+       "render_ms": 0.3221758071052276,
+       "swap_ms": 0.3076402674591382,
+       "tick_ms": 0.014252708361475077,
+       "visible_chunks": 1490.9092259894637,
+       "pending_chunks": 0.00027016074564365796
+      },
+      {
+       "start_s": 20,
+       "frames": 8230,
+       "frame_ms": 0.6075726488456865,
+       "render_ms": 0.3016431227217497,
+       "swap_ms": 0.2643054313487242,
+       "tick_ms": 0.011458469015795869,
+       "visible_chunks": 1406.8272174969622,
+       "pending_chunks": 0.0
+      },
+      {
+       "start_s": 25,
+       "frames": 8128,
+       "frame_ms": 0.6151311392716535,
+       "render_ms": 0.30326689222440945,
+       "swap_ms": 0.26980329724409446,
+       "tick_ms": 0.012080437992125985,
+       "visible_chunks": 1417.3330462598426,
+       "pending_chunks": 0.0
+      }
+     ],
+     "threads": {
+      "covered_s": 29.34990119934082,
+      "sampler_cpu_cores": 0.08145257402275997,
+      "cpu_cores": {
+       "native-origin:nvoglv64.dll": 0.9162083653148361,
+       "Client thread": 0.5722974972187383,
+       "Thread-4": 0.037798253304679466,
+       "JFR Periodic Tasks": 0.031942185891278424,
+       "Server thread": 0.021827160359040254,
+       "C2 CompilerThread0": 0.009050286002528886,
+       "File IO Thread": 0.007985546472819606,
+       "Chunk Batcher 0": 0.007453176707964965,
+       "Thread-5": 0.005323697648546404,
+       "Chunk Batcher 1": 0.004258958118837123,
+       "JFR Sampler Thread": 0.0031942185891278424,
+       "G1 Conc#0": 0.0015971092945639212,
+       "G1 Conc#1": 0.0015971092945639212,
+       "G1 Conc#2": 0.0015971092945639212,
+       "G1 Conc#3": 0.0015971092945639212,
+       "Netty Server IO #1": 0.0010647395297092807,
+       "GC Thread#0": 0.0005323697648546403,
+       "C1 CompilerThread0": 0.0005323697648546403,
+       "JFR Recorder Thread": 0.0005323697648546403,
+       "GC Thread#7": 0.0005323697648546403,
+       "GC Thread#9": 0.0005323697648546403,
+       "GC Thread#14": 0.0005323697648546403,
+       "native-origin:java.exe": 0.0,
+       "G1 Main Marker": 0.0,
+       "G1 Refine#0": 0.0,
+       "G1 Service": 0.0,
+       "VM Periodic Task Thread": 0.0,
+       "VM Thread": 0.0,
+       "Reference Handler": 0.0,
+       "Finalizer": 0.0,
+       "Signal Dispatcher": 0.0,
+       "Attach Listener": 0.0,
+       "Service Thread": 0.0,
+       "Monitor Deflation Thread": 0.0,
+       "Notification Thread": 0.0,
+       "Common-Cleaner": 0.0,
+       "GC Thread#1": 0.0,
+       "GC Thread#2": 0.0,
+       "GC Thread#3": 0.0,
+       "GC Thread#4": 0.0,
+       "GC Thread#5": 0.0,
+       "GC Thread#6": 0.0,
+       "GC Thread#8": 0.0,
+       "GC Thread#10": 0.0,
+       "GC Thread#11": 0.0,
+       "Alacer benchmark watchdog": 0.0,
+       "GC Thread#12": 0.0,
+       "Snooper Timer": 0.0,
+       "GC Thread#13": 0.0,
+       "Timer hack thread": 0.0,
+       "Java2D Disposer": 0.0,
+       "native-origin:ntdll.dll": 0.0,
+       "native-origin:uiautomationcore.dll": 0.0,
+       "native-origin:OpenAL-amd64.dll": 0.0,
+       "LWJGL Timer": 0.0,
+       "native-origin:ucrtbase.dll": 0.0,
+       "Netty Server IO #0": 0.0,
+       "Netty Local Client IO #0": 0.0
+      }
+     }
+    },
+    "sort": {
+     "frame_ms": 0.6655837624792014,
+     "client_cpu_ms": 0.3942,
+     "process_cpu_ms": 1.140345825499168,
+     "off_client_cpu_ms": 0.7461458254991681,
+     "cpu_distribution_hint": "mixed",
+     "sections_ms": {
+      "render": 0.3623,
+      "swap": 0.2584,
+      "tick": 0.0132,
+      "terrain_setup": 0.16
+     },
+     "visible_chunks": {
+      "visible_mean": 1432.8431,
+      "pending_mean": 3.4134,
+      "pending_max": 268
+     },
+     "allocation_bytes_per_frame": 7549.6792,
+     "bins_5s": [
+      {
+       "start_s": 0,
+       "frames": 7074,
+       "frame_ms": 0.7069025162567147,
+       "render_ms": 0.36684502403166525,
+       "swap_ms": 0.29259004806333055,
+       "tick_ms": 0.015381297709923665,
+       "visible_chunks": 1445.6470172462539,
+       "pending_chunks": 3.83587786259542
+      },
+      {
+       "start_s": 5,
+       "frames": 8204,
+       "frame_ms": 0.609384300341297,
+       "render_ms": 0.34888806679668455,
+       "swap_ms": 0.2176441491955144,
+       "tick_ms": 0.011153108239882983,
+       "visible_chunks": 1391.155046318869,
+       "pending_chunks": 3.4973183812774256
+      },
+      {
+       "start_s": 10,
+       "frames": 6960,
+       "frame_ms": 0.7184241954022988,
+       "render_ms": 0.39064330459770114,
+       "swap_ms": 0.279884367816092,
+       "tick_ms": 0.01529925287356322,
+       "visible_chunks": 1475.6120689655172,
+       "pending_chunks": 3.0216954022988505
+      },
+      {
+       "start_s": 15,
+       "frames": 7584,
+       "frame_ms": 0.6593220991561182,
+       "render_ms": 0.36217506592827003,
+       "swap_ms": 0.25315524789029537,
+       "tick_ms": 0.012717141350210969,
+       "visible_chunks": 1424.9976265822784,
+       "pending_chunks": 4.8103902953586495
+      },
+      {
+       "start_s": 20,
+       "frames": 7871,
+       "frame_ms": 0.6352014229449879,
+       "render_ms": 0.3426929869139881,
+       "swap_ms": 0.24906873332486343,
+       "tick_ms": 0.012076546817431075,
+       "visible_chunks": 1420.5712107737263,
+       "pending_chunks": 2.5163257527633083
+      },
+      {
+       "start_s": 25,
+       "frames": 7005,
+       "frame_ms": 0.7138553176302641,
+       "render_ms": 0.379121698786581,
+       "swap_ms": 0.28870064239828697,
+       "tick_ms": 0.014201741613133475,
+       "visible_chunks": 1460.1961456102783,
+       "pending_chunks": 3.1964311206281226
+      },
+      {
+       "start_s": 30,
+       "frames": 3382,
+       "frame_ms": 0.591511531638084,
+       "render_ms": 0.33816076286221175,
+       "swap_ms": 0.2128975458308693,
+       "tick_ms": 0.010438882318154938,
+       "visible_chunks": 1408.6697220579538,
+       "pending_chunks": 2.5369603784742756
+      }
+     ],
+     "threads": {
+      "covered_s": 30.350510120391846,
+      "sampler_cpu_cores": 0.08340057514550005,
+      "cpu_cores": {
+       "native-origin:nvoglv64.dll": 0.8947543185362907,
+       "Client thread": 0.5884373913043615,
+       "Thread-4": 0.035522467191601875,
+       "Server thread": 0.034492830461410516,
+       "JFR Periodic Tasks": 0.0324335570010278,
+       "Chunk Batcher 0": 0.03088910190574076,
+       "Chunk Batcher 1": 0.03088910190574076,
+       "File IO Thread": 0.022652008064209892,
+       "C2 CompilerThread0": 0.018533461143444455,
+       "JFR Sampler Thread": 0.003088910190574076,
+       "G1 Conc#1": 0.003088910190574076,
+       "G1 Conc#2": 0.003088910190574076,
+       "G1 Conc#3": 0.003088910190574076,
+       "G1 Conc#0": 0.0020592734603827175,
+       "GC Thread#0": 0.0010296367301913588,
+       "G1 Refine#0": 0.0010296367301913588,
+       "C1 CompilerThread0": 0.0010296367301913588,
+       "GC Thread#9": 0.0010296367301913588,
+       "VM Periodic Task Thread": 0.0005148183650956794,
+       "JFR Recorder Thread": 0.0005148183650956794,
+       "GC Thread#2": 0.0005148183650956794,
+       "GC Thread#3": 0.0005148183650956794,
+       "GC Thread#6": 0.0005148183650956794,
+       "GC Thread#8": 0.0005148183650956794,
+       "GC Thread#10": 0.0005148183650956794,
+       "native-origin:uiautomationcore.dll": 0.0005148183650956794,
+       "GC Thread#14": 0.0005148183650956794,
+       "Netty Server IO #0": 0.0005148183650956794,
+       "Netty Local Client IO #0": 0.0005148183650956794,
+       "Netty Server IO #1": 0.0005148183650956794,
+       "native-origin:java.exe": 0.0,
+       "G1 Main Marker": 0.0,
+       "G1 Service": 0.0,
+       "VM Thread": 0.0,
+       "Reference Handler": 0.0,
+       "Finalizer": 0.0,
+       "Signal Dispatcher": 0.0,
+       "Attach Listener": 0.0,
+       "Service Thread": 0.0,
+       "Monitor Deflation Thread": 0.0,
+       "Notification Thread": 0.0,
+       "Common-Cleaner": 0.0,
+       "GC Thread#1": 0.0,
+       "GC Thread#4": 0.0,
+       "GC Thread#5": 0.0,
+       "GC Thread#7": 0.0,
+       "GC Thread#11": 0.0,
+       "Alacer benchmark watchdog": 0.0,
+       "GC Thread#12": 0.0,
+       "Snooper Timer": 0.0,
+       "GC Thread#13": 0.0,
+       "Timer hack thread": 0.0,
+       "Java2D Disposer": 0.0,
+       "Thread-5": 0.0,
+       "native-origin:OpenAL-amd64.dll": 0.0,
+       "native-origin:ntdll.dll": 0.0,
+       "LWJGL Timer": 0.0,
+       "native-origin:ucrtbase.dll": 0.0
+      }
+     }
+    },
+    "fly": {
+     "frame_ms": 0.8741320170454545,
+     "client_cpu_ms": 0.4268,
+     "process_cpu_ms": 1.8585803728146855,
+     "off_client_cpu_ms": 1.4317803728146854,
+     "cpu_distribution_hint": "low-client-cpu",
+     "sections_ms": {
+      "render": 0.5113,
+      "swap": 0.3042,
+      "tick": 0.02,
+      "terrain_setup": 0.1778
+     },
+     "visible_chunks": {
+      "visible_mean": 1263.3259,
+      "pending_mean": 56.2923,
+      "pending_max": 822
+     },
+     "allocation_bytes_per_frame": 17353.1463,
+     "bins_5s": [
+      {
+       "start_s": 0,
+       "frames": 7782,
+       "frame_ms": 0.6425867000771011,
+       "render_ms": 0.3449144307375996,
+       "swap_ms": 0.2526116551015163,
+       "tick_ms": 0.012362528912875866,
+       "visible_chunks": 1155.5242868157286,
+       "pending_chunks": 6.635183757388846
+      },
+      {
+       "start_s": 5,
+       "frames": 7545,
+       "frame_ms": 0.6626125248508946,
+       "render_ms": 0.38283211398277006,
+       "swap_ms": 0.23154347249834326,
+       "tick_ms": 0.0128937972166998,
+       "visible_chunks": 1239.979324055666,
+       "pending_chunks": 8.647713717693836
+      },
+      {
+       "start_s": 10,
+       "frames": 5686,
+       "frame_ms": 0.8793840309532185,
+       "render_ms": 0.5127769785437918,
+       "swap_ms": 0.3101514245515301,
+       "tick_ms": 0.018782026028842772,
+       "visible_chunks": 1264.159866338375,
+       "pending_chunks": 20.105522335561027
+      },
+      {
+       "start_s": 15,
+       "frames": 5180,
+       "frame_ms": 0.9652747297297297,
+       "render_ms": 0.5523267181467181,
+       "swap_ms": 0.3502423552123552,
+       "tick_ms": 0.023446872586872586,
+       "visible_chunks": 1155.3698841698842,
+       "pending_chunks": 24.434555984555985
+      },
+      {
+       "start_s": 20,
+       "frames": 4400,
+       "frame_ms": 1.1363339545454545,
+       "render_ms": 0.7145526818181818,
+       "swap_ms": 0.3453394090909091,
+       "tick_ms": 0.030177795454545457,
+       "visible_chunks": 1327.8568181818182,
+       "pending_chunks": 116.01818181818182
+      },
+      {
+       "start_s": 25,
+       "frames": 5209,
+       "frame_ms": 0.9599336724899213,
+       "render_ms": 0.5498514686120177,
+       "swap_ms": 0.34670927241313115,
+       "tick_ms": 0.02309809944327126,
+       "visible_chunks": 1328.1958149356883,
+       "pending_chunks": 93.93184872336342
+      },
+      {
+       "start_s": 30,
+       "frames": 5180,
+       "frame_ms": 0.9652514478764479,
+       "render_ms": 0.5656600386100386,
+       "swap_ms": 0.3333446911196911,
+       "tick_ms": 0.024550714285714287,
+       "visible_chunks": 1340.438223938224,
+       "pending_chunks": 103.13474903474903
+      },
+      {
+       "start_s": 35,
+       "frames": 4778,
+       "frame_ms": 1.0464195897865216,
+       "render_ms": 0.6507896609460024,
+       "swap_ms": 0.32988884470489743,
+       "tick_ms": 0.023397509418166595,
+       "visible_chunks": 1378.0701130179991,
+       "pending_chunks": 143.188154039347
+      }
+     ],
+     "threads": {
+      "covered_s": 39.452109813690186,
+      "sampler_cpu_cores": 0.0811902079540621,
+      "cpu_cores": {
+       "native-origin:nvoglv64.dll": 0.8332887684651056,
+       "Client thread": 0.48714124772437256,
+       "Server thread": 0.17941055708873233,
+       "Chunk Batcher 0": 0.10653739482752538,
+       "Chunk Batcher 1": 0.1041610960581382,
+       "C2 CompilerThread0": 0.10257689687854674,
+       "native-origin:ucrtbase.dll": 0.037624730515297064,
+       "File IO Thread": 0.035644481540807745,
+       "JFR Periodic Tasks": 0.034456332156114156,
+       "Thread-4": 0.022970888104076104,
+       "G1 Conc#3": 0.013465693026527371,
+       "G1 Conc#0": 0.013069643231629508,
+       "G1 Conc#1": 0.013069643231629508,
+       "G1 Conc#2": 0.013069643231629508,
+       "C1 CompilerThread0": 0.004752597538774366,
+       "GC Thread#1": 0.003960497948978638,
+       "GC Thread#10": 0.0035644481540807746,
+       "GC Thread#0": 0.003168398359182911,
+       "GC Thread#9": 0.002772348564285047,
+       "JFR Sampler Thread": 0.002772348564285047,
+       "Netty Server IO #1": 0.002772348564285047,
+       "GC Thread#2": 0.002376298769387183,
+       "GC Thread#11": 0.002376298769387183,
+       "GC Thread#13": 0.002376298769387183,
+       "GC Thread#7": 0.001980248974489319,
+       "GC Thread#8": 0.001980248974489319,
+       "GC Thread#12": 0.0015841991795914555,
+       "VM Thread": 0.0011881493846935915,
+       "GC Thread#6": 0.0011881493846935915,
+       "GC Thread#3": 0.0007920995897957278,
+       "GC Thread#4": 0.0007920995897957278,
+       "GC Thread#5": 0.0007920995897957278,
+       "GC Thread#14": 0.0007920995897957278,
+       "VM Periodic Task Thread": 0.0003960497948978639,
+       "Reference Handler": 0.0003960497948978639,
+       "Common-Cleaner": 0.0003960497948978639,
+       "JFR Recorder Thread": 0.0003960497948978639,
+       "native-origin:java.exe": 0.0,
+       "G1 Main Marker": 0.0,
+       "G1 Refine#0": 0.0,
+       "G1 Service": 0.0,
+       "Finalizer": 0.0,
+       "Signal Dispatcher": 0.0,
+       "Attach Listener": 0.0,
+       "Service Thread": 0.0,
+       "Monitor Deflation Thread": 0.0,
+       "Notification Thread": 0.0,
+       "Alacer benchmark watchdog": 0.0,
+       "Snooper Timer": 0.0,
+       "Timer hack thread": 0.0,
+       "Java2D Disposer": 0.0,
+       "native-origin:uiautomationcore.dll": 0.0,
+       "Thread-5": 0.0,
+       "native-origin:OpenAL-amd64.dll": 0.0,
+       "native-origin:ntdll.dll": 0.0,
+       "LWJGL Timer": 0.0,
+       "Netty Server IO #0": 0.0,
+       "Netty Local Client IO #0": 0.0
+      }
+     }
+    },
+    "reference-post": {
+     "frame_ms": 0.5262232398442432,
+     "client_cpu_ms": 0.1833,
+     "process_cpu_ms": 0.6783019969480109,
+     "off_client_cpu_ms": 0.49500199694801084,
+     "cpu_distribution_hint": "low-client-cpu",
+     "sections_ms": {
+      "render": 0.1557,
+      "swap": 0.3302,
+      "tick": 0.0095,
+      "terrain_setup": 0.0091
+     },
+     "visible_chunks": {
+      "visible_mean": 1293.0,
+      "pending_mean": 0.0,
+      "pending_max": 0
+     },
+     "allocation_bytes_per_frame": 3886.8748,
+     "bins_5s": [
+      {
+       "start_s": 0,
+       "frames": 9687,
+       "frame_ms": 0.516165004645401,
+       "render_ms": 0.16141172705688037,
+       "swap_ms": 0.31365781975843915,
+       "tick_ms": 0.009666326003922783,
+       "visible_chunks": 1293.0,
+       "pending_chunks": 0.0
+      },
+      {
+       "start_s": 5,
+       "frames": 9295,
+       "frame_ms": 0.5379515115653577,
+       "render_ms": 0.15069281334050563,
+       "swap_ms": 0.34751413663259817,
+       "tick_ms": 0.009471984938138785,
+       "visible_chunks": 1293.0,
+       "pending_chunks": 0.0
+      },
+      {
+       "start_s": 10,
+       "frames": 9813,
+       "frame_ms": 0.509568623254866,
+       "render_ms": 0.15922830938550903,
+       "swap_ms": 0.30995768878018953,
+       "tick_ms": 0.008770406603485173,
+       "visible_chunks": 1293.0,
+       "pending_chunks": 0.0
+      },
+      {
+       "start_s": 15,
+       "frames": 9213,
+       "frame_ms": 0.5427055573645935,
+       "render_ms": 0.15110332139368282,
+       "swap_ms": 0.3515035167697818,
+       "tick_ms": 0.010285531314446976,
+       "visible_chunks": 1293.0,
+       "pending_chunks": 0.0
+      }
+     ],
+     "threads": {
+      "covered_s": 19.209951877593994,
+      "sampler_cpu_cores": 0.07645776571221467,
+      "cpu_cores": {
+       "native-origin:nvoglv64.dll": 0.8296480960261592,
+       "Client thread": 0.35463389202686807,
+       "Thread-4": 0.036602121883507026,
+       "JFR Periodic Tasks": 0.03172183896570609,
+       "File IO Thread": 0.01870775118490359,
+       "Server thread": 0.01708099021230328,
+       "C2 CompilerThread0": 0.0032535219452006245,
+       "native-origin:OpenAL-amd64.dll": 0.0032535219452006245,
+       "JFR Sampler Thread": 0.0008133804863001561,
+       "native-origin:ntdll.dll": 0.0008133804863001561,
+       "native-origin:java.exe": 0.0,
+       "GC Thread#0": 0.0,
+       "G1 Main Marker": 0.0,
+       "G1 Conc#0": 0.0,
+       "G1 Refine#0": 0.0,
+       "G1 Service": 0.0,
+       "VM Periodic Task Thread": 0.0,
+       "VM Thread": 0.0,
+       "Reference Handler": 0.0,
+       "Finalizer": 0.0,
+       "Signal Dispatcher": 0.0,
+       "Attach Listener": 0.0,
+       "Service Thread": 0.0,
+       "Monitor Deflation Thread": 0.0,
+       "C1 CompilerThread0": 0.0,
+       "Notification Thread": 0.0,
+       "Common-Cleaner": 0.0,
+       "JFR Recorder Thread": 0.0,
+       "GC Thread#1": 0.0,
+       "GC Thread#2": 0.0,
+       "GC Thread#3": 0.0,
+       "GC Thread#4": 0.0,
+       "GC Thread#5": 0.0,
+       "GC Thread#6": 0.0,
+       "GC Thread#7": 0.0,
+       "GC Thread#8": 0.0,
+       "GC Thread#9": 0.0,
+       "GC Thread#10": 0.0,
+       "GC Thread#11": 0.0,
+       "G1 Conc#1": 0.0,
+       "G1 Conc#2": 0.0,
+       "G1 Conc#3": 0.0,
+       "Alacer benchmark watchdog": 0.0,
+       "GC Thread#12": 0.0,
+       "Snooper Timer": 0.0,
+       "GC Thread#13": 0.0,
+       "Timer hack thread": 0.0,
+       "Java2D Disposer": 0.0,
+       "native-origin:uiautomationcore.dll": 0.0,
+       "Thread-5": 0.0,
+       "GC Thread#14": 0.0,
+       "Chunk Batcher 0": 0.0,
+       "Chunk Batcher 1": 0.0,
+       "LWJGL Timer": 0.0,
+       "native-origin:ucrtbase.dll": 0.0,
+       "Netty Server IO #0": 0.0,
+       "Netty Local Client IO #0": 0.0,
+       "Netty Server IO #1": 0.0
+      }
+     }
+    }
+   }
+  }
+ ]
+}

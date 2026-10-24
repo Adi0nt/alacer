@@ -38,6 +38,7 @@ import net.minecraft.client.Screenshot;
 import net.minecraft.client.entity.living.player.LocalClientPlayerEntity;
 import net.minecraft.client.gui.screen.menu.TitleScreen;
 import net.minecraft.client.options.GameOptions;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.living.mob.MobEntity;
 import net.minecraft.entity.living.mob.passive.animal.CowEntity;
 import net.minecraft.entity.living.mob.passive.animal.PigEntity;
@@ -111,6 +112,10 @@ import net.minecraft.world.gen.WorldGeneratorType;
  * the 4,000 cap at scale 2), share a network id with a live particle, appear twice in one list,
  * or override {@code equals}. Not a performance scenario.
  *
+ * <p>{@link StabilityOptions} (all opt-in, absent by default) add identical reference phases before and
+ * after the scored phases, override recorded phase lengths, add repeated in-process segments or short
+ * toggle blocks, and record the client thread's logical processor and the mobs' movement per phase.
+ *
  * <p>Spectator mode is used so the camera can pass through terrain without the server
  * correcting its position; it also disables hand and block-outline rendering, which is a
  * small, constant difference from survival play.
@@ -156,6 +161,13 @@ public final class BenchmarkRunner implements FrameProfiler.FrameListener {
 		long wallNanos;
 		long threadCpuNanos;
 		long processCpuNanos;
+		/** Frames per logical processor of the client thread (processor sampling only). */
+		int[] processors;
+		int unknownProcessorFrames;
+		/** Mob network id to x, y, z, yaw, head yaw at the first recorded frame (mob pose check only). */
+		Map<Integer, double[]> mobPoses;
+		/** Mobs at start, at end, present at both, largest movement (blocks) and turn (degrees). */
+		double[] mobPoseResult;
 
 		Phase(String name, double seconds, CameraPath path) {
 			this.name = name;
@@ -183,6 +195,8 @@ public final class BenchmarkRunner implements FrameProfiler.FrameListener {
 	private final double[] pose = new double[5];
 	private final ThreadMXBean threads = ManagementFactory.getThreadMXBean();
 	private final OperatingSystemMXBean os = ManagementFactory.getOperatingSystemMXBean();
+	private final StabilityOptions stability = StabilityOptions.fromSystemProperties();
+	private final ProcessorSampler processorSampler = this.stability.processorSampling ? ProcessorSampler.create() : null;
 
 	/** Read by the watchdog thread. */
 	private volatile Stage stage = Stage.WAIT_FOR_MENU;
@@ -214,6 +228,7 @@ public final class BenchmarkRunner implements FrameProfiler.FrameListener {
 	private long particleProbes;
 	private int[] particleTops;
 	private int particleToggles;
+	private volatile int frozenMobs;
 
 	public BenchmarkRunner(String label) {
 		if (net.adiont.alacer.render.ParticleMovementCensus.ENABLED) {
@@ -240,6 +255,15 @@ public final class BenchmarkRunner implements FrameProfiler.FrameListener {
 		double scale = Double.parseDouble(System.getProperty("alacer.benchmark.timeScale", "1").trim());
 		String toggle = System.getProperty("alacer.benchmark.toggle");
 		this.toggleKey = toggle == null || toggle.trim().isEmpty() ? null : toggle.trim();
+		if (this.stability.toggleBlocks > 0 && this.toggleKey == null) {
+			throw new IllegalArgumentException("toggleBlocks requires alacer.benchmark.toggle");
+		}
+		addScenarioPhases(scale);
+		applyStability();
+	}
+
+	/** The scenario's own phases, exactly as without {@link StabilityOptions}. */
+	private void addScenarioPhases(double scale) {
 		if (!this.chunkFlight.isEmpty()) {
 			double height = ChunkFlightScenario.height(this.chunkFlight);
 			if (this.backendScenario || this.particleScenario || this.toggleKey != null || this.shadowDiagnostic
@@ -361,6 +385,15 @@ public final class BenchmarkRunner implements FrameProfiler.FrameListener {
 			addWarmup("warmup-static-a", 5 * scale, still, false);
 			addWarmup("warmup-static-b", 5 * scale, still, true);
 		}
+		if (this.stability.toggleBlocks > 0) {
+			// Opt-in short blocks in the stationary view only; pan segments are not repeated.
+			for (String name : this.stability.toggleBlockNames()) {
+				Phase phase = new Phase(name, this.stability.toggleSegmentSeconds, still);
+				phase.toggle = StabilityOptions.isVariant(name);
+				this.phases.add(phase);
+			}
+			return;
+		}
 		String[] order = Boolean.getBoolean("alacer.benchmark.toggleReverse")
 			? new String[] {"b1", "a1", "a2", "b2"} : new String[] {"a1", "b1", "b2", "a2"};
 		for (String segment : order) {
@@ -381,6 +414,57 @@ public final class BenchmarkRunner implements FrameProfiler.FrameListener {
 			Phase phase = new Phase("pan-" + segment, 7.5 * scale, turn);
 			phase.toggle = segment.charAt(0) == 'b';
 			this.phases.add(phase);
+		}
+	}
+
+	/**
+	 * Applies {@link StabilityOptions}: phase-length overrides, then the reference phases and repeat segments,
+	 * all at the default static view. With a toggle they run with the option off (A).
+	 */
+	private void applyStability() {
+		if (!this.stability.changesPhases()) {
+			return;
+		}
+		if (Boolean.getBoolean("alacer.benchmark.cloudSweep")) {
+			throw new IllegalArgumentException("stability phases are not supported with cloudSweep");
+		}
+		List<String> names = new ArrayList<>();
+		for (Phase phase : this.phases) {
+			names.add(phase.name);
+		}
+		this.stability.checkPhaseNames(names);
+		for (int i = 0; i < this.phases.size(); i++) {
+			Phase phase = this.phases.get(i);
+			double seconds = this.stability.secondsFor(phase.name, phase.seconds);
+			if (seconds != phase.seconds) {
+				Phase longer = new Phase(phase.name, seconds, phase.path);
+				longer.toggle = phase.toggle;
+				longer.setup = phase.setup;
+				this.phases.set(i, longer);
+			}
+		}
+		CameraPath reference = (t, out) -> {
+			out[0] = this.anchorX;
+			out[1] = this.groundY + 1.0;
+			out[2] = this.anchorZ;
+			out[3] = 45.0;
+			out[4] = 5.0;
+		};
+		Boolean off = this.toggleKey == null ? null : Boolean.FALSE;
+		if (this.stability.referenceSeconds > 0) {
+			Phase pre = new Phase(StabilityOptions.REFERENCE_PRE, this.stability.referenceSeconds, reference);
+			pre.toggle = off;
+			this.phases.add(0, pre);
+		}
+		for (String name : this.stability.repeatNames()) {
+			Phase segment = new Phase(name, this.stability.repeatSegmentSeconds, reference);
+			segment.toggle = off;
+			this.phases.add(segment);
+		}
+		if (this.stability.referencePost) {
+			Phase post = new Phase(StabilityOptions.REFERENCE_POST, this.stability.referenceSeconds, reference);
+			post.toggle = off;
+			this.phases.add(post);
 		}
 	}
 
@@ -943,7 +1027,28 @@ public final class BenchmarkRunner implements FrameProfiler.FrameListener {
 		if (phase.setup != null) {
 			phase.setup.run();
 		}
+		if (this.stability.freezeMobs) {
+			freezeMobs(phase.name);
+		}
 		hold(phase, 0.0);
+	}
+
+	/** Opt-in: NoAI for every mob the server has loaded, so no mob walks or turns while a phase records. */
+	private void freezeMobs(String phaseName) {
+		IntegratedServer server = this.minecraft.getServer();
+		server.executeTask(() -> {
+			int frozen = 0;
+			for (Entity entity : server.getWorld(0).getEntities()) {
+				if (entity instanceof MobEntity mob && !mob.isNoAi()) {
+					mob.setNoAi(true);
+					frozen++;
+				}
+			}
+			this.frozenMobs += frozen;
+			if (frozen > 0) {
+				Alacer.LOGGER.info("Benchmark: froze {} mobs before '{}'", frozen, phaseName);
+			}
+		});
 	}
 
 	/**
@@ -968,6 +1073,10 @@ public final class BenchmarkRunner implements FrameProfiler.FrameListener {
 		phase.columns = new long[FrameProfiler.COLUMNS][capacity];
 		phase.rows = 0;
 		phase.entitiesAtStart = this.minecraft.world.getEntities().size();
+		if (this.processorSampler != null) {
+			phase.processors = new int[ProcessorSampler.MAX_PROCESSORS];
+			phase.unknownProcessorFrames = 0;
+		}
 		// The following frame contains this setup's arrays/maps/logging. Arm capture at its
 		// completed boundary instead of reporting it as a render frame or polluting the tails.
 		phase.capturePending = true;
@@ -993,6 +1102,9 @@ public final class BenchmarkRunner implements FrameProfiler.FrameListener {
 		phase.processCpuNanos = process < 0 || phase.processCpuStart < 0 ? -1 : process - phase.processCpuStart;
 		if (!phase.config.equals(configSnapshot())) {
 			throw new IllegalStateException("Configuration changed while recording " + phase.name);
+		}
+		if (this.stability.mobPoseCheck && phase.mobPoses != null) {
+			phase.mobPoseResult = StabilityOptions.compareMobPoses(phase.mobPoses, mobPoses());
 		}
 		GlCallStats.log(phase.name);
 		EntityDrawDetails.log(phase.name);
@@ -1034,6 +1146,17 @@ public final class BenchmarkRunner implements FrameProfiler.FrameListener {
 		return config;
 	}
 
+	/** Client-side mob poses by network id: x, y, z, yaw, head yaw. Phase boundaries only. */
+	private Map<Integer, double[]> mobPoses() {
+		Map<Integer, double[]> poses = new LinkedHashMap<>();
+		for (Entity entity : this.minecraft.world.getEntities()) {
+			if (entity instanceof MobEntity mob) {
+				poses.put(mob.getNetworkId(), new double[] {mob.x, mob.y, mob.z, mob.yaw, mob.headYaw});
+			}
+		}
+		return poses;
+	}
+
 	private long processCpuTime() {
 		if (this.os instanceof com.sun.management.OperatingSystemMXBean) {
 			return ((com.sun.management.OperatingSystemMXBean) this.os).getProcessCpuTime();
@@ -1069,6 +1192,9 @@ public final class BenchmarkRunner implements FrameProfiler.FrameListener {
 			phase.wallStart = System.nanoTime();
 			phase.threadCpuStart = this.threads.getCurrentThreadCpuTime();
 			phase.processCpuStart = processCpuTime();
+			if (this.stability.mobPoseCheck) {
+				phase.mobPoses = mobPoses();
+			}
 			this.stageStart = phase.wallStart;
 			if (ChunkUploadGpu.ENABLED) { ChunkUploadGpu.phase(phase.name); }
 			if (net.adiont.alacer.render.ParticleMovementCensus.ENABLED
@@ -1089,6 +1215,15 @@ public final class BenchmarkRunner implements FrameProfiler.FrameListener {
 			phase.columns[c][phase.rows] = frames.get(row, c);
 		}
 		phase.rows++;
+		if (phase.processors != null) {
+			// One sample per recorded frame, taken on the client thread at the frame boundary.
+			int processor = this.processorSampler.current();
+			if (processor < 0) {
+				phase.unknownProcessorFrames++;
+			} else {
+				phase.processors[processor]++;
+			}
+		}
 	}
 
 	private void finish() throws IOException {
@@ -1125,6 +1260,11 @@ public final class BenchmarkRunner implements FrameProfiler.FrameListener {
 		environment.put("profiler.particleMovementCensus", String.valueOf(net.adiont.alacer.render.ParticleMovementCensus.ENABLED));
 		environment.put("profiler.particleMovementRegions", String.valueOf(net.adiont.alacer.render.ParticleMovementCensus.REGIONS));
 		environment.put("benchmark.movementCensusInactive", String.valueOf(Boolean.getBoolean("alacer.benchmark.movementCensusInactive")));
+		if (this.stability.any()) {
+			environment.putAll(this.stability.describe());
+			environment.put("benchmark.processorSource", this.processorSampler == null ? "off" : this.processorSampler.source());
+			environment.put("benchmark.frozenMobs", String.valueOf(this.frozenMobs));
+		}
 		Map<String, String> config = configSnapshot();
 
 		String stamp = new SimpleDateFormat("yyyyMMdd-HHmmss", Locale.ROOT).format(new Date());
@@ -1224,6 +1364,25 @@ public final class BenchmarkRunner implements FrameProfiler.FrameListener {
 		}
 		json.field("alloc_mean_bytes", alloc.mean);
 		json.field("pending_chunks_mean", pending.mean);
+		if (phase.processors != null) {
+			json.beginObject("client_processor_frames");
+			for (int i = 0; i < phase.processors.length; i++) {
+				if (phase.processors[i] > 0) {
+					json.field(String.valueOf(i), phase.processors[i]);
+				}
+			}
+			json.endObject();
+			json.field("client_processor_unknown_frames", phase.unknownProcessorFrames);
+		}
+		if (phase.mobPoseResult != null) {
+			json.beginObject("mob_pose");
+			json.field("mobs_start", (long) phase.mobPoseResult[0]);
+			json.field("mobs_end", (long) phase.mobPoseResult[1]);
+			json.field("mobs_both", (long) phase.mobPoseResult[2]);
+			json.field("max_move_blocks", phase.mobPoseResult[3]);
+			json.field("max_turn_degrees", phase.mobPoseResult[4]);
+			json.endObject();
+		}
 		json.endObject();
 	}
 

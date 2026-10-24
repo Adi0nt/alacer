@@ -46,6 +46,7 @@ public class AlacerMixinPlugin implements IMixinConfigPlugin {
 	private boolean particleLightEntry;
 	private boolean particleLightReuse;
 	private boolean shadowPositions;
+	private boolean benchmarkMobFreeze;
 
 	@Override
 	public void onLoad(String mixinPackage) {
@@ -74,6 +75,12 @@ public class AlacerMixinPlugin implements IMixinConfigPlugin {
 		this.particleLightEntry = particleLightEntryEnabled(file);
 		this.particleLightReuse = particleLightReuseEnabled(file);
 		this.shadowPositions = shadowPositionsEnabled(file);
+		this.benchmarkMobFreeze = benchmarkMobFreezeEnabled();
+	}
+
+	static boolean benchmarkMobFreezeEnabled() {
+		return Boolean.parseBoolean(System.getProperty("alacer.benchmark", "false").trim())
+			&& Boolean.parseBoolean(System.getProperty("alacer.benchmark.freezeMobs", "false").trim());
 	}
 
 	static boolean shadowPositionsEnabled(Properties file) {
@@ -169,6 +176,7 @@ public class AlacerMixinPlugin implements IMixinConfigPlugin {
 	@Override
 	public boolean shouldApplyMixin(String targetClassName, String mixinClassName) {
 		String name = mixinClassName.substring(mixinClassName.lastIndexOf('.') + 1);
+		if (name.equals("BenchmarkMobFreezeMixin")) { return this.benchmarkMobFreeze; }
 		if (name.equals("ParticleDrawDiagnosticMixin")) { return this.particleDrawDiagnostics; }
 		if (name.equals("EntityParticleMovementCensusMixin") || name.equals("WorldParticleMovementCensusMixin")) {
 			return this.particleMovementCensus;

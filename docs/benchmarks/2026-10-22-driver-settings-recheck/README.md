@@ -1,0 +1,11 @@
+# Driver settings recheck: diagnostic protocol v1
+
+Recorded before any client launch. User reports prior global Threaded optimization was enabled, now disabled; GPU power management also changed to maximum performance. Other settings are not independently enumerated. The NVIDIA connector exposes installed driver and overlay status, not the effective global/program 3D profile. Treat this as a combined-configuration recheck; do not attribute a difference solely to threading. Do not alter or restore the user's chosen NVIDIA settings.
+
+Exactly two fresh terrain launches, environmental monitor enabled in both, no retries, maximum 15 minutes wall time including quiet waits. Require seven minutes left before another launch. Stop on functional or environmental failure. No calibration, A/A pilot or next session. All existing 5% / 3% / environmental limits stay unchanged; two observations cannot qualify these gates or prove 2% detection power.
+
+Use the same explicit Temurin Java 25, original display-list backend, 1920x1080, 2G heap, P-core affinity, all original terrain phases/reference lengths and copied base world/config. Save the current CPU power plan, use the existing High performance plan only during testing, restore in finally. Existing in-client profiler and processor sampling stay enabled. No JFR; a native thread snapshot every five seconds plus one Java thread-name dump at elapsed 45 seconds supplies sparse attribution. Measure collector self CPU. Sparse intervals entirely inside phases are reported with their actual coverage; new/transient threads or work between samples can be missed. A thread origin is not a sampled native call stack.
+
+Compare all initial/final references, steady/pan/sort/fly means and five-second trajectories, client/process CPU, native NVIDIA-origin CPU, visible chunks, environment and collector cost. Retain every observation including a failure. Descriptive only; changes in instrumentation and GPU power settings prevent a clean speedup claim against older runs. Keep archive README, sources and protocol fixed for the entire series. All analysis, report writing and tests occur after clients exit.
+
+Preserve aa31, aa31w2 and the completed Session 32 investigation and raw data. New data use diag32off labels and separate archive/raw directories. No commits, pushes or publications.

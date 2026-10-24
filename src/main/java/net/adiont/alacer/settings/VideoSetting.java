@@ -29,7 +29,8 @@ public record VideoSetting(String key, Category category, String title, String d
 		return switch (this.key) {
 			case "distance" -> value + " chunks";
 			case "fps" -> value == 260 ? "Unlimited" : value + " FPS";
-			case "gamma", "quality.aoStrength" -> value + "%";
+			case "gamma", "quality.aoStrength", "quality.fogStart", "quality.starBrightness", "quality.weatherOpacity" -> value + "%";
+			case "quality.cloudHeight" -> value == 0 ? "Default" : (value > 0 ? "+" : "") + value + " blocks";
 			case "fov" -> value + " degrees";
 			default -> Integer.toString(value);
 		};

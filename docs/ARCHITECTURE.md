@@ -21,6 +21,8 @@ net.adiont.alacer
 ├── benchmark/
 │   ├── BenchmarkRunner     Scripted camera paths in a fresh copy of a fixed-seed world; optional
 │   │                       mob/chest population or particle scenario; optional in-process A/B segments
+│   ├── StabilityOptions    Opt-in reference phases, phase lengths, repeat segments, toggle blocks (session 31)
+│   ├── ProcessorSampler    Client thread's logical processor per frame via the Java 25 FFM API (session 31)
 │   └── ParticleProbes      Verification-only particles for the removal diagnostic (session 16)
 ├── render/
 │   ├── ChunkVisibility     Allocation-free chunk visibility search (optimization 1)
@@ -1266,8 +1268,7 @@ startup fly +6.6%, above the 1% limit) with matching tail and CPU failures, tick
 (+9.0%) and d0 pan/fly (+2.1% / +2.3%), d0 fly visible chunks (-2.4%), and d0 frame means (+3.3% to +24.4%, two pairs).
 **Closed; off by default and outside `render.defaults`.** The results (`gates.json`, attempts, records, three freezes)
 are in the [session 29 archive](benchmarks/2026-10-22-shadow-positions-reference/README.md), committed byte-for-byte
-from the reference checkout. TODO: that archive's README is still the run plan, and `docs/BENCHMARKS.md` has no
-session 29 entry.
+from the reference checkout; its results README and the `docs/BENCHMARKS.md` entry were written in session 31.
 
 Done in session 30: **`render.fastCameraSectionFaces` (session 28b) on the reference hardware.** Gates were written from
 the mechanism and frozen before measuring (one pre-freeze amendment ported session 29's 4,000 FPS buffer, which four
@@ -1291,6 +1292,102 @@ were exact and cut allocation substantially, yet neither showed a frame-time ben
 per-frame allocation savings of about 20 KB (session 29) or 2-10 KB while moving (session 30) are not a selection
 target on their own at these frame rates. Any new candidate needs a frame-time mechanism, and its series must account
 for launch-to-launch variance of several percent in means and tens of percent in tails (session 30's still phases).
+
+**Measuring 1-2% effects (session 31; a proposal only: nothing frozen, run or selected).** Session 31's
+[noise-floor analysis](benchmarks/2026-10-22-noise-floor/README.md) is a new analysis of the session 29 and 30
+`gates.json` files, and neither session is rescored. Most of session 30's spread came from one 20-minute block
+(14:21-14:41). In it, whole launches ran 58-373% slower in frame mean, and the client thread's CPU time per frame rose
+with it. The cause is not established. Outside that block, adjacent launches agreed within a few percent, and session
+29's night series kept 12 of 16 launches within +/-6%.
+
+Session 30's 32 still-phase pairs, where the option did no work, have a robust spread (1.4826 x median |change|) of
+16.7% in frame mean, 24-31% in p99, slow-1% and tick-frame p99, 7.9% in tick-free allocation and 24.2% in
+`terrain_setup`. Resampled symmetrically, the median of n such pairs resolves frame mean to about +/-32% at n = 4,
++/-7% at 16 and +/-1.7% at 64 (95% half-width). With normal per-pair noise sigma, a median reaches +/-2% at 12-16
+pairs only if sigma is about 3%, and +/-1% needs sigma about 2% with about 24 pairs. More pairs alone would need
+hundreds, so the per-pair spread has to come down first. A future series aiming at 2% on frame mean (about 1% on
+allocation) should:
+
+- **Check the noise first.** Run an A/A pilot: the same build and settings on both sides, hooks absent, for example
+  8 d0 and 8 terrain pairs (about 1.6 h), under the controls below. Write its rule before running it: go ahead only if
+  the robust per-pair spread of frame mean is at most 3%. If it is wider, fix the machine state, not the gates.
+- **Pairs and phases.** Run at least 12-16 alternating pairs per judged scene in ABBA blocks, with the two launches of
+  each pair back to back. Judge by medians pooled over the scenes the mechanism touches, not by 4-pair medians per
+  scene. Make still phases at least 60 s long. The client ticks 20 times a second, so a 20 s phase's tick-frame p99
+  rests on its 4 slowest tick frames. Resting it on 20 needs about 100 s; otherwise judge the tick-frame mean or p90.
+- **In-process A/B** wherever the option can be toggled at runtime and its effect does not need camera translation.
+  Use many short alternating segments (for example 8 x ABBA of 5-10 s) in a stationary scene: with 200 wandering mobs,
+  d200 "static" drifted up to 30% between two A segments of one launch (session 29). Options that need translation
+  (session 30) still need separate launches.
+- **Controls.** Start every launch with a reference phase that is identical on both sides (for example 20 s of the d0
+  static view). Compare its frame mean and its client and process CPU per frame with the pilot's median. The runner
+  rejects a launch outside a band declared in advance (for example +/-5%), keeps its attempt, and repeats the whole
+  pair at the end under `-r2` labels. Keep hooks-absent sides and fresh copied worlds.
+- **Background load.** Record, before and during every launch: the top processes by CPU, the foreground window, the
+  power plan, the CPU clock, and whether the client thread runs on a P-core or an E-core (the i7-12700F is hybrid).
+  Close browsers, chat, music and the agent app. Keep the game window in front, use the High Performance power plan,
+  and pin the client to P-cores identically on both sides. A launch whose recorded background CPU exceeds a declared
+  limit is rejected like a reference-phase failure.
+- **Using the machine during a series.** Correctness (`.verify`), screenshot and allocation-only series can run while
+  the machine is in use: in d200 still phases, tick-free allocation stayed within 1.1-1.5% across launches through
+  session 30's slow block. Frame-time, tail and CPU series need an idle, unattended machine; session 29's night series
+  was the quietest.
+- **Time on the reference machine.** A launch takes about 125 s (d0, d200), 230 s (terrain) or 95 s (near, high), so a
+  pair costs 4.2, 7.7 or 3.2 min. Sixteen pairs each in d0, d200 and terrain take about 4.3 h, or about 6.0 h with
+  near and high, plus the 1.6 h pilot and any repeated pairs. Split this over several unattended sittings, each
+  starting with a reference-phase check.
+
+**Done in session 31 (infrastructure; nothing measured on the reference machine yet).** The proposal above is now
+tooling, with its protocol written before any scored launch: the [A/A pilot archive](benchmarks/2026-10-22-aa-pilot/README.md)
+holds the proposed frozen protocol (`protocol.json` and README), and `tools/aa_pilot.py` runs it in separate stages
+(plan, smoke, freeze, calibrate, pilot, optional overhead, evaluate). Both sides of every pair are the same build and
+settings; only the label differs, and the runner checks options, launcher command lines, phase configurations,
+environment, hashes and back-to-back timing before accepting a pair. `tools/aa_monitor.py` samples background and
+client CPU, effective clocks per core class, the foreground executable (no window contents), power plan, affinity,
+memory and nvidia-smi GPU state once per second, with an explicit availability status per source and its own CPU cost.
+`BenchmarkRunner` gained opt-in, default-off `StabilityOptions`: identical reference phases before and after the
+scored phases, literal phase lengths (60 s still phases), in-process repeat segments, short ABBA toggle blocks,
+per-frame client-thread processor sampling (`ProcessorSampler`, Java 25 FFM), mob pose evidence, and `freezeMobs`.
+The last was needed: the "0 mob" world holds about 90-100 generated animals with AI, and in a container smoke they
+turned by up to 148 degrees within a still phase. Predeclared rules reject a launch, and with it its whole pair, on
+reference-phase deviation from an independent calibration (+/-5% frame mean; CPU bands from calibration), background
+CPU, foreground, power-plan, affinity, efficiency-core placement, GPU-backend or configuration changes, missing critical
+telemetry or a moving scene; rejected pairs are repeated whole under `-r2`/`-r3` labels and an interrupted series
+resumes without reusing or completing an unfinished pair. `tools/aa_report.py` reports per scene and phase (never
+assuming a shared variance) the robust spread, outliers, time structure, environmental correlations, intervals, MDE80
+and pairs needed for 1/2/5%, and a three-part verdict: the 3% gate, power for 2% at 16 pairs, and validity. 130 Java and
+80 Python tests pass; container launches tested the tooling only (software GL). Remaining, on the reference machine:
+run `tools\aa_pilot_windows.bat check`, then `prepare` (the first real test of every Windows probe and of the P-core
+policy; amend before the freeze if either fails), then `run` unattended (about 3.8 h), and write the results. No
+candidate series should be frozen before that pilot's verdict.
+
+**Windows validation update (session 31, 2026-10-22):** reference i7-12700F / RTX 3060 Ti integration and fresh
+d0/terrain smoke pass with the pinned Java 25 runtime, P-core affinity and complete critical telemetry. Windows
+quiet-window expiry now fails closed; smoke inspection precedes freeze; JSON replacement has bounded Windows
+retry; and an opt-in mob tick freeze eliminates the observed movement that NoAI alone permitted. 131 Java tests
+and 105 Python tests pass, with 2 Linux-only skips. The original aa31 calibration retained 7 accepted launches
+but failed a validator defect requiring one configuration hash across distinct scenes. Its failed calibration,
+manifest, source ZIP and attempts are preserved without rescoring. The correction scopes configuration identity
+to each scene and keeps all numerical gates unchanged. The [fresh aa31w2 protocol](benchmarks/2026-10-22-aa-pilot/windows2/README.md)
+completed 12 calibration launches (7 accepted, 5 background-CPU rejections) and failed the unchanged 5%
+calibration gate: terrain/reference-pre robust frame-mean spread was 12.7093%. The runner stopped before
+any A/A pair. The 3% paired stability gate and 2% power remain unresolved; attribution of the terrain
+timing groups is required before a new frozen series. See the [terminal outcome](benchmarks/2026-10-22-aa-pilot/windows2/RESULTS.md).
+See [Windows findings](benchmarks/2026-10-22-aa-pilot/WINDOWS.md). No rendering default or candidate selection changed.
+
+**Frame-time mechanisms already in the archives: none qualifies.** The visibility search is still the largest
+frame-time component: about 60% of client-thread Java samples and 18-29% of frame time whenever the camera moves, and
+2-9% when it is still (session 26). Its remaining cost is the per-chunk traversal that optimization 1 already does.
+Its separable pieces (`setFrame` 14-19% of it, occlusion and frustum lookups 10-13% each, the per-layer chunk
+filter) were each judged required work or below 10% (item 3). Session 30 measured the camera-section part: -1.65% in
+`terrain_setup`. Entity draws (26-40% of samples at 200 mobs, still or turning) are spread over many renderers.
+Native costs, such as display-list draws, swap and chunk upload in fresh-flight tails (1.23-1.32 ms of 4.0-5.4 ms
+slow-1% frames), are not ranked by Java samples. No candidate is named. A new one needs new attribution, for example
+native or GPU timing of the draws, with its rule written first.
+
+Still open, and not possible in a software-GL container: a visual check of the Video Settings -> Details controls
+(Rain splashes, Vignette, Stars, Enchantment glint, Dropped items) on the reference GPU
+([VIDEO_SETTINGS.md](VIDEO_SETTINGS.md) lists what was checked under llvmpipe).
 
 Sessions 26-27 found no qualifying candidate under their separate frozen rules. Do not select a chunk scheduling,
 upload budget, list replacement or backend change from these aggregate costs. Revisit upload only with a design

@@ -5,6 +5,7 @@
   "plugin": "net.adiont.alacer.config.AlacerMixinPlugin",
   "compatibilityLevel": "JAVA_25",
   "client": [
+    "BenchmarkMobFreezeMixin",
     "BlockParticleLightMixin",
     "BlockParticleLightEntryMixin",
     "BoxAccessor",
@@ -37,6 +38,8 @@
     "GameGuiMixin",
     "GameOptionsMixin",
     "LeavesQualityMixin",
+    "AtmosphereQualityMixin",
+    "FogQualityMixin",
     "SmoothLightingMixin",
     "WeatherQualityMixin",
     "RainSplashQualityMixin",

@@ -1,0 +1,15 @@
+Removing stale lock from pid 38736 (2026-10-23T03:48:02.244204+00:00)
+Keep awake: ok 
+20:51:11 Starting diag32v2-terrain-1-mon
+20:56:34 passed-smoke: diag32v2-terrain-1-mon
+  flag: reference-pre: 1.11 busy cores not attributed to any readable process
+  flag: warmup-pan: 1.21 busy cores not attributed to any readable process
+  flag: warmup-sort: 1.30 busy cores not attributed to any readable process
+  flag: steady: 1.05 busy cores not attributed to any readable process
+  flag: sort: 1.03 busy cores not attributed to any readable process
+  flag: fly: 1.45 busy cores not attributed to any readable process
+20:56:34 Starting diag32v2-terrain-2-nomon
+21:02:04 passed-smoke: diag32v2-terrain-2-nomon
+  flag: monitoring off (overhead stage)
+21:02:04 Starting diag32v2-terrain-3-nomon
+Failed checks: diag32v2-terrain-3-nomon: source_sha256 changed during the launch

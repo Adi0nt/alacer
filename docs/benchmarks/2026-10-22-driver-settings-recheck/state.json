@@ -1,0 +1,37 @@
+{
+ "started_epoch": 1792729681.618326,
+ "original_power_plan": {
+  "status": "ok",
+  "value": {
+   "guid": "6926823e-1958-4e8c-a849-b485e20e7181",
+   "name": "Ultimate Performance"
+  },
+  "source": "windows:PowerGetActiveScheme"
+ },
+ "budget_s": 900,
+ "attempts": [
+  {
+   "label": "diag32off-terrain-1",
+   "status": "passed-smoke",
+   "environment_rejections": []
+  },
+  {
+   "label": "diag32off-terrain-2",
+   "status": "failed-checks",
+   "environment_rejections": null
+  }
+ ],
+ "stop_reason": "functional/environmental failure; no retry",
+ "ended_epoch": 1792730073.4117432,
+ "elapsed_s": 391.79278239999985,
+ "restore_exit_code": 0,
+ "final_power_plan": {
+  "status": "ok",
+  "value": {
+   "guid": "6926823e-1958-4e8c-a849-b485e20e7181",
+   "name": "Ultimate Performance"
+  },
+  "source": "windows:PowerGetActiveScheme"
+ },
+ "clients_remaining": []
+}

@@ -12,7 +12,7 @@ import net.minecraft.client.gui.widget.ButtonWidget;
 import net.minecraft.client.gui.widget.TextFieldWidget;
 import net.minecraft.client.render.Window;
 
-/** Staged video controls built from Minecraft's own menu widgets and textures. */
+/** Staged video controls built from Minecraft's own menu widgets, textures and pixel font. */
 public final class VideoSettingsScreen extends Screen {
 	private static final int TEXT = 0xffffff, MUTED = 0xaaaaaa;
 	private static final int ROW_HEIGHT = 24;
@@ -36,7 +36,7 @@ public final class VideoSettingsScreen extends Screen {
 			this.backend = new VideoSettingsBackend(this.minecraft);
 			this.draft = new VideoSettingsDraft(this.backend.snapshot());
 		}
-		this.contentWidth = Math.min(310,this.width-20);
+		this.contentWidth = Math.min(520,this.width-24);
 		this.left = (this.width-this.contentWidth)/2;
 		this.top = 92;
 		this.bottom = this.height-60;
@@ -234,7 +234,7 @@ public final class VideoSettingsScreen extends Screen {
 		String message=this.status;
 		if (message.isEmpty()) {
 			int changed=this.draft.changes().size();
-			message=changed>0?"\u00a7e"+changed+" unsaved change"+(changed==1?"":"s"):this.backend.restartRequired()?"\u00a76Restart required for saved changes":"\u00a77Changes are saved when you Apply or select Done.";
+			message=changed>0?"\u00a7e"+changed+" unsaved change"+(changed==1?"":"s"):this.backend.restartRequired()?"\u00a76Restart required for saved changes":"\u00a77"+(this.matches.isEmpty()?"0":(this.offset+1)+"-"+Math.min(this.offset+this.pageSize,this.matches.size()))+" of "+this.matches.size()+" settings. Apply to save.";
 		}
 		this.drawCenteredString(this.textRenderer,trim(message,this.width-20),this.width/2,this.height-43,MUTED);
 		if (this.modal!=null) { renderModal(mouseX,mouseY); return; }
@@ -285,6 +285,7 @@ public final class VideoSettingsScreen extends Screen {
 			String label=this.message;
 			this.message=(this.selected && this.active?"\u00a76":"")+trim(label,this.width-6);
 			super.render(mc,keyboardFocus && this.id==focusId?this.x:mx,keyboardFocus && this.id==focusId?this.y:my);
+			if (this.selected) { fill(this.x+1,this.y+this.height-2,this.x+this.width-1,this.y+this.height,0xffd0ad63); }
 			this.message=label;
 		}
 	}

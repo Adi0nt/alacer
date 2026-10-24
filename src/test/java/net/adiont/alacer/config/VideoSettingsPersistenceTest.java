@@ -117,4 +117,29 @@ class VideoSettingsPersistenceTest {
 		assertEquals("1",config.describe().get("quality.stars")); assertEquals("1",config.describe().get("quality.enchantGlint"));
 		assertEquals("1",config.describe().get("quality.droppedItems"));
 	}
+	@Test void atmosphereControlsSaveApplyLiveAndReloadWithoutChangingOtherOptions() throws IOException {
+		Path p=this.dir.resolve("atmosphere.properties"); AlacerConfig config=load(p);
+		config.saveVideoChanges(Map.of("quality.fogStart","40", "quality.cloudHeight","32", "quality.sky","0",
+			"quality.starBrightness","160", "quality.weatherOpacity","35"));
+		assertEquals(40,config.fogStartPercent); assertEquals(32,config.cloudHeightOffset);
+		assertEquals(0,config.skyQuality); assertEquals(160,config.starBrightness); assertEquals(35,config.weatherOpacity);
+		AlacerConfig restored=load(p);
+		assertEquals(40,restored.fogStartPercent); assertEquals(32,restored.cloudHeightOffset);
+		assertEquals(0,restored.skyQuality); assertEquals(160,restored.starBrightness); assertEquals(35,restored.weatherOpacity);
+		assertEquals(1,restored.starsQuality); assertEquals(0,restored.weatherQuality);
+		assertFalse(restored.videoRestartRequired());
+		byte[] before=Files.readAllBytes(p);
+		assertThrows(IllegalArgumentException.class,() -> config.saveVideoChanges(Map.of("quality.cloudHeight","129")));
+		assertThrows(IllegalArgumentException.class,() -> config.saveVideoChanges(Map.of("quality.weatherOpacity","105")));
+		assertArrayEquals(before,Files.readAllBytes(p));
+	}
+	@Test void benchmarkIgnoresSavedAtmosphereAndRetainsTheFile() throws IOException {
+		Path p=this.dir.resolve("atmosphere.properties");
+		String saved="quality.fogStart=10\nquality.cloudHeight=64\nquality.sky=0\nquality.starBrightness=200\nquality.weatherOpacity=20\n";
+		Files.writeString(p,saved); System.setProperty("alacer.benchmark","true"); AlacerConfig config=load(p);
+		assertEquals(75,config.fogStartPercent); assertEquals(0,config.cloudHeightOffset);
+		assertEquals(1,config.skyQuality); assertEquals(100,config.starBrightness); assertEquals(100,config.weatherOpacity);
+		assertEquals(saved,Files.readString(p));
+		assertThrows(IOException.class,() -> config.saveVideoChanges(Map.of("quality.sky","1")));
+	}
 }

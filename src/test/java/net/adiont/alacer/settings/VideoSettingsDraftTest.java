@@ -67,4 +67,16 @@ class VideoSettingsDraftTest {
 		assertTrue(draft.matching(VideoSetting.Category.GRAPHICS,"glint").stream().anyMatch(s -> s.key().equals("quality.enchantGlint")));
 		assertTrue(draft.matching(VideoSetting.Category.GRAPHICS,"world-border").stream().anyMatch(s -> s.key().equals("quality.vignette")));
 	}
+	@Test void atmosphereControlsAreDiscoverableAndResetWithGraphicsOnly() {
+		VideoSettingsDraft draft = new VideoSettingsDraft(Map.of("quality.cloudHeight",32,"quality.starBrightness",160,"quality.stars",0));
+		assertEquals("+32 blocks",VideoSettingsCatalog.byKey("quality.cloudHeight").valueLabel(32));
+		assertEquals("Default",VideoSettingsCatalog.byKey("quality.cloudHeight").valueLabel(0));
+		assertEquals("160%",VideoSettingsCatalog.byKey("quality.starBrightness").valueLabel(160));
+		assertEquals("75%",VideoSettingsCatalog.byKey("quality.fogStart").valueLabel(75));
+		assertTrue(draft.matching(VideoSetting.Category.GRAPHICS,"horizon").stream().anyMatch(s -> s.key().equals("quality.fogStart")));
+		draft.reset(VideoSetting.Category.GRAPHICS,s -> true);
+		assertEquals(0,draft.value(VideoSettingsCatalog.byKey("quality.cloudHeight")));
+		assertEquals(100,draft.value(VideoSettingsCatalog.byKey("quality.starBrightness")));
+		assertEquals(0,draft.value(VideoSettingsCatalog.byKey("quality.stars")));
+	}
 }

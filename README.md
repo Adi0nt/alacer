@@ -122,6 +122,12 @@ vanilla's appearance. New choices are saved to `config/alacer.properties` as
 defaults during benchmark launches. Existing optimization defaults stay unchanged.
 See [the settings guide and validation](docs/VIDEO_SETTINGS.md).
 
+Graphics also includes fog start, cloud height, sky visibility, star brightness
+and weather opacity. These controls can soften the horizon, move clouds or tune
+night/weather effects while keeping Minecraft's default appearance until edited.
+The menu retains native Minecraft buttons and sliders with a wider layout and
+clear selected-category and pending-change indicators.
+
 ## Configuration
 
 Performance percentages below describe the historical Java 8 measurements unless explicitly
@@ -329,6 +335,19 @@ directory name ends with the label and the main toggles, for example `mytest-vis
 ```bash
 python tools/compare_benchmarks.py run/alacer/benchmarks/*-a1-* run/alacer/benchmarks/*-a2-* -- run/alacer/benchmarks/*-b1-* run/alacer/benchmarks/*-b2-*
 ```
+
+**Benchmark stability (session 31, all opt-in; without them every scenario is unchanged).**
+`alacer.benchmark.reference=<s>` adds an identical `reference-pre` phase at the static view before the
+scenario (`referencePost=true` adds `reference-post` after it); `phaseSeconds=static:60,steady:100`
+sets recorded lengths of named phases (literal seconds, not scaled); `repeatSegments=<n>` with
+`repeatSegmentSeconds` adds identical in-process segments; `toggleBlocks=<n>` with
+`toggleSegmentSeconds` turns a toggle run's static segments into short ABBA/BAAB blocks;
+`processorSampling=true` records the client thread's logical processor per frame;
+`mobPoseCheck=true` records mob movement per phase; `freezeMobs=true` sets NoAI on every loaded mob,
+including the world's own animals. `tools/aa_pilot.py` runs a monitored A/A pilot (identical builds
+on both sides) with calibration, predeclared rejection rules, resumable retries and a statistical
+report; the protocol and the Windows commands are in
+[the session 31 A/A pilot archive](docs/benchmarks/2026-10-22-aa-pilot/README.md).
 
 ## License
 

@@ -1,0 +1,288 @@
+{
+ "scenes": {
+  "d0": {
+   "launches": [
+    "aa31w2-cal-d0-1",
+    "aa31w2-cal-d0-2",
+    "aa31w2-cal-d0-3"
+   ],
+   "reference-pre": {
+    "frame_mean_ms": {
+     "median": 0.5850529793769197,
+     "spread": 0.012751668988783483,
+     "values": [
+      0.5800741262797645,
+      0.5995303387290167,
+      0.5850529793769197
+     ],
+     "band": 0.05
+    },
+    "client_cpu_ms_per_frame": {
+     "median": 0.5599,
+     "spread": 0.0029198897560819646,
+     "values": [
+      0.5588,
+      0.5705,
+      0.5599
+     ],
+     "band": 0.05
+    },
+    "process_cpu_ms_per_frame": {
+     "median": 0.6201531870503597,
+     "spread": 0.027681704108288564,
+     "values": [
+      0.605424098146698,
+      0.6201531870503597,
+      0.6316805616498464
+     ],
+     "band": 0.0830451123248657
+    }
+   },
+   "reference-post": {
+    "frame_mean_ms": {
+     "median": 0.5801915206544441,
+     "spread": 0.02148012613775313,
+     "values": [
+      0.5801915206544441,
+      0.5719339548184158,
+      0.5886793524650479
+     ],
+     "band": 0.05
+    },
+    "client_cpu_ms_per_frame": {
+     "median": 0.5516,
+     "spread": 0.0018820480963145918,
+     "values": [
+      0.5516,
+      0.5465,
+      0.5523
+     ],
+     "band": 0.05
+    },
+    "process_cpu_ms_per_frame": {
+     "median": 0.589707779067069,
+     "spread": 0.03221472615869817,
+     "values": [
+      0.589707779067069,
+      0.5763941635687733,
+      0.6024550216335541
+     ],
+     "band": 0.09664417847609452
+    }
+   },
+   "backend": {
+    "gl.vendor": "NVIDIA Corporation",
+    "gl.renderer": "NVIDIA GeForce RTX 3060 Ti/PCIe/SSE2",
+    "gl.version": "4.6.0 NVIDIA 616.92",
+    "vboActive": "false",
+    "options.useVbo": "false",
+    "window": "1920x1080",
+    "os": "Windows 11 10.0 amd64",
+    "cpu": "20x 12th Gen Intel(R) Core(TM) i7-12700F",
+    "cpu.threads": "20",
+    "java.runtime.version": "25.0.4.1+1-LTS",
+    "java.vendor": "Eclipse Adoptium",
+    "backend.renderChunkClass": []
+   },
+   "config_sha": [
+    "7ef399971e4df2ff988ce8a39a186b1469f6fb08546c70157d2334b9c36a14d9"
+   ],
+   "p_core_mhz_median": 3368.26362671919,
+   "background_cores_mean": [
+    0.23168489178477653,
+    0.2341498585668953,
+    0.2209330598622909
+   ]
+  },
+  "terrain": {
+   "launches": [
+    "aa31w2-cal-terrain-1",
+    "aa31w2-cal-terrain-2",
+    "aa31w2-cal-terrain-3",
+    "aa31w2-cal-terrain-4-r3"
+   ],
+   "reference-pre": {
+    "frame_mean_ms": {
+     "median": 0.5658697515873874,
+     "spread": 0.12709281966516556,
+     "values": [
+      0.6071018303788247,
+      0.6165270345252774,
+      0.5045611165771084,
+      0.52463767279595
+     ],
+     "band": 0.05
+    },
+    "client_cpu_ms_per_frame": {
+     "median": 0.3936,
+     "spread": 1.1942669514177635,
+     "values": [
+      0.5843,
+      0.5857,
+      0.1849,
+      0.2029
+     ],
+     "band": 0.15
+    },
+    "process_cpu_ms_per_frame": {
+     "median": 0.6512259001700215,
+     "spread": 0.050116337840878274,
+     "values": [
+      0.6307799781447303,
+      0.6271301393341554,
+      0.6716718221953126,
+      0.6737934433281746
+     ],
+     "band": 0.15
+    }
+   },
+   "reference-post": {
+    "frame_mean_ms": {
+     "median": 0.6268477934018479,
+     "spread": 0.013496021239182934,
+     "values": [
+      0.6220132736207005,
+      0.6333641649249477,
+      0.6316823131829954,
+      0.5172375074352807
+     ],
+     "band": 0.05
+    },
+    "client_cpu_ms_per_frame": {
+     "median": 0.5999,
+     "spread": 0.010267153483157862,
+     "values": [
+      0.6065,
+      0.5982,
+      0.6016,
+      0.2008
+     ],
+     "band": 0.05
+    },
+    "process_cpu_ms_per_frame": {
+     "median": 0.6597529078444226,
+     "spread": 0.008648058264700845,
+     "values": [
+      0.6584627641973004,
+      0.6610430514915447,
+      0.653411354936517,
+      0.699873276954509
+     ],
+     "band": 0.05
+    }
+   },
+   "backend": {
+    "gl.vendor": "NVIDIA Corporation",
+    "gl.renderer": "NVIDIA GeForce RTX 3060 Ti/PCIe/SSE2",
+    "gl.version": "4.6.0 NVIDIA 616.92",
+    "vboActive": "false",
+    "options.useVbo": "false",
+    "window": "1920x1080",
+    "os": "Windows 11 10.0 amd64",
+    "cpu": "20x 12th Gen Intel(R) Core(TM) i7-12700F",
+    "cpu.threads": "20",
+    "java.runtime.version": "25.0.4.1+1-LTS",
+    "java.vendor": "Eclipse Adoptium",
+    "backend.renderChunkClass": [
+     "net.minecraft.client.render.world.GlListRenderChunk"
+    ]
+   },
+   "config_sha": [
+    "06401f93e0142cd4a3d5b31bfbd2c783702a9a5b7e72dcb7c719b45242c7678b"
+   ],
+   "p_core_mhz_median": 3414.763290963124,
+   "background_cores_mean": [
+    0.2344407199060961,
+    0.22368236862779922,
+    0.2700613585105865,
+    0.2873590351019147
+   ]
+  }
+ },
+ "pass": false,
+ "failures": [
+  "terrain/reference-pre: calibration frame-mean spread 12.71% above 5.0%"
+ ],
+ "power_plans": [
+  {
+   "guid": "8c5e7fda-e8bf-4a96-9a85-a6e23a8c635c",
+   "name": "High performance"
+  }
+ ],
+ "config_sha": [
+  "06401f93e0142cd4a3d5b31bfbd2c783702a9a5b7e72dcb7c719b45242c7678b",
+  "7ef399971e4df2ff988ce8a39a186b1469f6fb08546c70157d2334b9c36a14d9"
+ ],
+ "written_utc": "2026-10-23T03:29:46.777782+00:00",
+ "slots": [
+  {
+   "scene": "d0",
+   "i": 1,
+   "labels": [
+    "aa31w2-cal-d0-1"
+   ],
+   "status": "passed"
+  },
+  {
+   "scene": "terrain",
+   "i": 1,
+   "labels": [
+    "aa31w2-cal-terrain-1"
+   ],
+   "status": "passed"
+  },
+  {
+   "scene": "d0",
+   "i": 2,
+   "labels": [
+    "aa31w2-cal-d0-2"
+   ],
+   "status": "passed"
+  },
+  {
+   "scene": "terrain",
+   "i": 2,
+   "labels": [
+    "aa31w2-cal-terrain-2"
+   ],
+   "status": "passed"
+  },
+  {
+   "scene": "d0",
+   "i": 3,
+   "labels": [
+    "aa31w2-cal-d0-3"
+   ],
+   "status": "passed"
+  },
+  {
+   "scene": "terrain",
+   "i": 3,
+   "labels": [
+    "aa31w2-cal-terrain-3"
+   ],
+   "status": "passed"
+  },
+  {
+   "scene": "d0",
+   "i": 4,
+   "labels": [
+    "aa31w2-cal-d0-4",
+    "aa31w2-cal-d0-4-r2",
+    "aa31w2-cal-d0-4-r3"
+   ],
+   "status": "exhausted"
+  },
+  {
+   "scene": "terrain",
+   "i": 4,
+   "labels": [
+    "aa31w2-cal-terrain-4",
+    "aa31w2-cal-terrain-4-r2",
+    "aa31w2-cal-terrain-4-r3"
+   ],
+   "status": "passed"
+  }
+ ],
+ "protocol_sha256": "ffacd672b9ea918119715697ef3a1444b2e5feb69a378bc467c90bb0da6e6dbb"
+}
