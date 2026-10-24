@@ -104,6 +104,10 @@ public final class AlacerConfig {
 	public volatile boolean fastEntityCulling;
 	/** Also run vanilla's shouldRender decision, use its result and log differences. Debug only. */
 	public volatile boolean verifyEntityCulling;
+	/** Trace crosshair and entity rays without intermediate Vec3d or BlockPos allocations. Runtime-toggleable. */
+	public volatile boolean fastRayTrace;
+	/** Also run vanilla's ray trace, use its result and log differences. Debug only. */
+	public volatile boolean verifyFastRayTrace;
 	/** Answer particles' light queries through cached chunk references. Runtime-toggleable. */
 	public volatile boolean fastParticleLight;
 	/** Also run vanilla's particle light query, use its result and log differences. Debug only. */
@@ -326,6 +330,10 @@ public final class AlacerConfig {
 			"Evaluate entity distance and frustum before entity state preparation and renderer invocation.");
 		this.verifyEntityCulling = bool(file, system, "render.fastEntityCulling.verify", false,
 			"Debug: also run vanilla's shouldRender check, use its result and log any difference.");
+		this.fastRayTrace = bool(file, system, "render.fastRayTrace", true,
+			"Trace crosshair and entity rays without intermediate Vec3d or BlockPos allocations.");
+		this.verifyFastRayTrace = bool(file, system, "render.fastRayTrace.verify", false,
+			"Debug: also run vanilla's ray trace, use its result and log any difference.");
 		this.fastParticleLight = bool(file, system, "render.fastParticleLight", true,
 			"Answer particles' per-frame light queries from cached chunk references instead of chunk hash lookups, without allocating neighbor positions.");
 		this.verifyFastParticleLight = bool(file, system, "render.fastParticleLight.verify", false,
@@ -445,6 +453,7 @@ public final class AlacerConfig {
 				this.fastEntityLighting = value;
 				this.fastEntityRendererLookup = value;
 				this.fastEntityCulling = value;
+				this.fastRayTrace = value;
 				this.fastParticleLight = value;
 				this.fastParticleRemoval = value;
 				this.fastParticleVertices = value;
@@ -516,6 +525,12 @@ public final class AlacerConfig {
 				break;
 			case "render.fastEntityCulling.verify":
 				this.verifyEntityCulling = value;
+				break;
+			case "render.fastRayTrace":
+				this.fastRayTrace = value;
+				break;
+			case "render.fastRayTrace.verify":
+				this.verifyFastRayTrace = value;
 				break;
 			case "render.fastParticleLight":
 				this.fastParticleLight = value;
@@ -723,6 +738,8 @@ public final class AlacerConfig {
 		values.put("render.fastEntityRendererLookup.verify", String.valueOf(this.verifyEntityRendererLookup));
 		values.put("render.fastEntityCulling", String.valueOf(this.fastEntityCulling));
 		values.put("render.fastEntityCulling.verify", String.valueOf(this.verifyEntityCulling));
+		values.put("render.fastRayTrace", String.valueOf(this.fastRayTrace));
+		values.put("render.fastRayTrace.verify", String.valueOf(this.verifyFastRayTrace));
 		values.put("render.fastParticleLight", String.valueOf(this.fastParticleLight));
 		values.put("render.fastParticleLight.verify", String.valueOf(this.verifyFastParticleLight));
 		values.put("render.fastParticleRemoval", String.valueOf(this.fastParticleRemoval));
