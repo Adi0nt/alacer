@@ -132,9 +132,10 @@ flowchart TD
 ### Phase 4: Visibility Culling & Traversal Data-Locality (Highest Moving Java Sample Opportunity)
 *Target: 41%–60% of Java samples in moving frames (0.21–0.34 ms/frame).*
 
-1. **Camera Movement Hysteresis / Delta Caching**:
+1. **Camera Movement Hysteresis / Delta Caching (`cameraHysteresis`)** [COMPLETED - commit `e364b82`]:
    - *Problem*: `WorldRenderer.setupRender` re-runs the full 1,400+ chunk BFS traversal whenever the camera angle or position changes by even fractional micro-units.
-   - *Mechanism*: If camera rotation and translation between frames are below an empirical threshold (e.g., <0.01 blocks, <0.05 degrees) and no chunks have been marked dirty, reuse the previous frame's visible chunk list.
+   - *Mechanism*: If camera rotation and translation between frames are below empirical thresholds (<0.01 blocks translation, <0.05 degrees rotation) and no chunks have been marked dirty, reuses the previous frame's visible chunk list without walking the BFS queue.
+   - *Status*: Merged into `main` with runtime toggle (`render.cameraHysteresis`).
 2. **Vectorized Frustum Testing (Java 25 Vector API)**:
    - *Problem*: Evaluating 6 frustum plane dot products across thousands of chunk bounding boxes is performed via scalar float arithmetic.
    - *Mechanism*: Use Java 25's `VectorSpecies<Float>` to test 8 chunk bounding boxes simultaneously against the 6 frustum planes.
