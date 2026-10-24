@@ -1161,6 +1161,8 @@ pursued: profiling found no camera cost left to remove.
 
 ## Roadmap (recommended order)
 
+See the dedicated [Performance Roadmap](ROADMAP.md) for the feature-by-feature empirical breakdown, active priorities, and phase roadmap. Historical session progression and context follow below:
+
 Done in session 11: nearby-mob shadow queries (optimization 6). With it on, shadows still cost
 about 0.14-0.16 ms per frame at 200 mobs (chunk reads, geometry, state changes and the draw);
 no further exact, bounded change was identified there (see optimization 6). Session 9's model-list batching stays an explicit experiment,

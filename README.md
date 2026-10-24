@@ -22,8 +22,9 @@ the evidence does not select a scheduling or renderer change.
 Model-part zero translations remain off after measurements showed no dependable gain.
 Session 9 also tests combining face uploads inside model display lists; it remains off because
 the frame-time benefit did not repeat reliably. See
-[docs/BENCHMARKS.md](docs/BENCHMARKS.md) for measured results and
-[docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) for design notes and the roadmap.
+[docs/BENCHMARKS.md](docs/BENCHMARKS.md) for measured results,
+[docs/ROADMAP.md](docs/ROADMAP.md) for the performance roadmap, and
+[docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) for design notes.
 
 ## Requirements
 
