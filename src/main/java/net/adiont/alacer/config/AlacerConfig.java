@@ -114,6 +114,8 @@ public final class AlacerConfig {
 	public volatile boolean verifyFastRandomDisplayTicks;
 	/** Wake paulscode sound threads via lock-free parking instead of Thread.sleep and thread interruption. Runtime-toggleable. */
 	public volatile boolean fastSoundThread;
+	/** Verify sound thread wake timing, lifecycle and interruption handling against expected bounds. Debug only. */
+	public volatile boolean verifyFastSoundThread;
 	/** Reuse visibility only when every camera, frustum and compiled-chunk input remains unchanged. Runtime-toggleable. */
 	public volatile boolean cameraHysteresis;
 	/** Compare retained exact-input visibility against a fresh vanilla search. Debug only. */
@@ -175,6 +177,10 @@ public final class AlacerConfig {
 	/** Give chunk uploads and rebuild queueing at least 1/32 of the previous frame. Runtime-toggleable. */
 	public volatile boolean chunkTimeFloor;
 	public volatile boolean fastChunkNeighbours, verifyChunkNeighbours, terrainShader, terrainVaos, directBufferUploads, verifyModernGl;
+	/** Batch terrain draw calls via OpenGL 4.3 Multi-Draw Indirect over resident mesh arena. Runtime-toggleable. */
+	public volatile boolean multiDrawIndirect;
+	/** Validate indirect draw command structs, quads, and origin records against reference direct draws. Debug only. */
+	public volatile boolean verifyMultiDrawIndirect;
 	/** Vectorized block state unpacking and linear block counter scan during chunk packet handling. */
 	public volatile boolean fastChunkUnpack;
 	/** Debug: compare fast chunk unpacking and block counters with vanilla's scalar logic. */
@@ -379,6 +385,8 @@ public final class AlacerConfig {
 			"Debug: also verify fast display tick block queries against vanilla, logging differences.");
 		this.fastSoundThread = bool(file, system, "render.fastSoundThread", true,
 			"Wake paulscode sound threads via lock-free parking instead of Thread.sleep and thread interruption.");
+		this.verifyFastSoundThread = bool(file, system, "render.fastSoundThread.verify", false,
+			"Debug: verify sound thread wake timing, lifecycle and interruption handling against expected bounds.");
 		this.cameraHysteresis = bool(file, system, "render.cameraHysteresis", true,
 			"Reuse visibility only when all camera, frustum, storage and compiled-chunk inputs remain exactly unchanged.");
 		this.verifyCameraHysteresis = bool(file, system, "render.cameraHysteresis.verify", false,
@@ -448,6 +456,8 @@ public final class AlacerConfig {
 		}
 		this.directBufferUploads = bool(file, system, "render.directBufferUploads", false, "Experimental OpenGL 4.5 named VBO creation/uploads; startup hooks, preserves vanilla buffer bytes and final unbind.");
 		this.verifyModernGl = bool(file, system, "render.modernGl.verify", false, "Intrusive: validate terrain VAO state and read back every named VBO upload byte. Enables both GL experiments when supported.");
+		this.multiDrawIndirect = bool(file, system, "render.multiDrawIndirect", false, "Experimental OpenGL 4.3 Multi-Draw Indirect submission over shared resident mesh storage.");
+		this.verifyMultiDrawIndirect = bool(file, system, "render.multiDrawIndirect.verify", false, "Debug: validate indirect draw command structs, quads, and origin records against reference direct draws.");
 		this.feedChunkWorkers = bool(file, system, "render.feedChunkWorkers", false,
 			"Experimental: after Minecraft's per-frame chunk deadline stops queueing rebuilds, keep queueing visible dirty chunks (same order and calls) until the builder threads have about one frame of work. Uploads keep Minecraft's deadline. Off by default.");
 		this.chunkTimeFloor = bool(file, system, "render.chunkTimeFloor", false,
@@ -618,6 +628,9 @@ public final class AlacerConfig {
 			case "render.fastSoundThread":
 				this.fastSoundThread = value;
 				break;
+			case "render.fastSoundThread.verify":
+				this.verifyFastSoundThread = value;
+				break;
 			case "render.cameraHysteresis":
 				this.cameraHysteresis = value;
 				break;
@@ -686,6 +699,12 @@ public final class AlacerConfig {
 			case "render.terrainVaos":
 				this.terrainShader = value;
 				this.terrainVaos = value;
+				break;
+			case "render.multiDrawIndirect":
+				this.multiDrawIndirect = value;
+				break;
+			case "render.multiDrawIndirect.verify":
+				this.verifyMultiDrawIndirect = value;
 				break;
 			case "render.directBufferUploads": this.directBufferUploads = value; break;
 			case "render.modernPipeline":
@@ -871,6 +890,7 @@ public final class AlacerConfig {
 		values.put("render.fastRandomDisplayTicks", String.valueOf(this.fastRandomDisplayTicks));
 		values.put("render.fastRandomDisplayTicks.verify", String.valueOf(this.verifyFastRandomDisplayTicks));
 		values.put("render.fastSoundThread", String.valueOf(this.fastSoundThread));
+		values.put("render.fastSoundThread.verify", String.valueOf(this.verifyFastSoundThread));
 		values.put("render.cameraHysteresis", String.valueOf(this.cameraHysteresis));
 		values.put("render.cameraHysteresis.verify", String.valueOf(this.verifyCameraHysteresis));
 		values.put("render.flatOcclusion", String.valueOf(this.flatOcclusion));
@@ -907,6 +927,8 @@ public final class AlacerConfig {
 		values.put("render.terrainVaos", String.valueOf(this.terrainVaos));
 		values.put("render.directBufferUploads", String.valueOf(this.directBufferUploads));
 		values.put("render.modernGl.verify", String.valueOf(this.verifyModernGl));
+		values.put("render.multiDrawIndirect", String.valueOf(this.multiDrawIndirect));
+		values.put("render.multiDrawIndirect.verify", String.valueOf(this.verifyMultiDrawIndirect));
 		values.put("render.feedChunkWorkers", String.valueOf(this.feedChunkWorkers));
 		values.put("render.chunkTimeFloor", String.valueOf(this.chunkTimeFloor));
 		values.put("render.batchModelLists", String.valueOf(this.batchModelLists));

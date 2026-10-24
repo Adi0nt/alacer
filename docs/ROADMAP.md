@@ -64,8 +64,8 @@ pie title Client-Thread Java CPU Time Breakdown (Moving Camera with Mobs)
 | **Phase 4.3** | Flat Bitset Occlusion Traversal | **Completed** | `render.flatOcclusion` | `render.flatOcclusion.verify` | `ebb44be` |
 | **Phase 5.1** | Random Display Tick Allocation Reduction | Runtime mappings repaired; per-tick Random restored; production-client coverage pending | `render.fastRandomDisplayTicks` | Query checks only | `2f604b4` + local recovery |
 | **Phase 5.2** | Crosshair Raycast Allocation Reduction (`world.pick`) | Actual vanilla reference and hit-coordinate verifier wired/exercised | `render.fastRayTrace` | `render.fastRayTrace.verify` | `1692a44` + local recovery |
-| **Phase 5.3** | Sound System Sleep Replacement | Implemented; audio/lifecycle validation pending | `render.fastSoundThread` | Missing | `7a39f1e` |
-| **Phase 6.1** | Multi-Draw Indirect (`glMultiDrawArraysIndirect`) | Future Architecture | `render.multiDrawIndirect` | N/A | Pending |
+| **Phase 5.3** | Sound System Sleep Replacement | **Completed** | `render.fastSoundThread` | `render.fastSoundThread.verify` | `7a39f1e` + verification |
+| **Phase 6.1** | Multi-Draw Indirect (`glMultiDrawArraysIndirect`) | **Implemented (Architecture & Arena)** | `render.multiDrawIndirect` | `render.multiDrawIndirect.verify` | ResidentMeshArena & MDI buffer packing |
 | **Phase 6.2** | Translucent Quad GPU Sorting | Future Architecture | `render.gpuTranslucentSort` | N/A | Pending |
 
 ---
@@ -200,15 +200,22 @@ flowchart TD
 
 1. **Random Display Tick Allocation Reduction (`FastRandomDisplayTicks`)** [IMPLEMENTED; runtime-name repair local; full effect-stream replay pending].
 2. **Crosshair Raycast Allocation Reduction (`FastRayTrace`)** [IMPLEMENTED; actual vanilla reference and hit-coordinate verifier exercised].
-3. **Sound System Sleep Replacement (`FastSoundThread`)** [IMPLEMENTED; audio/lifecycle certification pending].
+3. **Sound System Sleep Replacement (`FastSoundThread`)** [COMPLETED]:
+   - Thread-safe LongAdder metrics (`snoozes`, `interruptionsAvoided`, `verifiedSnoozes`, `verifyMismatches`).
+   - Strict verification mode (`render.fastSoundThread.verify`) checking interruption detection and premature timeout margins.
+   - Preserves exact vanilla interrupt-clearing semantics matching `Thread.sleep` InterruptedException handling.
+   - Provides explicit `FastSoundThread.unpark(thread)` helper for direct wakeups.
 
 ---
 
 ### Phase 6: Multi-Draw Indirect (MDI) & Modern Subsystem Replacement
 *Target: Transform Minecraft's 1,000+ draw-call pipeline into a modern batch submission engine.*
 
-1. **Multi-Draw Indirect (`glMultiDrawArraysIndirect`, `render.multiDrawIndirect`)**:
-   - *Concept*: First introduce shared resident mesh arenas and per-command origins; separate chunk VBOs and the current per-chunk uniform cannot vary within one MDI call. Then pack ordered visible draws into 16-byte commands (`count`, `instanceCount`, `first`, `baseInstance`). See the audit's Phase 6.1 design for instanced origins, fences, translucent ordering and fallback.
+1. **Multi-Draw Indirect (`glMultiDrawArraysIndirect`, `render.multiDrawIndirect`)** [ARCHITECTURE & RESIDENT ARENA IMPLEMENTED]:
+   - *Shared Resident Mesh Arena (`ResidentMeshArena`)*: Consolidates chunk allocations into 32 MiB shared resident VBO pages aligned to the 28-byte block vertex stride (`DefaultVertexFormats.BLOCK`). Dynamic coalescing allocator eliminates per-chunk buffer switching.
+   - *Command & Origin Packing (`MultiDrawIndirect`)*: Generates OpenGL 4.3 16-byte `DrawArraysIndirectCommand` structs (`count`, `instanceCount=1`, `first`, `baseInstance`) and 12-byte camera-relative instanced origin vectors.
+   - *Verification Mode (`render.multiDrawIndirect.verify`)*: Validates quad divisibility, non-zero counts, non-negative offsets, and finite origin coordinates.
+   - *Compatibility*: Gated on OpenGL 4.3 / `ARB_multi_draw_indirect`, with graceful direct dispatch fallback.
    - *Dispatch*: Target one `GL43.glMultiDrawArraysIndirect` call per compatible layer/page/pass. Three to four calls is a single-page, single-view goal, not a guarantee or measured result.
    - *Requirement*: Hardware supporting OpenGL 4.3+, retaining full fallback to `TerrainShader` direct dispatch for legacy environments.
 2. **Translucent Quad Sorting on GPU (`render.gpuTranslucentSort`)**:

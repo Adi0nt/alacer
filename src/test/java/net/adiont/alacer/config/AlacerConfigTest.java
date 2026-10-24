@@ -128,6 +128,9 @@ class AlacerConfigTest {
 		assertTrue(config.fastRandomDisplayTicks);
 		assertFalse(config.verifyFastRandomDisplayTicks);
 		assertTrue(config.fastSoundThread);
+		assertFalse(config.verifyFastSoundThread);
+		assertFalse(config.multiDrawIndirect);
+		assertFalse(config.verifyMultiDrawIndirect);
 		assertTrue(config.cameraHysteresis);
 		assertFalse(config.profilerParticleDetail);
 		assertFalse(config.profilerParticleLightRepeats);
@@ -202,8 +205,14 @@ class AlacerConfigTest {
 		assertFalse(config.fastRandomDisplayTicks);
 		config.setToggle("render.fastSoundThread", false);
 		assertFalse(config.fastSoundThread);
+		config.setToggle("render.fastSoundThread.verify", true);
+		assertTrue(config.verifyFastSoundThread);
 		config.setToggle("render.cameraHysteresis", false);
 		assertFalse(config.cameraHysteresis);
+		config.setToggle("render.multiDrawIndirect", true);
+		assertTrue(config.multiDrawIndirect);
+		config.setToggle("render.multiDrawIndirect.verify", true);
+		assertTrue(config.verifyMultiDrawIndirect);
 		// The shadow-off attribution toggle changes a game option in the benchmark, never config.
 		assertThrows(IllegalArgumentException.class, () -> config.setToggle("benchmark.disableEntityShadows", true));
 		config.setToggle("render.fastParticleLight", false);
