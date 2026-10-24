@@ -96,6 +96,14 @@ public final class AlacerConfig {
 	public volatile boolean fastEntityLighting;
 	/** Also run vanilla's entity lighting queries, use their results and log differences. Debug only. */
 	public volatile boolean verifyFastEntityLighting;
+	/** Cache entity renderer lookups to eliminate repeated map lookups during entity rendering. Runtime-toggleable. */
+	public volatile boolean fastEntityRendererLookup;
+	/** Also run vanilla's map lookup, use its result and log differences. Debug only. */
+	public volatile boolean verifyEntityRendererLookup;
+	/** Evaluate distance and frustum before entity state preparation and renderer invocation. Runtime-toggleable. */
+	public volatile boolean fastEntityCulling;
+	/** Also run vanilla's shouldRender decision, use its result and log differences. Debug only. */
+	public volatile boolean verifyEntityCulling;
 	/** Answer particles' light queries through cached chunk references. Runtime-toggleable. */
 	public volatile boolean fastParticleLight;
 	/** Also run vanilla's particle light query, use its result and log differences. Debug only. */
@@ -310,6 +318,14 @@ public final class AlacerConfig {
 			"Answer entity light and brightness queries without BlockPos allocations or chunk hash lookups.");
 		this.verifyFastEntityLighting = bool(file, system, "render.fastEntityLighting.verify", false,
 			"Debug: also run vanilla's entity light queries, use their results and log any difference.");
+		this.fastEntityRendererLookup = bool(file, system, "render.fastEntityRendererLookup", true,
+			"Cache entity renderer lookups to eliminate repeated map searches in entity rendering.");
+		this.verifyEntityRendererLookup = bool(file, system, "render.fastEntityRendererLookup.verify", false,
+			"Debug: also run vanilla's renderer map query, use its result and log any difference.");
+		this.fastEntityCulling = bool(file, system, "render.fastEntityCulling", true,
+			"Evaluate entity distance and frustum before entity state preparation and renderer invocation.");
+		this.verifyEntityCulling = bool(file, system, "render.fastEntityCulling.verify", false,
+			"Debug: also run vanilla's shouldRender check, use its result and log any difference.");
 		this.fastParticleLight = bool(file, system, "render.fastParticleLight", true,
 			"Answer particles' per-frame light queries from cached chunk references instead of chunk hash lookups, without allocating neighbor positions.");
 		this.verifyFastParticleLight = bool(file, system, "render.fastParticleLight.verify", false,
@@ -427,6 +443,8 @@ public final class AlacerConfig {
 				this.cacheClouds = value;
 				this.fastEntityShadows = value;
 				this.fastEntityLighting = value;
+				this.fastEntityRendererLookup = value;
+				this.fastEntityCulling = value;
 				this.fastParticleLight = value;
 				this.fastParticleRemoval = value;
 				this.fastParticleVertices = value;
@@ -486,6 +504,18 @@ public final class AlacerConfig {
 				break;
 			case "render.fastEntityLighting.verify":
 				this.verifyFastEntityLighting = value;
+				break;
+			case "render.fastEntityRendererLookup":
+				this.fastEntityRendererLookup = value;
+				break;
+			case "render.fastEntityRendererLookup.verify":
+				this.verifyEntityRendererLookup = value;
+				break;
+			case "render.fastEntityCulling":
+				this.fastEntityCulling = value;
+				break;
+			case "render.fastEntityCulling.verify":
+				this.verifyEntityCulling = value;
 				break;
 			case "render.fastParticleLight":
 				this.fastParticleLight = value;
@@ -689,6 +719,10 @@ public final class AlacerConfig {
 		values.put("render.fastEntityShadows.verify", String.valueOf(this.verifyFastEntityShadows));
 		values.put("render.fastEntityLighting", String.valueOf(this.fastEntityLighting));
 		values.put("render.fastEntityLighting.verify", String.valueOf(this.verifyFastEntityLighting));
+		values.put("render.fastEntityRendererLookup", String.valueOf(this.fastEntityRendererLookup));
+		values.put("render.fastEntityRendererLookup.verify", String.valueOf(this.verifyEntityRendererLookup));
+		values.put("render.fastEntityCulling", String.valueOf(this.fastEntityCulling));
+		values.put("render.fastEntityCulling.verify", String.valueOf(this.verifyEntityCulling));
 		values.put("render.fastParticleLight", String.valueOf(this.fastParticleLight));
 		values.put("render.fastParticleLight.verify", String.valueOf(this.verifyFastParticleLight));
 		values.put("render.fastParticleRemoval", String.valueOf(this.fastParticleRemoval));

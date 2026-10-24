@@ -9,12 +9,16 @@ import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.ModifyVariable;
+import org.spongepowered.asm.mixin.injection.Redirect;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import net.adiont.alacer.Alacer;
 import net.adiont.alacer.profiler.FrameProfiler.Section;
 import net.adiont.alacer.render.ChunkSchedulingExperiments;
 import net.adiont.alacer.render.ChunkVisibility;
+import net.adiont.alacer.render.EntityCulling;
+import net.adiont.alacer.render.EntityLighting;
+import net.adiont.alacer.render.EntityRendererCache;
 import net.adiont.alacer.render.EntityShadows;
 import net.adiont.alacer.render.ParticleLight;
 import net.minecraft.client.render.Culler;
@@ -23,6 +27,7 @@ import net.minecraft.client.render.world.RenderChunk;
 import net.minecraft.client.render.world.WorldRenderer;
 import net.minecraft.client.world.ClientWorld;
 import net.minecraft.entity.Entity;
+import net.minecraft.util.math.BlockPos;
 
 /** Terrain setup timing and the chunk visibility hooks. Logic lives in {@link ChunkVisibility}. */
 @Mixin(WorldRenderer.class)
@@ -80,6 +85,8 @@ public class WorldRendererMixin {
 	private void alacer$worldChanged(ClientWorld world, CallbackInfo ci) {
 		EntityShadows.reset();
 		ParticleLight.reset();
+		EntityRendererCache.clear();
+		EntityCulling.clear();
 		ChunkSchedulingExperiments.reset();
 		if (this.alacer$visibility != null) {
 			this.alacer$visibility.reset();
@@ -89,9 +96,19 @@ public class WorldRendererMixin {
 	@Inject(method = "reload()V", at = @At("HEAD"))
 	private void alacer$reloadReset(CallbackInfo ci) {
 		ChunkSchedulingExperiments.reset();
+		EntityRendererCache.clear();
+		EntityCulling.clear();
 		if (this.alacer$visibility != null) {
 			this.alacer$visibility.reset();
 		}
+	}
+
+	@Redirect(method = "renderEntities", at = @At(value = "NEW", target = "(Lnet/minecraft/entity/Entity;)Lnet/minecraft/util/math/BlockPos;"))
+	private BlockPos alacer$pooledEntityPos(Entity entity) {
+		if (EntityLighting.isEnabled(entity)) {
+			return EntityLighting.pooledEntityPos(entity);
+		}
+		return new BlockPos(entity);
 	}
 
 	// Its only caller passes the frame's chunk deadline; uploads and rebuild queueing both stop at it.

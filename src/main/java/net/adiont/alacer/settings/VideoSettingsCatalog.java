@@ -74,6 +74,8 @@ public final class VideoSettingsCatalog {
 		optimization("cacheClouds","Cloud geometry cache","Reuses unchanged Fancy cloud geometry while preserving Minecraft's cloud appearance.",Effect.IMMEDIATE),
 		optimization("fastEntityShadows","Shadow lookup cache","Reuses chunk references for entity shadow queries, preserving shadow geometry.",Effect.IMMEDIATE),
 		optimization("fastEntityLighting","Entity lighting cache","Avoids repeated BlockPos allocations and chunk lookups for entity lighting.",Effect.IMMEDIATE),
+		optimization("fastEntityRendererLookup","Entity renderer cache","Avoids repeated hash table lookups during entity rendering via a direct reference cache.",Effect.IMMEDIATE),
+		optimization("fastEntityCulling","Fast entity culling","Evaluates distance and frustum before entity state preparation and renderer invocation.",Effect.IMMEDIATE),
 		optimization("fastParticleLight","Particle lighting cache","Avoids repeated chunk lookups for particle lighting, preserving the light values.",Effect.IMMEDIATE),
 		optimization("fastParticleRemoval","Particle cleanup","Removes expired particles in a single ordered pass.",Effect.IMMEDIATE),
 		optimization("fastParticleVertices","Particle vertex writing","Writes the original particle geometry more directly. Hooks are selected at startup; changes take effect after restarting Minecraft.",Effect.RESTART),

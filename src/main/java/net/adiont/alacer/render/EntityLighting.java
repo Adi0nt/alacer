@@ -33,6 +33,8 @@ public final class EntityLighting {
 	private static final int LIMIT = 30000000;
 	private static final long SUMMARY_EVERY = 1_000_000L;
 
+	private static final ThreadLocal<BlockPos.Mutable> POOLED_POS = ThreadLocal.withInitial(BlockPos.Mutable::new);
+
 	private static Thread clientThread;
 	private static long verified;
 	private static long mismatches;
@@ -42,6 +44,17 @@ public final class EntityLighting {
 
 	public static void init() {
 		clientThread = Thread.currentThread();
+	}
+
+	/**
+	 * Returns a pooled mutable BlockPos set to the entity's floored block coordinates.
+	 * Only safe for immediate scalar consumption within the calling method.
+	 */
+	public static BlockPos pooledEntityPos(Entity entity) {
+		int x = MathHelper.floor(entity.x);
+		int y = MathHelper.floor(entity.y);
+		int z = MathHelper.floor(entity.z);
+		return POOLED_POS.get().set(x, y, z);
 	}
 
 	public static boolean isEnabled(Entity entity) {
