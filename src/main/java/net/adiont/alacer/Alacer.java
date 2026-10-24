@@ -109,6 +109,7 @@ public final class Alacer implements ClientModInitializer, FrameProfiler.ChunkCo
 
 		EntityRendering.init(this.profiler, this.config.profilerEntityDetail, this.config.profilerEntityStages);
 		EntityShadows.init(this.profiler);
+		net.adiont.alacer.render.EntityLighting.init();
 		ParticleTimings.init(this.profiler);
 		ParticleLight.init();
 		net.adiont.alacer.render.ParticleLightEntry.init();

@@ -137,26 +137,30 @@ public final class EntityShadows {
 		return brightness;
 	}
 
+	/** {@code World.getBrightness(pos)} at the given coordinates. */
+	public static float fastBrightness(World world, int x, int y, int z) {
+		return world.dimension.getBrightnessTable()[fastRawBrightness(world, x, y, z)];
+	}
+
 	/** {@code World.getBlockState}, with the chunk from the cache. */
-	private static BlockState fastBlockState(World world, BlockPos pos) {
-		int x = pos.getX();
-		int y = pos.getY();
-		int z = pos.getZ();
+	public static BlockState fastBlockState(World world, int x, int y, int z) {
 		if (x < -LIMIT || z < -LIMIT || x >= LIMIT || z >= LIMIT || y < 0 || y >= 256) {
 			return Blocks.AIR.defaultState();
 		}
-		return chunk(world, x >> 4, z >> 4).getBlockState(pos);
+		NEIGHBOR.set(x, y, z);
+		return chunk(world, x >> 4, z >> 4).getBlockState(NEIGHBOR);
+	}
+
+	private static BlockState fastBlockState(World world, BlockPos pos) {
+		return fastBlockState(world, pos.getX(), pos.getY(), pos.getZ());
 	}
 
 	/** {@code World.getRawBrightness(pos, true)}, with chunks from the cache. */
-	private static int fastRawBrightness(World world, BlockPos pos) {
-		int x = pos.getX();
-		int y = pos.getY();
-		int z = pos.getZ();
+	public static int fastRawBrightness(World world, int x, int y, int z) {
 		if (x < -LIMIT || z < -LIMIT || x >= LIMIT || z >= LIMIT) {
 			return 15;
 		}
-		if (fastBlockState(world, pos).getBlock().usesNeighborLight()) {
+		if (fastBlockState(world, x, y, z).getBlock().usesNeighborLight()) {
 			// Vanilla: the largest of up, east, west, south and north, without neighbor light.
 			int light = light(world, x, y + 1, z);
 			light = Math.max(light, light(world, x + 1, y, z));
@@ -170,7 +174,12 @@ public final class EntityShadows {
 		if (y >= 256) {
 			return light(world, x, y, z);
 		}
-		return chunk(world, x >> 4, z >> 4).getLight(pos, world.getAmbientDarkness());
+		NEIGHBOR.set(x, y, z);
+		return chunk(world, x >> 4, z >> 4).getLight(NEIGHBOR, world.getAmbientDarkness());
+	}
+
+	private static int fastRawBrightness(World world, BlockPos pos) {
+		return fastRawBrightness(world, pos.getX(), pos.getY(), pos.getZ());
 	}
 
 	/** {@code World.getRawBrightness(pos, false)} at the given coordinates. */

@@ -73,6 +73,7 @@ public final class VideoSettingsCatalog {
 		optimization("avoidMatrixReads","Camera matrix tracking","Uses tracked camera matrices to avoid repeated driver state reads.",Effect.IMMEDIATE),
 		optimization("cacheClouds","Cloud geometry cache","Reuses unchanged Fancy cloud geometry while preserving Minecraft's cloud appearance.",Effect.IMMEDIATE),
 		optimization("fastEntityShadows","Shadow lookup cache","Reuses chunk references for entity shadow queries, preserving shadow geometry.",Effect.IMMEDIATE),
+		optimization("fastEntityLighting","Entity lighting cache","Avoids repeated BlockPos allocations and chunk lookups for entity lighting.",Effect.IMMEDIATE),
 		optimization("fastParticleLight","Particle lighting cache","Avoids repeated chunk lookups for particle lighting, preserving the light values.",Effect.IMMEDIATE),
 		optimization("fastParticleRemoval","Particle cleanup","Removes expired particles in a single ordered pass.",Effect.IMMEDIATE),
 		optimization("fastParticleVertices","Particle vertex writing","Writes the original particle geometry more directly. Hooks are selected at startup; changes take effect after restarting Minecraft.",Effect.RESTART),

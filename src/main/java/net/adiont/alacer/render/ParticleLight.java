@@ -94,7 +94,7 @@ public final class ParticleLight {
 	}
 
 	/** {@code World.getLightColor}: sky brightness, then block brightness raised to the minimum. */
-	private static int fastLightColor(World world, int x, int y, int z, int blockLight) {
+	static int fastLightColor(World world, int x, int y, int z, int blockLight) {
 		int sky = brightness(world, LightType.SKY, x, y, z);
 		int block = brightness(world, LightType.BLOCK, x, y, z);
 		if (block < blockLight) {

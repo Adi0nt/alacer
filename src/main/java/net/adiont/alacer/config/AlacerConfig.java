@@ -92,6 +92,10 @@ public final class AlacerConfig {
 	public volatile boolean fastEntityShadows;
 	/** Also run vanilla's shadow queries, use their results and log differences. Debug only. */
 	public volatile boolean verifyFastEntityShadows;
+	/** Answer entity lighting queries without BlockPos allocations or chunk hash lookups. Runtime-toggleable. */
+	public volatile boolean fastEntityLighting;
+	/** Also run vanilla's entity lighting queries, use their results and log differences. Debug only. */
+	public volatile boolean verifyFastEntityLighting;
 	/** Answer particles' light queries through cached chunk references. Runtime-toggleable. */
 	public volatile boolean fastParticleLight;
 	/** Also run vanilla's particle light query, use its result and log differences. Debug only. */
@@ -302,6 +306,10 @@ public final class AlacerConfig {
 			"Answer entity shadows' block and light queries from cached chunk references instead of a chunk hash lookup per query.");
 		this.verifyFastEntityShadows = bool(file, system, "render.fastEntityShadows.verify", false,
 			"Debug: also run vanilla's shadow queries, use their results and log any difference.");
+		this.fastEntityLighting = bool(file, system, "render.fastEntityLighting", true,
+			"Answer entity light and brightness queries without BlockPos allocations or chunk hash lookups.");
+		this.verifyFastEntityLighting = bool(file, system, "render.fastEntityLighting.verify", false,
+			"Debug: also run vanilla's entity light queries, use their results and log any difference.");
 		this.fastParticleLight = bool(file, system, "render.fastParticleLight", true,
 			"Answer particles' per-frame light queries from cached chunk references instead of chunk hash lookups, without allocating neighbor positions.");
 		this.verifyFastParticleLight = bool(file, system, "render.fastParticleLight.verify", false,
@@ -418,6 +426,7 @@ public final class AlacerConfig {
 				this.avoidMatrixReads = value;
 				this.cacheClouds = value;
 				this.fastEntityShadows = value;
+				this.fastEntityLighting = value;
 				this.fastParticleLight = value;
 				this.fastParticleRemoval = value;
 				this.fastParticleVertices = value;
@@ -471,6 +480,12 @@ public final class AlacerConfig {
 				break;
 			case "render.fastEntityShadows":
 				this.fastEntityShadows = value;
+				break;
+			case "render.fastEntityLighting":
+				this.fastEntityLighting = value;
+				break;
+			case "render.fastEntityLighting.verify":
+				this.verifyFastEntityLighting = value;
 				break;
 			case "render.fastParticleLight":
 				this.fastParticleLight = value;
@@ -672,6 +687,8 @@ public final class AlacerConfig {
 		values.put("render.cacheClouds.verify", String.valueOf(this.verifyCacheClouds));
 		values.put("render.fastEntityShadows", String.valueOf(this.fastEntityShadows));
 		values.put("render.fastEntityShadows.verify", String.valueOf(this.verifyFastEntityShadows));
+		values.put("render.fastEntityLighting", String.valueOf(this.fastEntityLighting));
+		values.put("render.fastEntityLighting.verify", String.valueOf(this.verifyFastEntityLighting));
 		values.put("render.fastParticleLight", String.valueOf(this.fastParticleLight));
 		values.put("render.fastParticleLight.verify", String.valueOf(this.verifyFastParticleLight));
 		values.put("render.fastParticleRemoval", String.valueOf(this.fastParticleRemoval));

@@ -1361,6 +1361,7 @@ public final class BenchmarkRunner implements FrameProfiler.FrameListener {
 		Alacer.LOGGER.info("Model list batch final: {}", net.adiont.alacer.render.ModelListBatch.summary());
 		Alacer.LOGGER.info("Camera section faces final: {}", net.adiont.alacer.render.ChunkVisibility.sectionFacesSummary());
 		Alacer.LOGGER.info("Entity shadow queries final: {}", EntityShadows.verificationSummary());
+		Alacer.LOGGER.info("Entity lighting queries final: {}", net.adiont.alacer.render.EntityLighting.verificationSummary());
 		Alacer.LOGGER.info("Shadow position reuse final: {}", net.adiont.alacer.render.ShadowPositions.verificationSummary());
 		Alacer.LOGGER.info("Particle light queries final: {}", net.adiont.alacer.render.ParticleLight.verificationSummary());
 		Alacer.LOGGER.info("Particle removal final: {}", net.adiont.alacer.render.ParticleRemoval.verificationSummary());
