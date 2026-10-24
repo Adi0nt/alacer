@@ -45,6 +45,8 @@ def replay(out_dir):
     shutil.copy2(script_dir / "launches.json", out_dir / "launches.json")
     shutil.copy2(script_dir / "evaluate.py", out_dir / "evaluate.py")
 
+    if str(out_dir) not in sys.path:
+        sys.path.insert(0, str(out_dir))
     import evaluate
     out_eval = evaluate.evaluate_archive(out_dir)
 

@@ -1,0 +1,35 @@
+{
+  "base_source_head": "cc74a1b",
+  "branch": "claude/magical-planck-7t9612",
+  "completed_native_clients": 16,
+  "all_receipts_valid": true,
+  "gates_pass": false,
+  "failed_gates": [
+    "terrain pan frame time regressed 22.85% (limit 0.0%)",
+    "terrain pan CPU/frame regressed 21.27% (limit 0.0%)",
+    "terrain pan frame time regressed 22.85% (limit 1.0%)",
+    "terrain pan p99 regressed 24.88% (limit 2.0%)",
+    "terrain sort frame time regressed 6.04% (limit 1.0%)",
+    "terrain sort p99 regressed 8.67% (limit 2.0%)",
+    "terrain fly frame time regressed 7.01% (limit 1.0%)",
+    "terrain fly p99 regressed 2.75% (limit 2.0%)"
+  ],
+  "no_client_or_launcher_remaining": true,
+  "primary_head": "0de17a5aa557c78f9f394800a1ef23a8dbbe08d1",
+  "primary_clean": true,
+  "replay": {
+    "raw_files_verified": 160,
+    "logs_verified": 16,
+    "evaluation_structurally_identical": true,
+    "gates_pass": false,
+    "note": "JSON numeric/structural equality; no cross-platform byte-identity claim."
+  },
+  "helper_sha256": {
+    "run_series.py": "17ee4405364177d9c6df3fc333cfb5fc3b02014f3b76cf6b8f5ee5e7fc7147ef",
+    "evaluate.py": "a577d612e557be148ec7ee2cfdbccf08bf65671158f9fc2ce6134b1262d140e0",
+    "replay.py": "4064501a4e2358fb05caee7eefbbf0192e21b777a835567c824c3a2f3f9d50a2"
+  },
+  "unit_tests_pass": true,
+  "defaults_promoted": false,
+  "decision": "REJECTED"
+}
