@@ -1,0 +1,4 @@
+# Preserve recorded bytes, including Windows line endings, for hash replay.
+raw/** -text -diff
+logs/** -text -diff
+*.json -text
