@@ -1,0 +1,24 @@
+applied {distance=8, fps=260, vsync=0}
+start atlas=512x512 anisotropy=1.0 stone x,y=320,144 border=0 u=0.62501955..0.65623045
+fallback: 40 sprites, bordered cells would need >256x256; stitched 128x128 border now 0
+screenshot af2-off
+applied {quality.anisotropicFiltering=4}
+16x atlas=2048x1024 anisotropy=16.0 stone x,y=160,800 border=16 u=0.07812988..0.08593262
+screenshot af2-16x
+applied {quality.anisotropicFiltering=2}
+4x (no reload expected) atlas=2048x1024 anisotropy=4.0 stone x,y=160,800 border=16 u=0.07812988..0.08593262
+screenshot af2-4x
+4x after resource reload atlas=2048x1024 anisotropy=4.0 stone x,y=160,800 border=16 u=0.07812988..0.08593262
+water animates with border: frame 21->18
+applied {quality.anisotropicFiltering=0}
+timing quality.anisotropicFiltering=0 block=0 meanMs=40.896 p95Ms=48.358 frames=300 particles=27
+applied {quality.anisotropicFiltering=4}
+timing quality.anisotropicFiltering=4 block=0 meanMs=51.919 p95Ms=60.484 frames=300 particles=41
+applied {quality.anisotropicFiltering=4}
+timing quality.anisotropicFiltering=4 block=1 meanMs=53.180 p95Ms=61.088 frames=300 particles=40
+applied {quality.anisotropicFiltering=0}
+timing quality.anisotropicFiltering=0 block=1 meanMs=38.455 p95Ms=45.369 frames=300 particles=17
+applied {quality.anisotropicFiltering=0}
+off atlas=512x512 anisotropy=1.0 stone x,y=320,144 border=0 u=0.62501955..0.65623045
+screenshot af2-off-again
+DONE

@@ -48,6 +48,8 @@ public final class AlacerConfig {
 	public final boolean profilerFrustumTiming;
 	/** Chunk pipeline attribution, including worker wall times. Startup only; intrusive. */
 	public final boolean profilerChunkDetail;
+	/** Visible-update latency (dirty and visible to published) and terrain holes. Startup only; light attribution. */
+	public final boolean profilerChunkLatency;
 	/** Per-particle update, movement, light and removal timers. Startup only; intrusive. */
 	public final boolean profilerParticleDetail;
 	/** Count particle light queries and their distinct positions per render pass. Startup only; attribution. */
@@ -122,6 +124,15 @@ public final class AlacerConfig {
 	public volatile boolean scalarParticleEntityQuery;
 	/** Compare scalar bounds and ordered entity lists, returning the candidate. */
 	public volatile boolean verifyScalarParticleEntityQuery;
+	/** Keep queueing chunk rebuilds for the workers after vanilla's frame deadline stops its loop. Runtime-toggleable. */
+	public volatile boolean feedChunkWorkers;
+	/** Give chunk uploads and rebuild queueing at least 1/32 of the previous frame. Runtime-toggleable. */
+	public volatile boolean chunkTimeFloor;
+	public volatile boolean fastChunkNeighbours, verifyChunkNeighbours, terrainShader, terrainVaos, directBufferUploads, verifyModernGl;
+	/** Vectorized block state unpacking and linear block counter scan during chunk packet handling. */
+	public volatile boolean fastChunkUnpack;
+	/** Debug: compare fast chunk unpacking and block counters with vanilla's scalar logic. */
+	public volatile boolean verifyChunkUnpack;
 	/** Session 28 candidate: one reused position for entity shadows' block-below query. Runtime-toggleable when installed. */
 	public volatile boolean reuseShadowPositions;
 	/** Also make vanilla's position, use it, and compare coordinates and the block state answered for both. Debug only. */
@@ -148,17 +159,50 @@ public final class AlacerConfig {
 	/** Ambient-occlusion darkening only, as a percentage; 100 preserves full strength. */
 	public volatile int ambientOcclusionStrength;
 	/** Atmosphere controls default to Minecraft's existing appearance. */
-	public volatile int fogStartPercent;
 	public volatile int cloudHeightOffset;
 	public volatile int skyQuality;
 	public volatile int starBrightness;
 	public volatile int weatherOpacity;
+	/** Entity and block-entity draw distances as a percentage of vanilla's; 100 is vanilla. */
+	public volatile int entityDistance;
+	public volatile int blockEntityDistance;
+	/** Overworld fog start as a percentage of the render distance (vanilla 75); 100 moves the fog out of view. */
+	public volatile int fogStart;
+	/** 0 hides the sun and moon, 1 draws them. */
+	public volatile int sunMoonQuality;
+	/** Texture animation groups: 0 freezes the current frame, 1 animates. */
+	public volatile int waterAnimation;
+	public volatile int lavaAnimation;
+	public volatile int fireAnimation;
+	public volatile int portalAnimation;
+	public volatile int otherAnimations;
+	/** Choice index into ParticleLimit; 4 is vanilla's 4000 per list. */
+	public volatile int particleLimit;
+	/** Choice index into BiomeBlend; 1 is vanilla's 3x3. */
+	public volatile int biomeBlend;
+	/** Choice index into TextureFiltering; 0 is off. */
+	public volatile int anisotropicFiltering;
+	/** Camera effect strengths as percentages; 100 is vanilla. */
+	public volatile int fovEffects;
+	public volatile int damageTilt;
+	/** View-bobbing and nausea/portal distortion strengths as percentages; 100 is vanilla. */
+	public volatile int viewBobbing;
+	public volatile int distortion;
+	/** Third-person camera distance in blocks (vanilla 4) and whether it stops in front of blocks (1, vanilla). */
+	public volatile int thirdPersonDistance;
+	public volatile int cameraCollision;
+	/** Choice index into CameraEffects' field-of-view approach rates (1 is vanilla's) and zoom factors (2 is 4x). */
+	public volatile int fovTransition;
+	public volatile int zoom;
+	/** Choice index into ChunkScheduling's frame budgets; 2 is vanilla. */
+	public volatile int chunkUpdateBudget;
+	/** Chunk builder threads, read when the renderer is created at startup; 2 is vanilla. */
+	public volatile int chunkThreads;
 	private Path settingsFile;
 	private final Map<String, String> pendingRestart = new LinkedHashMap<>();
 	private final Map<String, String> effective = new LinkedHashMap<>();
 
 	private AlacerConfig(Properties file, Properties system) {
-		this.fogStartPercent = clamp(integer(file, system, "quality.fogStart", 75, "Ordinary distance fog begins at this percent of render distance (0-95). Water, lava and blindness remain unchanged."), 0, 95);
 		this.cloudHeightOffset = clamp(integer(file, system, "quality.cloudHeight", 0, "Cloud layer height offset in blocks (-64 to 128). Zero preserves the dimension's height."), -64, 128);
 		this.skyQuality = clamp(integer(file, system, "quality.sky", 1, "Sky pass: 0 Off (including sun, moon and stars), 1 On. Clouds remain separate."), 0, 1);
 		this.starBrightness = clamp(integer(file, system, "quality.starBrightness", 100, "Star brightness, 0-200 percent. Requires Sky and Stars enabled."), 0, 200);
@@ -172,6 +216,28 @@ public final class AlacerConfig {
 		this.droppedItemsQuality = clamp(integer(file, system, "quality.droppedItems", 1, "Dropped item stacks: 0 Fast (one model per stack), 1 Fancy (up to five models by stack size)."), 0, 1);
 		this.smoothLightingStyle = clamp(integer(file, system, "quality.lightingStyle", 0, "Smooth-lighting style: 0 Vanilla, 1 Soft. Requires smooth lighting; rebuild terrain after changes."), 0, 1);
 		this.ambientOcclusionStrength = clamp(integer(file, system, "quality.aoStrength", 100, "Ambient-occlusion corner darkness, 0-100 percent. Does not change sky/block light or directional shading."), 0, 100);
+		this.entityDistance = step(integer(file, system, "quality.entityDistance", 100, "Entity draw distance, 25-500 percent of vanilla's (multiples of 25). Entities still need visible terrain."), 25, 500, 25, 100);
+		this.blockEntityDistance = step(integer(file, system, "quality.blockEntityDistance", 100, "Block entity (chests, signs, banners, heads) draw distance, 25-500 percent of vanilla's (multiples of 25)."), 25, 500, 25, 100);
+		this.fogStart = step(integer(file, system, "quality.fogStart", 75, "Overworld distance fog start, 10-95 percent of the render distance (multiples of 5), or 100 for no distance fog. Blindness, water, lava and Nether fog are unchanged."), 10, 100, 5, 75);
+		this.sunMoonQuality = clamp(integer(file, system, "quality.sunMoon", 1, "Sun and moon: 0 Off, 1 On."), 0, 1);
+		this.waterAnimation = clamp(integer(file, system, "quality.waterAnimation", 1, "Water texture animation: 0 Off (frozen frame), 1 On."), 0, 1);
+		this.lavaAnimation = clamp(integer(file, system, "quality.lavaAnimation", 1, "Lava texture animation: 0 Off (frozen frame), 1 On."), 0, 1);
+		this.fireAnimation = clamp(integer(file, system, "quality.fireAnimation", 1, "Fire texture animation: 0 Off (frozen frame), 1 On."), 0, 1);
+		this.portalAnimation = clamp(integer(file, system, "quality.portalAnimation", 1, "Nether portal texture animation: 0 Off (frozen frame), 1 On."), 0, 1);
+		this.otherAnimations = clamp(integer(file, system, "quality.otherAnimations", 1, "Other block and item texture animations (clocks and compasses always update): 0 Off, 1 On."), 0, 1);
+		this.particleLimit = clamp(integer(file, system, "quality.particleLimit", 4, "Particles kept per particle list before the oldest is removed: 0=250, 1=500, 2=1000, 3=2000, 4=4000 (vanilla)."), 0, 4);
+		this.biomeBlend = clamp(integer(file, system, "quality.biomeBlend", 1, "Biome color blending: 0 Off (1x1), 1 3x3 (vanilla), 2 5x5, 3 7x7. Rebuild terrain after changes."), 0, 3);
+		this.anisotropicFiltering = clamp(integer(file, system, "quality.anisotropicFiltering", 0, "Anisotropic filtering for block and item textures: 0 Off, 1=2x, 2=4x, 3=8x, 4=16x (limited by the driver)."), 0, 4);
+		this.fovEffects = step(integer(file, system, "quality.fovEffects", 100, "Field-of-view changes from sprinting, flying, speed effects and bows, 0-100 percent (multiples of 5)."), 0, 100, 5, 100);
+		this.damageTilt = step(integer(file, system, "quality.damageTilt", 100, "Camera tilt when taking damage, 0-100 percent (multiples of 5)."), 0, 100, 5, 100);
+		this.viewBobbing = step(integer(file, system, "quality.viewBobbing", 100, "View-bobbing strength while View bobbing is on, 0-100 percent (multiples of 5)."), 0, 100, 5, 100);
+		this.distortion = step(integer(file, system, "quality.distortion", 100, "Nausea and Nether portal view distortion, 0-100 percent (multiples of 5)."), 0, 100, 5, 100);
+		this.thirdPersonDistance = clamp(integer(file, system, "quality.thirdPersonDistance", 4, "Third-person camera distance, 1-16 blocks (vanilla 4)."), 1, 16);
+		this.cameraCollision = clamp(integer(file, system, "quality.cameraCollision", 1, "Third-person camera stops in front of blocks: 0 Off, 1 On (vanilla)."), 0, 1);
+		this.fovTransition = clamp(integer(file, system, "quality.fovTransition", 1, "Field-of-view transitions: 0 Instant, 1 Vanilla, 2 Smooth, 3 Very smooth."), 0, 3);
+		this.zoom = clamp(integer(file, system, "quality.zoom", 2, "Zoom key magnification: 0=2x, 1=3x, 2=4x, 3=6x, 4=8x. The key is unbound by default."), 0, 4);
+		this.chunkUpdateBudget = clamp(integer(file, system, "advanced.chunkUpdateBudget", 2, "Client-thread time for chunk uploads and rebuild scheduling: 0=25%, 1=50%, 2=100% (vanilla), 3=200%, 4=400% of vanilla's budget."), 0, 4);
+		this.chunkThreads = clamp(integer(file, system, "advanced.chunkThreads", 2, "Chunk builder threads, 1-6 (vanilla 2). Read at startup."), 1, 6);
 		this.profilerEnabled = bool(file, system, "profiler.enabled", true,
 			"Collect frame-time, tick-time and memory statistics.");
 		this.profilerHistory = clamp(integer(file, system, "profiler.history", 8192,
@@ -188,6 +254,8 @@ public final class AlacerConfig {
 			"After each chunk visibility search, repeat its frustum tests through vanilla's test and Alacer's, timing each. Adds frame time; for attribution only.");
 		this.profilerChunkDetail = bool(file, system, "profiler.chunkDetail", false,
 			"Attribute chunk build, queue, buffer wait and GL upload wall times. Intrusive; startup only, not performance selection.");
+		this.profilerChunkLatency = bool(file, system, "profiler.chunkLatency", false,
+			"Measure how long each visible chunk update waits from the frame it is found dirty and visible until its rebuild is published, and count never-built chunks in view. Startup only; attribution.");
 		this.profilerParticleDetail = bool(file, system, "profiler.particleDetail", false,
 			"Time particle updates, their movement, dead-particle removal and light queries individually. Intrusive; startup only, not performance selection.");
 		this.profilerParticleLightRepeats = bool(file, system, "profiler.particleLightRepeats", false,
@@ -198,6 +266,10 @@ public final class AlacerConfig {
 			"Replace the per-frame chunk visibility search with an allocation-free equivalent.");
 		this.verifyChunkVisibility = bool(file, system, "render.fastChunkVisibility.verify", false,
 			"Debug: run vanilla and Alacer visibility searches side by side and log differences. Slower.");
+		this.fastChunkUnpack = bool(file, system, "render.fastChunkUnpack", true,
+			"Vectorized block state unpacking and linear block counter scan during chunk packet handling.");
+		this.verifyChunkUnpack = bool(file, system, "render.fastChunkUnpack.verify", false,
+			"Debug: compare fast chunk unpacking and block counters with vanilla's scalar logic.");
 		this.fastChunkFrustum = bool(file, system, "render.fastChunkFrustum", false,
 			"Experimental: test chunk boxes at one corner per frustum plane (same decisions as vanilla). No dependable measured performance gain; off by default.");
 		this.verifyChunkFrustum = bool(file, system, "render.fastChunkFrustum.verify", false,
@@ -266,6 +338,19 @@ public final class AlacerConfig {
 			"Experimental: pass one reused position instead of a new BlockPos to each entity shadow's block-below query (same query and answer). Off by default; its hook is installed only when on at startup (or verified, or benchmark-toggled).");
 		this.verifyReuseShadowPositions = bool(file, system, "render.reuseShadowPositions.verify", false,
 			"Debug: keep vanilla's new position, compare the reused one's coordinates and the block state answered for each, and log any difference.");
+		this.fastChunkNeighbours = bool(file, system, "render.fastChunkNeighbours", false, "Experimental exact precomputed chunk storage adjacency; avoids per-edge integer division.");
+		this.verifyChunkNeighbours = bool(file, system, "render.fastChunkNeighbours.verify", false, "Compare every adjacency result with the original slot math and use the original result.");
+		this.terrainShader = bool(file, system, "render.terrainShader", false, "Modern OpenGL terrain vertex shader pipeline; evaluates chunk translation and scaling on GPU, startup hooks.");
+		this.terrainVaos = bool(file, system, "render.terrainVaos", this.terrainShader, "Legacy alias for render.terrainShader.");
+		if (this.terrainVaos && !this.terrainShader) {
+			this.terrainShader = true;
+		}
+		this.directBufferUploads = bool(file, system, "render.directBufferUploads", false, "Experimental OpenGL 4.5 named VBO creation/uploads; startup hooks, preserves vanilla buffer bytes and final unbind.");
+		this.verifyModernGl = bool(file, system, "render.modernGl.verify", false, "Intrusive: validate terrain VAO state and read back every named VBO upload byte. Enables both GL experiments when supported.");
+		this.feedChunkWorkers = bool(file, system, "render.feedChunkWorkers", false,
+			"Experimental: after Minecraft's per-frame chunk deadline stops queueing rebuilds, keep queueing visible dirty chunks (same order and calls) until the builder threads have about one frame of work. Uploads keep Minecraft's deadline. Off by default.");
+		this.chunkTimeFloor = bool(file, system, "render.chunkTimeFloor", false,
+			"Experimental: when Minecraft's per-frame chunk deadline leaves less than 1/32 of the previous frame's time (at most 4.2 ms), allow that much for uploading built chunks and queueing rebuilds. Off by default.");
 		this.batchModelLists = bool(file, system, "render.batchModelLists", false,
 			"Combine vanilla model-part face uploads in an alternate display list; experimental, off by default.");
 		this.verifyBatchModelLists = bool(file, system, "render.batchModelLists.verify", false,
@@ -325,6 +410,7 @@ public final class AlacerConfig {
 			// Benchmark preset: vanilla paths vs the shipped defaults, not every experiment on.
 			case "render.defaults":
 				this.fastChunkVisibility = value;
+				this.fastChunkUnpack = value;
 				this.fastChunkFrustum = false;
 				this.fastCameraSectionFaces = false;
 				this.fastEntityChunkLookup = value;
@@ -341,11 +427,23 @@ public final class AlacerConfig {
 				this.reuseParticleBoxes = false;
 				this.scalarParticleEntityQuery = false;
 				this.reuseShadowPositions = false;
+				this.feedChunkWorkers = false;
+				this.chunkTimeFloor = false;
+				this.fastChunkNeighbours = false;
+				this.terrainShader = false;
+				this.terrainVaos = false;
+				this.directBufferUploads = false;
 				this.skipZeroTranslates = false;
 				this.batchModelLists = false;
 				break;
 			case "render.fastChunkVisibility":
 				this.fastChunkVisibility = value;
+				break;
+			case "render.fastChunkUnpack":
+				this.fastChunkUnpack = value;
+				break;
+			case "render.fastChunkUnpack.verify":
+				this.verifyChunkUnpack = value;
 				break;
 			case "render.fastChunkFrustum":
 				this.fastChunkFrustum = value;
@@ -401,6 +499,25 @@ public final class AlacerConfig {
 			case "render.reuseShadowPositions":
 				this.reuseShadowPositions = value;
 				break;
+			case "render.fastChunkNeighbours": this.fastChunkNeighbours = value; break;
+			case "render.terrainShader":
+			case "render.terrainVaos":
+				this.terrainShader = value;
+				this.terrainVaos = value;
+				break;
+			case "render.directBufferUploads": this.directBufferUploads = value; break;
+			case "render.modernPipeline":
+				this.fastChunkNeighbours = value;
+				this.terrainShader = value;
+				this.terrainVaos = value;
+				this.directBufferUploads = value;
+				break;
+			case "render.feedChunkWorkers":
+				this.feedChunkWorkers = value;
+				break;
+			case "render.chunkTimeFloor":
+				this.chunkTimeFloor = value;
+				break;
 			default:
 				throw new IllegalArgumentException("Not a runtime-toggleable option: " + key);
 		}
@@ -419,10 +536,10 @@ public final class AlacerConfig {
 			String key = e.getKey(), value = e.getValue();
 			net.adiont.alacer.settings.VideoSetting option = net.adiont.alacer.settings.VideoSettingsCatalog.byKey(key);
 			if (System.getProperty(SYSTEM_PREFIX + key) != null) { throw new IOException("A launch override controls " + key); }
-			if (key.startsWith("quality.")) {
+			if (key.startsWith("quality.") || key.startsWith("advanced.")) {
 				int number = Integer.parseInt(value);
 				if (option.normalize(number) != number) { throw new IllegalArgumentException("Invalid quality: " + value); }
-			} else if (!key.startsWith("render.") || !("true".equals(value) || "false".equals(value))) {
+			} else if (!(key.startsWith("render.") || key.equals("profiler.hud")) || !("true".equals(value) || "false".equals(value))) {
 				throw new IllegalArgumentException("Not a menu configuration option: " + key);
 			}
 		}
@@ -430,24 +547,58 @@ public final class AlacerConfig {
 		SettingsFile.update(this.settingsFile, changes);
 		for (Map.Entry<String,String> e : changes.entrySet()) {
 			String key = e.getKey(), value = e.getValue();
-			if ("quality.leaves".equals(key)) { this.leavesQuality = Integer.parseInt(value); }
-			else if ("quality.weather".equals(key)) { this.weatherQuality = Integer.parseInt(value); }
-			else if ("quality.rainSplashes".equals(key)) { this.rainSplashQuality = Integer.parseInt(value); }
-			else if ("quality.vignette".equals(key)) { this.vignetteQuality = Integer.parseInt(value); }
-			else if ("quality.stars".equals(key)) { this.starsQuality = Integer.parseInt(value); }
-			else if ("quality.enchantGlint".equals(key)) { this.enchantGlintQuality = Integer.parseInt(value); }
-			else if ("quality.droppedItems".equals(key)) { this.droppedItemsQuality = Integer.parseInt(value); }
-			else if ("quality.lightingStyle".equals(key)) { this.smoothLightingStyle = Integer.parseInt(value); }
-			else if ("quality.aoStrength".equals(key)) { this.ambientOcclusionStrength = Integer.parseInt(value); }
-			else if ("quality.fogStart".equals(key)) { this.fogStartPercent = Integer.parseInt(value); }
-			else if ("quality.cloudHeight".equals(key)) { this.cloudHeightOffset = Integer.parseInt(value); }
-			else if ("quality.sky".equals(key)) { this.skyQuality = Integer.parseInt(value); }
-			else if ("quality.starBrightness".equals(key)) { this.starBrightness = Integer.parseInt(value); }
-			else if ("quality.weatherOpacity".equals(key)) { this.weatherOpacity = Integer.parseInt(value); }
+			if (key.startsWith("quality.") || key.startsWith("advanced.")) { setVideoInt(key, Integer.parseInt(value)); }
+			else if ("profiler.hud".equals(key)) { this.hudVisible = Boolean.parseBoolean(value); }
 			else if ("render.fastParticleVertices".equals(key)) {
 				if (Boolean.parseBoolean(value) == this.fastParticleVertices) { this.pendingRestart.remove(key); }
 				else { this.pendingRestart.put(key,value); }
 			} else { setToggle(key,Boolean.parseBoolean(value)); }
+		}
+	}
+
+	/** Live update of a validated integer menu option. Startup-only options are recorded as pending instead. */
+	private void setVideoInt(String key, int value) {
+		switch (key) {
+			case "quality.leaves" -> this.leavesQuality = value;
+			case "quality.weather" -> this.weatherQuality = value;
+			case "quality.rainSplashes" -> this.rainSplashQuality = value;
+			case "quality.vignette" -> this.vignetteQuality = value;
+			case "quality.stars" -> this.starsQuality = value;
+			case "quality.enchantGlint" -> this.enchantGlintQuality = value;
+			case "quality.droppedItems" -> this.droppedItemsQuality = value;
+			case "quality.lightingStyle" -> this.smoothLightingStyle = value;
+			case "quality.aoStrength" -> this.ambientOcclusionStrength = value;
+			case "quality.entityDistance" -> this.entityDistance = value;
+			case "quality.blockEntityDistance" -> this.blockEntityDistance = value;
+			case "quality.fogStart" -> this.fogStart = value;
+			case "quality.sunMoon" -> this.sunMoonQuality = value;
+			case "quality.waterAnimation" -> this.waterAnimation = value;
+			case "quality.lavaAnimation" -> this.lavaAnimation = value;
+			case "quality.fireAnimation" -> this.fireAnimation = value;
+			case "quality.portalAnimation" -> this.portalAnimation = value;
+			case "quality.otherAnimations" -> this.otherAnimations = value;
+			case "quality.particleLimit" -> this.particleLimit = value;
+			case "quality.biomeBlend" -> this.biomeBlend = value;
+			case "quality.anisotropicFiltering" -> this.anisotropicFiltering = value;
+			case "quality.fovEffects" -> this.fovEffects = value;
+			case "quality.damageTilt" -> this.damageTilt = value;
+			case "quality.viewBobbing" -> this.viewBobbing = value;
+			case "quality.distortion" -> this.distortion = value;
+			case "quality.thirdPersonDistance" -> this.thirdPersonDistance = value;
+			case "quality.cameraCollision" -> this.cameraCollision = value;
+			case "quality.fovTransition" -> this.fovTransition = value;
+			case "quality.zoom" -> this.zoom = value;
+			case "quality.cloudHeight" -> this.cloudHeightOffset = value;
+			case "quality.sky" -> this.skyQuality = value;
+			case "quality.starBrightness" -> this.starBrightness = value;
+			case "quality.weatherOpacity" -> this.weatherOpacity = value;
+			case "advanced.chunkUpdateBudget" -> this.chunkUpdateBudget = value;
+			case "advanced.chunkThreads" -> {
+				// The chunk dispatcher and its threads exist from startup; keep the running count truthful.
+				if (value == this.chunkThreads) { this.pendingRestart.remove(key); }
+				else { this.pendingRestart.put(key, Integer.toString(value)); }
+			}
+			default -> throw new IllegalArgumentException("Not a menu configuration option: " + key);
 		}
 	}
 
@@ -463,11 +614,32 @@ public final class AlacerConfig {
 		values.put("quality.droppedItems", Integer.toString(this.droppedItemsQuality));
 		values.put("quality.lightingStyle", Integer.toString(this.smoothLightingStyle));
 		values.put("quality.aoStrength", Integer.toString(this.ambientOcclusionStrength));
-		values.put("quality.fogStart", Integer.toString(this.fogStartPercent));
 		values.put("quality.cloudHeight", Integer.toString(this.cloudHeightOffset));
 		values.put("quality.sky", Integer.toString(this.skyQuality));
 		values.put("quality.starBrightness", Integer.toString(this.starBrightness));
 		values.put("quality.weatherOpacity", Integer.toString(this.weatherOpacity));
+		values.put("quality.entityDistance", Integer.toString(this.entityDistance));
+		values.put("quality.blockEntityDistance", Integer.toString(this.blockEntityDistance));
+		values.put("quality.fogStart", Integer.toString(this.fogStart));
+		values.put("quality.sunMoon", Integer.toString(this.sunMoonQuality));
+		values.put("quality.waterAnimation", Integer.toString(this.waterAnimation));
+		values.put("quality.lavaAnimation", Integer.toString(this.lavaAnimation));
+		values.put("quality.fireAnimation", Integer.toString(this.fireAnimation));
+		values.put("quality.portalAnimation", Integer.toString(this.portalAnimation));
+		values.put("quality.otherAnimations", Integer.toString(this.otherAnimations));
+		values.put("quality.particleLimit", Integer.toString(this.particleLimit));
+		values.put("quality.biomeBlend", Integer.toString(this.biomeBlend));
+		values.put("quality.anisotropicFiltering", Integer.toString(this.anisotropicFiltering));
+		values.put("quality.fovEffects", Integer.toString(this.fovEffects));
+		values.put("quality.damageTilt", Integer.toString(this.damageTilt));
+		values.put("quality.viewBobbing", Integer.toString(this.viewBobbing));
+		values.put("quality.distortion", Integer.toString(this.distortion));
+		values.put("quality.thirdPersonDistance", Integer.toString(this.thirdPersonDistance));
+		values.put("quality.cameraCollision", Integer.toString(this.cameraCollision));
+		values.put("quality.fovTransition", Integer.toString(this.fovTransition));
+		values.put("quality.zoom", Integer.toString(this.zoom));
+		values.put("advanced.chunkUpdateBudget", Integer.toString(this.chunkUpdateBudget));
+		values.put("advanced.chunkThreads", Integer.toString(this.chunkThreads));
 		values.put("profiler.enabled", String.valueOf(this.profilerEnabled));
 		values.put("profiler.history", String.valueOf(this.profilerHistory));
 		values.put("profiler.logInterval", String.valueOf(this.profilerLogInterval));
@@ -476,11 +648,14 @@ public final class AlacerConfig {
 		values.put("profiler.shadowTiming", String.valueOf(this.profilerShadowTiming));
 		values.put("profiler.frustumTiming", String.valueOf(this.profilerFrustumTiming));
 		values.put("profiler.chunkDetail", String.valueOf(this.profilerChunkDetail));
+		values.put("profiler.chunkLatency", String.valueOf(this.profilerChunkLatency));
 		values.put("profiler.particleDetail", String.valueOf(this.profilerParticleDetail));
 		values.put("profiler.particleLightRepeats", String.valueOf(this.profilerParticleLightRepeats));
 		values.put("profiler.hud", String.valueOf(this.hudVisible));
 		values.put("render.fastChunkVisibility", String.valueOf(this.fastChunkVisibility));
 		values.put("render.fastChunkVisibility.verify", String.valueOf(this.verifyChunkVisibility));
+		values.put("render.fastChunkUnpack", String.valueOf(this.fastChunkUnpack));
+		values.put("render.fastChunkUnpack.verify", String.valueOf(this.verifyChunkUnpack));
 		values.put("render.fastChunkFrustum", String.valueOf(this.fastChunkFrustum));
 		values.put("render.fastChunkFrustum.verify", String.valueOf(this.verifyChunkFrustum));
 		values.put("render.fastCameraSectionFaces", String.valueOf(this.fastCameraSectionFaces));
@@ -515,6 +690,14 @@ public final class AlacerConfig {
 		values.put("render.reuseShadowPositions.verify", String.valueOf(this.verifyReuseShadowPositions));
 		values.put("render.reuseParticleBoxes", String.valueOf(this.reuseParticleBoxes));
 		values.put("render.reuseParticleBoxes.verify", String.valueOf(this.verifyReuseParticleBoxes));
+		values.put("render.fastChunkNeighbours", String.valueOf(this.fastChunkNeighbours));
+		values.put("render.fastChunkNeighbours.verify", String.valueOf(this.verifyChunkNeighbours));
+		values.put("render.terrainShader", String.valueOf(this.terrainShader));
+		values.put("render.terrainVaos", String.valueOf(this.terrainVaos));
+		values.put("render.directBufferUploads", String.valueOf(this.directBufferUploads));
+		values.put("render.modernGl.verify", String.valueOf(this.verifyModernGl));
+		values.put("render.feedChunkWorkers", String.valueOf(this.feedChunkWorkers));
+		values.put("render.chunkTimeFloor", String.valueOf(this.chunkTimeFloor));
 		values.put("render.batchModelLists", String.valueOf(this.batchModelLists));
 		values.put("render.batchModelLists.verify", String.valueOf(this.verifyBatchModelLists));
 		return values;
@@ -557,5 +740,12 @@ public final class AlacerConfig {
 
 	private static int clamp(int value, int min, int max) {
 		return Math.max(min, Math.min(max, value));
+	}
+
+	/** Clamps, then rounds an off-grid hand-edited value to the menu's nearest step. */
+	private static int step(int value, int min, int max, int step, int def) {
+		int bounded = clamp(value, min, max);
+		int snapped = min + Math.round((bounded - min) / (float) step) * step;
+		return snapped > max ? def : snapped;
 	}
 }

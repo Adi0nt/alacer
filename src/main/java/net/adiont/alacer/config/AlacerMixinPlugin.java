@@ -35,6 +35,7 @@ public class AlacerMixinPlugin implements IMixinConfigPlugin {
 	private boolean modelBatch;
 	private boolean shadowTiming;
 	private boolean chunkDetail;
+	private boolean chunkLatency;
 	private boolean particleDetail;
 	private boolean particleDrawDiagnostics;
 	private boolean particleMovementCensus;
@@ -47,6 +48,7 @@ public class AlacerMixinPlugin implements IMixinConfigPlugin {
 	private boolean particleLightReuse;
 	private boolean shadowPositions;
 	private boolean benchmarkMobFreeze;
+	private boolean modernGl;
 
 	@Override
 	public void onLoad(String mixinPackage) {
@@ -64,6 +66,7 @@ public class AlacerMixinPlugin implements IMixinConfigPlugin {
 		this.modelBatch = modelBatchEnabled(file);
 		this.shadowTiming = shadowTimingEnabled(file);
 		this.chunkDetail = chunkDetailEnabled(file);
+		this.chunkLatency = chunkLatencyEnabled(file);
 		this.particleDetail = particleDetailEnabled(file);
 		this.particleDrawDiagnostics = particleDrawDiagnosticsEnabled();
 		this.particleMovementCensus = particleMovementCensusEnabled();
@@ -76,11 +79,20 @@ public class AlacerMixinPlugin implements IMixinConfigPlugin {
 		this.particleLightReuse = particleLightReuseEnabled(file);
 		this.shadowPositions = shadowPositionsEnabled(file);
 		this.benchmarkMobFreeze = benchmarkMobFreezeEnabled();
+		this.modernGl = modernGlEnabled(file);
 	}
 
 	static boolean benchmarkMobFreezeEnabled() {
 		return Boolean.parseBoolean(System.getProperty("alacer.benchmark", "false").trim())
 			&& Boolean.parseBoolean(System.getProperty("alacer.benchmark.freezeMobs", "false").trim());
+	}
+
+	static boolean modernGlEnabled(Properties file) {
+		String toggle = System.getProperty("alacer.benchmark.toggle", "").trim();
+		return flag(file, "render.terrainShader", false) || flag(file, "render.terrainVaos", false)
+			|| flag(file, "render.directBufferUploads", false) || flag(file, "render.modernGl.verify", false)
+			|| toggle.equals("render.modernPipeline") || toggle.equals("render.terrainShader")
+			|| toggle.equals("render.terrainVaos") || toggle.equals("render.directBufferUploads");
 	}
 
 	static boolean shadowPositionsEnabled(Properties file) {
@@ -149,6 +161,10 @@ public class AlacerMixinPlugin implements IMixinConfigPlugin {
 		return flag(file, "profiler.enabled", true) && flag(file, "profiler.chunkDetail", false);
 	}
 
+	static boolean chunkLatencyEnabled(Properties file) {
+		return flag(file, "profiler.enabled", true) && flag(file, "profiler.chunkLatency", false);
+	}
+
 	static boolean modelBatchEnabled(Properties file) {
 		return flag(file, "render.batchModelLists", false) || flag(file, "render.batchModelLists.verify", false)
 			|| "render.batchModelLists".equals(System.getProperty("alacer.benchmark.toggle", "").trim());
@@ -177,6 +193,7 @@ public class AlacerMixinPlugin implements IMixinConfigPlugin {
 	public boolean shouldApplyMixin(String targetClassName, String mixinClassName) {
 		String name = mixinClassName.substring(mixinClassName.lastIndexOf('.') + 1);
 		if (name.equals("BenchmarkMobFreezeMixin")) { return this.benchmarkMobFreeze; }
+		if (name.equals("TerrainVaoMixin") || name.equals("ModernVertexBufferMixin") || name.equals("ModernWorldLifecycleMixin")) { return this.modernGl; }
 		if (name.equals("ParticleDrawDiagnosticMixin")) { return this.particleDrawDiagnostics; }
 		if (name.equals("EntityParticleMovementCensusMixin") || name.equals("WorldParticleMovementCensusMixin")) {
 			return this.particleMovementCensus;
@@ -198,6 +215,10 @@ public class AlacerMixinPlugin implements IMixinConfigPlugin {
 		if (name.equals("ChunkDispatcherTimingMixin") || name.equals("ChunkBuildTimingMixin")
 			|| name.equals("ChunkTaskTimingMixin") || name.equals("WorldRendererBackendTimingMixin")) {
 			return this.chunkDetail;
+		}
+		if (name.equals("ChunkLatencyRenderChunkMixin") || name.equals("ChunkLatencyTaskMixin")
+			|| name.equals("ChunkLatencyWorldRendererMixin")) {
+			return this.chunkLatency;
 		}
 		if (name.equals("ModelPartBatchMixin") || name.equals("ModelUploadMixin")
 			|| name.equals("BoxAccessor") || name.equals("BufferBuilderAccessor")) {

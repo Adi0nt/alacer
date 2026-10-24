@@ -1,0 +1,33 @@
+[
+  {
+    "label": "mg-follow-r1-s1-1a",
+    "stage": 1,
+    "index": 1,
+    "arm": "A",
+    "command": [
+      "C:\\Users\\CodyJ\\.codex\\worktrees\\alacer-chunk-camera\\alacer\\gradlew.bat",
+      "--offline",
+      "--console=plain",
+      "runClient",
+      "-Pwindow=1920x1080",
+      "-Pxmx=2G",
+      "-Palacer.benchmark=true",
+      "-Palacer.benchmark.vbo=true",
+      "-Palacer.benchmark.viewDistance=12",
+      "-Palacer.benchmark.label=mg-follow-r1-s1-1a",
+      "-Palacer.render.fastChunkNeighbours=false",
+      "-Palacer.render.directBufferUploads=false",
+      "-Palacer.render.terrainVaos=false",
+      "-Palacer.modernGl.forceFallback=false"
+    ],
+    "java_home": "C:\\Program Files\\Eclipse Adoptium\\jdk-25.0.4.101-hotspot",
+    "started_utc": "2026-10-23T21:27:40.346643+00:00",
+    "status": "failed",
+    "log": "docs/benchmarks/2026-10-23-modern-rendering-followup/logs/mg-follow-r1-s1-1a.log",
+    "launcher_pid": 42332,
+    "exit": 0,
+    "ended_utc": "2026-10-23T21:28:56.132305+00:00",
+    "log_sha256": "cd0608798699c74660c6f8b6b0b25d53b79348e1757c926f6edb53d18b9f94ff",
+    "summary": "run/alacer/benchmarks/20261023-142854-mg-follow-r1-s1-1a-vis_on-ecl_on-ent0/summary.json"
+  }
+]

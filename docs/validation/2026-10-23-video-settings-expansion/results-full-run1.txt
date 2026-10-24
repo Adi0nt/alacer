@@ -1,0 +1,163 @@
+applied {distance=8, fps=260, vsync=0}
+anisotropy supported=true max=16.0 lock=null note=null
+chunk batcher threads=2 available buffer sets=5 remaining capacity=0 config=2
+screenshot menu-graphics
+screenshot menu-details
+screenshot menu-display
+screenshot menu-performance
+screenshot menu-advanced
+screenshot menu-details-new
+screenshot menu-advanced-tooltip-threads
+screenshot menu-graphics-tooltip-anisotropy
+screenshot menu-presets
+world alacer-expansion-check-1792733711777
+origin -149,-806
+biome border at x=-160
+applied {quality.biomeBlend=1}
+settle biomeBlend=3x3 ms=537.8 frames=16 meanFrameMs=33.14 maxFrameMs=45.67
+screenshot biome-blend-3x3
+applied {quality.biomeBlend=0}
+settle biomeBlend=Off ms=428.8 frames=14 meanFrameMs=30.65 maxFrameMs=40.03
+screenshot biome-blend-Off
+applied {quality.biomeBlend=2}
+settle biomeBlend=5x5 ms=442.0 frames=14 meanFrameMs=31.59 maxFrameMs=41.85
+screenshot biome-blend-5x5
+applied {quality.biomeBlend=3}
+settle biomeBlend=7x7 ms=464.4 frames=16 meanFrameMs=29.04 maxFrameMs=38.22
+screenshot biome-blend-7x7
+applied {quality.biomeBlend=1}
+settle biomeBlend=3x3 ms=361.3 frames=12 meanFrameMs=30.13 maxFrameMs=35.15
+screenshot biome-blend-3x3
+applied {quality.entityDistance=100}
+entityDistance=100 E: 3/16, B: 0, I: 13
+applied {quality.entityDistance=25}
+entityDistance=25 E: 0/16, B: 0, I: 16
+applied {quality.entityDistance=50}
+entityDistance=50 E: 1/16, B: 0, I: 15
+applied {quality.entityDistance=200}
+entityDistance=200 E: 7/16, B: 0, I: 9
+applied {quality.entityDistance=500}
+entityDistance=500 E: 15/16, B: 0, I: 1
+applied {quality.entityDistance=100}
+entityDistance=100 E: 3/16, B: 0, I: 13
+applied {quality.entityDistance=200}
+screenshot entity-distance-200
+applied {quality.entityDistance=100}
+screenshot entity-distance-100
+applied {quality.blockEntityDistance=100}
+screenshot block-entity-distance-100
+applied {quality.blockEntityDistance=25}
+screenshot block-entity-distance-25
+applied {quality.blockEntityDistance=300}
+screenshot block-entity-distance-300
+applied {quality.blockEntityDistance=100}
+applied {quality.fogStart=75}
+screenshot fog-75pct
+applied {quality.fogStart=30}
+screenshot fog-30pct
+applied {quality.fogStart=100}
+screenshot fog-Off
+applied {quality.fogStart=75}
+applied {quality.sunMoon=0}
+screenshot sun-Off
+applied {quality.sunMoon=1}
+screenshot sun-On
+applied {quality.sunMoon=0}
+screenshot moon-Off
+applied {quality.sunMoon=1}
+screenshot moon-On
+applied {quality.waterAnimation=0, quality.lavaAnimation=0, quality.fireAnimation=0, quality.portalAnimation=0, quality.otherAnimations=0}
+animation quality.waterAnimation=0 minecraft:blocks/water_still frame 12->12 ticks 1->1
+animation quality.lavaAnimation=0 minecraft:blocks/lava_still frame 0->0 ticks 1->1
+animation quality.fireAnimation=0 minecraft:blocks/fire_layer_0 frame 25->25 ticks 0->0
+animation quality.portalAnimation=0 minecraft:blocks/portal frame 25->25 ticks 0->0
+animation quality.otherAnimations=0 minecraft:blocks/sea_lantern frame 3->3 ticks 4->4
+animation quality.otherAnimations=0 minecraft:blocks/prismarine_rough frame 4->4 ticks 169->169
+applied {quality.waterAnimation=1, quality.lavaAnimation=1, quality.fireAnimation=1, quality.portalAnimation=1, quality.otherAnimations=1}
+animation quality.waterAnimation=1 minecraft:blocks/water_still frame 13->31 ticks 1->0
+animation quality.lavaAnimation=1 minecraft:blocks/lava_still frame 1->19 ticks 1->0
+animation quality.fireAnimation=1 minecraft:blocks/fire_layer_0 frame 27->30 ticks 0->0
+animation quality.portalAnimation=1 minecraft:blocks/portal frame 27->30 ticks 0->0
+animation quality.otherAnimations=1 minecraft:blocks/sea_lantern frame 4->1 ticks 1->1
+animation quality.otherAnimations=1 minecraft:blocks/prismarine_rough frame 4->4 ticks 171->206
+applied {quality.otherAnimations=0}
+clock with otherAnimations=Off frame 0->31
+applied {quality.otherAnimations=1}
+applied {quality.particleLimit=4}
+timing quality.particleLimit=4 block=0 meanMs=53.305 p95Ms=63.811 frames=200 particles=4000
+applied {quality.particleLimit=0}
+timing quality.particleLimit=0 block=0 meanMs=45.514 p95Ms=54.837 frames=200 particles=1956
+applied {quality.particleLimit=0}
+timing quality.particleLimit=0 block=1 meanMs=45.497 p95Ms=55.399 frames=200 particles=1866
+applied {quality.particleLimit=4}
+timing quality.particleLimit=4 block=1 meanMs=48.340 p95Ms=57.636 frames=200 particles=4000
+applied {quality.particleLimit=4}
+timing quality.particleLimit=4 block=2 meanMs=47.656 p95Ms=57.376 frames=200 particles=4000
+applied {quality.particleLimit=0}
+timing quality.particleLimit=0 block=2 meanMs=42.685 p95Ms=50.360 frames=200 particles=2424
+applied {quality.particleLimit=0}
+timing quality.particleLimit=0 block=3 meanMs=42.309 p95Ms=50.751 frames=200 particles=2052
+applied {quality.particleLimit=4}
+timing quality.particleLimit=4 block=3 meanMs=50.457 p95Ms=61.430 frames=200 particles=4000
+applied {quality.particleLimit=4}
+anisotropy choice=0 atlas=1.0
+applied {quality.anisotropicFiltering=4}
+anisotropy choice=4 atlas=16.0
+anisotropy choice=4 after resource reload atlas=16.0
+screenshot anisotropic-16x
+applied {quality.anisotropicFiltering=0}
+anisotropy choice=0 atlas=1.0
+screenshot anisotropic-off
+applied {quality.anisotropicFiltering=0}
+timing quality.anisotropicFiltering=0 block=0 meanMs=37.973 p95Ms=44.634 frames=300 particles=0
+applied {quality.anisotropicFiltering=4}
+timing quality.anisotropicFiltering=4 block=0 meanMs=54.355 p95Ms=65.610 frames=300 particles=0
+applied {quality.anisotropicFiltering=4}
+timing quality.anisotropicFiltering=4 block=1 meanMs=50.047 p95Ms=58.507 frames=300 particles=0
+applied {quality.anisotropicFiltering=0}
+timing quality.anisotropicFiltering=0 block=1 meanMs=38.249 p95Ms=45.352 frames=300 particles=0
+applied {quality.anisotropicFiltering=0}
+timing quality.anisotropicFiltering=0 block=2 meanMs=38.527 p95Ms=45.557 frames=300 particles=0
+applied {quality.anisotropicFiltering=4}
+timing quality.anisotropicFiltering=4 block=2 meanMs=52.074 p95Ms=59.927 frames=300 particles=0
+applied {quality.anisotropicFiltering=4}
+timing quality.anisotropicFiltering=4 block=3 meanMs=51.548 p95Ms=58.841 frames=300 particles=0
+applied {quality.anisotropicFiltering=0}
+timing quality.anisotropicFiltering=0 block=3 meanMs=37.237 p95Ms=45.608 frames=300 particles=0
+applied {quality.anisotropicFiltering=0}
+applied {quality.fovEffects=100}
+fovEffects=100 flying=true fovMultiplier=1.0999999
+applied {quality.fovEffects=50}
+fovEffects=50 flying=true fovMultiplier=1.05
+applied {quality.fovEffects=0}
+fovEffects=0 flying=true fovMultiplier=1.0
+applied {quality.fovEffects=100}
+fovEffects=100 flying=true fovMultiplier=1.0999999
+applied {quality.damageTilt=100}
+screenshot damage-tilt-100pct
+applied {quality.damageTilt=0}
+screenshot damage-tilt-Off
+applied {quality.damageTilt=100}
+applied {advanced.chunkUpdateBudget=0}
+settle chunkUpdateBudget=25pct ms=8107.5 frames=276 meanFrameMs=29.37 maxFrameMs=47.69
+applied {advanced.chunkUpdateBudget=4}
+settle chunkUpdateBudget=400pct ms=63.8 frames=4 meanFrameMs=15.98 maxFrameMs=18.14
+applied {advanced.chunkUpdateBudget=0}
+settle chunkUpdateBudget=25pct ms=8636.5 frames=290 meanFrameMs=29.78 maxFrameMs=50.18
+applied {advanced.chunkUpdateBudget=4}
+settle chunkUpdateBudget=400pct ms=76.8 frames=4 meanFrameMs=19.22 maxFrameMs=22.32
+applied {advanced.chunkUpdateBudget=2}
+applied {profiler.hud=1}
+screenshot overlay-on
+applied {profiler.hud=0}
+preset Performance applied={graphics=0, quality.entityDistance=75, quality.blockEntityDistance=75, lighting=0, quality.biomeBlend=0, clouds=1, particles=1, quality.particleLimit=2, quality.droppedItems=0, shadows=0} liveMatches=true distance=8
+screenshot preset-performance
+preset Enhanced applied={graphics=1, quality.entityDistance=150, quality.blockEntityDistance=150, lighting=2, quality.biomeBlend=2, clouds=2, particles=0, quality.particleLimit=4, quality.anisotropicFiltering=3, quality.droppedItems=1, shadows=1} liveMatches=true distance=8
+screenshot preset-enhanced
+preset Vanilla applied={quality.entityDistance=100, quality.blockEntityDistance=100, quality.biomeBlend=1, quality.anisotropicFiltering=0} liveMatches=true distance=8
+screenshot preset-vanilla
+applied {advanced.chunkThreads=4, quality.fogStart=40, quality.waterAnimation=0, quality.entityDistance=250, quality.particleLimit=1}
+restartRequired=true live chunkThreads=2
+chunk batcher threads=2 available buffer sets=5 remaining capacity=0 config=2
+screenshot menu-advanced-restart-pending
+DONE

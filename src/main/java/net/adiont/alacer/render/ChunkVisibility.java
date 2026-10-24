@@ -99,6 +99,8 @@ public final class ChunkVisibility {
 	private byte[] sourceDir;
 	private int[] queue;
 	private int stamp;
+	private ChunkNeighbours neighbours;
+	private static long neighbourChecks, neighbourFailures, neighbourLookups;
 	private int sizeX;
 	private int sizeY;
 	private int sizeZ;
@@ -301,6 +303,8 @@ public final class ChunkVisibility {
 		}
 	}
 
+	public static String neighbourSummary() { return neighbourChecks + " compared, " + neighbourFailures + " mismatches, " + neighbourLookups + " indexed lookups"; }
+
 	public void logVerification() {
 		if (this.verifiedSearches == 0) {
 			return;
@@ -327,6 +331,13 @@ public final class ChunkVisibility {
 			this.frustumMode = config.verifyChunkFrustum ? FRUSTUM_VERIFY : FRUSTUM_PLANES;
 		} else {
 			this.frustumMode = FRUSTUM_CULLER;
+		}
+		boolean adjacent = (config.fastChunkNeighbours || config.verifyChunkNeighbours)
+			&& tickDelta >= 0 && tickDelta <= 1 && Math.abs(camera.x) <= 30_000_000 && Math.abs(camera.z) <= 30_000_000
+			&& Math.abs(camera.prevX) <= 30_000_000 && Math.abs(camera.prevZ) <= 30_000_000
+			&& storage.getClass() == RenderChunkStorage.class && RenderCompatibility.neighbours();
+		if (adjacent && this.neighbours == null) {
+			this.neighbours = new ChunkNeighbours(this.sizeX, this.sizeY, this.sizeZ, OFFSET_X, OFFSET_Y, OFFSET_Z);
 		}
 		this.frustumTests = 0;
 		if (this.frustumTiming) {
@@ -411,7 +422,13 @@ public final class ChunkVisibility {
 				if (Math.abs(originX - nx) > range || ny < 0 || ny >= 256 || Math.abs(originZ - nz) > range) {
 					continue;
 				}
-				int next = slot(nx, ny, nz);
+				int next = adjacent ? this.neighbours.next(current, d) : slot(nx, ny, nz);
+				if (adjacent) { neighbourLookups++; }
+				if (adjacent && config.verifyChunkNeighbours) {
+					int expected = slot(nx, ny, nz); neighbourChecks++;
+					if (next != expected) { neighbourFailures++; throw new IllegalStateException("Chunk adjacency differs from original slot math"); }
+					next = expected;
+				}
 				// Marked before the frustum test: a chunk reached first from outside the frustum
 				// is not revisited from another side, exactly as in vanilla.
 				if (next < 0 || !visit(next, frame, markFrames) || !inFrustum(culler, next)) {
@@ -498,6 +515,7 @@ public final class ChunkVisibility {
 		}
 		RenderChunkStorageAccessor dims = (RenderChunkStorageAccessor) storage;
 		this.chunks = storage.chunks;
+		this.neighbours = null;
 		this.sizeX = dims.alacer$getSizeX();
 		this.sizeY = dims.alacer$getSizeY();
 		this.sizeZ = dims.alacer$getSizeZ();
@@ -646,6 +664,7 @@ public final class ChunkVisibility {
 	/** Drops all cached state, e.g. when the renderer switches worlds. */
 	public void reset() {
 		this.chunks = null;
+		this.neighbours = null;
 		this.infos = null;
 		this.facesValid = false;
 		this.facesChunk = null;

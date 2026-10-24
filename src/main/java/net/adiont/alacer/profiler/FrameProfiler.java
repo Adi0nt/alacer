@@ -168,7 +168,14 @@ public final class FrameProfiler {
 		/** Particle detail: the {@code removeAll} of dead particles, inside {@link #PARTICLE_TICK}. */
 		PARTICLE_REMOVE,
 		/** Particle detail: {@code Entity.getLightLevel} for particles while drawing, inside {@link #PARTICLES}. */
-		PARTICLE_LIGHT
+		PARTICLE_LIGHT,
+		/**
+		 * {@code profiler.chunkLatency}: waits of the rebuilds published during the frame, each from the frame its chunk
+		 * was first eligible (dirty and visible) to publication, summed at completion. Not work time.
+		 */
+		CHUNK_UPDATE_LATENCY,
+		/** {@code profiler.chunkLatency}: the longest of those waits. */
+		CHUNK_UPDATE_LATENCY_MAX
 	}
 
 	/** Per-frame operation counts. */
@@ -235,7 +242,17 @@ public final class FrameProfiler {
 		/** {@code profiler.particleLightRepeats}: distinct (x, y, z) positions per pass, summed. */
 		PARTICLE_LIGHT_POSITIONS,
 		/** {@code profiler.particleLightRepeats}: queries whose arguments equal the previous query's. */
-		PARTICLE_LIGHT_SAME_AS_PREVIOUS
+		PARTICLE_LIGHT_SAME_AS_PREVIOUS,
+		/** {@code profiler.chunkLatency}: rebuilds published during the frame that had an update waiting. */
+		CHUNK_UPDATES_PUBLISHED,
+		/** {@code profiler.chunkLatency}: end-of-frame gauge of render chunks with an update waiting to be published. */
+		CHUNK_UPDATES_WAITING,
+		/** {@code profiler.chunkLatency}: chunks in the visible set that have never been built at their position (holes). */
+		CHUNK_VISIBLE_UNCOMPILED,
+		/** {@code render.feedChunkWorkers}: rebuilds queued after vanilla's frame deadline stopped its loop. */
+		CHUNK_FED_TASKS,
+		/** {@code render.feedChunkWorkers}: queued rebuilds still waiting for a worker when terrain setup cleared the queue. */
+		CHUNK_UNSTARTED_TASKS
 	}
 
 	private static final Section[] SECTIONS = Section.values();

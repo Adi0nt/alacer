@@ -1,0 +1,698 @@
+{
+  "label": "warmup-pan",
+  "environment": {
+    "alacer.version": "0.1.0+mc1.8.9",
+    "java.version": "25.0.5",
+    "java.vendor": "Eclipse Adoptium",
+    "java.vm": "OpenJDK 64-Bit Server VM",
+    "java.runtime.version": "25.0.5+8-LTS",
+    "java.vm.version": "25.0.5+8-LTS",
+    "jvm.args": "-Dalacer.benchmark=true -Dalacer.benchmark.chunkFlight=near -Dalacer.benchmark.label=cs-flight-8b -Dalacer.benchmark.timeout=800 -Dalacer.benchmark.vbo=false -Dalacer.benchmark.viewDistance=8 -Dalacer.profiler.chunkDetail=false -Dalacer.profiler.chunkLatency=true -Dalacer.render.chunkTimeFloor=true -Dfabric.dli.config=/workspace/.gradle/loom-cache/launch.cfg -Dfabric.dli.env=client -Dfabric.dli.main=net.fabricmc.loader.impl.launch.knot.KnotClient -Dfabric.gameVersion=1.8.9 --enable-native-access=ALL-UNNAMED -XX:StackShadowPages=32 -Xmx2G -Dfile.encoding=UTF-8 -Duser.country=US -Duser.language=en -Duser.variant",
+    "jvm.maxHeapMB": "2048",
+    "jvm.gc": "G1 Young Generation, G1 Concurrent GC, G1 Old Generation",
+    "alacer.configSource": "build-defaults-and-jvm-overrides",
+    "profiler.allocationAvailable": "true",
+    "profiler.epochWallMillis": "1792743767915",
+    "profiler.epochWallUncertaintyNanos": "1000980",
+    "os": "Linux 6.18.33.2-microsoft-standard-WSL2 amd64",
+    "cpu.threads": "4",
+    "cpu": "20x 12th Gen Intel(R) Core(TM) i7-12700F",
+    "gl.vendor": "Mesa",
+    "gl.renderer": "llvmpipe (LLVM 21.1.8, 256 bits)",
+    "gl.version": "4.5 (Compatibility Profile) Mesa 26.0.8-1ubuntu0.3",
+    "window": "854x480",
+    "options.renderDistance": "8",
+    "options.fancyGraphics": "true",
+    "options.smoothLighting": "2",
+    "options.fpsLimit": "260",
+    "options.vsync": "false",
+    "options.useVbo": "false",
+    "vboActive": "false",
+    "options.mipmapLevels": "4",
+    "options.clouds": "2",
+    "options.particles": "0",
+    "options.entityShadows": "true",
+    "mods": "java@25 alacer@0.1.0+mc1.8.9 mixinextras@0.5.5 osl-core@0.11.0+mc14w27a-mc1.14.4 osl-lifecycle-events@0.6.1+mc13w36a-mc19w07a fabricloader@0.20.0 osl-entrypoints@0.6.1+mc13w16a-mc1.14.4 minecraft@1.8.9 osl-keybinds@0.3.0+mc13w36a-mc17w15a",
+    "benchmark.seed": "1789",
+    "benchmark.anchor": "-200.5 65.0 267.5",
+    "benchmark.joinSettleSeconds": "11.02",
+    "benchmark.mobs": "0",
+    "benchmark.chests": "0",
+    "benchmark.generationRun": "false",
+    "benchmark.backendScenario": "false",
+    "benchmark.chunkFlight": "near",
+    "benchmark.chunkEdit": "false",
+    "benchmark.chunkUploadGpu": "false",
+    "benchmark.glassBlocks": "0",
+    "benchmark.particles": "false",
+    "benchmark.particleDiagnostic": "false",
+    "benchmark.particleRemovalDiagnostic": "false",
+    "benchmark.logGlErrors": "true",
+    "benchmark.toggle": "",
+    "benchmark.toggleReverse": "false",
+    "benchmark.screenshots": "false",
+    "benchmark.screenshotEndPose": "false",
+    "profiler.particleDrawDiagnostics": "false",
+    "profiler.particleMovementCensus": "false",
+    "profiler.particleMovementRegions": "false",
+    "benchmark.movementCensusInactive": "false"
+  },
+  "config": {
+    "quality.leaves": "0",
+    "quality.weather": "0",
+    "quality.rainSplashes": "0",
+    "quality.vignette": "0",
+    "quality.stars": "1",
+    "quality.enchantGlint": "1",
+    "quality.droppedItems": "1",
+    "quality.lightingStyle": "0",
+    "quality.aoStrength": "100",
+    "quality.entityDistance": "100",
+    "quality.blockEntityDistance": "100",
+    "quality.fogStart": "75",
+    "quality.sunMoon": "1",
+    "quality.waterAnimation": "1",
+    "quality.lavaAnimation": "1",
+    "quality.fireAnimation": "1",
+    "quality.portalAnimation": "1",
+    "quality.otherAnimations": "1",
+    "quality.particleLimit": "4",
+    "quality.biomeBlend": "1",
+    "quality.anisotropicFiltering": "0",
+    "quality.fovEffects": "100",
+    "quality.damageTilt": "100",
+    "quality.viewBobbing": "100",
+    "quality.distortion": "100",
+    "quality.thirdPersonDistance": "4",
+    "quality.cameraCollision": "1",
+    "quality.fovTransition": "1",
+    "quality.zoom": "2",
+    "advanced.chunkUpdateBudget": "2",
+    "advanced.chunkThreads": "2",
+    "profiler.enabled": "true",
+    "profiler.history": "8192",
+    "profiler.logInterval": "0",
+    "profiler.entityDetail": "false",
+    "profiler.entityStages": "true",
+    "profiler.shadowTiming": "false",
+    "profiler.frustumTiming": "false",
+    "profiler.chunkDetail": "false",
+    "profiler.chunkLatency": "true",
+    "profiler.particleDetail": "false",
+    "profiler.particleLightRepeats": "false",
+    "profiler.hud": "false",
+    "render.fastChunkVisibility": "true",
+    "render.fastChunkVisibility.verify": "false",
+    "render.fastChunkFrustum": "false",
+    "render.fastChunkFrustum.verify": "false",
+    "render.fastCameraSectionFaces": "false",
+    "render.fastCameraSectionFaces.verify": "false",
+    "render.fastEntityChunkLookup": "true",
+    "render.fastEntityChunkLookup.verify": "false",
+    "render.throttleGlErrorChecks": "true",
+    "render.throttleGlErrorChecks.verify": "false",
+    "render.avoidMatrixReads": "true",
+    "render.avoidMatrixReads.verify": "false",
+    "render.skipZeroTranslates": "false",
+    "render.skipZeroTranslates.verify": "false",
+    "render.cacheClouds": "true",
+    "render.cacheClouds.verify": "false",
+    "render.fastEntityShadows": "true",
+    "render.fastEntityShadows.verify": "false",
+    "render.fastParticleLight": "true",
+    "render.fastParticleLight.verify": "false",
+    "render.fastParticleRemoval": "true",
+    "render.fastParticleRemoval.verify": "false",
+    "render.fastParticleVertices": "true",
+    "render.fastParticleVertices.verify": "false",
+    "render.fastParticleLightEntry": "false",
+    "render.fastParticleLightEntry.verify": "false",
+    "render.reuseParticleLight": "false",
+    "render.reuseParticleLight.verify": "false",
+    "render.fastParticleMovement": "false",
+    "render.fastParticleMovement.verify": "false",
+    "render.scalarParticleEntityQuery": "false",
+    "render.scalarParticleEntityQuery.verify": "false",
+    "render.reuseShadowPositions": "false",
+    "render.reuseShadowPositions.verify": "false",
+    "render.reuseParticleBoxes": "false",
+    "render.reuseParticleBoxes.verify": "false",
+    "render.feedChunkWorkers": "false",
+    "render.chunkTimeFloor": "true",
+    "render.batchModelLists": "false",
+    "render.batchModelLists.verify": "false",
+    "options.entityShadows": "true",
+    "options.useVbo": "false",
+    "vboActive": "false",
+    "options.fov": "70.0",
+    "options.gamma": "0.0",
+    "options.anaglyph": "false",
+    "options.viewBobbing": "true",
+    "options.fancyGraphics": "true",
+    "options.smoothLighting": "2",
+    "options.mipmapLevels": "4",
+    "options.clouds": "2",
+    "options.particles": "0",
+    "options.renderDistance": "8",
+    "options.vsync": "false",
+    "options.fpsLimit": "260",
+    "backend.renderChunkClass": "net.minecraft.client.render.world.GlListRenderChunk"
+  },
+  "frames": {
+    "count": 382,
+    "duration_s": 10.0212,
+    "avg_fps": 38.1191,
+    "one_percent_low_fps": 18.3132,
+    "point_one_percent_low_fps": 14.7903,
+    "mean_ms": 26.2336,
+    "stddev_ms": 7.7007,
+    "min_ms": 15.8560,
+    "p50_ms": 23.7987,
+    "p90_ms": 37.3996,
+    "p95_ms": 40.0111,
+    "p99_ms": 43.6735,
+    "p99_9_ms": 67.6119,
+    "max_ms": 67.6119
+  },
+  "sections_ms": {
+    "tick": {
+      "mean": 0.2804,
+      "p50": 0.4263,
+      "p99": 0.7522,
+      "max": 0.9230
+    },
+    "render": {
+      "mean": 20.2448,
+      "p50": 18.2648,
+      "p99": 38.8517,
+      "max": 46.0201
+    },
+    "terrain_setup": {
+      "mean": 0.2670,
+      "p50": 0.2322,
+      "p99": 0.7443,
+      "max": 3.1794
+    },
+    "visibility": {
+      "mean": 0.2299,
+      "p50": 0.2106,
+      "p99": 0.6499,
+      "max": 0.8991
+    },
+    "chunk_upload": {
+      "mean": 0.1690,
+      "p50": 0.0028,
+      "p99": 2.1411,
+      "max": 2.8877
+    },
+    "entities": {
+      "mean": 0.2469,
+      "p50": 0.1620,
+      "p99": 0.8677,
+      "max": 1.7096
+    },
+    "entity_prepare": {
+      "mean": 0.0083,
+      "p50": 0.0054,
+      "p99": 0.0478,
+      "max": 0.0838
+    },
+    "entity_global": {
+      "mean": 0.0019,
+      "p50": 0.0014,
+      "p99": 0.0080,
+      "max": 0.0368
+    },
+    "entity_outline": {
+      "mean": 0.0000,
+      "p50": 0.0000,
+      "p99": 0.0000,
+      "max": 0.0000
+    },
+    "entity_loop": {
+      "mean": 0.1822,
+      "p50": 0.0990,
+      "p99": 0.6289,
+      "max": 1.3130
+    },
+    "entity_chunk_lookup": {
+      "mean": 0.0000,
+      "p50": 0.0000,
+      "p99": 0.0000,
+      "max": 0.0000
+    },
+    "entity_visibility_check": {
+      "mean": 0.0000,
+      "p50": 0.0000,
+      "p99": 0.0000,
+      "max": 0.0000
+    },
+    "entity_draw": {
+      "mean": 0.0000,
+      "p50": 0.0000,
+      "p99": 0.0000,
+      "max": 0.0000
+    },
+    "block_entity_loop": {
+      "mean": 0.0542,
+      "p50": 0.0455,
+      "p99": 0.2231,
+      "max": 0.3861
+    },
+    "block_entity_draw": {
+      "mean": 0.0000,
+      "p50": 0.0000,
+      "p99": 0.0000,
+      "max": 0.0000
+    },
+    "swap": {
+      "mean": 1.1330,
+      "p50": 1.0953,
+      "p99": 1.7085,
+      "max": 6.7321
+    },
+    "gl_error_check": {
+      "mean": 0.0015,
+      "p50": 0.0008,
+      "p99": 0.0286,
+      "max": 0.0358
+    },
+    "camera_setup": {
+      "mean": 0.0170,
+      "p50": 0.0109,
+      "p99": 0.0935,
+      "max": 0.0990
+    },
+    "frustum": {
+      "mean": 0.0108,
+      "p50": 0.0075,
+      "p99": 0.0476,
+      "max": 0.0762
+    },
+    "frustum_culler": {
+      "mean": 0.0009,
+      "p50": 0.0008,
+      "p99": 0.0027,
+      "max": 0.0036
+    },
+    "chunk_matrix": {
+      "mean": 0.0000,
+      "p50": 0.0000,
+      "p99": 0.0000,
+      "max": 0.0000
+    },
+    "world": {
+      "mean": 20.1451,
+      "p50": 18.1221,
+      "p99": 38.7737,
+      "max": 45.9503
+    },
+    "lightmap": {
+      "mean": 0.2981,
+      "p50": 0.4680,
+      "p99": 0.7205,
+      "max": 5.5846
+    },
+    "pick": {
+      "mean": 0.0111,
+      "p50": 0.0105,
+      "p99": 0.0300,
+      "max": 0.0833
+    },
+    "sky": {
+      "mean": 0.1615,
+      "p50": 0.1543,
+      "p99": 0.3161,
+      "max": 0.5173
+    },
+    "clouds": {
+      "mean": 0.4918,
+      "p50": 0.4946,
+      "p99": 0.7685,
+      "max": 0.8104
+    },
+    "terrain_solid": {
+      "mean": 7.2643,
+      "p50": 6.7370,
+      "p99": 16.3478,
+      "max": 27.5026
+    },
+    "terrain_cutout_mipped": {
+      "mean": 7.2661,
+      "p50": 5.9395,
+      "p99": 17.1416,
+      "max": 18.9192
+    },
+    "terrain_cutout": {
+      "mean": 3.0142,
+      "p50": 2.7521,
+      "p99": 8.1288,
+      "max": 17.5248
+    },
+    "terrain_translucent": {
+      "mean": 0.6008,
+      "p50": 0.5343,
+      "p99": 2.5572,
+      "max": 3.4086
+    },
+    "particles": {
+      "mean": 0.0065,
+      "p50": 0.0058,
+      "p99": 0.0332,
+      "max": 0.0437
+    },
+    "weather": {
+      "mean": 0.0002,
+      "p50": 0.0002,
+      "p99": 0.0008,
+      "max": 0.0011
+    },
+    "hand": {
+      "mean": 0.0149,
+      "p50": 0.0135,
+      "p99": 0.0430,
+      "max": 0.0725
+    },
+    "gui": {
+      "mean": 0.0877,
+      "p50": 0.0619,
+      "p99": 0.1929,
+      "max": 7.2444
+    },
+    "entity_living_setup": {
+      "mean": 0.0000,
+      "p50": 0.0000,
+      "p99": 0.0000,
+      "max": 0.0000
+    },
+    "entity_model_prepare": {
+      "mean": 0.0000,
+      "p50": 0.0000,
+      "p99": 0.0000,
+      "max": 0.0000
+    },
+    "entity_model_animation": {
+      "mean": 0.0000,
+      "p50": 0.0000,
+      "p99": 0.0000,
+      "max": 0.0000
+    },
+    "entity_render_model": {
+      "mean": 0.0000,
+      "p50": 0.0000,
+      "p99": 0.0000,
+      "max": 0.0000
+    },
+    "entity_model_draw": {
+      "mean": 0.0000,
+      "p50": 0.0000,
+      "p99": 0.0000,
+      "max": 0.0000
+    },
+    "entity_layers": {
+      "mean": 0.0000,
+      "p50": 0.0000,
+      "p99": 0.0000,
+      "max": 0.0000
+    },
+    "entity_shadow": {
+      "mean": 0.0000,
+      "p50": 0.0000,
+      "p99": 0.0000,
+      "max": 0.0000
+    },
+    "entity_shadow_block": {
+      "mean": 0.0000,
+      "p50": 0.0000,
+      "p99": 0.0000,
+      "max": 0.0000
+    },
+    "entity_name_tag": {
+      "mean": 0.0000,
+      "p50": 0.0000,
+      "p99": 0.0000,
+      "max": 0.0000
+    },
+    "entity_overlay": {
+      "mean": 0.0000,
+      "p50": 0.0000,
+      "p99": 0.0000,
+      "max": 0.0000
+    },
+    "entity_shadow_query": {
+      "mean": 0.0000,
+      "p50": 0.0000,
+      "p99": 0.0000,
+      "max": 0.0000
+    },
+    "shadows": {
+      "mean": 0.0000,
+      "p50": 0.0000,
+      "p99": 0.0000,
+      "max": 0.0000
+    },
+    "frustum_replay_vanilla": {
+      "mean": 0.0000,
+      "p50": 0.0000,
+      "p99": 0.0000,
+      "max": 0.0000
+    },
+    "frustum_replay_planes": {
+      "mean": 0.0000,
+      "p50": 0.0000,
+      "p99": 0.0000,
+      "max": 0.0000
+    },
+    "chunk_sync": {
+      "mean": 0.0000,
+      "p50": 0.0000,
+      "p99": 0.0000,
+      "max": 0.0000
+    },
+    "chunk_drain": {
+      "mean": 0.0000,
+      "p50": 0.0000,
+      "p99": 0.0000,
+      "max": 0.0000
+    },
+    "chunk_gl_list": {
+      "mean": 0.0000,
+      "p50": 0.0000,
+      "p99": 0.0000,
+      "max": 0.0000
+    },
+    "chunk_vbo": {
+      "mean": 0.0000,
+      "p50": 0.0000,
+      "p99": 0.0000,
+      "max": 0.0000
+    },
+    "chunk_enqueue": {
+      "mean": 0.0000,
+      "p50": 0.0000,
+      "p99": 0.0000,
+      "max": 0.0000
+    },
+    "chunk_build_client": {
+      "mean": 0.0000,
+      "p50": 0.0000,
+      "p99": 0.0000,
+      "max": 0.0000
+    },
+    "chunk_resort_client": {
+      "mean": 0.0000,
+      "p50": 0.0000,
+      "p99": 0.0000,
+      "max": 0.0000
+    },
+    "chunk_build_worker": {
+      "mean": 0.0000,
+      "p50": 0.0000,
+      "p99": 0.0000,
+      "max": 0.0000
+    },
+    "chunk_resort_worker": {
+      "mean": 0.0000,
+      "p50": 0.0000,
+      "p99": 0.0000,
+      "max": 0.0000
+    },
+    "chunk_buffer_wait": {
+      "mean": 0.0000,
+      "p50": 0.0000,
+      "p99": 0.0000,
+      "max": 0.0000
+    },
+    "chunk_queue_wait": {
+      "mean": 0.0000,
+      "p50": 0.0000,
+      "p99": 0.0000,
+      "max": 0.0000
+    },
+    "chunk_upload_latency": {
+      "mean": 0.0000,
+      "p50": 0.0000,
+      "p99": 0.0000,
+      "max": 0.0000
+    },
+    "chunk_dirty_age": {
+      "mean": 0.0000,
+      "p50": 0.0000,
+      "p99": 0.0000,
+      "max": 0.0000
+    },
+    "chunk_dirty_age_max": {
+      "mean": 0.0000,
+      "p50": 0.0000,
+      "p99": 0.0000,
+      "max": 0.0000
+    },
+    "chunk_schedule_wait": {
+      "mean": 0.0000,
+      "p50": 0.0000,
+      "p99": 0.0000,
+      "max": 0.0000
+    },
+    "terrain_submit": {
+      "mean": 0.0000,
+      "p50": 0.0000,
+      "p99": 0.0000,
+      "max": 0.0000
+    },
+    "particle_tick": {
+      "mean": 0.0040,
+      "p50": 0.0049,
+      "p99": 0.0201,
+      "max": 0.0710
+    },
+    "particle_draw": {
+      "mean": 0.0000,
+      "p50": 0.0000,
+      "p99": 0.0000,
+      "max": 0.0000
+    },
+    "particle_spawn": {
+      "mean": 0.0000,
+      "p50": 0.0000,
+      "p99": 0.0000,
+      "max": 0.0000
+    },
+    "particle_update": {
+      "mean": 0.0000,
+      "p50": 0.0000,
+      "p99": 0.0000,
+      "max": 0.0000
+    },
+    "particle_move": {
+      "mean": 0.0000,
+      "p50": 0.0000,
+      "p99": 0.0000,
+      "max": 0.0000
+    },
+    "particle_remove": {
+      "mean": 0.0000,
+      "p50": 0.0000,
+      "p99": 0.0000,
+      "max": 0.0000
+    },
+    "particle_light": {
+      "mean": 0.0000,
+      "p50": 0.0000,
+      "p99": 0.0000,
+      "max": 0.0000
+    },
+    "chunk_update_latency": {
+      "mean": 12.0839,
+      "p50": 0.0000,
+      "p99": 207.9977,
+      "max": 258.7620
+    },
+    "chunk_update_latency_max": {
+      "mean": 5.7478,
+      "p50": 0.0000,
+      "p99": 59.4659,
+      "max": 77.9705
+    }
+  },
+  "counters_per_frame": {
+    "terrain_solid_chunks": 0.0000,
+    "terrain_cutout_mipped_chunks": 0.0000,
+    "terrain_cutout_chunks": 0.0000,
+    "terrain_translucent_chunks": 0.0000,
+    "visibility_searches": 1.0000,
+    "entity_chunk_lookups": 0.0000,
+    "entity_chunk_cache_hits": 0.0000,
+    "entity_sections_occupied": 0.0000,
+    "entities_checked": 0.0000,
+    "entities_drawn": 0.0000,
+    "block_entities_drawn": 0.0000,
+    "chunk_matrix_reads": 0.0000,
+    "gl_calls": 0.0000,
+    "gl_matrix_ops": 0.0000,
+    "gl_zero_translates": 0.0000,
+    "gl_call_lists": 0.0000,
+    "gl_state_requests": 0.0000,
+    "gl_state_changes": 0.0000,
+    "gl_lightmap_sets": 0.0000,
+    "gl_immediate_draws": 0.0000,
+    "cloud_rebuilds": 0.0000,
+    "shadows_drawn": 0.0000,
+    "frustum_tests": 630.4791,
+    "chunk_sync_calls": 0.0000,
+    "chunk_drain_calls": 0.0000,
+    "chunk_gl_list_calls": 0.0000,
+    "chunk_vbo_calls": 0.0000,
+    "chunk_enqueue_calls": 0.0000,
+    "chunk_build_client_calls": 0.0000,
+    "chunk_resort_client_calls": 0.0000,
+    "chunk_build_worker_calls": 0.0000,
+    "chunk_resort_worker_calls": 0.0000,
+    "chunk_buffer_waits": 0.0000,
+    "chunk_task_starts": 0.0000,
+    "chunk_task_completions": 0.0000,
+    "chunk_dirty": 0.0000,
+    "chunk_queued": 0.0000,
+    "chunk_ready_uploads": 0.0000,
+    "chunk_available_buffers": 0.0000,
+    "chunk_expired_deadlines": 0.0000,
+    "chunk_enqueue_accepted": 0.0000,
+    "chunk_observed_schedules": 0.0000,
+    "particles_ticked": 0.0000,
+    "particles_rendered": 0.0000,
+    "particles_spawned": 0.0000,
+    "particles_removed": 0.0000,
+    "particle_light_queries": 0.0000,
+    "particle_light_keys": 0.0000,
+    "particle_light_positions": 0.0000,
+    "particle_light_same_as_previous": 0.0000,
+    "chunk_updates_published": 1.3351,
+    "chunk_updates_waiting": 0.4005,
+    "chunk_visible_uncompiled": 1.6309,
+    "chunk_fed_tasks": 0.0000,
+    "chunk_unstarted_tasks": 0.0052
+  },
+  "render_thread_alloc_bytes_per_frame": {
+    "mean": 28171.2251,
+    "p50": 32688,
+    "p99": 254664,
+    "max": 837624,
+    "total": 10761408
+  },
+  "chunks": {
+    "visible_mean": 484.0445,
+    "pending_mean": 0.9843,
+    "pending_max": 19
+  },
+  "client_ticks_ms": {
+    "count": 0,
+    "mean_ms": 0.0000,
+    "stddev_ms": 0.0000,
+    "min_ms": 0.0000,
+    "p50_ms": 0.0000,
+    "p90_ms": 0.0000,
+    "p95_ms": 0.0000,
+    "p99_ms": 0.0000,
+    "p99_9_ms": 0.0000,
+    "max_ms": 0.0000
+  }
+}

@@ -12,6 +12,9 @@ removal (session 16) and particle vertex writing (session 20). Session 21's part
 experiment verified exactly but did not save dependable time and stays off. Session 22's per-pass
 particle light reuse verified exactly and saved 9-14% of the particle pass in three of four measured
 groups, but failed at the lightest load and stays off pending a confirmation.
+The 2026-10-23 exact-neighbor/modern-GL combination passed its live correctness checks
+but regressed native frame/CPU/tail metrics; its three options remain off. See the
+[complete measured result](docs/benchmarks/2026-10-23-modern-rendering/README.md).
 Session 12 completed the chunk frustum investigation; its exact plane test remains an opt-in
 experiment because warmed repeated runs did not establish a dependable performance gain.
 Session 13 investigates chunk-build responsiveness and adds opt-in pipeline attribution;
@@ -106,6 +109,7 @@ Keys (rebindable under Controls → Alacer):
 | Key | Action |
 |---|---|
 | F7 | Toggle the overlay: FPS, 1%/0.1% lows, frame-time percentiles, CPU breakdown, allocation, heap, GC. Covers the last 5 seconds. |
+| Unbound (Zoom) | Hold for the selected magnification; bind under Controls -> Alacer. |
 | F9 | Export the full history to `alacer/profiles/profile-<time>.json` (summary) and `.csv` (one row per frame). |
 
 ## Video settings
@@ -120,6 +124,16 @@ Enchantment glint (Off/On) and Dropped items (Fast/Fancy); each defaults to
 vanilla's appearance. New choices are saved to `config/alacer.properties` as
 `quality.*` options, are recorded in profile and benchmark exports, and use their
 defaults during benchmark launches. Existing optimization defaults stay unchanged.
+
+The menu also offers entity and block-entity draw distances, biome blend, a
+particle limit, anisotropic filtering, distance fog, sun and moon, per-group
+texture animations, FOV effects and damage tilt, camera settings (bobbing strength, distortion effects,
+third-person distance and collision, FOV transitions, and a zoom factor for a Zoom key that is unbound by
+default), and an **Advanced** page with
+the chunk update budget, chunk builder threads (experimental, restart) and the
+performance overlay. **Presets...** stages Performance, Vanilla or Enhanced
+appearance choices; Apply is still required. Every new default is vanilla's
+behaviour, stored as `quality.*`/`advanced.*` options.
 See [the settings guide and validation](docs/VIDEO_SETTINGS.md).
 
 Graphics also includes fog start, cloud height, sky visibility, star brightness
@@ -153,11 +167,25 @@ Normal launches continue to use saved settings, so an existing explicit `false` 
 | `profiler.shadowTiming` | `false` | Time all of entity shadow rendering as one section (`shadows`) and count shadows drawn: two `nanoTime` calls per shadow. Its hook is only installed when this is on at startup. |
 | `profiler.frustumTiming` | `false` | Replay each search's tested boxes through the vanilla and candidate frustum predicates, alternating order and timing each batch. Adds work; for attribution only, excluded from warmed A/B selection. |
 | `profiler.chunkDetail` | `false` | Chunk pipeline and backend submission attribution, including per-layer submitted chunks, worker completion totals and sampled dirty-set ages. Hooks are installed only at startup; intrusive, excluded from selection. Worker/latency/age columns are not client render work. See sessions 13–14. |
+| `profiler.chunkLatency` | `false` | Visible chunk-update latency: from the end of the first terrain setup that finds a chunk dirty and visible until a completed rebuild is published (on whichever thread publishes it), plus a count of never-built chunks in view. Benchmark summaries add `update_latency_p50/p90/p99/max_ms`. Measurement only; its hooks are installed only when this is on at startup. See the [2026-10-23 chunk scheduling archive](docs/benchmarks/2026-10-23-chunk-scheduling/README.md). |
 | `profiler.particleDetail` | `false` | Time each particle's update, its movement, the removal of dead particles and the light query each particle makes while drawn, and count removed particles: two `nanoTime` calls per particle and operation. Intrusive, for attribution only; its hooks are only installed when this is on at startup. See session 15. |
 | `profiler.particleLightRepeats` | `false` | Count, per unlit particle render pass, the particle light queries, their distinct (x, y, z, blockLight) arguments and positions, and those equal to the previous query (`particle_light_*` counters, final log line). Read once at first use and folded away when off; two hash-set inserts per query when on, so attribution only. Startup only. |
 | `profiler.hud` | `false` | Show the overlay at startup. |
+| `benchmark.chunkEdit` | `false` | JVM-only benchmark scenario selector (not read from the config file): use with `benchmark=true`, an explicit `benchmark.vbo=false` or `true`, and `profiler.chunkLatency=true` for the 16-cell edit-burst responsiveness scenario described below. |
+| `quality.viewBobbing` | `100` | Bobbing strength, 0-100% in steps of 5, while vanilla View bobbing is on. Immediate; 100 returns vanilla's values untouched. |
+| `quality.distortion` | `100` | Nausea/portal view stretch, 0-100% in steps of 5. Immediate; 0 removes the stretch, 100 preserves vanilla. |
+| `quality.thirdPersonDistance` | `4` | Third-person camera distance, 1-16 blocks. Immediate; 4 preserves vanilla. |
+| `quality.cameraCollision` | `1` | Third-person block collision: 0 Off, 1 On (vanilla). Immediate; Off permits the camera behind blocks. |
+| `quality.fovTransition` | `1` | FOV approach rate: 0 Instant, 1 Vanilla, 2 Smooth, 3 Very smooth. Immediate; independent of FOV effects strength. |
+| `quality.zoom` | `2` | Hold-to-zoom magnification: 0=2x, 1=3x, 2=4x, 3=6x, 4=8x. Bind `key.alacer.zoom` under Controls -> Alacer; unbound by default. Changes the world FOV; the hand projection is unchanged. |
 | `render.fastChunkVisibility` | `true` | Use Alacer's chunk visibility search. |
 | `render.fastChunkVisibility.verify` | `false` | Debug: run vanilla's and Alacer's searches side by side and log differences. Slower. |
+| `render.fastChunkNeighbours` | `false` | Experimental exact culling math: precompute six neighbor addresses per chunk-storage slot instead of repeating division and modulo on each traversal edge. Keeps the existing traversal, frustum predicate and draw order. Requires Alacer visibility; guarded fallback for unsupported storage/camera inputs. Outside `render.defaults`. |
+| `render.fastChunkNeighbours.verify` | `false` | Debug: compare every precomputed address with the original world-coordinate calculation. Use with `render.fastChunkNeighbours=true`; whole-search verification remains separate. |
+| `render.terrainShader` | `false` | Modern OpenGL terrain vertex shader pipeline evaluating origin translation and chunk boundary expansion directly on the GPU, eliminating 4,500+ matrix operations per frame. Replaced the failed terrain VAO experiment; includes legacy `render.terrainVaos` alias. Startup hooks, capability/compatibility fallback; outside `render.defaults`. |
+| `render.terrainVaos` | `false` | Legacy alias for `render.terrainShader`. |
+| `render.directBufferUploads` | `false` | Experimental OpenGL 4.5 buffer creation/named-data uploads, retaining vanilla's upload bytes, usage and final ARRAY_BUFFER=0. Startup hooks, capability/compatibility fallback; outside `render.defaults`. |
+| `render.modernGl.verify` | `false` | Debug: exercises supported VAO/named-upload paths, checks all four terrain pointer layouts and reads back every uploaded byte. Intrusive; excluded from performance selection. |
 | `render.fastChunkFrustum` | `false` | Experimental: in Alacer's chunk search, test one corner per frustum plane with vanilla's exact arithmetic/boundary rules. Unknown/modified cullers and unsafe inputs use vanilla. No dependable measured gain; see session 12. |
 | `render.fastChunkFrustum.verify` | `false` | Debug: compare every eligible chunk predicate with vanilla, return vanilla's answer and log differences. Use with the Alacer chunk search enabled. |
 | `render.fastCameraSectionFaces` | `false` | Experimental (session 28b, not yet measured; reference series prepared as session 30): in Alacer's chunk search, find the camera section's open faces with an allocation-free flood fill instead of vanilla's (which copies `Direction.values()` per visited block), reading the section's blocks with vanilla's own calls and reusing the answer while the camera stays in the same connected pocket of an unchanged, populated section. Same faces as vanilla; only matters when the camera moves between blocks. Runtime-toggleable; not in `render.defaults`. |
@@ -186,6 +214,8 @@ Normal launches continue to use saved settings, so an existing explicit `false` 
 | `render.reuseParticleLight.verify` | `false` | Debug: also run vanilla's light query for every reused or computed answer, use its result and log any difference. Enable the option as well. |
 | `render.fastParticleMovement` | `false` | Experimental: fetch block states for particle movement and collision gathering through the existing chunk-reference cache. Collision loops, shapes, callbacks and movement calculations remain vanilla. Startup hooks are absent unless this option, its verification, or its benchmark toggle is requested. See the session 17 archive. |
 | `render.fastParticleMovement.verify` | `false` | Debug: compare each cached movement block-state read with vanilla, returning vanilla's state. Enable the movement option as well. |
+| `render.feedChunkWorkers` | `false` | Experimental: after vanilla's per-frame chunk deadline stops queueing rebuilds, keep queueing visible dirty chunks (same order and calls) until the builder threads have about one frame of work; uploads keep vanilla's deadline. No measurable effect in a software-rendering container, where uploads rather than idle workers were the limit (2026-10-23); unmeasured on the reference hardware. Runtime-toggleable; not in `render.defaults`. |
+| `render.chunkTimeFloor` | `false` | Experimental: when vanilla's chunk deadline leaves less than 1/32 of the previous frame (at most 4.2 ms), allow that much for uploading built chunks and queueing rebuilds. On llvmpipe it cut edit-update latency p90 by 76% but failed its frozen gates on flight frame cost (+20% mean) and visible holes (+12%) (2026-10-23); unmeasured on the reference hardware. Runtime-toggleable; not in `render.defaults`. |
 | `render.batchModelLists` | `false` | Experimental: combine face draws inside eligible vanilla model-part display lists. |
 | `render.batchModelLists.verify` | `false` | Debug: compare native feedback from vanilla and alternate lists at compilation; reject differing lists. |
 
@@ -267,6 +297,14 @@ uses `-Palacer.render.fastChunkFrustum.verify=true`; to compare the complete can
 instead use `-Palacer.render.fastChunkFrustum=true -Palacer.render.fastChunkVisibility.verify=true`
 with frustum verification off. See [session 12 evidence](docs/benchmarks/2026-10-19-chunk-frustum/README.md).
 
+For the **chunk-edit scenario**, add `-Palacer.benchmark.chunkEdit=true` (best with
+`-Palacer.profiler.chunkLatency=true`). From the `benchmark.chunkFlight=near` pose (24 blocks above the
+anchor, facing east) it records an unscored `warmup-pan` (10 s), `still` (10 s) and `edit` (30 s), in which one
+block in each of 16 render chunks ahead of the camera is placed or removed every second (28 bursts), on a schedule
+that follows phase time so a slower scheduler builds a backlog. Each launch plays a fresh, byte-identical world
+copy; compare separate launches in alternating order. See the
+[2026-10-23 chunk scheduling archive](docs/benchmarks/2026-10-23-chunk-scheduling/README.md).
+
 For the dedicated **particle scenario**, add `-Palacer.benchmark.particles=true`. Instead of the
 usual paths it records `static` (10 s) and `pan` (15 s) at the anchor, without added mobs, while 16
 stationary emitters around the camera emit a fixed, seeded schedule every client tick: one stone
@@ -322,6 +360,13 @@ through vanilla reload after export, before automatic exit. No backend is forced
 play. `profiler.chunkDetail=true`
 adds opt-in terrain submission/chunk counts to the existing upload/build/sort diagnostics;
 leave it off for selection. See the [Session 14 protocol and evidence](docs/benchmarks/2026-10-19-display-lists-vbo/README.md).
+
+The independent culling-math/modern-OpenGL trials use this same retained scene
+and the ordinary route on Java 25. Each option stays off by default. See the
+[mechanisms, gates and native-GPU results](docs/benchmarks/2026-10-23-modern-rendering/README.md).
+`-Palacer.benchmark.toggle=render.modernPipeline` toggles their combination for
+diagnostics; it is not a saved preset. `-Palacer.modernGl.forceFallback=true`
+forces the original GL path for compatibility checks.
 
 On the measured Java 8 profile, VBO reduced paired mean frame time by 51–61%, but rare fly
 maxima, allocation per second and one queue-wait proxy worsened. This is a throughput

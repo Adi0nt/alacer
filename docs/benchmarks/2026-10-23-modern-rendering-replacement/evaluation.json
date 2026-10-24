@@ -1,0 +1,2632 @@
+{
+  "scenes": {
+    "default": {
+      "pairs": [
+        {
+          "pair": "rep-default-1a vs rep-default-2b",
+          "phases": {
+            "static": {
+              "frame_ms": {
+                "control": 1.4495627538909164,
+                "candidate": 1.4850678653738458,
+                "delta_pct": 2.449366982397046
+              },
+              "cpu_ms": {
+                "control": 1.1525,
+                "candidate": 1.2483,
+                "delta_pct": 8.31236442516268
+              },
+              "p99_ms": {
+                "control": 3.2049,
+                "candidate": 3.4171,
+                "delta_pct": 6.621111423133333
+              },
+              "slow1_ms": {
+                "control": 3.650998164643223,
+                "candidate": 3.94863458190475,
+                "delta_pct": 8.152193012417252
+              },
+              "alloc_bytes": {
+                "control": 4781.9829,
+                "candidate": 6145.9566,
+                "delta_pct": 28.523182297452394
+              },
+              "visible_chunks": {
+                "control": 1379.248804521084,
+                "candidate": 1382.0,
+                "delta_pct": 0.19947057194451473
+              },
+              "visibility_ms": {
+                "control": 0.0027,
+                "candidate": 0.0027,
+                "delta_pct": 0.0
+              },
+              "terrain_layers_ms": {
+                "control": 0.5137,
+                "candidate": 0.5271,
+                "delta_pct": 2.6085263772629874
+              },
+              "render_ms": {
+                "control": 0.8374,
+                "candidate": 0.8563,
+                "delta_pct": 2.2569859087652158
+              },
+              "setup_ms": {
+                "control": 0.0269,
+                "candidate": 0.0328,
+                "delta_pct": 21.933085501858745
+              },
+              "upload_ms": {
+                "control": 0.0007,
+                "candidate": 0.0009,
+                "delta_pct": 28.57142857142857
+              },
+              "swap_ms": {
+                "control": 0.4708,
+                "candidate": 0.4786,
+                "delta_pct": 1.6567544604927844
+              },
+              "process_cpu_cores": {
+                "control": 1.0075,
+                "candidate": 1.0234,
+                "delta_pct": 1.5781637717121613
+              },
+              "terrain_solid_ms": {
+                "control": 0.2063,
+                "candidate": 0.2154,
+                "delta_pct": 4.411051866214249
+              },
+              "terrain_cutout_mipped_ms": {
+                "control": 0.123,
+                "candidate": 0.1255,
+                "delta_pct": 2.0325203252032535
+              },
+              "terrain_cutout_ms": {
+                "control": 0.1458,
+                "candidate": 0.1469,
+                "delta_pct": 0.7544581618655622
+              },
+              "terrain_translucent_ms": {
+                "control": 0.0386,
+                "candidate": 0.0393,
+                "delta_pct": 1.8134715025906714
+              }
+            },
+            "pan": {
+              "frame_ms": {
+                "control": 2.132836922649043,
+                "candidate": 2.3603816548305327,
+                "delta_pct": 10.668641834035427
+              },
+              "cpu_ms": {
+                "control": 2.0128,
+                "candidate": 2.235,
+                "delta_pct": 11.03934817170111
+              },
+              "p99_ms": {
+                "control": 4.2874,
+                "candidate": 5.1298,
+                "delta_pct": 19.648271679805955
+              },
+              "slow1_ms": {
+                "control": 5.069063455043237,
+                "candidate": 6.091202354615183,
+                "delta_pct": 20.164255362694554
+              },
+              "alloc_bytes": {
+                "control": 7761.8939,
+                "candidate": 9643.1975,
+                "delta_pct": 24.237687660224267
+              },
+              "visible_chunks": {
+                "control": 1493.3428124555667,
+                "candidate": 1499.9713611329662,
+                "delta_pct": 0.443873209963084
+              },
+              "visibility_ms": {
+                "control": 0.3676,
+                "candidate": 0.437,
+                "delta_pct": 18.87921653971709
+              },
+              "terrain_layers_ms": {
+                "control": 0.8417,
+                "candidate": 0.904,
+                "delta_pct": 7.401687061898541
+              },
+              "render_ms": {
+                "control": 1.6089,
+                "candidate": 1.7779,
+                "delta_pct": 10.504071104481325
+              },
+              "setup_ms": {
+                "control": 0.3945,
+                "candidate": 0.4716,
+                "delta_pct": 19.543726235741442
+              },
+              "upload_ms": {
+                "control": 0.0109,
+                "candidate": 0.0145,
+                "delta_pct": 33.02752293577982
+              },
+              "swap_ms": {
+                "control": 0.3531,
+                "candidate": 0.393,
+                "delta_pct": 11.299915038232793
+              },
+              "process_cpu_cores": {
+                "control": 1.2396,
+                "candidate": 1.325,
+                "delta_pct": 6.889319135204898
+              },
+              "terrain_solid_ms": {
+                "control": 0.3451,
+                "candidate": 0.3711,
+                "delta_pct": 7.53404810199941
+              },
+              "terrain_cutout_mipped_ms": {
+                "control": 0.2114,
+                "candidate": 0.2267,
+                "delta_pct": 7.237464522232738
+              },
+              "terrain_cutout_ms": {
+                "control": 0.2077,
+                "candidate": 0.2255,
+                "delta_pct": 8.57005296100145
+              },
+              "terrain_translucent_ms": {
+                "control": 0.0775,
+                "candidate": 0.0807,
+                "delta_pct": 4.129032258064509
+              }
+            },
+            "fly": {
+              "frame_ms": {
+                "control": 2.3229855940048387,
+                "candidate": 2.55937297409633,
+                "delta_pct": 10.176015757547523
+              },
+              "cpu_ms": {
+                "control": 2.1777,
+                "candidate": 2.4232,
+                "delta_pct": 11.273361803737881
+              },
+              "p99_ms": {
+                "control": 5.2551,
+                "candidate": 5.5185,
+                "delta_pct": 5.0122737911743025
+              },
+              "slow1_ms": {
+                "control": 7.138263160637332,
+                "candidate": 7.70867379975949,
+                "delta_pct": 7.990888347568699
+              },
+              "alloc_bytes": {
+                "control": 32374.8413,
+                "candidate": 36329.4362,
+                "delta_pct": 12.215024819287674
+              },
+              "visible_chunks": {
+                "control": 1320.8229965156795,
+                "candidate": 1311.1893793985926,
+                "delta_pct": -0.7293647326326349
+              },
+              "visibility_ms": {
+                "control": 0.4212,
+                "candidate": 0.479,
+                "delta_pct": 13.72269705603038
+              },
+              "terrain_layers_ms": {
+                "control": 0.8873,
+                "candidate": 0.9608,
+                "delta_pct": 8.283556857883468
+              },
+              "render_ms": {
+                "control": 1.7357,
+                "candidate": 1.92,
+                "delta_pct": 10.618194388431174
+              },
+              "setup_ms": {
+                "control": 0.4693,
+                "candidate": 0.5347,
+                "delta_pct": 13.935648838695922
+              },
+              "upload_ms": {
+                "control": 0.0331,
+                "candidate": 0.0422,
+                "delta_pct": 27.49244712990938
+              },
+              "swap_ms": {
+                "control": 0.3906,
+                "candidate": 0.4195,
+                "delta_pct": 7.3988735279057805
+              },
+              "process_cpu_cores": {
+                "control": 2.3749,
+                "candidate": 2.3701,
+                "delta_pct": -0.20211377321150012
+              },
+              "terrain_solid_ms": {
+                "control": 0.4359,
+                "candidate": 0.4719,
+                "delta_pct": 8.258774948382651
+              },
+              "terrain_cutout_mipped_ms": {
+                "control": 0.1785,
+                "candidate": 0.1947,
+                "delta_pct": 9.075630252100853
+              },
+              "terrain_cutout_ms": {
+                "control": 0.1941,
+                "candidate": 0.2107,
+                "delta_pct": 8.552292632663578
+              },
+              "terrain_translucent_ms": {
+                "control": 0.0788,
+                "candidate": 0.0835,
+                "delta_pct": 5.9644670050761555
+              }
+            }
+          }
+        },
+        {
+          "pair": "rep-default-4a vs rep-default-3b",
+          "phases": {
+            "static": {
+              "frame_ms": {
+                "control": 1.4658307522496838,
+                "candidate": 1.4883240236185116,
+                "delta_pct": 1.5345067180713856
+              },
+              "cpu_ms": {
+                "control": 1.1954,
+                "candidate": 1.1627,
+                "delta_pct": -2.7354860297808226
+              },
+              "p99_ms": {
+                "control": 3.915,
+                "candidate": 4.8139,
+                "delta_pct": 22.96040868454662
+              },
+              "slow1_ms": {
+                "control": 4.334594266805547,
+                "candidate": 5.732055085049367,
+                "delta_pct": 32.23971454365676
+              },
+              "alloc_bytes": {
+                "control": 6485.5753,
+                "candidate": 6000.5036,
+                "delta_pct": -7.479239351364872
+              },
+              "visible_chunks": {
+                "control": 1382.0,
+                "candidate": 1382.0,
+                "delta_pct": 0.0
+              },
+              "visibility_ms": {
+                "control": 0.0008,
+                "candidate": 0.0013,
+                "delta_pct": 62.499999999999986
+              },
+              "terrain_layers_ms": {
+                "control": 0.51,
+                "candidate": 0.496,
+                "delta_pct": -2.7450980392156885
+              },
+              "render_ms": {
+                "control": 0.8291,
+                "candidate": 0.7976,
+                "delta_pct": -3.7993004462670337
+              },
+              "setup_ms": {
+                "control": 0.0338,
+                "candidate": 0.0304,
+                "delta_pct": -10.059171597633128
+              },
+              "upload_ms": {
+                "control": 0.0003,
+                "candidate": 0.0003,
+                "delta_pct": 0.0
+              },
+              "swap_ms": {
+                "control": 0.4927,
+                "candidate": 0.5519,
+                "delta_pct": 12.015425208037328
+              },
+              "process_cpu_cores": {
+                "control": 1.028,
+                "candidate": 0.9641,
+                "delta_pct": -6.2159533073930024
+              },
+              "terrain_solid_ms": {
+                "control": 0.2092,
+                "candidate": 0.2001,
+                "delta_pct": -4.349904397705544
+              },
+              "terrain_cutout_mipped_ms": {
+                "control": 0.121,
+                "candidate": 0.1193,
+                "delta_pct": -1.4049586776859448
+              },
+              "terrain_cutout_ms": {
+                "control": 0.1425,
+                "candidate": 0.1391,
+                "delta_pct": -2.3859649122806923
+              },
+              "terrain_translucent_ms": {
+                "control": 0.0373,
+                "candidate": 0.0375,
+                "delta_pct": 0.5361930294906134
+              }
+            },
+            "pan": {
+              "frame_ms": {
+                "control": 2.63539263792525,
+                "candidate": 2.387867531615963,
+                "delta_pct": -9.392342634156948
+              },
+              "cpu_ms": {
+                "control": 2.5063,
+                "candidate": 2.2361,
+                "delta_pct": -10.780832302597453
+              },
+              "p99_ms": {
+                "control": 6.3607,
+                "candidate": 4.7751,
+                "delta_pct": -24.92807395412454
+              },
+              "slow1_ms": {
+                "control": 7.755503111120073,
+                "candidate": 5.650023956101574,
+                "delta_pct": -27.14819560834938
+              },
+              "alloc_bytes": {
+                "control": 12383.9199,
+                "candidate": 7855.8752,
+                "delta_pct": -36.56390493933993
+              },
+              "visible_chunks": {
+                "control": 1493.0498945888967,
+                "candidate": 1499.8102515122573,
+                "delta_pct": 0.45278841302366923
+              },
+              "visibility_ms": {
+                "control": 0.5154,
+                "candidate": 0.4463,
+                "delta_pct": -13.407062475746992
+              },
+              "terrain_layers_ms": {
+                "control": 0.9769,
+                "candidate": 0.9143,
+                "delta_pct": -6.408025386426449
+              },
+              "render_ms": {
+                "control": 2.0113,
+                "candidate": 1.8149,
+                "delta_pct": -9.764828717744738
+              },
+              "setup_ms": {
+                "control": 0.5647,
+                "candidate": 0.4855,
+                "delta_pct": -14.025146095271825
+              },
+              "upload_ms": {
+                "control": 0.0146,
+                "candidate": 0.0128,
+                "delta_pct": -12.328767123287667
+              },
+              "swap_ms": {
+                "control": 0.4132,
+                "candidate": 0.3841,
+                "delta_pct": -7.042594385285579
+              },
+              "process_cpu_cores": {
+                "control": 1.2958,
+                "candidate": 1.251,
+                "delta_pct": -3.4573236610588185
+              },
+              "terrain_solid_ms": {
+                "control": 0.4061,
+                "candidate": 0.3741,
+                "delta_pct": -7.879832553558244
+              },
+              "terrain_cutout_mipped_ms": {
+                "control": 0.2455,
+                "candidate": 0.2296,
+                "delta_pct": -6.476578411405294
+              },
+              "terrain_cutout_ms": {
+                "control": 0.2374,
+                "candidate": 0.2283,
+                "delta_pct": -3.83319292333614
+              },
+              "terrain_translucent_ms": {
+                "control": 0.0879,
+                "candidate": 0.0823,
+                "delta_pct": -6.370875995449382
+              }
+            },
+            "fly": {
+              "frame_ms": {
+                "control": 2.751077046663769,
+                "candidate": 2.463046300590663,
+                "delta_pct": -10.469744801309758
+              },
+              "cpu_ms": {
+                "control": 2.6027,
+                "candidate": 2.3031,
+                "delta_pct": -11.511123064509928
+              },
+              "p99_ms": {
+                "control": 5.6318,
+                "candidate": 5.1911,
+                "delta_pct": -7.825206861039109
+              },
+              "slow1_ms": {
+                "control": 7.661837155313101,
+                "candidate": 7.379300471832472,
+                "delta_pct": -3.687584031784124
+              },
+              "alloc_bytes": {
+                "control": 39148.3334,
+                "candidate": 33740.5886,
+                "delta_pct": -13.813473857867983
+              },
+              "visible_chunks": {
+                "control": 1322.272764786795,
+                "candidate": 1316.6257850018471,
+                "delta_pct": -0.42706617993893586
+              },
+              "visibility_ms": {
+                "control": 0.547,
+                "candidate": 0.4638,
+                "delta_pct": -15.210237659963447
+              },
+              "terrain_layers_ms": {
+                "control": 1.0025,
+                "candidate": 0.9285,
+                "delta_pct": -7.3815461346633375
+              },
+              "render_ms": {
+                "control": 2.0953,
+                "candidate": 1.8466,
+                "delta_pct": -11.869422039803366
+              },
+              "setup_ms": {
+                "control": 0.6209,
+                "candidate": 0.5176,
+                "delta_pct": -16.63713963601225
+              },
+              "upload_ms": {
+                "control": 0.0458,
+                "candidate": 0.0371,
+                "delta_pct": -18.995633187772924
+              },
+              "swap_ms": {
+                "control": 0.4203,
+                "candidate": 0.4145,
+                "delta_pct": -1.3799666904592023
+              },
+              "process_cpu_cores": {
+                "control": 2.3171,
+                "candidate": 2.3669,
+                "delta_pct": 2.1492382719778966
+              },
+              "terrain_solid_ms": {
+                "control": 0.5001,
+                "candidate": 0.4561,
+                "delta_pct": -8.79824035192961
+              },
+              "terrain_cutout_mipped_ms": {
+                "control": 0.2012,
+                "candidate": 0.188,
+                "delta_pct": -6.560636182902579
+              },
+              "terrain_cutout_ms": {
+                "control": 0.2134,
+                "candidate": 0.2048,
+                "delta_pct": -4.029990627928771
+              },
+              "terrain_translucent_ms": {
+                "control": 0.0878,
+                "candidate": 0.0796,
+                "delta_pct": -9.339407744874714
+              }
+            }
+          }
+        },
+        {
+          "pair": "rep-default-5b vs rep-default-6a",
+          "phases": {
+            "static": {
+              "frame_ms": {
+                "control": 4.230351076835866,
+                "candidate": 1.3603154625970382,
+                "delta_pct": -67.8439108743074
+              },
+              "cpu_ms": {
+                "control": 1.6107,
+                "candidate": 1.0988,
+                "delta_pct": -31.781213137145343
+              },
+              "p99_ms": {
+                "control": 18.2181,
+                "candidate": 3.0815,
+                "delta_pct": -83.08550287900495
+              },
+              "slow1_ms": {
+                "control": 33.150123649961216,
+                "candidate": 3.7150594019423075,
+                "delta_pct": -88.79322610928887
+              },
+              "alloc_bytes": {
+                "control": 9042.1191,
+                "candidate": 4563.1371,
+                "delta_pct": -49.53464946065574
+              },
+              "visible_chunks": {
+                "control": 1382.0,
+                "candidate": 1382.0,
+                "delta_pct": 0.0
+              },
+              "visibility_ms": {
+                "control": 0.0051,
+                "candidate": 0.0009,
+                "delta_pct": -82.3529411764706
+              },
+              "terrain_layers_ms": {
+                "control": 0.573,
+                "candidate": 0.4659,
+                "delta_pct": -18.69109947643979
+              },
+              "render_ms": {
+                "control": 1.049,
+                "candidate": 0.7419,
+                "delta_pct": -29.275500476644417
+              },
+              "setup_ms": {
+                "control": 0.0483,
+                "candidate": 0.0239,
+                "delta_pct": -50.5175983436853
+              },
+              "upload_ms": {
+                "control": 0.0007,
+                "candidate": 0.0003,
+                "delta_pct": -57.14285714285715
+              },
+              "swap_ms": {
+                "control": 2.9488,
+                "candidate": 0.492,
+                "delta_pct": -83.31524688008682
+              },
+              "process_cpu_cores": {
+                "control": 0.5945,
+                "candidate": 1.0249,
+                "delta_pct": 72.39697224558451
+              },
+              "terrain_solid_ms": {
+                "control": 0.2415,
+                "candidate": 0.1873,
+                "delta_pct": -22.443064182194618
+              },
+              "terrain_cutout_mipped_ms": {
+                "control": 0.1352,
+                "candidate": 0.111,
+                "delta_pct": -17.89940828402366
+              },
+              "terrain_cutout_ms": {
+                "control": 0.1512,
+                "candidate": 0.1323,
+                "delta_pct": -12.5
+              },
+              "terrain_translucent_ms": {
+                "control": 0.0451,
+                "candidate": 0.0353,
+                "delta_pct": -21.729490022172957
+              }
+            },
+            "pan": {
+              "frame_ms": {
+                "control": 3.030674976777453,
+                "candidate": 2.0985006842161478,
+                "delta_pct": -30.7579763486382
+              },
+              "cpu_ms": {
+                "control": 2.2317,
+                "candidate": 1.9649,
+                "delta_pct": -11.955011874355868
+              },
+              "p99_ms": {
+                "control": 13.6554,
+                "candidate": 4.2204,
+                "delta_pct": -69.0935454106068
+              },
+              "slow1_ms": {
+                "control": 24.821656398774802,
+                "candidate": 4.994481098386283,
+                "delta_pct": -79.87853421968724
+              },
+              "alloc_bytes": {
+                "control": 11075.4699,
+                "candidate": 7074.6611,
+                "delta_pct": -36.12315175900573
+              },
+              "visible_chunks": {
+                "control": 1492.3755555555556,
+                "candidate": 1498.6890474192194,
+                "delta_pct": 0.42304980406312725
+              },
+              "visibility_ms": {
+                "control": 0.4466,
+                "candidate": 0.3569,
+                "delta_pct": -20.08508732646664
+              },
+              "terrain_layers_ms": {
+                "control": 0.901,
+                "candidate": 0.829,
+                "delta_pct": -7.99112097669257
+              },
+              "render_ms": {
+                "control": 1.8178,
+                "candidate": 1.5732,
+                "delta_pct": -13.45582572340192
+              },
+              "setup_ms": {
+                "control": 0.4867,
+                "candidate": 0.3848,
+                "delta_pct": -20.936922128621337
+              },
+              "upload_ms": {
+                "control": 0.0163,
+                "candidate": 0.0107,
+                "delta_pct": -34.35582822085889
+              },
+              "swap_ms": {
+                "control": 1.0109,
+                "candidate": 0.3608,
+                "delta_pct": -64.30903155603916
+              },
+              "process_cpu_cores": {
+                "control": 1.0738,
+                "candidate": 1.2925,
+                "delta_pct": 20.36692121437883
+              },
+              "terrain_solid_ms": {
+                "control": 0.3793,
+                "candidate": 0.3389,
+                "delta_pct": -10.651199578170326
+              },
+              "terrain_cutout_mipped_ms": {
+                "control": 0.2226,
+                "candidate": 0.2067,
+                "delta_pct": -7.142857142857142
+              },
+              "terrain_cutout_ms": {
+                "control": 0.2176,
+                "candidate": 0.2074,
+                "delta_pct": -4.687499999999995
+              },
+              "terrain_translucent_ms": {
+                "control": 0.0815,
+                "candidate": 0.076,
+                "delta_pct": -6.748466257668717
+              }
+            },
+            "fly": {
+              "frame_ms": {
+                "control": 2.1853261468154552,
+                "candidate": 2.154731251144701,
+                "delta_pct": -1.4000150831187532
+              },
+              "cpu_ms": {
+                "control": 2.0212,
+                "candidate": 1.9929,
+                "delta_pct": -1.4001583217890359
+              },
+              "p99_ms": {
+                "control": 4.6954,
+                "candidate": 4.9132,
+                "delta_pct": 4.6385824423904145
+              },
+              "slow1_ms": {
+                "control": 6.581848577991615,
+                "candidate": 6.616377784585296,
+                "delta_pct": 0.5246125945397714
+              },
+              "alloc_bytes": {
+                "control": 30388.6105,
+                "candidate": 29507.4385,
+                "delta_pct": -2.899678483160652
+              },
+              "visible_chunks": {
+                "control": 1309.4514366874248,
+                "candidate": 1314.0890875794462,
+                "delta_pct": 0.354167459906222
+              },
+              "visibility_ms": {
+                "control": 0.3819,
+                "candidate": 0.3722,
+                "delta_pct": -2.5399319193506265
+              },
+              "terrain_layers_ms": {
+                "control": 0.8492,
+                "candidate": 0.8349,
+                "delta_pct": -1.6839378238341944
+              },
+              "render_ms": {
+                "control": 1.6248,
+                "candidate": 1.5834,
+                "delta_pct": -2.5480059084195044
+              },
+              "setup_ms": {
+                "control": 0.4276,
+                "candidate": 0.4139,
+                "delta_pct": -3.2039289055191746
+              },
+              "upload_ms": {
+                "control": 0.0325,
+                "candidate": 0.0307,
+                "delta_pct": -5.5384615384615365
+              },
+              "swap_ms": {
+                "control": 0.3796,
+                "candidate": 0.3952,
+                "delta_pct": 4.109589041095891
+              },
+              "process_cpu_cores": {
+                "control": 2.3404,
+                "candidate": 2.3466,
+                "delta_pct": 0.2649119808579818
+              },
+              "terrain_solid_ms": {
+                "control": 0.4145,
+                "candidate": 0.4088,
+                "delta_pct": -1.3751507840771975
+              },
+              "terrain_cutout_mipped_ms": {
+                "control": 0.1726,
+                "candidate": 0.1669,
+                "delta_pct": -3.302433371958291
+              },
+              "terrain_cutout_ms": {
+                "control": 0.1883,
+                "candidate": 0.1862,
+                "delta_pct": -1.1152416356877275
+              },
+              "terrain_translucent_ms": {
+                "control": 0.0738,
+                "candidate": 0.073,
+                "delta_pct": -1.0840108401084132
+              }
+            }
+          }
+        },
+        {
+          "pair": "rep-default-8b vs rep-default-7a",
+          "phases": {
+            "static": {
+              "frame_ms": {
+                "control": 1.7883751324291786,
+                "candidate": 1.4690817783469978,
+                "delta_pct": -17.853824306339995
+              },
+              "cpu_ms": {
+                "control": 1.1787,
+                "candidate": 1.072,
+                "delta_pct": -9.052345804700094
+              },
+              "p99_ms": {
+                "control": 4.7721,
+                "candidate": 3.4151,
+                "delta_pct": -28.436118270782256
+              },
+              "slow1_ms": {
+                "control": 5.090791725019867,
+                "candidate": 3.9962818593580534,
+                "delta_pct": -21.499796589253354
+              },
+              "alloc_bytes": {
+                "control": 5937.5259,
+                "candidate": 5086.8059,
+                "delta_pct": -14.327853289869427
+              },
+              "visible_chunks": {
+                "control": 1382.0,
+                "candidate": 1382.0,
+                "delta_pct": 0.0
+              },
+              "visibility_ms": {
+                "control": 0.002,
+                "candidate": 0.0008,
+                "delta_pct": -60.00000000000001
+              },
+              "terrain_layers_ms": {
+                "control": 0.4909,
+                "candidate": 0.48329999999999995,
+                "delta_pct": -1.5481768180892344
+              },
+              "render_ms": {
+                "control": 0.8151,
+                "candidate": 0.7836,
+                "delta_pct": -3.864556496135454
+              },
+              "setup_ms": {
+                "control": 0.0349,
+                "candidate": 0.0266,
+                "delta_pct": -23.782234957020062
+              },
+              "upload_ms": {
+                "control": 0.0004,
+                "candidate": 0.0003,
+                "delta_pct": -25.00000000000001
+              },
+              "swap_ms": {
+                "control": 0.827,
+                "candidate": 0.549,
+                "delta_pct": -33.6154776299879
+              },
+              "process_cpu_cores": {
+                "control": 0.9309,
+                "candidate": 0.9281,
+                "delta_pct": -0.3007841873455703
+              },
+              "terrain_solid_ms": {
+                "control": 0.2037,
+                "candidate": 0.1944,
+                "delta_pct": -4.565537555228278
+              },
+              "terrain_cutout_mipped_ms": {
+                "control": 0.1168,
+                "candidate": 0.1163,
+                "delta_pct": -0.42808219178082235
+              },
+              "terrain_cutout_ms": {
+                "control": 0.1346,
+                "candidate": 0.1367,
+                "delta_pct": 1.5601783060921182
+              },
+              "terrain_translucent_ms": {
+                "control": 0.0358,
+                "candidate": 0.0359,
+                "delta_pct": 0.2793296089385555
+              }
+            },
+            "pan": {
+              "frame_ms": {
+                "control": 2.144077735682385,
+                "candidate": 2.1123883549944678,
+                "delta_pct": -1.47799588422253
+              },
+              "cpu_ms": {
+                "control": 1.9584,
+                "candidate": 1.8835,
+                "delta_pct": -3.8245506535947693
+              },
+              "p99_ms": {
+                "control": 4.2479,
+                "candidate": 4.9204,
+                "delta_pct": 15.831351962146012
+              },
+              "slow1_ms": {
+                "control": 5.25000525000525,
+                "candidate": 6.304939668032317,
+                "delta_pct": 20.093968820812353
+              },
+              "alloc_bytes": {
+                "control": 10174.5011,
+                "candidate": 8380.1267,
+                "delta_pct": -17.635993965345374
+              },
+              "visible_chunks": {
+                "control": 1499.7125911104758,
+                "candidate": 1497.984509224053,
+                "delta_pct": -0.11522753737389564
+              },
+              "visibility_ms": {
+                "control": 0.3736,
+                "candidate": 0.3618,
+                "delta_pct": -3.158458244111343
+              },
+              "terrain_layers_ms": {
+                "control": 0.7815,
+                "candidate": 0.7986,
+                "delta_pct": 2.1880998080614207
+              },
+              "render_ms": {
+                "control": 1.5188,
+                "candidate": 1.5312,
+                "delta_pct": 0.816434026863311
+              },
+              "setup_ms": {
+                "control": 0.405,
+                "candidate": 0.39,
+                "delta_pct": -3.703703703703707
+              },
+              "upload_ms": {
+                "control": 0.0113,
+                "candidate": 0.0115,
+                "delta_pct": 1.7699115044247835
+              },
+              "swap_ms": {
+                "control": 0.4709,
+                "candidate": 0.4223,
+                "delta_pct": -10.320662561053298
+              },
+              "process_cpu_cores": {
+                "control": 1.28,
+                "candidate": 1.1896,
+                "delta_pct": -7.062500000000002
+              },
+              "terrain_solid_ms": {
+                "control": 0.3198,
+                "candidate": 0.3249,
+                "delta_pct": 1.5947467166979516
+              },
+              "terrain_cutout_mipped_ms": {
+                "control": 0.1973,
+                "candidate": 0.1994,
+                "delta_pct": 1.0643689812468276
+              },
+              "terrain_cutout_ms": {
+                "control": 0.1954,
+                "candidate": 0.2015,
+                "delta_pct": 3.1218014329580464
+              },
+              "terrain_translucent_ms": {
+                "control": 0.069,
+                "candidate": 0.0728,
+                "delta_pct": 5.50724637681159
+              }
+            },
+            "fly": {
+              "frame_ms": {
+                "control": 2.176477028046736,
+                "candidate": 1.6694671978911289,
+                "delta_pct": -23.294977324461787
+              },
+              "cpu_ms": {
+                "control": 1.9761,
+                "candidate": 1.5873,
+                "delta_pct": -19.675117655989073
+              },
+              "p99_ms": {
+                "control": 4.7063,
+                "candidate": 4.3089,
+                "delta_pct": -8.444000594947184
+              },
+              "slow1_ms": {
+                "control": 6.6829150608178685,
+                "candidate": 5.728754912407338,
+                "delta_pct": -14.277604005545431
+              },
+              "alloc_bytes": {
+                "control": 29845.9017,
+                "candidate": 24388.3826,
+                "delta_pct": -18.285656619984103
+              },
+              "visible_chunks": {
+                "control": 1314.1049369290997,
+                "candidate": 1322.1479966611018,
+                "delta_pct": 0.6120561232193339
+              },
+              "visibility_ms": {
+                "control": 0.3798,
+                "candidate": 0.293,
+                "delta_pct": -22.854133754607698
+              },
+              "terrain_layers_ms": {
+                "control": 0.7912,
+                "candidate": 0.6889,
+                "delta_pct": -12.92972699696664
+              },
+              "render_ms": {
+                "control": 1.5296,
+                "candidate": 1.2691,
+                "delta_pct": -17.030596234309634
+              },
+              "setup_ms": {
+                "control": 0.4208,
+                "candidate": 0.3238,
+                "delta_pct": -23.051330798479093
+              },
+              "upload_ms": {
+                "control": 0.0302,
+                "candidate": 0.0225,
+                "delta_pct": -25.49668874172186
+              },
+              "swap_ms": {
+                "control": 0.4816,
+                "candidate": 0.2635,
+                "delta_pct": -45.28654485049833
+              },
+              "process_cpu_cores": {
+                "control": 2.2257,
+                "candidate": 2.2601,
+                "delta_pct": 1.5455811654760394
+              },
+              "terrain_solid_ms": {
+                "control": 0.3894,
+                "candidate": 0.3313,
+                "delta_pct": -14.920390344119166
+              },
+              "terrain_cutout_mipped_ms": {
+                "control": 0.1572,
+                "candidate": 0.1398,
+                "delta_pct": -11.068702290076335
+              },
+              "terrain_cutout_ms": {
+                "control": 0.1758,
+                "candidate": 0.1565,
+                "delta_pct": -10.978384527872588
+              },
+              "terrain_translucent_ms": {
+                "control": 0.0688,
+                "candidate": 0.0613,
+                "delta_pct": -10.901162790697674
+              }
+            }
+          }
+        }
+      ],
+      "medians": {
+        "static": {
+          "frame_ms": -8.159658794134305,
+          "cpu_ms": -5.8939159172404585,
+          "p99_ms": -10.907503423824462,
+          "slow1_ms": -6.673801788418051,
+          "alloc_bytes": -10.90354632061715,
+          "visible_chunks": 0.0,
+          "visibility_ms": -30.000000000000004,
+          "terrain_layers_ms": -2.146637428652461,
+          "render_ms": -3.831928471201244,
+          "setup_ms": -16.920703277326595,
+          "upload_ms": -12.500000000000005,
+          "swap_ms": -15.979361584747558,
+          "process_cpu_cores": 0.6386897921832955,
+          "terrain_solid_ms": -4.457720976466911,
+          "terrain_cutout_mipped_ms": -0.9165204347333836,
+          "terrain_cutout_ms": -0.815753375207565,
+          "terrain_translucent_ms": 0.4077613192145845
+        },
+        "pan": {
+          "frame_ms": -5.435169259189739,
+          "cpu_ms": -7.302691478096111,
+          "p99_ms": -4.548360995989263,
+          "slow1_ms": -3.527113393768513,
+          "alloc_bytes": -26.87957286217555,
+          "visible_chunks": 0.4334615070131056,
+          "visibility_ms": -8.282760359929167,
+          "terrain_layers_ms": -2.1099627891825143,
+          "render_ms": -4.474197345440714,
+          "setup_ms": -8.864424899487766,
+          "upload_ms": -5.279427809431442,
+          "swap_ms": -8.68162847316944,
+          "process_cpu_cores": 1.71599773707304,
+          "terrain_solid_ms": -3.1425429184301463,
+          "terrain_cutout_mipped_ms": -2.706104715079233,
+          "terrain_cutout_ms": -0.3556957451890468,
+          "terrain_translucent_ms": -1.1209218686924367
+        },
+        "fly": {
+          "frame_ms": -5.9348799422142555,
+          "cpu_ms": -6.455640693149482,
+          "p99_ms": -1.5933122093243473,
+          "slow1_ms": -1.5814857186221762,
+          "alloc_bytes": -8.356576170514318,
+          "visible_chunks": -0.03644936001635693,
+          "visibility_ms": -8.875084789657036,
+          "terrain_layers_ms": -4.532741979248766,
+          "render_ms": -7.208713974111435,
+          "setup_ms": -9.920534270765712,
+          "upload_ms": -12.26704736311723,
+          "swap_ms": 1.3648111753183443,
+          "process_cpu_cores": 0.9052465731670106,
+          "terrain_solid_ms": -5.086695568003404,
+          "terrain_cutout_mipped_ms": -4.931534777430435,
+          "terrain_cutout_ms": -2.572616131808249,
+          "terrain_translucent_ms": -5.211709292491564
+        }
+      }
+    },
+    "terrain": {
+      "pairs": [
+        {
+          "pair": "rep-terrain-1a vs rep-terrain-2b",
+          "phases": {
+            "steady": {
+              "frame_ms": {
+                "control": 1.755140367350879,
+                "candidate": 1.7686703048214838,
+                "delta_pct": 0.7708749523564451
+              },
+              "cpu_ms": {
+                "control": 1.2587,
+                "candidate": 1.3484,
+                "delta_pct": 7.126400254230565
+              },
+              "p99_ms": {
+                "control": 4.7957,
+                "candidate": 4.6607,
+                "delta_pct": -2.815021790353854
+              },
+              "slow1_ms": {
+                "control": 5.875564935568555,
+                "candidate": 5.1897529366217,
+                "delta_pct": -11.672273329755853
+              },
+              "alloc_bytes": {
+                "control": 7241.39,
+                "candidate": 9444.5991,
+                "delta_pct": 30.425223610384183
+              },
+              "visible_chunks": {
+                "control": 1293.0,
+                "candidate": 1293.0,
+                "delta_pct": 0.0
+              },
+              "visibility_ms": {
+                "control": 0.0005,
+                "candidate": 0.0009,
+                "delta_pct": 80.0
+              },
+              "terrain_layers_ms": {
+                "control": 0.5515,
+                "candidate": 0.5560999999999999,
+                "delta_pct": 0.8340888485947303
+              },
+              "render_ms": {
+                "control": 0.9108,
+                "candidate": 0.9311,
+                "delta_pct": 2.2288098375054877
+              },
+              "setup_ms": {
+                "control": 0.0283,
+                "candidate": 0.0298,
+                "delta_pct": 5.300353356890464
+              },
+              "upload_ms": {
+                "control": 0.0003,
+                "candidate": 0.0003,
+                "delta_pct": 0.0
+              },
+              "swap_ms": {
+                "control": 0.703,
+                "candidate": 0.6959,
+                "delta_pct": -1.0099573257467989
+              },
+              "process_cpu_cores": {
+                "control": 0.864,
+                "candidate": 0.878,
+                "delta_pct": 1.6203703703703716
+              },
+              "terrain_solid_ms": {
+                "control": 0.2319,
+                "candidate": 0.2345,
+                "delta_pct": 1.12117291936179
+              },
+              "terrain_cutout_mipped_ms": {
+                "control": 0.1281,
+                "candidate": 0.1283,
+                "delta_pct": 0.15612802498048847
+              },
+              "terrain_cutout_ms": {
+                "control": 0.1529,
+                "candidate": 0.1543,
+                "delta_pct": 0.9156311314584595
+              },
+              "terrain_translucent_ms": {
+                "control": 0.0386,
+                "candidate": 0.039,
+                "delta_pct": 1.0362694300518072
+              }
+            },
+            "pan": {
+              "frame_ms": {
+                "control": 2.0252619018059868,
+                "candidate": 2.2203403604145286,
+                "delta_pct": 9.632258348146705
+              },
+              "cpu_ms": {
+                "control": 1.8817,
+                "candidate": 2.0075,
+                "delta_pct": 6.68544401339214
+              },
+              "p99_ms": {
+                "control": 3.7149,
+                "candidate": 4.4061,
+                "delta_pct": 18.60615359767424
+              },
+              "slow1_ms": {
+                "control": 4.315951844335702,
+                "candidate": 5.530120075497199,
+                "delta_pct": 28.132107932459522
+              },
+              "alloc_bytes": {
+                "control": 6829.6746,
+                "candidate": 8075.5879,
+                "delta_pct": 18.242645118114414
+              },
+              "visible_chunks": {
+                "control": 1441.582827055488,
+                "candidate": 1439.5199822380107,
+                "delta_pct": -0.14309582347694666
+              },
+              "visibility_ms": {
+                "control": 0.327,
+                "candidate": 0.3521,
+                "delta_pct": 7.675840978593275
+              },
+              "terrain_layers_ms": {
+                "control": 0.8221,
+                "candidate": 0.8438,
+                "delta_pct": 2.639581559420988
+              },
+              "render_ms": {
+                "control": 1.5137,
+                "candidate": 1.5783,
+                "delta_pct": 4.267688445530818
+              },
+              "setup_ms": {
+                "control": 0.3511,
+                "candidate": 0.3788,
+                "delta_pct": 7.889490173739675
+              },
+              "upload_ms": {
+                "control": 0.003,
+                "candidate": 0.0036,
+                "delta_pct": 19.999999999999996
+              },
+              "swap_ms": {
+                "control": 0.3578,
+                "candidate": 0.4792,
+                "delta_pct": 33.929569591950816
+              },
+              "process_cpu_cores": {
+                "control": 1.1051,
+                "candidate": 1.0791,
+                "delta_pct": -2.3527282598859856
+              },
+              "terrain_solid_ms": {
+                "control": 0.3346,
+                "candidate": 0.345,
+                "delta_pct": 3.108188882247449
+              },
+              "terrain_cutout_mipped_ms": {
+                "control": 0.2033,
+                "candidate": 0.2102,
+                "delta_pct": 3.393999016232164
+              },
+              "terrain_cutout_ms": {
+                "control": 0.209,
+                "candidate": 0.2126,
+                "delta_pct": 1.7224880382775216
+              },
+              "terrain_translucent_ms": {
+                "control": 0.0752,
+                "candidate": 0.076,
+                "delta_pct": 1.063829787234036
+              }
+            },
+            "sort": {
+              "frame_ms": {
+                "control": 2.1671773620120245,
+                "candidate": 2.302909518915293,
+                "delta_pct": 6.263084844022815
+              },
+              "cpu_ms": {
+                "control": 2.0126,
+                "candidate": 2.006,
+                "delta_pct": -0.3279340157010912
+              },
+              "p99_ms": {
+                "control": 4.0913,
+                "candidate": 5.8729,
+                "delta_pct": 43.546061154156355
+              },
+              "slow1_ms": {
+                "control": 5.281506961818402,
+                "candidate": 8.267209436523538,
+                "delta_pct": 56.53126079904231
+              },
+              "alloc_bytes": {
+                "control": 18981.7787,
+                "candidate": 18864.4594,
+                "delta_pct": -0.6180627319187912
+              },
+              "visible_chunks": {
+                "control": 1431.5556007043208,
+                "candidate": 1433.210132412205,
+                "delta_pct": 0.11557579091375596
+              },
+              "visibility_ms": {
+                "control": 0.3621,
+                "candidate": 0.3727,
+                "delta_pct": 2.9273681303507315
+              },
+              "terrain_layers_ms": {
+                "control": 0.8505,
+                "candidate": 0.8562,
+                "delta_pct": 0.6701940035273283
+              },
+              "render_ms": {
+                "control": 1.6331,
+                "candidate": 1.636,
+                "delta_pct": 0.17757638846365212
+              },
+              "setup_ms": {
+                "control": 0.3937,
+                "candidate": 0.4058,
+                "delta_pct": 3.0734061468122937
+              },
+              "upload_ms": {
+                "control": 0.0113,
+                "candidate": 0.0116,
+                "delta_pct": 2.654867256637168
+              },
+              "swap_ms": {
+                "control": 0.3699,
+                "candidate": 0.4993,
+                "delta_pct": 34.98242768315761
+              },
+              "process_cpu_cores": {
+                "control": 1.2744,
+                "candidate": 1.1865,
+                "delta_pct": -6.8973634651600655
+              },
+              "terrain_solid_ms": {
+                "control": 0.3472,
+                "candidate": 0.3503,
+                "delta_pct": 0.8928571428571404
+              },
+              "terrain_cutout_mipped_ms": {
+                "control": 0.2074,
+                "candidate": 0.21,
+                "delta_pct": 1.2536162005785878
+              },
+              "terrain_cutout_ms": {
+                "control": 0.218,
+                "candidate": 0.2183,
+                "delta_pct": 0.13761467889908013
+              },
+              "terrain_translucent_ms": {
+                "control": 0.0779,
+                "candidate": 0.0776,
+                "delta_pct": -0.3851091142490305
+              }
+            },
+            "fly": {
+              "frame_ms": {
+                "control": 2.2447722061284527,
+                "candidate": 2.2105373219384554,
+                "delta_pct": -1.525093909151791
+              },
+              "cpu_ms": {
+                "control": 2.022,
+                "candidate": 2.0064,
+                "delta_pct": -0.771513353115708
+              },
+              "p99_ms": {
+                "control": 4.4288,
+                "candidate": 4.2295,
+                "delta_pct": -4.500090317919076
+              },
+              "slow1_ms": {
+                "control": 6.142042093871287,
+                "candidate": 6.255219198518764,
+                "delta_pct": 1.8426624714996522
+              },
+              "alloc_bytes": {
+                "control": 30641.9978,
+                "candidate": 30107.6645,
+                "delta_pct": -1.743793937613304
+              },
+              "visible_chunks": {
+                "control": 1316.410325476992,
+                "candidate": 1314.2431207868274,
+                "delta_pct": -0.1646298762796022
+              },
+              "visibility_ms": {
+                "control": 0.397,
+                "candidate": 0.3901,
+                "delta_pct": -1.7380352644836314
+              },
+              "terrain_layers_ms": {
+                "control": 0.8415,
+                "candidate": 0.8368,
+                "delta_pct": -0.5585264408793864
+              },
+              "render_ms": {
+                "control": 1.619,
+                "candidate": 1.6046,
+                "delta_pct": -0.8894379246448406
+              },
+              "setup_ms": {
+                "control": 0.4407,
+                "candidate": 0.4335,
+                "delta_pct": -1.6337644656228691
+              },
+              "upload_ms": {
+                "control": 0.0314,
+                "candidate": 0.0316,
+                "delta_pct": 0.636942675159254
+              },
+              "swap_ms": {
+                "control": 0.451,
+                "candidate": 0.4329,
+                "delta_pct": -4.013303769401332
+              },
+              "process_cpu_cores": {
+                "control": 2.1421,
+                "candidate": 2.0255,
+                "delta_pct": -5.443256617338128
+              },
+              "terrain_solid_ms": {
+                "control": 0.4146,
+                "candidate": 0.4096,
+                "delta_pct": -1.205981669078631
+              },
+              "terrain_cutout_mipped_ms": {
+                "control": 0.1664,
+                "candidate": 0.1686,
+                "delta_pct": 1.322115384615389
+              },
+              "terrain_cutout_ms": {
+                "control": 0.1863,
+                "candidate": 0.1862,
+                "delta_pct": -0.05367686527106226
+              },
+              "terrain_translucent_ms": {
+                "control": 0.0742,
+                "candidate": 0.0724,
+                "delta_pct": -2.425876010781666
+              }
+            }
+          }
+        },
+        {
+          "pair": "rep-terrain-4a vs rep-terrain-3b",
+          "phases": {
+            "steady": {
+              "frame_ms": {
+                "control": 1.7079428050945202,
+                "candidate": 1.7142029427721919,
+                "delta_pct": 0.36653087322354416
+              },
+              "cpu_ms": {
+                "control": 1.2623,
+                "candidate": 1.3552,
+                "delta_pct": 7.3595817159153905
+              },
+              "p99_ms": {
+                "control": 3.7885,
+                "candidate": 3.9715,
+                "delta_pct": 4.8304078131186445
+              },
+              "slow1_ms": {
+                "control": 4.317871323980248,
+                "candidate": 4.929957627014196,
+                "delta_pct": 14.175649460292897
+              },
+              "alloc_bytes": {
+                "control": 9554.7969,
+                "candidate": 6566.5012,
+                "delta_pct": -31.275345057308336
+              },
+              "visible_chunks": {
+                "control": 1293.0,
+                "candidate": 1293.0,
+                "delta_pct": 0.0
+              },
+              "visibility_ms": {
+                "control": 0.0015,
+                "candidate": 0.0006,
+                "delta_pct": -60.00000000000001
+              },
+              "terrain_layers_ms": {
+                "control": 0.5589999999999999,
+                "candidate": 0.5791,
+                "delta_pct": 3.5957066189624345
+              },
+              "render_ms": {
+                "control": 0.9301,
+                "candidate": 0.9506,
+                "delta_pct": 2.204064079131272
+              },
+              "setup_ms": {
+                "control": 0.0323,
+                "candidate": 0.0296,
+                "delta_pct": -8.359133126934987
+              },
+              "upload_ms": {
+                "control": 0.0004,
+                "candidate": 0.0003,
+                "delta_pct": -25.00000000000001
+              },
+              "swap_ms": {
+                "control": 0.6348,
+                "candidate": 0.6149,
+                "delta_pct": -3.1348456206679316
+              },
+              "process_cpu_cores": {
+                "control": 0.9047,
+                "candidate": 0.9484,
+                "delta_pct": 4.830330496297123
+              },
+              "terrain_solid_ms": {
+                "control": 0.2358,
+                "candidate": 0.241,
+                "delta_pct": 2.2052586938083043
+              },
+              "terrain_cutout_mipped_ms": {
+                "control": 0.1294,
+                "candidate": 0.1333,
+                "delta_pct": 3.0139103554868742
+              },
+              "terrain_cutout_ms": {
+                "control": 0.1543,
+                "candidate": 0.1639,
+                "delta_pct": 6.2216461438755655
+              },
+              "terrain_translucent_ms": {
+                "control": 0.0395,
+                "candidate": 0.0409,
+                "delta_pct": 3.5443037974683502
+              }
+            },
+            "pan": {
+              "frame_ms": {
+                "control": 2.1609987271717497,
+                "candidate": 2.178128669466143,
+                "delta_pct": 0.792686366678823
+              },
+              "cpu_ms": {
+                "control": 1.9199,
+                "candidate": 1.9872,
+                "delta_pct": 3.5053909057763497
+              },
+              "p99_ms": {
+                "control": 4.0035,
+                "candidate": 4.4417,
+                "delta_pct": 10.945422755089302
+              },
+              "slow1_ms": {
+                "control": 4.999350084489016,
+                "candidate": 5.517576239109684,
+                "delta_pct": 10.365870480415367
+              },
+              "alloc_bytes": {
+                "control": 7354.3175,
+                "candidate": 6907.7515,
+                "delta_pct": -6.072161012901602
+              },
+              "visible_chunks": {
+                "control": 1440.575194468453,
+                "candidate": 1440.3931475029035,
+                "delta_pct": -0.012637102613491906
+              },
+              "visibility_ms": {
+                "control": 0.345,
+                "candidate": 0.3544,
+                "delta_pct": 2.724637681159426
+              },
+              "terrain_layers_ms": {
+                "control": 0.8476,
+                "candidate": 0.863,
+                "delta_pct": 1.8168947616800342
+              },
+              "render_ms": {
+                "control": 1.571,
+                "candidate": 1.5912,
+                "delta_pct": 1.2858052196053467
+              },
+              "setup_ms": {
+                "control": 0.3699,
+                "candidate": 0.3802,
+                "delta_pct": 2.78453636117869
+              },
+              "upload_ms": {
+                "control": 0.0035,
+                "candidate": 0.0031,
+                "delta_pct": -11.428571428571434
+              },
+              "swap_ms": {
+                "control": 0.4256,
+                "candidate": 0.4231,
+                "delta_pct": -0.5874060150375946
+              },
+              "process_cpu_cores": {
+                "control": 1.0655,
+                "candidate": 1.0873,
+                "delta_pct": 2.04598779915533
+              },
+              "terrain_solid_ms": {
+                "control": 0.3451,
+                "candidate": 0.354,
+                "delta_pct": 2.57896261953056
+              },
+              "terrain_cutout_mipped_ms": {
+                "control": 0.2104,
+                "candidate": 0.2129,
+                "delta_pct": 1.1882129277566549
+              },
+              "terrain_cutout_ms": {
+                "control": 0.2156,
+                "candidate": 0.2171,
+                "delta_pct": 0.6957328385899691
+              },
+              "terrain_translucent_ms": {
+                "control": 0.0765,
+                "candidate": 0.079,
+                "delta_pct": 3.2679738562091534
+              }
+            },
+            "sort": {
+              "frame_ms": {
+                "control": 2.3259189240485134,
+                "candidate": 2.2054835820493928,
+                "delta_pct": -5.177968189428113
+              },
+              "cpu_ms": {
+                "control": 2.0528,
+                "candidate": 2.0352,
+                "delta_pct": -0.857365549493367
+              },
+              "p99_ms": {
+                "control": 4.4353,
+                "candidate": 4.1614,
+                "delta_pct": -6.1754560007214705
+              },
+              "slow1_ms": {
+                "control": 5.721691217490065,
+                "candidate": 5.143845055041714,
+                "delta_pct": -10.099219627266686
+              },
+              "alloc_bytes": {
+                "control": 19041.015,
+                "candidate": 17098.1513,
+                "delta_pct": -10.20357213100246
+              },
+              "visible_chunks": {
+                "control": 1435.82284551664,
+                "candidate": 1433.9569951757408,
+                "delta_pct": -0.1299498992320213
+              },
+              "visibility_ms": {
+                "control": 0.3722,
+                "candidate": 0.3789,
+                "delta_pct": 1.8001074691026435
+              },
+              "terrain_layers_ms": {
+                "control": 0.8608,
+                "candidate": 0.8797,
+                "delta_pct": 2.1956319702602265
+              },
+              "render_ms": {
+                "control": 1.6775,
+                "candidate": 1.636,
+                "delta_pct": -2.4739195230998567
+              },
+              "setup_ms": {
+                "control": 0.4027,
+                "candidate": 0.4102,
+                "delta_pct": 1.8624286069034035
+              },
+              "upload_ms": {
+                "control": 0.0107,
+                "candidate": 0.0113,
+                "delta_pct": 5.6074766355140175
+              },
+              "swap_ms": {
+                "control": 0.4801,
+                "candidate": 0.397,
+                "delta_pct": -17.30889398042075
+              },
+              "process_cpu_cores": {
+                "control": 1.1793,
+                "candidate": 1.2402,
+                "delta_pct": 5.164080386670054
+              },
+              "terrain_solid_ms": {
+                "control": 0.3522,
+                "candidate": 0.3567,
+                "delta_pct": 1.2776831345826247
+              },
+              "terrain_cutout_mipped_ms": {
+                "control": 0.2108,
+                "candidate": 0.2148,
+                "delta_pct": 1.8975332068311213
+              },
+              "terrain_cutout_ms": {
+                "control": 0.2192,
+                "candidate": 0.2278,
+                "delta_pct": 3.9233576642335746
+              },
+              "terrain_translucent_ms": {
+                "control": 0.0786,
+                "candidate": 0.0804,
+                "delta_pct": 2.2900763358778575
+              }
+            },
+            "fly": {
+              "frame_ms": {
+                "control": 2.3602150816799634,
+                "candidate": 2.323925463344259,
+                "delta_pct": -1.5375555650578279
+              },
+              "cpu_ms": {
+                "control": 2.0817,
+                "candidate": 2.0677,
+                "delta_pct": -0.6725272613729276
+              },
+              "p99_ms": {
+                "control": 5.5103,
+                "candidate": 4.9837,
+                "delta_pct": -9.556648458341655
+              },
+              "slow1_ms": {
+                "control": 8.958879638347947,
+                "candidate": 7.336488023183302,
+                "delta_pct": -18.109313671545436
+              },
+              "alloc_bytes": {
+                "control": 32401.0394,
+                "candidate": 31281.2334,
+                "delta_pct": -3.4560804861093453
+              },
+              "visible_chunks": {
+                "control": 1308.4622374321455,
+                "candidate": 1307.288021377948,
+                "delta_pct": -0.0897401560859529
+              },
+              "visibility_ms": {
+                "control": 0.3953,
+                "candidate": 0.4103,
+                "delta_pct": 3.794586390083485
+              },
+              "terrain_layers_ms": {
+                "control": 0.8609,
+                "candidate": 0.8654,
+                "delta_pct": 0.5227087931234694
+              },
+              "render_ms": {
+                "control": 1.653,
+                "candidate": 1.6688,
+                "delta_pct": 0.9558378705384172
+              },
+              "setup_ms": {
+                "control": 0.4415,
+                "candidate": 0.454,
+                "delta_pct": 2.8312570781426976
+              },
+              "upload_ms": {
+                "control": 0.0323,
+                "candidate": 0.0314,
+                "delta_pct": -2.7863777089783435
+              },
+              "swap_ms": {
+                "control": 0.5253,
+                "candidate": 0.4726,
+                "delta_pct": -10.03236245954692
+              },
+              "process_cpu_cores": {
+                "control": 2.0265,
+                "candidate": 2.035,
+                "delta_pct": 0.4194423883543141
+              },
+              "terrain_solid_ms": {
+                "control": 0.4193,
+                "candidate": 0.423,
+                "delta_pct": 0.8824230860958695
+              },
+              "terrain_cutout_mipped_ms": {
+                "control": 0.1761,
+                "candidate": 0.1747,
+                "delta_pct": -0.7950028392958617
+              },
+              "terrain_cutout_ms": {
+                "control": 0.19,
+                "candidate": 0.1912,
+                "delta_pct": 0.6315789473684245
+              },
+              "terrain_translucent_ms": {
+                "control": 0.0755,
+                "candidate": 0.0765,
+                "delta_pct": 1.3245033112582794
+              }
+            }
+          }
+        },
+        {
+          "pair": "rep-terrain-5b vs rep-terrain-6a",
+          "phases": {
+            "steady": {
+              "frame_ms": {
+                "control": 1.5195293713631015,
+                "candidate": 1.462619112043937,
+                "delta_pct": -3.7452556292553245
+              },
+              "cpu_ms": {
+                "control": 1.2014,
+                "candidate": 1.1654,
+                "delta_pct": -2.9965040785749983
+              },
+              "p99_ms": {
+                "control": 3.3452,
+                "candidate": 3.0413,
+                "delta_pct": -9.08465861532943
+              },
+              "slow1_ms": {
+                "control": 3.8486865779749677,
+                "candidate": 3.7454993143863504,
+                "delta_pct": -2.6811033192240483
+              },
+              "alloc_bytes": {
+                "control": 6690.4069,
+                "candidate": 6217.2811,
+                "delta_pct": -7.0717044130753814
+              },
+              "visible_chunks": {
+                "control": 1293.0,
+                "candidate": 1293.0,
+                "delta_pct": 0.0
+              },
+              "visibility_ms": {
+                "control": 0.0008,
+                "candidate": 0.001,
+                "delta_pct": 24.999999999999996
+              },
+              "terrain_layers_ms": {
+                "control": 0.545,
+                "candidate": 0.5322,
+                "delta_pct": -2.348623853211015
+              },
+              "render_ms": {
+                "control": 0.8863,
+                "candidate": 0.8347,
+                "delta_pct": -5.82195644815525
+              },
+              "setup_ms": {
+                "control": 0.0209,
+                "candidate": 0.0274,
+                "delta_pct": 31.100478468899535
+              },
+              "upload_ms": {
+                "control": 0.0003,
+                "candidate": 0.0004,
+                "delta_pct": 33.33333333333336
+              },
+              "swap_ms": {
+                "control": 0.5034,
+                "candidate": 0.4976,
+                "delta_pct": -1.1521652761223624
+              },
+              "process_cpu_cores": {
+                "control": 0.9047,
+                "candidate": 0.9983,
+                "delta_pct": 10.3459710401238
+              },
+              "terrain_solid_ms": {
+                "control": 0.2231,
+                "candidate": 0.2184,
+                "delta_pct": -2.106678619453152
+              },
+              "terrain_cutout_mipped_ms": {
+                "control": 0.1276,
+                "candidate": 0.1235,
+                "delta_pct": -3.2131661442006214
+              },
+              "terrain_cutout_ms": {
+                "control": 0.1562,
+                "candidate": 0.1527,
+                "delta_pct": -2.2407170294494256
+              },
+              "terrain_translucent_ms": {
+                "control": 0.0381,
+                "candidate": 0.0376,
+                "delta_pct": -1.3123359580052503
+              }
+            },
+            "pan": {
+              "frame_ms": {
+                "control": 2.059935894794954,
+                "candidate": 1.9958251329868182,
+                "delta_pct": -3.112269754128314
+              },
+              "cpu_ms": {
+                "control": 1.8944,
+                "candidate": 1.8523,
+                "delta_pct": -2.222339527027028
+              },
+              "p99_ms": {
+                "control": 3.9752,
+                "candidate": 3.8885,
+                "delta_pct": -2.1810223384986918
+              },
+              "slow1_ms": {
+                "control": 4.745158870291557,
+                "candidate": 4.6558164416432986,
+                "delta_pct": -1.8828121690005504
+              },
+              "alloc_bytes": {
+                "control": 7632.2878,
+                "candidate": 7573.9106,
+                "delta_pct": -0.7648715762526657
+              },
+              "visible_chunks": {
+                "control": 1432.450089248936,
+                "candidate": 1436.8138637573177,
+                "delta_pct": 0.3046371068097588
+              },
+              "visibility_ms": {
+                "control": 0.3332,
+                "candidate": 0.317,
+                "delta_pct": -4.8619447779111615
+              },
+              "terrain_layers_ms": {
+                "control": 0.8371,
+                "candidate": 0.8160000000000001,
+                "delta_pct": -2.520606857006319
+              },
+              "render_ms": {
+                "control": 1.5374,
+                "candidate": 1.4914,
+                "delta_pct": -2.9920645245219224
+              },
+              "setup_ms": {
+                "control": 0.3544,
+                "candidate": 0.3418,
+                "delta_pct": -3.5553047404063203
+              },
+              "upload_ms": {
+                "control": 0.003,
+                "candidate": 0.003,
+                "delta_pct": 0.0
+              },
+              "swap_ms": {
+                "control": 0.3713,
+                "candidate": 0.3524,
+                "delta_pct": -5.090223538917325
+              },
+              "process_cpu_cores": {
+                "control": 1.0738,
+                "candidate": 1.1302,
+                "delta_pct": 5.252374743900168
+              },
+              "terrain_solid_ms": {
+                "control": 0.3389,
+                "candidate": 0.329,
+                "delta_pct": -2.921215697845962
+              },
+              "terrain_cutout_mipped_ms": {
+                "control": 0.2079,
+                "candidate": 0.2034,
+                "delta_pct": -2.1645021645021667
+              },
+              "terrain_cutout_ms": {
+                "control": 0.2147,
+                "candidate": 0.2089,
+                "delta_pct": -2.7014438751746623
+              },
+              "terrain_translucent_ms": {
+                "control": 0.0756,
+                "candidate": 0.0747,
+                "delta_pct": -1.1904761904761878
+              }
+            },
+            "sort": {
+              "frame_ms": {
+                "control": 2.225152500826644,
+                "candidate": 2.027194407538244,
+                "delta_pct": -8.896383201369728
+              },
+              "cpu_ms": {
+                "control": 1.9664,
+                "candidate": 1.8351,
+                "delta_pct": -6.677176566314075
+              },
+              "p99_ms": {
+                "control": 5.5561,
+                "candidate": 3.9598,
+                "delta_pct": -28.73058440272853
+              },
+              "slow1_ms": {
+                "control": 6.786092852751286,
+                "candidate": 6.745376213240229,
+                "delta_pct": -0.6000012141677159
+              },
+              "alloc_bytes": {
+                "control": 17517.3356,
+                "candidate": 16739.7309,
+                "delta_pct": -4.439058072278983
+              },
+              "visible_chunks": {
+                "control": 1435.2272284800445,
+                "candidate": 1432.5290763968073,
+                "delta_pct": -0.18799476693976575
+              },
+              "visibility_ms": {
+                "control": 0.3542,
+                "candidate": 0.3332,
+                "delta_pct": -5.928853754940717
+              },
+              "terrain_layers_ms": {
+                "control": 0.8545,
+                "candidate": 0.8018000000000001,
+                "delta_pct": -6.167349327091863
+              },
+              "render_ms": {
+                "control": 1.5864,
+                "candidate": 1.4827,
+                "delta_pct": -6.5368129097327365
+              },
+              "setup_ms": {
+                "control": 0.3825,
+                "candidate": 0.363,
+                "delta_pct": -5.098039215686279
+              },
+              "upload_ms": {
+                "control": 0.0105,
+                "candidate": 0.0095,
+                "delta_pct": -9.52380952380953
+              },
+              "swap_ms": {
+                "control": 0.4765,
+                "candidate": 0.3903,
+                "delta_pct": -18.090241343126966
+              },
+              "process_cpu_cores": {
+                "control": 1.2236,
+                "candidate": 1.1943,
+                "delta_pct": -2.394573389996739
+              },
+              "terrain_solid_ms": {
+                "control": 0.3449,
+                "candidate": 0.3265,
+                "delta_pct": -5.334879675268186
+              },
+              "terrain_cutout_mipped_ms": {
+                "control": 0.2104,
+                "candidate": 0.1956,
+                "delta_pct": -7.034220532319395
+              },
+              "terrain_cutout_ms": {
+                "control": 0.2205,
+                "candidate": 0.2066,
+                "delta_pct": -6.303854875283445
+              },
+              "terrain_translucent_ms": {
+                "control": 0.0787,
+                "candidate": 0.0731,
+                "delta_pct": -7.115628970775105
+              }
+            },
+            "fly": {
+              "frame_ms": {
+                "control": 2.1296133814682747,
+                "candidate": 2.112078278689996,
+                "delta_pct": -0.8233937169473068
+              },
+              "cpu_ms": {
+                "control": 1.9914,
+                "candidate": 1.9403,
+                "delta_pct": -2.566033945967668
+              },
+              "p99_ms": {
+                "control": 4.1549,
+                "candidate": 4.4084,
+                "delta_pct": 6.101229873161827
+              },
+              "slow1_ms": {
+                "control": 5.963007884289024,
+                "candidate": 6.22195453991135,
+                "delta_pct": 4.342550951585731
+              },
+              "alloc_bytes": {
+                "control": 29479.2862,
+                "candidate": 29344.3692,
+                "delta_pct": -0.457667119497614
+              },
+              "visible_chunks": {
+                "control": 1313.3762776831345,
+                "candidate": 1312.1246040126716,
+                "delta_pct": -0.09530198555671321
+              },
+              "visibility_ms": {
+                "control": 0.3792,
+                "candidate": 0.3661,
+                "delta_pct": -3.4546413502109705
+              },
+              "terrain_layers_ms": {
+                "control": 0.8477,
+                "candidate": 0.8198,
+                "delta_pct": -3.291258700011801
+              },
+              "render_ms": {
+                "control": 1.5974,
+                "candidate": 1.5505,
+                "delta_pct": -2.93602103418054
+              },
+              "setup_ms": {
+                "control": 0.4177,
+                "candidate": 0.4072,
+                "delta_pct": -2.5137658606655515
+              },
+              "upload_ms": {
+                "control": 0.028,
+                "candidate": 0.0285,
+                "delta_pct": 1.7857142857142874
+              },
+              "swap_ms": {
+                "control": 0.3632,
+                "candidate": 0.3956,
+                "delta_pct": 8.920704845814974
+              },
+              "process_cpu_cores": {
+                "control": 2.153,
+                "candidate": 2.0381,
+                "delta_pct": -5.336739433348816
+              },
+              "terrain_solid_ms": {
+                "control": 0.4116,
+                "candidate": 0.3991,
+                "delta_pct": -3.036929057337223
+              },
+              "terrain_cutout_mipped_ms": {
+                "control": 0.1718,
+                "candidate": 0.1641,
+                "delta_pct": -4.481955762514559
+              },
+              "terrain_cutout_ms": {
+                "control": 0.1895,
+                "candidate": 0.1834,
+                "delta_pct": -3.218997361477569
+              },
+              "terrain_translucent_ms": {
+                "control": 0.0748,
+                "candidate": 0.0732,
+                "delta_pct": -2.1390374331550857
+              }
+            }
+          }
+        },
+        {
+          "pair": "rep-terrain-8b vs rep-terrain-7a",
+          "phases": {
+            "steady": {
+              "frame_ms": {
+                "control": 1.515979561563551,
+                "candidate": 1.8466941036165287,
+                "delta_pct": 21.815237516255525
+              },
+              "cpu_ms": {
+                "control": 1.2387,
+                "candidate": 1.2809,
+                "delta_pct": 3.4067974489384047
+              },
+              "p99_ms": {
+                "control": 3.4042,
+                "candidate": 4.4479,
+                "delta_pct": 30.65918571176781
+              },
+              "slow1_ms": {
+                "control": 4.088476261693553,
+                "candidate": 5.1643156119843106,
+                "delta_pct": 26.31394391036814
+              },
+              "alloc_bytes": {
+                "control": 6366.9838,
+                "candidate": 6848.6056,
+                "delta_pct": 7.564363521703949
+              },
+              "visible_chunks": {
+                "control": 1293.0,
+                "candidate": 1293.0,
+                "delta_pct": 0.0
+              },
+              "visibility_ms": {
+                "control": 0.0014,
+                "candidate": 0.0011,
+                "delta_pct": -21.428571428571423
+              },
+              "terrain_layers_ms": {
+                "control": 0.5386,
+                "candidate": 0.5582,
+                "delta_pct": 3.639064240623852
+              },
+              "render_ms": {
+                "control": 0.8468,
+                "candidate": 0.9212,
+                "delta_pct": 8.786017949929148
+              },
+              "setup_ms": {
+                "control": 0.0277,
+                "candidate": 0.031,
+                "delta_pct": 11.913357400722026
+              },
+              "upload_ms": {
+                "control": 0.0005,
+                "candidate": 0.0005,
+                "delta_pct": 0.0
+              },
+              "swap_ms": {
+                "control": 0.5328,
+                "candidate": 0.7782,
+                "delta_pct": 46.058558558558545
+              },
+              "process_cpu_cores": {
+                "control": 0.9655,
+                "candidate": 0.8389,
+                "delta_pct": -13.112377006732267
+              },
+              "terrain_solid_ms": {
+                "control": 0.2237,
+                "candidate": 0.2352,
+                "delta_pct": 5.1408135896289595
+              },
+              "terrain_cutout_mipped_ms": {
+                "control": 0.1245,
+                "candidate": 0.1291,
+                "delta_pct": 3.694779116465858
+              },
+              "terrain_cutout_ms": {
+                "control": 0.1522,
+                "candidate": 0.1553,
+                "delta_pct": 2.03679369250985
+              },
+              "terrain_translucent_ms": {
+                "control": 0.0382,
+                "candidate": 0.0386,
+                "delta_pct": 1.0471204188481793
+              }
+            },
+            "pan": {
+              "frame_ms": {
+                "control": 2.0123088910246194,
+                "candidate": 2.2722113774622534,
+                "delta_pct": 12.915635745429615
+              },
+              "cpu_ms": {
+                "control": 1.8528,
+                "candidate": 1.9265,
+                "delta_pct": 3.9777633851468104
+              },
+              "p99_ms": {
+                "control": 3.9506,
+                "candidate": 4.5431,
+                "delta_pct": 14.997721865033153
+              },
+              "slow1_ms": {
+                "control": 4.716267018060001,
+                "candidate": 5.70395991713287,
+                "delta_pct": 20.94225995455086
+              },
+              "alloc_bytes": {
+                "control": 8309.6435,
+                "candidate": 7155.0863,
+                "delta_pct": -13.894184509840887
+              },
+              "visible_chunks": {
+                "control": 1439.4391683433937,
+                "candidate": 1444.2220539230536,
+                "delta_pct": 0.33227424158288044
+              },
+              "visibility_ms": {
+                "control": 0.3222,
+                "candidate": 0.3466,
+                "delta_pct": 7.5729360645561865
+              },
+              "terrain_layers_ms": {
+                "control": 0.8251,
+                "candidate": 0.8449,
+                "delta_pct": 2.39970912616653
+              },
+              "render_ms": {
+                "control": 1.4971,
+                "candidate": 1.5726,
+                "delta_pct": 5.043083294369106
+              },
+              "setup_ms": {
+                "control": 0.3475,
+                "candidate": 0.3716,
+                "delta_pct": 6.935251798561154
+              },
+              "upload_ms": {
+                "control": 0.0031,
+                "candidate": 0.0036,
+                "delta_pct": 16.129032258064516
+              },
+              "swap_ms": {
+                "control": 0.359,
+                "candidate": 0.5394,
+                "delta_pct": 50.250696378830085
+              },
+              "process_cpu_cores": {
+                "control": 1.1519,
+                "candidate": 1.0322,
+                "delta_pct": -10.39152704227797
+              },
+              "terrain_solid_ms": {
+                "control": 0.3349,
+                "candidate": 0.3455,
+                "delta_pct": 3.165123917587339
+              },
+              "terrain_cutout_mipped_ms": {
+                "control": 0.2049,
+                "candidate": 0.2091,
+                "delta_pct": 2.049780380673504
+              },
+              "terrain_cutout_ms": {
+                "control": 0.2109,
+                "candidate": 0.2143,
+                "delta_pct": 1.6121384542437107
+              },
+              "terrain_translucent_ms": {
+                "control": 0.0744,
+                "candidate": 0.076,
+                "delta_pct": 2.150537634408608
+              }
+            },
+            "sort": {
+              "frame_ms": {
+                "control": 2.2703609374411124,
+                "candidate": 2.312845683698,
+                "delta_pct": 1.871277185766385
+              },
+              "cpu_ms": {
+                "control": 1.9398,
+                "candidate": 2.0395,
+                "delta_pct": 5.139705124239607
+              },
+              "p99_ms": {
+                "control": 6.8046,
+                "candidate": 4.457,
+                "delta_pct": -34.500191047232754
+              },
+              "slow1_ms": {
+                "control": 14.569740979144871,
+                "candidate": 5.591962337015268,
+                "delta_pct": -61.61934282140222
+              },
+              "alloc_bytes": {
+                "control": 17697.5358,
+                "candidate": 18914.8875,
+                "delta_pct": 6.878650868444629
+              },
+              "visible_chunks": {
+                "control": 1430.644721906924,
+                "candidate": 1438.8425845620122,
+                "delta_pct": 0.5730187606718528
+              },
+              "visibility_ms": {
+                "control": 0.3552,
+                "candidate": 0.3644,
+                "delta_pct": 2.590090090090086
+              },
+              "terrain_layers_ms": {
+                "control": 0.8235,
+                "candidate": 0.8613999999999999,
+                "delta_pct": 4.602307225258037
+              },
+              "render_ms": {
+                "control": 1.5817,
+                "candidate": 1.6465,
+                "delta_pct": 4.096857811215778
+              },
+              "setup_ms": {
+                "control": 0.3847,
+                "candidate": 0.3959,
+                "delta_pct": 2.911359500909797
+              },
+              "upload_ms": {
+                "control": 0.0104,
+                "candidate": 0.011,
+                "delta_pct": 5.769230769230768
+              },
+              "swap_ms": {
+                "control": 0.5251,
+                "candidate": 0.501,
+                "delta_pct": -4.5896019805751305
+              },
+              "process_cpu_cores": {
+                "control": 1.1766,
+                "candidate": 1.2051,
+                "delta_pct": 2.4222335543090234
+              },
+              "terrain_solid_ms": {
+                "control": 0.3363,
+                "candidate": 0.3514,
+                "delta_pct": 4.490038655961939
+              },
+              "terrain_cutout_mipped_ms": {
+                "control": 0.2012,
+                "candidate": 0.2104,
+                "delta_pct": 4.572564612326051
+              },
+              "terrain_cutout_ms": {
+                "control": 0.2118,
+                "candidate": 0.2182,
+                "delta_pct": 3.0217186024551546
+              },
+              "terrain_translucent_ms": {
+                "control": 0.0742,
+                "candidate": 0.0814,
+                "delta_pct": 9.703504043126681
+              }
+            },
+            "fly": {
+              "frame_ms": {
+                "control": 2.0692816178471403,
+                "candidate": 2.251139864670476,
+                "delta_pct": 8.788472543072176
+              },
+              "cpu_ms": {
+                "control": 1.9204,
+                "candidate": 2.0663,
+                "delta_pct": 7.5973755467610875
+              },
+              "p99_ms": {
+                "control": 4.1743,
+                "candidate": 4.4284,
+                "delta_pct": 6.087248161368379
+              },
+              "slow1_ms": {
+                "control": 5.918875887091524,
+                "candidate": 6.355691171881405,
+                "delta_pct": 7.38003791805353
+              },
+              "alloc_bytes": {
+                "control": 28439.3909,
+                "candidate": 30615.4733,
+                "delta_pct": 7.651649107576362
+              },
+              "visible_chunks": {
+                "control": 1310.3666459755846,
+                "candidate": 1317.354980303883,
+                "delta_pct": 0.5333113712685715
+              },
+              "visibility_ms": {
+                "control": 0.3652,
+                "candidate": 0.3949,
+                "delta_pct": 8.132530120481913
+              },
+              "terrain_layers_ms": {
+                "control": 0.8132,
+                "candidate": 0.8529,
+                "delta_pct": 4.881947860304963
+              },
+              "render_ms": {
+                "control": 1.5323,
+                "candidate": 1.6302,
+                "delta_pct": 6.389088298636043
+              },
+              "setup_ms": {
+                "control": 0.4038,
+                "candidate": 0.437,
+                "delta_pct": 8.221892025755325
+              },
+              "upload_ms": {
+                "control": 0.0271,
+                "candidate": 0.0311,
+                "delta_pct": 14.760147601476014
+              },
+              "swap_ms": {
+                "control": 0.3695,
+                "candidate": 0.4428,
+                "delta_pct": 19.837618403247642
+              },
+              "process_cpu_cores": {
+                "control": 2.0787,
+                "candidate": 2.0834,
+                "delta_pct": 0.22610285274451092
+              },
+              "terrain_solid_ms": {
+                "control": 0.3947,
+                "candidate": 0.4173,
+                "delta_pct": 5.725867747656451
+              },
+              "terrain_cutout_mipped_ms": {
+                "control": 0.1647,
+                "candidate": 0.1722,
+                "delta_pct": 4.55373406193077
+              },
+              "terrain_cutout_ms": {
+                "control": 0.1826,
+                "candidate": 0.1889,
+                "delta_pct": 3.450164293537787
+              },
+              "terrain_translucent_ms": {
+                "control": 0.0712,
+                "candidate": 0.0745,
+                "delta_pct": 4.634831460674153
+              }
+            }
+          }
+        }
+      ],
+      "medians": {
+        "steady": {
+          "frame_ms": 0.5687029127899946,
+          "cpu_ms": 5.266598851584485,
+          "p99_ms": 1.0076930113823952,
+          "slow1_ms": 5.747273070534424,
+          "alloc_bytes": 0.2463295543142836,
+          "visible_chunks": 0.0,
+          "visibility_ms": 1.7857142857142865,
+          "terrain_layers_ms": 2.2148977337785825,
+          "render_ms": 2.21643695831838,
+          "setup_ms": 8.606855378806245,
+          "upload_ms": 0.0,
+          "swap_ms": -1.0810613009345806,
+          "process_cpu_cores": 3.2253504333337473,
+          "terrain_solid_ms": 1.6632158065850473,
+          "terrain_cutout_mipped_ms": 1.5850191902336814,
+          "terrain_cutout_ms": 1.4762124119841549,
+          "terrain_translucent_ms": 1.0416949244499931
+        },
+        "pan": {
+          "frame_ms": 5.212472357412763,
+          "cpu_ms": 3.74157714546158,
+          "p99_ms": 12.971572310061227,
+          "slow1_ms": 15.654065217483113,
+          "alloc_bytes": -3.4185162945771337,
+          "visible_chunks": 0.14600000209813346,
+          "visibility_ms": 5.148786872857807,
+          "terrain_layers_ms": 2.108301943923282,
+          "render_ms": 2.776746832568082,
+          "setup_ms": 4.859894079869922,
+          "upload_ms": 8.064516129032258,
+          "swap_ms": 16.67108178845661,
+          "process_cpu_cores": -0.1533702303653277,
+          "terrain_solid_ms": 2.8435757508890047,
+          "terrain_cutout_mipped_ms": 1.6189966542150795,
+          "terrain_cutout_ms": 1.15393564641684,
+          "terrain_translucent_ms": 1.6071837108213218
+        },
+        "sort": {
+          "frame_ms": -1.653345501830864,
+          "cpu_ms": -0.5926497825972291,
+          "p99_ms": -17.453020201725,
+          "slow1_ms": -5.349610420717201,
+          "alloc_bytes": -2.528560402098887,
+          "visible_chunks": -0.007187054159132671,
+          "visibility_ms": 2.195098779596365,
+          "terrain_layers_ms": 1.4329129868937773,
+          "render_ms": -1.1481715673181023,
+          "setup_ms": 2.3868940539066,
+          "upload_ms": 4.131171946075593,
+          "swap_ms": -10.94924798049794,
+          "process_cpu_cores": 0.01383008215614212,
+          "terrain_solid_ms": 1.0852701387198826,
+          "terrain_cutout_mipped_ms": 1.5755747037048544,
+          "terrain_cutout_ms": 1.5796666406771174,
+          "terrain_translucent_ms": 0.9524836108144135
+        },
+        "fly": {
+          "frame_ms": -1.174243813049549,
+          "cpu_ms": -0.7220203072443179,
+          "p99_ms": 0.7935789217246514,
+          "slow1_ms": 3.092606711542692,
+          "alloc_bytes": -1.100730528555459,
+          "visible_chunks": -0.09252107082133305,
+          "visibility_ms": 1.0282755627999267,
+          "terrain_layers_ms": -0.017908823877958502,
+          "render_ms": 0.03319997294678828,
+          "setup_ms": 0.5987463062599142,
+          "upload_ms": 1.2113284804367708,
+          "swap_ms": 2.4537005382068213,
+          "process_cpu_cores": -2.5553182903021527,
+          "terrain_solid_ms": -0.1617792914913807,
+          "terrain_cutout_mipped_ms": 0.26355627265976367,
+          "terrain_cutout_ms": 0.2889510410486811,
+          "terrain_translucent_ms": -0.40726706094840315
+        }
+      }
+    }
+  },
+  "gates_pass": false,
+  "failed_gates": [
+    "terrain pan frame time regressed 5.21% (limit 1.0%)",
+    "terrain pan CPU/frame regressed 3.74% (limit 1.0%)",
+    "terrain pan frame time regressed 5.21% (limit 2.0%)",
+    "terrain pan terrain layers regressed 2.11% (limit 1.0%)"
+  ]
+}

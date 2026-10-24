@@ -1,0 +1,86 @@
+[
+  {
+    "label": "mg-ablation-control",
+    "command": [
+      "C:\\Users\\CodyJ\\.codex\\worktrees\\alacer-chunk-camera\\alacer\\gradlew.bat",
+      "--offline",
+      "--console=plain",
+      "runClient",
+      "-Pwindow=1920x1080",
+      "-Pxmx=2G",
+      "-Palacer.benchmark=true",
+      "-Palacer.benchmark.vbo=true",
+      "-Palacer.benchmark.viewDistance=12",
+      "-Palacer.benchmark.label=mg-ablation-control",
+      "-Palacer.render.fastChunkNeighbours=false",
+      "-Palacer.render.terrainVaos=false",
+      "-Palacer.render.directBufferUploads=false"
+    ],
+    "summary": "run/alacer/benchmarks/20261023-133916-mg-ablation-control-vis_on-ecl_on-ent0/summary.json",
+    "exit": 0,
+    "log_sha256": "13d2874aa0f24da7cc08d1cc411d1c8eae277a73b35ebc9956acbb1e33169819"
+  },
+  {
+    "label": "mg-ablation-fastChunkNeighbours",
+    "command": [
+      "C:\\Users\\CodyJ\\.codex\\worktrees\\alacer-chunk-camera\\alacer\\gradlew.bat",
+      "--offline",
+      "--console=plain",
+      "runClient",
+      "-Pwindow=1920x1080",
+      "-Pxmx=2G",
+      "-Palacer.benchmark=true",
+      "-Palacer.benchmark.vbo=true",
+      "-Palacer.benchmark.viewDistance=12",
+      "-Palacer.benchmark.label=mg-ablation-fastChunkNeighbours",
+      "-Palacer.render.fastChunkNeighbours=true",
+      "-Palacer.render.terrainVaos=false",
+      "-Palacer.render.directBufferUploads=false"
+    ],
+    "summary": "run/alacer/benchmarks/20261023-134031-mg-ablation-fastChunkNeighbours-vis_on-ecl_on-ent0/summary.json",
+    "exit": 0,
+    "log_sha256": "b24134b4e18ef527a1f5671f575ec5293039e3a9ec8e0eda1f6341755c7c0640"
+  },
+  {
+    "label": "mg-ablation-terrainVaos",
+    "command": [
+      "C:\\Users\\CodyJ\\.codex\\worktrees\\alacer-chunk-camera\\alacer\\gradlew.bat",
+      "--offline",
+      "--console=plain",
+      "runClient",
+      "-Pwindow=1920x1080",
+      "-Pxmx=2G",
+      "-Palacer.benchmark=true",
+      "-Palacer.benchmark.vbo=true",
+      "-Palacer.benchmark.viewDistance=12",
+      "-Palacer.benchmark.label=mg-ablation-terrainVaos",
+      "-Palacer.render.fastChunkNeighbours=false",
+      "-Palacer.render.terrainVaos=true",
+      "-Palacer.render.directBufferUploads=false"
+    ],
+    "summary": "run/alacer/benchmarks/20261023-134148-mg-ablation-terrainVaos-vis_on-ecl_on-ent0/summary.json",
+    "exit": 0,
+    "log_sha256": "4c4b41a1970b8f49202789fa54ed8af0302fcb5e8876ebe100ff45d107e19856"
+  },
+  {
+    "label": "mg-ablation-directBufferUploads",
+    "command": [
+      "C:\\Users\\CodyJ\\.codex\\worktrees\\alacer-chunk-camera\\alacer\\gradlew.bat",
+      "--offline",
+      "--console=plain",
+      "runClient",
+      "-Pwindow=1920x1080",
+      "-Pxmx=2G",
+      "-Palacer.benchmark=true",
+      "-Palacer.benchmark.vbo=true",
+      "-Palacer.benchmark.viewDistance=12",
+      "-Palacer.benchmark.label=mg-ablation-directBufferUploads",
+      "-Palacer.render.fastChunkNeighbours=false",
+      "-Palacer.render.terrainVaos=false",
+      "-Palacer.render.directBufferUploads=true"
+    ],
+    "summary": "run/alacer/benchmarks/20261023-134306-mg-ablation-directBufferUploads-vis_on-ecl_on-ent0/summary.json",
+    "exit": 0,
+    "log_sha256": "563166ec2f0ca833d46e214846b4905c9b29e98ffd52167f9561eb40c8c32df1"
+  }
+]

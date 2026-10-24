@@ -148,6 +148,9 @@ public final class BenchmarkRunner implements FrameProfiler.FrameListener {
 		/** Optional diagnostic scene setup, run once before settling. */
 		Runnable setup;
 		long[][] columns;
+		/** With profiler.chunkLatency: every update latency published while recording, and how many did not fit. */
+		long[] updateLatencies;
+		long updateLatencyOverflow;
 		int rows;
 		int dropped;
 		double settleSeconds;
@@ -188,6 +191,9 @@ public final class BenchmarkRunner implements FrameProfiler.FrameListener {
 	private final boolean shadowDiagnostic;
 	private final boolean backendScenario;
 	private final String chunkFlight = System.getProperty("alacer.benchmark.chunkFlight", "");
+	private final boolean chunkEdit = Boolean.getBoolean("alacer.benchmark.chunkEdit");
+	private int[] editCells;
+	private int editBursts;
 	private final Boolean requestedVbo;
 	private Boolean originalVbo;
 	private volatile int placedGlass;
@@ -264,6 +270,19 @@ public final class BenchmarkRunner implements FrameProfiler.FrameListener {
 
 	/** The scenario's own phases, exactly as without {@link StabilityOptions}. */
 	private void addScenarioPhases(double scale) {
+		if (this.chunkEdit) {
+			if (!this.chunkFlight.isEmpty() || this.backendScenario || this.particleScenario || this.toggleKey != null || this.shadowDiagnostic
+				|| Boolean.getBoolean("alacer.benchmark.cloudSweep") || this.entityCount != 0 || this.chestCount != 0
+				|| this.requestedVbo == null || !Double.isFinite(scale) || scale <= 0) {
+				throw new IllegalArgumentException("chunkEdit requires explicit backend, positive scale and no other scenario/toggle/population");
+			}
+			for (int i = 0; i < ChunkEditScenario.NAMES.length; i++) {
+				final int phase = i;
+				this.phases.add(new Phase(ChunkEditScenario.NAMES[i], ChunkEditScenario.SECONDS[i] * scale,
+					(t, out) -> ChunkEditScenario.pose(phase, t, this.anchorX, this.groundY, this.anchorZ, out)));
+			}
+			return;
+		}
 		if (!this.chunkFlight.isEmpty()) {
 			double height = ChunkFlightScenario.height(this.chunkFlight);
 			if (this.backendScenario || this.particleScenario || this.toggleKey != null || this.shadowDiagnostic
@@ -470,7 +489,8 @@ public final class BenchmarkRunner implements FrameProfiler.FrameListener {
 
 	/** Toggles measured with the Phase 10 protocol: both paths warmed, detail and verification off. */
 	private static boolean warmsBothPaths(String key) {
-		return "render.defaults".equals(key) || "render.fastEntityShadows".equals(key)
+		return "render.modernPipeline".equals(key) || "render.fastChunkNeighbours".equals(key) || "render.terrainShader".equals(key) || "render.terrainVaos".equals(key) || "render.directBufferUploads".equals(key)
+			|| "render.defaults".equals(key) || "render.fastEntityShadows".equals(key)
 			|| "render.fastChunkFrustum".equals(key) || "render.fastParticleLight".equals(key)
 			|| "render.fastCameraSectionFaces".equals(key)
 			|| "render.fastParticleRemoval".equals(key)
@@ -598,6 +618,9 @@ public final class BenchmarkRunner implements FrameProfiler.FrameListener {
 						}
 						if (this.particleDiagnostic && this.stageFrames % 30 == 0) {
 							toggleParticleCells();
+						}
+						if (this.chunkEdit && this.phaseIndex == ChunkEditScenario.EDIT_PHASE) {
+							editDueBursts(t);
 						}
 					}
 					break;
@@ -775,6 +798,38 @@ public final class BenchmarkRunner implements FrameProfiler.FrameListener {
 		return (random.nextDouble() - 0.5) * 0.6;
 	}
 
+	/** Chunk edit scenario: issues the bursts due by phase time {@code t} on the server thread, in order. */
+	private void editDueBursts(double t) {
+		int due = ChunkEditScenario.burstsDue(t);
+		while (this.editBursts < due) {
+			int burst = this.editBursts++;
+			IntegratedServer server = this.minecraft.getServer();
+			double ax = this.anchorX, az = this.anchorZ;
+			server.executeTask(() -> {
+				ServerWorld world = server.getWorld(0);
+				if (this.editCells == null) {
+					int[] cells = new int[ChunkEditScenario.CELLS * 3];
+					for (int cell = 0; cell < ChunkEditScenario.CELLS; cell++) {
+						int[] column = ChunkEditScenario.column(cell, ax, az);
+						cells[cell * 3] = column[0];
+						cells[cell * 3 + 1] = world.getHeight(new BlockPos(column[0], 0, column[1])).getY();
+						cells[cell * 3 + 2] = column[1];
+					}
+					this.editCells = cells;
+					StringBuilder where = new StringBuilder();
+					for (int cell = 0; cell < ChunkEditScenario.CELLS; cell++) {
+						where.append(cell == 0 ? "" : " ").append(cells[cell * 3]).append(',').append(cells[cell * 3 + 1]).append(',').append(cells[cell * 3 + 2]);
+					}
+					Alacer.LOGGER.info("Benchmark: chunk edit cells {}", where);
+				}
+				BlockState state = ChunkEditScenario.places(burst) ? Blocks.STONE.defaultState() : Blocks.AIR.defaultState();
+				for (int cell = 0; cell < ChunkEditScenario.CELLS; cell++) {
+					world.setBlockState(new BlockPos(this.editCells[cell * 3], this.editCells[cell * 3 + 1], this.editCells[cell * 3 + 2]), state);
+				}
+			});
+		}
+	}
+
 	private void takeScreenshot(Phase phase) {
 		Screenshot.take(this.minecraft.gameDir, "alacer-" + this.label + "-" + phase.name + ".png",
 			this.minecraft.width, this.minecraft.height, this.minecraft.getRenderTarget());
@@ -820,7 +875,7 @@ public final class BenchmarkRunner implements FrameProfiler.FrameListener {
 			Path copy = saves.resolve(RUN_WORLD);
 			deleteRecursively(copy);
 			copyRecursively(base, copy);
-			if (!this.chunkFlight.isEmpty()) {
+			if (!this.chunkFlight.isEmpty() || this.chunkEdit) {
 				try (Stream<Path> paths = Files.walk(base)) {
 					for (Path source : (Iterable<Path>) paths::iterator) {
 						if (Files.isRegularFile(source) && !source.getFileName().toString().equals("session.lock")
@@ -1096,6 +1151,10 @@ public final class BenchmarkRunner implements FrameProfiler.FrameListener {
 		if (net.adiont.alacer.render.ParticleDrawDiagnostics.ENABLED) {
 			net.adiont.alacer.render.ParticleDrawDiagnostics.phase(null);
 		}
+		if (Alacer.get().config().profilerChunkLatency) {
+			phase.updateLatencyOverflow = net.adiont.alacer.render.ChunkUpdateLatency.LOG.overflow();
+			phase.updateLatencies = net.adiont.alacer.render.ChunkUpdateLatency.LOG.takeValues();
+		}
 		phase.wallNanos = now - phase.wallStart;
 		phase.threadCpuNanos = this.threads.getCurrentThreadCpuTime() - phase.threadCpuStart;
 		long process = processCpuTime();
@@ -1121,7 +1180,7 @@ public final class BenchmarkRunner implements FrameProfiler.FrameListener {
 			config.put("benchmark.particleEmission", String.valueOf(this.particlesEnabled));
 			config.put("benchmark.particleScale", String.valueOf(this.particleScale));
 		}
-		if (this.backendScenario || !this.chunkFlight.isEmpty()) {
+		if (this.backendScenario || !this.chunkFlight.isEmpty() || this.chunkEdit) {
 			GameOptions options = this.minecraft.options;
 			config.put("options.fov", String.valueOf(options.fov));
 			config.put("options.gamma", String.valueOf(options.gamma));
@@ -1196,6 +1255,9 @@ public final class BenchmarkRunner implements FrameProfiler.FrameListener {
 				phase.mobPoses = mobPoses();
 			}
 			this.stageStart = phase.wallStart;
+			if (Alacer.get().config().profilerChunkLatency) {
+				net.adiont.alacer.render.ChunkUpdateLatency.LOG.takeValues();
+			}
 			if (ChunkUploadGpu.ENABLED) { ChunkUploadGpu.phase(phase.name); }
 			if (net.adiont.alacer.render.ParticleMovementCensus.ENABLED
 				&& !Boolean.getBoolean("alacer.benchmark.movementCensusInactive")) {
@@ -1240,6 +1302,10 @@ public final class BenchmarkRunner implements FrameProfiler.FrameListener {
 		environment.put("benchmark.generationRun", String.valueOf(this.generationRun));
 		environment.put("benchmark.backendScenario", String.valueOf(this.backendScenario));
 		environment.put("benchmark.chunkFlight", this.chunkFlight);
+		environment.put("benchmark.chunkEdit", String.valueOf(this.chunkEdit));
+		if (this.chunkEdit) {
+			environment.put("benchmark.chunkEditBursts", String.valueOf(this.editBursts));
+		}
 		environment.put("benchmark.chunkUploadGpu", String.valueOf(ChunkUploadGpu.ENABLED));
 		environment.put("benchmark.glassBlocks", String.valueOf(this.placedGlass));
 		environment.put("benchmark.particles", String.valueOf(this.particleScenario));
@@ -1382,6 +1448,17 @@ public final class BenchmarkRunner implements FrameProfiler.FrameListener {
 			json.field("max_move_blocks", phase.mobPoseResult[3]);
 			json.field("max_turn_degrees", phase.mobPoseResult[4]);
 			json.endObject();
+		}
+		if (phase.updateLatencies != null) {
+			long[] values = phase.updateLatencies;
+			SeriesStats latency = SeriesStats.compute(values, values.length, new long[values.length]);
+			json.field("update_latency_count", latency.count);
+			json.field("update_latency_overflow", phase.updateLatencyOverflow);
+			json.field("update_latency_mean_ms", latency.mean / 1.0e6);
+			json.field("update_latency_p50_ms", latency.p50 / 1.0e6);
+			json.field("update_latency_p90_ms", latency.p90 / 1.0e6);
+			json.field("update_latency_p99_ms", latency.p99 / 1.0e6);
+			json.field("update_latency_max_ms", latency.max / 1.0e6);
 		}
 		json.endObject();
 	}
