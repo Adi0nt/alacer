@@ -12,6 +12,7 @@ import net.adiont.alacer.Alacer;
 public final class ModernGl {
 	private static final boolean FORCE_FALLBACK = Boolean.getBoolean("alacer.modernGl.forceFallback");
 	private static long namedCreates, namedUploads, uploadChecks, uploadBytes, uploadFailures;
+	private static long decoupledDraws, fallbackDraws;
 	private static ByteBuffer readback;
 	private ModernGl() { }
 
@@ -27,6 +28,9 @@ public final class ModernGl {
 			&& (Alacer.get().config().terrainShader || Alacer.get().config().terrainVaos || verify())
 			&& RenderCompatibility.buffers();
 	}
+
+	public static void recordDecoupledDraws(long n) { decoupledDraws += n; }
+	public static void recordFallbackDraws(long n) { fallbackDraws += n; }
 
 	/** Nonzero names must be real objects for named-buffer operations, not merely glGenBuffers reservations. */
 	public static int createBuffer() { namedCreates++; return GL45.glCreateBuffers(); }
@@ -50,6 +54,7 @@ public final class ModernGl {
 	public static void describe(Map<String, String> out) {
 		out.put("modernGl.forcedFallback", Boolean.toString(FORCE_FALLBACK));
 		out.put("modernGl.terrainShaderActive", Boolean.toString(pipelineActive()));
+		out.put("modernGl.terrainShaderAttribBinding", Boolean.toString(TerrainShader.isAttribBindingActive()));
 		out.put("modernGl.vaoSupported", Boolean.toString(GLContext.getCapabilities().OpenGL30));
 		out.put("modernGl.dsaSupported", Boolean.toString(GLContext.getCapabilities().OpenGL45));
 		out.put("modernGl.vaosCreated", "0");
@@ -58,6 +63,8 @@ public final class ModernGl {
 		out.put("modernGl.pointerSetups", "0");
 		out.put("modernGl.vaoChecks", "0");
 		out.put("modernGl.vaoFailures", "0");
+		out.put("modernGl.decoupledDraws", Long.toString(decoupledDraws));
+		out.put("modernGl.fallbackDraws", Long.toString(fallbackDraws));
 		out.put("modernGl.namedCreates", Long.toString(namedCreates));
 		out.put("modernGl.namedUploads", Long.toString(namedUploads));
 		out.put("modernGl.uploadChecks", Long.toString(uploadChecks));
