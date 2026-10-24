@@ -64,8 +64,7 @@ public abstract class TerrainVaoMixin extends RenderChunkList {
 				RenderChunk chunk = list.get(i);
 				VertexBuffer buffer = chunk.getBuffer(layerOrdinal);
 
-				BlockPos pos = chunk.getOrigin();
-				TerrainShader.setOrigin(pos.getX(), pos.getY(), pos.getZ());
+				TerrainShader.setOrigin(chunk.getOrigin());
 
 				if (((Object) buffer).getClass() == VertexBuffer.class) {
 					ModernVertexBuffer mvb = (ModernVertexBuffer) buffer;
@@ -89,8 +88,7 @@ public abstract class TerrainVaoMixin extends RenderChunkList {
 				RenderChunk chunk = list.get(i);
 				VertexBuffer buffer = chunk.getBuffer(layerOrdinal);
 
-				BlockPos pos = chunk.getOrigin();
-				TerrainShader.setOrigin(pos.getX(), pos.getY(), pos.getZ());
+				TerrainShader.setOrigin(chunk.getOrigin());
 
 				buffer.bind();
 				this.prepareDrawState();

@@ -8,6 +8,8 @@ import org.lwjgl.opengl.GL20;
 import org.lwjgl.opengl.GL30;
 import org.lwjgl.opengl.GLContext;
 
+import net.minecraft.util.math.BlockPos;
+
 /**
  * Capability-gated terrain vertex shader replacing per-chunk matrix stack operations.
  * Evaluates origin translation and chunk boundary scaling directly in the vertex shader,
@@ -234,6 +236,13 @@ public final class TerrainShader {
 		if (attribBindingSupported) {
 			GL30.glBindVertexArray(singleVaoId);
 		}
+	}
+
+	public static void setOrigin(BlockPos pos) {
+		float relX = (float) (pos.getX() - cameraX);
+		float relY = (float) (pos.getY() - cameraY);
+		float relZ = (float) (pos.getZ() - cameraZ);
+		GL20.glUniform3f(originUniformLocation, relX, relY, relZ);
 	}
 
 	public static void setOrigin(int blockX, int blockY, int blockZ) {
