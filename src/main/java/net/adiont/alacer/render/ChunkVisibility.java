@@ -155,6 +155,13 @@ public final class ChunkVisibility {
 	private long stableMismatches;
 	private long inconclusiveSearches;
 	private long inconclusiveMismatches;
+	private Entity lastCamera;
+	private double lastSearchCameraX = Double.NaN;
+	private double lastSearchCameraY = Double.NaN;
+	private double lastSearchCameraZ = Double.NaN;
+	private float lastSearchCameraPitch = Float.NaN;
+	private float lastSearchCameraYaw = Float.NaN;
+	private long hysteresisSkips;
 
 	public ChunkVisibility(WorldRenderer renderer) {
 		this.renderer = renderer;
@@ -178,6 +185,27 @@ public final class ChunkVisibility {
 		// Same guard as vanilla: no search while a frustum is captured (debug) or nothing moved.
 		if (this.access.alacer$getCapturedFrustum() != null || !this.access.alacer$isViewChanged()) {
 			return;
+		}
+
+		this.lastCamera = camera;
+
+		if (config.cameraHysteresis && !this.verifyPending && !Double.isNaN(this.lastSearchCameraX)) {
+			List<WorldRenderer.RenderChunkInfo> currentVisible = this.access.alacer$getVisibleChunks();
+			if (currentVisible != null && !currentVisible.isEmpty()) {
+				Set<RenderChunk> dirty = this.access.alacer$getDirtyChunks();
+				if (dirty == null || dirty.isEmpty()) {
+					double dx = Math.abs(camera.x - this.lastSearchCameraX);
+					double dy = Math.abs(camera.y - this.lastSearchCameraY);
+					double dz = Math.abs(camera.z - this.lastSearchCameraZ);
+					float dp = Math.abs(camera.pitch - this.lastSearchCameraPitch);
+					float dyaw = Math.abs(camera.yaw - this.lastSearchCameraYaw);
+					if (dx < 0.01 && dy < 0.01 && dz < 0.01 && dp < 0.05F && dyaw < 0.05F) {
+						this.hysteresisSkips++;
+						this.access.alacer$setViewChanged(false);
+						return;
+					}
+				}
+			}
 		}
 		if (profiler != null) {
 			profiler.count(Counter.VISIBILITY_SEARCHES);
@@ -223,6 +251,13 @@ public final class ChunkVisibility {
 			}
 		}
 		this.testedCuller = null;
+		if (this.lastCamera != null) {
+			this.lastSearchCameraX = this.lastCamera.x;
+			this.lastSearchCameraY = this.lastCamera.y;
+			this.lastSearchCameraZ = this.lastCamera.z;
+			this.lastSearchCameraPitch = this.lastCamera.pitch;
+			this.lastSearchCameraYaw = this.lastCamera.yaw;
+		}
 	}
 
 	/**
@@ -642,6 +677,7 @@ public final class ChunkVisibility {
 
 	/** Called for every render-dirty region; drops the cached faces if they could be affected. */
 	public void onRegionDirty(int minX, int minY, int minZ, int maxX, int maxY, int maxZ) {
+		this.lastSearchCameraX = Double.NaN;
 		if (this.sectionValid) {
 			int sx = this.sectionX;
 			int sy = this.sectionY;
@@ -671,6 +707,16 @@ public final class ChunkVisibility {
 		this.sectionValid = false;
 		this.sectionChunk = null;
 		this.testedCuller = null;
+		this.lastCamera = null;
+		this.lastSearchCameraX = Double.NaN;
+		this.lastSearchCameraY = Double.NaN;
+		this.lastSearchCameraZ = Double.NaN;
+		this.lastSearchCameraPitch = Float.NaN;
+		this.lastSearchCameraYaw = Float.NaN;
 		this.result.clear();
+	}
+
+	public long hysteresisSkips() {
+		return this.hysteresisSkips;
 	}
 }
