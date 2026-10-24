@@ -155,9 +155,10 @@ flowchart TD
    - *Problem*: Crosshair target selection (`World.rayTrace`) allocates `Vec3d`, `BlockPos`, and `HitResult` objects on every step (up to 200 steps per frame), accounting for **23% of steady-state allocation** in empty scenes.
    - *Mechanism*: Scalar coordinate DDA stepping with pooled mutable block positions, eliminating intermediate vector and position allocations until terminal collision.
    - *Status*: Merged into `main` with unit test suite and runtime verification (`render.fastRayTrace`).
-3. **Sound System Thread Interruption Cleanup**:
-   - *Problem*: Profiling logs identify 34,394+ `InterruptedException` events on paulscode's sound `CommandThread` during a typical 130-second run.
-   - *Mechanism*: Audit the sound manager dispatch queue to avoid using thread interruption as control flow.
+3. **Sound System Thread Interruption Cleanup (`FastSoundThread`)** [COMPLETED - commit `7a39f1e`]:
+   - *Problem*: Profiling logs identify 34,394+ `InterruptedException` events on paulscode's sound `CommandThread` and `StreamThread` during a typical 130-second run due to `Thread.sleep` and `Thread.interrupt()` being used as control flow.
+   - *Mechanism*: Replaces `Thread.sleep` with allocation-free `LockSupport.parkNanos` in `SimpleThread.snooze`, allowing interrupts to wake the sound threads cleanly with zero exceptions thrown.
+   - *Status*: Merged into `main` with unit test suite and runtime toggle (`render.fastSoundThread`).
 
 ---
 
