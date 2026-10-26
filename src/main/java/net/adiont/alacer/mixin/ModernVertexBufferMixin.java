@@ -41,6 +41,13 @@ public class ModernVertexBufferMixin implements ModernVertexBuffer {
 		}
 	}
 
+	@Inject(method = "<init>", at = @At("RETURN"))
+	private void alacer$checkSubclass(CallbackInfo ci) {
+		if (((Object) this).getClass() != VertexBuffer.class) {
+			ModernGl.notifyForeignBuffer();
+		}
+	}
+
 	@Inject(method = "upload", at = @At("RETURN"))
 	private void alacer$materialized(ByteBuffer data, CallbackInfo ci) {
 		this.alacer$created = true; this.alacer$context = GLContext.getCapabilities();

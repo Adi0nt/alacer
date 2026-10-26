@@ -13,8 +13,12 @@ public final class ModernGl {
 	private static final boolean FORCE_FALLBACK = Boolean.getBoolean("alacer.modernGl.forceFallback");
 	private static long namedCreates, namedUploads, uploadChecks, uploadBytes, uploadFailures;
 	private static long decoupledDraws, fallbackDraws;
+	private static volatile boolean foreignBuffersPresent;
 	private static ByteBuffer readback;
 	private ModernGl() { }
+
+	public static void notifyForeignBuffer() { foreignBuffersPresent = true; }
+	public static boolean foreignBuffersPresent() { return foreignBuffersPresent; }
 
 	public static boolean verify() { return Alacer.get() != null && Alacer.get().config().verifyModernGl; }
 
@@ -53,7 +57,8 @@ public final class ModernGl {
 
 	public static void describe(Map<String, String> out) {
 		out.put("modernGl.forcedFallback", Boolean.toString(FORCE_FALLBACK));
-		out.put("modernGl.terrainShaderActive", Boolean.toString(pipelineActive()));
+		out.put("modernGl.terrainShaderRequested", Boolean.toString(pipelineActive()));
+		out.put("modernGl.terrainShaderActive", Boolean.toString(pipelineActive() && TerrainShader.initializedAndSupported()));
 		out.put("modernGl.terrainShaderAttribBinding", Boolean.toString(TerrainShader.isAttribBindingActive()));
 		out.put("modernGl.vaoSupported", Boolean.toString(GLContext.getCapabilities().OpenGL30));
 		out.put("modernGl.dsaSupported", Boolean.toString(GLContext.getCapabilities().OpenGL45));

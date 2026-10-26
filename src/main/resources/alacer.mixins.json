@@ -21,6 +21,8 @@
     "ClientChunkCacheMixin",
     "ClientWorldRandomDisplayTickMixin",
     "CloudsMixin",
+    "CompiledChunkMixin",
+    "DebugOverlayMixin",
     "DrawCountMixin",
     "EntityRenderDetailMixin",
     "EntityModelAnimationMixin",
@@ -58,6 +60,7 @@
     "SunMoonQualityMixin",
     "EntityDistanceMixin",
     "BlockEntityDistanceMixin",
+    "BlockEntityRenderDispatcherMixin",
     "FogDistanceMixin",
     "TextureAnimationMixin",
     "TextureFilteringMixin",
@@ -100,8 +103,12 @@
     "ParticleVertexMixin",
     "RenderChunkMixin",
     "RenderChunkRegionMixin",
+    "RenderChunkListMixin",
     "RenderChunkListAccessor",
+    "RenderChunkStorageMixin",
     "RenderChunkStorageAccessor",
+    "GlListRenderChunkListMixin",
+    "VboRenderChunkListMixin",
     "WorldRendererAccessor",
     "WorldParticleMovementCensusMixin",
     "WorldParticleMovementRegionsMixin",
@@ -115,7 +122,9 @@
     "WorldChunkSectionAccessor",
     "WorldChunkMixin",
     "WorldChunkSectionMixin",
-    "WorldRayTraceMixin"
+    "WorldRayTraceMixin",
+    "TypeInstanceMultiMapMixin",
+    "WorldRendererEntityPipelineMixin"
   ],
   "injectors": {
     "defaultRequire": 1

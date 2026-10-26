@@ -11,9 +11,9 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import net.adiont.alacer.render.ModernGl;
 import net.adiont.alacer.render.ModernVertexBuffer;
+import net.adiont.alacer.render.RenderChunkOrigin;
 import net.adiont.alacer.render.TerrainShader;
 import net.minecraft.client.render.block.BlockLayer;
-import net.minecraft.client.render.platform.GLX;
 import net.minecraft.client.render.platform.GlStateManager;
 import net.minecraft.client.render.vertex.VertexBuffer;
 import net.minecraft.client.render.world.RenderChunk;
@@ -38,77 +38,89 @@ public abstract class TerrainVaoMixin extends RenderChunkList {
 	@Inject(method = "render", at = @At("HEAD"), cancellable = true)
 	private void alacer$render(BlockLayer layer, CallbackInfo ci) {
 		if (TerrainShader.isActive()) {
-			alacer$renderShaderPipeline(layer);
-			ci.cancel();
+			if (alacer$renderShaderPipeline(layer)) ci.cancel();
 		}
 	}
 
 	@Unique
-	private void alacer$renderShaderPipeline(BlockLayer layer) {
+	private boolean alacer$renderShaderPipeline(BlockLayer layer) {
 		if (!this.ready) {
-			return;
+			return true;
 		}
 		List<RenderChunk> list = this.chunks;
 		int count = list.size();
 		if (count == 0) {
-			return;
+			return true;
 		}
 		int layerOrdinal = layer.ordinal();
+		// Conventional pointers cannot feed the generic shader. Retain the entire vanilla
+		// layer for foreign buffers, before submitting any geometry or changing bindings.
+		if (ModernGl.foreignBuffersPresent()) {
+			for (int i = 0; i < count; i++) {
+				if (list.get(i).getBuffer(layerOrdinal).getClass() != VertexBuffer.class) return false;
+			}
+		}
 
 		RenderChunkListAccessor acc = (RenderChunkListAccessor) this;
 		TerrainShader.begin(acc.alacer$getX(), acc.alacer$getY(), acc.alacer$getZ());
 
-		if (TerrainShader.isAttribBindingActive()) {
-			int fast = 0;
-			for (int i = 0; i < count; i++) {
-				RenderChunk chunk = list.get(i);
-				BlockPos origin = chunk.getOrigin();
-				int ox = origin.getX();
-				int oy = origin.getY();
-				int oz = origin.getZ();
-				VertexBuffer buffer = chunk.getBuffer(layerOrdinal);
-
-				if (((Object) buffer).getClass() == VertexBuffer.class) {
+		try {
+			if (TerrainShader.isAttribBindingActive()) {
+				for (int i = 0; i < count; i++) {
+					RenderChunk chunk = list.get(i);
+					VertexBuffer buffer = chunk.getBuffer(layerOrdinal);
 					ModernVertexBuffer mvb = (ModernVertexBuffer) buffer;
 					int vCount = mvb.alacer$vertexCount();
 					if (vCount > 0) {
+						int ox, oy, oz;
+						if (chunk instanceof RenderChunkOrigin ro) {
+							ox = ro.alacer$originX();
+							oy = ro.alacer$originY();
+							oz = ro.alacer$originZ();
+						} else {
+							BlockPos origin = chunk.getOrigin();
+							ox = origin.getX();
+							oy = origin.getY();
+							oz = origin.getZ();
+						}
 						TerrainShader.setOrigin(ox, oy, oz);
 						ARBVertexAttribBinding.glBindVertexBuffer(0, mvb.alacer$bufferId(), 0L, 28);
 						GL11.glDrawArrays(GL11.GL_QUADS, 0, vCount);
 					}
-					fast++;
-				} else {
+				}
+				ModernGl.recordDecoupledDraws(count);
+			} else {
+				for (int i = 0; i < count; i++) {
+					RenderChunk chunk = list.get(i);
+					VertexBuffer buffer = chunk.getBuffer(layerOrdinal);
+					if (buffer instanceof ModernVertexBuffer mvb && mvb.alacer$vertexCount() <= 0) {
+						continue;
+					}
+					int ox, oy, oz;
+					if (chunk instanceof RenderChunkOrigin ro) {
+						ox = ro.alacer$originX();
+						oy = ro.alacer$originY();
+						oz = ro.alacer$originZ();
+					} else {
+						BlockPos origin = chunk.getOrigin();
+						ox = origin.getX();
+						oy = origin.getY();
+						oz = origin.getZ();
+					}
 					TerrainShader.setOrigin(ox, oy, oz);
+
 					buffer.bind();
 					this.prepareDrawState();
 					buffer.draw(7);
 				}
+				ModernGl.recordFallbackDraws(count);
 			}
-			if (fast > 0) {
-				ModernGl.recordDecoupledDraws(fast);
-			}
-			if (count > fast) {
-				ModernGl.recordFallbackDraws(count - fast);
-			}
-		} else {
-			for (int i = 0; i < count; i++) {
-				RenderChunk chunk = list.get(i);
-				BlockPos origin = chunk.getOrigin();
-				VertexBuffer buffer = chunk.getBuffer(layerOrdinal);
-
-				TerrainShader.setOrigin(origin.getX(), origin.getY(), origin.getZ());
-
-				buffer.bind();
-				this.prepareDrawState();
-				buffer.draw(7);
-			}
-			ModernGl.recordFallbackDraws(count);
+		} finally {
+			TerrainShader.end();
 		}
 
-		TerrainShader.end();
-
-		GLX.bindBuffer(GLX.GL_ARRAY_BUFFER, 0);
 		GlStateManager.clearColor();
 		list.clear();
+		return true;
 	}
 }

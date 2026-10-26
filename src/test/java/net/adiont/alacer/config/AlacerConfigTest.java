@@ -106,6 +106,8 @@ class AlacerConfigTest {
 		assertTrue(config.profilerEntityStages);
 		assertTrue(config.fastEntityChunkLookup);
 		assertFalse(config.verifyEntityChunkLookup);
+		assertTrue(config.fastEntityPipeline);
+		assertFalse(config.verifyEntityPipeline);
 		assertTrue(config.throttleGlErrorChecks);
 		assertFalse(config.verifyGlErrorChecks);
 		assertTrue(config.avoidMatrixReads);
@@ -175,6 +177,9 @@ class AlacerConfigTest {
 		AlacerConfig config = AlacerConfig.load(this.dir.resolve("alacer.properties"), LOGGER);
 		config.setToggle("render.fastEntityChunkLookup", false);
 		assertFalse(config.fastEntityChunkLookup);
+		config.setToggle("render.fastEntityPipeline", false);
+		assertFalse(config.fastEntityPipeline);
+		assertThrows(IllegalArgumentException.class, () -> config.setToggle("render.fastEntityPipeline.verify", true));
 		config.setToggle("render.fastChunkVisibility", false);
 		assertFalse(config.fastChunkVisibility);
 		config.setToggle("render.fastChunkFrustum", false);

@@ -13,4 +13,12 @@ public interface EntityChunkSlot {
 	int alacer$getEntityChunkGeneration();
 
 	void alacer$setEntityChunk(WorldChunk chunk, long column, int generation);
+
+	int alacer$getEntityStamp();
+
+	void alacer$setEntityStamp(int stamp);
+
+	boolean alacer$hasBlockEntities();
+
+	void alacer$setHasBlockEntities(boolean has);
 }

@@ -110,8 +110,13 @@ Keys (rebindable under Controls → Alacer):
 | Key | Action |
 |---|---|
 | F7 | Toggle the overlay: FPS, 1%/0.1% lows, frame-time percentiles, CPU breakdown, allocation, heap, GC. Covers the last 5 seconds. |
+| F8 | Toggle the performance graph; Shift+F8 freezes or resumes its history. |
 | Unbound (Zoom) | Hold for the selected magnification; bind under Controls -> Alacer. |
 | F9 | Export the full history to `alacer/profiles/profile-<time>.json` (summary) and `.csv` (one row per frame). |
+
+The [F3 overlay and graph](docs/F3-OVERLAY.md) use Minecraft's font and debug backgrounds.
+With the graph visible, F4 changes its mode, Ctrl+F4 changes its scale, and Shift+F4
+freezes the history. Compact layouts reserve space above the graph for world details.
 
 ## Video settings
 
@@ -172,6 +177,8 @@ Normal launches continue to use saved settings, so an existing explicit `false` 
 | `profiler.particleDetail` | `false` | Time each particle's update, its movement, the removal of dead particles and the light query each particle makes while drawn, and count removed particles: two `nanoTime` calls per particle and operation. Intrusive, for attribution only; its hooks are only installed when this is on at startup. See session 15. |
 | `profiler.particleLightRepeats` | `false` | Count, per unlit particle render pass, the particle light queries, their distinct (x, y, z, blockLight) arguments and positions, and those equal to the previous query (`particle_light_*` counters, final log line). Read once at first use and folded away when off; two hash-set inserts per query when on, so attribution only. Startup only. |
 | `profiler.hud` | `false` | Show the overlay at startup. |
+| `profiler.graph` | `false` | Show the performance graph at startup; also toggled by its Controls binding (F8 by default). |
+| `profiler.graphMode` | `1` | Graph startup mode: 0 frame milliseconds, 1 subsystem milliseconds, 2 subsystem percentages, 3 top subsystem detail. |
 | `benchmark.chunkEdit` | `false` | JVM-only benchmark scenario selector (not read from the config file): use with `benchmark=true`, an explicit `benchmark.vbo=false` or `true`, and `profiler.chunkLatency=true` for the 16-cell edit-burst responsiveness scenario described below. |
 | `quality.viewBobbing` | `100` | Bobbing strength, 0-100% in steps of 5, while vanilla View bobbing is on. Immediate; 100 returns vanilla's values untouched. |
 | `quality.distortion` | `100` | Nausea/portal view stretch, 0-100% in steps of 5. Immediate; 0 removes the stretch, 100 preserves vanilla. |
@@ -193,6 +200,8 @@ Normal launches continue to use saved settings, so an existing explicit `false` 
 | `render.fastCameraSectionFaces.verify` | `false` | Debug: also run vanilla's camera-section flood fill for every answer, use its result and log any difference (`Camera section faces final:` in the benchmark log). Use with the Alacer chunk search enabled. |
 | `render.fastEntityChunkLookup` | `true` | Reuse each render chunk's world-chunk reference when gathering entities. |
 | `render.fastEntityChunkLookup.verify` | `false` | Debug: also do vanilla's lookup for every cached one and log differences. |
+| `render.fastEntityPipeline` | `true` | Streamline entity and block entity iteration by stamping active chunk sections and iterating list instances directly. Eliminates 95%+ of entity chunk loop CPU overhead across empty visible chunks while preserving exact vanilla rendering order and behavior. |
+| `render.fastEntityPipeline.verify` | `false` | Debug: also evaluate vanilla entity traversal and verify identical rendered entity counts and sequence. |
 | `render.throttleGlErrorChecks` | `true` | Check for OpenGL errors about once per second instead of twice per frame. Errors are still logged, with a note that they may come from any frame since the previous check; after the first error, checks return to every frame. Saves about 2-3% of frame time when the NVIDIA driver runs threaded; no measurable effect otherwise (see BENCHMARKS.md). |
 | `render.throttleGlErrorChecks.verify` | `false` | Debug: deliberately raise a harmless OpenGL error between checks and log whether it is reported. |
 | `render.avoidMatrixReads` | `true` | Answer the world render's camera, frustum and viewport reads, and render chunk matrix reads, from CPU-side copies instead of `glGet` calls that wait for the driver. The real values are compared about once per second; after a difference (something changed the matrices without `GlStateManager`), reads return to OpenGL for the session. With `render.throttleGlErrorChecks` also on, about 35% less frame time when the NVIDIA driver runs threaded; no measurable effect otherwise (see BENCHMARKS.md). |

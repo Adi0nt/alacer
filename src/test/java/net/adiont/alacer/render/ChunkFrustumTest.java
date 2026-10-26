@@ -112,4 +112,32 @@ class ChunkFrustumTest {
 		assertFalse(fast.prepare(null));
 		assertFalse(fast.prepare(new FrustumCuller(new FrustumData()) {}));
 	}
+
+	@Test
+	void fastChunkMethodMatchesBoxTestAndVanilla() {
+		Random random = new Random(8821);
+		FrustumData vanilla = new FrustumData();
+		ChunkFrustum fast = new ChunkFrustum();
+		for (int view = 0; view < 100; view++) {
+			for (float[] plane : vanilla.frustum) {
+				for (int c = 0; c < 4; c++) {
+					plane[c] = (random.nextFloat() * 2 - 1) * (c == 3 ? 512 : 1);
+				}
+			}
+			double ox = random.nextInt(10_000) - 5000;
+			double oy = random.nextInt(256);
+			double oz = random.nextInt(10_000) - 5000;
+			assertTrue(fast.load(vanilla.frustum, ox, oy, oz));
+			for (int box = 0; box < 500; box++) {
+				int cx = (random.nextInt(200) - 100) * 16;
+				int cy = random.nextInt(16) * 16;
+				int cz = (random.nextInt(200) - 100) * 16;
+				boolean expected = vanilla.contains(cx - ox, cy - oy, cz - oz, cx + 16 - ox, cy + 16 - oy, cz + 16 - oz);
+				boolean testBox = fast.test(cx, cy, cz, cx + 16, cy + 16, cz + 16) == ChunkFrustum.VISIBLE;
+				boolean fastChunk = fast.isChunkVisible(cx, cy, cz);
+				assertEquals(expected, testBox);
+				assertEquals(expected, fastChunk);
+			}
+		}
+	}
 }

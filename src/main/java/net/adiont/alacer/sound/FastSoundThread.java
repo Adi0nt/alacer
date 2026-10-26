@@ -1,6 +1,7 @@
 package net.adiont.alacer.sound;
 
 import java.util.concurrent.atomic.LongAdder;
+import java.util.concurrent.TimeUnit;
 import java.util.concurrent.locks.LockSupport;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -51,48 +52,64 @@ public final class FastSoundThread {
 		return config != null && config.verifyFastSoundThread;
 	}
 
-	public static void snooze(Thread thread, long milliseconds) {
-		snoozes.increment();
-		if (milliseconds <= 0) {
-			return;
-		}
-		if (isEnabled()) {
-			boolean verify = isVerifyEnabled();
-			long startNanos = verify ? System.nanoTime() : 0L;
+	interface Waiter {
+		long nanoTime();
+		void park(Thread blocker, long nanos);
+		boolean interrupted();
+	}
 
-			LockSupport.parkNanos(thread, milliseconds * 1_000_000L);
-			boolean interrupted = Thread.interrupted();
+	static final Waiter SYSTEM_WAITER = new Waiter() {
+		public long nanoTime() { return System.nanoTime(); }
+		public void park(Thread blocker, long nanos) { LockSupport.parkNanos(blocker, nanos); }
+		public boolean interrupted() { return Thread.interrupted(); }
+	};
+
+	public static void snooze(Thread thread, long milliseconds) {
+		if (isEnabled()) {
+			snooze(thread, milliseconds, isVerifyEnabled(), SYSTEM_WAITER);
+		} else {
+			snoozes.increment();
+			if (milliseconds <= 0) return;
+			try { Thread.sleep(milliseconds); }
+			catch (InterruptedException ignored) { }
+		}
+	}
+
+	/** Same wait loop for production and deterministic timing/interrupt regression tests. */
+	static void snooze(Thread thread, long milliseconds, boolean verify, Waiter waiter) {
+		snoozes.increment();
+		if (milliseconds <= 0) return;
+		long requested = TimeUnit.MILLISECONDS.toNanos(milliseconds); // saturates instead of overflowing
+		long start = waiter.nanoTime();
+		long remaining = requested;
+		boolean interrupted;
+		do {
+			waiter.park(thread, remaining);
+			interrupted = waiter.interrupted();
 			if (interrupted) {
 				interruptionsAvoided.increment();
+				break;
 			}
+			// Raw unpark permits and spurious returns do not shorten a timed sleep.
+			remaining = requested - (waiter.nanoTime() - start);
+		} while (remaining > 0);
 
-			if (verify) {
-				verifiedSnoozes.increment();
-				long elapsedMillis = (System.nanoTime() - startNanos) / 1_000_000L;
-				// If not interrupted, elapsed time should have reached at least near the requested time
-				// (accounting for standard timer granularity / OS scheduling slack of ~15ms on Windows).
-				if (!interrupted && milliseconds > 50 && elapsedMillis < (milliseconds - 20)) {
-					verifyMismatches.increment();
-					LOGGER.warn("FastSoundThread: premature unpark without interrupt: requested {}ms, elapsed {}ms",
-						milliseconds, elapsedMillis);
-				}
-			}
-		} else {
-			try {
-				Thread.sleep(milliseconds);
-			} catch (InterruptedException ignored) {
-				// Vanilla sleep clears the interrupted status when throwing InterruptedException
+		if (verify) {
+			verifiedSnoozes.increment();
+			long elapsed = waiter.nanoTime() - start;
+			if (!interrupted && elapsed < requested) {
+				verifyMismatches.increment();
+				LOGGER.warn("FastSoundThread: wait returned early: requested {}ns, elapsed {}ns", requested, elapsed);
 			}
 		}
 	}
 
 	/**
-	 * Unparks the sound thread directly if parked.
+	 * Legacy wake helper. Use interrupt so a requested wake can be distinguished from a
+	 * spurious park return, just as in the sound library. snooze clears the interrupt flag.
 	 */
 	public static void unpark(Thread thread) {
-		if (thread != null) {
-			LockSupport.unpark(thread);
-		}
+		if (thread != null) thread.interrupt();
 	}
 
 	public static void clear() {

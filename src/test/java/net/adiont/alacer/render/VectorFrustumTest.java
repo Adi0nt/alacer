@@ -82,7 +82,7 @@ class VectorFrustumTest {
 	}
 
 	@Test
-	void liveCameraRotationsSweepPitchAndYawWithZeroCullingMisses() {
+	void syntheticCameraRotationsMatchVanillaPredicate() {
 		VectorFrustum fast = new VectorFrustum();
 		FrustumData vanilla = new FrustumData();
 
@@ -91,7 +91,7 @@ class VectorFrustumTest {
 		double camZ = -256.5;
 
 		// Sweep yaw through full 360 degrees in 15-degree steps
-		// Sweep pitch from looking straight down (-89 deg) to straight up (+89 deg)
+		// Synthetic matrices; this is not a native camera/rendering qualification.
 		for (float yaw = -180.0f; yaw <= 180.0f; yaw += 15.0f) {
 			for (float pitch = -85.0f; pitch <= 85.0f; pitch += 17.0f) {
 				computeFrustumPlanes(pitch, yaw, 70.0f, 16.0f / 9.0f, 0.05f, 256.0f, vanilla.frustum);
@@ -156,10 +156,10 @@ class VectorFrustumTest {
 		float[] clip = new float[16];
 		for (int r = 0; r < 4; r++) {
 			for (int c = 0; c < 4; c++) {
-				clip[r * 4 + c] = proj[r * 4 + 0] * model[0 * 4 + c]
-								+ proj[r * 4 + 1] * model[1 * 4 + c]
-								+ proj[r * 4 + 2] * model[2 * 4 + c]
-								+ proj[r * 4 + 3] * model[3 * 4 + c];
+				clip[c * 4 + r] = model[c * 4] * proj[r]
+								+ model[c * 4 + 1] * proj[4 + r]
+								+ model[c * 4 + 2] * proj[8 + r]
+								+ model[c * 4 + 3] * proj[12 + r];
 			}
 		}
 
@@ -176,6 +176,19 @@ class VectorFrustumTest {
 		setPlane(planes[4], clip[3] - clip[2], clip[7] - clip[6], clip[11] - clip[10], clip[15] - clip[14]);
 		// Near: row 3 + row 2
 		setPlane(planes[5], clip[3] + clip[2], clip[7] + clip[6], clip[11] + clip[10], clip[15] + clip[14]);
+	}
+
+	@Test
+	void rotatedCameraSeesForwardButNotBackwardOrBeyondFarPlane() {
+		FrustumData data = new FrustumData();
+		for (float yaw : new float[] {-180, -90, 0, 90}) {
+			computeFrustumPlanes(0, yaw, 70, 16.0f / 9.0f, 0.05f, 256, data.frustum);
+			double angle = Math.toRadians(yaw);
+			double x = -Math.sin(angle), z = Math.cos(angle);
+			assertTrue(data.contains(x * 32, 0, z * 32, x * 32, 0, z * 32));
+			assertFalse(data.contains(-x * 32, 0, -z * 32, -x * 32, 0, -z * 32));
+			assertFalse(data.contains(x * 300, 0, z * 300, x * 300, 0, z * 300));
+		}
 	}
 
 	private static void setPlane(float[] plane, float a, float b, float c, float d) {

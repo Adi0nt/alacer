@@ -1,5 +1,6 @@
 package net.adiont.alacer.mixin;
 
+import org.lwjgl.input.Keyboard;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -10,8 +11,11 @@ import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 
 import net.adiont.alacer.Alacer;
 import net.adiont.alacer.profiler.FrameProfiler.Section;
+import net.adiont.alacer.profiler.PerformanceAreaGraphRenderer;
+import net.adiont.alacer.profiler.PerformanceTracker;
 import net.adiont.alacer.render.GlErrorChecks;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.screen.Screen;
 
 /** Frame boundaries, the render/swap split of each frame, and vanilla's per-frame GL error checks. */
 @Mixin(Minecraft.class)
@@ -52,5 +56,23 @@ public class MinecraftMixin {
 	@Inject(method = "runGame", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/Minecraft;updateDisplay()V", shift = At.Shift.AFTER))
 	private void alacer$afterSwap(CallbackInfo ci) {
 		Alacer.get().end(Section.SWAP);
+	}
+
+	@Inject(method = "handleGuiKeyBindings", at = @At("HEAD"))
+	private void alacer$handleKeyBindings(CallbackInfo ci) {
+		Minecraft minecraft = (Minecraft) (Object) this;
+		if (minecraft.screen != null || !Keyboard.getEventKeyState() || Keyboard.isRepeatEvent()
+			|| Keyboard.getEventKey() != Keyboard.KEY_F4 || !PerformanceAreaGraphRenderer.isVisible(minecraft)) return;
+		if (Screen.isShiftDown()) PerformanceTracker.toggleFrozen();
+		else if (Screen.isControlDown()) PerformanceAreaGraphRenderer.cycleScale();
+		else {
+			PerformanceAreaGraphRenderer.cycleMode();
+			Alacer.get().config().graphMode = PerformanceAreaGraphRenderer.getMode();
+		}
+	}
+
+	@Inject(method = "renderProfilerChart", at = @At("HEAD"), cancellable = true)
+	private void alacer$cancelVanillaProfilerChart(long time, CallbackInfo ci) {
+		if (PerformanceAreaGraphRenderer.isVisible((Minecraft) (Object) this)) ci.cancel();
 	}
 }

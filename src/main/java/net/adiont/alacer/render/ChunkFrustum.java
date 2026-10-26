@@ -53,12 +53,12 @@ public final class ChunkFrustum {
 	private double offsetY;
 	private double offsetZ;
 	// Plane coefficients as doubles (float to double widening is exact).
-	private double a0, b0, c0, d0;
-	private double a1, b1, c1, d1;
-	private double a2, b2, c2, d2;
-	private double a3, b3, c3, d3;
-	private double a4, b4, c4, d4;
-	private double a5, b5, c5, d5;
+	private double a0, b0, c0, d0, k0;
+	private double a1, b1, c1, d1, k1;
+	private double a2, b2, c2, d2, k2;
+	private double a3, b3, c3, d3, k3;
+	private double a4, b4, c4, d4, k4;
+	private double a5, b5, c5, d5, k5;
 
 	/**
 	 * Reads the culler's planes and offsets for the boxes tested next.
@@ -106,6 +106,45 @@ public final class ChunkFrustum {
 		this.a3 = planes[3][0]; this.b3 = planes[3][1]; this.c3 = planes[3][2]; this.d3 = planes[3][3];
 		this.a4 = planes[4][0]; this.b4 = planes[4][1]; this.c4 = planes[4][2]; this.d4 = planes[4][3];
 		this.a5 = planes[5][0]; this.b5 = planes[5][1]; this.c5 = planes[5][2]; this.d5 = planes[5][3];
+
+		this.k0 = this.d0 - (this.a0 * offsetX + this.b0 * offsetY + this.c0 * offsetZ)
+			+ (this.a0 >= 0.0 ? this.a0 * 16.0 : 0.0)
+			+ (this.b0 >= 0.0 ? this.b0 * 16.0 : 0.0)
+			+ (this.c0 >= 0.0 ? this.c0 * 16.0 : 0.0);
+		this.k1 = this.d1 - (this.a1 * offsetX + this.b1 * offsetY + this.c1 * offsetZ)
+			+ (this.a1 >= 0.0 ? this.a1 * 16.0 : 0.0)
+			+ (this.b1 >= 0.0 ? this.b1 * 16.0 : 0.0)
+			+ (this.c1 >= 0.0 ? this.c1 * 16.0 : 0.0);
+		this.k2 = this.d2 - (this.a2 * offsetX + this.b2 * offsetY + this.c2 * offsetZ)
+			+ (this.a2 >= 0.0 ? this.a2 * 16.0 : 0.0)
+			+ (this.b2 >= 0.0 ? this.b2 * 16.0 : 0.0)
+			+ (this.c2 >= 0.0 ? this.c2 * 16.0 : 0.0);
+		this.k3 = this.d3 - (this.a3 * offsetX + this.b3 * offsetY + this.c3 * offsetZ)
+			+ (this.a3 >= 0.0 ? this.a3 * 16.0 : 0.0)
+			+ (this.b3 >= 0.0 ? this.b3 * 16.0 : 0.0)
+			+ (this.c3 >= 0.0 ? this.c3 * 16.0 : 0.0);
+		this.k4 = this.d4 - (this.a4 * offsetX + this.b4 * offsetY + this.c4 * offsetZ)
+			+ (this.a4 >= 0.0 ? this.a4 * 16.0 : 0.0)
+			+ (this.b4 >= 0.0 ? this.b4 * 16.0 : 0.0)
+			+ (this.c4 >= 0.0 ? this.c4 * 16.0 : 0.0);
+		this.k5 = this.d5 - (this.a5 * offsetX + this.b5 * offsetY + this.c5 * offsetZ)
+			+ (this.a5 >= 0.0 ? this.a5 * 16.0 : 0.0)
+			+ (this.b5 >= 0.0 ? this.b5 * 16.0 : 0.0)
+			+ (this.c5 >= 0.0 ? this.c5 * 16.0 : 0.0);
+		return true;
+	}
+
+	/**
+	 * Fast-path chunk box visibility check using precomputed corner discriminant offsets.
+	 * Evaluates plane equations at integer chunk coordinates, short-circuiting on the first negative plane.
+	 */
+	public boolean isChunkVisible(int ox, int oy, int oz) {
+		if (this.a0 * ox + this.b0 * oy + this.c0 * oz + this.k0 <= 0.0) return false;
+		if (this.a1 * ox + this.b1 * oy + this.c1 * oz + this.k1 <= 0.0) return false;
+		if (this.a2 * ox + this.b2 * oy + this.c2 * oz + this.k2 <= 0.0) return false;
+		if (this.a3 * ox + this.b3 * oy + this.c3 * oz + this.k3 <= 0.0) return false;
+		if (this.a4 * ox + this.b4 * oy + this.c4 * oz + this.k4 <= 0.0) return false;
+		if (this.a5 * ox + this.b5 * oy + this.c5 * oz + this.k5 <= 0.0) return false;
 		return true;
 	}
 

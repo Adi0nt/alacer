@@ -16,9 +16,9 @@ import net.minecraft.client.render.platform.GlStateManager;
  * negated offset afterwards. The offset is zero for practically every part, so each drawn part
  * issues two OpenGL calls that do nothing; for the benchmark's mobs that is 12-24 of about 75
  * calls per entity (see BENCHMARKS.md). The other translations in those methods (the part's
- * pivot) are skipped too when they happen to be zero. Multiplying by a translation of zero is
- * the identity: each matrix element {@code m[12+i]} becomes {@code m[12+i] + 0}, so the matrix is
- * unchanged for any finite matrix, which is why vanilla's result is reproduced exactly.
+ * pivot) are skipped too when they happen to be zero. A zero translation is a mathematical identity, but IEEE-754 signed zeros and exceptional
+ * matrix elements prevent a universal raw-bit guarantee. Native verification below samples
+ * actual driver behavior; finite Java matrix tests do not certify it.
  *
  * <p>Only these call sites are wrapped, so other callers of {@code translatef} and other mods'
  * hooks into it are unaffected; a skipped call simply does not happen, as when vanilla

@@ -361,14 +361,16 @@ public final class FrameProfiler {
 
 		if (this.frameStart != 0L) {
 			int row = this.frames.append();
-			this.frames.set(row, COL_FRAME, now - this.frameStart);
+			long frameNs = now - this.frameStart;
+			this.frames.set(row, COL_FRAME, frameNs);
 			for (int i = 0; i < this.sectionTotal.length; i++) {
 				this.frames.set(row, SECTION_BASE + i, this.sectionTotal[i]);
 			}
 			for (int i = 0; i < this.counterTotal.length; i++) {
 				this.frames.set(row, COUNTER_BASE + i, this.counterTotal[i]);
 			}
-			this.frames.set(row, COL_ALLOC_BYTES, alloc < 0 || this.frameStartAlloc < 0 ? -1 : alloc - this.frameStartAlloc);
+			long allocBytes = alloc < 0 || this.frameStartAlloc < 0 ? -1 : alloc - this.frameStartAlloc;
+			this.frames.set(row, COL_ALLOC_BYTES, allocBytes);
 			if (this.chunkCounters != null) {
 				this.frames.set(row, COL_VISIBLE_CHUNKS, this.chunkCounters.visibleChunks());
 				this.frames.set(row, COL_PENDING_CHUNKS, this.chunkCounters.pendingChunks());
@@ -376,6 +378,63 @@ public final class FrameProfiler {
 			this.frames.set(row, COL_START, this.frameStart - this.epoch);
 			if (this.listener != null) {
 				this.listener.onFrame(this.frames, row);
+			}
+
+			if (PerformanceTracker.isCollecting()) {
+				long skyNs = this.sectionTotal[Section.SKY.ordinal()] + this.sectionTotal[Section.CLOUDS.ordinal()]
+					+ this.sectionTotal[Section.WEATHER.ordinal()] + this.sectionTotal[Section.LIGHTMAP.ordinal()]
+					+ this.sectionTotal[Section.PICK.ordinal()] + this.sectionTotal[Section.HAND.ordinal()];
+				long terrainNs = this.sectionTotal[Section.TERRAIN_SETUP.ordinal()] + this.sectionTotal[Section.CHUNK_UPLOAD.ordinal()]
+					+ this.sectionTotal[Section.TERRAIN_SOLID.ordinal()] + this.sectionTotal[Section.TERRAIN_CUTOUT_MIPPED.ordinal()]
+					+ this.sectionTotal[Section.TERRAIN_CUTOUT.ordinal()] + this.sectionTotal[Section.TERRAIN_TRANSLUCENT.ordinal()];
+
+				long visNs = this.sectionTotal[Section.VISIBILITY.ordinal()];
+				long setupOtherNs = Math.max(0L, this.sectionTotal[Section.TERRAIN_SETUP.ordinal()] - visNs);
+				long uploadNs = this.sectionTotal[Section.CHUNK_UPLOAD.ordinal()];
+				long solidNs = this.sectionTotal[Section.TERRAIN_SOLID.ordinal()];
+				long cutoutMippedNs = this.sectionTotal[Section.TERRAIN_CUTOUT_MIPPED.ordinal()];
+				long cutoutNs = this.sectionTotal[Section.TERRAIN_CUTOUT.ordinal()];
+				long translucentNs = this.sectionTotal[Section.TERRAIN_TRANSLUCENT.ordinal()];
+				int visChunks = this.chunkCounters != null ? this.chunkCounters.visibleChunks() : 0;
+				int pendChunks = this.chunkCounters != null ? this.chunkCounters.pendingChunks() : 0;
+				int frustumTests = (int) this.counterTotal[Counter.FRUSTUM_TESTS.ordinal()];
+				long entityPrep = this.sectionTotal[Section.ENTITY_PREPARE.ordinal()];
+				long entityGlobal = this.sectionTotal[Section.ENTITY_GLOBAL.ordinal()];
+				long entityOutline = this.sectionTotal[Section.ENTITY_OUTLINE.ordinal()];
+				long entityBlock = this.sectionTotal[Section.BLOCK_ENTITY_LOOP.ordinal()];
+				long entityDraw = this.sectionTotal[Section.ENTITY_DRAW.ordinal()];
+				long entityVis = this.sectionTotal[Section.ENTITY_VISIBILITY_CHECK.ordinal()];
+				long entityLoopRaw = this.sectionTotal[Section.ENTITY_LOOP.ordinal()];
+				long entityLoopNs = Math.max(0L, entityLoopRaw - entityDraw - entityVis);
+
+				PerformanceTracker.recordFrame(
+					frameNs,
+					this.sectionTotal[Section.SWAP.ordinal()],
+					skyNs,
+					terrainNs,
+					this.sectionTotal[Section.ENTITIES.ordinal()],
+					this.sectionTotal[Section.PARTICLES.ordinal()],
+					this.sectionTotal[Section.TICK.ordinal()],
+					this.sectionTotal[Section.GUI.ordinal()],
+					allocBytes,
+					setupOtherNs,
+					visNs,
+					uploadNs,
+					solidNs,
+					cutoutMippedNs,
+					cutoutNs,
+					translucentNs,
+					visChunks,
+					pendChunks,
+					frustumTests,
+					entityLoopNs,
+					entityBlock,
+					entityGlobal,
+					entityDraw,
+					entityVis,
+					entityPrep,
+					entityOutline
+				);
 			}
 		}
 
@@ -491,5 +550,6 @@ public final class FrameProfiler {
 		this.frames.clear();
 		this.ticks.clear();
 		this.frameStart = 0L;
+		PerformanceTracker.reset();
 	}
 }

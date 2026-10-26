@@ -19,6 +19,8 @@ import net.adiont.alacer.config.AlacerConfig;
 import net.adiont.alacer.mixin.ChunkRenderDispatcherAccessor;
 import net.adiont.alacer.mixin.WorldRendererAccessor;
 import net.adiont.alacer.profiler.FrameProfiler;
+import net.adiont.alacer.profiler.PerformanceAreaGraphRenderer;
+import net.adiont.alacer.profiler.PerformanceTracker;
 import net.adiont.alacer.profiler.ProfileReport;
 import net.adiont.alacer.profiler.ProfilerHud;
 import net.adiont.alacer.render.EntityRendering;
@@ -32,6 +34,7 @@ import net.fabricmc.loader.api.ModContainer;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.options.GameOptions;
 import net.minecraft.client.options.KeyBinding;
+import net.minecraft.client.render.Window;
 import net.minecraft.client.render.platform.GLX;
 import net.minecraft.client.render.world.WorldRenderer;
 import net.minecraft.text.LiteralText;
@@ -56,9 +59,14 @@ public final class Alacer implements ClientModInitializer, FrameProfiler.ChunkCo
 	private ProfilerHud hud;
 	private BenchmarkRunner benchmark;
 	private KeyBinding hudKey;
+	private KeyBinding graphKey;
 	private KeyBinding exportKey;
 	private KeyBinding zoomKey;
 	private long nextLog;
+	private net.minecraft.client.world.ClientWorld telemetryWorld;
+	private Window graphWindow;
+	private int graphWidth = -1, graphHeight = -1, graphGuiScale = -1;
+	private boolean graphUnicode;
 
 	public static Alacer get() {
 		return instance;
@@ -69,6 +77,7 @@ public final class Alacer implements ClientModInitializer, FrameProfiler.ChunkCo
 		instance = this;
 		Path configFile = FabricLoader.getInstance().getConfigDir().resolve(MOD_ID + ".properties");
 		this.config = AlacerConfig.load(configFile, LOGGER);
+		PerformanceAreaGraphRenderer.setMode(this.config.graphMode);
 		LOGGER.info("Alacer initializing: {}", this.config.describe());
 
 		if (this.config.profilerEnabled) {
@@ -92,6 +101,7 @@ public final class Alacer implements ClientModInitializer, FrameProfiler.ChunkCo
 			});
 			KeybindEvents.REGISTER_KEYBINDS.register(() -> {
 				this.hudKey = KeybindRegistry.register("key.alacer.hud", Keyboard.KEY_F7, "key.categories.alacer");
+				this.graphKey = KeybindRegistry.register("key.alacer.graph", Keyboard.KEY_F8, "key.categories.alacer");
 				this.exportKey = KeybindRegistry.register("key.alacer.export", Keyboard.KEY_F9, "key.categories.alacer");
 			});
 
@@ -134,6 +144,14 @@ public final class Alacer implements ClientModInitializer, FrameProfiler.ChunkCo
 	/** Start of a {@code runGame()} iteration. */
 	public void onFrameStart() {
 		GlErrorChecks.onFrameStart();
+		Minecraft minecraft = Minecraft.getInstance();
+		if (this.telemetryWorld != minecraft.world) {
+			this.telemetryWorld = minecraft.world;
+			PerformanceTracker.reset();
+		}
+		PerformanceTracker.setCollecting(this.profiler != null && this.benchmark == null
+			&& minecraft.world != null && minecraft.screen == null && !minecraft.options.hideGui
+			&& (minecraft.options.debugEnabled || this.config.graphVisible));
 		if (this.profiler != null) {
 			if (this.config.profilerChunkDetail) {
 				net.adiont.alacer.render.ChunkPipelineTimings.frameBoundary(this.profiler);
@@ -165,9 +183,31 @@ public final class Alacer implements ClientModInitializer, FrameProfiler.ChunkCo
 		}
 	}
 
+	public String graphKeyName() {
+		if (this.graphKey == null || this.graphKey.getKeyCode() == 0) return "Unbound";
+		int code = this.graphKey.getKeyCode();
+		return code < 0 ? "Mouse " + (code + 101) : Keyboard.getKeyName(code);
+	}
+
+	public boolean isGraphVisible() {
+		return this.config != null && this.config.graphVisible;
+	}
+
+	public boolean isBenchmarking() { return this.benchmark != null; }
+
 	public void renderHud(Minecraft minecraft) {
-		if (this.hud != null && this.config.hudVisible && !minecraft.options.debugEnabled) {
+		if (this.hud != null && this.config.hudVisible && !minecraft.options.debugEnabled && !minecraft.options.hideGui) {
 			this.hud.render(minecraft);
+		}
+		if (PerformanceAreaGraphRenderer.isVisible(minecraft) && !minecraft.options.debugEnabled) {
+			boolean unicode = minecraft.isUnicode();
+			if (this.graphWindow == null || this.graphWidth != minecraft.width || this.graphHeight != minecraft.height
+				|| this.graphGuiScale != minecraft.options.guiScale || this.graphUnicode != unicode) {
+				this.graphWindow = new Window(minecraft);
+				this.graphWidth = minecraft.width; this.graphHeight = minecraft.height;
+				this.graphGuiScale = minecraft.options.guiScale; this.graphUnicode = unicode;
+			}
+			PerformanceAreaGraphRenderer.render(minecraft, this.graphWindow);
 		}
 	}
 
@@ -175,6 +215,13 @@ public final class Alacer implements ClientModInitializer, FrameProfiler.ChunkCo
 		if (this.hudKey != null) {
 			while (this.hudKey.consumeClick()) {
 				this.config.hudVisible = !this.config.hudVisible;
+			}
+		}
+		if (this.graphKey != null) {
+			while (this.graphKey.consumeClick()) {
+				if (net.minecraft.client.gui.screen.Screen.isShiftDown()) {
+					if (PerformanceAreaGraphRenderer.isVisible(minecraft)) PerformanceTracker.toggleFrozen();
+				} else { this.config.graphVisible = !this.config.graphVisible; }
 			}
 		}
 		if (this.exportKey != null) {

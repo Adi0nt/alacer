@@ -57,8 +57,8 @@ class FastSoundThreadTest {
 		assertFalse(worker.isAlive());
 		assertTrue(finished.get());
 		assertEquals(1, FastSoundThread.snoozes());
-		// Unpark is not an interruption
-		assertEquals(0, FastSoundThread.interruptionsAvoided());
+		// Explicit wakes use the sound library's interrupt-and-clear contract.
+		assertEquals(1, FastSoundThread.interruptionsAvoided());
 	}
 
 	@Test
@@ -147,37 +147,83 @@ class FastSoundThreadTest {
 		assertEquals(0, FastSoundThread.verifyMismatches());
 	}
 
-	@Test
-	void heavyAudioStreamingConcurrentLockFreeParkingCertification() throws Exception {
-		int channels = 16;
-		int iterationsPerChannel = 200;
-		ExecutorService channelPool = Executors.newFixedThreadPool(channels);
-		CountDownLatch done = new CountDownLatch(channels);
-
-		for (int c = 0; c < channels; c++) {
-			channelPool.submit(() -> {
-				try {
-					Thread self = Thread.currentThread();
-					for (int i = 0; i < iterationsPerChannel; i++) {
-						// Audio stream channel sleeps briefly or is immediately unparked
-						if (i % 2 == 0) {
-							FastSoundThread.snooze(self, 1);
-						} else {
-							FastSoundThread.unpark(self);
-							FastSoundThread.snooze(self, 10);
-						}
-					}
-				} finally {
-					done.countDown();
-				}
-			});
+	private static final class FakeWaiter implements FastSoundThread.Waiter {
+		long now;
+		long firstAdvance;
+		int calls;
+		boolean interrupt;
+		final java.util.List<Long> waits = new java.util.ArrayList<>();
+		public long nanoTime() { return now; }
+		public void park(Thread blocker, long nanos) {
+			waits.add(nanos);
+			// First call is a spurious return or an already available raw unpark permit.
+			if (calls++ > 0) now += nanos;
+			else now += firstAdvance;
 		}
+		public boolean interrupted() { boolean result = interrupt; interrupt = false; return result; }
+	}
 
-		assertTrue(done.await(10, TimeUnit.SECONDS), "All audio streaming channels must complete without deadlock");
-		channelPool.shutdown();
-		channelPool.awaitTermination(2, TimeUnit.SECONDS);
+	@Test void spuriousReturnRetriesRemainingDeadlineAndActuallyVerifies() {
+		FakeWaiter waiter = new FakeWaiter();
+		FastSoundThread.snooze(Thread.currentThread(), 100, true, waiter);
+		assertEquals(java.util.List.of(100_000_000L, 100_000_000L), waiter.waits);
+		assertEquals(100_000_000L, waiter.now);
+		assertEquals(1, FastSoundThread.verifiedSnoozes());
+		assertEquals(0, FastSoundThread.verifyMismatches());
+	}
 
-		assertEquals(channels * iterationsPerChannel, FastSoundThread.snoozes());
+	@Test void interruptedWaitReturnsEarlyAndClearsStatus() {
+		FakeWaiter waiter = new FakeWaiter();
+		waiter.interrupt = true;
+		FastSoundThread.snooze(Thread.currentThread(), 100, true, waiter);
+		assertEquals(0, waiter.now);
+		assertFalse(waiter.interrupt);
+		assertEquals(1, FastSoundThread.interruptionsAvoided());
+		assertEquals(1, FastSoundThread.verifiedSnoozes());
+		assertEquals(0, FastSoundThread.verifyMismatches());
+	}
+
+	@Test void earlyReturnWaitsOnlyForTheRemainingTimeAcrossClockWrap() {
+		FakeWaiter waiter = new FakeWaiter();
+		waiter.now = Long.MAX_VALUE - 20_000_000L;
+		waiter.firstAdvance = 30_000_000L;
+		FastSoundThread.snooze(Thread.currentThread(), 100, true, waiter);
+		assertEquals(java.util.List.of(100_000_000L, 70_000_000L), waiter.waits);
+		assertEquals(1, FastSoundThread.verifiedSnoozes());
+		assertEquals(0, FastSoundThread.verifyMismatches());
+	}
+
+	@Test void longTimeoutConversionSaturatesWithoutBecomingNegative() {
+		FakeWaiter waiter = new FakeWaiter();
+		FastSoundThread.snooze(Thread.currentThread(), Long.MAX_VALUE, true, waiter);
+		assertEquals(Long.MAX_VALUE, waiter.now);
+		assertTrue(waiter.waits.stream().allMatch(nanos -> nanos > 0));
+		assertEquals(1, FastSoundThread.verifiedSnoozes());
+	}
+
+	@Test void concurrentParkingExerciseVerifiesEveryCompletedWait() throws Exception {
+		int threads = 16, iterations = 200;
+		ExecutorService pool = Executors.newFixedThreadPool(threads);
+		java.util.List<java.util.concurrent.Future<?>> futures = new java.util.ArrayList<>();
+		try {
+			for (int c = 0; c < threads; c++) {
+				futures.add(pool.submit(() -> {
+					for (int i = 0; i < iterations; i++) {
+						Thread self = Thread.currentThread();
+						if (i % 2 != 0) FastSoundThread.unpark(self);
+						FastSoundThread.snooze(self, i % 2 == 0 ? 1 : 10, true, FastSoundThread.SYSTEM_WAITER);
+						assertFalse(self.isInterrupted());
+					}
+				}));
+			}
+			for (java.util.concurrent.Future<?> future : futures) future.get(10, TimeUnit.SECONDS);
+		} finally {
+			pool.shutdownNow();
+			assertTrue(pool.awaitTermination(5, TimeUnit.SECONDS));
+		}
+		assertEquals(threads * iterations, FastSoundThread.snoozes());
+		assertEquals(threads * iterations, FastSoundThread.verifiedSnoozes());
+		assertEquals(threads * iterations / 2, FastSoundThread.interruptionsAvoided());
 		assertEquals(0, FastSoundThread.verifyMismatches());
 	}
 }

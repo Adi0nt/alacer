@@ -66,47 +66,51 @@ class WorkerBlockStateCacheTest {
 	}
 
 	@Test
-	void rapidTerrainGenerationWorkerPoolBenchmark() throws Exception {
+	void concurrentCompileLeasesKeepArraysAndContentsIsolated() throws Exception {
 		int workerCount = 4;
 		int compilesPerWorker = 200;
 		java.util.concurrent.ExecutorService pool = java.util.concurrent.Executors.newFixedThreadPool(workerCount);
-		java.util.concurrent.CountDownLatch latch = new java.util.concurrent.CountDownLatch(workerCount);
-		java.util.concurrent.atomic.AtomicInteger totalCompiles = new java.util.concurrent.atomic.AtomicInteger();
-
-		long startNanos = System.nanoTime();
-		for (int w = 0; w < workerCount; w++) {
-			final int workerId = w;
-			pool.submit(() -> {
-				try {
+		java.util.concurrent.CyclicBarrier barrier = new java.util.concurrent.CyclicBarrier(workerCount);
+		WorkerBlockStateCache[] live = new WorkerBlockStateCache[workerCount];
+		java.util.List<java.util.concurrent.Future<?>> futures = new java.util.ArrayList<>();
+		try {
+			for (int w = 0; w < workerCount; w++) {
+				final int workerId = w;
+				futures.add(pool.submit(() -> {
 					for (int c = 0; c < compilesPerWorker; c++) {
 						int mark = WorkerBlockStateCache.beginCompile();
 						try {
 							WorkerBlockStateCache cache = WorkerBlockStateCache.acquireRegion();
 							org.junit.jupiter.api.Assertions.assertNotNull(cache);
-							assertEquals(8000, cache.blocks.length);
-							assertEquals(8000, cache.light.length);
-
-							// Simulate section compilation writes
-							cache.light[0] = (workerId * 1000) + c;
+							assertEquals(-1, cache.light[0]);
+							assertEquals(-1, cache.light[7999]);
+							live[workerId] = cache;
+							int marker = workerId * compilesPerWorker + c;
+							cache.light[0] = marker;
 							cache.light[7999] = c;
-							totalCompiles.incrementAndGet();
+							barrier.await(10, java.util.concurrent.TimeUnit.SECONDS);
+							for (int other = 0; other < workerCount; other++) {
+								if (other == workerId) continue;
+								assertNotSame(cache.blocks, live[other].blocks);
+								assertNotSame(cache.light, live[other].light);
+							}
+							assertEquals(marker, cache.light[0]);
+							assertEquals(c, cache.light[7999]);
+							// Keep every lease alive until every worker has read its markers.
+							barrier.await(10, java.util.concurrent.TimeUnit.SECONDS);
 						} finally {
 							WorkerBlockStateCache.endCompile(mark);
 						}
+						assertNull(WorkerBlockStateCache.acquireRegion());
 					}
-				} finally {
-					latch.countDown();
-				}
-			});
+					return null;
+				}));
+			}
+			// Propagate assertion failures and exceptions out of executor tasks.
+			for (java.util.concurrent.Future<?> future : futures) future.get(30, java.util.concurrent.TimeUnit.SECONDS);
+		} finally {
+			pool.shutdownNow();
+			org.junit.jupiter.api.Assertions.assertTrue(pool.awaitTermination(5, java.util.concurrent.TimeUnit.SECONDS));
 		}
-
-		boolean finished = latch.await(10, java.util.concurrent.TimeUnit.SECONDS);
-		pool.shutdown();
-		long durationMs = (System.nanoTime() - startNanos) / 1_000_000L;
-
-		org.junit.jupiter.api.Assertions.assertTrue(finished, "Worker threads must complete terrain compiles within timeout");
-		assertEquals(workerCount * compilesPerWorker, totalCompiles.get());
-		// Confirm rapid execution without GC pressure (< 1000ms for 800 compiles)
-		org.junit.jupiter.api.Assertions.assertTrue(durationMs < 2000L, "Rapid pooled compilation should be fast, elapsed: " + durationMs + "ms");
 	}
 }

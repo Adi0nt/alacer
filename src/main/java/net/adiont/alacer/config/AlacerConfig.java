@@ -56,6 +56,10 @@ public final class AlacerConfig {
 	public final boolean profilerParticleLightRepeats;
 	/** Show the profiler overlay at startup (it can also be toggled with a key). */
 	public volatile boolean hudVisible;
+	/** Show the performance area graph at startup (it can also be toggled with a key). */
+	public volatile boolean graphVisible;
+	/** Selected performance area graph mode: 0 = Frame Time, 1 = Subsystem Time (ms), 2 = % Split. */
+	public volatile int graphMode;
 	/** Use Alacer's allocation-free chunk visibility search instead of vanilla's. Runtime-toggleable. */
 	public volatile boolean fastChunkVisibility;
 	/** Run both visibility searches and log any difference (vanilla's result is used). Debug only. */
@@ -72,6 +76,10 @@ public final class AlacerConfig {
 	public volatile boolean fastEntityChunkLookup;
 	/** Compare every cached entity-loop chunk lookup with vanilla's lookup. Debug only. */
 	public volatile boolean verifyEntityChunkLookup;
+	/** High-performance entity pipeline with active chunk stamping and direct array access. Runtime-toggleable. */
+	public volatile boolean fastEntityPipeline;
+	/** Compare fast entity pipeline rendered entities and count with vanilla. Debug only. */
+	public volatile boolean verifyEntityPipeline;
 	/** Run vanilla's two per-frame GL error checks only about once per second. Runtime-toggleable. */
 	public volatile boolean throttleGlErrorChecks;
 	/** Raise a harmless GL error in skipped frames and confirm the next check reports it. Debug only. */
@@ -323,6 +331,10 @@ public final class AlacerConfig {
 			"Count particle light queries and their distinct positions in each particle render pass. Startup only; attribution, not performance selection.");
 		this.hudVisible = bool(file, system, "profiler.hud", false,
 			"Show the performance overlay at startup.");
+		this.graphVisible = bool(file, system, "profiler.graph", false,
+			"Show the performance area graph at startup.");
+		this.graphMode = clamp(integer(file, system, "profiler.graphMode", 1,
+			"Selected graph mode: 0 = Frame Time, 1 = Subsystem Time (ms), 2 = % Split, 3 = Top Subsystem Detail."), 0, 3);
 		this.fastChunkVisibility = bool(file, system, "render.fastChunkVisibility", true,
 			"Replace the per-frame chunk visibility search with an allocation-free equivalent.");
 		this.verifyChunkVisibility = bool(file, system, "render.fastChunkVisibility.verify", false,
@@ -343,6 +355,10 @@ public final class AlacerConfig {
 			"Reuse each render chunk's world-chunk reference when gathering entities instead of a hash lookup per chunk per frame.");
 		this.verifyEntityChunkLookup = bool(file, system, "render.fastEntityChunkLookup.verify", false,
 			"Debug: also do vanilla's lookup for every cached one and log differences.");
+		this.fastEntityPipeline = bool(file, system, "render.fastEntityPipeline", true,
+			"High-performance entity pipeline override: skips empty chunk sections during entity and block entity loops while preserving exact vanilla rendering order and behavior.");
+		this.verifyEntityPipeline = bool(file, system, "render.fastEntityPipeline.verify", false,
+			"Debug: also run vanilla entity traversal and verify matching rendered counts and entities.");
 		this.throttleGlErrorChecks = bool(file, system, "render.throttleGlErrorChecks", true,
 			"Check for OpenGL errors about once per second instead of twice per frame. Errors are still reported, with a less precise location.");
 		this.verifyGlErrorChecks = bool(file, system, "render.throttleGlErrorChecks.verify", false,
@@ -447,10 +463,11 @@ public final class AlacerConfig {
 			"Experimental: pass one reused position instead of a new BlockPos to each entity shadow's block-below query (same query and answer). Off by default; its hook is installed only when on at startup (or verified, or benchmark-toggled).");
 		this.verifyReuseShadowPositions = bool(file, system, "render.reuseShadowPositions.verify", false,
 			"Debug: keep vanilla's new position, compare the reused one's coordinates and the block state answered for each, and log any difference.");
-		this.fastChunkNeighbours = bool(file, system, "render.fastChunkNeighbours", false, "Experimental exact precomputed chunk storage adjacency; avoids per-edge integer division.");
+		boolean modern = bool(file, system, "render.modernPipeline", false,
+			"Modern OpenGL rendering pipeline (TerrainShader, VAO attribute binding, and precomputed chunk adjacency).");
+		this.fastChunkNeighbours = bool(file, system, "render.fastChunkNeighbours", modern, "Experimental exact precomputed chunk storage adjacency; avoids per-edge integer division.");
 		this.verifyChunkNeighbours = bool(file, system, "render.fastChunkNeighbours.verify", false, "Compare every adjacency result with the original slot math and use the original result.");
-		boolean defTerrainShader = !Boolean.getBoolean("alacer.benchmark");
-		this.terrainShader = bool(file, system, "render.terrainShader", defTerrainShader, "Modern OpenGL terrain vertex shader pipeline; evaluates chunk translation and scaling on GPU, startup hooks.");
+		this.terrainShader = bool(file, system, "render.terrainShader", modern, "Experimental terrain vertex shader pipeline; off pending native visual and performance qualification. Startup hooks.");
 		this.terrainVaos = bool(file, system, "render.terrainVaos", this.terrainShader, "Legacy alias for render.terrainShader.");
 		if (this.terrainVaos && !this.terrainShader) {
 			this.terrainShader = true;
@@ -526,6 +543,7 @@ public final class AlacerConfig {
 				this.fastChunkFrustum = false;
 				this.fastCameraSectionFaces = false;
 				this.fastEntityChunkLookup = value;
+				this.fastEntityPipeline = value;
 				this.throttleGlErrorChecks = value;
 				this.avoidMatrixReads = value;
 				this.cacheClouds = value;
@@ -554,8 +572,8 @@ public final class AlacerConfig {
 				this.feedChunkWorkers = false;
 				this.chunkTimeFloor = false;
 				this.fastChunkNeighbours = false;
-				this.terrainShader = value;
-				this.terrainVaos = value;
+				this.terrainShader = false;
+				this.terrainVaos = false;
 				this.directBufferUploads = false;
 				this.skipZeroTranslates = false;
 				this.batchModelLists = false;
@@ -577,6 +595,9 @@ public final class AlacerConfig {
 				break;
 			case "render.fastEntityChunkLookup":
 				this.fastEntityChunkLookup = value;
+				break;
+			case "render.fastEntityPipeline":
+				this.fastEntityPipeline = value;
 				break;
 			case "render.throttleGlErrorChecks":
 				this.throttleGlErrorChecks = value;
@@ -751,6 +772,8 @@ public final class AlacerConfig {
 			String key = e.getKey(), value = e.getValue();
 			if (key.startsWith("quality.") || key.startsWith("advanced.")) { setVideoInt(key, Integer.parseInt(value)); }
 			else if ("profiler.hud".equals(key)) { this.hudVisible = Boolean.parseBoolean(value); }
+			else if ("profiler.graph".equals(key)) { this.graphVisible = Boolean.parseBoolean(value); }
+			else if ("profiler.graphMode".equals(key)) { this.graphMode = clamp(Integer.parseInt(value), 0, 3); }
 			else if ("render.fastParticleVertices".equals(key)) {
 				if (Boolean.parseBoolean(value) == this.fastParticleVertices) { this.pendingRestart.remove(key); }
 				else { this.pendingRestart.put(key,value); }
@@ -860,6 +883,8 @@ public final class AlacerConfig {
 		values.put("profiler.particleDetail", String.valueOf(this.profilerParticleDetail));
 		values.put("profiler.particleLightRepeats", String.valueOf(this.profilerParticleLightRepeats));
 		values.put("profiler.hud", String.valueOf(this.hudVisible));
+		values.put("profiler.graph", String.valueOf(this.graphVisible));
+		values.put("profiler.graphMode", String.valueOf(this.graphMode));
 		values.put("render.fastChunkVisibility", String.valueOf(this.fastChunkVisibility));
 		values.put("render.fastChunkVisibility.verify", String.valueOf(this.verifyChunkVisibility));
 		values.put("render.fastChunkUnpack", String.valueOf(this.fastChunkUnpack));
@@ -870,6 +895,8 @@ public final class AlacerConfig {
 		values.put("render.fastCameraSectionFaces.verify", String.valueOf(this.verifyCameraSectionFaces));
 		values.put("render.fastEntityChunkLookup", String.valueOf(this.fastEntityChunkLookup));
 		values.put("render.fastEntityChunkLookup.verify", String.valueOf(this.verifyEntityChunkLookup));
+		values.put("render.fastEntityPipeline", String.valueOf(this.fastEntityPipeline));
+		values.put("render.fastEntityPipeline.verify", String.valueOf(this.verifyEntityPipeline));
 		values.put("render.throttleGlErrorChecks", String.valueOf(this.throttleGlErrorChecks));
 		values.put("render.throttleGlErrorChecks.verify", String.valueOf(this.verifyGlErrorChecks));
 		values.put("render.avoidMatrixReads", String.valueOf(this.avoidMatrixReads));

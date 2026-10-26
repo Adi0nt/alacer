@@ -1,6 +1,9 @@
 package net.adiont.alacer.mixin;
 
+import java.util.Collection;
+import java.util.LinkedHashSet;
 import java.util.Set;
+import com.google.common.collect.Sets;
 
 import org.objectweb.asm.Opcodes;
 import org.spongepowered.asm.mixin.Mixin;
@@ -11,6 +14,7 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.ModifyVariable;
 import org.spongepowered.asm.mixin.injection.Redirect;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 import net.adiont.alacer.Alacer;
 import net.adiont.alacer.profiler.FrameProfiler.Section;
@@ -20,7 +24,9 @@ import net.adiont.alacer.render.EntityCulling;
 import net.adiont.alacer.render.EntityLighting;
 import net.adiont.alacer.render.EntityRendererCache;
 import net.adiont.alacer.render.EntityShadows;
+import net.adiont.alacer.render.FastDirtyChunk;
 import net.adiont.alacer.render.ParticleLight;
+import net.adiont.alacer.render.RenderChunkOrigin;
 import net.minecraft.client.render.Culler;
 import net.minecraft.client.render.world.ChunkRenderDispatcher;
 import net.minecraft.client.render.world.RenderChunk;
@@ -63,6 +69,71 @@ public class WorldRendererMixin {
 		alacer$visibility().afterVanillaSearch();
 	}
 
+	@Unique
+	private Set<RenderChunk> alacer$swapSetA;
+	@Unique
+	private Set<RenderChunk> alacer$swapSetB;
+	@Unique
+	private int alacer$currentDirtyEpoch = 1;
+	@Unique
+	private int alacer$previousDirtyEpoch = 0;
+
+	@Redirect(method = "setupRender", at = @At(value = "INVOKE", target = "Lcom/google/common/collect/Sets;newLinkedHashSet()Ljava/util/LinkedHashSet;"))
+	private LinkedHashSet<RenderChunk> alacer$reusedDirtySet() {
+		if (this.alacer$swapSetA == null) {
+			this.alacer$swapSetA = Sets.newLinkedHashSet();
+			this.alacer$swapSetB = Sets.newLinkedHashSet();
+		}
+		this.alacer$previousDirtyEpoch = this.alacer$currentDirtyEpoch;
+		this.alacer$currentDirtyEpoch++;
+		if (this.alacer$currentDirtyEpoch == Integer.MAX_VALUE) {
+			this.alacer$currentDirtyEpoch = 1;
+			this.alacer$previousDirtyEpoch = 0;
+		}
+		Set<RenderChunk> target = (this.dirtyChunks == this.alacer$swapSetA) ? this.alacer$swapSetB : this.alacer$swapSetA;
+		target.clear();
+		return (LinkedHashSet<RenderChunk>) target;
+	}
+
+	@Redirect(method = "setupRender", at = @At(value = "INVOKE", target = "Ljava/util/Set;contains(Ljava/lang/Object;)Z"))
+	private boolean alacer$fastDirtyContains(Set<RenderChunk> set, Object obj) {
+		if (set.isEmpty()) {
+			return false;
+		}
+		if (obj instanceof FastDirtyChunk fc) {
+			return fc.alacer$dirtyEpoch() == this.alacer$previousDirtyEpoch;
+		}
+		return set.contains(obj);
+	}
+
+	@Redirect(method = "setupRender", at = @At(value = "INVOKE", target = "Ljava/util/Set;add(Ljava/lang/Object;)Z"))
+	private boolean alacer$fastDirtyAdd(Set<RenderChunk> set, Object obj) {
+		if (obj instanceof FastDirtyChunk fc) {
+			fc.alacer$setDirtyEpoch(this.alacer$currentDirtyEpoch);
+		}
+		return set.add((RenderChunk) obj);
+	}
+
+	@Redirect(method = "setupRender", at = @At(value = "INVOKE", target = "Ljava/util/Set;addAll(Ljava/util/Collection;)Z"))
+	private boolean alacer$fastDirtyAddAll(Set<RenderChunk> dest, Collection<RenderChunk> src) {
+		if (src.isEmpty()) {
+			return false;
+		}
+		int cur = this.alacer$currentDirtyEpoch;
+		int prev = this.alacer$previousDirtyEpoch;
+		for (RenderChunk chunk : src) {
+			if (chunk instanceof FastDirtyChunk fc) {
+				if (fc.alacer$dirtyEpoch() == prev) {
+					fc.alacer$setDirtyEpoch(cur);
+					dest.add(chunk);
+				}
+			} else {
+				dest.add(chunk);
+			}
+		}
+		return true;
+	}
+
 	// Vanilla cancels every queued rebuild that no worker has started yet.
 	@Inject(method = "setupRender", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/render/world/ChunkRenderDispatcher;clear()V"))
 	private void alacer$beforeQueueClear(CallbackInfo ci) {
@@ -72,6 +143,24 @@ public class WorldRendererMixin {
 	@Inject(method = "setupRender", at = @At("RETURN"))
 	private void alacer$endSetup(CallbackInfo ci) {
 		Alacer.get().end(Section.TERRAIN_SETUP);
+	}
+
+	@Inject(method = "isNear", at = @At("HEAD"), cancellable = true)
+	private void alacer$fastIsNear(BlockPos pos, RenderChunk chunk, CallbackInfoReturnable<Boolean> cir) {
+		if (chunk instanceof RenderChunkOrigin ro) {
+			int dx = pos.getX() - ro.alacer$originX();
+			if (dx < -16 || dx > 16) {
+				cir.setReturnValue(false);
+				return;
+			}
+			int dy = pos.getY() - ro.alacer$originY();
+			if (dy < -16 || dy > 16) {
+				cir.setReturnValue(false);
+				return;
+			}
+			int dz = pos.getZ() - ro.alacer$originZ();
+			cir.setReturnValue(dz >= -16 && dz <= 16);
+		}
 	}
 
 	@Inject(method = "markDirty", at = @At("HEAD"))
@@ -88,8 +177,14 @@ public class WorldRendererMixin {
 		EntityRendererCache.clear();
 		EntityCulling.clear();
 		ChunkSchedulingExperiments.reset();
+		this.alacer$currentDirtyEpoch = 1;
+		this.alacer$previousDirtyEpoch = 0;
 		if (this.alacer$visibility != null) {
 			this.alacer$visibility.reset();
+		}
+		if (this.alacer$swapSetA != null) {
+			this.alacer$swapSetA.clear();
+			this.alacer$swapSetB.clear();
 		}
 	}
 
@@ -98,8 +193,14 @@ public class WorldRendererMixin {
 		ChunkSchedulingExperiments.reset();
 		EntityRendererCache.clear();
 		EntityCulling.clear();
+		this.alacer$currentDirtyEpoch = 1;
+		this.alacer$previousDirtyEpoch = 0;
 		if (this.alacer$visibility != null) {
 			this.alacer$visibility.reset();
+		}
+		if (this.alacer$swapSetA != null) {
+			this.alacer$swapSetA.clear();
+			this.alacer$swapSetB.clear();
 		}
 	}
 

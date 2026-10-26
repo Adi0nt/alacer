@@ -98,4 +98,28 @@ class FrameProfilerTest {
 		// The first boundary only opens a frame.
 		assertEquals(4, seen[0]);
 	}
+
+	@Test void displayTelemetryIsOptionalAndDoesNotReplaceTheProfilerOrListener() {
+		PerformanceTracker.setCollecting(false);
+		PerformanceTracker.reset();
+		FrameProfiler profiler = new FrameProfiler(256);
+		int[] seen = {0};
+		profiler.setListener((frames, row) -> seen[0]++);
+		try {
+			profiler.frameBoundary();
+			profiler.frameBoundary();
+			assertEquals(0, PerformanceTracker.getHistoryCount());
+			PerformanceTracker.setCollecting(true);
+			profiler.frameBoundary();
+			assertEquals(1, PerformanceTracker.getHistoryCount());
+			PerformanceTracker.setCollecting(false);
+			profiler.frameBoundary();
+			assertEquals(1, PerformanceTracker.getHistoryCount());
+			assertEquals(3, profiler.frames().size());
+			assertEquals(3, seen[0]);
+		} finally {
+			PerformanceTracker.setCollecting(false);
+			PerformanceTracker.reset();
+		}
+	}
 }

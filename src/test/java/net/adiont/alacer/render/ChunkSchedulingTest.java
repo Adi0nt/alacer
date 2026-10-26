@@ -63,8 +63,8 @@ class ChunkSchedulingTest {
 	}
 
 	@Test
-	void flightUploadPacingEliminatesStutterTails() {
-		// Simulate flight frame intervals: 60 FPS (16.6ms), 120 FPS (8.33ms), 240 FPS (4.16ms)
+	void frameEnvelopesScaleDeadlinesWithoutClaimingAnUploadTimeBound() {
+		// Arithmetic only: a GL upload already running can overrun this scheduling deadline.
 		double[] fpsTargets = {60.0, 120.0, 240.0};
 
 		for (double fps : fpsTargets) {
@@ -74,13 +74,13 @@ class ChunkSchedulingTest {
 			long now = 500_000_000L;
 			long vanillaDeadline = now + vanillaUploadBudget;
 
-			// Choice 0: 25% pacing -> reduces flight spike to 1/16 frame (6.25%)
+			// Choice 0: schedule 1/16 frame (6.25%), not a bound on an individual upload.
 			long paced25 = ChunkScheduling.deadline(vanillaDeadline, now, 0);
 			long duration25 = paced25 - now;
 			assertEquals(vanillaUploadBudget * 25 / 100, duration25);
 			org.junit.jupiter.api.Assertions.assertTrue(duration25 < vanillaUploadBudget);
 
-			// Choice 1: 50% pacing -> reduces flight spike to 1/8 frame (12.5%)
+			// Choice 1: schedule 1/8 frame (12.5%).
 			long paced50 = ChunkScheduling.deadline(vanillaDeadline, now, 1);
 			long duration50 = paced50 - now;
 			assertEquals(vanillaUploadBudget * 50 / 100, duration50);
@@ -88,6 +88,10 @@ class ChunkSchedulingTest {
 
 			// Monotonicity check
 			org.junit.jupiter.api.Assertions.assertTrue(duration25 < duration50);
+			if (fps == 60.0) {
+				assertEquals(1_041_666L, duration25);
+				assertEquals(2_083_333L, duration50);
+			}
 		}
 	}
 }

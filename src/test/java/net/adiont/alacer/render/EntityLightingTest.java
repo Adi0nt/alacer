@@ -6,25 +6,17 @@ import org.junit.jupiter.api.Test;
 class EntityLightingTest {
 
 	@Test
-	void boundaryLimitsMatchVanillaWorldRules() {
-		int limit = 30000000;
-		// Within valid build height and world bounds
-		assertTrue(isValid(0, 64, 0, limit));
-		assertTrue(isValid(-limit, 0, -limit, limit));
-		assertTrue(isValid(limit - 1, 255, limit - 1, limit));
-
-		// Outside boundaries
-		assertFalse(isValid(-limit - 1, 64, 0, limit));
-		assertFalse(isValid(limit, 64, 0, limit));
-		assertFalse(isValid(0, -1, 0, limit));
-		assertFalse(isValid(0, 256, 0, limit));
-	}
-
-	@Test
-	void coordinateFlooringMatchesMathFloor() {
-		double[] testCoords = {0.0, 0.25, 0.75, 1.0, -0.25, -0.75, -1.0, 128.99, -64.01};
-		for (double d : testCoords) {
-			assertEquals((int) Math.floor(d), (int) Math.floor(d));
+	void pooledCoordinatesMatchVanillaAtNegativeAndWorldBoundaries() {
+		TestEntity entity = new TestEntity();
+		for (double coordinate : new double[] {0, -0.0, Double.MIN_VALUE, -Double.MIN_VALUE,
+			-1, Math.nextDown(-1.0), Math.nextUp(-1.0), -30_000_001, -30_000_000,
+			29_999_999, 30_000_000, -1, 255, 256}) {
+			entity.x = coordinate; entity.y = coordinate; entity.z = coordinate;
+			net.minecraft.util.math.BlockPos expected = new net.minecraft.util.math.BlockPos(entity);
+			net.minecraft.util.math.BlockPos actual = EntityLighting.pooledEntityPos(entity);
+			assertEquals(expected.getX(), actual.getX());
+			assertEquals(expected.getY(), actual.getY());
+			assertEquals(expected.getZ(), actual.getZ());
 		}
 	}
 
@@ -46,7 +38,7 @@ class EntityLightingTest {
 	}
 
 	@Test
-	void denseScene200EntitiesLightingVerificationGate() {
+	void pooledEntityPositionsMatchVanillaAcross200Coordinates() {
 		java.util.Random random = new java.util.Random(1337);
 		TestEntity entity = new TestEntity();
 
@@ -64,7 +56,4 @@ class EntityLightingTest {
 		}
 	}
 
-	private static boolean isValid(int x, int y, int z, int limit) {
-		return x >= -limit && z >= -limit && x < limit && z < limit && y >= 0 && y < 256;
-	}
 }
