@@ -7,6 +7,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import net.adiont.alacer.profiler.FrameProfiler.Section;
 import net.adiont.alacer.render.RenderPasses;
+import net.adiont.alacer.render.SwapOptimizer;
 import net.minecraft.client.render.GameRenderer;
 
 /**
@@ -27,6 +28,7 @@ public class GameRendererPassesMixin {
 	@Inject(method = "renderWorld", at = @At("RETURN"))
 	private void alacer$endWorld(CallbackInfo ci) {
 		RenderPasses.end(Section.WORLD);
+		SwapOptimizer.onPostRenderWorld();
 	}
 
 	@Inject(method = "renderWorld", at = @At(value = "INVOKE", target = LIGHTMAP))

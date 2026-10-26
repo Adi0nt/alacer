@@ -206,6 +206,16 @@ public final class AlacerConfig {
 	public volatile boolean batchModelLists;
 	/** Compare native feedback from both lists at compilation. Debug only. */
 	public volatile boolean verifyBatchModelLists;
+	/** High-precision frame limiter and frame pacer using LockSupport.parkNanos and Thread.onSpinWait. Runtime-toggleable. */
+	public volatile boolean fastDisplaySync;
+	/** Also verify frame limiter sleep durations and pacing error bounds. Debug only. */
+	public volatile boolean verifyFastDisplaySync;
+	/** Early 3D pipeline flush to overlap CPU HUD/GUI rendering with GPU draw execution. Runtime-toggleable. */
+	public volatile boolean fastSwapBuffers;
+	/** Also verify pipeline flush execution and fence status. Debug only. */
+	public volatile boolean verifyFastSwapBuffers;
+	/** Suppress unconditional client-thread yield after buffer swap to eliminate OS context-switch latency spikes. Runtime-toggleable. */
+	public volatile boolean suppressThreadYield;
 
 	/** Independent quality selectors: 0 follows Graphics, 1 Fast, 2 Fancy; weather also supports 3 Off. */
 	public volatile int leavesQuality;
@@ -492,6 +502,16 @@ public final class AlacerConfig {
 			"Combine vanilla model-part face uploads in an alternate display list; experimental, off by default.");
 		this.verifyBatchModelLists = bool(file, system, "render.batchModelLists.verify", false,
 			"Debug: compare native OpenGL feedback from vanilla and batched model lists at compilation.");
+		this.fastDisplaySync = bool(file, system, "render.fastDisplaySync", true,
+			"High-precision frame limiter and frame pacer using LockSupport.parkNanos and Thread.onSpinWait.");
+		this.verifyFastDisplaySync = bool(file, system, "render.fastDisplaySync.verify", false,
+			"Debug: verify frame limiter sleep durations and pacing error bounds.");
+		this.fastSwapBuffers = bool(file, system, "render.fastSwapBuffers", true,
+			"Early 3D pipeline flush to overlap CPU HUD/GUI rendering with GPU draw execution.");
+		this.verifyFastSwapBuffers = bool(file, system, "render.fastSwapBuffers.verify", false,
+			"Debug: verify pipeline flush execution and fence status.");
+		this.suppressThreadYield = bool(file, system, "render.suppressThreadYield", true,
+			"Suppress unconditional client-thread yield after buffer swap to eliminate OS context-switch latency spikes.");
 	}
 
 	public static AlacerConfig load(Path file, Logger logger) {
@@ -586,6 +606,9 @@ public final class AlacerConfig {
 				this.directBufferUploads = false;
 				this.skipZeroTranslates = false;
 				this.batchModelLists = false;
+				this.fastDisplaySync = value;
+				this.fastSwapBuffers = value;
+				this.suppressThreadYield = value;
 				break;
 			case "render.fastChunkVisibility":
 				this.fastChunkVisibility = value;
@@ -752,6 +775,21 @@ public final class AlacerConfig {
 				break;
 			case "render.chunkTimeFloor":
 				this.chunkTimeFloor = value;
+				break;
+			case "render.fastDisplaySync":
+				this.fastDisplaySync = value;
+				break;
+			case "render.fastDisplaySync.verify":
+				this.verifyFastDisplaySync = value;
+				break;
+			case "render.fastSwapBuffers":
+				this.fastSwapBuffers = value;
+				break;
+			case "render.fastSwapBuffers.verify":
+				this.verifyFastSwapBuffers = value;
+				break;
+			case "render.suppressThreadYield":
+				this.suppressThreadYield = value;
 				break;
 			default:
 				throw new IllegalArgumentException("Not a runtime-toggleable option: " + key);
@@ -975,6 +1013,11 @@ public final class AlacerConfig {
 		values.put("render.chunkTimeFloor", String.valueOf(this.chunkTimeFloor));
 		values.put("render.batchModelLists", String.valueOf(this.batchModelLists));
 		values.put("render.batchModelLists.verify", String.valueOf(this.verifyBatchModelLists));
+		values.put("render.fastDisplaySync", String.valueOf(this.fastDisplaySync));
+		values.put("render.fastDisplaySync.verify", String.valueOf(this.verifyFastDisplaySync));
+		values.put("render.fastSwapBuffers", String.valueOf(this.fastSwapBuffers));
+		values.put("render.fastSwapBuffers.verify", String.valueOf(this.verifyFastSwapBuffers));
+		values.put("render.suppressThreadYield", String.valueOf(this.suppressThreadYield));
 		return values;
 	}
 

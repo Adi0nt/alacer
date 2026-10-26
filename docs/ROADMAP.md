@@ -65,6 +65,8 @@ pie title Client-Thread Java CPU Time Breakdown (Moving Camera with Mobs)
 | **Phase 5.1** | Random Display Tick Allocation Reduction | Runtime mappings repaired; per-tick Random restored; production-client coverage pending | `render.fastRandomDisplayTicks` | Query checks only | `2f604b4` + local recovery |
 | **Phase 5.2** | Crosshair Raycast Allocation Reduction (`world.pick`) | Actual vanilla reference and hit-coordinate verifier wired/exercised | `render.fastRayTrace` | `render.fastRayTrace.verify` | `1692a44` + local recovery |
 | **Phase 5.3** | Sound System Sleep Replacement | **Completed** | `render.fastSoundThread` | `render.fastSoundThread.verify` | `7a39f1e` + verification |
+| **Phase 5.4** | Precision Frame Pacing & Limiting | **Completed** | `render.fastDisplaySync` | `render.fastDisplaySync.verify` | `FastDisplaySync` park/spin-wait engine |
+| **Phase 5.5** | Early GPU Flush & Swap Optimization | **Completed** | `render.fastSwapBuffers`, `render.suppressThreadYield` | `render.fastSwapBuffers.verify` | `SwapOptimizer` early flush & fence pipeline |
 | **Phase 6.1** | Multi-Draw Indirect (`glMultiDrawArraysIndirect`) | **Implemented (Architecture & Arena)** | `render.multiDrawIndirect` | `render.multiDrawIndirect.verify` | ResidentMeshArena & MDI buffer packing |
 | **Phase 6.2** | Translucent Quad GPU Sorting | Future Architecture | `render.gpuTranslucentSort` | N/A | Pending |
 
@@ -206,6 +208,16 @@ flowchart TD
    - Preserves exact vanilla interrupt-clearing semantics matching `Thread.sleep` InterruptedException handling.
    - Provides explicit `FastSoundThread.unpark(thread)` helper for direct wakeups.
 
+4. **Precision Frame Pacing & Limiting (`FastDisplaySync`)** [COMPLETED]:
+   - Nanosecond monotonic frame pacing replacing LWJGL's Thread.yield() loop.
+   - LockSupport.parkNanos coarse wait (> 1.5 ms) with Thread.onSpinWait() (CPU PAUSE) for sub-millisecond precision.
+   - Hardware VSync coexistence preventing beat-frequency frame time spikes.
+   - Bounded late-frame deficit recovery to eliminate multi-frame hitch cascades.
+5. **Early GPU Pipeline Flush & Swap Optimization (`SwapOptimizer`)** [COMPLETED]:
+   - Early glFlush() at renderWorld return overlapping GPU rasterization with CPU 2D GUI/HUD rendering.
+   - Modern GPU sync fence (GL32.glFenceSync) support to prevent driver queue buffer overflow stalls.
+   - Post-swap Thread.yield() suppression preventing Windows scheduler preemption spikes.
+   - Complete timing attribution unifying driver swap and limiter sync under Swap / sync.
 ---
 
 ### Phase 6: Multi-Draw Indirect (MDI) & Modern Subsystem Replacement

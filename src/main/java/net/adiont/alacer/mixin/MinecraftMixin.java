@@ -13,7 +13,9 @@ import net.adiont.alacer.Alacer;
 import net.adiont.alacer.profiler.FrameProfiler.Section;
 import net.adiont.alacer.profiler.PerformanceAreaGraphRenderer;
 import net.adiont.alacer.profiler.PerformanceTracker;
+import net.adiont.alacer.render.FastDisplaySync;
 import net.adiont.alacer.render.GlErrorChecks;
+import net.adiont.alacer.render.SwapOptimizer;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screen.Screen;
 
@@ -28,6 +30,7 @@ public class MinecraftMixin {
 
 	@Inject(method = "runGame", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/render/GameRenderer;render(FJ)V"))
 	private void alacer$beforeRender(CallbackInfo ci) {
+		SwapOptimizer.onPreRenderWorld();
 		Alacer.get().begin(Section.RENDER);
 	}
 
@@ -51,11 +54,38 @@ public class MinecraftMixin {
 	@Inject(method = "runGame", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/Minecraft;updateDisplay()V"))
 	private void alacer$beforeSwap(CallbackInfo ci) {
 		Alacer.get().begin(Section.SWAP);
+		SwapOptimizer.beforeDisplayUpdate();
 	}
 
 	@Inject(method = "runGame", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/Minecraft;updateDisplay()V", shift = At.Shift.AFTER))
 	private void alacer$afterSwap(CallbackInfo ci) {
+		SwapOptimizer.afterDisplayUpdate();
 		Alacer.get().end(Section.SWAP);
+	}
+
+	@WrapOperation(method = "runGame", at = @At(value = "INVOKE", target = "Ljava/lang/Thread;yield()V"))
+	private void alacer$postSwapYield(Operation<Void> original) {
+		Alacer alacer = Alacer.get();
+		if (alacer != null && alacer.config().suppressThreadYield) {
+			SwapOptimizer.onPostSwapYield();
+		} else {
+			original.call();
+		}
+	}
+
+	@WrapOperation(method = "runGame", at = @At(value = "INVOKE", target = "Lorg/lwjgl/opengl/Display;sync(I)V"))
+	private void alacer$displaySync(int fps, Operation<Void> original) {
+		Alacer.get().begin(Section.SWAP);
+		try {
+			Alacer alacer = Alacer.get();
+			if (alacer != null && alacer.config().fastDisplaySync) {
+				FastDisplaySync.sync(fps);
+			} else {
+				original.call(fps);
+			}
+		} finally {
+			Alacer.get().end(Section.SWAP);
+		}
 	}
 
 	@Inject(method = "handleGuiKeyBindings", at = @At("HEAD"))
