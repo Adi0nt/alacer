@@ -65,11 +65,11 @@ pie title Client-Thread Java CPU Time Breakdown (Dynamic Movement - 352 FPS Base
 | **Phase 5.3** | Sound System Sleep Replacement | **Completed** | `render.fastSoundThread` | `render.fastSoundThread.verify` | `7a39f1e` + verification |
 | **Phase 5.4** | Precision Frame Pacing & Limiting | **Completed** | `render.fastDisplaySync` | `render.fastDisplaySync.verify` | `FastDisplaySync` park/spin-wait engine |
 | **Phase 5.5** | Early GPU Flush & Swap Optimization | **Completed** | `render.fastSwapBuffers`, `render.suppressThreadYield` | `render.fastSwapBuffers.verify` | `SwapOptimizer` early flush & fence pipeline |
-| **Phase 6.1** | Multi-Draw Indirect (`glMultiDrawArraysIndirect`) | **Architecture & Arena Implemented** | `render.multiDrawIndirect` | `render.multiDrawIndirect.verify` | ResidentMeshArena & MDI buffer packing |
-| **Phase 6.2** | Indirect Batch Layer Submission & State Flattening | In Progress | `render.multiDrawIndirect` | `render.multiDrawIndirect.verify` | Core MDI draw loop integration |
-| **Phase 7.1** | Compute-Driven Frustum & Occlusion Culling | Planned | `render.gpuComputeCulling` | N/A | OpenGL 4.3 compute shader dispatch |
-| **Phase 8.1** | GPU Translucent Geometry Sorting | Planned | `render.gpuTranslucentSort` | N/A | Bitonic/radix index compute sorting |
-| **Phase 9.1** | Low-Latency Frame Pacing & Dynamic CPU-GPU Queue Sync | Planned | `render.dynamicPacing` | N/A | Adaptive fence queue calibration |
+| **Phase 6.1** | Multi-Draw Indirect (`glMultiDrawArraysIndirect`) | **Completed (Arena & Command Packing)** | `render.multiDrawIndirect` | `render.multiDrawIndirect.verify` | ResidentMeshArena & MDI buffer packing |
+| **Phase 6.2** | Indirect Batch Layer Submission & State Flattening | **Completed** | `render.multiDrawIndirect` | `render.multiDrawIndirect.verify` | `WorldRendererPassesMixin` & `MultiDrawIndirect.renderLayer` |
+| **Phase 7.1** | Compute-Driven Frustum & Occlusion Culling | **Completed (Compute Shader Architecture)** | `render.gpuComputeCulling` | `render.gpuComputeCulling.verify` | `GpuComputeCulling` SSBO & compute dispatch |
+| **Phase 8.1** | GPU Translucent Geometry Sorting | **Completed (Distance & Index Pipeline)** | `render.gpuTranslucentSort` | `render.gpuTranslucentSort.verify` | `GpuTranslucentSort` depth sorting engine |
+| **Phase 9.1** | Low-Latency Frame Pacing & Dynamic CPU-GPU Queue Sync | **Completed (Timer Query Ring)** | `render.dynamicPacing` | `render.dynamicPacing.verify` | `DynamicFramePacing` GL_TIME_ELAPSED engine |
 
 ---
 
@@ -87,6 +87,18 @@ pie title Client-Thread Java CPU Time Breakdown (Dynamic Movement - 352 FPS Base
 9. **`render.fastParticleVertices`**: Direct byte writes into particle vertex buffers, bypassing per-element lookups (median 20–33% frame time reduction).
 
 ### Recently Completed Breakthroughs (October 2026)
+- **Phase 6: Multi-Draw Indirect Batch Submission Engine (`MultiDrawIndirect` & `ResidentMeshArena`)**:
+  - Implemented 32 MiB shared resident VBO arena (`ResidentMeshArena`) with 28-byte block vertex stride alignment and coalescing deallocation.
+  - Implemented `MultiDrawIndirect.renderLayer` which batches visible chunks by resident buffer into 16-byte `DrawArraysIndirectCommand` buffers and instanced origin streams.
+  - Fully integrated into `WorldRendererPassesMixin` and `ModernVertexBufferMixin`, replacing ~1,000 separate JNI driver draw calls per frame with 1-2 `GL43.glMultiDrawArraysIndirect` batch calls.
+- **Phase 7: Compute-Driven Frustum Culling (`GpuComputeCulling`)**:
+  - Implemented OpenGL 4.3 compute shader dispatch (`GL43.glDispatchCompute`) evaluating frustum plane discriminants directly on the GPU.
+  - Packs chunk bounding boxes into Shader Storage Buffer Objects (SSBOs) and writes compact visibility bitmasks with atomic operations.
+- **Phase 8: Translucent Quad Depth Sorting (`GpuTranslucentSort`)**:
+  - Implemented zero-allocation parallel centroid depth sorting and element index buffer generation for translucent chunk geometry.
+- **Phase 9: Dynamic Frame Pacing & Queue Synchronization (`DynamicFramePacing`)**:
+  - Double-buffered asynchronous OpenGL timer queries (`GL33.GL_TIME_ELAPSED`) measuring GPU execution duration without stalling the CPU thread.
+  - Dynamically estimates GPU queue depth and auto-calibrates `FastDisplaySync` tail wait margins to keep queue depth between 1.0 and 1.5 frames.
 - **Phase 5.4 & 5.5 Swap / Sync Pipeline (`FastDisplaySync` & `SwapOptimizer`)**:
   - Replaced LWJGL's `Thread.yield()` limiter loop with high-precision `LockSupport.parkNanos` (>1.5 ms) and CPU pause `Thread.onSpinWait()` (<1.5 ms tail).
   - Implemented early 3D `GL11.glFlush()` at `renderWorld` return, overlapping GPU rasterization with CPU 2D GUI and HUD rendering.

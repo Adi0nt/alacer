@@ -91,4 +91,10 @@ class MultiDrawIndirectTest {
 		assertEquals(0, MultiDrawIndirect.verifiedCommands());
 		assertEquals(0, MultiDrawIndirect.verifyMismatches());
 	}
+
+	@Test
+	void emptyQueueReturnsZero() {
+		TerrainLayerBatch.LayerQueue emptyQueue = new TerrainLayerBatch.LayerQueue();
+		assertEquals(0, MultiDrawIndirect.renderLayer(net.minecraft.client.render.block.BlockLayer.SOLID, emptyQueue, null, 0.0));
+	}
 }

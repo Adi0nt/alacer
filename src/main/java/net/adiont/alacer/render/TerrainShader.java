@@ -32,6 +32,7 @@ public final class TerrainShader {
 	private static int singleVaoId;
 	private static int originUniformLocation;
 	private static int fogUniformLocation;
+	private static int instancedOriginUniformLocation = -1;
 	private static final TerrainGlState DRAW_STATE = new TerrainGlState(new TerrainGlState.Driver() {
 		public int program() { return GL11.glGetInteger(GL20.GL_CURRENT_PROGRAM); }
 		public int vao() { return GL11.glGetInteger(GL30.GL_VERTEX_ARRAY_BINDING); }
@@ -51,12 +52,14 @@ public final class TerrainShader {
 		"attribute vec4 in_Color;\n" +
 		"attribute vec2 in_TexCoord0;\n" +
 		"attribute vec2 in_TexCoord1;\n" +
+		"attribute vec3 in_ChunkOrigin;\n" +
 		"uniform vec3 u_ChunkOrigin;\n" +
 		"uniform int u_FogDistanceMode;\n" +
+		"uniform int u_UseInstancedOrigin;\n" +
 		"void main() {\n" +
 		"    vec4 localPos = vec4(in_Position, 1.0);\n" +
 		TerrainShaderMath.EXPANSION +
-		"    localPos.xyz += u_ChunkOrigin;\n" +
+		"    localPos.xyz += (u_UseInstancedOrigin == 1 ? in_ChunkOrigin : u_ChunkOrigin);\n" +
 		"    gl_Position = gl_ModelViewProjectionMatrix * localPos;\n" +
 		"    gl_FrontColor = in_Color;\n" +
 		"    gl_TexCoord[0] = gl_TextureMatrix[0] * vec4(in_TexCoord0, 0.0, 1.0);\n" +
@@ -132,6 +135,7 @@ public final class TerrainShader {
 			int origin = GL20.glGetUniformLocation(program, "u_ChunkOrigin");
 			int fog = GL20.glGetUniformLocation(program, "u_FogDistanceMode");
 			if (origin < 0 || fog < 0) throw new IllegalStateException("Missing terrain shader uniform");
+			instancedOriginUniformLocation = GL20.glGetUniformLocation(program, "u_UseInstancedOrigin");
 			if (decoupled) vao = createVao();
 			programId = program;
 			singleVaoId = vao;
@@ -168,6 +172,13 @@ public final class TerrainShader {
 				ARBVertexAttribBinding.glVertexAttribFormat(1, 4, GL11.GL_UNSIGNED_BYTE, true, 12);
 				ARBVertexAttribBinding.glVertexAttribFormat(2, 2, GL11.GL_FLOAT, false, 16);
 				ARBVertexAttribBinding.glVertexAttribFormat(3, 2, GL11.GL_SHORT, false, 24);
+
+				// Instanced attribute 4: in_ChunkOrigin on binding index 1 (divisor 1)
+				GL20.glEnableVertexAttribArray(4);
+				ARBVertexAttribBinding.glVertexAttribBinding(4, 1);
+				ARBVertexAttribBinding.glVertexAttribFormat(4, 3, GL11.GL_FLOAT, false, 0);
+				ARBVertexAttribBinding.glVertexBindingDivisor(1, 1);
+
 				int error = GL11.glGetError();
 				if (error != GL11.GL_NO_ERROR) throw new IllegalStateException("Terrain VAO setup GL error " + error);
 			} finally {
@@ -194,6 +205,7 @@ public final class TerrainShader {
 				? TerrainShaderMath.fogMode(GL11.glGetInteger(NVFogDistance.GL_FOG_DISTANCE_MODE_NV))
 				: TerrainShaderMath.DEPTH;
 			GL20.glUniform1i(fogUniformLocation, mode);
+			setInstancedOrigin(false);
 		} catch (RuntimeException | Error failure) {
 			try { end(); } catch (RuntimeException | Error restore) { failure.addSuppressed(restore); }
 			throw failure;
@@ -217,6 +229,12 @@ public final class TerrainShader {
 		GL20.glUniform3f(originUniformLocation, relX, relY, relZ);
 	}
 
+	public static void setInstancedOrigin(boolean enabled) {
+		if (instancedOriginUniformLocation >= 0) {
+			GL20.glUniform1i(instancedOriginUniformLocation, enabled ? 1 : 0);
+		}
+	}
+
 	public static void end() { DRAW_STATE.end(); }
 
 	public static void cleanup() {
@@ -229,6 +247,7 @@ public final class TerrainShader {
 			GL20.glDeleteProgram(programId);
 			programId = 0;
 		}
+		instancedOriginUniformLocation = -1;
 		initialized = false;
 		supported = false;
 		attribBindingSupported = false;

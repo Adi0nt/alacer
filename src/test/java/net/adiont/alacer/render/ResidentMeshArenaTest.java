@@ -93,6 +93,11 @@ class ResidentMeshArenaTest {
 	}
 
 	@Test
+	void singletonInstanceIsAvailable() {
+		assertNotNull(ResidentMeshArena.get());
+	}
+
+	@Test
 	void stressRandomAllocationsAndFreesMaintainIntegrity() {
 		List<ResidentMeshArena.Slice> active = new ArrayList<>();
 		java.util.Random rand = new java.util.Random(12345);

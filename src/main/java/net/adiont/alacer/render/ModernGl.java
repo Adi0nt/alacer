@@ -29,7 +29,7 @@ public final class ModernGl {
 
 	public static boolean pipelineActive() {
 		return !FORCE_FALLBACK && Alacer.get() != null
-			&& (Alacer.get().config().terrainShader || Alacer.get().config().terrainVaos || verify())
+			&& (Alacer.get().config().terrainShader || Alacer.get().config().terrainVaos || Alacer.get().config().multiDrawIndirect || verify())
 			&& RenderCompatibility.buffers();
 	}
 

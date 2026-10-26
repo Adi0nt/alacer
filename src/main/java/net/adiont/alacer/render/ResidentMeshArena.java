@@ -115,6 +115,12 @@ public final class ResidentMeshArena {
 	private final boolean glEnabled;
 	private final List<Page> pages = new ArrayList<>();
 
+	private static final ResidentMeshArena INSTANCE = new ResidentMeshArena();
+
+	public static ResidentMeshArena get() {
+		return INSTANCE;
+	}
+
 	public ResidentMeshArena() {
 		this(DEFAULT_PAGE_SIZE, true);
 	}

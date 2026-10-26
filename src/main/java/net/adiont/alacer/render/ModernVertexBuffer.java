@@ -4,4 +4,6 @@ package net.adiont.alacer.render;
 public interface ModernVertexBuffer {
 	int alacer$bufferId();
 	int alacer$vertexCount();
+	default ResidentMeshArena.Slice alacer$slice() { return null; }
+	default void alacer$setSlice(ResidentMeshArena.Slice slice) {}
 }

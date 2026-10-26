@@ -4,6 +4,8 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 import net.adiont.alacer.Alacer;
 import net.adiont.alacer.render.ModernGl;
+import net.adiont.alacer.render.MultiDrawIndirect;
+import net.adiont.alacer.render.ResidentMeshArena;
 import net.adiont.alacer.render.TerrainShader;
 import net.minecraft.client.render.world.WorldRenderer;
 import net.minecraft.client.world.ClientWorld;
@@ -18,6 +20,8 @@ public class ModernWorldLifecycleMixin {
 	private void alacer$worldReceipt(ClientWorld world, CallbackInfo ci) {
 		if (world == null) {
 			TerrainShader.cleanup();
+			ResidentMeshArena.get().clear();
+			MultiDrawIndirect.cleanup();
 		}
 		if (ModernGl.verify()) { alacer$log(world == null ? "removed" : "loaded"); }
 	}
@@ -25,6 +29,8 @@ public class ModernWorldLifecycleMixin {
 	@Inject(method = "reload()V", at = @At("RETURN"))
 	private void alacer$reloadReceipt(CallbackInfo ci) {
 		TerrainShader.cleanup();
+		ResidentMeshArena.get().clear();
+		MultiDrawIndirect.cleanup();
 		if (ModernGl.verify()) { alacer$log("reload"); }
 	}
 
