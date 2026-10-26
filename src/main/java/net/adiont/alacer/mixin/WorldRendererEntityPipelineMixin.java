@@ -1,5 +1,6 @@
 package net.adiont.alacer.mixin;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -72,6 +73,7 @@ public abstract class WorldRendererEntityPipelineMixin {
 	@Shadow private Map<Integer, BlockMiningProgress> miningProgress;
 	@Shadow private RenderTarget entityOutlineRenderTarget;
 	@Shadow private PostChain entityOutline;
+	@Unique private final List<Entity> alacer$entityOrder = new ArrayList<>();
 
 	@Shadow protected abstract boolean shouldRenderEntityOutlines();
 	@Shadow protected abstract void setupMiningProgressState();
@@ -179,6 +181,10 @@ public abstract class WorldRendererEntityPipelineMixin {
 
 		int stamp = FastEntityPipeline.nextStamp();
 		int stamped = FastEntityPipeline.stampActiveChunks(list, this.chunkStorage, stamp);
+		boolean verifyOrder = FastEntityPipeline.isVerifying();
+		if (verifyOrder) {
+			this.alacer$entityOrder.clear();
+		}
 
 		int compiledCount = this.compiledChunks.size();
 		boolean cameraSleeping = this.minecraft.getCamera() instanceof LivingEntity living && living.isSleeping();
@@ -204,7 +210,7 @@ public abstract class WorldRendererEntityPipelineMixin {
 				WorldChunk worldChunk = ((EntityChunkSlot) chunk).alacer$getEntityChunk();
 				if (worldChunk == null || ((EntityChunkSlot) chunk).alacer$getEntityChunkColumn() != column
 					|| ((EntityChunkSlot) chunk).alacer$getEntityChunkGeneration() != generation || worldChunk.getWorld() != this.world) {
-					worldChunk = this.world.getChunk(new BlockPos(ro.alacer$originX(), ro.alacer$originY(), ro.alacer$originZ()));
+					worldChunk = this.world.getChunk(chunk.getOrigin());
 					((EntityChunkSlot) chunk).alacer$setEntityChunk(worldChunk, column, generation);
 				}
 
@@ -229,11 +235,11 @@ public abstract class WorldRendererEntityPipelineMixin {
 					if (instances != null) {
 						for (int k = 0; k < instSize; k++) {
 							Entity entity3 = instances.get(k);
-							alacer$renderSingleEntity(entity3, culler, camX, camY, camZ, tickDelta, cameraEntity, firstPerson, cameraSleeping, detail);
+							alacer$renderSingleEntity(entity3, culler, camX, camY, camZ, tickDelta, cameraEntity, firstPerson, cameraSleeping, detail, verifyOrder);
 						}
 					} else {
 						for (Entity entity3 : multiMap) {
-							alacer$renderSingleEntity(entity3, culler, camX, camY, camZ, tickDelta, cameraEntity, firstPerson, cameraSleeping, detail);
+							alacer$renderSingleEntity(entity3, culler, camX, camY, camZ, tickDelta, cameraEntity, firstPerson, cameraSleeping, detail, verifyOrder);
 						}
 					}
 				}
@@ -298,14 +304,18 @@ public abstract class WorldRendererEntityPipelineMixin {
 		this.world.profiler.pop();
 		EntityRendering.finish();
 
-		if (FastEntityPipeline.isVerifying()) {
+		if (verifyOrder) {
 			alacer$verifyEntityTraversal(culler, camX, camY, camZ, cameraEntity, firstPerson, cameraSleeping);
+			this.alacer$entityOrder.clear();
 		}
 	}
 
 	@Unique
 	private void alacer$renderSingleEntity(Entity entity3, Culler culler, double camX, double camY, double camZ,
-		float tickDelta, Entity cameraEntity, boolean firstPerson, boolean cameraSleeping, boolean detail) {
+		float tickDelta, Entity cameraEntity, boolean firstPerson, boolean cameraSleeping, boolean detail, boolean verifyOrder) {
+		if (verifyOrder) {
+			this.alacer$entityOrder.add(entity3);
+		}
 		boolean bl3;
 		if (detail) {
 			long start = System.nanoTime();
@@ -348,6 +358,8 @@ public abstract class WorldRendererEntityPipelineMixin {
 	private void alacer$verifyEntityTraversal(Culler culler, double camX, double camY, double camZ,
 		Entity cameraEntity, boolean firstPerson, boolean cameraSleeping) {
 		int vanillaRendered = this.world.globalEntities.size();
+		int orderIndex = 0;
+		boolean orderMatch = true;
 		int compiledCount = this.compiledChunks.size();
 		for (int i = 0; i < compiledCount; i++) {
 			WorldRenderer.RenderChunkInfo info = this.compiledChunks.get(i);
@@ -358,6 +370,10 @@ public abstract class WorldRendererEntityPipelineMixin {
 				TypeInstanceMultiMap<Entity> map = wc.getEntities()[cy];
 				if (!map.isEmpty()) {
 					for (Entity e : map) {
+						if (orderIndex >= this.alacer$entityOrder.size() || this.alacer$entityOrder.get(orderIndex) != e) {
+							orderMatch = false;
+						}
+						orderIndex++;
 						boolean bl3 = this.entityRenderDispatcher.shouldRender(e, culler, camX, camY, camZ) || e.rider == this.minecraft.player;
 						if (bl3) {
 							if (e == cameraEntity && firstPerson && !cameraSleeping
@@ -370,6 +386,7 @@ public abstract class WorldRendererEntityPipelineMixin {
 				}
 			}
 		}
-		FastEntityPipeline.recordVerification(this.renderedEntityCount, vanillaRendered, true);
+		FastEntityPipeline.recordVerification(this.renderedEntityCount, vanillaRendered,
+			orderMatch && orderIndex == this.alacer$entityOrder.size());
 	}
 }
