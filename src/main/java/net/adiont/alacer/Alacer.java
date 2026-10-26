@@ -302,6 +302,7 @@ public final class Alacer implements ClientModInitializer, FrameProfiler.ChunkCo
 		env.put("java.vm", System.getProperty("java.vm.name"));
 		env.put("java.runtime.version", System.getProperty("java.runtime.version"));
 		env.put("java.vm.version", System.getProperty("java.vm.version"));
+		net.adiont.alacer.profiler.JvmRuntime.describe(env);
 		env.put("jvm.args", String.join(" ", java.lang.management.ManagementFactory.getRuntimeMXBean().getInputArguments()));
 		env.put("jvm.maxHeapMB", String.valueOf(Runtime.getRuntime().maxMemory() >> 20));
 		env.put("jvm.gc", this.profiler == null ? "" : this.profiler.jvm().collectorNames());

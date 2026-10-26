@@ -34,8 +34,8 @@ the frame-time benefit did not repeat reliably. See
 | Loader | Fabric Loader ≥ 0.20.0 via the Ornithe installer, Gen 2 intermediary |
 | Libraries | OSL `entrypoints`, `lifecycle-events`, `keybinds` (and `core`), from OSL 0.22.2 |
 | Java (game) | Java 25; primary development and benchmark runtime |
-| Java (Gradle) | Installed JDK 25, selected by `gradle/gradle-daemon-jvm.properties`; Gradle 9.7.1 |
-| Java (compiler/tests) | JDK 25 toolchain, `--release 25` (classfile 69), tests on Java 25 |
+| Java (Gradle) | Installed Eclipse Temurin JDK 25, selected by `gradle/gradle-daemon-jvm.properties`; Gradle 9.7.1 |
+| Java (compiler/tests) | Eclipse Temurin JDK 25 toolchain, `--release 25` (classfile 69), tests on Java 25 |
 
 ## Building
 
@@ -46,10 +46,11 @@ the frame-time benefit did not repeat reliably. See
 The mod jar is written to `build/libs/alacer-<version>+mc1.8.9.jar`. Unit tests run as part of
 `build` (`./gradlew test` to run only them).
 
-Install a JDK 25 before building. Gradle finds installed JDKs automatically; otherwise point
+Install Eclipse Temurin JDK 25 before building. Gradle finds installed JDKs automatically; otherwise point
 `org.gradle.java.installations.paths` at one. The Gradle daemon, compiler/test toolchain and
 Minecraft launcher each select Java 25 independently. `JAVA_HOME` selects the wrapper's
-bootstrap JVM; `./gradlew --version` reports both launcher and daemon JVMs. No automatic JDK
+bootstrap JVM; `./gradlew --version` reports both launcher and daemon JVMs. Run
+`./gradlew javaRuntimeInfo` to see the selected installations and bytecode target. No automatic JDK
 download is configured. The mod now requires Java 25; historical Java 8 benchmark results
 remain separate references. See [Java 25 compatibility](docs/JAVA25.md).
 
@@ -67,7 +68,14 @@ run-client.bat -Pwindow=1920x1080 -Pxmx=2G
 ```
 
 The development launcher grants `--enable-native-access=ALL-UNNAMED` for LWJGL 2's native
-libraries. Add the same JVM argument in an external launcher using Java 25.
+libraries. External launchers using Java 25 also need that argument and
+`--add-modules=jdk.incubator.vector` for the Vector API implementation.
+
+`-PcompactObjectHeaders=true` opts the test and development-client JVMs into Java 25's
+compact object headers. `false` explicitly selects the control layout; without the property,
+the JVM uses its own default. The option is experimental for Alacer and is not promoted to
+the default by the short compatibility check. Profile and benchmark exports include the
+effective JVM layout flags so comparisons can check what actually ran.
 
 Useful project properties (all optional):
 

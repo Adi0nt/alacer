@@ -52,25 +52,41 @@ tasks.withType(JavaCompile).configureEach {
 java {
 	toolchain {
 		languageVersion = JavaLanguageVersion.of(25)
+		vendor = JvmVendorSpec.ADOPTIUM
 	}
 	sourceCompatibility = JavaVersion.VERSION_25
 	targetCompatibility = JavaVersion.VERSION_25
 	withSourcesJar()
 }
 
-test {
+// Share the exact toolchain specification across compilation, tests and game tasks.
+def java25Launcher = javaToolchains.launcherFor(java.toolchain)
+def compactHeaders = providers.gradleProperty('compactObjectHeaders').map { value ->
+	if (!(value in ['true', 'false'])) {
+		throw new GradleException('-PcompactObjectHeaders must be true or false')
+	}
+	value == 'true' ? '-XX:+UseCompactObjectHeaders' : '-XX:-UseCompactObjectHeaders'
+}
+
+tasks.withType(Test).configureEach {
 	useJUnitPlatform()
-	jvmArgs '--add-modules', 'jdk.incubator.vector'
+	javaLauncher = java25Launcher
+	jvmArgs '--add-modules', 'jdk.incubator.vector', '--enable-native-access=ALL-UNNAMED'
+	if (compactHeaders.isPresent()) {
+		jvmArgs compactHeaders.get()
+	}
 }
 
 // Minecraft's JVM is independent of the JVM running Gradle and the bytecode target.
 // Java 25 is the primary development and benchmark runtime.
 tasks.withType(net.fabricmc.loom.task.AbstractRunTask).configureEach {
-	javaLauncher = javaToolchains.launcherFor {
-		languageVersion = JavaLanguageVersion.of(25)
-	}
+	javaLauncher = java25Launcher
 	// LWJGL 2 loads native OpenGL/OpenAL/JInput libraries on the classpath.
 	jvmArgs '--enable-native-access=ALL-UNNAMED', '--add-modules=jdk.incubator.vector'
+	// Java 25's supported memory-layout experiment; keep normal JVM ergonomics by default.
+	if (compactHeaders.isPresent()) {
+		jvmArgs compactHeaders.get()
+	}
 
 	// Forward -Palacer.<key>=<value> to the game as -Dalacer.<key>=<value>, e.g.
 	//   ./gradlew runClient -Palacer.benchmark=true -Palacer.render.fastChunkVisibility=false
@@ -103,5 +119,22 @@ tasks.withType(net.fabricmc.loom.task.AbstractRunTask).configureEach {
 
 	if (project.hasProperty('xmx')) {
 		jvmArgs "-Xmx${project.property('xmx')}"
+	}
+}
+
+tasks.register('javaRuntimeInfo') {
+	group = 'verification'
+	description = 'Print the selected Gradle, compiler, test and Minecraft Java runtimes.'
+	doLast {
+		println "Gradle: ${System.getProperty('java.runtime.version')} (${System.getProperty('java.home')})"
+		def compiler = tasks.named('compileJava', JavaCompile).get().javaCompiler.get().metadata
+		def tests = tasks.named('test', Test).get().javaLauncher.get().metadata
+		def client = tasks.named('runClient').get().javaLauncher.get().metadata
+		[Compiler: compiler, Tests: tests, Minecraft: client].each { name, metadata ->
+			println "${name}: ${metadata.javaRuntimeVersion} (${metadata.installationPath})"
+		}
+		println "Bytecode release: ${tasks.named('compileJava', JavaCompile).get().options.release.get()}"
+		println "Compact object headers: ${compactHeaders.orElse('JVM default (experiment not selected)').get()}"
+		println 'Game modules: jdk.incubator.vector; native access: ALL-UNNAMED'
 	}
 }

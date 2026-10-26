@@ -10,12 +10,12 @@ justify them; see [ARCHITECTURE.md](ARCHITECTURE.md) and the root `AGENTS.md`.
 
 | Component | Selection | Verification |
 |---|---|---|
-| Gradle daemon | Installed JDK 25 via `gradle/gradle-daemon-jvm.properties` | `./gradlew --version` |
-| Compiler and unit tests | Java 25 toolchain; `--release 25`, classfile major 69 | `./gradlew build`; inspect the remapped jar |
-| Minecraft | Independent Java 25 `javaLauncher` on Loom run tasks | Exported `environment.java.version`, VM version and JVM arguments |
+| Gradle daemon | Installed Eclipse Temurin JDK 25 via `gradle/gradle-daemon-jvm.properties` | `./gradlew --version`; `./gradlew javaRuntimeInfo` |
+| Compiler and unit tests | Eclipse Temurin 25 toolchain; `--release 25`, classfile major 69 | `./gradlew build`; inspect the remapped jar |
+| Minecraft | Shared Eclipse Temurin 25 `javaLauncher` on Loom run tasks | Exported `environment.java.version`, VM version and JVM arguments |
 
 `JAVA_HOME` controls the wrapper bootstrap JVM, independently of daemon criteria. Install a
-JDK 25 locally and set `JAVA_HOME` to it for the simplest setup. Gradle can discover installed
+Temurin JDK 25 locally and set `JAVA_HOME` to it for the simplest setup. Gradle can discover installed
 JDKs; a custom installation can be listed in `org.gradle.java.installations.paths`. No JDK
 download repository or machine-specific absolute path is committed.
 
@@ -59,10 +59,22 @@ this particular dependency graph, not every version published under those snapsh
 ```
 
 Loom run tasks grant `--enable-native-access=ALL-UNNAMED` for the classpath's native LWJGL,
-OpenAL and input libraries. External launchers should select Java 25 and add that argument
-too. Broad reflective `--add-opens`, preview features and GC tuning are not required by the
+OpenAL and input libraries. They also add `jdk.incubator.vector` for the Vector API code.
+External launchers should select Java 25 and add both JVM arguments. Broad reflective
+`--add-opens`, preview features and GC tuning are not required by the
 tested configuration. JFR uses `-XX:StartFlightRecording` directly; the obsolete
 `-XX:+FlightRecorder` switch is removed. `-PjfrSettings=path` remains supported.
+
+The project's 2026-10-25 runtime follow-up discovered that an unqualified Gradle daemon
+selected an older installed Microsoft JDK 25.0.3, despite Temurin 25.0.4.1 appearing first
+on the shell PATH. The daemon criteria and build toolchain now select Temurin consistently.
+`./gradlew javaRuntimeInfo` prints the effective Gradle, compiler, test and game paths.
+Adoptium's 25.0.5 release had no Windows x64 JDK asset at the time of this check, so the
+available Temurin 25.0.4.1 remains the selected runtime. The Java 25 compact object header
+option can be tried with `-PcompactObjectHeaders=true` on `test` or `runClient`; `false`
+selects the control layout. Both are opt-in for a controlled comparison. Exports record
+`java.home`, `java.vectorModule` and effective object-header, compressed-oops and alignment
+flags; no benchmark result is inferred from a successful build alone.
 
 The profiler still uses `com.sun.management.ThreadMXBean` to measure client-thread allocated
 bytes, and MXBeans for heap, collector names, GC counts/time and thread/process CPU clocks.

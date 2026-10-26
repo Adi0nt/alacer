@@ -1,0 +1,270 @@
+{
+  "runtime": "Eclipse Temurin 25.0.4.1+1-LTS",
+  "head": "1f28efbc64603fd109369d75e10208c6bd9748fb",
+  "source_diff_sha256": "c4bab118db735baa08901609b6d6285769d259075618c0e2272e23ecee18f39c",
+  "class_sha256": "177195c99748780728dc14138b980f6b36b4e841addf4c73ced9fcad39abdf39",
+  "jdk_sha256": "5808527e3dfc4eb285c7664ba356bc267055ef906e83ed4660d9f7976da7349b",
+  "runs": [
+    {
+      "label": "j25-layout-20261025-a1",
+      "compact_headers": false,
+      "seconds": 69.63,
+      "command": [
+        "C:\\Users\\CodyJ\\OneDrive\\Documents\\GitLab\\adiont\\aevum\\alacer\\gradlew.bat",
+        "runClient",
+        "--offline",
+        "--console=plain",
+        "-PcompactObjectHeaders=false",
+        "-Porg.gradle.java.installations.auto-detect=false",
+        "-Porg.gradle.java.installations.paths=C:\\Program Files\\Eclipse Adoptium\\jdk-25.0.4.101-hotspot",
+        "-Pwindow=1920x1080",
+        "-Pxmx=2G",
+        "-Palacer.benchmark=true",
+        "-Palacer.benchmark.exit=true",
+        "-Palacer.benchmark.label=j25-layout-20261025-a1",
+        "-Palacer.benchmark.timeScale=0.5",
+        "-Palacer.benchmark.timeout=600",
+        "-Palacer.benchmark.viewDistance=12",
+        "-Palacer.benchmark.vbo=false",
+        "-Palacer.benchmark.entities=0",
+        "-Palacer.benchmark.chests=0",
+        "-Palacer.benchmark.screenshots=false",
+        "-Palacer.profiler.hud=false",
+        "-Palacer.profiler.chunkDetail=false",
+        "-Palacer.profiler.entityDetail=false",
+        "-Palacer.profiler.particleDetail=false"
+      ],
+      "raw_path": "run\\alacer\\benchmarks\\20261025-191545-j25-layout-20261025-a1-vis_on-ecl_on-ent0",
+      "raw_sha256": {
+        "fly.csv": "ca7c2b4491b37277a048eb97233aa9f9987fd57333dfaeb790a490570de80718",
+        "fly.json": "ca375ffbdc1e9c09e9cd89936112a0a316f789dd60e13b46b486c11c400c5cdc",
+        "pan.csv": "97432b08f3529b54b1275c4b417bafc292980097b2aa49dd00ec3e9cb2fef3f4",
+        "pan.json": "5d081aab4789060552753a63ee4f352be2e40e0689afb2d31823953cb3bfcc7a",
+        "static.csv": "b3b235b3a789910d75617f55682fd37a8a54b45cddf3d2a1e7015f86b50640c2",
+        "static.json": "cd9370a89fc9093f93fd4e2abe0106f4d454440141d3a20933730779b99ce60a",
+        "summary.json": "a016f90a311ef98fa3e701fcf1d881fd8a9df73faabf568340dd3d2b3b84234a"
+      },
+      "log_sha256": "de159a009c38af0a17bc05a53cb4d09dbc1fd82363896d6d7f191d181c3f8f0c",
+      "summary_sha256": "a016f90a311ef98fa3e701fcf1d881fd8a9df73faabf568340dd3d2b3b84234a",
+      "metrics": {
+        "static": {
+          "avg_fps": 481.7363,
+          "frame_p99_ms": 4.9781,
+          "client_thread_cpu_ms_per_frame": 1.4652,
+          "alloc_mean_bytes": 3892.6008,
+          "heap_used_mean_bytes": null
+        },
+        "pan": {
+          "avg_fps": 318.0298,
+          "frame_p99_ms": 6.2808,
+          "client_thread_cpu_ms_per_frame": 2.901,
+          "alloc_mean_bytes": 32020.9355,
+          "heap_used_mean_bytes": null
+        },
+        "fly": {
+          "avg_fps": 303.9138,
+          "frame_p99_ms": 6.1893,
+          "client_thread_cpu_ms_per_frame": 3.089,
+          "alloc_mean_bytes": 40136.7737,
+          "heap_used_mean_bytes": null
+        }
+      }
+    },
+    {
+      "label": "j25-layout-20261025-b1",
+      "compact_headers": true,
+      "seconds": 61.68,
+      "command": [
+        "C:\\Users\\CodyJ\\OneDrive\\Documents\\GitLab\\adiont\\aevum\\alacer\\gradlew.bat",
+        "runClient",
+        "--offline",
+        "--console=plain",
+        "-PcompactObjectHeaders=true",
+        "-Porg.gradle.java.installations.auto-detect=false",
+        "-Porg.gradle.java.installations.paths=C:\\Program Files\\Eclipse Adoptium\\jdk-25.0.4.101-hotspot",
+        "-Pwindow=1920x1080",
+        "-Pxmx=2G",
+        "-Palacer.benchmark=true",
+        "-Palacer.benchmark.exit=true",
+        "-Palacer.benchmark.label=j25-layout-20261025-b1",
+        "-Palacer.benchmark.timeScale=0.5",
+        "-Palacer.benchmark.timeout=600",
+        "-Palacer.benchmark.viewDistance=12",
+        "-Palacer.benchmark.vbo=false",
+        "-Palacer.benchmark.entities=0",
+        "-Palacer.benchmark.chests=0",
+        "-Palacer.benchmark.screenshots=false",
+        "-Palacer.profiler.hud=false",
+        "-Palacer.profiler.chunkDetail=false",
+        "-Palacer.profiler.entityDetail=false",
+        "-Palacer.profiler.particleDetail=false"
+      ],
+      "raw_path": "run\\alacer\\benchmarks\\20261025-191647-j25-layout-20261025-b1-vis_on-ecl_on-ent0",
+      "raw_sha256": {
+        "fly.csv": "313ae2548a823e44af70055fa4120db224cb5de809aa85fcac5291fecabed98d",
+        "fly.json": "94bd943b2e60dff89071824863a5b6c5b2045ce100b032d56034a5dd6a09b024",
+        "pan.csv": "8b7ed957667c96749471993566789cae7e785f327fc549437ea675cd9e1f4fb1",
+        "pan.json": "8f8466fa1dc8af48d048ef41ed904ceafe55cc6a7d31f0603336429dba73312a",
+        "static.csv": "950ca3ac48f867f573e0b52f95c4bae7750b930f17e1bcf49f5fe59870075b2a",
+        "static.json": "3c3271c586c8899102f036783156984d7536ebeba0fc3313a08435c32f7b2e48",
+        "summary.json": "da0d91d8c5ce3d696860aa81a9170fef8440dae647b2f5d936f729de930ced98"
+      },
+      "log_sha256": "79815af2b76901a7bd053de4c073be239a1b177271483da0c648eead0b3640ef",
+      "summary_sha256": "da0d91d8c5ce3d696860aa81a9170fef8440dae647b2f5d936f729de930ced98",
+      "metrics": {
+        "static": {
+          "avg_fps": 563.8805,
+          "frame_p99_ms": 4.5892,
+          "client_thread_cpu_ms_per_frame": 1.3731,
+          "alloc_mean_bytes": 3293.5507,
+          "heap_used_mean_bytes": null
+        },
+        "pan": {
+          "avg_fps": 323.0406,
+          "frame_p99_ms": 5.7331,
+          "client_thread_cpu_ms_per_frame": 2.8954,
+          "alloc_mean_bytes": 29242.4201,
+          "heap_used_mean_bytes": null
+        },
+        "fly": {
+          "avg_fps": 315.8874,
+          "frame_p99_ms": 5.6514,
+          "client_thread_cpu_ms_per_frame": 2.9668,
+          "alloc_mean_bytes": 40185.6987,
+          "heap_used_mean_bytes": null
+        }
+      }
+    },
+    {
+      "label": "j25-layout-20261025-b2",
+      "compact_headers": true,
+      "seconds": 57.28,
+      "command": [
+        "C:\\Users\\CodyJ\\OneDrive\\Documents\\GitLab\\adiont\\aevum\\alacer\\gradlew.bat",
+        "runClient",
+        "--offline",
+        "--console=plain",
+        "-PcompactObjectHeaders=true",
+        "-Porg.gradle.java.installations.auto-detect=false",
+        "-Porg.gradle.java.installations.paths=C:\\Program Files\\Eclipse Adoptium\\jdk-25.0.4.101-hotspot",
+        "-Pwindow=1920x1080",
+        "-Pxmx=2G",
+        "-Palacer.benchmark=true",
+        "-Palacer.benchmark.exit=true",
+        "-Palacer.benchmark.label=j25-layout-20261025-b2",
+        "-Palacer.benchmark.timeScale=0.5",
+        "-Palacer.benchmark.timeout=600",
+        "-Palacer.benchmark.viewDistance=12",
+        "-Palacer.benchmark.vbo=false",
+        "-Palacer.benchmark.entities=0",
+        "-Palacer.benchmark.chests=0",
+        "-Palacer.benchmark.screenshots=false",
+        "-Palacer.profiler.hud=false",
+        "-Palacer.profiler.chunkDetail=false",
+        "-Palacer.profiler.entityDetail=false",
+        "-Palacer.profiler.particleDetail=false"
+      ],
+      "raw_path": "run\\alacer\\benchmarks\\20261025-191744-j25-layout-20261025-b2-vis_on-ecl_on-ent0",
+      "raw_sha256": {
+        "fly.csv": "7adf22baa03fa65e2da36d28c075d286f0c7aa935a3ef7af0ad9209a410da9b2",
+        "fly.json": "7f4049e7a6613a7ee0e46426f2148db93c79c851deae0048875b93ee71894740",
+        "pan.csv": "c6c7ae07a4e8d97704f4edf8d231bcaf003ae770b80122ae409f8ceba1d46f3c",
+        "pan.json": "84d384fe11b51204222078029b566240e86216eba91d10d6019dab9532f5af98",
+        "static.csv": "35d62e74b6ba1b202d2a5d85d24f906562630dd7411a702f6239987a03c6f883",
+        "static.json": "7e1065517a0d6ccc80bff75ee906a93591d004d95b5ed00cb0cee31309b90f36",
+        "summary.json": "42ce6fffcd38ce8d255429a7e78a3869be933600d7ef5989d1f1d6e753cd870f"
+      },
+      "log_sha256": "6210879859d8471280f282dca24f4ca537288151973a851d09c197c88ec1648c",
+      "summary_sha256": "42ce6fffcd38ce8d255429a7e78a3869be933600d7ef5989d1f1d6e753cd870f",
+      "metrics": {
+        "static": {
+          "avg_fps": 525.6757,
+          "frame_p99_ms": 5.0198,
+          "client_thread_cpu_ms_per_frame": 1.4026,
+          "alloc_mean_bytes": 3474.1149,
+          "heap_used_mean_bytes": null
+        },
+        "pan": {
+          "avg_fps": 326.0548,
+          "frame_p99_ms": 5.7071,
+          "client_thread_cpu_ms_per_frame": 2.8682,
+          "alloc_mean_bytes": 30166.3123,
+          "heap_used_mean_bytes": null
+        },
+        "fly": {
+          "avg_fps": 322.593,
+          "frame_p99_ms": 5.3813,
+          "client_thread_cpu_ms_per_frame": 2.9303,
+          "alloc_mean_bytes": 34767.2188,
+          "heap_used_mean_bytes": null
+        }
+      }
+    },
+    {
+      "label": "j25-layout-20261025-a2",
+      "compact_headers": false,
+      "seconds": 57.37,
+      "command": [
+        "C:\\Users\\CodyJ\\OneDrive\\Documents\\GitLab\\adiont\\aevum\\alacer\\gradlew.bat",
+        "runClient",
+        "--offline",
+        "--console=plain",
+        "-PcompactObjectHeaders=false",
+        "-Porg.gradle.java.installations.auto-detect=false",
+        "-Porg.gradle.java.installations.paths=C:\\Program Files\\Eclipse Adoptium\\jdk-25.0.4.101-hotspot",
+        "-Pwindow=1920x1080",
+        "-Pxmx=2G",
+        "-Palacer.benchmark=true",
+        "-Palacer.benchmark.exit=true",
+        "-Palacer.benchmark.label=j25-layout-20261025-a2",
+        "-Palacer.benchmark.timeScale=0.5",
+        "-Palacer.benchmark.timeout=600",
+        "-Palacer.benchmark.viewDistance=12",
+        "-Palacer.benchmark.vbo=false",
+        "-Palacer.benchmark.entities=0",
+        "-Palacer.benchmark.chests=0",
+        "-Palacer.benchmark.screenshots=false",
+        "-Palacer.profiler.hud=false",
+        "-Palacer.profiler.chunkDetail=false",
+        "-Palacer.profiler.entityDetail=false",
+        "-Palacer.profiler.particleDetail=false"
+      ],
+      "raw_path": "run\\alacer\\benchmarks\\20261025-191842-j25-layout-20261025-a2-vis_on-ecl_on-ent0",
+      "raw_sha256": {
+        "fly.csv": "dc4b12d9e15366a3786ebc0b8100ebbe1ff64f0706ac60d5c0c533bff0e258f8",
+        "fly.json": "946bbfb3b4bcbefc5ea2ea3148449071487bf611cb3a54dc690e667dbcc3178d",
+        "pan.csv": "16f36d8c77be6fa8df7ecbad6594b79204ca7968b231a5d183261944b06e0351",
+        "pan.json": "a2b445b6a3df5c31499d220bd58222ca4c51300031e0cdc5d5bedd208f348b5b",
+        "static.csv": "a87921e63d3d007a7bba2633cc92c8718d98eff2546f989d74cb76b2ef4d1f46",
+        "static.json": "5e45718bc818791581842b8b5c36c845c152b1209aca4439d96f6ce3ba088721",
+        "summary.json": "1b5ac0821363982b0f977a50473bbde37e00cf9d9a7af9142e0195a94fc15cc1"
+      },
+      "log_sha256": "7602418773ca1366806433269e6061d5278e518045491a4117250d1f8e8537f6",
+      "summary_sha256": "1b5ac0821363982b0f977a50473bbde37e00cf9d9a7af9142e0195a94fc15cc1",
+      "metrics": {
+        "static": {
+          "avg_fps": 477.8519,
+          "frame_p99_ms": 5.1059,
+          "client_thread_cpu_ms_per_frame": 1.4252,
+          "alloc_mean_bytes": 3875.3339,
+          "heap_used_mean_bytes": null
+        },
+        "pan": {
+          "avg_fps": 313.1088,
+          "frame_p99_ms": 5.8834,
+          "client_thread_cpu_ms_per_frame": 2.9866,
+          "alloc_mean_bytes": 32836.3252,
+          "heap_used_mean_bytes": null
+        },
+        "fly": {
+          "avg_fps": 333.4536,
+          "frame_p99_ms": 5.265,
+          "client_thread_cpu_ms_per_frame": 2.8579,
+          "alloc_mean_bytes": 35463.8081,
+          "heap_used_mean_bytes": null
+        }
+      }
+    }
+  ],
+  "decision": "Exploratory only; compact headers remain opt-in pending repeated performance and visual gates."
+}
