@@ -225,14 +225,14 @@ public final class PerformanceAreaGraphRenderer {
 					TOP_DETAIL_ROWS[i].percentage = detailEntries[i].getPercentage();
 					TOP_DETAIL_ROWS[i].updateStrings();
 				}
-				String topName = PerformanceTracker.getTopSubsystemName();
-				double topPct = PerformanceTracker.getTopSubsystemPercentage();
-				double topMs = PerformanceTracker.getTopSubsystemMillis();
+				String detailName = PerformanceTracker.getDetailSubsystemName();
+				double detailPct = PerformanceTracker.getDetailSubsystemPercentage();
+				double detailMs = PerformanceTracker.getDetailSubsystemMillis();
 				int visChunks = PerformanceTracker.getAvgVisibleChunks();
 				int pendChunks = PerformanceTracker.getAvgPendingChunks();
 				int frustTests = PerformanceTracker.getAvgFrustumTests();
 				cachedStatsRow = String.format(Locale.ROOT, "\u00a77Top: \u00a7f%s (%.1f%% / %.2fms) \u00a77| Vis \u00a7f%d \u00a77| Frust \u00a7f%d \u00a77| Pend \u00a7f%d",
-					topName, topPct, topMs, visChunks, frustTests, pendChunks);
+					detailName, detailPct, detailMs, visChunks, frustTests, pendChunks);
 			} else {
 				PerformanceTracker.SubsystemEntry[] entries = PerformanceTracker.getSubsystemBreakdown();
 				for (int i = 0; i < DISPLAY_ROWS.length; i++) {

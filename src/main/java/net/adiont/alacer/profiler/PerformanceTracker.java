@@ -621,6 +621,15 @@ public final class PerformanceTracker {
 	public static double getTopSubsystemMillis() { updateStatistics(); return BREAKDOWN[topSubsystemIndex].getMillis(); }
 	public static double getTopSubsystemPercentage() { updateStatistics(); return BREAKDOWN[topSubsystemIndex].getPercentage(); }
 	public static double getTopSubsystemWorstMillis() { updateStatistics(); return topSubsystemWorstMillis; }
+
+	public static String getDetailSubsystemName() { updateStatistics(); return topSubsystemIndex == 2 ? "Entities" : "Terrain"; }
+	public static double getDetailSubsystemMillis() { updateStatistics(); return topSubsystemIndex == 2 ? avgEntitiesMillis : avgTerrainMillis; }
+	public static double getDetailSubsystemPercentage() {
+		updateStatistics();
+		double frameMs = Math.max(0.0001D, averageFrameMillis);
+		return (getDetailSubsystemMillis() / frameMs) * 100.0D;
+	}
+
 	public static int getAvgVisibleChunks() { updateStatistics(); return avgVisibleChunks; }
 	public static int getAvgPendingChunks() { updateStatistics(); return avgPendingChunks; }
 	public static int getAvgFrustumTests() { updateStatistics(); return avgFrustumTests; }

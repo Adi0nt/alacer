@@ -3,9 +3,11 @@ package net.adiont.alacer.mixin;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import net.adiont.alacer.Alacer;
+import net.adiont.alacer.render.DynamicFramePacing;
 import net.adiont.alacer.render.ModernGl;
 import net.adiont.alacer.render.MultiDrawIndirect;
 import net.adiont.alacer.render.ResidentMeshArena;
+import net.adiont.alacer.render.SwapOptimizer;
 import net.adiont.alacer.render.TerrainShader;
 import net.minecraft.client.render.world.WorldRenderer;
 import net.minecraft.client.world.ClientWorld;
@@ -22,6 +24,8 @@ public class ModernWorldLifecycleMixin {
 			TerrainShader.cleanup();
 			ResidentMeshArena.get().clear();
 			MultiDrawIndirect.cleanup();
+			DynamicFramePacing.cleanup();
+			SwapOptimizer.reset();
 		}
 		if (ModernGl.verify()) { alacer$log(world == null ? "removed" : "loaded"); }
 	}
@@ -31,6 +35,8 @@ public class ModernWorldLifecycleMixin {
 		TerrainShader.cleanup();
 		ResidentMeshArena.get().clear();
 		MultiDrawIndirect.cleanup();
+		DynamicFramePacing.cleanup();
+		SwapOptimizer.reset();
 		if (ModernGl.verify()) { alacer$log("reload"); }
 	}
 

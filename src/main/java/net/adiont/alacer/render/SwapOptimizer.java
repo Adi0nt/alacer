@@ -37,11 +37,14 @@ public final class SwapOptimizer {
 
 	private static boolean initialized = false;
 	private static boolean fenceSupported = false;
-	private static GLSync previousFrameFence = null;
+	private static final int FENCE_RING_SIZE = 2; // Double-buffered GPU/CPU overlap (1 frame in flight)
+	private static final GLSync[] fenceRing = new GLSync[FENCE_RING_SIZE];
+	private static int currentFenceIndex = 0;
 
 	private static long lastDisplayUpdateStartNs = 0L;
 	private static long lastDriverSwapNs = 0L;
 	private static long lastLimiterSyncNs = 0L;
+	private static long lastFenceWaitNs = 0L;
 	private static long totalDriverSwapNs = 0L;
 	private static long totalFlushes = 0L;
 	private static long totalYieldsSuppressed = 0L;
@@ -86,14 +89,16 @@ public final class SwapOptimizer {
 			totalFlushes++;
 
 			if (isFenceSupported() && (config.terrainShader || config.multiDrawIndirect)) {
-				if (previousFrameFence != null) {
+				GLSync old = fenceRing[currentFenceIndex];
+				if (old != null) {
 					try {
-						GL32.glDeleteSync(previousFrameFence);
+						GL32.glDeleteSync(old);
 					} catch (Throwable ignored) {
 					}
-					previousFrameFence = null;
+					fenceRing[currentFenceIndex] = null;
 				}
-				previousFrameFence = GL32.glFenceSync(GL32.GL_SYNC_GPU_COMMANDS_COMPLETE, 0);
+				fenceRing[currentFenceIndex] = GL32.glFenceSync(GL32.GL_SYNC_GPU_COMMANDS_COMPLETE, 0);
+				currentFenceIndex = (currentFenceIndex + 1) % FENCE_RING_SIZE;
 			}
 
 			if (config.verifyFastSwapBuffers) {
@@ -107,16 +112,30 @@ public final class SwapOptimizer {
 	}
 
 	/**
-	 * Called before beginning frame rendering to await previous frame completion if fence active.
+	 * Called before beginning frame rendering to await completion of the frame from
+	 * {@link #FENCE_RING_SIZE} frames ago.
+	 *
+	 * <p>Uses non-blocking polling first to avoid CPU stalls during steady-state rendering,
+	 * only waiting if the GPU is more than 1 full frame behind.
 	 */
 	public static void onPreRenderWorld() {
-		if (previousFrameFence != null && isFenceSupported()) {
+		lastFenceWaitNs = 0L;
+		if (!isFenceSupported()) return;
+
+		// The oldest fence in the ring is at currentFenceIndex (submitted FENCE_RING_SIZE frames ago)
+		GLSync oldestFence = fenceRing[currentFenceIndex];
+		if (oldestFence != null) {
 			try {
-				GL32.glClientWaitSync(previousFrameFence, GL32.GL_SYNC_FLUSH_COMMANDS_BIT, 50_000_000L);
-				GL32.glDeleteSync(previousFrameFence);
+				int status = GL32.glClientWaitSync(oldestFence, 0, 0L);
+				if (status != GL32.GL_ALREADY_SIGNALED && status != GL32.GL_CONDITION_SATISFIED) {
+					long waitStart = System.nanoTime();
+					GL32.glClientWaitSync(oldestFence, GL32.GL_SYNC_FLUSH_COMMANDS_BIT, 20_000_000L);
+					lastFenceWaitNs = System.nanoTime() - waitStart;
+				}
+				GL32.glDeleteSync(oldestFence);
 			} catch (Throwable ignored) {
 			}
-			previousFrameFence = null;
+			fenceRing[currentFenceIndex] = null;
 		}
 	}
 
@@ -193,14 +212,22 @@ public final class SwapOptimizer {
 		}
 	}
 
+	public static long getLastFenceWaitNs() {
+		return lastFenceWaitNs;
+	}
+
 	public static void reset() {
-		if (previousFrameFence != null) {
-			try {
-				if (isFenceSupported()) GL32.glDeleteSync(previousFrameFence);
-			} catch (Throwable ignored) {
+		for (int i = 0; i < FENCE_RING_SIZE; i++) {
+			if (fenceRing[i] != null) {
+				try {
+					if (isFenceSupported()) GL32.glDeleteSync(fenceRing[i]);
+				} catch (Throwable ignored) {
+				}
+				fenceRing[i] = null;
 			}
-			previousFrameFence = null;
 		}
+		currentFenceIndex = 0;
+		lastFenceWaitNs = 0L;
 		lastDisplayUpdateStartNs = 0L;
 		lastDriverSwapNs = 0L;
 		lastLimiterSyncNs = 0L;

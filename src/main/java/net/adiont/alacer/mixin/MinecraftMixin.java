@@ -13,6 +13,7 @@ import net.adiont.alacer.Alacer;
 import net.adiont.alacer.profiler.FrameProfiler.Section;
 import net.adiont.alacer.profiler.PerformanceAreaGraphRenderer;
 import net.adiont.alacer.profiler.PerformanceTracker;
+import net.adiont.alacer.render.DynamicFramePacing;
 import net.adiont.alacer.render.FastDisplaySync;
 import net.adiont.alacer.render.GlErrorChecks;
 import net.adiont.alacer.render.SwapOptimizer;
@@ -31,12 +32,14 @@ public class MinecraftMixin {
 	@Inject(method = "runGame", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/render/GameRenderer;render(FJ)V"))
 	private void alacer$beforeRender(CallbackInfo ci) {
 		SwapOptimizer.onPreRenderWorld();
+		DynamicFramePacing.beginFrame();
 		Alacer.get().begin(Section.RENDER);
 	}
 
 	@Inject(method = "runGame", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/render/GameRenderer;render(FJ)V", shift = At.Shift.AFTER))
 	private void alacer$afterRender(CallbackInfo ci) {
 		Alacer.get().end(Section.RENDER);
+		DynamicFramePacing.endFrame();
 	}
 
 	/** The two per-frame checks only; the startup checks are in other methods. */

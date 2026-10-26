@@ -144,10 +144,14 @@ public final class FastDisplaySync {
 
 		final long waitStart = now;
 
-		// Phase 1: Coarse park if remaining wait exceeds 1.5 ms.
-		// Leave a 1.0 ms margin for fine-grained spin wait to absorb OS park latency jitter.
-		if (remainingNs > 1_500_000L) {
-			long parkNs = remainingNs - 1_000_000L;
+		// Phase 1: Coarse park if remaining wait exceeds margin + 500us.
+		// Dynamically scales margin based on real-time GPU load (Phase 9.1).
+		long margin = DynamicFramePacing.isEnabled()
+			? DynamicFramePacing.computePacingMarginNanos(frameIntervalNs)
+			: 1_000_000L;
+		long parkThreshold = margin + 500_000L;
+		if (remainingNs > parkThreshold) {
+			long parkNs = remainingNs - margin;
 			clock.parkNanos(parkNs);
 			if (clock.interrupted()) {
 				// Clear interrupt status cleanly without allocating exceptions

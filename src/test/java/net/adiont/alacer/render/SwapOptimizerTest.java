@@ -54,6 +54,14 @@ class SwapOptimizerTest {
 
 		assertEquals(0L, SwapOptimizer.getLastDriverSwapNs());
 		assertEquals(0L, SwapOptimizer.getLastLimiterSyncNs());
+		assertEquals(0L, SwapOptimizer.getLastFenceWaitNs());
 		assertEquals(0.0D, SwapOptimizer.getAverageSwapMillis());
+	}
+
+	@Test
+	void fenceWaitAndPreRenderSafetyWhenHeadless() {
+		assertEquals(0L, SwapOptimizer.getLastFenceWaitNs());
+		SwapOptimizer.onPreRenderWorld();
+		assertEquals(0L, SwapOptimizer.getLastFenceWaitNs());
 	}
 }
