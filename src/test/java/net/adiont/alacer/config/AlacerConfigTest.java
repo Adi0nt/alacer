@@ -108,6 +108,8 @@ class AlacerConfigTest {
 		assertFalse(config.verifyEntityChunkLookup);
 		assertTrue(config.fastEntityPipeline);
 		assertFalse(config.verifyEntityPipeline);
+		assertTrue(config.fastTerrainPipeline);
+		assertFalse(config.verifyTerrainPipeline);
 		assertTrue(config.throttleGlErrorChecks);
 		assertFalse(config.verifyGlErrorChecks);
 		assertTrue(config.avoidMatrixReads);
@@ -180,6 +182,9 @@ class AlacerConfigTest {
 		config.setToggle("render.fastEntityPipeline", false);
 		assertFalse(config.fastEntityPipeline);
 		assertThrows(IllegalArgumentException.class, () -> config.setToggle("render.fastEntityPipeline.verify", true));
+		config.setToggle("render.fastTerrainPipeline", false);
+		assertFalse(config.fastTerrainPipeline);
+		assertThrows(IllegalArgumentException.class, () -> config.setToggle("render.fastTerrainPipeline.verify", true));
 		config.setToggle("render.fastChunkVisibility", false);
 		assertFalse(config.fastChunkVisibility);
 		config.setToggle("render.fastChunkFrustum", false);

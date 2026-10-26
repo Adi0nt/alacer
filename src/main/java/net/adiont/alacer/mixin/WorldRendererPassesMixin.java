@@ -15,12 +15,15 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 import net.adiont.alacer.Alacer;
+import net.adiont.alacer.config.AlacerConfig;
 import net.adiont.alacer.profiler.FrameProfiler.Section;
 import net.adiont.alacer.render.FastCompiledChunk;
+import net.adiont.alacer.render.FastRenderChunk;
 import net.adiont.alacer.render.ModernGl;
 import net.adiont.alacer.render.ModernVertexBuffer;
 import net.adiont.alacer.render.RenderChunkOrigin;
 import net.adiont.alacer.render.RenderPasses;
+import net.adiont.alacer.render.TerrainLayerBatch;
 import net.adiont.alacer.render.TerrainShader;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.render.block.BlockLayer;
@@ -32,13 +35,19 @@ import net.minecraft.client.render.vertex.VertexFormat;
 import net.minecraft.client.render.vertex.VertexFormatElement;
 import net.minecraft.client.render.world.ChunkRenderDispatcher;
 import net.minecraft.client.render.world.CompiledChunk;
+import net.minecraft.client.render.world.GlListRenderChunk;
 import net.minecraft.client.render.world.RenderChunk;
 import net.minecraft.client.render.world.RenderChunkList;
 import net.minecraft.client.render.world.WorldRenderer;
 import net.minecraft.entity.Entity;
 import net.minecraft.util.math.BlockPos;
 
-/** Sky, cloud and terrain layer timing and fast layer filtering. Logic lives in {@link RenderPasses}. */
+/**
+ * High-performance terrain layer rendering override.
+ * Replaces two-pass intermediate chunk list filtering with direct single-pass rendering,
+ * eliminates thousands of getCompiledChunk calls per frame via cached RenderChunk bitmasks,
+ * accelerates translucent sorting, and skips empty layer passes in zero iterations.
+ */
 @Mixin(WorldRenderer.class)
 public class WorldRendererPassesMixin {
 
@@ -52,22 +61,61 @@ public class WorldRendererPassesMixin {
 	@Shadow private double lastCameraY;
 	@Shadow private double lastCameraZ;
 
+	@Unique private int alacer$visibleLayerBits;
+	@Unique private final TerrainLayerBatch alacer$batch = new TerrainLayerBatch();
+
 	@Inject(method = LAYER, at = @At("HEAD"), cancellable = true)
 	private void alacer$beginLayer(BlockLayer layer, double tickDelta, int anaglyphRenderPass, Entity camera, CallbackInfoReturnable<Integer> cir) {
 		if (TerrainShader.isActive() && !ModernGl.foreignBuffersPresent()) {
-			int count = alacer$renderShaderDirect(layer, camera);
+			int count = alacer$renderShaderDirect(layer, camera, tickDelta);
 			cir.setReturnValue(count);
 			cir.cancel();
 			return;
 		}
+
+		AlacerConfig config = Alacer.get() != null ? Alacer.get().config() : null;
+		if (config != null && (config.fastTerrainPipeline || config.verifyTerrainPipeline)) {
+			int count = alacer$renderStandardDirect(layer, camera, tickDelta);
+			cir.setReturnValue(count);
+			cir.cancel();
+			return;
+		}
+
 		RenderPasses.beginLayer(layer);
 	}
 
 	@Unique
-	private int alacer$renderShaderDirect(BlockLayer layer, Entity camera) {
+	private int alacer$renderShaderDirect(BlockLayer layer, Entity camera, double tickDelta) {
 		RenderPasses.beginLayer(layer);
 
+		int layerOrdinal = layer.ordinal();
+		int layerBit = 1 << layerOrdinal;
+
+		if (layer == BlockLayer.SOLID || !this.alacer$batch.isBuiltFor(this.compiledChunks)) {
+			this.alacer$batch.build(this.compiledChunks);
+			this.alacer$visibleLayerBits = this.alacer$batch.getVisibleLayerBits();
+		}
+
+		if ((this.alacer$visibleLayerBits & layerBit) == 0) {
+			RenderPasses.chunks(layer, 0);
+			RenderPasses.endLayer(layer);
+			return 0;
+		}
+
+		TerrainLayerBatch.LayerQueue queue = this.alacer$batch.getQueue(layer);
+		int queueSize = queue.size();
+		if (queueSize == 0) {
+			RenderPasses.chunks(layer, 0);
+			RenderPasses.endLayer(layer);
+			return 0;
+		}
+
 		Lighting.turnOff();
+
+		double camX = camera.lastX + (camera.x - camera.lastX) * tickDelta;
+		double camY = camera.lastY + (camera.y - camera.lastY) * tickDelta;
+		double camZ = camera.lastZ + (camera.z - camera.lastZ) * tickDelta;
+		this.chunkList.setCameraPos(camX, camY, camZ);
 
 		if (layer == BlockLayer.TRANSLUCENT) {
 			double dx = camera.x - this.lastCameraX;
@@ -77,20 +125,10 @@ public class WorldRendererPassesMixin {
 				this.lastCameraX = camera.x;
 				this.lastCameraY = camera.y;
 				this.lastCameraZ = camera.z;
-				int resortCount = 0;
-				int size = this.compiledChunks.size();
-				for (int i = 0; i < size; i++) {
-					WorldRenderer.RenderChunkInfo info = this.compiledChunks.get(i);
-					CompiledChunk cc = info.chunk.getCompiledChunk();
-					boolean hasTranslucent = (cc instanceof FastCompiledChunk fcc)
-						? (fcc.alacer$builtLayerMask() & (1 << BlockLayer.TRANSLUCENT.ordinal())) != 0
-						: cc.hasLayer(BlockLayer.TRANSLUCENT);
-					if (hasTranslucent) {
-						this.chunkRenderDispatcher.resortTransparency(info.chunk);
-						if (++resortCount == 15) {
-							break;
-						}
-					}
+				TerrainLayerBatch.LayerQueue resortQueue = this.alacer$batch.getTranslucentResortQueue();
+				int resortLimit = Math.min(15, resortQueue.size());
+				for (int i = 0; i < resortLimit; i++) {
+					this.chunkRenderDispatcher.resortTransparency(resortQueue.get(i).alacer$renderChunk());
 				}
 			}
 		}
@@ -108,46 +146,24 @@ public class WorldRendererPassesMixin {
 			GL11.glEnableClientState(32886);
 		}
 
-		RenderChunkListAccessor acc = (RenderChunkListAccessor) this.chunkList;
-		TerrainShader.begin(acc.alacer$getX(), acc.alacer$getY(), acc.alacer$getZ());
+		TerrainShader.begin(camX, camY, camZ);
 
 		Alacer.get().begin(Section.TERRAIN_SUBMIT);
 		int count = 0;
-		int layerOrdinal = layer.ordinal();
-		int layerBit = 1 << layerOrdinal;
 		boolean isTranslucent = (layer == BlockLayer.TRANSLUCENT);
-		int size = this.compiledChunks.size();
-		int startIndex = isTranslucent ? size - 1 : 0;
-		int endIndex = isTranslucent ? -1 : size;
+		int startIndex = isTranslucent ? queueSize - 1 : 0;
+		int endIndex = isTranslucent ? -1 : queueSize;
 		int step = isTranslucent ? -1 : 1;
 
 		try {
 			if (decoupled) {
 				for (int j = startIndex; j != endIndex; j += step) {
-					WorldRenderer.RenderChunkInfo info = this.compiledChunks.get(j);
-					RenderChunk chunk = info.chunk;
-					CompiledChunk cc = chunk.getCompiledChunk();
-					if (cc instanceof FastCompiledChunk fcc) {
-						if ((fcc.alacer$layerMask() & layerBit) == 0) continue;
-					} else if (cc.hasBlock(layer)) {
-						continue;
-					}
-					VertexBuffer buffer = chunk.getBuffer(layerOrdinal);
+					FastRenderChunk chunk = queue.get(j);
+					VertexBuffer buffer = chunk.alacer$getBuffer(layerOrdinal);
 					ModernVertexBuffer mvb = (ModernVertexBuffer) buffer;
 					int vCount = mvb.alacer$vertexCount();
 					if (vCount > 0) {
-						int ox, oy, oz;
-						if (chunk instanceof RenderChunkOrigin ro) {
-							ox = ro.alacer$originX();
-							oy = ro.alacer$originY();
-							oz = ro.alacer$originZ();
-						} else {
-							BlockPos pos = chunk.getOrigin();
-							ox = pos.getX();
-							oy = pos.getY();
-							oz = pos.getZ();
-						}
-						TerrainShader.setOrigin(ox, oy, oz);
+						TerrainShader.setOrigin(chunk.alacer$originX(), chunk.alacer$originY(), chunk.alacer$originZ());
 						ARBVertexAttribBinding.glBindVertexBuffer(0, mvb.alacer$bufferId(), 0L, 28);
 						GL11.glDrawArrays(GL11.GL_QUADS, 0, vCount);
 						count++;
@@ -156,30 +172,12 @@ public class WorldRendererPassesMixin {
 				ModernGl.recordDecoupledDraws(count);
 			} else {
 				for (int j = startIndex; j != endIndex; j += step) {
-					WorldRenderer.RenderChunkInfo info = this.compiledChunks.get(j);
-					RenderChunk chunk = info.chunk;
-					CompiledChunk cc = chunk.getCompiledChunk();
-					if (cc instanceof FastCompiledChunk fcc) {
-						if ((fcc.alacer$layerMask() & layerBit) == 0) continue;
-					} else if (cc.hasBlock(layer)) {
-						continue;
-					}
-					VertexBuffer buffer = chunk.getBuffer(layerOrdinal);
+					FastRenderChunk chunk = queue.get(j);
+					VertexBuffer buffer = chunk.alacer$getBuffer(layerOrdinal);
 					if (buffer instanceof ModernVertexBuffer mvb && mvb.alacer$vertexCount() <= 0) {
 						continue;
 					}
-					int ox, oy, oz;
-					if (chunk instanceof RenderChunkOrigin ro) {
-						ox = ro.alacer$originX();
-						oy = ro.alacer$originY();
-						oz = ro.alacer$originZ();
-					} else {
-						BlockPos pos = chunk.getOrigin();
-						ox = pos.getX();
-						oy = pos.getY();
-						oz = pos.getZ();
-					}
-					TerrainShader.setOrigin(ox, oy, oz);
+					TerrainShader.setOrigin(chunk.alacer$originX(), chunk.alacer$originY(), chunk.alacer$originZ());
 					buffer.bind();
 					GL11.glVertexPointer(3, 5126, 28, 0L);
 					GL11.glColorPointer(4, 5121, 28, 12L);
@@ -214,16 +212,174 @@ public class WorldRendererPassesMixin {
 		return count;
 	}
 
+	@Unique
+	private int alacer$renderStandardDirect(BlockLayer layer, Entity camera, double tickDelta) {
+		RenderPasses.beginLayer(layer);
+
+		int layerOrdinal = layer.ordinal();
+		int layerBit = 1 << layerOrdinal;
+
+		if (layer == BlockLayer.SOLID || !this.alacer$batch.isBuiltFor(this.compiledChunks)) {
+			this.alacer$batch.build(this.compiledChunks);
+			this.alacer$visibleLayerBits = this.alacer$batch.getVisibleLayerBits();
+		}
+
+		// Early skip: if solid pass saw zero chunks for this layer, bypass all work
+		if ((this.alacer$visibleLayerBits & layerBit) == 0) {
+			RenderPasses.chunks(layer, 0);
+			RenderPasses.endLayer(layer);
+			return 0;
+		}
+
+		TerrainLayerBatch.LayerQueue queue = this.alacer$batch.getQueue(layer);
+		int queueSize = queue.size();
+		if (queueSize == 0) {
+			RenderPasses.chunks(layer, 0);
+			RenderPasses.endLayer(layer);
+			return 0;
+		}
+
+		Lighting.turnOff();
+
+		double camX = camera.lastX + (camera.x - camera.lastX) * tickDelta;
+		double camY = camera.lastY + (camera.y - camera.lastY) * tickDelta;
+		double camZ = camera.lastZ + (camera.z - camera.lastZ) * tickDelta;
+		this.chunkList.setCameraPos(camX, camY, camZ);
+
+		if (layer == BlockLayer.TRANSLUCENT) {
+			double dx = camera.x - this.lastCameraX;
+			double dy = camera.y - this.lastCameraY;
+			double dz = camera.z - this.lastCameraZ;
+			if (dx * dx + dy * dy + dz * dz > 1.0D) {
+				this.lastCameraX = camera.x;
+				this.lastCameraY = camera.y;
+				this.lastCameraZ = camera.z;
+				TerrainLayerBatch.LayerQueue resortQueue = this.alacer$batch.getTranslucentResortQueue();
+				int resortLimit = Math.min(15, resortQueue.size());
+				for (int i = 0; i < resortLimit; i++) {
+					this.chunkRenderDispatcher.resortTransparency(resortQueue.get(i).alacer$renderChunk());
+				}
+			}
+		}
+
+		this.minecraft.gameRenderer.enableLightMap();
+		boolean useVbo = GLX.useVbo();
+		if (useVbo) {
+			GL11.glEnableClientState(32884);
+			GLX.clientActiveTexture(GLX.GL_TEXTURE0);
+			GL11.glEnableClientState(32888);
+			GLX.clientActiveTexture(GLX.GL_TEXTURE1);
+			GL11.glEnableClientState(32888);
+			GLX.clientActiveTexture(GLX.GL_TEXTURE0);
+			GL11.glEnableClientState(32886);
+		}
+
+		Alacer.get().begin(Section.TERRAIN_SUBMIT);
+		int count = 0;
+		boolean isTranslucent = (layer == BlockLayer.TRANSLUCENT);
+		int startIndex = isTranslucent ? queueSize - 1 : 0;
+		int endIndex = isTranslucent ? -1 : queueSize;
+		int step = isTranslucent ? -1 : 1;
+
+		try {
+			if (useVbo) {
+				for (int j = startIndex; j != endIndex; j += step) {
+					FastRenderChunk chunk = queue.get(j);
+					VertexBuffer buffer = chunk.alacer$getBuffer(layerOrdinal);
+					if (buffer instanceof ModernVertexBuffer mvb && mvb.alacer$vertexCount() <= 0) {
+						continue;
+					}
+
+					float ox = (float) (chunk.alacer$originX() - camX);
+					float oy = (float) (chunk.alacer$originY() - camY);
+					float oz = (float) (chunk.alacer$originZ() - camZ);
+
+					GlStateManager.pushMatrix();
+					GlStateManager.translatef(ox, oy, oz);
+					chunk.alacer$glMultMatrix();
+					buffer.bind();
+					GL11.glVertexPointer(3, 5126, 28, 0L);
+					GL11.glColorPointer(4, 5121, 28, 12L);
+					GL11.glTexCoordPointer(2, 5126, 28, 16L);
+					GLX.clientActiveTexture(GLX.GL_TEXTURE1);
+					GL11.glTexCoordPointer(2, 5122, 28, 24L);
+					GLX.clientActiveTexture(GLX.GL_TEXTURE0);
+					buffer.draw(7);
+					GlStateManager.popMatrix();
+					count++;
+				}
+			} else {
+				for (int j = startIndex; j != endIndex; j += step) {
+					FastRenderChunk chunk = queue.get(j);
+					GlListRenderChunk glChunk = (GlListRenderChunk) chunk.alacer$renderChunk();
+					int glList = glChunk.getGlList(layer, glChunk.getCompiledChunk());
+					if (glList <= 0) {
+						continue;
+					}
+
+					float ox = (float) (chunk.alacer$originX() - camX);
+					float oy = (float) (chunk.alacer$originY() - camY);
+					float oz = (float) (chunk.alacer$originZ() - camZ);
+
+					GlStateManager.pushMatrix();
+					GlStateManager.translatef(ox, oy, oz);
+					GL11.glCallList(glList);
+					GlStateManager.popMatrix();
+					count++;
+				}
+			}
+		} finally {
+			Alacer.get().end(Section.TERRAIN_SUBMIT);
+		}
+
+		if (useVbo) {
+			GLX.bindBuffer(GLX.GL_ARRAY_BUFFER, 0);
+		}
+		GlStateManager.clearColor();
+		if (useVbo) {
+			GL11.glDisableClientState(32884);
+			GL11.glDisableClientState(32886);
+			GL11.glDisableClientState(32888);
+			GLX.clientActiveTexture(GLX.GL_TEXTURE1);
+			GL11.glDisableClientState(32888);
+			GLX.clientActiveTexture(GLX.GL_TEXTURE0);
+		}
+
+		this.minecraft.gameRenderer.disableLightMap();
+		RenderPasses.chunks(layer, count);
+		RenderPasses.endLayer(layer);
+
+		AlacerConfig config = Alacer.get() != null ? Alacer.get().config() : null;
+		if (config != null && config.verifyTerrainPipeline) {
+			int vanillaCount = 0;
+			int total = this.compiledChunks.size();
+			for (int i = 0; i < total; i++) {
+				if (!this.compiledChunks.get(i).chunk.getCompiledChunk().hasBlock(layer)) {
+					vanillaCount++;
+				}
+			}
+			if (count != vanillaCount) {
+				Alacer.LOGGER.warn("Terrain pipeline verification mismatch on {}: fast count {}, vanilla count {}",
+					layer, count, vanillaCount);
+			}
+		}
+
+		return count;
+	}
+
 	@Redirect(method = LAYER, at = @At(value = "INVOKE", target = "Ljava/util/List;iterator()Ljava/util/Iterator;"))
 	private Iterator<?> alacer$fastTranslucentSort(List<WorldRenderer.RenderChunkInfo> list) {
 		int size = list.size();
 		int count = 0;
+		int translucentMask = 1 << BlockLayer.TRANSLUCENT.ordinal();
 		for (int i = 0; i < size; i++) {
 			WorldRenderer.RenderChunkInfo info = list.get(i);
-			CompiledChunk cc = info.chunk.getCompiledChunk();
-			boolean hasTranslucent = (cc instanceof FastCompiledChunk fcc)
-				? (fcc.alacer$builtLayerMask() & (1 << BlockLayer.TRANSLUCENT.ordinal())) != 0
-				: cc.hasLayer(BlockLayer.TRANSLUCENT);
+			RenderChunk chunk = info.chunk;
+			boolean hasTranslucent = (chunk instanceof FastRenderChunk frc)
+				? (frc.alacer$builtLayerMask() & translucentMask) != 0
+				: (chunk.getCompiledChunk() instanceof FastCompiledChunk fcc)
+					? (fcc.alacer$builtLayerMask() & translucentMask) != 0
+					: chunk.getCompiledChunk().hasLayer(BlockLayer.TRANSLUCENT);
 			if (hasTranslucent) {
 				this.chunkRenderDispatcher.resortTransparency(info.chunk);
 				if (++count == 15) {
@@ -245,7 +401,6 @@ public class WorldRendererPassesMixin {
 		return compiled.hasBlock(layer);
 	}
 
-	// After the draw rather than at RETURN, whose callback would box the returned chunk count.
 	@Inject(method = LAYER, at = @At(value = "INVOKE", target = "Lnet/minecraft/client/render/world/WorldRenderer;renderLastChunks(Lnet/minecraft/client/render/block/BlockLayer;)V", shift = At.Shift.AFTER))
 	private void alacer$endLayer(BlockLayer layer, double tickDelta, int anaglyphRenderPass, Entity camera, CallbackInfoReturnable<Integer> cir) {
 		RenderPasses.endLayer(layer);

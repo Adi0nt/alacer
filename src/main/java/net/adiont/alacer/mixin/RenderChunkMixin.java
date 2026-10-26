@@ -3,6 +3,7 @@ package net.adiont.alacer.mixin;
 import java.nio.FloatBuffer;
 
 import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -16,10 +17,12 @@ import com.llamalad7.mixinextras.injector.wrapmethod.WrapMethod;
 import net.adiont.alacer.render.EntityChunkSlot;
 import net.adiont.alacer.render.FastCompiledChunk;
 import net.adiont.alacer.render.FastDirtyChunk;
+import net.adiont.alacer.render.FastRenderChunk;
 import net.adiont.alacer.render.GlStateReads;
 import net.adiont.alacer.render.RenderChunkOrigin;
 import net.adiont.alacer.render.WorkerBlockStateCache;
 import net.minecraft.client.render.block.BlockLayer;
+import net.minecraft.client.render.vertex.VertexBuffer;
 import net.minecraft.client.render.world.ChunkCompileTask;
 import net.minecraft.client.render.world.CompiledChunk;
 import net.minecraft.client.render.world.RenderChunk;
@@ -30,10 +33,10 @@ import net.minecraft.world.chunk.WorldChunk;
 /**
  * Adds the entity loop's cached world-chunk reference to each render chunk, and wraps the
  * modelview read in {@code glTransform}. Exposes primitive chunk origin coordinates and tracks
- * dirty queue epoch.
+ * dirty queue epoch. Implements {@link FastRenderChunk} for single-cycle layer mask evaluation.
  */
 @Mixin(RenderChunk.class)
-public class RenderChunkMixin implements EntityChunkSlot, RenderChunkOrigin, FastDirtyChunk {
+public abstract class RenderChunkMixin implements EntityChunkSlot, RenderChunkOrigin, FastDirtyChunk, FastRenderChunk {
 
 	@Unique
 	private static final BlockLayer[] ALACER$LAYERS = BlockLayer.values();
@@ -161,15 +164,65 @@ public class RenderChunkMixin implements EntityChunkSlot, RenderChunkOrigin, Fas
 		this.alacer$hasBlockEntities = has;
 	}
 
+	@Unique
+	private int alacer$layerMask;
+
+	@Unique
+	private int alacer$builtLayerMask;
+
+	@Override
+	public int alacer$layerMask() {
+		return this.alacer$layerMask;
+	}
+
+	@Override
+	public int alacer$builtLayerMask() {
+		return this.alacer$builtLayerMask;
+	}
+
+	@Shadow private VertexBuffer[] buffers;
+	@Shadow public abstract void glMultMatrix();
+
+	@Override
+	public void alacer$setLayerMasks(int layerMask, int builtLayerMask) {
+		this.alacer$layerMask = layerMask;
+		this.alacer$builtLayerMask = builtLayerMask;
+	}
+
+	@Override
+	public VertexBuffer alacer$getBuffer(int layerOrdinal) {
+		return this.buffers[layerOrdinal];
+	}
+
+	@Override
+	public void alacer$glMultMatrix() {
+		this.glMultMatrix();
+	}
+
+	@Override
+	public RenderChunk alacer$renderChunk() {
+		return (RenderChunk) (Object) this;
+	}
+
 	@Inject(method = "setCompiledChunk", at = @At("RETURN"))
 	private void alacer$onSetCompiledChunk(CompiledChunk cc, CallbackInfo ci) {
-		this.alacer$hasBlockEntities = (cc instanceof FastCompiledChunk fcc) && fcc.alacer$hasBlockEntities();
+		if (cc instanceof FastCompiledChunk fcc) {
+			this.alacer$hasBlockEntities = fcc.alacer$hasBlockEntities();
+			this.alacer$layerMask = fcc.alacer$layerMask();
+			this.alacer$builtLayerMask = fcc.alacer$builtLayerMask();
+		} else {
+			this.alacer$hasBlockEntities = false;
+			this.alacer$layerMask = 0;
+			this.alacer$builtLayerMask = 0;
+		}
 	}
 
 	@Inject(method = "reset", at = @At("HEAD"))
 	private void alacer$onReset(CallbackInfo ci) {
 		this.alacer$dirtyEpoch = 0;
 		this.alacer$hasBlockEntities = false;
+		this.alacer$layerMask = 0;
+		this.alacer$builtLayerMask = 0;
 	}
 
 	@Override

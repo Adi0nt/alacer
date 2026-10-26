@@ -80,6 +80,10 @@ public final class AlacerConfig {
 	public volatile boolean fastEntityPipeline;
 	/** Compare fast entity pipeline rendered entities and count with vanilla. Debug only. */
 	public volatile boolean verifyEntityPipeline;
+	/** Unified direct single-pass terrain layer rendering and chunk-level layer bitmask filtering. Runtime-toggleable. */
+	public volatile boolean fastTerrainPipeline;
+	/** Compare fast terrain layer rendered chunk counts with vanilla. Debug only. */
+	public volatile boolean verifyTerrainPipeline;
 	/** Run vanilla's two per-frame GL error checks only about once per second. Runtime-toggleable. */
 	public volatile boolean throttleGlErrorChecks;
 	/** Raise a harmless GL error in skipped frames and confirm the next check reports it. Debug only. */
@@ -359,6 +363,10 @@ public final class AlacerConfig {
 			"High-performance entity pipeline override: skips empty chunk sections during entity and block entity loops while preserving exact vanilla rendering order and behavior.");
 		this.verifyEntityPipeline = bool(file, system, "render.fastEntityPipeline.verify", false,
 			"Debug: also run vanilla entity traversal and verify matching rendered counts and entities.");
+		this.fastTerrainPipeline = bool(file, system, "render.fastTerrainPipeline", true,
+			"Unified direct single-pass terrain layer rendering and chunk-level layer bitmask filtering.");
+		this.verifyTerrainPipeline = bool(file, system, "render.fastTerrainPipeline.verify", false,
+			"Debug: compare fast terrain layer rendered chunk counts with vanilla.");
 		this.throttleGlErrorChecks = bool(file, system, "render.throttleGlErrorChecks", true,
 			"Check for OpenGL errors about once per second instead of twice per frame. Errors are still reported, with a less precise location.");
 		this.verifyGlErrorChecks = bool(file, system, "render.throttleGlErrorChecks.verify", false,
@@ -544,6 +552,7 @@ public final class AlacerConfig {
 				this.fastCameraSectionFaces = false;
 				this.fastEntityChunkLookup = value;
 				this.fastEntityPipeline = value;
+				this.fastTerrainPipeline = value;
 				this.throttleGlErrorChecks = value;
 				this.avoidMatrixReads = value;
 				this.cacheClouds = value;
@@ -598,6 +607,9 @@ public final class AlacerConfig {
 				break;
 			case "render.fastEntityPipeline":
 				this.fastEntityPipeline = value;
+				break;
+			case "render.fastTerrainPipeline":
+				this.fastTerrainPipeline = value;
 				break;
 			case "render.throttleGlErrorChecks":
 				this.throttleGlErrorChecks = value;
@@ -897,6 +909,8 @@ public final class AlacerConfig {
 		values.put("render.fastEntityChunkLookup.verify", String.valueOf(this.verifyEntityChunkLookup));
 		values.put("render.fastEntityPipeline", String.valueOf(this.fastEntityPipeline));
 		values.put("render.fastEntityPipeline.verify", String.valueOf(this.verifyEntityPipeline));
+		values.put("render.fastTerrainPipeline", String.valueOf(this.fastTerrainPipeline));
+		values.put("render.fastTerrainPipeline.verify", String.valueOf(this.verifyTerrainPipeline));
 		values.put("render.throttleGlErrorChecks", String.valueOf(this.throttleGlErrorChecks));
 		values.put("render.throttleGlErrorChecks.verify", String.valueOf(this.verifyGlErrorChecks));
 		values.put("render.avoidMatrixReads", String.valueOf(this.avoidMatrixReads));

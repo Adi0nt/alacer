@@ -73,6 +73,7 @@ public final class VideoSettingsCatalog {
 		optimization("fastChunkVisibility","Chunk visibility","Reuses bounded storage when finding visible terrain, preserving the original traversal order.",Effect.IMMEDIATE),
 		optimization("fastEntityChunkLookup","Entity lookup cache","Avoids repeated world-chunk lookups while gathering entities. Preserves the rendered result.",Effect.IMMEDIATE),
 		optimization("fastEntityPipeline","Entity pipeline","Skips empty chunk sections during entity and block entity loops while preserving exact vanilla rendering order and behavior.",Effect.IMMEDIATE),
+		optimization("fastTerrainPipeline","Terrain pipeline","Unified direct single-pass terrain layer rendering and chunk-level layer bitmask filtering.",Effect.IMMEDIATE),
 		optimization("throttleGlErrorChecks","GL error check throttling","Checks for graphics errors periodically. Falls back to checking every frame if an error is detected.",Effect.IMMEDIATE),
 		optimization("avoidMatrixReads","Camera matrix tracking","Uses tracked camera matrices to avoid repeated driver state reads.",Effect.IMMEDIATE),
 		optimization("cacheClouds","Cloud geometry cache","Reuses unchanged Fancy cloud geometry while preserving Minecraft's cloud appearance.",Effect.IMMEDIATE),
