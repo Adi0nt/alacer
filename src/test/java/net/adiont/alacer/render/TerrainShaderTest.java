@@ -41,6 +41,13 @@ class TerrainShaderTest {
 		assertTrue((0 - 8) * 1.000001F + 8 < 0);
 	}
 
+	@Test void genericShaderVariantDeclaresInstancedChunkOrigin() throws Exception {
+		String generic = source("GENERIC_ATTRIB_VERTEX_SOURCE");
+		assertTrue(generic.contains("attribute vec3 in_ChunkOrigin;"));
+		assertTrue(generic.contains("uniform int u_UseInstancedOrigin;"));
+		assertTrue(generic.contains("u_UseInstancedOrigin == 1 ? in_ChunkOrigin : u_ChunkOrigin"));
+	}
+
 	@Test void radialAndPlanarFogModesHaveDistinctCoordinates() {
 		assertEquals(TerrainShaderMath.RADIAL, TerrainShaderMath.fogMode(0x855B));
 		assertEquals(TerrainShaderMath.SIGNED_DEPTH, TerrainShaderMath.fogMode(0x2502));

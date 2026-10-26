@@ -1,7 +1,9 @@
 package net.adiont.alacer.render;
 
+import java.nio.ByteBuffer;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.lwjgl.BufferUtils;
 import org.lwjgl.opengl.ARBVertexAttribBinding;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL15;
@@ -30,6 +32,7 @@ public final class TerrainShader {
 	private static boolean attribBindingSupported;
 	private static int programId;
 	private static int singleVaoId;
+	private static int dummyOriginVboId;
 	private static int originUniformLocation;
 	private static int fogUniformLocation;
 	private static int instancedOriginUniformLocation = -1;
@@ -128,6 +131,7 @@ public final class TerrainShader {
 				GL20.glBindAttribLocation(program, 1, "in_Color");
 				GL20.glBindAttribLocation(program, 2, "in_TexCoord0");
 				GL20.glBindAttribLocation(program, 3, "in_TexCoord1");
+				GL20.glBindAttribLocation(program, 4, "in_ChunkOrigin");
 			}
 			GL20.glLinkProgram(program);
 			if (GL20.glGetProgrami(program, GL20.GL_LINK_STATUS) == GL11.GL_FALSE)
@@ -151,6 +155,10 @@ public final class TerrainShader {
 		} finally {
 			if (shader != 0) GL20.glDeleteShader(shader);
 			if (!installed) {
+				if (dummyOriginVboId != 0) {
+					GL15.glDeleteBuffers(dummyOriginVboId);
+					dummyOriginVboId = 0;
+				}
 				if (vao != 0) GL30.glDeleteVertexArrays(vao);
 				if (program != 0) GL20.glDeleteProgram(program);
 			}
@@ -174,10 +182,21 @@ public final class TerrainShader {
 				ARBVertexAttribBinding.glVertexAttribFormat(3, 2, GL11.GL_SHORT, false, 24);
 
 				// Instanced attribute 4: in_ChunkOrigin on binding index 1 (divisor 1)
-				GL20.glEnableVertexAttribArray(4);
+				// Attribute 4 is disabled by default so direct rendering passes do not trigger
+				// uninitialized vertex buffer fetches on binding 1.
+				GL20.glDisableVertexAttribArray(4);
 				ARBVertexAttribBinding.glVertexAttribBinding(4, 1);
 				ARBVertexAttribBinding.glVertexAttribFormat(4, 3, GL11.GL_FLOAT, false, 0);
 				ARBVertexAttribBinding.glVertexBindingDivisor(1, 1);
+
+				// Bind fallback zeroed VBO to binding index 1 to guarantee safe reads
+				dummyOriginVboId = GL15.glGenBuffers();
+				GL15.glBindBuffer(GL15.GL_ARRAY_BUFFER, dummyOriginVboId);
+				ByteBuffer zeroBuf = BufferUtils.createByteBuffer(12);
+				zeroBuf.putFloat(0.0f).putFloat(0.0f).putFloat(0.0f).flip();
+				GL15.glBufferData(GL15.GL_ARRAY_BUFFER, zeroBuf, GL15.GL_STATIC_DRAW);
+				GL15.glBindBuffer(GL15.GL_ARRAY_BUFFER, 0);
+				ARBVertexAttribBinding.glBindVertexBuffer(1, dummyOriginVboId, 0L, 12);
 
 				int error = GL11.glGetError();
 				if (error != GL11.GL_NO_ERROR) throw new IllegalStateException("Terrain VAO setup GL error " + error);
@@ -187,7 +206,13 @@ public final class TerrainShader {
 			configured = true;
 			return vao;
 		} finally {
-			if (!configured) GL30.glDeleteVertexArrays(vao);
+			if (!configured) {
+				if (dummyOriginVboId != 0) {
+					GL15.glDeleteBuffers(dummyOriginVboId);
+					dummyOriginVboId = 0;
+				}
+				GL30.glDeleteVertexArrays(vao);
+			}
 		}
 	}
 
@@ -233,12 +258,30 @@ public final class TerrainShader {
 		if (instancedOriginUniformLocation >= 0) {
 			GL20.glUniform1i(instancedOriginUniformLocation, enabled ? 1 : 0);
 		}
+		if (attribBindingSupported && singleVaoId != 0) {
+			if (enabled) {
+				GL20.glEnableVertexAttribArray(4);
+			} else {
+				GL20.glDisableVertexAttribArray(4);
+			}
+		}
 	}
 
-	public static void end() { DRAW_STATE.end(); }
+	public static int dummyOriginVbo() {
+		return dummyOriginVboId;
+	}
+
+	public static void end() {
+		setInstancedOrigin(false);
+		DRAW_STATE.end();
+	}
 
 	public static void cleanup() {
 		end();
+		if (dummyOriginVboId != 0) {
+			GL15.glDeleteBuffers(dummyOriginVboId);
+			dummyOriginVboId = 0;
+		}
 		if (singleVaoId != 0) {
 			GL30.glDeleteVertexArrays(singleVaoId);
 			singleVaoId = 0;

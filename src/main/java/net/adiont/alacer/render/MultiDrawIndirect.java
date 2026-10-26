@@ -208,6 +208,12 @@ public final class MultiDrawIndirect {
 			totalRendered += batchSize;
 		}
 
+		int dummy = TerrainShader.dummyOriginVbo();
+		if (dummy != 0) {
+			ARBVertexAttribBinding.glBindVertexBuffer(1, dummy, 0L, 12);
+		} else {
+			ARBVertexAttribBinding.glBindVertexBuffer(1, 0, 0L, 0);
+		}
 		GL15.glBindBuffer(GL40.GL_DRAW_INDIRECT_BUFFER, 0);
 		GL15.glBindBuffer(GL15.GL_ARRAY_BUFFER, 0);
 		return totalRendered;

@@ -24,6 +24,7 @@ import net.adiont.alacer.render.ModernVertexBuffer;
 import net.adiont.alacer.render.MultiDrawIndirect;
 import net.adiont.alacer.render.RenderChunkOrigin;
 import net.adiont.alacer.render.RenderPasses;
+import net.adiont.alacer.render.ResidentMeshArena;
 import net.adiont.alacer.render.TerrainLayerBatch;
 import net.adiont.alacer.render.TerrainShader;
 import net.minecraft.client.Minecraft;
@@ -245,7 +246,10 @@ public class WorldRendererPassesMixin {
 						int vCount = mvb.alacer$vertexCount();
 						if (vCount > 0) {
 							TerrainShader.setOrigin(chunk.alacer$originX(), chunk.alacer$originY(), chunk.alacer$originZ());
-							ARBVertexAttribBinding.glBindVertexBuffer(0, mvb.alacer$bufferId(), 0L, 28);
+							ResidentMeshArena.Slice slice = mvb.alacer$slice();
+							int bufferId = slice != null ? slice.glBufferId : mvb.alacer$bufferId();
+							long offset = slice != null ? (long) slice.byteOffset : 0L;
+							ARBVertexAttribBinding.glBindVertexBuffer(0, bufferId, offset, 28);
 							GL11.glDrawArrays(GL11.GL_QUADS, 0, vCount);
 							count++;
 						}
@@ -258,7 +262,10 @@ public class WorldRendererPassesMixin {
 						int vCount = mvb.alacer$vertexCount();
 						if (vCount > 0) {
 							TerrainShader.setOrigin(chunk.alacer$originX(), chunk.alacer$originY(), chunk.alacer$originZ());
-							ARBVertexAttribBinding.glBindVertexBuffer(0, mvb.alacer$bufferId(), 0L, 28);
+							ResidentMeshArena.Slice slice = mvb.alacer$slice();
+							int bufferId = slice != null ? slice.glBufferId : mvb.alacer$bufferId();
+							long offset = slice != null ? (long) slice.byteOffset : 0L;
+							ARBVertexAttribBinding.glBindVertexBuffer(0, bufferId, offset, 28);
 							GL11.glDrawArrays(GL11.GL_QUADS, 0, vCount);
 							count++;
 						}
