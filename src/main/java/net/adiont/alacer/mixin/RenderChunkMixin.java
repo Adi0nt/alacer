@@ -2,7 +2,9 @@ package net.adiont.alacer.mixin;
 
 import java.nio.FloatBuffer;
 
+import org.lwjgl.opengl.GL11;
 import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Overwrite;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
@@ -19,9 +21,12 @@ import net.adiont.alacer.render.FastCompiledChunk;
 import net.adiont.alacer.render.FastDirtyChunk;
 import net.adiont.alacer.render.FastRenderChunk;
 import net.adiont.alacer.render.GlStateReads;
+import net.adiont.alacer.render.MatrixTracker;
 import net.adiont.alacer.render.RenderChunkOrigin;
 import net.adiont.alacer.render.WorkerBlockStateCache;
 import net.minecraft.client.render.block.BlockLayer;
+import net.minecraft.client.render.platform.GlStateManager;
+import net.minecraft.client.render.platform.MemoryTracker;
 import net.minecraft.client.render.vertex.VertexBuffer;
 import net.minecraft.client.render.world.ChunkCompileTask;
 import net.minecraft.client.render.world.CompiledChunk;
@@ -181,7 +186,6 @@ public abstract class RenderChunkMixin implements EntityChunkSlot, RenderChunkOr
 	}
 
 	@Shadow private VertexBuffer[] buffers;
-	@Shadow public abstract void glMultMatrix();
 
 	@Override
 	public void alacer$setLayerMasks(int layerMask, int builtLayerMask) {
@@ -194,9 +198,37 @@ public abstract class RenderChunkMixin implements EntityChunkSlot, RenderChunkOr
 		return this.buffers[layerOrdinal];
 	}
 
+	@Unique
+	private static final FloatBuffer ALACER$SHARED_CHUNK_MATRIX = alacer$createSharedChunkMatrix();
+
+	private static FloatBuffer alacer$createSharedChunkMatrix() {
+		FloatBuffer buf = MemoryTracker.createFloatBuffer(16);
+		MatrixTracker tracker = new MatrixTracker();
+		tracker.loadIdentity();
+		tracker.translate(-8.0F, -8.0F, -8.0F);
+		tracker.scale(1.000001F, 1.000001F, 1.000001F);
+		tracker.translate(8.0F, 8.0F, 8.0F);
+		float[] matrix = new float[16];
+		tracker.get(MatrixTracker.MODELVIEW, matrix);
+		for (float f : matrix) {
+			buf.put(f);
+		}
+		buf.flip();
+		return buf;
+	}
+
+	/**
+	 * @author Alacer
+	 * @reason Replaces per-chunk heap FloatBuffer dereferencing with an L1-cached static matrix buffer.
+	 */
+	@Overwrite
+	public void glMultMatrix() {
+		GL11.glMultMatrix(ALACER$SHARED_CHUNK_MATRIX);
+	}
+
 	@Override
 	public void alacer$glMultMatrix() {
-		this.glMultMatrix();
+		GL11.glMultMatrix(ALACER$SHARED_CHUNK_MATRIX);
 	}
 
 	@Override

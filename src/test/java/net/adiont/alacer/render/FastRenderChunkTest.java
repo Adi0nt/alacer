@@ -68,4 +68,10 @@ class FastRenderChunkTest {
 		assertFalse((visibleLayerBits & (1 << BlockLayer.CUTOUT_MIPPED.ordinal())) != 0);
 		assertFalse((visibleLayerBits & (1 << BlockLayer.TRANSLUCENT.ordinal())) != 0);
 	}
+
+	@Test
+	void fastRenderChunkDefaultGlListReturnsNegativeOne() {
+		DummyFastRenderChunk chunk = new DummyFastRenderChunk();
+		assertEquals(-1, chunk.alacer$glList(0));
+	}
 }

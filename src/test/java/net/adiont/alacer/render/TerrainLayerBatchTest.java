@@ -2,6 +2,7 @@ package net.adiont.alacer.render;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -88,6 +89,8 @@ class TerrainLayerBatchTest {
 		assertEquals(1000, queue.size());
 		assertFalse(queue.isEmpty());
 		assertSame(sample, queue.get(999));
+		assertNotNull(queue.array());
+		assertSame(sample, queue.array()[999]);
 
 		queue.clear();
 		assertEquals(0, queue.size());

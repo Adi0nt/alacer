@@ -8,6 +8,7 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
+import net.adiont.alacer.render.FastRenderChunk;
 import net.adiont.alacer.render.RenderChunkOrigin;
 import net.minecraft.client.render.block.BlockLayer;
 import net.minecraft.client.render.platform.GlStateManager;
@@ -38,13 +39,20 @@ public abstract class GlListRenderChunkListMixin extends RenderChunkList {
 			double camX = acc.alacer$getX();
 			double camY = acc.alacer$getY();
 			double camZ = acc.alacer$getZ();
+			int layerOrdinal = layer.ordinal();
 
 			for (int i = 0; i < size; i++) {
 				RenderChunk renderChunk = list.get(i);
-				GlListRenderChunk glListRenderChunk = (GlListRenderChunk) renderChunk;
-				GlStateManager.pushMatrix();
+				int glList = (renderChunk instanceof FastRenderChunk frc)
+					? frc.alacer$glList(layerOrdinal)
+					: ((GlListRenderChunk) renderChunk).getGlList(layer, renderChunk.getCompiledChunk());
+				if (glList <= 0) {
+					continue;
+				}
+
+				GL11.glPushMatrix();
 				if (renderChunk instanceof RenderChunkOrigin ro) {
-					GlStateManager.translatef(
+					GL11.glTranslatef(
 						(float) (ro.alacer$originX() - camX),
 						(float) (ro.alacer$originY() - camY),
 						(float) (ro.alacer$originZ() - camZ)
@@ -52,8 +60,8 @@ public abstract class GlListRenderChunkListMixin extends RenderChunkList {
 				} else {
 					this.glTranslatefOrigin(renderChunk);
 				}
-				GL11.glCallList(glListRenderChunk.getGlList(layer, glListRenderChunk.getCompiledChunk()));
-				GlStateManager.popMatrix();
+				GL11.glCallList(glList);
+				GL11.glPopMatrix();
 			}
 
 			GlStateManager.clearColor();

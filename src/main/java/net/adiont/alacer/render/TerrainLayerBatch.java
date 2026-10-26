@@ -17,9 +17,22 @@ import net.minecraft.client.render.world.WorldRenderer;
  */
 public final class TerrainLayerBatch {
 
+	private static final int SOLID_BIT = 1 << BlockLayer.SOLID.ordinal();
+	private static final int CUTOUT_MIPPED_BIT = 1 << BlockLayer.CUTOUT_MIPPED.ordinal();
+	private static final int CUTOUT_BIT = 1 << BlockLayer.CUTOUT.ordinal();
+	private static final int TRANSLUCENT_BIT = 1 << BlockLayer.TRANSLUCENT.ordinal();
+
 	public static final class LayerQueue {
-		private FastRenderChunk[] chunks = new FastRenderChunk[512];
+		private FastRenderChunk[] chunks;
 		private int size = 0;
+
+		public LayerQueue() {
+			this(128);
+		}
+
+		public LayerQueue(int initialCapacity) {
+			this.chunks = new FastRenderChunk[initialCapacity];
+		}
 
 		public void clear() {
 			Arrays.fill(this.chunks, 0, this.size, null);
@@ -31,6 +44,10 @@ public final class TerrainLayerBatch {
 				this.chunks = Arrays.copyOf(this.chunks, this.chunks.length << 1);
 			}
 			this.chunks[this.size++] = chunk;
+		}
+
+		public FastRenderChunk[] array() {
+			return this.chunks;
 		}
 
 		public FastRenderChunk get(int index) {
@@ -46,22 +63,20 @@ public final class TerrainLayerBatch {
 		}
 	}
 
-	private final LayerQueue[] queues = new LayerQueue[BlockLayer.values().length];
-	private final LayerQueue translucentResort = new LayerQueue();
+	private final LayerQueue solid = new LayerQueue(2048);
+	private final LayerQueue cutoutMipped = new LayerQueue(1024);
+	private final LayerQueue cutout = new LayerQueue(1024);
+	private final LayerQueue translucent = new LayerQueue(512);
+	private final LayerQueue translucentResort = new LayerQueue(512);
 	private int visibleLayerBits;
 	private Object lastListIdentity;
 	private int lastListSize;
 
-	public TerrainLayerBatch() {
-		for (int i = 0; i < this.queues.length; i++) {
-			this.queues[i] = new LayerQueue();
-		}
-	}
-
 	public void clear() {
-		for (LayerQueue queue : this.queues) {
-			queue.clear();
-		}
+		this.solid.clear();
+		this.cutoutMipped.clear();
+		this.cutout.clear();
+		this.translucent.clear();
 		this.translucentResort.clear();
 		this.visibleLayerBits = 0;
 		this.lastListIdentity = null;
@@ -73,14 +88,14 @@ public final class TerrainLayerBatch {
 	}
 
 	public void build(List<WorldRenderer.RenderChunkInfo> compiledChunks) {
-		for (LayerQueue queue : this.queues) {
-			queue.clear();
-		}
+		this.solid.clear();
+		this.cutoutMipped.clear();
+		this.cutout.clear();
+		this.translucent.clear();
 		this.translucentResort.clear();
 		this.visibleLayerBits = 0;
 
 		int total = compiledChunks.size();
-		int translucentMask = 1 << BlockLayer.TRANSLUCENT.ordinal();
 
 		for (int i = 0; i < total; i++) {
 			WorldRenderer.RenderChunkInfo info = compiledChunks.get(i);
@@ -101,13 +116,12 @@ public final class TerrainLayerBatch {
 
 			this.visibleLayerBits |= mask;
 
-			for (int layerIdx = 0; layerIdx < this.queues.length; layerIdx++) {
-				if ((mask & (1 << layerIdx)) != 0) {
-					this.queues[layerIdx].add(frc);
-				}
-			}
+			if ((mask & SOLID_BIT) != 0) this.solid.add(frc);
+			if ((mask & CUTOUT_MIPPED_BIT) != 0) this.cutoutMipped.add(frc);
+			if ((mask & CUTOUT_BIT) != 0) this.cutout.add(frc);
+			if ((mask & TRANSLUCENT_BIT) != 0) this.translucent.add(frc);
 
-			if ((builtMask & translucentMask) != 0) {
+			if ((builtMask & TRANSLUCENT_BIT) != 0) {
 				this.translucentResort.add(frc);
 			}
 		}
@@ -117,7 +131,12 @@ public final class TerrainLayerBatch {
 	}
 
 	public LayerQueue getQueue(BlockLayer layer) {
-		return this.queues[layer.ordinal()];
+		return switch (layer) {
+			case SOLID -> this.solid;
+			case CUTOUT_MIPPED -> this.cutoutMipped;
+			case CUTOUT -> this.cutout;
+			case TRANSLUCENT -> this.translucent;
+		};
 	}
 
 	public LayerQueue getTranslucentResortQueue() {

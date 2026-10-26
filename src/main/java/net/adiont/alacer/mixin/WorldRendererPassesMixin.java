@@ -126,9 +126,10 @@ public class WorldRendererPassesMixin {
 				this.lastCameraY = camera.y;
 				this.lastCameraZ = camera.z;
 				TerrainLayerBatch.LayerQueue resortQueue = this.alacer$batch.getTranslucentResortQueue();
+				FastRenderChunk[] resortChunks = resortQueue.array();
 				int resortLimit = Math.min(15, resortQueue.size());
 				for (int i = 0; i < resortLimit; i++) {
-					this.chunkRenderDispatcher.resortTransparency(resortQueue.get(i).alacer$renderChunk());
+					this.chunkRenderDispatcher.resortTransparency(resortChunks[i].alacer$renderChunk());
 				}
 			}
 		}
@@ -151,42 +152,69 @@ public class WorldRendererPassesMixin {
 		Alacer.get().begin(Section.TERRAIN_SUBMIT);
 		int count = 0;
 		boolean isTranslucent = (layer == BlockLayer.TRANSLUCENT);
-		int startIndex = isTranslucent ? queueSize - 1 : 0;
-		int endIndex = isTranslucent ? -1 : queueSize;
-		int step = isTranslucent ? -1 : 1;
+		FastRenderChunk[] chunks = queue.array();
 
 		try {
 			if (decoupled) {
-				for (int j = startIndex; j != endIndex; j += step) {
-					FastRenderChunk chunk = queue.get(j);
-					VertexBuffer buffer = chunk.alacer$getBuffer(layerOrdinal);
-					ModernVertexBuffer mvb = (ModernVertexBuffer) buffer;
-					int vCount = mvb.alacer$vertexCount();
-					if (vCount > 0) {
-						TerrainShader.setOrigin(chunk.alacer$originX(), chunk.alacer$originY(), chunk.alacer$originZ());
-						ARBVertexAttribBinding.glBindVertexBuffer(0, mvb.alacer$bufferId(), 0L, 28);
-						GL11.glDrawArrays(GL11.GL_QUADS, 0, vCount);
-						count++;
+				if (isTranslucent) {
+					for (int j = queueSize - 1; j >= 0; j--) {
+						FastRenderChunk chunk = chunks[j];
+						VertexBuffer buffer = chunk.alacer$getBuffer(layerOrdinal);
+						ModernVertexBuffer mvb = (ModernVertexBuffer) buffer;
+						int vCount = mvb.alacer$vertexCount();
+						if (vCount > 0) {
+							TerrainShader.setOrigin(chunk.alacer$originX(), chunk.alacer$originY(), chunk.alacer$originZ());
+							ARBVertexAttribBinding.glBindVertexBuffer(0, mvb.alacer$bufferId(), 0L, 28);
+							GL11.glDrawArrays(GL11.GL_QUADS, 0, vCount);
+							count++;
+						}
+					}
+				} else {
+					for (int j = 0; j < queueSize; j++) {
+						FastRenderChunk chunk = chunks[j];
+						VertexBuffer buffer = chunk.alacer$getBuffer(layerOrdinal);
+						ModernVertexBuffer mvb = (ModernVertexBuffer) buffer;
+						int vCount = mvb.alacer$vertexCount();
+						if (vCount > 0) {
+							TerrainShader.setOrigin(chunk.alacer$originX(), chunk.alacer$originY(), chunk.alacer$originZ());
+							ARBVertexAttribBinding.glBindVertexBuffer(0, mvb.alacer$bufferId(), 0L, 28);
+							GL11.glDrawArrays(GL11.GL_QUADS, 0, vCount);
+							count++;
+						}
 					}
 				}
 				ModernGl.recordDecoupledDraws(count);
 			} else {
-				for (int j = startIndex; j != endIndex; j += step) {
-					FastRenderChunk chunk = queue.get(j);
-					VertexBuffer buffer = chunk.alacer$getBuffer(layerOrdinal);
-					if (buffer instanceof ModernVertexBuffer mvb && mvb.alacer$vertexCount() <= 0) {
-						continue;
+				if (isTranslucent) {
+					for (int j = queueSize - 1; j >= 0; j--) {
+						FastRenderChunk chunk = chunks[j];
+						VertexBuffer buffer = chunk.alacer$getBuffer(layerOrdinal);
+						TerrainShader.setOrigin(chunk.alacer$originX(), chunk.alacer$originY(), chunk.alacer$originZ());
+						buffer.bind();
+						GL11.glVertexPointer(3, 5126, 28, 0L);
+						GL11.glColorPointer(4, 5121, 28, 12L);
+						GL11.glTexCoordPointer(2, 5126, 28, 16L);
+						GLX.clientActiveTexture(GLX.GL_TEXTURE1);
+						GL11.glTexCoordPointer(2, 5122, 28, 24L);
+						GLX.clientActiveTexture(GLX.GL_TEXTURE0);
+						buffer.draw(7);
+						count++;
 					}
-					TerrainShader.setOrigin(chunk.alacer$originX(), chunk.alacer$originY(), chunk.alacer$originZ());
-					buffer.bind();
-					GL11.glVertexPointer(3, 5126, 28, 0L);
-					GL11.glColorPointer(4, 5121, 28, 12L);
-					GL11.glTexCoordPointer(2, 5126, 28, 16L);
-					GLX.clientActiveTexture(GLX.GL_TEXTURE1);
-					GL11.glTexCoordPointer(2, 5122, 28, 24L);
-					GLX.clientActiveTexture(GLX.GL_TEXTURE0);
-					buffer.draw(7);
-					count++;
+				} else {
+					for (int j = 0; j < queueSize; j++) {
+						FastRenderChunk chunk = chunks[j];
+						VertexBuffer buffer = chunk.alacer$getBuffer(layerOrdinal);
+						TerrainShader.setOrigin(chunk.alacer$originX(), chunk.alacer$originY(), chunk.alacer$originZ());
+						buffer.bind();
+						GL11.glVertexPointer(3, 5126, 28, 0L);
+						GL11.glColorPointer(4, 5121, 28, 12L);
+						GL11.glTexCoordPointer(2, 5126, 28, 16L);
+						GLX.clientActiveTexture(GLX.GL_TEXTURE1);
+						GL11.glTexCoordPointer(2, 5122, 28, 24L);
+						GLX.clientActiveTexture(GLX.GL_TEXTURE0);
+						buffer.draw(7);
+						count++;
+					}
 				}
 				ModernGl.recordFallbackDraws(count);
 			}
@@ -255,9 +283,10 @@ public class WorldRendererPassesMixin {
 				this.lastCameraY = camera.y;
 				this.lastCameraZ = camera.z;
 				TerrainLayerBatch.LayerQueue resortQueue = this.alacer$batch.getTranslucentResortQueue();
+				FastRenderChunk[] resortChunks = resortQueue.array();
 				int resortLimit = Math.min(15, resortQueue.size());
 				for (int i = 0; i < resortLimit; i++) {
-					this.chunkRenderDispatcher.resortTransparency(resortQueue.get(i).alacer$renderChunk());
+					this.chunkRenderDispatcher.resortTransparency(resortChunks[i].alacer$renderChunk());
 				}
 			}
 		}
@@ -277,55 +306,94 @@ public class WorldRendererPassesMixin {
 		Alacer.get().begin(Section.TERRAIN_SUBMIT);
 		int count = 0;
 		boolean isTranslucent = (layer == BlockLayer.TRANSLUCENT);
-		int startIndex = isTranslucent ? queueSize - 1 : 0;
-		int endIndex = isTranslucent ? -1 : queueSize;
-		int step = isTranslucent ? -1 : 1;
+		FastRenderChunk[] chunks = queue.array();
 
 		try {
 			if (useVbo) {
-				for (int j = startIndex; j != endIndex; j += step) {
-					FastRenderChunk chunk = queue.get(j);
-					VertexBuffer buffer = chunk.alacer$getBuffer(layerOrdinal);
-					if (buffer instanceof ModernVertexBuffer mvb && mvb.alacer$vertexCount() <= 0) {
-						continue;
+				if (isTranslucent) {
+					for (int j = queueSize - 1; j >= 0; j--) {
+						FastRenderChunk chunk = chunks[j];
+						VertexBuffer buffer = chunk.alacer$getBuffer(layerOrdinal);
+
+						float ox = (float) (chunk.alacer$originX() - camX);
+						float oy = (float) (chunk.alacer$originY() - camY);
+						float oz = (float) (chunk.alacer$originZ() - camZ);
+
+						GL11.glPushMatrix();
+						GL11.glTranslatef(ox, oy, oz);
+						chunk.alacer$glMultMatrix();
+						buffer.bind();
+						GL11.glVertexPointer(3, 5126, 28, 0L);
+						GL11.glColorPointer(4, 5121, 28, 12L);
+						GL11.glTexCoordPointer(2, 5126, 28, 16L);
+						GLX.clientActiveTexture(GLX.GL_TEXTURE1);
+						GL11.glTexCoordPointer(2, 5122, 28, 24L);
+						GLX.clientActiveTexture(GLX.GL_TEXTURE0);
+						buffer.draw(7);
+						GL11.glPopMatrix();
+						count++;
 					}
+				} else {
+					for (int j = 0; j < queueSize; j++) {
+						FastRenderChunk chunk = chunks[j];
+						VertexBuffer buffer = chunk.alacer$getBuffer(layerOrdinal);
 
-					float ox = (float) (chunk.alacer$originX() - camX);
-					float oy = (float) (chunk.alacer$originY() - camY);
-					float oz = (float) (chunk.alacer$originZ() - camZ);
+						float ox = (float) (chunk.alacer$originX() - camX);
+						float oy = (float) (chunk.alacer$originY() - camY);
+						float oz = (float) (chunk.alacer$originZ() - camZ);
 
-					GlStateManager.pushMatrix();
-					GlStateManager.translatef(ox, oy, oz);
-					chunk.alacer$glMultMatrix();
-					buffer.bind();
-					GL11.glVertexPointer(3, 5126, 28, 0L);
-					GL11.glColorPointer(4, 5121, 28, 12L);
-					GL11.glTexCoordPointer(2, 5126, 28, 16L);
-					GLX.clientActiveTexture(GLX.GL_TEXTURE1);
-					GL11.glTexCoordPointer(2, 5122, 28, 24L);
-					GLX.clientActiveTexture(GLX.GL_TEXTURE0);
-					buffer.draw(7);
-					GlStateManager.popMatrix();
-					count++;
+						GL11.glPushMatrix();
+						GL11.glTranslatef(ox, oy, oz);
+						chunk.alacer$glMultMatrix();
+						buffer.bind();
+						GL11.glVertexPointer(3, 5126, 28, 0L);
+						GL11.glColorPointer(4, 5121, 28, 12L);
+						GL11.glTexCoordPointer(2, 5126, 28, 16L);
+						GLX.clientActiveTexture(GLX.GL_TEXTURE1);
+						GL11.glTexCoordPointer(2, 5122, 28, 24L);
+						GLX.clientActiveTexture(GLX.GL_TEXTURE0);
+						buffer.draw(7);
+						GL11.glPopMatrix();
+						count++;
+					}
 				}
 			} else {
-				for (int j = startIndex; j != endIndex; j += step) {
-					FastRenderChunk chunk = queue.get(j);
-					GlListRenderChunk glChunk = (GlListRenderChunk) chunk.alacer$renderChunk();
-					int glList = glChunk.getGlList(layer, glChunk.getCompiledChunk());
-					if (glList <= 0) {
-						continue;
+				if (isTranslucent) {
+					for (int j = queueSize - 1; j >= 0; j--) {
+						FastRenderChunk chunk = chunks[j];
+						int glList = chunk.alacer$glList(layerOrdinal);
+						if (glList <= 0) {
+							continue;
+						}
+
+						float ox = (float) (chunk.alacer$originX() - camX);
+						float oy = (float) (chunk.alacer$originY() - camY);
+						float oz = (float) (chunk.alacer$originZ() - camZ);
+
+						GL11.glPushMatrix();
+						GL11.glTranslatef(ox, oy, oz);
+						GL11.glCallList(glList);
+						GL11.glPopMatrix();
+						count++;
 					}
+				} else {
+					for (int j = 0; j < queueSize; j++) {
+						FastRenderChunk chunk = chunks[j];
+						int glList = chunk.alacer$glList(layerOrdinal);
+						if (glList <= 0) {
+							continue;
+						}
 
-					float ox = (float) (chunk.alacer$originX() - camX);
-					float oy = (float) (chunk.alacer$originY() - camY);
-					float oz = (float) (chunk.alacer$originZ() - camZ);
+						float ox = (float) (chunk.alacer$originX() - camX);
+						float oy = (float) (chunk.alacer$originY() - camY);
+						float oz = (float) (chunk.alacer$originZ() - camZ);
 
-					GlStateManager.pushMatrix();
-					GlStateManager.translatef(ox, oy, oz);
-					GL11.glCallList(glList);
-					GlStateManager.popMatrix();
-					count++;
+						GL11.glPushMatrix();
+						GL11.glTranslatef(ox, oy, oz);
+						GL11.glCallList(glList);
+						GL11.glPopMatrix();
+						count++;
+					}
 				}
 			}
 		} finally {

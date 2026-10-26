@@ -2,6 +2,7 @@ package net.adiont.alacer.mixin;
 
 import java.util.List;
 
+import org.lwjgl.opengl.GL11;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
@@ -53,9 +54,9 @@ public abstract class VboRenderChunkListMixin extends RenderChunkList {
 				if (vertexBuffer instanceof ModernVertexBuffer mvb && mvb.alacer$vertexCount() <= 0) {
 					continue;
 				}
-				GlStateManager.pushMatrix();
+				GL11.glPushMatrix();
 				if (renderChunk instanceof RenderChunkOrigin ro) {
-					GlStateManager.translatef(
+					GL11.glTranslatef(
 						(float) (ro.alacer$originX() - camX),
 						(float) (ro.alacer$originY() - camY),
 						(float) (ro.alacer$originZ() - camZ)
@@ -63,11 +64,15 @@ public abstract class VboRenderChunkListMixin extends RenderChunkList {
 				} else {
 					this.glTranslatefOrigin(renderChunk);
 				}
-				renderChunk.glMultMatrix();
+				if (renderChunk instanceof net.adiont.alacer.render.FastRenderChunk frc) {
+					frc.alacer$glMultMatrix();
+				} else {
+					renderChunk.glMultMatrix();
+				}
 				vertexBuffer.bind();
 				this.prepareDrawState();
 				vertexBuffer.draw(7);
-				GlStateManager.popMatrix();
+				GL11.glPopMatrix();
 			}
 
 			GLX.bindBuffer(GLX.GL_ARRAY_BUFFER, 0);
