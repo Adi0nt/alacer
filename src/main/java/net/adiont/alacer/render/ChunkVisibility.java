@@ -580,25 +580,34 @@ public final class ChunkVisibility {
 					allowedDirs &= allowedDirs - 1;
 
 					int next = adjacent ? this.neighbours.next(current, d) : -1;
-					if (next >= 0) {
-						if (this.visited[next] == this.stamp) {
-							continue;
-						}
+					if (next >= 0 && this.visited[next] == this.stamp) {
+						continue;
 					}
 
-					int ny = y + OFFSET_Y[d];
-					if (ny < 0 || ny >= 256) {
-						continue;
-					}
-					int nx = x + OFFSET_X[d];
-					int nz = z + OFFSET_Z[d];
-					int dx = originX - nx;
-					if (dx < -range || dx > range) {
-						continue;
-					}
-					int dz = originZ - nz;
-					if (dz < -range || dz > range) {
-						continue;
+					int nx, ny, nz;
+					if (d <= 1) { // 0: DOWN, 1: UP
+						ny = y + OFFSET_Y[d];
+						if (ny < 0 || ny >= 256) {
+							continue;
+						}
+						nx = x;
+						nz = z;
+					} else if (d <= 3) { // 2: NORTH, 3: SOUTH
+						nz = z + OFFSET_Z[d];
+						int dz = originZ - nz;
+						if (dz < -range || dz > range) {
+							continue;
+						}
+						nx = x;
+						ny = y;
+					} else { // 4: WEST, 5: EAST
+						nx = x + OFFSET_X[d];
+						int dx = originX - nx;
+						if (dx < -range || dx > range) {
+							continue;
+						}
+						ny = y;
+						nz = z;
 					}
 
 					if (next < 0) {
@@ -613,15 +622,7 @@ public final class ChunkVisibility {
 						this.chunks[next].setFrame(frame);
 					}
 
-					this.frustumTests++;
-					if (this.frustumTiming) {
-						this.tested[this.testedCount++] = next;
-					}
-					if (this.frustumMode == FRUSTUM_PLANES) {
-						if (!this.frustum.isChunkVisible(nx, ny, nz)) {
-							continue;
-						}
-					} else if (!inFrustum(culler, next, nx, ny, nz)) {
+					if (!inFrustum(culler, next, nx, ny, nz)) {
 						continue;
 					}
 
@@ -646,6 +647,9 @@ public final class ChunkVisibility {
 		}
 		if (this.frustumMode == FRUSTUM_PLANES) {
 			return this.frustum.isChunkVisible(nx, ny, nz);
+		}
+		if (this.frustumMode == FRUSTUM_VECTOR) {
+			return this.vectorFrustum.isChunkVisible(nx, ny, nz);
 		}
 		Box bounds = this.chunks[slot].bounds;
 		switch (this.frustumMode) {

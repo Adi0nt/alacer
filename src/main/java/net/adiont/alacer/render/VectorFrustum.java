@@ -43,11 +43,13 @@ public final class VectorFrustum implements VectorFrustumAccess.Predicate {
 	private final double[] planeB0 = new double[4];
 	private final double[] planeC0 = new double[4];
 	private final double[] planeD0 = new double[4];
+	private final double[] planeK0 = new double[4];
 
 	private final double[] planeA1 = new double[4];
 	private final double[] planeB1 = new double[4];
 	private final double[] planeC1 = new double[4];
 	private final double[] planeD1 = new double[4];
+	private final double[] planeK1 = new double[4];
 
 	private final boolean[] signA = new boolean[6];
 	private final boolean[] signB = new boolean[6];
@@ -107,6 +109,10 @@ public final class VectorFrustum implements VectorFrustumAccess.Predicate {
 			this.planeB0[i] = planes[i][1];
 			this.planeC0[i] = planes[i][2];
 			this.planeD0[i] = planes[i][3];
+			this.planeK0[i] = this.planeD0[i] - (this.planeA0[i] * offsetX + this.planeB0[i] * offsetY + this.planeC0[i] * offsetZ)
+				+ (this.planeA0[i] >= 0.0 ? this.planeA0[i] * 16.0 : 0.0)
+				+ (this.planeB0[i] >= 0.0 ? this.planeB0[i] * 16.0 : 0.0)
+				+ (this.planeC0[i] >= 0.0 ? this.planeC0[i] * 16.0 : 0.0);
 		}
 
 		this.planeA1[0] = planes[4][0]; this.planeA1[1] = planes[5][0];
@@ -114,16 +120,51 @@ public final class VectorFrustum implements VectorFrustumAccess.Predicate {
 		this.planeC1[0] = planes[4][2]; this.planeC1[1] = planes[5][2];
 		this.planeD1[0] = planes[4][3]; this.planeD1[1] = planes[5][3];
 
+		this.planeK1[0] = this.planeD1[0] - (this.planeA1[0] * offsetX + this.planeB1[0] * offsetY + this.planeC1[0] * offsetZ)
+			+ (this.planeA1[0] >= 0.0 ? this.planeA1[0] * 16.0 : 0.0)
+			+ (this.planeB1[0] >= 0.0 ? this.planeB1[0] * 16.0 : 0.0)
+			+ (this.planeC1[0] >= 0.0 ? this.planeC1[0] * 16.0 : 0.0);
+		this.planeK1[1] = this.planeD1[1] - (this.planeA1[1] * offsetX + this.planeB1[1] * offsetY + this.planeC1[1] * offsetZ)
+			+ (this.planeA1[1] >= 0.0 ? this.planeA1[1] * 16.0 : 0.0)
+			+ (this.planeB1[1] >= 0.0 ? this.planeB1[1] * 16.0 : 0.0)
+			+ (this.planeC1[1] >= 0.0 ? this.planeC1[1] * 16.0 : 0.0);
+
 		// Padding lanes 2 & 3: positive constant ensures LE 0.0 comparison is always false.
 		this.planeA1[2] = 0.0; this.planeA1[3] = 0.0;
 		this.planeB1[2] = 0.0; this.planeB1[3] = 0.0;
 		this.planeC1[2] = 0.0; this.planeC1[3] = 0.0;
 		this.planeD1[2] = 1.0; this.planeD1[3] = 1.0;
+		this.planeK1[2] = 1.0; this.planeK1[3] = 1.0;
 
 		this.offsetX = offsetX;
 		this.offsetY = offsetY;
 		this.offsetZ = offsetZ;
 		return true;
+	}
+
+	@Override
+	public boolean isChunkVisible(int ox, int oy, int oz) {
+		DoubleVector vox = DoubleVector.broadcast(SPECIES, (double) ox);
+		DoubleVector voy = DoubleVector.broadcast(SPECIES, (double) oy);
+		DoubleVector voz = DoubleVector.broadcast(SPECIES, (double) oz);
+
+		DoubleVector va0 = DoubleVector.fromArray(SPECIES, this.planeA0, 0);
+		DoubleVector vb0 = DoubleVector.fromArray(SPECIES, this.planeB0, 0);
+		DoubleVector vc0 = DoubleVector.fromArray(SPECIES, this.planeC0, 0);
+		DoubleVector vk0 = DoubleVector.fromArray(SPECIES, this.planeK0, 0);
+
+		DoubleVector dot0 = va0.mul(vox).add(vb0.mul(voy)).add(vc0.mul(voz)).add(vk0);
+		if (dot0.compare(VectorOperators.LE, 0.0).anyTrue()) {
+			return false;
+		}
+
+		DoubleVector va1 = DoubleVector.fromArray(SPECIES, this.planeA1, 0);
+		DoubleVector vb1 = DoubleVector.fromArray(SPECIES, this.planeB1, 0);
+		DoubleVector vc1 = DoubleVector.fromArray(SPECIES, this.planeC1, 0);
+		DoubleVector vk1 = DoubleVector.fromArray(SPECIES, this.planeK1, 0);
+
+		DoubleVector dot1 = va1.mul(vox).add(vb1.mul(voy)).add(vc1.mul(voz)).add(vk1);
+		return !dot1.compare(VectorOperators.LE, 0.0).anyTrue();
 	}
 
 	public boolean isVisible(Box box) {

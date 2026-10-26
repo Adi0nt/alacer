@@ -9,6 +9,7 @@ public final class VectorFrustumAccess {
 	public interface Predicate {
 		boolean prepare(Culler culler);
 		boolean isVisible(Box box);
+		default boolean isChunkVisible(int ox, int oy, int oz) { return false; }
 		boolean verify(Box box, Culler culler);
 		String verificationSummary();
 	}

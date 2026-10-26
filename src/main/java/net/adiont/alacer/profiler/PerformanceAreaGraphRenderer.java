@@ -67,6 +67,7 @@ public final class PerformanceAreaGraphRenderer {
 	private static int fixedScale = 0;    // 0 = adaptive, 1 = 50ms, 2 = 33.3ms, 3 = 100ms
 	private static int lastMode = -1;
 	private static int lastScale = -1;
+	private static String lastTopName = "";
 	private static String cachedModeTitle = "";
 	private static int lastMaxScaleInt = -1;
 	private static String cachedMaxScaleStr = "";
@@ -270,14 +271,15 @@ public final class PerformanceAreaGraphRenderer {
 				}
 			}
 			int mode = areaGraphMode;
+			String topName = mode == 3 ? PerformanceTracker.getTopSubsystemName() : "";
 			String title = switch (mode) {
 				case 1 -> "Subsystem ms";
 				case 2 -> "Subsystem %";
-				case 3 -> "Top: " + PerformanceTracker.getTopSubsystemName() + " ms";
+				case 3 -> "Top: " + topName + " ms";
 				default -> "Frame ms";
 			};
-			if (mode != lastMode || fixedScale != lastScale) {
-				lastMode = mode; lastScale = fixedScale;
+			if (mode != lastMode || fixedScale != lastScale || (mode == 3 && !topName.equals(lastTopName))) {
+				lastMode = mode; lastScale = fixedScale; lastTopName = topName;
 				cachedModeTitle = "\u00a7e" + title + " \u00a77| " + (mode == 2 ? "100%"
 					: switch (fixedScale) { case 1 -> "50ms"; case 2 -> "33.3ms"; case 3 -> "100ms"; default -> "Auto scale"; });
 			}

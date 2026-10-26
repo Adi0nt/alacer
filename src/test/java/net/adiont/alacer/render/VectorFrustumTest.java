@@ -82,6 +82,32 @@ class VectorFrustumTest {
 	}
 
 	@Test
+	void isChunkVisibleMatchesVanillaContainsAcrossRandomViews() {
+		Random random = new Random(4321);
+		FrustumData vanilla = new FrustumData();
+		VectorFrustum fast = new VectorFrustum();
+		for (int view = 0; view < 500; view++) {
+			for (float[] plane : vanilla.frustum) {
+				for (int c = 0; c < 4; c++) {
+					plane[c] = (random.nextFloat() * 2 - 1) * (c == 3 ? 512 : 1);
+				}
+			}
+			double ox = random.nextDouble() * 1000 - 500;
+			double oy = random.nextDouble() * 512 - 128;
+			double oz = random.nextDouble() * 1000 - 500;
+			assertTrue(fast.load(vanilla.frustum, ox, oy, oz));
+			for (int box = 0; box < 500; box++) {
+				int cx = (int) Math.floor((ox + random.nextInt(1024) - 512) / 16) * 16;
+				int cy = random.nextInt(16) * 16;
+				int cz = (int) Math.floor((oz + random.nextInt(1024) - 512) / 16) * 16;
+				boolean expected = vanilla.contains(cx - ox, cy - oy, cz - oz, cx + 16 - ox, cy + 16 - oy, cz + 16 - oz);
+				boolean actual = fast.isChunkVisible(cx, cy, cz);
+				assertEquals(expected, actual);
+			}
+		}
+	}
+
+	@Test
 	void syntheticCameraRotationsMatchVanillaPredicate() {
 		VectorFrustum fast = new VectorFrustum();
 		FrustumData vanilla = new FrustumData();
