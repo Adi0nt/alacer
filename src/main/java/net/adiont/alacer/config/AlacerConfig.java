@@ -502,16 +502,16 @@ public final class AlacerConfig {
 			"Combine vanilla model-part face uploads in an alternate display list; experimental, off by default.");
 		this.verifyBatchModelLists = bool(file, system, "render.batchModelLists.verify", false,
 			"Debug: compare native OpenGL feedback from vanilla and batched model lists at compilation.");
-		this.fastDisplaySync = bool(file, system, "render.fastDisplaySync", true,
-			"High-precision frame limiter and frame pacer using LockSupport.parkNanos and Thread.onSpinWait.");
+		this.fastDisplaySync = bool(file, system, "render.fastDisplaySync", false,
+			"Experimental: high-precision frame limiter and pacer using LockSupport.parkNanos and Thread.onSpinWait, with GPU timer-query margins. Not yet qualified against vanilla's Display.sync; off by default.");
 		this.verifyFastDisplaySync = bool(file, system, "render.fastDisplaySync.verify", false,
 			"Debug: verify frame limiter sleep durations and pacing error bounds.");
-		this.fastSwapBuffers = bool(file, system, "render.fastSwapBuffers", true,
-			"Early 3D pipeline flush to overlap CPU HUD/GUI rendering with GPU draw execution.");
+		this.fastSwapBuffers = bool(file, system, "render.fastSwapBuffers", false,
+			"Experimental: early 3D pipeline flush to overlap CPU HUD/GUI rendering with GPU draw execution. Not yet qualified; off by default.");
 		this.verifyFastSwapBuffers = bool(file, system, "render.fastSwapBuffers.verify", false,
 			"Debug: verify pipeline flush execution and fence status.");
-		this.suppressThreadYield = bool(file, system, "render.suppressThreadYield", true,
-			"Suppress unconditional client-thread yield after buffer swap to eliminate OS context-switch latency spikes.");
+		this.suppressThreadYield = bool(file, system, "render.suppressThreadYield", false,
+			"Experimental: skip vanilla's unconditional client-thread yield after the buffer swap. Not yet qualified; off by default.");
 	}
 
 	public static AlacerConfig load(Path file, Logger logger) {
@@ -606,9 +606,9 @@ public final class AlacerConfig {
 				this.directBufferUploads = false;
 				this.skipZeroTranslates = false;
 				this.batchModelLists = false;
-				this.fastDisplaySync = value;
-				this.fastSwapBuffers = value;
-				this.suppressThreadYield = value;
+				this.fastDisplaySync = false;
+				this.fastSwapBuffers = false;
+				this.suppressThreadYield = false;
 				break;
 			case "render.fastChunkVisibility":
 				this.fastChunkVisibility = value;

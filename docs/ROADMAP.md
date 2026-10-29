@@ -1,7 +1,16 @@
 # Alacer Performance Roadmap
 
 This roadmap establishes the development priorities and technical specifications for **Alacer** on Minecraft 1.8.9 (Java 25).
-In accordance with [AGENTS.md](file:///c:/Users/CodyJ/OneDrive/Documents/GitLab/adiont/aevum/alacer/AGENTS.md), every priority and candidate is derived directly from empirical measurements gathered by the in-game profiler, Java Flight Recorder (JFR) sampling, native GPU diagnostics, and reproducible benchmark archives.
+In accordance with [AGENTS.md](../AGENTS.md), every priority and candidate is derived directly from empirical measurements gathered by the in-game profiler, Java Flight Recorder (JFR) sampling, native GPU diagnostics, and reproducible benchmark archives.
+
+> **1.0.0 correction (2026-10-28):** the October 25/26 update below this note reported that
+> `FastDisplaySync` (Phase 5.4) and `SwapOptimizer` (Phase 5.5) eliminated the swap/sync stall.
+> No benchmark archive supported it: time blocked in the buffer swap includes the frame limiter's
+> and driver's waits, so moving those waits elsewhere lowers the swap section without making
+> frames faster. `render.fastDisplaySync`, `render.fastSwapBuffers` and `render.suppressThreadYield`
+> ship **off** in 1.0.0. The measured check is in
+> [benchmarks/2026-10-28-release-pacing](benchmarks/2026-10-28-release-pacing/README.md).
+> Table rows below that describe those options as completed are superseded by that archive.
 
 > **October 25/26 Breakthrough Update:** Phase 5.4 (`FastDisplaySync`) and Phase 5.5 (`SwapOptimizer`)
 > have been fully implemented, verified, and integrated. Whole-client telemetry confirms that the
@@ -67,9 +76,9 @@ pie title Client-Thread Java CPU Time Breakdown (Dynamic Movement - 352 FPS Base
 | **Phase 5.5** | Early GPU Flush & Swap Optimization | **Completed** | `render.fastSwapBuffers`, `render.suppressThreadYield` | `render.fastSwapBuffers.verify` | `SwapOptimizer` early flush & fence pipeline |
 | **Phase 6.1** | Multi-Draw Indirect (`glMultiDrawArraysIndirect`) | **Completed (Arena & Command Packing)** | `render.multiDrawIndirect` | `render.multiDrawIndirect.verify` | ResidentMeshArena & MDI buffer packing |
 | **Phase 6.2** | Indirect Batch Layer Submission & State Flattening | **Completed** | `render.multiDrawIndirect` | `render.multiDrawIndirect.verify` | `WorldRendererPassesMixin` & `MultiDrawIndirect.renderLayer` |
-| **Phase 7.1** | Compute-Driven Frustum & Occlusion Culling | **Completed (Compute Shader Architecture)** | `render.gpuComputeCulling` | `render.gpuComputeCulling.verify` | `GpuComputeCulling` SSBO & compute dispatch |
-| **Phase 8.1** | GPU Translucent Geometry Sorting | **Completed (Distance & Index Pipeline)** | `render.gpuTranslucentSort` | `render.gpuTranslucentSort.verify` | `GpuTranslucentSort` depth sorting engine |
-| **Phase 9.1** | Low-Latency Frame Pacing & Dynamic CPU-GPU Queue Sync | **Completed (Timer Query Ring)** | `render.dynamicPacing` | `render.dynamicPacing.verify` | `DynamicFramePacing` GL_TIME_ELAPSED engine |
+| **Phase 7.1** | Compute-Driven Frustum & Occlusion Culling | **Completed (Compute Shader Architecture)** | `render.modernPipeline` (no separate option) | None | `GpuComputeCulling` SSBO & compute dispatch |
+| **Phase 8.1** | GPU Translucent Geometry Sorting | **Completed (Distance & Index Pipeline)** | `render.modernPipeline` (no separate option) | None | `GpuTranslucentSort` depth sorting engine |
+| **Phase 9.1** | Low-Latency Frame Pacing & Dynamic CPU-GPU Queue Sync | **Completed (Timer Query Ring)** | `render.fastDisplaySync` (no separate option) | `render.fastDisplaySync.verify` | `DynamicFramePacing` GL_TIME_ELAPSED engine |
 
 ---
 
@@ -224,7 +233,7 @@ flowchart TD
 
 ## 5. Verification and Benchmark Protocol Standards
 
-In accordance with [AGENTS.md](file:///c:/Users/CodyJ/OneDrive/Documents/GitLab/adiont/aevum/alacer/AGENTS.md) and [docs/BENCHMARK_MODES.md](file:///c:/Users/CodyJ/OneDrive/Documents/GitLab/adiont/aevum/alacer/docs/BENCHMARK_MODES.md), any candidate worked on from this roadmap must adhere to the following evaluation standards:
+In accordance with [AGENTS.md](../AGENTS.md) and [docs/BENCHMARK_MODES.md](BENCHMARK_MODES.md), any candidate worked on from this roadmap must adhere to the following evaluation standards:
 
 | Workflow Mode | Duration | Workload & Mechanism | Permitted Decisions |
 |---|---|---|---|

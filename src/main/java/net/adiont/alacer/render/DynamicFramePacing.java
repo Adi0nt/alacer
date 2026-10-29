@@ -52,7 +52,8 @@ public final class DynamicFramePacing {
 	}
 
 	public static synchronized void beginFrame() {
-		if (!isSupported()) return;
+		// Timer queries only feed FastDisplaySync; with it off the frame keeps vanilla's GL calls.
+		if (!isEnabled()) return;
 		if (!queriesInitialized) {
 			for (int i = 0; i < QUERY_RING_SIZE; i++) {
 				timerQueries[i] = GL15.glGenQueries();

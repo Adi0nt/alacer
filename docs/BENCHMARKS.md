@@ -1949,3 +1949,11 @@ frame-mean changes moved together pair by pair (per-crossing work spread over mo
 mob shadows to draw, moved by up to +24% in frame mean, so this series cannot resolve frame effects of a few percent.
 Verdict: **closed** under the frozen rule. `render.reuseShadowPositions` stays off by default and outside
 `render.defaults`.
+
+## 2026-10-28 — 1.0.0 frame pacing check (`render.fastDisplaySync`, `render.fastSwapBuffers`, `render.suppressThreadYield`)
+
+Standard-mode in-process toggles against the 1.0.0 candidate, two launches per option (ABBA and
+BAAB). `fastDisplaySync` at a 120 FPS cap cut frame-time p99 by 12-13% and its standard deviation
+by 68-96%, but raised pan client CPU per frame by 3.5% and 12.8%. `fastSwapBuffers` and
+`suppressThreadYield` changed sign with segment order. All three fail their predeclared gates and
+ship off in 1.0.0. See [the archive](benchmarks/2026-10-28-release-pacing/README.md).

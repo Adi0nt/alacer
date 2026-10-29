@@ -1,11 +1,11 @@
 # Third-party components
 
-Alacer's own source code is original work. Its project license has **not been chosen yet**;
-until one is, no license is granted for the Alacer sources (`fabric.mod.json` deliberately has
-no `license` field).
+Alacer's own source code is original work, licensed under the GNU Lesser General Public License,
+version 3 only (`LGPL-3.0-only`, see `COPYING.LESSER` and `COPYING`). The mod jar includes both
+license texts.
 
 This file records everything Alacer builds against, ships with, or borrows build scaffolding
-from, so the licensing picture stays clear when a license is selected. Licenses were checked on
+from, so the licensing picture stays clear. Licenses were checked on
 2026-10-19 against each project's repository.
 
 ## Runtime dependencies (required by players, not bundled in the Alacer jar)

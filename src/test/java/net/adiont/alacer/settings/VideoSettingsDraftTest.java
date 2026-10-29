@@ -45,8 +45,10 @@ class VideoSettingsDraftTest {
 			assertTrue(!s.key().startsWith("profiler.") || s.key().equals("profiler.hud"),s.key());
 			if (s.key().startsWith("render.")) { assertEquals(1,s.defaultValue()); }
 		}
-		assertEquals(22,keys.stream().filter(k -> k.startsWith("render.")).count());
+		assertEquals(19,keys.stream().filter(k -> k.startsWith("render.")).count());
 		assertFalse(keys.contains("render.reuseParticleLight"));
+		// Unqualified frame pacing experiments stay config-only.
+		for (String key : new String[] {"render.fastDisplaySync","render.fastSwapBuffers","render.suppressThreadYield"}) { assertFalse(keys.contains(key),key); }
 		assertEquals(VideoSetting.Effect.RESTART,VideoSettingsCatalog.byKey("render.fastParticleVertices").effect());
 	}
 	@Test void graphicsSplitsFollowGraphicsAndNewDetailChoicesKeepVanillaDefaults() {

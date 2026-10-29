@@ -857,11 +857,21 @@ public final class BenchmarkRunner implements FrameProfiler.FrameListener {
 		this.stageFrames = 0;
 	}
 
+	private static int benchmarkFpsLimit() {
+		int max = (int) GameOptions.Option.FRAMERATE_LIMIT.getMax();
+		int limit = Integer.getInteger("alacer.benchmark.fpsLimit", max);
+		if (limit < 10 || limit > max) {
+			throw new IllegalArgumentException("alacer.benchmark.fpsLimit must be 10-" + max + ", got " + limit);
+		}
+		return limit;
+	}
+
 	private void loadWorld() throws IOException {
 		GameOptions options = this.minecraft.options;
 		// Settings that would otherwise make results depend on window focus or display refresh rate.
 		options.pauseOnUnfocus = false;
-		options.fpsLimit = (int) GameOptions.Option.FRAMERATE_LIMIT.getMax();
+		// alacer.benchmark.fpsLimit (below the maximum) exercises the frame limiter; the default is unlimited.
+		options.fpsLimit = benchmarkFpsLimit();
 		options.vsync = false;
 		GlErrorChecks.beforeDisplayChange();
 		Display.setVSyncEnabled(false);
@@ -1324,6 +1334,7 @@ public final class BenchmarkRunner implements FrameProfiler.FrameListener {
 			environment.put("benchmark.particlesSpawned", String.valueOf(this.particlesSpawned));
 		}
 		environment.put("benchmark.logGlErrors", String.valueOf(((net.adiont.alacer.mixin.MinecraftAccessor) this.minecraft).alacer$logsGlErrors()));
+		environment.put("benchmark.fpsLimit", String.valueOf(this.minecraft.options.fpsLimit));
 		environment.put("benchmark.toggle", this.toggleKey == null ? "" : this.toggleKey + " (a=false, b=true)");
 		environment.put("benchmark.toggleReverse", String.valueOf(Boolean.getBoolean("alacer.benchmark.toggleReverse")));
 		environment.put("benchmark.screenshots", String.valueOf(this.screenshots));

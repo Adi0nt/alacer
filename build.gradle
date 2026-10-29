@@ -43,6 +43,13 @@ processResources {
 	}
 }
 
+// Ship the license texts inside the mod jar (LGPL-3.0-only incorporates GPL-3.0).
+jar {
+	from(files('COPYING', 'COPYING.LESSER')) {
+		rename { "${it}_${project.archives_base_name}" }
+	}
+}
+
 tasks.withType(JavaCompile).configureEach {
 	it.options.encoding = 'UTF-8'
 	it.options.release = 25

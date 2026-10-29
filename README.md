@@ -5,26 +5,21 @@ Client-side performance mod for Minecraft 1.8.9, built on
 scratch and has to justify itself with measurements taken by the mod's own profiler and
 benchmark.
 
-Status: early development. Runtime-verified optimizations cover chunk visibility, entity-loop
-world-chunk lookups, per-frame GL error checks, camera matrix reads, fancy cloud geometry,
-entity shadows' world queries, particles' light queries (session 15, Java 25), dead-particle
-removal (session 16) and particle vertex writing (session 20). Session 21's particle light-entry
-experiment verified exactly but did not save dependable time and stays off. Session 22's per-pass
-particle light reuse verified exactly and saved 9-14% of the particle pass in three of four measured
-groups, but failed at the lightest load and stays off pending a confirmation.
-The 2026-10-23 exact-neighbor/modern-GL combination passed its live correctness checks
-but regressed native frame/CPU/tail metrics; its three options remain off. See the
-[complete measured result](docs/benchmarks/2026-10-23-modern-rendering/README.md).
-Session 12 completed the chunk frustum investigation; its exact plane test remains an opt-in
-experiment because warmed repeated runs did not establish a dependable performance gain.
-Session 13 investigates chunk-build responsiveness and adds opt-in pipeline attribution;
-the evidence does not select a scheduling or renderer change.
-Model-part zero translations remain off after measurements showed no dependable gain.
-Session 9 also tests combining face uploads inside model display lists; it remains off because
-the frame-time benefit did not repeat reliably. See
-[docs/BENCHMARKS.md](docs/BENCHMARKS.md) for measured results,
-[docs/ROADMAP.md](docs/ROADMAP.md) for the performance roadmap, and
-[docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) for design notes.
+Status: **1.0.0**, the first release. It ships the default-on optimizations listed under
+[Configuration](#configuration), the in-game profiler and overlay, the expanded Video Settings
+menu, and the scripted benchmark. Not every default has an archived Java 25 performance
+qualification; [CHANGELOG.md](CHANGELOG.md) lists the known limitations. Everything else stays opt-in, including the modern
+OpenGL pipeline, the chunk frustum test, particle light reuse, model display-list batching and the
+2026-10-25 frame pacing/swap options (see the
+[1.0.0 frame pacing check](docs/benchmarks/2026-10-28-release-pacing/README.md)). Every
+optimization can be switched back to vanilla's code path, and most have a `.verify` mode that runs
+vanilla alongside it and logs any difference.
+
+Measured results, including the ideas that did not pay off, are in
+[docs/BENCHMARKS.md](docs/BENCHMARKS.md) and the archives under `docs/benchmarks/`. See
+[docs/ROADMAP.md](docs/ROADMAP.md) for the performance roadmap,
+[docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) for design notes and
+[CHANGELOG.md](CHANGELOG.md) for release notes.
 
 ## Requirements
 
@@ -36,6 +31,19 @@ the frame-time benefit did not repeat reliably. See
 | Java (game) | Java 25; primary development and benchmark runtime |
 | Java (Gradle) | Installed Eclipse Temurin JDK 25, selected by `gradle/gradle-daemon-jvm.properties`; Gradle 9.7.1 |
 | Java (compiler/tests) | Eclipse Temurin JDK 25 toolchain, `--release 25` (classfile 69), tests on Java 25 |
+
+## Installing
+
+1. Install Minecraft 1.8.9 with Fabric Loader 0.20.0 or later through the
+   [Ornithe installer](https://ornithemc.net/) (Gen 2 intermediary).
+2. Put OSL 0.22.2 (`core`, `entrypoints`, `lifecycle-events`, `keybinds`) and
+   `alacer-1.0.0+mc1.8.9.jar` in the instance's `mods` folder.
+3. Run the game on Java 25. Launchers other than the development client must add
+   `--enable-native-access=ALL-UNNAMED --add-modules=jdk.incubator.vector` to the JVM arguments.
+
+Alacer is client-only and does not need to be installed on servers. Settings are written to
+`config/alacer.properties` on first launch and are also available under
+**Options -> Video Settings**.
 
 ## Building
 
@@ -236,6 +244,48 @@ Normal launches continue to use saved settings, so an existing explicit `false` 
 | `render.chunkTimeFloor` | `false` | Experimental: when vanilla's chunk deadline leaves less than 1/32 of the previous frame (at most 4.2 ms), allow that much for uploading built chunks and queueing rebuilds. On llvmpipe it cut edit-update latency p90 by 76% but failed its frozen gates on flight frame cost (+20% mean) and visible holes (+12%) (2026-10-23); unmeasured on the reference hardware. Runtime-toggleable; not in `render.defaults`. |
 | `render.batchModelLists` | `false` | Experimental: combine face draws inside eligible vanilla model-part display lists. |
 | `render.batchModelLists.verify` | `false` | Debug: compare native feedback from vanilla and alternate lists at compilation; reject differing lists. |
+| `render.fastChunkUnpack` | `true` | Vectorized block state unpacking and linear block counter scan during chunk packet handling. |
+| `render.fastChunkUnpack.verify` | `false` | Debug: compare fast chunk unpacking and block counters with vanilla's scalar logic. |
+| `render.fastTerrainPipeline` | `true` | Unified direct single-pass terrain layer rendering and chunk-level layer bitmask filtering. |
+| `render.fastTerrainPipeline.verify` | `false` | Debug: compare fast terrain layer rendered chunk counts with vanilla. |
+| `render.fastEntityLighting` | `true` | Answer entity light and brightness queries without BlockPos allocations or chunk hash lookups. |
+| `render.fastEntityLighting.verify` | `false` | Debug: also run vanilla's entity light queries, use their results and log any difference. |
+| `render.fastEntityRendererLookup` | `true` | Cache entity renderer lookups to eliminate repeated map searches in entity rendering. |
+| `render.fastEntityRendererLookup.verify` | `false` | Debug: also run vanilla's renderer map query, use its result and log any difference. |
+| `render.fastEntityCulling` | `true` | Evaluate entity distance and frustum before entity state preparation and renderer invocation. |
+| `render.fastEntityCulling.verify` | `false` | Debug: also run vanilla's shouldRender check, use its result and log any difference. |
+| `render.fastRayTrace` | `true` | Trace crosshair and entity rays without intermediate Vec3d or BlockPos allocations. |
+| `render.fastRayTrace.verify` | `false` | Debug: also run vanilla's ray trace, use its result and log any difference. |
+| `render.fastRandomDisplayTicks` | `true` | Reduce client ambient tick position and lookup allocations, preserving vanilla per-tick Random lifetime. |
+| `render.fastRandomDisplayTicks.verify` | `false` | Debug: also verify fast display tick block queries against vanilla, logging differences. |
+| `render.fastSoundThread` | `true` | Wake paulscode sound threads via lock-free parking instead of Thread.sleep and thread interruption. |
+| `render.fastSoundThread.verify` | `false` | Debug: verify sound thread wake timing, lifecycle and interruption handling against expected bounds. |
+| `render.cameraHysteresis` | `true` | Reuse visibility only when all camera, frustum, storage and compiled-chunk inputs remain exactly unchanged. |
+| `render.cameraHysteresis.verify` | `false` | Debug: compare retained visibility against a fresh vanilla search and use vanilla's result. |
+| `render.flatOcclusion` | `true` | Pack section connectivity flags into a dense 36-bit bitmask per chunk section. |
+| `render.flatOcclusion.verify` | `false` | Debug: also test chunk occlusion via vanilla CompiledChunk.isVisible and log differences. |
+| `render.vectorFrustum` | `true` | Vectorized frustum testing of chunk bounding boxes against the 6 frustum planes. |
+| `render.vectorFrustum.verify` | `false` | Debug: also run vanilla frustum culler and log differences. |
+| `render.fastWorkerAo` | `true` | Cache chunk block states in thread-local flat memory during chunk compilation and ambient occlusion. |
+| `render.fastWorkerAo.verify` | `false` | Debug: also verify worker block state queries against vanilla chunk lookups. |
+| `render.fastModelTransforms` | `true` | Skip zero translations in model parts; hierarchy flattening and push/pop removal are not implemented. |
+| `render.fastModelTransforms.verify` | `false` | Debug: retain vanilla translations and sample raw matrix bits before/after zero translations. |
+| `render.fastMipmaps` | `true` | Fast LUT-based gamma mipmap generation and parallel sprite downsampling. |
+| `render.fastMipmaps.verify` | `false` | Debug: compare fast mipmap results against vanilla downsampling and log differences. |
+| `render.reuseParticleBoxes` | `false` | Experimental: reuse immutable zero-offset particle movement boxes with bit-exact safe coordinates. Off by default. |
+| `render.reuseParticleBoxes.verify` | `false` | Debug: compare particle movement Box coordinates against vanilla using raw double bits. |
+| `render.scalarParticleEntityQuery` | `false` | Experimental: scalar particle collision nearby-entity query bounds. Off by default. |
+| `render.scalarParticleEntityQuery.verify` | `false` | Debug: compare scalar bounds and ordered entity query results with vanilla. |
+| `render.reuseShadowPositions` | `false` | Experimental: pass one reused position instead of a new BlockPos to each entity shadow's block-below query (same query and answer). Off by default; its hook is installed only when on at startup (or verified, or benchmark-toggled). |
+| `render.reuseShadowPositions.verify` | `false` | Debug: keep vanilla's new position, compare the reused one's coordinates and the block state answered for each, and log any difference. |
+| `render.modernPipeline` | `false` | Modern OpenGL rendering pipeline (TerrainShader, VAO attribute binding, and precomputed chunk adjacency). |
+| `render.multiDrawIndirect` | `false` | Experimental OpenGL 4.3 Multi-Draw Indirect submission over shared resident mesh storage. |
+| `render.multiDrawIndirect.verify` | `false` | Debug: validate indirect draw command structs, quads, and origin records against reference direct draws. |
+| `render.fastDisplaySync` | `false` | Experimental: high-precision frame limiter and pacer using LockSupport.parkNanos and Thread.onSpinWait, with GPU timer-query margins. Not yet qualified against vanilla's Display.sync; off by default. See the 1.0.0 frame pacing check. |
+| `render.fastDisplaySync.verify` | `false` | Debug: verify frame limiter sleep durations and pacing error bounds. |
+| `render.fastSwapBuffers` | `false` | Experimental: early 3D pipeline flush to overlap CPU HUD/GUI rendering with GPU draw execution. Not yet qualified; off by default. See the 1.0.0 frame pacing check. |
+| `render.fastSwapBuffers.verify` | `false` | Debug: verify pipeline flush execution and fence status. |
+| `render.suppressThreadYield` | `false` | Experimental: skip vanilla's unconditional client-thread yield after the buffer swap. Not yet qualified; off by default. See the 1.0.0 frame pacing check. |
 
 The experimental `render.batchModelLists` option (default `false`) combines the face draws
 inside eligible vanilla model parts' display lists. Animation, transforms, child parts and
@@ -272,7 +322,7 @@ results**); every later run copies it to `alacer-benchmark-run`, so nothing a ru
 carries over. Additional options: `alacer.benchmark.entities` (motionless mobs placed around the
 camera), `alacer.benchmark.chests`, `alacer.benchmark.viewDistance` (default 12),
 `alacer.benchmark.vbo` (true/false; default leaves the option alone), `alacer.benchmark.seed`,
-`alacer.benchmark.timeScale` (scales phase durations), `alacer.benchmark.exit`,
+`alacer.benchmark.timeScale` (scales phase durations), `alacer.benchmark.fpsLimit` (10-260; default unlimited, which never calls the frame limiter), `alacer.benchmark.exit`,
 `alacer.benchmark.screenshots` (saves `screenshots/alacer-<label>-<phase>.png` at the end of each
 phase; with `alacer.benchmark.screenshotEndPose=true` it first renders one unrecorded frame at the
 phase's exact end pose, so pan captures have the same yaw at any frame rate), and `alacer.benchmark.timeout` (seconds, default 600, 0 = off: if the benchmark has not
@@ -414,4 +464,7 @@ report; the protocol and the Windows commands are in
 
 ## License
 
-Not yet decided. See [THIRD_PARTY.md](THIRD_PARTY.md) for the dependencies and their licenses.
+Alacer is licensed under the GNU Lesser General Public License, version 3 only
+(`LGPL-3.0-only`). See [COPYING.LESSER](COPYING.LESSER) and [COPYING](COPYING), which holds the GNU
+GPL v3 that the LGPL builds on. [THIRD_PARTY.md](THIRD_PARTY.md) lists the dependencies and their
+licenses.
