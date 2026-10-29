@@ -21,12 +21,12 @@ Measured results, including the ideas that did not pay off, are in
 [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) for design notes and
 [CHANGELOG.md](CHANGELOG.md) for release notes.
 
-Qualification follow-up in this checkout: camera visibility reuse, flat occlusion,
-the direct terrain pipeline, worker AO caching and model zero-translation skipping
-now default off and are excluded from the shipped-default benchmark preset and
-Video Settings menu. See the [qualification report](docs/benchmarks/2026-10-29-defaults-qualification/resume-1/README.md).
-Existing config values override changed defaults; set these five keys to false in
-an existing config when updating.
+Release qualification turned off camera visibility reuse, flat occlusion, the direct terrain
+pipeline, worker AO caching and model zero-translation skipping: they are config-only experiments,
+outside the Video Settings menu and the shipped-default benchmark preset. See the
+[qualification report](docs/benchmarks/2026-10-29-defaults-qualification/resume-1/README.md).
+A config file written by a development build keeps its saved values; set these five keys to
+`false` in it.
 
 ## Requirements
 
