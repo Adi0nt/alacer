@@ -499,6 +499,7 @@ public final class BenchmarkRunner implements FrameProfiler.FrameListener {
 			|| "render.cameraHysteresis".equals(key) || "render.flatOcclusion".equals(key)
 			|| "render.vectorFrustum".equals(key) || "render.fastWorkerAo".equals(key)
 			|| "render.fastModelTransforms".equals(key)
+			|| "render.fastTerrainPipeline".equals(key)
 			|| "render.fastParticleRemoval".equals(key)
 			|| "render.fastParticleVertices".equals(key)
 			|| "render.fastParticleLightEntry".equals(key)
@@ -1380,6 +1381,8 @@ public final class BenchmarkRunner implements FrameProfiler.FrameListener {
 		Alacer.LOGGER.info("Entity shadow queries final: {}", EntityShadows.verificationSummary());
 		Alacer.LOGGER.info("Entity lighting queries final: {}", net.adiont.alacer.render.EntityLighting.verificationSummary());
 		Alacer.LOGGER.info("Worker AO verification final: {}", net.adiont.alacer.render.WorkerBlockStateCache.summary());
+		Alacer.LOGGER.info("Terrain pipeline verification final: {}", net.adiont.alacer.render.TerrainLayerBatch.verificationSummary());
+		Alacer.LOGGER.info("Fast mipmaps verification final: {}", net.adiont.alacer.render.FastMipmaps.verificationSummary());
 		Alacer.LOGGER.info("Vector frustum verification final: {}", net.adiont.alacer.render.VectorFrustumAccess.summary());
 		Alacer.LOGGER.info("Model zero-translation verification final: {}", net.adiont.alacer.render.ZeroTranslates.verificationSummary());
 		Alacer.LOGGER.info("Ray trace verification final: {} traces, {} mismatches", net.adiont.alacer.render.FastRayTrace.traces(), net.adiont.alacer.render.FastRayTrace.mismatches());

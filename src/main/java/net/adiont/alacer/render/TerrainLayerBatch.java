@@ -16,6 +16,20 @@ import net.minecraft.client.render.world.WorldRenderer;
  * redundant iterations per frame.
  */
 public final class TerrainLayerBatch {
+	private static long verificationComparisons;
+	private static long verificationMismatches;
+
+	/** Client-thread verification only; does not execute in performance runs. */
+	public static boolean verifyCount(int actual, int expected) {
+		verificationComparisons++;
+		if (actual == expected) return true;
+		verificationMismatches++;
+		return false;
+	}
+
+	public static String verificationSummary() {
+		return verificationComparisons + " layer counts compared, " + verificationMismatches + " mismatches";
+	}
 
 	private static final int SOLID_BIT = 1 << BlockLayer.SOLID.ordinal();
 	private static final int CUTOUT_MIPPED_BIT = 1 << BlockLayer.CUTOUT_MIPPED.ordinal();

@@ -514,7 +514,7 @@ public class WorldRendererPassesMixin {
 					vanillaCount++;
 				}
 			}
-			if (count != vanillaCount) {
+			if (!TerrainLayerBatch.verifyCount(count, vanillaCount)) {
 				Alacer.LOGGER.warn("Terrain pipeline verification mismatch on {}: fast count {}, vanilla count {}",
 					layer, count, vanillaCount);
 			}

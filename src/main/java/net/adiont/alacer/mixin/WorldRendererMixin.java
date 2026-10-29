@@ -13,6 +13,7 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.ModifyVariable;
 import org.spongepowered.asm.mixin.injection.Redirect;
+import org.spongepowered.asm.mixin.injection.Slice;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
@@ -78,7 +79,10 @@ public class WorldRendererMixin {
 	@Unique
 	private int alacer$previousDirtyEpoch = 0;
 
-	@Redirect(method = "setupRender", at = @At(value = "INVOKE", target = "Lcom/google/common/collect/Sets;newLinkedHashSet()Ljava/util/LinkedHashSet;"))
+	// setupRender also uses Set<Direction> in the vanilla visibility search. Only
+	// the scheduling block after clear() owns dirty-chunk sets and epoch stamps.
+	@Redirect(method = "setupRender", slice = @Slice(from = @At(value = "INVOKE", target = "Lnet/minecraft/client/render/world/ChunkRenderDispatcher;clear()V")),
+		at = @At(value = "INVOKE", target = "Lcom/google/common/collect/Sets;newLinkedHashSet()Ljava/util/LinkedHashSet;"), require = 1, allow = 1)
 	private LinkedHashSet<RenderChunk> alacer$reusedDirtySet() {
 		if (this.alacer$swapSetA == null) {
 			this.alacer$swapSetA = Sets.newLinkedHashSet();
@@ -95,7 +99,8 @@ public class WorldRendererMixin {
 		return (LinkedHashSet<RenderChunk>) target;
 	}
 
-	@Redirect(method = "setupRender", at = @At(value = "INVOKE", target = "Ljava/util/Set;contains(Ljava/lang/Object;)Z"))
+	@Redirect(method = "setupRender", slice = @Slice(from = @At(value = "INVOKE", target = "Lnet/minecraft/client/render/world/ChunkRenderDispatcher;clear()V")),
+		at = @At(value = "INVOKE", target = "Ljava/util/Set;contains(Ljava/lang/Object;)Z"), require = 1, allow = 1)
 	private boolean alacer$fastDirtyContains(Set<RenderChunk> set, Object obj) {
 		if (set.isEmpty()) {
 			return false;
@@ -106,7 +111,8 @@ public class WorldRendererMixin {
 		return set.contains(obj);
 	}
 
-	@Redirect(method = "setupRender", at = @At(value = "INVOKE", target = "Ljava/util/Set;add(Ljava/lang/Object;)Z"))
+	@Redirect(method = "setupRender", slice = @Slice(from = @At(value = "INVOKE", target = "Lnet/minecraft/client/render/world/ChunkRenderDispatcher;clear()V")),
+		at = @At(value = "INVOKE", target = "Ljava/util/Set;add(Ljava/lang/Object;)Z"), require = 1, allow = 1)
 	private boolean alacer$fastDirtyAdd(Set<RenderChunk> set, Object obj) {
 		if (obj instanceof FastDirtyChunk fc) {
 			fc.alacer$setDirtyEpoch(this.alacer$currentDirtyEpoch);
@@ -114,7 +120,8 @@ public class WorldRendererMixin {
 		return set.add((RenderChunk) obj);
 	}
 
-	@Redirect(method = "setupRender", at = @At(value = "INVOKE", target = "Ljava/util/Set;addAll(Ljava/util/Collection;)Z"))
+	@Redirect(method = "setupRender", slice = @Slice(from = @At(value = "INVOKE", target = "Lnet/minecraft/client/render/world/ChunkRenderDispatcher;clear()V")),
+		at = @At(value = "INVOKE", target = "Ljava/util/Set;addAll(Ljava/util/Collection;)Z"), require = 1, allow = 1)
 	private boolean alacer$fastDirtyAddAll(Set<RenderChunk> dest, Collection<RenderChunk> src) {
 		if (src.isEmpty()) {
 			return false;

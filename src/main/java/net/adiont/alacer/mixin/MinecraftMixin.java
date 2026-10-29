@@ -2,6 +2,7 @@ package net.adiont.alacer.mixin;
 
 import org.lwjgl.input.Keyboard;
 import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
@@ -23,6 +24,19 @@ import net.minecraft.client.gui.screen.Screen;
 /** Frame boundaries, the render/swap split of each frame, and vanilla's per-frame GL error checks. */
 @Mixin(Minecraft.class)
 public class MinecraftMixin {
+	@Unique private long alacer$resourceReloadStart;
+
+	@Inject(method = "reloadResources", at = @At("HEAD"))
+	private void alacer$beginResourceTiming(CallbackInfo ci) {
+		if (Boolean.getBoolean("alacer.benchmark.resourceTiming")) this.alacer$resourceReloadStart = System.nanoTime();
+	}
+
+	@Inject(method = "reloadResources", at = @At("RETURN"))
+	private void alacer$endResourceTiming(CallbackInfo ci) {
+		if (Boolean.getBoolean("alacer.benchmark.resourceTiming")) {
+			Alacer.LOGGER.info("Resource timing: Minecraft reloadResources {} ns", System.nanoTime() - this.alacer$resourceReloadStart);
+		}
+	}
 
 	@Inject(method = "runGame", at = @At("HEAD"))
 	private void alacer$frameStart(CallbackInfo ci) {

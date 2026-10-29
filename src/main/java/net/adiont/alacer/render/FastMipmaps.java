@@ -1,6 +1,7 @@
 package net.adiont.alacer.render;
 
 import java.util.Collection;
+import java.util.concurrent.atomic.LongAdder;
 import net.adiont.alacer.Alacer;
 import net.minecraft.client.render.texture.TextureAtlasSprite;
 import net.minecraft.util.crash.CrashException;
@@ -16,6 +17,9 @@ public final class FastMipmaps {
 	public static final int CUTOUT_PRESERVED = 1;
 
 	private static final float[] GAMMA_TO_LINEAR = new float[256];
+	private static final LongAdder verifiedSprites = new LongAdder();
+	private static final LongAdder verifiedPixels = new LongAdder();
+	private static final LongAdder verificationMismatches = new LongAdder();
 
 	static {
 		for (int i = 0; i < 256; i++) {
@@ -256,23 +260,32 @@ public final class FastMipmaps {
 	}
 
 	private static void verifyAgainstVanilla(int mipLevels, int width, int[][] data, int[][] fastResult) {
+		verifiedSprites.increment();
 		int[][] vanillaResult = vanillaGenerateMipmaps(mipLevels, width, data);
 		for (int level = 1; level <= mipLevels; level++) {
 			int[] fast = fastResult[level];
 			int[] vanilla = vanillaResult[level];
 			if (fast == null || vanilla == null || fast.length != vanilla.length) {
+				verificationMismatches.increment();
 				Alacer.LOGGER.error("FastMipmaps verification failed: level {} length mismatch (fast={}, vanilla={})",
 					level, fast == null ? -1 : fast.length, vanilla == null ? -1 : vanilla.length);
 				continue;
 			}
+			verifiedPixels.add(fast.length);
 			for (int i = 0; i < fast.length; i++) {
 				if (fast[i] != vanilla[i]) {
+					verificationMismatches.increment();
 					Alacer.LOGGER.warn("FastMipmaps verification mismatch at level {} [{}]: fast=0x{}, vanilla=0x{}",
 						level, i, Integer.toHexString(fast[i]), Integer.toHexString(vanilla[i]));
 					fast[i] = vanilla[i];
 				}
 			}
 		}
+	}
+
+	public static String verificationSummary() {
+		return verifiedSprites.sum() + " sprites, " + verifiedPixels.sum() + " pixels compared, "
+			+ verificationMismatches.sum() + " mismatches";
 	}
 
 	/** Exact vanilla reference logic for verification. */
