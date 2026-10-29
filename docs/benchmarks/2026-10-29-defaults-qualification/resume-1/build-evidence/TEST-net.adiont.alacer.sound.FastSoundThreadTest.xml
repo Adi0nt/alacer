@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="net.adiont.alacer.sound.FastSoundThreadTest" tests="12" skipped="0" failures="0" errors="0" timestamp="2026-10-29T00:50:20.696Z" hostname="CODYSPC" time="1.911">
+  <properties/>
+  <testcase name="earlyReturnWaitsOnlyForTheRemainingTimeAcrossClockWrap()" classname="net.adiont.alacer.sound.FastSoundThreadTest" time="0.002"/>
+  <testcase name="clearResetsCounters()" classname="net.adiont.alacer.sound.FastSoundThreadTest" time="0.001"/>
+  <testcase name="interruptedWaitReturnsEarlyAndClearsStatus()" classname="net.adiont.alacer.sound.FastSoundThreadTest" time="0.0"/>
+  <testcase name="timedSnoozeWithoutInterruptionReturnsAfterElapsed()" classname="net.adiont.alacer.sound.FastSoundThreadTest" time="0.032"/>
+  <testcase name="snoozeUnparksOnInterruptWithoutException()" classname="net.adiont.alacer.sound.FastSoundThreadTest" time="0.062"/>
+  <testcase name="spuriousReturnRetriesRemainingDeadlineAndActuallyVerifies()" classname="net.adiont.alacer.sound.FastSoundThreadTest" time="0.0"/>
+  <testcase name="unparkWakesSnoozingThreadCleanly()" classname="net.adiont.alacer.sound.FastSoundThreadTest" time="0.061"/>
+  <testcase name="concurrentParkingExerciseVerifiesEveryCompletedWait()" classname="net.adiont.alacer.sound.FastSoundThreadTest" time="1.554"/>
+  <testcase name="interruptedStatusMatchesVanilla()" classname="net.adiont.alacer.sound.FastSoundThreadTest" time="0.121"/>
+  <testcase name="zeroOrNegativeSleepReturnsImmediately()" classname="net.adiont.alacer.sound.FastSoundThreadTest" time="0.001"/>
+  <testcase name="longTimeoutConversionSaturatesWithoutBecomingNegative()" classname="net.adiont.alacer.sound.FastSoundThreadTest" time="0.003"/>
+  <testcase name="concurrentMultiThreadedSnoozeSafety()" classname="net.adiont.alacer.sound.FastSoundThreadTest" time="0.071"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

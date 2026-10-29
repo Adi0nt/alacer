@@ -1968,3 +1968,15 @@ launches. Correctness counts and all performance gates remain unavailable; no de
 The two model-transform options skip the same wrapped zero translations. See the
 [qualification archive](benchmarks/2026-10-29-defaults-qualification/README.md) for the frozen
 protocol, commands, crash, summaries, limitations and recommendations.
+
+### 2026-10-29 - Repaired qualification continuation
+
+The dirty-set redirect crash was fixed on codex/1.0-qualification and 21 fresh Java 25
+launches completed without a crash or retry. The build passed 353 JUnit tests; Python
+passed 119 tests with 2 skipped. Camera verification reported at least 3,454 stable
+differences, flat occlusion 3, and terrain pipeline 290; these options were not timed.
+Vector frustum, model transforms and worker AO failed frame/CPU gates; mipmap startup
+changed sign between pairs. Frame runs were not foreground; F3+T reload timing remains
+unavailable. No defaults changed and no release-performance approval is claimed. See
+the [separate repaired campaign](benchmarks/2026-10-29-defaults-qualification/resume-1/README.md)
+for every command, verifier count, gate, latency, limitation and recommendation.

@@ -1,0 +1,234 @@
+{
+  "20261028-181248-q2-fastModelTransforms-1-vis_on-ecl_on-ent200-ab": {
+    "toggle": "render.fastModelTransforms (a=false, b=true)",
+    "reverse": "false",
+    "fpsLimit": "260",
+    "alacer": "1.0.0+mc1.8.9",
+    "phases": {
+      "static": {
+        "a": {
+          "frames": 9414,
+          "median_ms": 0.9937,
+          "p99_ms": 2.4726,
+          "stdev_ms": 0.3083075549923298,
+          "mean_fps": 941.31163907644,
+          "client_cpu_ms_per_frame": 0.5510522094752496
+        },
+        "b": {
+          "frames": 9069,
+          "median_ms": 1.0156,
+          "p99_ms": 2.5806,
+          "stdev_ms": 0.33695179472881526,
+          "mean_fps": 906.827970654291,
+          "client_cpu_ms_per_frame": 0.5857819384717169
+        },
+        "change_pct": {
+          "median_ms": 2.2038844721746997,
+          "p99_ms": 4.367871875758311,
+          "stdev_ms": 9.290800459689708,
+          "mean_fps": -3.6633636503190736,
+          "client_cpu_ms_per_frame": 6.302438933969512
+        }
+      },
+      "pan": {
+        "a": {
+          "frames": 10907,
+          "median_ms": 1.278,
+          "p99_ms": 3.4972,
+          "stdev_ms": 0.49540579480760044,
+          "mean_fps": 727.1045545350648,
+          "client_cpu_ms_per_frame": 0.9884625469881727
+        },
+        "b": {
+          "frames": 11247,
+          "median_ms": 1.2442,
+          "p99_ms": 3.3947,
+          "stdev_ms": 0.4636684276705562,
+          "mean_fps": 749.7349180108838,
+          "client_cpu_ms_per_frame": 0.9543987552236153
+        },
+        "change_pct": {
+          "median_ms": -2.6447574334898305,
+          "p99_ms": -2.9309161615006296,
+          "stdev_ms": -6.4063374852871835,
+          "mean_fps": 3.1123946803344626,
+          "client_cpu_ms_per_frame": -3.4461388414107508
+        }
+      }
+    }
+  },
+  "20261028-181504-q2-fastModelTransforms-2-vis_on-ecl_on-ent200-ab": {
+    "toggle": "render.fastModelTransforms (a=false, b=true)",
+    "reverse": "true",
+    "fpsLimit": "260",
+    "alacer": "1.0.0+mc1.8.9",
+    "phases": {
+      "static": {
+        "a": {
+          "frames": 9250,
+          "median_ms": 1.0058,
+          "p99_ms": 2.3833,
+          "stdev_ms": 0.32294632503300946,
+          "mean_fps": 924.9511810766628,
+          "client_cpu_ms_per_frame": 0.5473191027027027
+        },
+        "b": {
+          "frames": 9164,
+          "median_ms": 1.01085,
+          "p99_ms": 2.5034,
+          "stdev_ms": 0.3301752257625251,
+          "mean_fps": 916.2926929627271,
+          "client_cpu_ms_per_frame": 0.5865352684417285
+        },
+        "change_pct": {
+          "median_ms": 0.5020878902366244,
+          "p99_ms": 5.039231317920523,
+          "stdev_ms": 2.238421734254681,
+          "mean_fps": -0.9361021739392794,
+          "client_cpu_ms_per_frame": 7.165137402545163
+        }
+      },
+      "pan": {
+        "a": {
+          "frames": 11139,
+          "median_ms": 1.2448,
+          "p99_ms": 3.3885,
+          "stdev_ms": 0.4685256923668995,
+          "mean_fps": 742.4974363541249,
+          "client_cpu_ms_per_frame": 0.9468181614148489
+        },
+        "b": {
+          "frames": 11106,
+          "median_ms": 1.2645499999999998,
+          "p99_ms": 3.4228,
+          "stdev_ms": 0.46598054771630176,
+          "mean_fps": 740.3533626738406,
+          "client_cpu_ms_per_frame": 0.8709073924005043
+        },
+        "change_pct": {
+          "median_ms": 1.5866002570694038,
+          "p99_ms": 1.012247307068015,
+          "stdev_ms": -0.5432241373445668,
+          "mean_fps": -0.28876512905046114,
+          "client_cpu_ms_per_frame": -8.017460174286228
+        }
+      }
+    }
+  },
+  "20261028-180813-q2-vectorFrustum-1-vis_on-ecl_on-ent0-ab": {
+    "toggle": "render.vectorFrustum (a=false, b=true)",
+    "reverse": "false",
+    "fpsLimit": "260",
+    "alacer": "1.0.0+mc1.8.9",
+    "phases": {
+      "static": {
+        "a": {
+          "frames": 16391,
+          "median_ms": 0.5704,
+          "p99_ms": 1.393,
+          "stdev_ms": 0.1823397337189149,
+          "mean_fps": 1638.8955477804145,
+          "client_cpu_ms_per_frame": 0.22495862973583067
+        },
+        "b": {
+          "frames": 17155,
+          "median_ms": 0.5466,
+          "p99_ms": 1.2841,
+          "stdev_ms": 0.16178821605636962,
+          "mean_fps": 1715.303168961362,
+          "client_cpu_ms_per_frame": 0.2404383853104051
+        },
+        "change_pct": {
+          "median_ms": -4.172510518934091,
+          "p99_ms": -7.817659727207471,
+          "stdev_ms": -11.271003441425664,
+          "mean_fps": 4.662140993941177,
+          "client_cpu_ms_per_frame": 6.881156589881576
+        }
+      },
+      "pan": {
+        "a": {
+          "frames": 18370,
+          "median_ms": 0.75595,
+          "p99_ms": 2.1979,
+          "stdev_ms": 0.31263468411654616,
+          "mean_fps": 1224.6040975613087,
+          "client_cpu_ms_per_frame": 0.6276899292324443
+        },
+        "b": {
+          "frames": 19384,
+          "median_ms": 0.7258,
+          "p99_ms": 1.8981,
+          "stdev_ms": 0.27442109892390837,
+          "mean_fps": 1292.2131690414685,
+          "client_cpu_ms_per_frame": 0.5174956458935204
+        },
+        "change_pct": {
+          "median_ms": -3.988359018453602,
+          "p99_ms": -13.640293006961201,
+          "stdev_ms": -12.223079246828627,
+          "mean_fps": 5.52089214912781,
+          "client_cpu_ms_per_frame": -17.55552832808268
+        }
+      }
+    }
+  },
+  "20261028-181031-q2-vectorFrustum-2-vis_on-ecl_on-ent0-ab": {
+    "toggle": "render.vectorFrustum (a=false, b=true)",
+    "reverse": "true",
+    "fpsLimit": "260",
+    "alacer": "1.0.0+mc1.8.9",
+    "phases": {
+      "static": {
+        "a": {
+          "frames": 17061,
+          "median_ms": 0.5469,
+          "p99_ms": 1.3507,
+          "stdev_ms": 0.194685622196964,
+          "mean_fps": 1706.0541583247657,
+          "client_cpu_ms_per_frame": 0.2372473008616142
+        },
+        "b": {
+          "frames": 16866,
+          "median_ms": 0.5541,
+          "p99_ms": 1.347,
+          "stdev_ms": 0.1712617442353776,
+          "mean_fps": 1686.5187266625621,
+          "client_cpu_ms_per_frame": 0.20754654927072214
+        },
+        "change_pct": {
+          "median_ms": 1.3165112452002248,
+          "p99_ms": -0.27393203524098686,
+          "stdev_ms": -12.031642448607938,
+          "mean_fps": -1.1450651532297296,
+          "client_cpu_ms_per_frame": -12.51889968106168
+        }
+      },
+      "pan": {
+        "a": {
+          "frames": 18507,
+          "median_ms": 0.7487,
+          "p99_ms": 2.1597,
+          "stdev_ms": 0.3144499369655386,
+          "mean_fps": 1233.7557986422541,
+          "client_cpu_ms_per_frame": 0.6221904414545847
+        },
+        "b": {
+          "frames": 18546,
+          "median_ms": 0.7473,
+          "p99_ms": 1.9792,
+          "stdev_ms": 0.3061237120186248,
+          "mean_fps": 1236.3556065913526,
+          "client_cpu_ms_per_frame": 0.5787983824005177
+        },
+        "change_pct": {
+          "median_ms": -0.1869907840256535,
+          "p99_ms": -8.357642265129407,
+          "stdev_ms": -2.6478698095036557,
+          "mean_fps": 0.21072305815783565,
+          "client_cpu_ms_per_frame": -6.9740799862857195
+        }
+      }
+    }
+  }
+}

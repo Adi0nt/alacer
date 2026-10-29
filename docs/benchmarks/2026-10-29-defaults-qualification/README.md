@@ -1,5 +1,11 @@
 # 1.0 default qualification: stopped on verifier crash
 
+The user subsequently authorized repair and continuation. See the separate
+[repaired campaign](resume-1/README.md): the redirect crash was fixed, 21 fresh
+launches completed, three options failed correctness gates, and the remaining
+performance results failed gates or were inconclusive. This original stopped
+attempt remains preserved below.
+
 **The campaign stopped on its first verifier launch. No option passed correctness
 qualification, and no A/B performance launch occurred.** The frozen
 [protocol](PROTOCOL.md) requires stopping on a functional failure. No retries,

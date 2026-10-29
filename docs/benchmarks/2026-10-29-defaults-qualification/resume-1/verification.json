@@ -1,0 +1,78 @@
+{
+  "vectorFrustum": {
+    "counts": {
+      "comparisons": 89165331,
+      "mismatches": 0,
+      "outside_exact_limit": 0
+    },
+    "performance_eligible": true,
+    "counter_line": "Vector frustum verification final: 89165331 boxes compared, 0 mismatched, 0 outside exact limit",
+    "final_counter": true,
+    "verifier_label": "q2-verify-vectorFrustum"
+  },
+  "fastModelTransforms": {
+    "counts": {
+      "comparisons": 700,
+      "mismatches": 0
+    },
+    "performance_eligible": true,
+    "counter_line": "Model zero-translation verification final: 700 zero translations compared, 0 changed the matrix",
+    "final_counter": true,
+    "verifier_label": "q2-verify-fastModelTransforms"
+  },
+  "fastWorkerAo": {
+    "counts": {
+      "block_comparisons": 81931321,
+      "light_comparisons": 10798628,
+      "mismatches": 0
+    },
+    "performance_eligible": true,
+    "counter_line": "Worker AO verification final: 81931321 worker block queries, 10798628 light queries compared, 0 mismatches",
+    "final_counter": true,
+    "verifier_label": "q2-verify-fastWorkerAo"
+  },
+  "fastMipmaps": {
+    "counts": {
+      "sprites": 886,
+      "comparisons": 87550,
+      "mismatches": 0
+    },
+    "performance_eligible": true,
+    "counter_line": "Fast mipmaps verification final: 886 sprites, 87550 pixels compared, 0 mismatches",
+    "final_counter": true,
+    "verifier_label": "q2-verify-fastMipmaps"
+  },
+  "fastTerrainPipeline": {
+    "counts": {
+      "comparisons": 339423,
+      "mismatches": 290
+    },
+    "performance_eligible": false,
+    "counter_line": "Terrain pipeline verification final: 339423 layer counts compared, 290 mismatches",
+    "final_counter": true,
+    "verifier_label": "q2-verify-fastTerrainPipeline"
+  },
+  "flatOcclusion": {
+    "counts": {
+      "mask_hits": 80007343,
+      "updates": 0,
+      "mismatches": 3
+    },
+    "performance_eligible": false,
+    "counter_line": "Flat occlusion verification final: 80007343 mask hits, 0 updates, 3 mismatches",
+    "final_counter": true,
+    "verifier_label": "q2-verify-flatOcclusion"
+  },
+  "cameraHysteresis": {
+    "counts": {
+      "comparisons_checkpoint": 26000,
+      "stable_mismatches_checkpoint": 3454,
+      "changing_input_comparisons_checkpoint": 609,
+      "changing_input_differences_checkpoint": 329
+    },
+    "performance_eligible": false,
+    "counter_line": "Chunk visibility verification: 26000 searches compared; 3454 mismatched with stable input; 609 had compiled chunk data change mid-comparison (329 of those differed)",
+    "final_counter": false,
+    "verifier_label": "q2-verify-cameraHysteresis"
+  }
+}
