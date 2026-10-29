@@ -108,7 +108,7 @@ class AlacerConfigTest {
 		assertFalse(config.verifyEntityChunkLookup);
 		assertTrue(config.fastEntityPipeline);
 		assertFalse(config.verifyEntityPipeline);
-		assertTrue(config.fastTerrainPipeline);
+		assertFalse(config.fastTerrainPipeline);
 		assertFalse(config.verifyTerrainPipeline);
 		assertTrue(config.throttleGlErrorChecks);
 		assertFalse(config.verifyGlErrorChecks);
@@ -135,7 +135,12 @@ class AlacerConfigTest {
 		assertFalse(config.verifyFastSoundThread);
 		assertFalse(config.multiDrawIndirect);
 		assertFalse(config.verifyMultiDrawIndirect);
-		assertTrue(config.cameraHysteresis);
+		assertFalse(config.cameraHysteresis);
+		assertFalse(config.flatOcclusion);
+		assertFalse(config.fastWorkerAo);
+		assertFalse(config.fastModelTransforms);
+		assertTrue(config.vectorFrustum);
+		assertTrue(config.fastMipmaps);
 		assertFalse(config.profilerParticleDetail);
 		assertFalse(config.profilerParticleLightRepeats);
 		assertTrue(config.fastParticleLight);
@@ -295,6 +300,13 @@ class AlacerConfigTest {
 		config.reuseShadowPositions = true;
 		config.fastCameraSectionFaces = true;
 		for (boolean enabled : new boolean[]{false, true, false, true}) {
+			// Explicit per-feature opt-ins remain available; the defaults preset must undo them.
+			for (String key : new String[] {"render.fastTerrainPipeline", "render.cameraHysteresis",
+				"render.flatOcclusion", "render.fastWorkerAo", "render.fastModelTransforms"}) {
+				assertEquals("false", defaults.describe().get(key), key);
+				config.setToggle(key, true);
+				assertEquals("true", config.describe().get(key), key);
+			}
 			config.setToggle("render.defaults", enabled);
 			for (java.util.Map.Entry<String, String> option : config.describe().entrySet()) {
 				if (option.getKey().startsWith("render.") && !option.getKey().endsWith(".verify")) {

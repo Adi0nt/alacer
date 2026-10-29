@@ -1980,3 +1980,12 @@ changed sign between pairs. Frame runs were not foreground; F3+T reload timing r
 unavailable. No defaults changed and no release-performance approval is claimed. See
 the [separate repaired campaign](benchmarks/2026-10-29-defaults-qualification/resume-1/README.md)
 for every command, verifier count, gate, latency, limitation and recommendation.
+
+### Maintainer default selection after qualification (2026-10-28)
+
+At the user's explicit direction, cameraHysteresis, flatOcclusion, fastTerrainPipeline,
+fastWorkerAo and fastModelTransforms now default off and stay out of render.defaults
+and Video Settings. Individual opt-ins remain. The local config also disables those
+five. Java 25 build: 353 tests passed; a plain static/pan/fly client smoke completed
+with all five false and no dropped frames. This is a default-selection decision,
+not a new performance claim. See the [selection record](benchmarks/2026-10-29-defaults-qualification/DEFAULT_SELECTION.md).

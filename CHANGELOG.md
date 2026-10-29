@@ -1,5 +1,17 @@
 # Changelog
 
+## Unreleased qualification follow-up
+
+- At the maintainer's direction, default off `render.cameraHysteresis`,
+  `render.flatOcclusion`, `render.fastTerrainPipeline`, `render.fastWorkerAo` and
+  `render.fastModelTransforms`. Remove them from the `render.defaults` benchmark
+  preset and the Video Settings menu; explicit config/toggle opt-ins remain.
+  The first three failed native verifier checks; the latter two failed frame/CPU
+  gates in the [Java 25 qualification](docs/benchmarks/2026-10-29-defaults-qualification/resume-1/README.md).
+- Vector frustum and mipmaps retain their defaults pending Extended work. The
+  Standard campaign does not support a release-performance claim. Historical
+  evidence, release tag and the completed campaign's frozen inputs are preserved.
+
 ## 1.0.0 (2026-10-28)
 
 First release. Client-only, for Minecraft 1.8.9 on Ornithe Gen 2 with Fabric Loader 0.20.0+,

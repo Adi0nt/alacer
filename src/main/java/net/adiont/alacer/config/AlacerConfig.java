@@ -373,8 +373,8 @@ public final class AlacerConfig {
 			"High-performance entity pipeline override: skips empty chunk sections during entity and block entity loops while preserving exact vanilla rendering order and behavior.");
 		this.verifyEntityPipeline = bool(file, system, "render.fastEntityPipeline.verify", false,
 			"Debug: also run vanilla entity traversal and verify matching rendered counts and entities.");
-		this.fastTerrainPipeline = bool(file, system, "render.fastTerrainPipeline", true,
-			"Unified direct single-pass terrain layer rendering and chunk-level layer bitmask filtering.");
+		this.fastTerrainPipeline = bool(file, system, "render.fastTerrainPipeline", false,
+			"Experimental direct terrain layer submission and layer filtering. Off after qualification found layer-count verifier differences.");
 		this.verifyTerrainPipeline = bool(file, system, "render.fastTerrainPipeline.verify", false,
 			"Debug: compare fast terrain layer rendered chunk counts with vanilla.");
 		this.throttleGlErrorChecks = bool(file, system, "render.throttleGlErrorChecks", true,
@@ -421,24 +421,24 @@ public final class AlacerConfig {
 			"Wake paulscode sound threads via lock-free parking instead of Thread.sleep and thread interruption.");
 		this.verifyFastSoundThread = bool(file, system, "render.fastSoundThread.verify", false,
 			"Debug: verify sound thread wake timing, lifecycle and interruption handling against expected bounds.");
-		this.cameraHysteresis = bool(file, system, "render.cameraHysteresis", true,
-			"Reuse visibility only when all camera, frustum, storage and compiled-chunk inputs remain exactly unchanged.");
+		this.cameraHysteresis = bool(file, system, "render.cameraHysteresis", false,
+			"Experimental exact-input visibility reuse. Off pending diagnosis of traversal verifier differences.");
 		this.verifyCameraHysteresis = bool(file, system, "render.cameraHysteresis.verify", false,
 			"Debug: compare retained visibility against a fresh vanilla search and use vanilla's result.");
-		this.flatOcclusion = bool(file, system, "render.flatOcclusion", true,
-			"Pack section connectivity flags into a dense 36-bit bitmask per chunk section.");
+		this.flatOcclusion = bool(file, system, "render.flatOcclusion", false,
+			"Experimental packed section connectivity bitmask. Off after qualification found native verifier differences.");
 		this.verifyFlatOcclusion = bool(file, system, "render.flatOcclusion.verify", false,
 			"Debug: also test chunk occlusion via vanilla CompiledChunk.isVisible and log differences.");
 		this.vectorFrustum = bool(file, system, "render.vectorFrustum", true,
 			"Vectorized frustum testing of chunk bounding boxes against the 6 frustum planes.");
 		this.verifyVectorFrustum = bool(file, system, "render.vectorFrustum.verify", false,
 			"Debug: also run vanilla frustum culler and log differences.");
-		this.fastWorkerAo = bool(file, system, "render.fastWorkerAo", true,
-			"Cache chunk block states in thread-local flat memory during chunk compilation and ambient occlusion.");
+		this.fastWorkerAo = bool(file, system, "render.fastWorkerAo", false,
+			"Experimental worker block-state and lighting cache. Off after qualification failed frame-tail and CPU gates.");
 		this.verifyWorkerAo = bool(file, system, "render.fastWorkerAo.verify", false,
 			"Debug: also verify worker block state queries against vanilla chunk lookups.");
-		this.fastModelTransforms = bool(file, system, "render.fastModelTransforms", true,
-			"Skip zero translations in model parts; hierarchy flattening and push/pop removal are not implemented.");
+		this.fastModelTransforms = bool(file, system, "render.fastModelTransforms", false,
+			"Experimental zero-translation skipping in model parts. Off after qualification failed static p99 and CPU gates; no hierarchy flattening or push/pop removal.");
 		this.verifyFastModelTransforms = bool(file, system, "render.fastModelTransforms.verify", false,
 			"Debug: retain vanilla translations and sample raw matrix bits before/after zero translations.");
 		this.fastParticleLight = bool(file, system, "render.fastParticleLight", true,
@@ -572,7 +572,7 @@ public final class AlacerConfig {
 				this.fastCameraSectionFaces = false;
 				this.fastEntityChunkLookup = value;
 				this.fastEntityPipeline = value;
-				this.fastTerrainPipeline = value;
+				this.fastTerrainPipeline = false;
 				this.throttleGlErrorChecks = value;
 				this.avoidMatrixReads = value;
 				this.cacheClouds = value;
@@ -583,11 +583,11 @@ public final class AlacerConfig {
 				this.fastRayTrace = value;
 				this.fastRandomDisplayTicks = value;
 				this.fastSoundThread = value;
-				this.cameraHysteresis = value;
-				this.flatOcclusion = value;
+				this.cameraHysteresis = false;
+				this.flatOcclusion = false;
 				this.vectorFrustum = value;
-				this.fastWorkerAo = value;
-				this.fastModelTransforms = value;
+				this.fastWorkerAo = false;
+				this.fastModelTransforms = false;
 				this.fastParticleLight = value;
 				this.fastMipmaps = value;
 				this.fastParticleRemoval = value;

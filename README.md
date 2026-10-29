@@ -21,6 +21,13 @@ Measured results, including the ideas that did not pay off, are in
 [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) for design notes and
 [CHANGELOG.md](CHANGELOG.md) for release notes.
 
+Qualification follow-up in this checkout: camera visibility reuse, flat occlusion,
+the direct terrain pipeline, worker AO caching and model zero-translation skipping
+now default off and are excluded from the shipped-default benchmark preset and
+Video Settings menu. See the [qualification report](docs/benchmarks/2026-10-29-defaults-qualification/resume-1/README.md).
+Existing config values override changed defaults; set these five keys to false in
+an existing config when updating.
+
 ## Requirements
 
 | | Version |
@@ -246,7 +253,7 @@ Normal launches continue to use saved settings, so an existing explicit `false` 
 | `render.batchModelLists.verify` | `false` | Debug: compare native feedback from vanilla and alternate lists at compilation; reject differing lists. |
 | `render.fastChunkUnpack` | `true` | Vectorized block state unpacking and linear block counter scan during chunk packet handling. |
 | `render.fastChunkUnpack.verify` | `false` | Debug: compare fast chunk unpacking and block counters with vanilla's scalar logic. |
-| `render.fastTerrainPipeline` | `true` | Unified direct single-pass terrain layer rendering and chunk-level layer bitmask filtering. |
+| `render.fastTerrainPipeline` | `false` | Experimental direct terrain layer submission and filtering; off after layer-count verifier differences. |
 | `render.fastTerrainPipeline.verify` | `false` | Debug: compare fast terrain layer rendered chunk counts with vanilla. |
 | `render.fastEntityLighting` | `true` | Answer entity light and brightness queries without BlockPos allocations or chunk hash lookups. |
 | `render.fastEntityLighting.verify` | `false` | Debug: also run vanilla's entity light queries, use their results and log any difference. |
@@ -260,15 +267,15 @@ Normal launches continue to use saved settings, so an existing explicit `false` 
 | `render.fastRandomDisplayTicks.verify` | `false` | Debug: also verify fast display tick block queries against vanilla, logging differences. |
 | `render.fastSoundThread` | `true` | Wake paulscode sound threads via lock-free parking instead of Thread.sleep and thread interruption. |
 | `render.fastSoundThread.verify` | `false` | Debug: verify sound thread wake timing, lifecycle and interruption handling against expected bounds. |
-| `render.cameraHysteresis` | `true` | Reuse visibility only when all camera, frustum, storage and compiled-chunk inputs remain exactly unchanged. |
+| `render.cameraHysteresis` | `false` | Experimental exact-input visibility reuse; off pending diagnosis of traversal verifier differences. |
 | `render.cameraHysteresis.verify` | `false` | Debug: compare retained visibility against a fresh vanilla search and use vanilla's result. |
-| `render.flatOcclusion` | `true` | Pack section connectivity flags into a dense 36-bit bitmask per chunk section. |
+| `render.flatOcclusion` | `false` | Experimental packed section connectivity flags; off after native verifier differences. |
 | `render.flatOcclusion.verify` | `false` | Debug: also test chunk occlusion via vanilla CompiledChunk.isVisible and log differences. |
 | `render.vectorFrustum` | `true` | Vectorized frustum testing of chunk bounding boxes against the 6 frustum planes. |
 | `render.vectorFrustum.verify` | `false` | Debug: also run vanilla frustum culler and log differences. |
-| `render.fastWorkerAo` | `true` | Cache chunk block states in thread-local flat memory during chunk compilation and ambient occlusion. |
+| `render.fastWorkerAo` | `false` | Experimental worker block-state/light caching; off after frame-tail and CPU gate failures. |
 | `render.fastWorkerAo.verify` | `false` | Debug: also verify worker block state queries against vanilla chunk lookups. |
-| `render.fastModelTransforms` | `true` | Skip zero translations in model parts; hierarchy flattening and push/pop removal are not implemented. |
+| `render.fastModelTransforms` | `false` | Experimental zero-translation skipping; off after static p99/CPU gate failures. No hierarchy flattening or push/pop removal. |
 | `render.fastModelTransforms.verify` | `false` | Debug: retain vanilla translations and sample raw matrix bits before/after zero translations. |
 | `render.fastMipmaps` | `true` | Fast LUT-based gamma mipmap generation and parallel sprite downsampling. |
 | `render.fastMipmaps.verify` | `false` | Debug: compare fast mipmap results against vanilla downsampling and log differences. |

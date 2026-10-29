@@ -1,5 +1,13 @@
 # Alacer Performance Roadmap
 
+> **Qualification follow-up (2026-10-28):** the maintainer directed disabling
+> `render.cameraHysteresis`, `render.flatOcclusion`, `render.fastTerrainPipeline`,
+> `render.fastWorkerAo` and `render.fastModelTransforms` by default after the
+> [Java 25 qualification](benchmarks/2026-10-29-defaults-qualification/resume-1/README.md).
+> They are excluded from `render.defaults` and Video Settings; explicit config
+> opt-ins remain for investigation. Vector frustum and mipmaps need Extended
+> evidence. Earlier default-on/status claims below are superseded by this decision.
+
 This roadmap establishes the development priorities and technical specifications for **Alacer** on Minecraft 1.8.9 (Java 25).
 In accordance with [AGENTS.md](../AGENTS.md), every priority and candidate is derived directly from empirical measurements gathered by the in-game profiler, Java Flight Recorder (JFR) sampling, native GPU diagnostics, and reproducible benchmark archives.
 
