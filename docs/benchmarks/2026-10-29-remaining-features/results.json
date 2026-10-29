@@ -1,0 +1,1236 @@
+{
+  "launches": [
+    {
+      "label": "q3-entities",
+      "status": "completed",
+      "exit_code": 0,
+      "duration_s": 49.43771879999986,
+      "jar_sha256": "efb44aa3b583ca0a5a8c6d48089cab44ff7f88973619fc6596a559c257b0d1a2",
+      "master_volume": "0.0",
+      "resource_driver_failed": false,
+      "native_crash": false,
+      "reload_completions": [],
+      "atlas_load_ms": [],
+      "resource_reload_ms": [],
+      "verifier_final_lines": [
+        "[14:26:50] [Client thread/INFO] (Alacer) Model list batch final: 0 lists compiled, 0 face draws -> 0 batched draws, 0 unsupported compilations; 0 native feedback comparisons, 0 floats compared, 0 mismatches, 0 empty comparisons",
+        "[14:26:50] [Client thread/INFO] (Alacer) Camera section faces final: 0 section reads, 0 flood fills, 0 reused answers; 0 compared with vanilla, 0 mismatched",
+        "[14:26:50] [Client thread/INFO] (Alacer) Entity shadow queries final: 0 queries compared, 0 mismatched",
+        "[14:26:50] [Client thread/INFO] (Alacer) Entity lighting queries final: 4254883 queries compared, 0 mismatched",
+        "[14:26:50] [Client thread/INFO] (Alacer) Worker AO verification final: 0 worker block queries, 0 light queries compared, 0 mismatches",
+        "[14:26:50] [Client thread/INFO] (Alacer) Terrain pipeline verification final: 0 layer counts compared, 0 mismatches",
+        "[14:26:50] [Client thread/INFO] (Alacer) Fast mipmaps verification final: 0 sprites, 0 pixels compared, 0 mismatches",
+        "[14:26:50] [Client thread/INFO] (Alacer) Vector frustum verification final: 0 boxes compared, 0 mismatched, 0 outside exact limit",
+        "[14:26:50] [Client thread/INFO] (Alacer) Model zero-translation verification final: 0 zero translations compared, 0 changed the matrix",
+        "[14:26:50] [Client thread/INFO] (Alacer) Ray trace verification final: 34358 traces, 0 mismatches",
+        "[14:26:50] [Client thread/INFO] (Alacer) Ambient tick verification final: 755 ticks, 264292 blocks, 0 mismatches",
+        "[14:26:50] [Client thread/INFO] (Alacer) Entity culling verification final: 6467684 tested, 0 mismatches",
+        "[14:26:50] [Client thread/INFO] (Alacer) Entity renderer cache final: 14324497 queries, 14320727 hits, 0 mismatches",
+        "[14:26:50] [Client thread/INFO] (Alacer) Flat occlusion verification final: 0 mask hits, 0 updates, 0 mismatches",
+        "[14:26:50] [Client thread/INFO] (Alacer) Shadow position reuse final: 0 positions compared, 0 mismatched",
+        "[14:26:50] [Client thread/INFO] (Alacer) Particle light queries final: 0 queries compared, 0 mismatched",
+        "[14:26:50] [Client thread/INFO] (Alacer) Particle removal final: 0 removals compared (0 particles removed, 0 vanilla fallbacks), 0 mismatched",
+        "[14:26:50] [Client thread/INFO] (Alacer) Particle vertices final: 0 elements compared (0 complete vertices, 0 incomplete, 0 vanilla vertices, 0/0 passes with another layout), 0 mismatched",
+        "[14:26:50] [Client thread/INFO] (Alacer) Particle light entry final: 0 chunk checks compared (0 not loaded), 0 mismatched; 0 positions compared, 0 mismatched",
+        "[14:26:50] [Client thread/INFO] (Alacer) Particle light reuse final: 0 passes, 0 reused, 0 computed (0 not stored); 0 queries compared (0 reused), 0 mismatched",
+        "[14:26:50] [Client thread/INFO] (Alacer) Particle movement final: 0 block reads compared, 0 mismatched",
+        "[14:26:50] [Client thread/INFO] (Alacer) Particle entity query final: 0 compared, 0 mismatched, 0 scalar queries, 0 chunk fallbacks, 0 shape fallbacks",
+        "[14:26:50] [Client thread/INFO] (Alacer) Particle boxes final: 0 compared, 0 reused, 0 mismatched",
+        "[14:26:50] [Client thread/INFO] (Alacer) Chunk frustum verification final: 0 boxes compared, 0 mismatched, 0 answered by vanilla's test (outside the exact range)"
+      ],
+      "functional_error_lines": [],
+      "startup_error_lines": [
+        "2026-10-29 14:26:04,378 main ERROR Error processing element Queue ([Appenders: null]): CLASS_NOT_FOUND",
+        "2026-10-29 14:26:04,519 main ERROR Unable to locate appender \"ServerGuiConsole\" for logger config \"root\"",
+        "[14:26:07] [Client thread/ERROR] (Minecraft) Couldn't initialize twitch stream",
+        "java.lang.ClassNotFoundException: com.mojang.realmsclient.gui.screens.RealmsNotificationsScreen",
+        "java.lang.ClassNotFoundException: com.mojang.realmsclient.gui.screens.RealmsNotificationsScreen"
+      ],
+      "phases": {
+        "static": {
+          "frames": 3337,
+          "dropped_frames": 0,
+          "entities": 209
+        },
+        "pan": {
+          "frames": 3085,
+          "dropped_frames": 0,
+          "entities": 209
+        },
+        "fly": {
+          "frames": 9304,
+          "dropped_frames": 0,
+          "entities": 209
+        }
+      },
+      "runtime": {
+        "java.version": "25.0.4.1",
+        "java.home": "C:\\Program Files\\Eclipse Adoptium\\jdk-25.0.4.101-hotspot",
+        "cpu": "20x 12th Gen Intel(R) Core(TM) i7-12700F",
+        "modernGl.forcedFallback": "false",
+        "modernGl.terrainShaderRequested": "false",
+        "modernGl.terrainShaderActive": "false",
+        "modernGl.terrainShaderAttribBinding": "false",
+        "modernGl.vaoSupported": "true",
+        "modernGl.dsaSupported": "true",
+        "modernGl.vaosCreated": "0",
+        "modernGl.vaosDeleted": "0",
+        "modernGl.vaoBinds": "0",
+        "modernGl.pointerSetups": "0",
+        "modernGl.vaoChecks": "0",
+        "modernGl.vaoFailures": "0",
+        "modernGl.decoupledDraws": "0",
+        "modernGl.fallbackDraws": "0",
+        "modernGl.namedCreates": "0",
+        "modernGl.namedUploads": "0",
+        "modernGl.uploadChecks": "0",
+        "modernGl.uploadBytesCompared": "0",
+        "modernGl.uploadFailures": "0",
+        "modernGl.contextDrops": "0",
+        "chunkNeighbours.verification": "0 compared, 0 mismatches, 0 indexed lookups",
+        "window": "1280x720"
+      },
+      "screenshots": [
+        "runs\\20261029-142650-q3-entities-vis_on-ecl_on-ent200\\alacer-q3-entities-vis_on-ecl_on-ent200-fly.png",
+        "runs\\20261029-142650-q3-entities-vis_on-ecl_on-ent200\\alacer-q3-entities-vis_on-ecl_on-ent200-pan.png",
+        "runs\\20261029-142650-q3-entities-vis_on-ecl_on-ent200\\alacer-q3-entities-vis_on-ecl_on-ent200-static.png"
+      ]
+    },
+    {
+      "label": "q3-mdi-fallback",
+      "status": "failed",
+      "exit_code": 1,
+      "duration_s": 11.765250400000241,
+      "jar_sha256": "efb44aa3b583ca0a5a8c6d48089cab44ff7f88973619fc6596a559c257b0d1a2",
+      "master_volume": "0.0",
+      "resource_driver_failed": false,
+      "native_crash": true,
+      "reload_completions": [],
+      "atlas_load_ms": [],
+      "resource_reload_ms": [],
+      "verifier_final_lines": [],
+      "functional_error_lines": [
+        "#  EXCEPTION_ACCESS_VIOLATION (0xc0000005) at pc=0x000001b4e4ddfa46, pid=9364, tid=33140"
+      ],
+      "startup_error_lines": [
+        "2026-10-29 14:38:27,082 main ERROR Error processing element Queue ([Appenders: null]): CLASS_NOT_FOUND",
+        "2026-10-29 14:38:27,221 main ERROR Unable to locate appender \"ServerGuiConsole\" for logger config \"root\"",
+        "[14:38:31] [Client thread/ERROR] (Minecraft) Couldn't initialize twitch stream",
+        "java.lang.ClassNotFoundException: com.mojang.realmsclient.gui.screens.RealmsNotificationsScreen",
+        "java.lang.ClassNotFoundException: com.mojang.realmsclient.gui.screens.RealmsNotificationsScreen"
+      ],
+      "final_observer_snapshot": "2026-10-29T21:38:36.601916700Z\nFastEntityPipeline.verificationSummary=0 passes compared, 0 mismatched\nMultiDrawIndirect.verifyMismatches=0\nMultiDrawIndirect.verifiedCommands=0\nMultiDrawIndirect.commandsGenerated=0\nMultiDrawIndirect.batchesSubmitted=0\nFastSoundThread.snoozes=8\nFastSoundThread.interruptionsAvoided=6\nFastSoundThread.verifyMismatches=0\nFastSoundThread.verifiedSnoozes=0"
+    },
+    {
+      "label": "q3-mdi",
+      "status": "completed",
+      "exit_code": 0,
+      "duration_s": 47.199440200000026,
+      "jar_sha256": "efb44aa3b583ca0a5a8c6d48089cab44ff7f88973619fc6596a559c257b0d1a2",
+      "master_volume": "0.0",
+      "resource_driver_failed": false,
+      "native_crash": false,
+      "reload_completions": [],
+      "atlas_load_ms": [],
+      "resource_reload_ms": [],
+      "verifier_final_lines": [
+        "[14:30:23] [Client thread/INFO] (Alacer) Model list batch final: 0 lists compiled, 0 face draws -> 0 batched draws, 0 unsupported compilations; 0 native feedback comparisons, 0 floats compared, 0 mismatches, 0 empty comparisons",
+        "[14:30:23] [Client thread/INFO] (Alacer) Camera section faces final: 0 section reads, 0 flood fills, 0 reused answers; 0 compared with vanilla, 0 mismatched",
+        "[14:30:23] [Client thread/INFO] (Alacer) Entity shadow queries final: 0 queries compared, 0 mismatched",
+        "[14:30:23] [Client thread/INFO] (Alacer) Entity lighting queries final: 0 queries compared, 0 mismatched",
+        "[14:30:23] [Client thread/INFO] (Alacer) Worker AO verification final: 0 worker block queries, 0 light queries compared, 0 mismatches",
+        "[14:30:23] [Client thread/INFO] (Alacer) Terrain pipeline verification final: 0 layer counts compared, 0 mismatches",
+        "[14:30:23] [Client thread/INFO] (Alacer) Fast mipmaps verification final: 0 sprites, 0 pixels compared, 0 mismatches",
+        "[14:30:23] [Client thread/INFO] (Alacer) Vector frustum verification final: 0 boxes compared, 0 mismatched, 0 outside exact limit",
+        "[14:30:23] [Client thread/INFO] (Alacer) Model zero-translation verification final: 0 zero translations compared, 0 changed the matrix",
+        "[14:30:23] [Client thread/INFO] (Alacer) Ray trace verification final: 30269 traces, 0 mismatches",
+        "[14:30:23] [Client thread/INFO] (Alacer) Ambient tick verification final: 731 ticks, 251837 blocks, 0 mismatches",
+        "[14:30:23] [Client thread/INFO] (Alacer) Entity culling verification final: 103067 tested, 0 mismatches",
+        "[14:30:23] [Client thread/INFO] (Alacer) Entity renderer cache final: 76981 queries, 76979 hits, 0 mismatches",
+        "[14:30:23] [Client thread/INFO] (Alacer) Flat occlusion verification final: 0 mask hits, 0 updates, 0 mismatches",
+        "[14:30:23] [Client thread/INFO] (Alacer) Shadow position reuse final: 0 positions compared, 0 mismatched",
+        "[14:30:23] [Client thread/INFO] (Alacer) Particle light queries final: 0 queries compared, 0 mismatched",
+        "[14:30:23] [Client thread/INFO] (Alacer) Particle removal final: 0 removals compared (0 particles removed, 0 vanilla fallbacks), 0 mismatched",
+        "[14:30:23] [Client thread/INFO] (Alacer) Particle vertices final: 0 elements compared (0 complete vertices, 0 incomplete, 0 vanilla vertices, 0/0 passes with another layout), 0 mismatched",
+        "[14:30:23] [Client thread/INFO] (Alacer) Particle light entry final: 0 chunk checks compared (0 not loaded), 0 mismatched; 0 positions compared, 0 mismatched",
+        "[14:30:23] [Client thread/INFO] (Alacer) Particle light reuse final: 0 passes, 0 reused, 0 computed (0 not stored); 0 queries compared (0 reused), 0 mismatched",
+        "[14:30:23] [Client thread/INFO] (Alacer) Particle movement final: 0 block reads compared, 0 mismatched",
+        "[14:30:23] [Client thread/INFO] (Alacer) Particle entity query final: 0 compared, 0 mismatched, 0 scalar queries, 0 chunk fallbacks, 0 shape fallbacks",
+        "[14:30:23] [Client thread/INFO] (Alacer) Particle boxes final: 0 compared, 0 reused, 0 mismatched",
+        "[14:30:23] [Client thread/INFO] (Alacer) Chunk frustum verification final: 0 boxes compared, 0 mismatched, 0 answered by vanilla's test (outside the exact range)"
+      ],
+      "functional_error_lines": [],
+      "startup_error_lines": [
+        "2026-10-29 14:29:39,064 main ERROR Error processing element Queue ([Appenders: null]): CLASS_NOT_FOUND",
+        "2026-10-29 14:29:39,183 main ERROR Unable to locate appender \"ServerGuiConsole\" for logger config \"root\"",
+        "[14:29:42] [Client thread/ERROR] (Minecraft) Couldn't initialize twitch stream",
+        "java.lang.ClassNotFoundException: com.mojang.realmsclient.gui.screens.RealmsNotificationsScreen",
+        "java.lang.ClassNotFoundException: com.mojang.realmsclient.gui.screens.RealmsNotificationsScreen"
+      ],
+      "final_observer_snapshot": "2026-10-29T21:30:24.275332500Z\nFastEntityPipeline.verificationSummary=0 passes compared, 0 mismatched\nMultiDrawIndirect.batchesSubmitted=5190068\nMultiDrawIndirect.commandsGenerated=5190068\nMultiDrawIndirect.verifiedCommands=19508294\nMultiDrawIndirect.verifyMismatches=0\nFastSoundThread.snoozes=30181\nFastSoundThread.verifyMismatches=0\nFastSoundThread.interruptionsAvoided=30181\nFastSoundThread.verifiedSnoozes=0",
+      "phases": {
+        "static": {
+          "frames": 3676,
+          "dropped_frames": 0,
+          "entities": 8
+        },
+        "pan": {
+          "frames": 2888,
+          "dropped_frames": 0,
+          "entities": 8
+        },
+        "fly": {
+          "frames": 4306,
+          "dropped_frames": 0,
+          "entities": 8
+        }
+      },
+      "runtime": {
+        "java.version": "25.0.4.1",
+        "java.home": "C:\\Program Files\\Eclipse Adoptium\\jdk-25.0.4.101-hotspot",
+        "cpu": "20x 12th Gen Intel(R) Core(TM) i7-12700F",
+        "modernGl.forcedFallback": "false",
+        "modernGl.terrainShaderRequested": "true",
+        "modernGl.terrainShaderActive": "true",
+        "modernGl.terrainShaderAttribBinding": "true",
+        "modernGl.vaoSupported": "true",
+        "modernGl.dsaSupported": "true",
+        "modernGl.vaosCreated": "0",
+        "modernGl.vaosDeleted": "0",
+        "modernGl.vaoBinds": "0",
+        "modernGl.pointerSetups": "0",
+        "modernGl.vaoChecks": "0",
+        "modernGl.vaoFailures": "0",
+        "modernGl.decoupledDraws": "19507493",
+        "modernGl.fallbackDraws": "0",
+        "modernGl.namedCreates": "0",
+        "modernGl.namedUploads": "0",
+        "modernGl.uploadChecks": "0",
+        "modernGl.uploadBytesCompared": "0",
+        "modernGl.uploadFailures": "0",
+        "modernGl.contextDrops": "0",
+        "chunkNeighbours.verification": "40849075 compared, 0 mismatches, 40849075 indexed lookups",
+        "window": "1280x720"
+      },
+      "screenshots": [
+        "runs\\20261029-143023-q3-mdi-vis_on-ecl_on-ent0\\alacer-q3-mdi-vis_on-ecl_on-ent0-fly.png",
+        "runs\\20261029-143023-q3-mdi-vis_on-ecl_on-ent0\\alacer-q3-mdi-vis_on-ecl_on-ent0-pan.png",
+        "runs\\20261029-143023-q3-mdi-vis_on-ecl_on-ent0\\alacer-q3-mdi-vis_on-ecl_on-ent0-static.png"
+      ]
+    },
+    {
+      "label": "q3-modern-gl",
+      "status": "completed",
+      "exit_code": 0,
+      "duration_s": 48.53446250000002,
+      "jar_sha256": "efb44aa3b583ca0a5a8c6d48089cab44ff7f88973619fc6596a559c257b0d1a2",
+      "master_volume": "0.0",
+      "resource_driver_failed": false,
+      "native_crash": false,
+      "reload_completions": [],
+      "atlas_load_ms": [],
+      "resource_reload_ms": [],
+      "verifier_final_lines": [
+        "[14:29:14] [Client thread/INFO] (Alacer) Model list batch final: 0 lists compiled, 0 face draws -> 0 batched draws, 0 unsupported compilations; 0 native feedback comparisons, 0 floats compared, 0 mismatches, 0 empty comparisons",
+        "[14:29:14] [Client thread/INFO] (Alacer) Camera section faces final: 0 section reads, 0 flood fills, 0 reused answers; 0 compared with vanilla, 0 mismatched",
+        "[14:29:14] [Client thread/INFO] (Alacer) Entity shadow queries final: 0 queries compared, 0 mismatched",
+        "[14:29:14] [Client thread/INFO] (Alacer) Entity lighting queries final: 0 queries compared, 0 mismatched",
+        "[14:29:14] [Client thread/INFO] (Alacer) Worker AO verification final: 0 worker block queries, 0 light queries compared, 0 mismatches",
+        "[14:29:14] [Client thread/INFO] (Alacer) Terrain pipeline verification final: 0 layer counts compared, 0 mismatches",
+        "[14:29:14] [Client thread/INFO] (Alacer) Fast mipmaps verification final: 0 sprites, 0 pixels compared, 0 mismatches",
+        "[14:29:14] [Client thread/INFO] (Alacer) Vector frustum verification final: 0 boxes compared, 0 mismatched, 0 outside exact limit",
+        "[14:29:14] [Client thread/INFO] (Alacer) Model zero-translation verification final: 0 zero translations compared, 0 changed the matrix",
+        "[14:29:14] [Client thread/INFO] (Alacer) Ray trace verification final: 56554 traces, 0 mismatches",
+        "[14:29:14] [Client thread/INFO] (Alacer) Ambient tick verification final: 730 ticks, 250915 blocks, 0 mismatches",
+        "[14:29:14] [Client thread/INFO] (Alacer) Entity culling verification final: 234805 tested, 0 mismatches",
+        "[14:29:14] [Client thread/INFO] (Alacer) Entity renderer cache final: 186126 queries, 186124 hits, 0 mismatches",
+        "[14:29:14] [Client thread/INFO] (Alacer) Flat occlusion verification final: 0 mask hits, 0 updates, 0 mismatches",
+        "[14:29:14] [Client thread/INFO] (Alacer) Shadow position reuse final: 0 positions compared, 0 mismatched",
+        "[14:29:14] [Client thread/INFO] (Alacer) Particle light queries final: 0 queries compared, 0 mismatched",
+        "[14:29:14] [Client thread/INFO] (Alacer) Particle removal final: 0 removals compared (0 particles removed, 0 vanilla fallbacks), 0 mismatched",
+        "[14:29:14] [Client thread/INFO] (Alacer) Particle vertices final: 0 elements compared (0 complete vertices, 0 incomplete, 0 vanilla vertices, 0/0 passes with another layout), 0 mismatched",
+        "[14:29:14] [Client thread/INFO] (Alacer) Particle light entry final: 0 chunk checks compared (0 not loaded), 0 mismatched; 0 positions compared, 0 mismatched",
+        "[14:29:14] [Client thread/INFO] (Alacer) Particle light reuse final: 0 passes, 0 reused, 0 computed (0 not stored); 0 queries compared (0 reused), 0 mismatched",
+        "[14:29:14] [Client thread/INFO] (Alacer) Particle movement final: 0 block reads compared, 0 mismatched",
+        "[14:29:14] [Client thread/INFO] (Alacer) Particle entity query final: 0 compared, 0 mismatched, 0 scalar queries, 0 chunk fallbacks, 0 shape fallbacks",
+        "[14:29:14] [Client thread/INFO] (Alacer) Particle boxes final: 0 compared, 0 reused, 0 mismatched",
+        "[14:29:14] [Client thread/INFO] (Alacer) Chunk frustum verification final: 0 boxes compared, 0 mismatched, 0 answered by vanilla's test (outside the exact range)"
+      ],
+      "functional_error_lines": [],
+      "startup_error_lines": [
+        "2026-10-29 14:28:28,493 main ERROR Error processing element Queue ([Appenders: null]): CLASS_NOT_FOUND",
+        "2026-10-29 14:28:28,623 main ERROR Unable to locate appender \"ServerGuiConsole\" for logger config \"root\"",
+        "[14:28:32] [Client thread/ERROR] (Minecraft) Couldn't initialize twitch stream",
+        "java.lang.ClassNotFoundException: com.mojang.realmsclient.gui.screens.RealmsNotificationsScreen",
+        "java.lang.ClassNotFoundException: com.mojang.realmsclient.gui.screens.RealmsNotificationsScreen"
+      ],
+      "final_observer_snapshot": "2026-10-29T21:29:14.605375300Z\nFastEntityPipeline.verificationSummary=0 passes compared, 0 mismatched\nMultiDrawIndirect.verifyMismatches=0\nMultiDrawIndirect.verifiedCommands=0\nMultiDrawIndirect.batchesSubmitted=0\nMultiDrawIndirect.commandsGenerated=0\nFastSoundThread.snoozes=56203\nFastSoundThread.interruptionsAvoided=56203\nFastSoundThread.verifiedSnoozes=0\nFastSoundThread.verifyMismatches=0",
+      "phases": {
+        "static": {
+          "frames": 7655,
+          "dropped_frames": 0,
+          "entities": 9
+        },
+        "pan": {
+          "frames": 4914,
+          "dropped_frames": 0,
+          "entities": 9
+        },
+        "fly": {
+          "frames": 9476,
+          "dropped_frames": 0,
+          "entities": 9
+        }
+      },
+      "runtime": {
+        "java.version": "25.0.4.1",
+        "java.home": "C:\\Program Files\\Eclipse Adoptium\\jdk-25.0.4.101-hotspot",
+        "cpu": "20x 12th Gen Intel(R) Core(TM) i7-12700F",
+        "modernGl.forcedFallback": "false",
+        "modernGl.terrainShaderRequested": "true",
+        "modernGl.terrainShaderActive": "true",
+        "modernGl.terrainShaderAttribBinding": "true",
+        "modernGl.vaoSupported": "true",
+        "modernGl.dsaSupported": "true",
+        "modernGl.vaosCreated": "0",
+        "modernGl.vaosDeleted": "0",
+        "modernGl.vaoBinds": "0",
+        "modernGl.pointerSetups": "0",
+        "modernGl.vaoChecks": "0",
+        "modernGl.vaoFailures": "0",
+        "modernGl.decoupledDraws": "37694436",
+        "modernGl.fallbackDraws": "0",
+        "modernGl.namedCreates": "40003",
+        "modernGl.namedUploads": "6833",
+        "modernGl.uploadChecks": "6833",
+        "modernGl.uploadBytesCompared": "207723840",
+        "modernGl.uploadFailures": "0",
+        "modernGl.contextDrops": "0",
+        "chunkNeighbours.verification": "0 compared, 0 mismatches, 0 indexed lookups",
+        "window": "1280x720"
+      },
+      "screenshots": [
+        "runs\\20261029-142914-q3-modern-gl-vis_on-ecl_on-ent0\\alacer-q3-modern-gl-vis_on-ecl_on-ent0-fly.png",
+        "runs\\20261029-142914-q3-modern-gl-vis_on-ecl_on-ent0\\alacer-q3-modern-gl-vis_on-ecl_on-ent0-pan.png",
+        "runs\\20261029-142914-q3-modern-gl-vis_on-ecl_on-ent0\\alacer-q3-modern-gl-vis_on-ecl_on-ent0-static.png"
+      ]
+    },
+    {
+      "label": "q3-particles",
+      "status": "completed",
+      "exit_code": 0,
+      "duration_s": 39.88140920000001,
+      "jar_sha256": "efb44aa3b583ca0a5a8c6d48089cab44ff7f88973619fc6596a559c257b0d1a2",
+      "master_volume": "0.0",
+      "resource_driver_failed": false,
+      "native_crash": false,
+      "reload_completions": [],
+      "atlas_load_ms": [],
+      "resource_reload_ms": [],
+      "verifier_final_lines": [
+        "[14:31:10] [Client thread/INFO] (Alacer) Model list batch final: 0 lists compiled, 0 face draws -> 0 batched draws, 0 unsupported compilations; 0 native feedback comparisons, 0 floats compared, 0 mismatches, 0 empty comparisons",
+        "[14:31:10] [Client thread/INFO] (Alacer) Camera section faces final: 0 section reads, 0 flood fills, 0 reused answers; 0 compared with vanilla, 0 mismatched",
+        "[14:31:10] [Client thread/INFO] (Alacer) Entity shadow queries final: 0 queries compared, 0 mismatched",
+        "[14:31:10] [Client thread/INFO] (Alacer) Entity lighting queries final: 0 queries compared, 0 mismatched",
+        "[14:31:10] [Client thread/INFO] (Alacer) Worker AO verification final: 0 worker block queries, 0 light queries compared, 0 mismatches",
+        "[14:31:10] [Client thread/INFO] (Alacer) Terrain pipeline verification final: 0 layer counts compared, 0 mismatches",
+        "[14:31:10] [Client thread/INFO] (Alacer) Fast mipmaps verification final: 0 sprites, 0 pixels compared, 0 mismatches",
+        "[14:31:10] [Client thread/INFO] (Alacer) Vector frustum verification final: 0 boxes compared, 0 mismatched, 0 outside exact limit",
+        "[14:31:10] [Client thread/INFO] (Alacer) Model zero-translation verification final: 0 zero translations compared, 0 changed the matrix",
+        "[14:31:10] [Client thread/INFO] (Alacer) Ray trace verification final: 10192 traces, 0 mismatches",
+        "[14:31:10] [Client thread/INFO] (Alacer) Ambient tick verification final: 573 ticks, 273294 blocks, 0 mismatches",
+        "[14:31:10] [Client thread/INFO] (Alacer) Entity culling verification final: 39200 tested, 0 mismatches",
+        "[14:31:10] [Client thread/INFO] (Alacer) Entity renderer cache final: 30992 queries, 30991 hits, 0 mismatches",
+        "[14:31:10] [Client thread/INFO] (Alacer) Flat occlusion verification final: 0 mask hits, 0 updates, 0 mismatches",
+        "[14:31:10] [Client thread/INFO] (Alacer) Shadow position reuse final: 0 positions compared, 0 mismatched",
+        "[14:31:10] [Client thread/INFO] (Alacer) Particle light queries final: 33692864 queries compared, 0 mismatched",
+        "[14:31:10] [Client thread/INFO] (Alacer) Particle removal final: 4584 removals compared (101434 particles removed, 47 vanilla fallbacks), 0 mismatched",
+        "[14:31:10] [Client thread/INFO] (Alacer) Particle vertices final: 447373568 elements compared (111843392 complete vertices, 0 incomplete, 0 vanilla vertices, 0/9619 passes with another layout), 0 mismatched",
+        "[14:31:10] [Client thread/INFO] (Alacer) Particle light entry final: 0 chunk checks compared (0 not loaded), 0 mismatched; 0 positions compared, 0 mismatched",
+        "[14:31:10] [Client thread/INFO] (Alacer) Particle light reuse final: 0 passes, 0 reused, 0 computed (0 not stored); 0 queries compared (0 reused), 0 mismatched",
+        "[14:31:10] [Client thread/INFO] (Alacer) Particle movement final: 0 block reads compared, 0 mismatched",
+        "[14:31:10] [Client thread/INFO] (Alacer) Particle entity query final: 0 compared, 0 mismatched, 0 scalar queries, 0 chunk fallbacks, 0 shape fallbacks",
+        "[14:31:10] [Client thread/INFO] (Alacer) Particle boxes final: 0 compared, 0 reused, 0 mismatched",
+        "[14:31:10] [Client thread/INFO] (Alacer) Chunk frustum verification final: 0 boxes compared, 0 mismatched, 0 answered by vanilla's test (outside the exact range)"
+      ],
+      "functional_error_lines": [],
+      "startup_error_lines": [
+        "2026-10-29 14:30:33,364 main ERROR Error processing element Queue ([Appenders: null]): CLASS_NOT_FOUND",
+        "2026-10-29 14:30:33,485 main ERROR Unable to locate appender \"ServerGuiConsole\" for logger config \"root\"",
+        "[14:30:36] [Client thread/ERROR] (Minecraft) Couldn't initialize twitch stream",
+        "java.lang.ClassNotFoundException: com.mojang.realmsclient.gui.screens.RealmsNotificationsScreen",
+        "java.lang.ClassNotFoundException: com.mojang.realmsclient.gui.screens.RealmsNotificationsScreen"
+      ],
+      "final_observer_snapshot": "2026-10-29T21:31:10.867946300Z\nFastEntityPipeline.verificationSummary=0 passes compared, 0 mismatched\nFastSoundThread.verifyMismatches=0\nFastSoundThread.snoozes=9701\nFastSoundThread.verifiedSnoozes=0\nFastSoundThread.interruptionsAvoided=9701",
+      "phases": {
+        "static": {
+          "frames": 729,
+          "dropped_frames": 0,
+          "entities": 9
+        },
+        "pan": {
+          "frames": 864,
+          "dropped_frames": 0,
+          "entities": 9
+        }
+      },
+      "runtime": {
+        "java.version": "25.0.4.1",
+        "java.home": "C:\\Program Files\\Eclipse Adoptium\\jdk-25.0.4.101-hotspot",
+        "cpu": "20x 12th Gen Intel(R) Core(TM) i7-12700F",
+        "modernGl.forcedFallback": "false",
+        "modernGl.terrainShaderRequested": "false",
+        "modernGl.terrainShaderActive": "false",
+        "modernGl.terrainShaderAttribBinding": "false",
+        "modernGl.vaoSupported": "true",
+        "modernGl.dsaSupported": "true",
+        "modernGl.vaosCreated": "0",
+        "modernGl.vaosDeleted": "0",
+        "modernGl.vaoBinds": "0",
+        "modernGl.pointerSetups": "0",
+        "modernGl.vaoChecks": "0",
+        "modernGl.vaoFailures": "0",
+        "modernGl.decoupledDraws": "0",
+        "modernGl.fallbackDraws": "0",
+        "modernGl.namedCreates": "0",
+        "modernGl.namedUploads": "0",
+        "modernGl.uploadChecks": "0",
+        "modernGl.uploadBytesCompared": "0",
+        "modernGl.uploadFailures": "0",
+        "modernGl.contextDrops": "0",
+        "chunkNeighbours.verification": "0 compared, 0 mismatches, 0 indexed lookups",
+        "window": "1280x720"
+      },
+      "screenshots": [
+        "runs\\20261029-143110-q3-particles-vis_on-ecl_on-ent0\\alacer-q3-particles-vis_on-ecl_on-ent0-pan.png",
+        "runs\\20261029-143110-q3-particles-vis_on-ecl_on-ent0\\alacer-q3-particles-vis_on-ecl_on-ent0-static.png"
+      ]
+    },
+    {
+      "label": "q3-production-jar",
+      "status": "failed",
+      "exit_code": 1,
+      "duration_s": 75.31107909999992,
+      "jar_sha256": "efb44aa3b583ca0a5a8c6d48089cab44ff7f88973619fc6596a559c257b0d1a2",
+      "master_volume": "0.0",
+      "resource_driver_failed": false,
+      "native_crash": false,
+      "reload_completions": [],
+      "atlas_load_ms": [],
+      "resource_reload_ms": [],
+      "verifier_final_lines": [],
+      "functional_error_lines": [
+        "Caused by: net.fabricmc.loader.impl.lib.classtweaker.reader.ClassTweakerFormatException: Namespace (intermediary) does not match current runtime namespace (official)"
+      ],
+      "startup_error_lines": []
+    },
+    {
+      "label": "q3-reload-1",
+      "status": "completed",
+      "exit_code": 0,
+      "duration_s": 77.9400647,
+      "jar_sha256": "efb44aa3b583ca0a5a8c6d48089cab44ff7f88973619fc6596a559c257b0d1a2",
+      "master_volume": "0.0",
+      "resource_driver_failed": true,
+      "native_crash": false,
+      "reload_completions": [],
+      "atlas_load_ms": [
+        229.2187
+      ],
+      "resource_reload_ms": [
+        123.4191
+      ],
+      "verifier_final_lines": [
+        "[14:32:44] [Client thread/INFO] (Alacer) Model list batch final: 0 lists compiled, 0 face draws -> 0 batched draws, 0 unsupported compilations; 0 native feedback comparisons, 0 floats compared, 0 mismatches, 0 empty comparisons",
+        "[14:32:44] [Client thread/INFO] (Alacer) Camera section faces final: 0 section reads, 0 flood fills, 0 reused answers; 0 compared with vanilla, 0 mismatched",
+        "[14:32:44] [Client thread/INFO] (Alacer) Entity shadow queries final: 0 queries compared, 0 mismatched",
+        "[14:32:44] [Client thread/INFO] (Alacer) Entity lighting queries final: 0 queries compared, 0 mismatched",
+        "[14:32:44] [Client thread/INFO] (Alacer) Worker AO verification final: 0 worker block queries, 0 light queries compared, 0 mismatches",
+        "[14:32:44] [Client thread/INFO] (Alacer) Terrain pipeline verification final: 0 layer counts compared, 0 mismatches",
+        "[14:32:44] [Client thread/INFO] (Alacer) Fast mipmaps verification final: 0 sprites, 0 pixels compared, 0 mismatches",
+        "[14:32:44] [Client thread/INFO] (Alacer) Vector frustum verification final: 0 boxes compared, 0 mismatched, 0 outside exact limit",
+        "[14:32:44] [Client thread/INFO] (Alacer) Model zero-translation verification final: 0 zero translations compared, 0 changed the matrix",
+        "[14:32:44] [Client thread/INFO] (Alacer) Ray trace verification final: 64807 traces, 0 mismatches",
+        "[14:32:44] [Client thread/INFO] (Alacer) Ambient tick verification final: 1326 ticks, 436685 blocks, 0 mismatches",
+        "[14:32:44] [Client thread/INFO] (Alacer) Entity culling verification final: 262470 tested, 0 mismatches",
+        "[14:32:44] [Client thread/INFO] (Alacer) Entity renderer cache final: 210143 queries, 210141 hits, 0 mismatches",
+        "[14:32:44] [Client thread/INFO] (Alacer) Flat occlusion verification final: 0 mask hits, 0 updates, 0 mismatches",
+        "[14:32:44] [Client thread/INFO] (Alacer) Shadow position reuse final: 0 positions compared, 0 mismatched",
+        "[14:32:44] [Client thread/INFO] (Alacer) Particle light queries final: 0 queries compared, 0 mismatched",
+        "[14:32:44] [Client thread/INFO] (Alacer) Particle removal final: 0 removals compared (0 particles removed, 0 vanilla fallbacks), 0 mismatched",
+        "[14:32:44] [Client thread/INFO] (Alacer) Particle vertices final: 0 elements compared (0 complete vertices, 0 incomplete, 0 vanilla vertices, 0/0 passes with another layout), 0 mismatched",
+        "[14:32:44] [Client thread/INFO] (Alacer) Particle light entry final: 0 chunk checks compared (0 not loaded), 0 mismatched; 0 positions compared, 0 mismatched",
+        "[14:32:44] [Client thread/INFO] (Alacer) Particle light reuse final: 0 passes, 0 reused, 0 computed (0 not stored); 0 queries compared (0 reused), 0 mismatched",
+        "[14:32:44] [Client thread/INFO] (Alacer) Particle movement final: 0 block reads compared, 0 mismatched",
+        "[14:32:44] [Client thread/INFO] (Alacer) Particle entity query final: 0 compared, 0 mismatched, 0 scalar queries, 0 chunk fallbacks, 0 shape fallbacks",
+        "[14:32:44] [Client thread/INFO] (Alacer) Particle boxes final: 0 compared, 0 reused, 0 mismatched",
+        "[14:32:44] [Client thread/INFO] (Alacer) Chunk frustum verification final: 0 boxes compared, 0 mismatched, 0 answered by vanilla's test (outside the exact range)"
+      ],
+      "functional_error_lines": [],
+      "startup_error_lines": [
+        "2026-10-29 14:31:29,115 main ERROR Error processing element Queue ([Appenders: null]): CLASS_NOT_FOUND",
+        "2026-10-29 14:31:29,232 main ERROR Unable to locate appender \"ServerGuiConsole\" for logger config \"root\"",
+        "[14:31:33] [Client thread/ERROR] (Minecraft) Couldn't initialize twitch stream",
+        "java.lang.ClassNotFoundException: com.mojang.realmsclient.gui.screens.RealmsNotificationsScreen",
+        "java.lang.ClassNotFoundException: com.mojang.realmsclient.gui.screens.RealmsNotificationsScreen",
+        "2026-10-29 14:32:03,694 followup-resource-driver ERROR Error processing element Queue ([Appenders: null]): CLASS_NOT_FOUND",
+        "2026-10-29 14:32:03,759 followup-resource-driver ERROR Unable to locate appender \"ServerGuiConsole\" for logger config \"root\""
+      ],
+      "final_observer_snapshot": "2026-10-29T21:32:44.993420800Z\nFastEntityPipeline.verificationSummary=0 passes compared, 0 mismatched\nFastSoundThread.snoozes=65391\nFastSoundThread.verifiedSnoozes=0\nFastSoundThread.interruptionsAvoided=65391\nFastSoundThread.verifyMismatches=0",
+      "phases": {
+        "static": {
+          "frames": 12397,
+          "dropped_frames": 0,
+          "entities": 9
+        },
+        "pan": {
+          "frames": 11837,
+          "dropped_frames": 0,
+          "entities": 9
+        },
+        "fly": {
+          "frames": 16608,
+          "dropped_frames": 0,
+          "entities": 9
+        }
+      },
+      "runtime": {
+        "java.version": "25.0.4.1",
+        "java.home": "C:\\Program Files\\Eclipse Adoptium\\jdk-25.0.4.101-hotspot",
+        "cpu": "20x 12th Gen Intel(R) Core(TM) i7-12700F",
+        "modernGl.forcedFallback": "false",
+        "modernGl.terrainShaderRequested": "false",
+        "modernGl.terrainShaderActive": "false",
+        "modernGl.terrainShaderAttribBinding": "false",
+        "modernGl.vaoSupported": "true",
+        "modernGl.dsaSupported": "true",
+        "modernGl.vaosCreated": "0",
+        "modernGl.vaosDeleted": "0",
+        "modernGl.vaoBinds": "0",
+        "modernGl.pointerSetups": "0",
+        "modernGl.vaoChecks": "0",
+        "modernGl.vaoFailures": "0",
+        "modernGl.decoupledDraws": "0",
+        "modernGl.fallbackDraws": "0",
+        "modernGl.namedCreates": "0",
+        "modernGl.namedUploads": "0",
+        "modernGl.uploadChecks": "0",
+        "modernGl.uploadBytesCompared": "0",
+        "modernGl.uploadFailures": "0",
+        "modernGl.contextDrops": "0",
+        "chunkNeighbours.verification": "0 compared, 0 mismatches, 0 indexed lookups",
+        "window": "1280x720"
+      },
+      "screenshots": [
+        "runs\\20261029-143244-q3-reload-1-vis_on-ecl_on-ent0\\alacer-q3-reload-1-vis_on-ecl_on-ent0-fly.png",
+        "runs\\20261029-143244-q3-reload-1-vis_on-ecl_on-ent0\\alacer-q3-reload-1-vis_on-ecl_on-ent0-pan.png",
+        "runs\\20261029-143244-q3-reload-1-vis_on-ecl_on-ent0\\alacer-q3-reload-1-vis_on-ecl_on-ent0-static.png"
+      ]
+    },
+    {
+      "label": "q3-ticks-sound",
+      "status": "completed",
+      "exit_code": 0,
+      "duration_s": 48.21836170000006,
+      "jar_sha256": "efb44aa3b583ca0a5a8c6d48089cab44ff7f88973619fc6596a559c257b0d1a2",
+      "master_volume": "0.0",
+      "resource_driver_failed": false,
+      "native_crash": false,
+      "reload_completions": [],
+      "atlas_load_ms": [],
+      "resource_reload_ms": [],
+      "verifier_final_lines": [
+        "[14:28:22] [Client thread/INFO] (Alacer) Model list batch final: 0 lists compiled, 0 face draws -> 0 batched draws, 0 unsupported compilations; 0 native feedback comparisons, 0 floats compared, 0 mismatches, 0 empty comparisons",
+        "[14:28:22] [Client thread/INFO] (Alacer) Camera section faces final: 0 section reads, 0 flood fills, 0 reused answers; 0 compared with vanilla, 0 mismatched",
+        "[14:28:22] [Client thread/INFO] (Alacer) Entity shadow queries final: 0 queries compared, 0 mismatched",
+        "[14:28:22] [Client thread/INFO] (Alacer) Entity lighting queries final: 0 queries compared, 0 mismatched",
+        "[14:28:22] [Client thread/INFO] (Alacer) Worker AO verification final: 0 worker block queries, 0 light queries compared, 0 mismatches",
+        "[14:28:22] [Client thread/INFO] (Alacer) Terrain pipeline verification final: 0 layer counts compared, 0 mismatches",
+        "[14:28:22] [Client thread/INFO] (Alacer) Fast mipmaps verification final: 0 sprites, 0 pixels compared, 0 mismatches",
+        "[14:28:22] [Client thread/INFO] (Alacer) Vector frustum verification final: 0 boxes compared, 0 mismatched, 0 outside exact limit",
+        "[14:28:22] [Client thread/INFO] (Alacer) Model zero-translation verification final: 0 zero translations compared, 0 changed the matrix",
+        "[14:28:22] [Client thread/INFO] (Alacer) Ray trace verification final: 36904 traces, 0 mismatches",
+        "[14:28:22] [Client thread/INFO] (Alacer) Ambient tick verification final: 729 ticks, 251363 blocks, 0 mismatches",
+        "[14:28:22] [Client thread/INFO] (Alacer) Entity culling verification final: 154543 tested, 0 mismatches",
+        "[14:28:22] [Client thread/INFO] (Alacer) Entity renderer cache final: 123254 queries, 123252 hits, 0 mismatches",
+        "[14:28:22] [Client thread/INFO] (Alacer) Flat occlusion verification final: 0 mask hits, 0 updates, 0 mismatches",
+        "[14:28:22] [Client thread/INFO] (Alacer) Shadow position reuse final: 0 positions compared, 0 mismatched",
+        "[14:28:22] [Client thread/INFO] (Alacer) Particle light queries final: 0 queries compared, 0 mismatched",
+        "[14:28:22] [Client thread/INFO] (Alacer) Particle removal final: 0 removals compared (0 particles removed, 0 vanilla fallbacks), 0 mismatched",
+        "[14:28:22] [Client thread/INFO] (Alacer) Particle vertices final: 0 elements compared (0 complete vertices, 0 incomplete, 0 vanilla vertices, 0/0 passes with another layout), 0 mismatched",
+        "[14:28:22] [Client thread/INFO] (Alacer) Particle light entry final: 0 chunk checks compared (0 not loaded), 0 mismatched; 0 positions compared, 0 mismatched",
+        "[14:28:22] [Client thread/INFO] (Alacer) Particle light reuse final: 0 passes, 0 reused, 0 computed (0 not stored); 0 queries compared (0 reused), 0 mismatched",
+        "[14:28:22] [Client thread/INFO] (Alacer) Particle movement final: 0 block reads compared, 0 mismatched",
+        "[14:28:22] [Client thread/INFO] (Alacer) Particle entity query final: 0 compared, 0 mismatched, 0 scalar queries, 0 chunk fallbacks, 0 shape fallbacks",
+        "[14:28:22] [Client thread/INFO] (Alacer) Particle boxes final: 0 compared, 0 reused, 0 mismatched",
+        "[14:28:22] [Client thread/INFO] (Alacer) Chunk frustum verification final: 0 boxes compared, 0 mismatched, 0 answered by vanilla's test (outside the exact range)"
+      ],
+      "functional_error_lines": [],
+      "startup_error_lines": [
+        "2026-10-29 14:27:36,315 main ERROR Error processing element Queue ([Appenders: null]): CLASS_NOT_FOUND",
+        "2026-10-29 14:27:36,436 main ERROR Unable to locate appender \"ServerGuiConsole\" for logger config \"root\"",
+        "[14:27:40] [Client thread/ERROR] (Minecraft) Couldn't initialize twitch stream",
+        "java.lang.ClassNotFoundException: com.mojang.realmsclient.gui.screens.RealmsNotificationsScreen",
+        "java.lang.ClassNotFoundException: com.mojang.realmsclient.gui.screens.RealmsNotificationsScreen"
+      ],
+      "final_observer_snapshot": "2026-10-29T21:28:22.432900700Z\nFastEntityPipeline.verificationSummary=0 passes compared, 0 mismatched\nFastSoundThread.snoozes=37035\nFastSoundThread.interruptionsAvoided=37035\nFastSoundThread.verifiedSnoozes=37035\nFastSoundThread.verifyMismatches=0",
+      "phases": {
+        "static": {
+          "frames": 4774,
+          "dropped_frames": 0,
+          "entities": 9
+        },
+        "pan": {
+          "frames": 3297,
+          "dropped_frames": 0,
+          "entities": 9
+        },
+        "fly": {
+          "frames": 5595,
+          "dropped_frames": 0,
+          "entities": 10
+        }
+      },
+      "runtime": {
+        "java.version": "25.0.4.1",
+        "java.home": "C:\\Program Files\\Eclipse Adoptium\\jdk-25.0.4.101-hotspot",
+        "cpu": "20x 12th Gen Intel(R) Core(TM) i7-12700F",
+        "modernGl.forcedFallback": "false",
+        "modernGl.terrainShaderRequested": "false",
+        "modernGl.terrainShaderActive": "false",
+        "modernGl.terrainShaderAttribBinding": "false",
+        "modernGl.vaoSupported": "true",
+        "modernGl.dsaSupported": "true",
+        "modernGl.vaosCreated": "0",
+        "modernGl.vaosDeleted": "0",
+        "modernGl.vaoBinds": "0",
+        "modernGl.pointerSetups": "0",
+        "modernGl.vaoChecks": "0",
+        "modernGl.vaoFailures": "0",
+        "modernGl.decoupledDraws": "0",
+        "modernGl.fallbackDraws": "0",
+        "modernGl.namedCreates": "0",
+        "modernGl.namedUploads": "0",
+        "modernGl.uploadChecks": "0",
+        "modernGl.uploadBytesCompared": "0",
+        "modernGl.uploadFailures": "0",
+        "modernGl.contextDrops": "0",
+        "chunkNeighbours.verification": "49216392 compared, 0 mismatches, 49216392 indexed lookups",
+        "window": "1280x720"
+      },
+      "screenshots": [
+        "runs\\20261029-142822-q3-ticks-sound-vis_on-ecl_on-ent0\\alacer-q3-ticks-sound-vis_on-ecl_on-ent0-fly.png",
+        "runs\\20261029-142822-q3-ticks-sound-vis_on-ecl_on-ent0\\alacer-q3-ticks-sound-vis_on-ecl_on-ent0-pan.png",
+        "runs\\20261029-142822-q3-ticks-sound-vis_on-ecl_on-ent0\\alacer-q3-ticks-sound-vis_on-ecl_on-ent0-static.png"
+      ]
+    },
+    {
+      "label": "q3r2-production-jar",
+      "status": "failed",
+      "exit_code": 4294967295,
+      "duration_s": 6.768448899999839,
+      "jar_sha256": "efb44aa3b583ca0a5a8c6d48089cab44ff7f88973619fc6596a559c257b0d1a2",
+      "master_volume": "0.0",
+      "resource_driver_failed": false,
+      "native_crash": false,
+      "reload_completions": [],
+      "atlas_load_ms": [
+        155.7084
+      ],
+      "resource_reload_ms": [
+        18.7735
+      ],
+      "verifier_final_lines": [],
+      "functional_error_lines": [
+        "java.lang.IllegalAccessError: class net.minecraft.unmapped.C_62408525 tried to access field net.minecraft.client.Minecraft.f_07565246 (net.minecraft.unmapped.C_62408525 and net.minecraft.client.Minecraft are in unnamed module of loader 'knot' @56f4468b)",
+        "java.lang.IllegalAccessError: class net.minecraft.unmapped.C_62408525 tried to access field net.minecraft.client.Minecraft.f_07565246 (net.minecraft.unmapped.C_62408525 and net.minecraft.client.Minecraft are in unnamed module of loader 'knot' @56f4468b)"
+      ],
+      "startup_error_lines": [
+        "java.lang.ClassNotFoundException: com.mojang.realmsclient.gui.screens.RealmsNotificationsScreen"
+      ]
+    },
+    {
+      "label": "q3r2-reload-1",
+      "status": "completed",
+      "exit_code": 0,
+      "duration_s": 78.65955179999992,
+      "jar_sha256": "efb44aa3b583ca0a5a8c6d48089cab44ff7f88973619fc6596a559c257b0d1a2",
+      "master_volume": "0.0",
+      "resource_driver_failed": false,
+      "native_crash": false,
+      "reload_completions": [
+        [
+          "1",
+          "0 sprites, 0 pixels compared, 0 mismatches"
+        ],
+        [
+          "2",
+          "0 sprites, 0 pixels compared, 0 mismatches"
+        ],
+        [
+          "3",
+          "0 sprites, 0 pixels compared, 0 mismatches"
+        ]
+      ],
+      "atlas_load_ms": [
+        247.8861,
+        144.0499,
+        122.8172,
+        125.826
+      ],
+      "resource_reload_ms": [
+        84.4303,
+        1087.4508,
+        1047.9216,
+        1164.6386
+      ],
+      "verifier_final_lines": [
+        "[14:34:20] [Client thread/INFO] (Alacer) Model list batch final: 0 lists compiled, 0 face draws -> 0 batched draws, 0 unsupported compilations; 0 native feedback comparisons, 0 floats compared, 0 mismatches, 0 empty comparisons",
+        "[14:34:20] [Client thread/INFO] (Alacer) Camera section faces final: 0 section reads, 0 flood fills, 0 reused answers; 0 compared with vanilla, 0 mismatched",
+        "[14:34:20] [Client thread/INFO] (Alacer) Entity shadow queries final: 0 queries compared, 0 mismatched",
+        "[14:34:20] [Client thread/INFO] (Alacer) Entity lighting queries final: 0 queries compared, 0 mismatched",
+        "[14:34:20] [Client thread/INFO] (Alacer) Worker AO verification final: 0 worker block queries, 0 light queries compared, 0 mismatches",
+        "[14:34:20] [Client thread/INFO] (Alacer) Terrain pipeline verification final: 0 layer counts compared, 0 mismatches",
+        "[14:34:20] [Client thread/INFO] (Alacer) Fast mipmaps verification final: 0 sprites, 0 pixels compared, 0 mismatches",
+        "[14:34:20] [Client thread/INFO] (Alacer) Vector frustum verification final: 0 boxes compared, 0 mismatched, 0 outside exact limit",
+        "[14:34:20] [Client thread/INFO] (Alacer) Model zero-translation verification final: 0 zero translations compared, 0 changed the matrix",
+        "[14:34:20] [Client thread/INFO] (Alacer) Ray trace verification final: 62343 traces, 0 mismatches",
+        "[14:34:20] [Client thread/INFO] (Alacer) Ambient tick verification final: 1247 ticks, 398065 blocks, 0 mismatches",
+        "[14:34:20] [Client thread/INFO] (Alacer) Entity culling verification final: 70817 tested, 0 mismatches",
+        "[14:34:20] [Client thread/INFO] (Alacer) Entity renderer cache final: 51279 queries, 51277 hits, 0 mismatches",
+        "[14:34:20] [Client thread/INFO] (Alacer) Flat occlusion verification final: 0 mask hits, 0 updates, 0 mismatches",
+        "[14:34:20] [Client thread/INFO] (Alacer) Shadow position reuse final: 0 positions compared, 0 mismatched",
+        "[14:34:20] [Client thread/INFO] (Alacer) Particle light queries final: 0 queries compared, 0 mismatched",
+        "[14:34:20] [Client thread/INFO] (Alacer) Particle removal final: 0 removals compared (0 particles removed, 0 vanilla fallbacks), 0 mismatched",
+        "[14:34:20] [Client thread/INFO] (Alacer) Particle vertices final: 0 elements compared (0 complete vertices, 0 incomplete, 0 vanilla vertices, 0/0 passes with another layout), 0 mismatched",
+        "[14:34:20] [Client thread/INFO] (Alacer) Particle light entry final: 0 chunk checks compared (0 not loaded), 0 mismatched; 0 positions compared, 0 mismatched",
+        "[14:34:20] [Client thread/INFO] (Alacer) Particle light reuse final: 0 passes, 0 reused, 0 computed (0 not stored); 0 queries compared (0 reused), 0 mismatched",
+        "[14:34:20] [Client thread/INFO] (Alacer) Particle movement final: 0 block reads compared, 0 mismatched",
+        "[14:34:20] [Client thread/INFO] (Alacer) Particle entity query final: 0 compared, 0 mismatched, 0 scalar queries, 0 chunk fallbacks, 0 shape fallbacks",
+        "[14:34:20] [Client thread/INFO] (Alacer) Particle boxes final: 0 compared, 0 reused, 0 mismatched",
+        "[14:34:20] [Client thread/INFO] (Alacer) Chunk frustum verification final: 0 boxes compared, 0 mismatched, 0 answered by vanilla's test (outside the exact range)"
+      ],
+      "functional_error_lines": [],
+      "startup_error_lines": [
+        "2026-10-29 14:33:04,527 main ERROR Error processing element Queue ([Appenders: null]): CLASS_NOT_FOUND",
+        "2026-10-29 14:33:04,642 main ERROR Unable to locate appender \"ServerGuiConsole\" for logger config \"root\"",
+        "[14:33:08] [Client thread/ERROR] (Minecraft) Couldn't initialize twitch stream",
+        "java.lang.ClassNotFoundException: com.mojang.realmsclient.gui.screens.RealmsNotificationsScreen",
+        "java.lang.ClassNotFoundException: com.mojang.realmsclient.gui.screens.RealmsNotificationsScreen"
+      ],
+      "final_observer_snapshot": "2026-10-29T21:34:20.869910Z\nFastEntityPipeline.verificationSummary=0 passes compared, 0 mismatched\nFastSoundThread.snoozes=61997\nFastSoundThread.verifyMismatches=0\nFastSoundThread.interruptionsAvoided=61997\nFastSoundThread.verifiedSnoozes=0",
+      "phases": {
+        "static": {
+          "frames": 13275,
+          "dropped_frames": 0,
+          "entities": 9
+        },
+        "pan": {
+          "frames": 9531,
+          "dropped_frames": 0,
+          "entities": 9
+        },
+        "fly": {
+          "frames": 15913,
+          "dropped_frames": 0,
+          "entities": 9
+        }
+      },
+      "runtime": {
+        "java.version": "25.0.4.1",
+        "java.home": "C:\\Program Files\\Eclipse Adoptium\\jdk-25.0.4.101-hotspot",
+        "cpu": "20x 12th Gen Intel(R) Core(TM) i7-12700F",
+        "modernGl.forcedFallback": "false",
+        "modernGl.terrainShaderRequested": "false",
+        "modernGl.terrainShaderActive": "false",
+        "modernGl.terrainShaderAttribBinding": "false",
+        "modernGl.vaoSupported": "true",
+        "modernGl.dsaSupported": "true",
+        "modernGl.vaosCreated": "0",
+        "modernGl.vaosDeleted": "0",
+        "modernGl.vaoBinds": "0",
+        "modernGl.pointerSetups": "0",
+        "modernGl.vaoChecks": "0",
+        "modernGl.vaoFailures": "0",
+        "modernGl.decoupledDraws": "0",
+        "modernGl.fallbackDraws": "0",
+        "modernGl.namedCreates": "0",
+        "modernGl.namedUploads": "0",
+        "modernGl.uploadChecks": "0",
+        "modernGl.uploadBytesCompared": "0",
+        "modernGl.uploadFailures": "0",
+        "modernGl.contextDrops": "0",
+        "chunkNeighbours.verification": "0 compared, 0 mismatches, 0 indexed lookups",
+        "window": "1280x720"
+      },
+      "screenshots": [
+        "runs\\20261029-143420-q3r2-reload-1-vis_on-ecl_on-ent0\\alacer-q3r2-reload-1-vis_on-ecl_on-ent0-fly.png",
+        "runs\\20261029-143420-q3r2-reload-1-vis_on-ecl_on-ent0\\alacer-q3r2-reload-1-vis_on-ecl_on-ent0-pan.png",
+        "runs\\20261029-143420-q3r2-reload-1-vis_on-ecl_on-ent0\\alacer-q3r2-reload-1-vis_on-ecl_on-ent0-static.png"
+      ]
+    },
+    {
+      "label": "q3r2-reload-2",
+      "status": "completed",
+      "exit_code": 0,
+      "duration_s": 79.0608671,
+      "jar_sha256": "efb44aa3b583ca0a5a8c6d48089cab44ff7f88973619fc6596a559c257b0d1a2",
+      "master_volume": "0.0",
+      "resource_driver_failed": false,
+      "native_crash": false,
+      "reload_completions": [
+        [
+          "1",
+          "1772 sprites, 175100 pixels compared, 0 mismatches"
+        ],
+        [
+          "2",
+          "2658 sprites, 262650 pixels compared, 0 mismatches"
+        ],
+        [
+          "3",
+          "3544 sprites, 350200 pixels compared, 0 mismatches"
+        ]
+      ],
+      "atlas_load_ms": [
+        285.6336,
+        126.5032,
+        143.2725,
+        120.5916
+      ],
+      "resource_reload_ms": [
+        51.1927,
+        1034.4592,
+        1198.4387,
+        1063.1572
+      ],
+      "verifier_final_lines": [
+        "[14:35:39] [Client thread/INFO] (Alacer) Model list batch final: 0 lists compiled, 0 face draws -> 0 batched draws, 0 unsupported compilations; 0 native feedback comparisons, 0 floats compared, 0 mismatches, 0 empty comparisons",
+        "[14:35:39] [Client thread/INFO] (Alacer) Camera section faces final: 0 section reads, 0 flood fills, 0 reused answers; 0 compared with vanilla, 0 mismatched",
+        "[14:35:39] [Client thread/INFO] (Alacer) Entity shadow queries final: 0 queries compared, 0 mismatched",
+        "[14:35:39] [Client thread/INFO] (Alacer) Entity lighting queries final: 0 queries compared, 0 mismatched",
+        "[14:35:39] [Client thread/INFO] (Alacer) Worker AO verification final: 0 worker block queries, 0 light queries compared, 0 mismatches",
+        "[14:35:39] [Client thread/INFO] (Alacer) Terrain pipeline verification final: 0 layer counts compared, 0 mismatches",
+        "[14:35:39] [Client thread/INFO] (Alacer) Fast mipmaps verification final: 3544 sprites, 350200 pixels compared, 0 mismatches",
+        "[14:35:39] [Client thread/INFO] (Alacer) Vector frustum verification final: 0 boxes compared, 0 mismatched, 0 outside exact limit",
+        "[14:35:39] [Client thread/INFO] (Alacer) Model zero-translation verification final: 0 zero translations compared, 0 changed the matrix",
+        "[14:35:39] [Client thread/INFO] (Alacer) Ray trace verification final: 86869 traces, 0 mismatches",
+        "[14:35:39] [Client thread/INFO] (Alacer) Ambient tick verification final: 1241 ticks, 394010 blocks, 0 mismatches",
+        "[14:35:39] [Client thread/INFO] (Alacer) Entity culling verification final: 105595 tested, 0 mismatches",
+        "[14:35:39] [Client thread/INFO] (Alacer) Entity renderer cache final: 75641 queries, 75639 hits, 0 mismatches",
+        "[14:35:39] [Client thread/INFO] (Alacer) Flat occlusion verification final: 0 mask hits, 0 updates, 0 mismatches",
+        "[14:35:39] [Client thread/INFO] (Alacer) Shadow position reuse final: 0 positions compared, 0 mismatched",
+        "[14:35:39] [Client thread/INFO] (Alacer) Particle light queries final: 0 queries compared, 0 mismatched",
+        "[14:35:39] [Client thread/INFO] (Alacer) Particle removal final: 0 removals compared (0 particles removed, 0 vanilla fallbacks), 0 mismatched",
+        "[14:35:39] [Client thread/INFO] (Alacer) Particle vertices final: 0 elements compared (0 complete vertices, 0 incomplete, 0 vanilla vertices, 0/0 passes with another layout), 0 mismatched",
+        "[14:35:39] [Client thread/INFO] (Alacer) Particle light entry final: 0 chunk checks compared (0 not loaded), 0 mismatched; 0 positions compared, 0 mismatched",
+        "[14:35:39] [Client thread/INFO] (Alacer) Particle light reuse final: 0 passes, 0 reused, 0 computed (0 not stored); 0 queries compared (0 reused), 0 mismatched",
+        "[14:35:39] [Client thread/INFO] (Alacer) Particle movement final: 0 block reads compared, 0 mismatched",
+        "[14:35:39] [Client thread/INFO] (Alacer) Particle entity query final: 0 compared, 0 mismatched, 0 scalar queries, 0 chunk fallbacks, 0 shape fallbacks",
+        "[14:35:39] [Client thread/INFO] (Alacer) Particle boxes final: 0 compared, 0 reused, 0 mismatched",
+        "[14:35:39] [Client thread/INFO] (Alacer) Chunk frustum verification final: 0 boxes compared, 0 mismatched, 0 answered by vanilla's test (outside the exact range)"
+      ],
+      "functional_error_lines": [],
+      "startup_error_lines": [
+        "2026-10-29 14:34:23,762 main ERROR Error processing element Queue ([Appenders: null]): CLASS_NOT_FOUND",
+        "2026-10-29 14:34:23,892 main ERROR Unable to locate appender \"ServerGuiConsole\" for logger config \"root\"",
+        "[14:34:26] [Client thread/ERROR] (Minecraft) Couldn't initialize twitch stream",
+        "java.lang.ClassNotFoundException: com.mojang.realmsclient.gui.screens.RealmsNotificationsScreen",
+        "java.lang.ClassNotFoundException: com.mojang.realmsclient.gui.screens.RealmsNotificationsScreen"
+      ],
+      "final_observer_snapshot": "2026-10-29T21:35:40.009796900Z\nFastEntityPipeline.verificationSummary=0 passes compared, 0 mismatched\nFastSoundThread.verifiedSnoozes=0\nFastSoundThread.interruptionsAvoided=85982\nFastSoundThread.verifyMismatches=0\nFastSoundThread.snoozes=85982",
+      "phases": {
+        "static": {
+          "frames": 16958,
+          "dropped_frames": 0,
+          "entities": 8
+        },
+        "pan": {
+          "frames": 15222,
+          "dropped_frames": 0,
+          "entities": 8
+        },
+        "fly": {
+          "frames": 25219,
+          "dropped_frames": 0,
+          "entities": 8
+        }
+      },
+      "runtime": {
+        "java.version": "25.0.4.1",
+        "java.home": "C:\\Program Files\\Eclipse Adoptium\\jdk-25.0.4.101-hotspot",
+        "cpu": "20x 12th Gen Intel(R) Core(TM) i7-12700F",
+        "modernGl.forcedFallback": "false",
+        "modernGl.terrainShaderRequested": "false",
+        "modernGl.terrainShaderActive": "false",
+        "modernGl.terrainShaderAttribBinding": "false",
+        "modernGl.vaoSupported": "true",
+        "modernGl.dsaSupported": "true",
+        "modernGl.vaosCreated": "0",
+        "modernGl.vaosDeleted": "0",
+        "modernGl.vaoBinds": "0",
+        "modernGl.pointerSetups": "0",
+        "modernGl.vaoChecks": "0",
+        "modernGl.vaoFailures": "0",
+        "modernGl.decoupledDraws": "0",
+        "modernGl.fallbackDraws": "0",
+        "modernGl.namedCreates": "0",
+        "modernGl.namedUploads": "0",
+        "modernGl.uploadChecks": "0",
+        "modernGl.uploadBytesCompared": "0",
+        "modernGl.uploadFailures": "0",
+        "modernGl.contextDrops": "0",
+        "chunkNeighbours.verification": "0 compared, 0 mismatches, 0 indexed lookups",
+        "window": "1280x720"
+      },
+      "screenshots": [
+        "runs\\20261029-143539-q3r2-reload-2-vis_on-ecl_on-ent0\\alacer-q3r2-reload-2-vis_on-ecl_on-ent0-fly.png",
+        "runs\\20261029-143539-q3r2-reload-2-vis_on-ecl_on-ent0\\alacer-q3r2-reload-2-vis_on-ecl_on-ent0-pan.png",
+        "runs\\20261029-143539-q3r2-reload-2-vis_on-ecl_on-ent0\\alacer-q3r2-reload-2-vis_on-ecl_on-ent0-static.png"
+      ]
+    },
+    {
+      "label": "q3r2-reload-3",
+      "status": "completed",
+      "exit_code": 0,
+      "duration_s": 79.88709430000017,
+      "jar_sha256": "efb44aa3b583ca0a5a8c6d48089cab44ff7f88973619fc6596a559c257b0d1a2",
+      "master_volume": "0.0",
+      "resource_driver_failed": false,
+      "native_crash": false,
+      "reload_completions": [
+        [
+          "1",
+          "1772 sprites, 175100 pixels compared, 0 mismatches"
+        ],
+        [
+          "2",
+          "2658 sprites, 262650 pixels compared, 0 mismatches"
+        ],
+        [
+          "3",
+          "3544 sprites, 350200 pixels compared, 0 mismatches"
+        ]
+      ],
+      "atlas_load_ms": [
+        236.2204,
+        123.4718,
+        114.5518,
+        112.7587
+      ],
+      "resource_reload_ms": [
+        93.3466,
+        1038.8134,
+        1035.226,
+        1009.4742
+      ],
+      "verifier_final_lines": [
+        "[14:36:59] [Client thread/INFO] (Alacer) Model list batch final: 0 lists compiled, 0 face draws -> 0 batched draws, 0 unsupported compilations; 0 native feedback comparisons, 0 floats compared, 0 mismatches, 0 empty comparisons",
+        "[14:36:59] [Client thread/INFO] (Alacer) Camera section faces final: 0 section reads, 0 flood fills, 0 reused answers; 0 compared with vanilla, 0 mismatched",
+        "[14:36:59] [Client thread/INFO] (Alacer) Entity shadow queries final: 0 queries compared, 0 mismatched",
+        "[14:36:59] [Client thread/INFO] (Alacer) Entity lighting queries final: 0 queries compared, 0 mismatched",
+        "[14:36:59] [Client thread/INFO] (Alacer) Worker AO verification final: 0 worker block queries, 0 light queries compared, 0 mismatches",
+        "[14:36:59] [Client thread/INFO] (Alacer) Terrain pipeline verification final: 0 layer counts compared, 0 mismatches",
+        "[14:36:59] [Client thread/INFO] (Alacer) Fast mipmaps verification final: 3544 sprites, 350200 pixels compared, 0 mismatches",
+        "[14:36:59] [Client thread/INFO] (Alacer) Vector frustum verification final: 0 boxes compared, 0 mismatched, 0 outside exact limit",
+        "[14:36:59] [Client thread/INFO] (Alacer) Model zero-translation verification final: 0 zero translations compared, 0 changed the matrix",
+        "[14:36:59] [Client thread/INFO] (Alacer) Ray trace verification final: 59287 traces, 0 mismatches",
+        "[14:36:59] [Client thread/INFO] (Alacer) Ambient tick verification final: 1239 ticks, 392101 blocks, 0 mismatches",
+        "[14:36:59] [Client thread/INFO] (Alacer) Entity culling verification final: 71812 tested, 0 mismatches",
+        "[14:36:59] [Client thread/INFO] (Alacer) Entity renderer cache final: 52937 queries, 52935 hits, 0 mismatches",
+        "[14:36:59] [Client thread/INFO] (Alacer) Flat occlusion verification final: 0 mask hits, 0 updates, 0 mismatches",
+        "[14:36:59] [Client thread/INFO] (Alacer) Shadow position reuse final: 0 positions compared, 0 mismatched",
+        "[14:36:59] [Client thread/INFO] (Alacer) Particle light queries final: 0 queries compared, 0 mismatched",
+        "[14:36:59] [Client thread/INFO] (Alacer) Particle removal final: 0 removals compared (0 particles removed, 0 vanilla fallbacks), 0 mismatched",
+        "[14:36:59] [Client thread/INFO] (Alacer) Particle vertices final: 0 elements compared (0 complete vertices, 0 incomplete, 0 vanilla vertices, 0/0 passes with another layout), 0 mismatched",
+        "[14:36:59] [Client thread/INFO] (Alacer) Particle light entry final: 0 chunk checks compared (0 not loaded), 0 mismatched; 0 positions compared, 0 mismatched",
+        "[14:36:59] [Client thread/INFO] (Alacer) Particle light reuse final: 0 passes, 0 reused, 0 computed (0 not stored); 0 queries compared (0 reused), 0 mismatched",
+        "[14:36:59] [Client thread/INFO] (Alacer) Particle movement final: 0 block reads compared, 0 mismatched",
+        "[14:36:59] [Client thread/INFO] (Alacer) Particle entity query final: 0 compared, 0 mismatched, 0 scalar queries, 0 chunk fallbacks, 0 shape fallbacks",
+        "[14:36:59] [Client thread/INFO] (Alacer) Particle boxes final: 0 compared, 0 reused, 0 mismatched",
+        "[14:36:59] [Client thread/INFO] (Alacer) Chunk frustum verification final: 0 boxes compared, 0 mismatched, 0 answered by vanilla's test (outside the exact range)"
+      ],
+      "functional_error_lines": [],
+      "startup_error_lines": [
+        "2026-10-29 14:35:43,208 main ERROR Error processing element Queue ([Appenders: null]): CLASS_NOT_FOUND",
+        "2026-10-29 14:35:43,346 main ERROR Unable to locate appender \"ServerGuiConsole\" for logger config \"root\"",
+        "[14:35:47] [Client thread/ERROR] (Minecraft) Couldn't initialize twitch stream",
+        "java.lang.ClassNotFoundException: com.mojang.realmsclient.gui.screens.RealmsNotificationsScreen",
+        "java.lang.ClassNotFoundException: com.mojang.realmsclient.gui.screens.RealmsNotificationsScreen"
+      ],
+      "final_observer_snapshot": "2026-10-29T21:37:00.114073500Z\nFastEntityPipeline.verificationSummary=0 passes compared, 0 mismatched\nFastSoundThread.snoozes=58933\nFastSoundThread.interruptionsAvoided=58933\nFastSoundThread.verifyMismatches=0\nFastSoundThread.verifiedSnoozes=0",
+      "phases": {
+        "static": {
+          "frames": 12578,
+          "dropped_frames": 0,
+          "entities": 9
+        },
+        "pan": {
+          "frames": 9535,
+          "dropped_frames": 0,
+          "entities": 9
+        },
+        "fly": {
+          "frames": 16258,
+          "dropped_frames": 0,
+          "entities": 9
+        }
+      },
+      "runtime": {
+        "java.version": "25.0.4.1",
+        "java.home": "C:\\Program Files\\Eclipse Adoptium\\jdk-25.0.4.101-hotspot",
+        "cpu": "20x 12th Gen Intel(R) Core(TM) i7-12700F",
+        "modernGl.forcedFallback": "false",
+        "modernGl.terrainShaderRequested": "false",
+        "modernGl.terrainShaderActive": "false",
+        "modernGl.terrainShaderAttribBinding": "false",
+        "modernGl.vaoSupported": "true",
+        "modernGl.dsaSupported": "true",
+        "modernGl.vaosCreated": "0",
+        "modernGl.vaosDeleted": "0",
+        "modernGl.vaoBinds": "0",
+        "modernGl.pointerSetups": "0",
+        "modernGl.vaoChecks": "0",
+        "modernGl.vaoFailures": "0",
+        "modernGl.decoupledDraws": "0",
+        "modernGl.fallbackDraws": "0",
+        "modernGl.namedCreates": "0",
+        "modernGl.namedUploads": "0",
+        "modernGl.uploadChecks": "0",
+        "modernGl.uploadBytesCompared": "0",
+        "modernGl.uploadFailures": "0",
+        "modernGl.contextDrops": "0",
+        "chunkNeighbours.verification": "0 compared, 0 mismatches, 0 indexed lookups",
+        "window": "1280x720"
+      },
+      "screenshots": [
+        "runs\\20261029-143659-q3r2-reload-3-vis_on-ecl_on-ent0\\alacer-q3r2-reload-3-vis_on-ecl_on-ent0-fly.png",
+        "runs\\20261029-143659-q3r2-reload-3-vis_on-ecl_on-ent0\\alacer-q3r2-reload-3-vis_on-ecl_on-ent0-pan.png",
+        "runs\\20261029-143659-q3r2-reload-3-vis_on-ecl_on-ent0\\alacer-q3r2-reload-3-vis_on-ecl_on-ent0-static.png"
+      ]
+    },
+    {
+      "label": "q3r2-reload-4",
+      "status": "completed",
+      "exit_code": 0,
+      "duration_s": 78.98100390000036,
+      "jar_sha256": "efb44aa3b583ca0a5a8c6d48089cab44ff7f88973619fc6596a559c257b0d1a2",
+      "master_volume": "0.0",
+      "resource_driver_failed": false,
+      "native_crash": false,
+      "reload_completions": [
+        [
+          "1",
+          "0 sprites, 0 pixels compared, 0 mismatches"
+        ],
+        [
+          "2",
+          "0 sprites, 0 pixels compared, 0 mismatches"
+        ],
+        [
+          "3",
+          "0 sprites, 0 pixels compared, 0 mismatches"
+        ]
+      ],
+      "atlas_load_ms": [
+        294.3608,
+        148.8671,
+        128.7282,
+        128.5515
+      ],
+      "resource_reload_ms": [
+        162.1338,
+        1079.4681,
+        1087.7295,
+        1042.7763
+      ],
+      "verifier_final_lines": [
+        "[14:38:18] [Client thread/INFO] (Alacer) Model list batch final: 0 lists compiled, 0 face draws -> 0 batched draws, 0 unsupported compilations; 0 native feedback comparisons, 0 floats compared, 0 mismatches, 0 empty comparisons",
+        "[14:38:18] [Client thread/INFO] (Alacer) Camera section faces final: 0 section reads, 0 flood fills, 0 reused answers; 0 compared with vanilla, 0 mismatched",
+        "[14:38:18] [Client thread/INFO] (Alacer) Entity shadow queries final: 0 queries compared, 0 mismatched",
+        "[14:38:18] [Client thread/INFO] (Alacer) Entity lighting queries final: 0 queries compared, 0 mismatched",
+        "[14:38:18] [Client thread/INFO] (Alacer) Worker AO verification final: 0 worker block queries, 0 light queries compared, 0 mismatches",
+        "[14:38:18] [Client thread/INFO] (Alacer) Terrain pipeline verification final: 0 layer counts compared, 0 mismatches",
+        "[14:38:18] [Client thread/INFO] (Alacer) Fast mipmaps verification final: 0 sprites, 0 pixels compared, 0 mismatches",
+        "[14:38:18] [Client thread/INFO] (Alacer) Vector frustum verification final: 0 boxes compared, 0 mismatched, 0 outside exact limit",
+        "[14:38:18] [Client thread/INFO] (Alacer) Model zero-translation verification final: 0 zero translations compared, 0 changed the matrix",
+        "[14:38:18] [Client thread/INFO] (Alacer) Ray trace verification final: 88137 traces, 0 mismatches",
+        "[14:38:18] [Client thread/INFO] (Alacer) Ambient tick verification final: 1244 ticks, 395743 blocks, 0 mismatches",
+        "[14:38:18] [Client thread/INFO] (Alacer) Entity culling verification final: 111396 tested, 0 mismatches",
+        "[14:38:18] [Client thread/INFO] (Alacer) Entity renderer cache final: 79890 queries, 79888 hits, 0 mismatches",
+        "[14:38:18] [Client thread/INFO] (Alacer) Flat occlusion verification final: 0 mask hits, 0 updates, 0 mismatches",
+        "[14:38:18] [Client thread/INFO] (Alacer) Shadow position reuse final: 0 positions compared, 0 mismatched",
+        "[14:38:18] [Client thread/INFO] (Alacer) Particle light queries final: 0 queries compared, 0 mismatched",
+        "[14:38:18] [Client thread/INFO] (Alacer) Particle removal final: 0 removals compared (0 particles removed, 0 vanilla fallbacks), 0 mismatched",
+        "[14:38:18] [Client thread/INFO] (Alacer) Particle vertices final: 0 elements compared (0 complete vertices, 0 incomplete, 0 vanilla vertices, 0/0 passes with another layout), 0 mismatched",
+        "[14:38:18] [Client thread/INFO] (Alacer) Particle light entry final: 0 chunk checks compared (0 not loaded), 0 mismatched; 0 positions compared, 0 mismatched",
+        "[14:38:19] [Client thread/INFO] (Alacer) Particle light reuse final: 0 passes, 0 reused, 0 computed (0 not stored); 0 queries compared (0 reused), 0 mismatched",
+        "[14:38:19] [Client thread/INFO] (Alacer) Particle movement final: 0 block reads compared, 0 mismatched",
+        "[14:38:19] [Client thread/INFO] (Alacer) Particle entity query final: 0 compared, 0 mismatched, 0 scalar queries, 0 chunk fallbacks, 0 shape fallbacks",
+        "[14:38:19] [Client thread/INFO] (Alacer) Particle boxes final: 0 compared, 0 reused, 0 mismatched",
+        "[14:38:19] [Client thread/INFO] (Alacer) Chunk frustum verification final: 0 boxes compared, 0 mismatched, 0 answered by vanilla's test (outside the exact range)"
+      ],
+      "functional_error_lines": [],
+      "startup_error_lines": [
+        "2026-10-29 14:37:02,950 main ERROR Error processing element Queue ([Appenders: null]): CLASS_NOT_FOUND",
+        "2026-10-29 14:37:03,109 main ERROR Unable to locate appender \"ServerGuiConsole\" for logger config \"root\"",
+        "[14:37:06] [Client thread/ERROR] (Minecraft) Couldn't initialize twitch stream",
+        "java.lang.ClassNotFoundException: com.mojang.realmsclient.gui.screens.RealmsNotificationsScreen",
+        "java.lang.ClassNotFoundException: com.mojang.realmsclient.gui.screens.RealmsNotificationsScreen"
+      ],
+      "final_observer_snapshot": "2026-10-29T21:38:19.268000100Z\nFastEntityPipeline.verificationSummary=0 passes compared, 0 mismatched\nFastSoundThread.interruptionsAvoided=87437\nFastSoundThread.verifyMismatches=0\nFastSoundThread.verifiedSnoozes=0\nFastSoundThread.snoozes=87437",
+      "phases": {
+        "static": {
+          "frames": 17946,
+          "dropped_frames": 0,
+          "entities": 9
+        },
+        "pan": {
+          "frames": 15561,
+          "dropped_frames": 0,
+          "entities": 9
+        },
+        "fly": {
+          "frames": 24903,
+          "dropped_frames": 0,
+          "entities": 8
+        }
+      },
+      "runtime": {
+        "java.version": "25.0.4.1",
+        "java.home": "C:\\Program Files\\Eclipse Adoptium\\jdk-25.0.4.101-hotspot",
+        "cpu": "20x 12th Gen Intel(R) Core(TM) i7-12700F",
+        "modernGl.forcedFallback": "false",
+        "modernGl.terrainShaderRequested": "false",
+        "modernGl.terrainShaderActive": "false",
+        "modernGl.terrainShaderAttribBinding": "false",
+        "modernGl.vaoSupported": "true",
+        "modernGl.dsaSupported": "true",
+        "modernGl.vaosCreated": "0",
+        "modernGl.vaosDeleted": "0",
+        "modernGl.vaoBinds": "0",
+        "modernGl.pointerSetups": "0",
+        "modernGl.vaoChecks": "0",
+        "modernGl.vaoFailures": "0",
+        "modernGl.decoupledDraws": "0",
+        "modernGl.fallbackDraws": "0",
+        "modernGl.namedCreates": "0",
+        "modernGl.namedUploads": "0",
+        "modernGl.uploadChecks": "0",
+        "modernGl.uploadBytesCompared": "0",
+        "modernGl.uploadFailures": "0",
+        "modernGl.contextDrops": "0",
+        "chunkNeighbours.verification": "0 compared, 0 mismatches, 0 indexed lookups",
+        "window": "1280x720"
+      },
+      "screenshots": [
+        "runs\\20261029-143818-q3r2-reload-4-vis_on-ecl_on-ent0\\alacer-q3r2-reload-4-vis_on-ecl_on-ent0-fly.png",
+        "runs\\20261029-143818-q3r2-reload-4-vis_on-ecl_on-ent0\\alacer-q3r2-reload-4-vis_on-ecl_on-ent0-pan.png",
+        "runs\\20261029-143818-q3r2-reload-4-vis_on-ecl_on-ent0\\alacer-q3r2-reload-4-vis_on-ecl_on-ent0-static.png"
+      ]
+    },
+    {
+      "label": "q3r3-production-jar",
+      "status": "completed",
+      "exit_code": 0,
+      "duration_s": 102.11585669999977,
+      "jar_sha256": "efb44aa3b583ca0a5a8c6d48089cab44ff7f88973619fc6596a559c257b0d1a2",
+      "master_volume": "0.0",
+      "resource_driver_failed": false,
+      "native_crash": false,
+      "reload_completions": [],
+      "atlas_load_ms": [
+        161.7222
+      ],
+      "resource_reload_ms": [
+        12.4105
+      ],
+      "verifier_final_lines": [
+        "[14:41:52] [Client thread/INFO]: Model list batch final: 0 lists compiled, 0 face draws -> 0 batched draws, 0 unsupported compilations; 0 native feedback comparisons, 0 floats compared, 0 mismatches, 0 empty comparisons",
+        "[14:41:52] [Client thread/INFO]: Camera section faces final: 0 section reads, 0 flood fills, 0 reused answers; 0 compared with vanilla, 0 mismatched",
+        "[14:41:52] [Client thread/INFO]: Entity shadow queries final: 0 queries compared, 0 mismatched",
+        "[14:41:52] [Client thread/INFO]: Entity lighting queries final: 0 queries compared, 0 mismatched",
+        "[14:41:52] [Client thread/INFO]: Worker AO verification final: 0 worker block queries, 0 light queries compared, 0 mismatches",
+        "[14:41:52] [Client thread/INFO]: Terrain pipeline verification final: 0 layer counts compared, 0 mismatches",
+        "[14:41:52] [Client thread/INFO]: Fast mipmaps verification final: 0 sprites, 0 pixels compared, 0 mismatches",
+        "[14:41:52] [Client thread/INFO]: Vector frustum verification final: 0 boxes compared, 0 mismatched, 0 outside exact limit",
+        "[14:41:52] [Client thread/INFO]: Model zero-translation verification final: 0 zero translations compared, 0 changed the matrix",
+        "[14:41:52] [Client thread/INFO]: Ray trace verification final: 36715 traces, 0 mismatches",
+        "[14:41:52] [Client thread/INFO]: Ambient tick verification final: 0 ticks, 0 blocks, 0 mismatches",
+        "[14:41:52] [Client thread/INFO]: Entity culling verification final: 3462389 tested, 0 mismatches",
+        "[14:41:52] [Client thread/INFO]: Entity renderer cache final: 5047735 queries, 5045120 hits, 0 mismatches",
+        "[14:41:52] [Client thread/INFO]: Flat occlusion verification final: 0 mask hits, 0 updates, 0 mismatches",
+        "[14:41:52] [Client thread/INFO]: Shadow position reuse final: 0 positions compared, 0 mismatched",
+        "[14:41:52] [Client thread/INFO]: Particle light queries final: 0 queries compared, 0 mismatched",
+        "[14:41:52] [Client thread/INFO]: Particle removal final: 0 removals compared (0 particles removed, 0 vanilla fallbacks), 0 mismatched",
+        "[14:41:52] [Client thread/INFO]: Particle vertices final: 0 elements compared (0 complete vertices, 0 incomplete, 0 vanilla vertices, 0/0 passes with another layout), 0 mismatched",
+        "[14:41:52] [Client thread/INFO]: Particle light entry final: 0 chunk checks compared (0 not loaded), 0 mismatched; 0 positions compared, 0 mismatched",
+        "[14:41:52] [Client thread/INFO]: Particle light reuse final: 0 passes, 0 reused, 0 computed (0 not stored); 0 queries compared (0 reused), 0 mismatched",
+        "[14:41:52] [Client thread/INFO]: Particle movement final: 0 block reads compared, 0 mismatched",
+        "[14:41:52] [Client thread/INFO]: Particle entity query final: 0 compared, 0 mismatched, 0 scalar queries, 0 chunk fallbacks, 0 shape fallbacks",
+        "[14:41:52] [Client thread/INFO]: Particle boxes final: 0 compared, 0 reused, 0 mismatched",
+        "[14:41:52] [Client thread/INFO]: Chunk frustum verification final: 0 boxes compared, 0 mismatched, 0 answered by vanilla's test (outside the exact range)"
+      ],
+      "functional_error_lines": [],
+      "startup_error_lines": [
+        "java.lang.ClassNotFoundException: com.mojang.realmsclient.gui.screens.RealmsNotificationsScreen",
+        "java.lang.ClassNotFoundException: com.mojang.realmsclient.gui.screens.RealmsNotificationsScreen"
+      ],
+      "phases": {
+        "static": {
+          "frames": 3446,
+          "dropped_frames": 0,
+          "entities": 209
+        },
+        "pan": {
+          "frames": 3504,
+          "dropped_frames": 0,
+          "entities": 209
+        },
+        "fly": {
+          "frames": 9966,
+          "dropped_frames": 0,
+          "entities": 209
+        }
+      },
+      "runtime": {
+        "java.version": "25.0.4.1",
+        "java.home": "C:\\Program Files\\Eclipse Adoptium\\jdk-25.0.4.101-hotspot",
+        "cpu": "20x 12th Gen Intel(R) Core(TM) i7-12700F",
+        "modernGl.forcedFallback": "false",
+        "modernGl.terrainShaderRequested": "false",
+        "modernGl.terrainShaderActive": "false",
+        "modernGl.terrainShaderAttribBinding": "false",
+        "modernGl.vaoSupported": "true",
+        "modernGl.dsaSupported": "true",
+        "modernGl.vaosCreated": "0",
+        "modernGl.vaosDeleted": "0",
+        "modernGl.vaoBinds": "0",
+        "modernGl.pointerSetups": "0",
+        "modernGl.vaoChecks": "0",
+        "modernGl.vaoFailures": "0",
+        "modernGl.decoupledDraws": "0",
+        "modernGl.fallbackDraws": "0",
+        "modernGl.namedCreates": "0",
+        "modernGl.namedUploads": "0",
+        "modernGl.uploadChecks": "0",
+        "modernGl.uploadBytesCompared": "0",
+        "modernGl.uploadFailures": "0",
+        "modernGl.contextDrops": "0",
+        "chunkNeighbours.verification": "0 compared, 0 mismatches, 0 indexed lookups",
+        "window": "1280x720"
+      },
+      "screenshots": [
+        "runs\\20261029-144152-q3r3-production-jar-vis_on-ecl_on-ent200\\alacer-q3r3-production-jar-vis_on-ecl_on-ent200-fly.png",
+        "runs\\20261029-144152-q3r3-production-jar-vis_on-ecl_on-ent200\\alacer-q3r3-production-jar-vis_on-ecl_on-ent200-pan.png",
+        "runs\\20261029-144152-q3r3-production-jar-vis_on-ecl_on-ent200\\alacer-q3r3-production-jar-vis_on-ecl_on-ent200-static.png"
+      ]
+    }
+  ],
+  "performance_approval": false,
+  "identities": {
+    "config_matches_backup": true,
+    "options_master_muted": true,
+    "current_jar_sha256": "efb44aa3b583ca0a5a8c6d48089cab44ff7f88973619fc6596a559c257b0d1a2"
+  }
+}

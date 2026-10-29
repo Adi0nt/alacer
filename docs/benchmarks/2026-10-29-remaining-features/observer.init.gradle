@@ -1,0 +1,17 @@
+allprojects {
+    afterEvaluate { p ->
+        p.tasks.named('runClient') {
+            def label = p.findProperty('alacer.benchmark.label') ?: 'manual'
+            jvmArgs "-javaagent:${p.rootDir}/build/remaining-feature-observer.jar=${p.rootDir}/run/alacer/benchmarks/remaining-features/${label}-counters.txt"
+        }
+        p.tasks.register('followupClasspath') {
+            doLast {
+                def task = p.tasks.named('runClient').get()
+                def out = [classpath: task.classpath.files.collect { it.absolutePath },
+                           jvmArgs: task.jvmArgs, args: task.args,
+                           runtime: p.configurations.runtimeClasspath.files.collect { it.absolutePath }]
+                p.file('build/remaining-feature-classpath.json').text = groovy.json.JsonOutput.prettyPrint(groovy.json.JsonOutput.toJson(out))
+            }
+        }
+    }
+}

@@ -1,0 +1,99 @@
+"""Launch the remapped artifact in an isolated, locally assembled Loader installation."""
+import datetime
+import json
+from pathlib import Path
+import shutil
+import subprocess
+import time
+from launch import HERE, ROOT, JDK, sha
+
+
+def main():
+    label = 'q3-production-jar'
+    record_path = HERE / 'launches' / (label + '.json')
+    if record_path.exists():
+        raise SystemExit('Production attempt already exists')
+    game = ROOT / 'build/remaining-feature-production-game'
+    game.mkdir(exist_ok=False)
+    (game / 'mods').mkdir()
+    artifact = ROOT / 'build/libs/alacer-1.0.0+mc1.8.9.jar'
+    shutil.copy2(artifact, game / 'mods' / artifact.name)
+    shutil.copy2(ROOT / 'run/options.txt', game / 'options.txt')
+    assert 'soundCategory_master:0.0' in (game / 'options.txt').read_text()
+    (game / 'saves').mkdir()
+    shutil.copytree(ROOT / 'run/saves/alacer-benchmark', game / 'saves/alacer-benchmark')
+    base = json.loads((ROOT / 'build/remaining-feature-classpath.json').read_text())
+    production = (ROOT / '.gradle/loom-cache/remapClasspath.txt').read_text().split(';')
+    for file in production:
+        if 'net.ornithemc.osl-gen2' in file:
+            shutil.copy2(file, game / 'mods' / Path(file).name)
+    cp = []
+    for file in base['classpath'] + production:
+        path = Path(file)
+        if not path.is_file() or path.suffix != '.jar': continue
+        if any(excluded in file for excluded in (
+            'remapped_mods', 'dev-launch-injector', 'mappings.jar',
+            str(ROOT / '.gradle/loom-cache/minecraftMaven'), 'net.ornithemc.osl-gen2')): continue
+        if file not in cp: cp.append(file)
+    assert len([p for p in cp if 'minecraft-merged-' in p]) == 1
+    log = game / 'launcher.log'
+    classlog = game / 'class-load.log'
+    native = ROOT / '.gradle/loom-cache/natives/1.8.9'
+    args = ['-Xmx2G', '--enable-native-access=ALL-UNNAMED', '--add-modules=jdk.incubator.vector',
+            '-Dfabric.development=false', '-Dfabric.gameVersion=1.8.9',
+            '-Dfabric.defaultModDistributionNamespace=intermediary',
+            '-Djava.library.path=' + str(native), '-Dorg.lwjgl.librarypath=' + str(native),
+            '-Xlog:class+load=info:file=class-load.log',
+            '-Dalacer.benchmark=true', '-Dalacer.benchmark.label=' + label,
+            '-Dalacer.benchmark.exit=false', '-Dalacer.benchmark.resourceTiming=true',
+            '-Dalacer.benchmark.timeScale=0.35', '-Dalacer.benchmark.vbo=true',
+            '-Dalacer.benchmark.entities=200', '-Dalacer.benchmark.screenshots=true',
+            '-Dalacer.benchmark.timeout=180', '-cp', ';'.join(cp),
+            'net.fabricmc.loader.impl.launch.knot.KnotClient',
+            '--username', 'FeatureTest', '--accessToken', '0', '--version', '1.8.9',
+            '--gameDir', str(game), '--assetsDir', r'C:\Users\CodyJ\.gradle\caches\fabric-loom\assets',
+            '--assetIndex', '1.8.9-1.8', '--width', '1280', '--height', '720']
+    # Java argument files avoid Windows' command-line length limit.
+    argfile = game / 'java.args'
+    argfile.write_text('\n'.join('"' + arg.replace('\\', '\\\\').replace('"', '\\"') + '"' for arg in args), encoding='utf-8')
+    record = dict(label=label, source=subprocess.check_output(['git', 'rev-parse', 'HEAD'], text=True).strip(),
+                  started_utc=datetime.datetime.now(datetime.timezone.utc).isoformat(),
+                  java=str(JDK / 'bin/java.exe'), args=args, game_dir=str(game),
+                  jar_sha256=sha(artifact), status='running', master_volume='0.0')
+    record_path.write_text(json.dumps(record, indent=2) + '\n')
+    start = time.monotonic()
+    with log.open('w', encoding='utf-8') as output:
+        process = subprocess.Popen([str(JDK / 'bin/java.exe'), '@' + str(argfile)], cwd=game,
+                                   stdout=output, stderr=subprocess.STDOUT)
+        try:
+            record['exit_code'] = process.wait(timeout=210)
+        except subprocess.TimeoutExpired:
+            process.kill()
+            record['exit_code'] = process.wait()
+            record['timeout'] = True
+    record['duration_s'] = time.monotonic() - start
+    record['status'] = 'completed' if record['exit_code'] == 0 else 'failed'
+    record['ended_utc'] = datetime.datetime.now(datetime.timezone.utc).isoformat()
+    record['mods'] = {p.name: sha(p) for p in (game / 'mods').iterdir()}
+    (HERE / 'logs' / (label + '.log')).write_text('\n'.join(line.rstrip() for line in log.read_text(errors='replace').splitlines()) + '\n')
+    if classlog.exists():
+        origins = [line for line in classlog.read_text(errors='replace').splitlines()
+                   if 'net.adiont.alacer.Alacer source:' in line or 'net.minecraft.client.main.Main source:' in line]
+        record['class_origins'] = origins
+    summaries = list((game / 'alacer/benchmarks').glob('*/summary.json'))
+    if len(summaries) == 1:
+        dest = HERE / 'runs' / summaries[0].parent.name
+        dest.mkdir(exist_ok=True)
+        for file in summaries[0].parent.iterdir():
+            if file.suffix in ('.png', '.json'): shutil.copy2(file, dest / file.name)
+        for file in (game / 'screenshots').glob('alacer-' + label + '-*.png'):
+            shutil.copy2(file, dest / file.name)
+    else:
+        record['summary_missing'] = True
+    record_path.write_text(json.dumps(record, indent=2) + '\n')
+    print(json.dumps({key: record.get(key) for key in ('status', 'exit_code', 'duration_s', 'class_origins', 'summary_missing')}, indent=2))
+    if record['status'] != 'completed' or record.get('summary_missing'): raise SystemExit(1)
+
+
+if __name__ == '__main__':
+    main()

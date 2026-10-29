@@ -1,0 +1,25 @@
+WARNING: Using incubator modules: jdk.incubator.vector
+[14:39:02] [main/INFO]: Loading Minecraft 1.8.9 with Fabric Loader 0.20.0
+[14:39:02] [main/INFO]: Mappings not present!
+[14:39:02] [main/INFO]: Loading 10 mods:
+	- alacer 1.0.0+mc1.8.9
+	- fabricloader 0.20.0
+	   \-- mixinextras 0.5.5
+	- java 25
+	- minecraft 1.8.9
+	- osl-core 0.11.0+mc14w27a-mc1.14.4
+	   \-- org_quiltmc_parsers_json 0.2.1
+	- osl-entrypoints 0.6.1+mc13w16a-mc1.14.4
+	- osl-keybinds 0.3.0+mc13w36a-mc17w15a
+	- osl-lifecycle-events 0.6.1+mc13w36a-mc19w07a
+[14:39:02] [main/ERROR]: Uncaught exception in thread "main"
+java.lang.RuntimeException: Failed to read classTweaker file from mod alacer
+	at net.fabricmc.loader.impl.FabricLoaderImpl.loadClassTweakers(FabricLoaderImpl.java:543) ~[fabric-loader-0.20.0.jar:?]
+	at net.fabricmc.loader.impl.launch.knot.Knot.init(Knot.java:145) ~[fabric-loader-0.20.0.jar:?]
+	at net.fabricmc.loader.impl.launch.knot.Knot.launch(Knot.java:66) ~[fabric-loader-0.20.0.jar:?]
+	at net.fabricmc.loader.impl.launch.knot.KnotClient.main(KnotClient.java:23) ~[fabric-loader-0.20.0.jar:?]
+Caused by: net.fabricmc.loader.impl.lib.classtweaker.reader.ClassTweakerFormatException: Namespace (intermediary) does not match current runtime namespace (official)
+	at net.fabricmc.loader.impl.lib.classtweaker.reader.ClassTweakerReaderImpl.error(ClassTweakerReaderImpl.java:332) ~[fabric-loader-0.20.0.jar:?]
+	at net.fabricmc.loader.impl.lib.classtweaker.reader.ClassTweakerReaderImpl.read(ClassTweakerReaderImpl.java:93) ~[fabric-loader-0.20.0.jar:?]
+	at net.fabricmc.loader.impl.FabricLoaderImpl.loadClassTweakers(FabricLoaderImpl.java:541) ~[fabric-loader-0.20.0.jar:?]
+	... 3 more
