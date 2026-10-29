@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="net.adiont.alacer.config.AlacerConfigTest" tests="11" skipped="0" failures="0" errors="0" timestamp="2026-10-29T21:53:43.702Z" hostname="CODYSPC" time="1.465">
+  <properties/>
+  <testcase name="runtimeTogglesOnlyAcceptToggleableKeys()" classname="net.adiont.alacer.config.AlacerConfigTest" time="0.023"/>
+  <testcase name="particleVerticesAreOnByDefaultAndInThePreset()" classname="net.adiont.alacer.config.AlacerConfigTest" time="0.01"/>
+  <testcase name="readsValuesAndFallsBackOnInvalidOnes()" classname="net.adiont.alacer.config.AlacerConfigTest" time="0.01"/>
+  <testcase name="systemPropertyOverridesWithoutBeingPersisted()" classname="net.adiont.alacer.config.AlacerConfigTest" time="0.007"/>
+  <testcase name="cameraSectionFacesIsAnUnmeasuredExperiment()" classname="net.adiont.alacer.config.AlacerConfigTest" time="0.007"/>
+  <testcase name="benchmarkIgnoresStoredOptionsWithoutRewritingSharedFile()" classname="net.adiont.alacer.config.AlacerConfigTest" time="0.016"/>
+  <testcase name="benchmarkDoesNotCreateConfigAndNormalLaunchKeepsStoredOptions()" classname="net.adiont.alacer.config.AlacerConfigTest" time="0.008"/>
+  <testcase name="newOptionsHaveSafeDefaults()" classname="net.adiont.alacer.config.AlacerConfigTest" time="0.005"/>
+  <testcase name="clampsHistory()" classname="net.adiont.alacer.config.AlacerConfigTest" time="0.008"/>
+  <testcase name="benchmarkPresetMatchesShippedDefaultsAndDisablesEveryRenderOptimization()" classname="net.adiont.alacer.config.AlacerConfigTest" time="0.01"/>
+  <testcase name="writesDefaultsWhenMissing()" classname="net.adiont.alacer.config.AlacerConfigTest" time="0.009"/>
+  <system-out><![CDATA[[14:53:45] [Test worker/INFO]: Benchmark config: build defaults plus explicit JVM overrides; ignoring C:\Users\CodyJ\AppData\Local\Temp\junit-8458267319885819563\alacer.properties (no writes)
+[14:53:45] [Test worker/INFO]: Benchmark config: build defaults plus explicit JVM overrides; ignoring C:\Users\CodyJ\AppData\Local\Temp\junit-8458267319885819563\alacer.properties (no writes)
+[14:53:45] [Test worker/INFO]: Benchmark config: build defaults plus explicit JVM overrides; ignoring C:\Users\CodyJ\AppData\Local\Temp\junit-333532228978856431\alacer.properties (no writes)
+]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

@@ -42,14 +42,21 @@ config file only for investigation.
   CPU gate failures).
 - Failed the [frame pacing check](docs/benchmarks/2026-10-28-release-pacing/README.md):
   `render.fastDisplaySync`, `render.fastSwapBuffers` and `render.suppressThreadYield`.
-- Earlier experiments: modern OpenGL pipeline (terrain shader, VAOs, named buffer uploads,
-  multi-draw indirect, GPU culling and translucent sorting), exact chunk frustum test,
+- Earlier experiments: modern OpenGL pipeline (terrain shader, named buffer uploads,
+  multi-draw indirect), exact chunk frustum test,
   camera-section face reuse, chunk worker feeding and time floor, particle light-entry/light
   reuse/movement/box/entity-query experiments, shadow position reuse, zero-translate skipping and
   model display-list batching.
 
 ### Fixes in release preparation
 
+- Resident terrain VBOs now bind their arena page and draw from their actual vertex offset
+  when the shader/MDI path falls back to fixed-function rendering. Previously, enabling MDI
+  with forced modern-GL fallback drew from an empty individual buffer and crashed in native
+  `glDrawArrays`. Replacement uploads also release old slices before returning to ordinary
+  storage. Enabling MDI alone or selecting its benchmark toggle also installs the required
+  buffer/lifecycle hooks. MDI remains an opt-in experiment; see the
+  [v1 hardening evidence](docs/benchmarks/2026-10-29-v1-hardening/README.md).
 - Alacer's dirty-chunk set redirects in `WorldRenderer.setupRender` also intercepted vanilla's
   direction-set operations and cast them to `RenderChunk`, a `ClassCastException` whenever
   vanilla's own visibility search ran (observed with `render.cameraHysteresis.verify`; by code
@@ -65,7 +72,11 @@ config file only for investigation.
 - All measurements come from one Windows 11 / NVIDIA RTX 3060 Ti machine and Standard-mode
   campaigns, which cannot support small-improvement claims. `render.vectorFrustum` and
   `render.fastMipmaps` stay on with exact verifiers but inconclusive performance results.
-- Release testing launched the development client (`runClient`), not the remapped jar in a
-  normal launcher. F3+T resource reloads were not exercised.
+- The [muted native follow-up](docs/benchmarks/2026-10-29-remaining-features/README.md)
+  exercised the actual remapped JAR in an isolated, manually assembled Loader installation
+  and twelve scheduled calls to the resource-reload entrypoint. An external installer profile
+  and physical F3+T delivery remain unverified.
+- GPU compute culling and translucent sorting are unintegrated helpers with no production
+  callers. The sorting helper runs on the CPU; these are not active opt-in GPU features.
 - External launchers must pass `--enable-native-access=ALL-UNNAMED --add-modules=jdk.incubator.vector`.
 - Build-time plugins (Fabric Loom, Ploceus) are `1.18-SNAPSHOT` versions; this build resolved 1.18.4.

@@ -42,15 +42,26 @@ public class ModernVertexBufferMixin implements ModernVertexBuffer {
 		return original.call();
 	}
 
+	// Resident storage also belongs to the fixed-function fallback. The vanilla ID
+	// has no vertex data while a slice is resident, even if MDI is now disabled.
+	@WrapOperation(method = "bind", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/render/platform/GLX;bindBuffer(II)V"))
+	private void alacer$bindStorage(int target, int buffer, Operation<Void> original) {
+		original.call(target, this.alacer$slice != null ? this.alacer$slice.glBufferId : buffer);
+	}
+
+	@WrapOperation(method = "draw", at = @At(value = "INVOKE", target = "Lorg/lwjgl/opengl/GL11;glDrawArrays(III)V"))
+	private void alacer$drawStorage(int mode, int first, int count, Operation<Void> original) {
+		original.call(mode, this.alacer$slice != null ? this.alacer$slice.firstVertex + first : first, count);
+	}
+
 	@Inject(method = "upload", at = @At("HEAD"), cancellable = true)
 	private void alacer$namedUpload(ByteBuffer data, CallbackInfo ci) {
+		// A replacement may use ordinary storage after an option/capability change,
+		// an empty upload or a failed arena allocation. Never retain the old slice.
+		this.alacer$releaseSlice();
 		if (((Object) this).getClass() == VertexBuffer.class && MultiDrawIndirect.isEnabled() && MultiDrawIndirect.isSupported()) {
 			int vCount = data.limit() / this.format.getVertexSize();
 			if (vCount > 0) {
-				if (this.alacer$slice != null) {
-					ResidentMeshArena.get().free(this.alacer$slice);
-					this.alacer$slice = null;
-				}
 				ResidentMeshArena.Slice slice = ResidentMeshArena.get().allocate(vCount);
 				if (slice != null) {
 					ResidentMeshArena.get().upload(slice, data);
@@ -69,6 +80,11 @@ public class ModernVertexBufferMixin implements ModernVertexBuffer {
 
 	@Inject(method = "delete", at = @At("HEAD"))
 	private void alacer$delete(CallbackInfo ci) {
+		this.alacer$releaseSlice();
+	}
+
+	@Unique
+	private void alacer$releaseSlice() {
 		if (this.alacer$slice != null) {
 			ResidentMeshArena.get().free(this.alacer$slice);
 			this.alacer$slice = null;

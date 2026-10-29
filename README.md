@@ -28,6 +28,15 @@ outside the Video Settings menu and the shipped-default benchmark preset. See th
 A config file written by a development build keeps its saved values; set these five keys to
 `false` in it.
 
+The [muted native follow-up](docs/benchmarks/2026-10-29-remaining-features/README.md)
+also exercised the remapped JAR and resource-reload entrypoint. GPU compute-culling
+and translucent-sort helpers have no production callers; they are planned work,
+not active features of the modern pipeline.
+
+The subsequent [v1 hardening](docs/benchmarks/2026-10-29-v1-hardening/README.md)
+repairs the MDI fallback crash and standalone-MDI startup hooks, with 360 passing
+unit tests and four muted native regression checks. The modern renderer remains opt-in.
+
 ## Requirements
 
 | | Version |

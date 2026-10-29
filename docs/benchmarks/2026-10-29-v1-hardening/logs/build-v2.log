@@ -1,0 +1,44 @@
+
+> Configure project :
+Fabric Loom: 1.18.4
+Ploceus: 1.18.4
+
+> Task :compileJava
+> Task :processResources UP-TO-DATE
+> Task :classes
+> Task :jar
+> Task :processIncludeJars UP-TO-DATE
+> Task :sourcesJar
+> Task :remapJar
+> Task :compileTestJava
+> Task :processTestResources NO-SOURCE
+> Task :testClasses
+> Task :remapSourcesJar
+
+> Task :test
+WARNING: Using incubator modules: jdk.incubator.vector
+
+> Task :assemble
+> Task :validateAccessWidener UP-TO-DATE
+> Task :check
+> Task :build
+
+> Task :javaRuntimeInfo
+Gradle: 25.0.4.1+1-LTS (C:\Program Files\Eclipse Adoptium\jdk-25.0.4.101-hotspot)
+Compiler: 25.0.4.1+1-LTS (C:\Program Files\Eclipse Adoptium\jdk-25.0.4.101-hotspot)
+Tests: 25.0.4.1+1-LTS (C:\Program Files\Eclipse Adoptium\jdk-25.0.4.101-hotspot)
+Minecraft: 25.0.4.1+1-LTS (C:\Program Files\Eclipse Adoptium\jdk-25.0.4.101-hotspot)
+Bytecode release: 25
+Compact object headers: JVM default (experiment not selected)
+Game modules: jdk.incubator.vector; native access: ALL-UNNAMED
+
+[Incubating] Problems report is available at: file:///C:/Users/CodyJ/OneDrive/Documents/GitLab/adiont/aevum/alacer/build/reports/problems/problems-report.html
+
+Deprecated Gradle features were used in this build, making it incompatible with Gradle 10.
+
+You can use '--warning-mode all' to show the individual deprecation warnings and determine if they come from your own scripts or plugins.
+
+For more on this, please refer to https://docs.gradle.org/9.7.1/userguide/command_line_interface.html#sec:command_line_warnings in the Gradle documentation.
+
+BUILD SUCCESSFUL in 14s
+11 actionable tasks: 8 executed, 3 up-to-date

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="net.adiont.alacer.render.BlockEntityRendererCacheTest" tests="6" skipped="0" failures="0" errors="0" timestamp="2026-10-29T21:53:45.549Z" hostname="CODYSPC" time="0.013">
+  <properties/>
+  <testcase name="fourSlotsPromoteCorrectlyAcrossMultipleLookups()" classname="net.adiont.alacer.render.BlockEntityRendererCacheTest" time="0.005"/>
+  <testcase name="nullPutIgnoredGracefully()" classname="net.adiont.alacer.render.BlockEntityRendererCacheTest" time="0.001"/>
+  <testcase name="putAndGetSingleRendererHitsMRUCache()" classname="net.adiont.alacer.render.BlockEntityRendererCacheTest" time="0.001"/>
+  <testcase name="emptyCacheReturnsNullAndRecordsMiss()" classname="net.adiont.alacer.render.BlockEntityRendererCacheTest" time="0.0"/>
+  <testcase name="verificationDetectsMatchesAndMismatches()" classname="net.adiont.alacer.render.BlockEntityRendererCacheTest" time="0.004"/>
+  <testcase name="clearResetsAllSlotsAndStatistics()" classname="net.adiont.alacer.render.BlockEntityRendererCacheTest" time="0.001"/>
+  <system-out><![CDATA[[14:53:45] [Test worker/WARN]: BlockEntityRendererCache mismatch for class net.minecraft.block.entity.ChestBlockEntity: cached net.adiont.alacer.render.BlockEntityRendererCacheTest$DummyRenderer@38d80d65, vanilla net.adiont.alacer.render.BlockEntityRendererCacheTest$DummyRenderer@5403799b
+]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

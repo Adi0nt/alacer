@@ -8,6 +8,25 @@ import java.util.Properties;
 import org.junit.jupiter.api.Test;
 
 class AlacerMixinPluginTest {
+	@Test
+	void mdiAloneRequiresModernStorageHooks() {
+		Properties file = new Properties();
+		assertFalse(AlacerMixinPlugin.modernGlEnabled(file));
+		file.setProperty("render.multiDrawIndirect", "true");
+		assertTrue(AlacerMixinPlugin.modernGlEnabled(file), "MDI must not render without its buffer and lifecycle mixins");
+	}
+
+	@Test
+	void mdiBenchmarkToggleInstallsHooksBeforeItsInitialOffSegment() {
+		String key = "alacer.benchmark.toggle";
+		String previous = System.getProperty(key);
+		try {
+			System.setProperty(key, "render.multiDrawIndirect");
+			assertTrue(AlacerMixinPlugin.modernGlEnabled(new Properties()));
+		} finally {
+			if (previous == null) System.clearProperty(key); else System.setProperty(key, previous);
+		}
+	}
 
 	@Test
 	void movementCensusRequiresItsOwnBenchmarkAndProfilerGates() throws Exception {

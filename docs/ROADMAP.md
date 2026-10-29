@@ -11,7 +11,7 @@
 This roadmap establishes the development priorities and technical specifications for **Alacer** on Minecraft 1.8.9 (Java 25).
 In accordance with [AGENTS.md](../AGENTS.md), every priority and candidate is derived directly from empirical measurements gathered by the in-game profiler, Java Flight Recorder (JFR) sampling, native GPU diagnostics, and reproducible benchmark archives.
 
-> **1.0.0 correction (2026-10-28):** the October 25/26 update below this note reported that
+> **1.0.0 correction (2026-10-28):** an earlier roadmap version incorrectly reported that
 > `FastDisplaySync` (Phase 5.4) and `SwapOptimizer` (Phase 5.5) eliminated the swap/sync stall.
 > No benchmark archive supported it: time blocked in the buffer swap includes the frame limiter's
 > and driver's waits, so moving those waits elsewhere lowers the swap section without making
@@ -20,79 +20,69 @@ In accordance with [AGENTS.md](../AGENTS.md), every priority and candidate is de
 > [benchmarks/2026-10-28-release-pacing](benchmarks/2026-10-28-release-pacing/README.md).
 > Table rows below that describe those options as completed are superseded by that archive.
 
-> **October 25/26 Breakthrough Update:** Phase 5.4 (`FastDisplaySync`) and Phase 5.5 (`SwapOptimizer`)
-> have been fully implemented, verified, and integrated. Whole-client telemetry confirms that the
-> historical swap/sync driver stall bottleneck (which previously spiked to 31.7 ms and restricted 1% lows to 57 FPS)
-> has been completely eliminated. Real-time gameplay frame rates increased from ~240 FPS to **477 FPS** in static views
-> (2.10 ms frame time) and **352 FPS** in dynamic camera movement (2.84 ms frame time). With driver synchronization
-> resolved to <0.63 ms, the primary client CPU bottleneck in moving scenes has shifted cleanly to **Terrain** (47.7% of frame time, 1.36 ms),
-> specifically **Visibility BFS** (0.47 ms for 2,153 frustum tests across 2,958 chunks) and layer draw submissions (0.73 ms).
-> All 340+ unit tests pass cleanly on Java 25.
+## 1. Current release priorities
 
----
+The current default decisions are documented in [CHANGELOG.md](../CHANGELOG.md).
+The [muted native follow-up](benchmarks/2026-10-29-remaining-features/README.md)
+completed entity/particle/tick/sound/adjacency verifiers, shader upload readbacks,
+MDI command checks, twelve scheduled resource reloads and an isolated remapped-JAR
+smoke. It also found a native crash when MDI storage fell back to fixed-function
+VBO drawing. Correctness checks and successful startup do not establish speedups.
 
-## 1. Executive Summary & Empirical Feature Profile
+The subsequent [v1 hardening](benchmarks/2026-10-29-v1-hardening/README.md)
+repairs the MDI fallback and standalone-MDI startup hooks, with 360 passing tests
+and four completed muted native checks, including the rebuilt remapped JAR.
+Keep rejected experiments default-off and distinguish installed features from unintegrated helpers.
+`GpuComputeCulling` has no production callers. `GpuTranslucentSort` also has no
+production callers and currently sorts indices on the CPU. Neither is an active
+GPU rendering feature. The Phase 7/8 blueprints below describe future work.
 
-Whole-client attribution and dedicated telemetry modes (Modes 0, 1, 2, and 3 in `PerformanceAreaGraphRenderer`) have classified where the Minecraft client thread and GPU spend their execution time, allocation budgets, and tail latencies.
+The frame pacing/swap options failed the archived gate and remain default-off.
+The former claim that moving waits out of swap eliminated the whole-frame stall
+has been removed. Whole-client improvement needs controlled frame/CPU/tail
+measurements; lower swap-section time alone is insufficient.
 
-### Empirical Performance Profile by Minecraft Feature (Post Phase 5 Swap/Sync Optimization)
-
-| Subsystem / Feature | Client Java CPU Samples (%) | Wall-Clock Frame Impact | Tail Impact (p99 / Slow-1%) | Heap Allocation Impact | Current State in Alacer |
-|---|---|---|---|---|---|
-| **Terrain Setup & Visibility Culling** (`WorldRenderer.setupRender`, BFS culling) | **35% – 48%** (moving phases: pan, fly, sprint) | **0.47 – 0.58 ms/frame** in active movement (~2,150 frustum tests) | +0.28 – 0.54 ms in slow-1% frames | ~7% in static; zero on steady path | **Active & Accelerated**: `render.fastChunkVisibility` (allocation-free BFS), `render.vectorFrustum` (Java 25 SIMD direct discriminant `isChunkVisible`), `render.flatOcclusion`, axis-split BFS direction stepping |
-| **Terrain Layer Drawing & GL Submission** (`TerrainLayerBatch`, `VboRenderChunkList`, `glDrawArrays`) | **25% – 32%** (steady, pan, fly) | **0.70 – 0.85 ms** across Solid, Cutout Mipped, Cutout, Translucent | Major contributor to draw driver overhead across ~950 passes | Negligible in steady state (<3 KB/frame) | **Active**: `TerrainShader` & `TerrainLayerBatch` single-pass queue segregation; **Phase 6 MDI** in development to batch passes into indirect draws |
-| **Driver Sync & Buffer Swap** (`Display.update`, `swap`) | **15% – 22%** (previously 82%+) | **0.55 – 0.65 ms** (down from 15.0–31.7 ms!) | Completely smoothed; no scheduler spikes | 0 | **Completed**: `FastDisplaySync` (high-precision spin-wait pacing), `SwapOptimizer` (early `glFlush` 3D/2D overlap, fence sync, post-swap yield suppression) |
-| **Entity Processing & Rendering** (`RenderManager`, `ModelRenderer`, layers) | **10% – 18%** (when mobs are in view: `d200`) | 6.6 – 10.5 µs per drawn entity; dominates mob scenes | +0.27 – 0.29 ms in slow-1% frames | **89% of frame allocation** (53–58 KB/frame in `d200`, mostly `BlockPos`) | **Active**: `render.fastEntityChunkLookup`, `render.fastEntityShadows`, `render.fastEntityLighting` (scalar lighting), `render.fastEntityRendererLookup`, `render.fastEntityCulling` |
-| **Chunk Upload & Compilation Pipeline** (`ChunkCompileTaskGenerator`, worker queues) | <1% in steady state; spikes during flights | 0.16–0.18 ms/frame mean; **1.23–1.32 ms** in slow-1% | **Dominates flight tail frames** (16%–18% of slow-1% time) | 26–29 KB/frame in flight | Bulk little-endian chunk decode; native scheduling core complete; worker ambient occlusion cache active |
-| **Client Tick Execution** (`Minecraft.runTick`, `World.tick`, random display ticks) | 1.7% – 2.6% of all frames (20 ticks/sec) | Spikes frames by **+0.9 to +1.9 ms** (+3.5 ms with particles) | **Primary driver of p99 frame stutters** and tick-frame lows | 13% of static allocation; heavy `BlockPos` in void/barrier checks | **Active**: `render.fastRandomDisplayTicks`, `render.fastSoundThread`, `render.fastRayTrace` |
-| **Particle Simulation & Rendering** (`EffectRenderer`) | 0.7% – 1.1% (default); **55.8%** in heavy particle scenes | Dominates in combat/explosions (up to 3.5 ms/frame) | +1.73 – 1.78 ms in particle tick frames | **58% of allocation** in particle scenes (`Box`, `BlockPos`) | **Optimizations 7, 8, 9 Active** (`fastParticleLight`, `fastParticleRemoval`, `fastParticleVertices`) |
-| **HUD, GUI & World Picking** (`world.pick`, `FontRenderer`) | ~1% – 2% CPU | ~0.05 ms/frame | Low | **23% of steady-state allocation** (`world.pick` crosshair raycast) | **Active**: `render.fastRayTrace` scalar DDA; Mode 3 graph title invalidation repaired |
-
-```mermaid
-pie title Client-Thread Java CPU Time Breakdown (Dynamic Movement - 352 FPS Baseline)
-    "Terrain Visibility BFS & Culling" : 34
-    "Solid & Cutout Layer Drawing" : 26
-    "Driver Swap & Display Sync" : 22
-    "Entity & Particle Drawing" : 10
-    "Client Ticking & World Tasks" : 5
-    "HUD & GUI Interface" : 3
-```
-
----
+Extended performance, repeatability, compatibility and stability evidence remains
+open. No implementation-status row below overrides the release qualification or
+promotes an option by default.
 
 ## 2. Implementation Status Matrix
 
 | Phase | Milestone Item | Status | Runtime Toggle | Verification Toggle | Primary Commit(s) |
 |---|---|---|---|---|---|
 | **Phase 1.1** | `TerrainShader` Promotion Pipeline | Pending Benchmark | `render.terrainShader` | `render.modernGl.verify` | `Option B series` |
-| **Phase 1.2** | Terrain Draw Loop Streamlining | **Completed** | `render.terrainShader` | N/A | `ebb44be` |
-| **Phase 1.3** | Texture Pipeline & Fast LUT Mipmaps | **Completed** | `render.fastMipmaps` | `render.fastMipmaps.verify` | Local recovery |
+| **Phase 1.2** | Terrain Draw Loop Streamlining | Implemented; default-off experiment | `render.terrainShader` | N/A | `ebb44be` |
+| **Phase 1.3** | Texture Pipeline & Fast LUT Mipmaps | Native verifier/reloads pass; performance inconclusive | `render.fastMipmaps` | `render.fastMipmaps.verify` | Local recovery |
 | **Phase 2.1** | Allocation-Free Entity Lighting | **Completed** | `render.fastEntityLighting` | `render.fastEntityLighting.verify` | `46f5711` |
 | **Phase 2.2** | Frustum Culling & Renderer Cache | **Completed** | `render.fastEntityCulling`, `render.fastEntityRendererLookup` | `render.fastEntityCulling.verify`, `render.fastEntityRendererLookup.verify` | `2c2dc70` |
-| **Phase 2.3** | Model Part Zero-Translation Skipping | Implemented; flattening absent | `render.fastModelTransforms` | Sampled raw-matrix verifier wired and exercised | `ebb44be` + local recovery |
+| **Phase 2.3** | Model Part Zero-Translation Skipping | Default-off; performance gates failed; flattening absent | `render.fastModelTransforms` | Sampled raw-matrix verifier wired and exercised | `ebb44be` + local recovery |
 | **Phase 3.1** | Reference Hardware Chunk Scheduling | **Native core complete: floor fails six gates**; feed/full controls unscored | `render.feedChunkWorkers`, `render.chunkTimeFloor` | Frozen receipts/latency/frame/CPU gates | October 24 native-core-01 |
-| **Phase 3.2** | Worker Ambient Occlusion & Culling Cache | Repaired; native correctness smokes pass | `render.fastWorkerAo` | Independent unpooled block/light reference | `ebb44be` + local recovery |
+| **Phase 3.2** | Worker Ambient Occlusion & Culling Cache | Default-off; performance/latency gates failed | `render.fastWorkerAo` | Independent unpooled block/light reference | `ebb44be` + local recovery |
 | **Phase 3.3** | Ring-Buffered PBO Chunk Staging | Backlog | `render.pboChunkUploads` | N/A | Pending |
-| **Phase 4.1** | Exact-Input Visibility Reuse | Approximate thresholds removed; invalidation repaired; no performance promotion | `render.cameraHysteresis` | `render.cameraHysteresis.verify` | `e364b82` + local recovery |
-| **Phase 4.2** | Vectorized Frustum Testing (Vector API) | **Completed** | `render.vectorFrustum` | `render.vectorFrustum.verify` | `ebb44be` + local recovery |
-| **Phase 4.3** | Flat Bitset Occlusion Traversal | **Completed** | `render.flatOcclusion` | `render.flatOcclusion.verify` | `ebb44be` |
+| **Phase 4.1** | Exact-Input Visibility Reuse | Default-off; native verifier differences | `render.cameraHysteresis` | `render.cameraHysteresis.verify` | `e364b82` + local recovery |
+| **Phase 4.2** | Vectorized Frustum Testing (Vector API) | Native verifier passes; performance inconclusive | `render.vectorFrustum` | `render.vectorFrustum.verify` | `ebb44be` + local recovery |
+| **Phase 4.3** | Flat Bitset Occlusion Traversal | Default-off; native verifier differences | `render.flatOcclusion` | `render.flatOcclusion.verify` | `ebb44be` |
 | **Phase 4.4** | SIMD Direct Discriminant & Axis-Split BFS Traversal | **Completed** | `render.vectorFrustum`, `render.fastChunkVisibility` | `render.vectorFrustum.verify` | `VectorFrustum.isChunkVisible` & axis unroll |
 | **Phase 5.1** | Random Display Tick Allocation Reduction | **Completed** | `render.fastRandomDisplayTicks` | Query checks only | `2f604b4` + local recovery |
 | **Phase 5.2** | Crosshair Raycast Allocation Reduction (`world.pick`) | **Completed** | `render.fastRayTrace` | `render.fastRayTrace.verify` | `1692a44` + local recovery |
 | **Phase 5.3** | Sound System Sleep Replacement | **Completed** | `render.fastSoundThread` | `render.fastSoundThread.verify` | `7a39f1e` + verification |
-| **Phase 5.4** | Precision Frame Pacing & Limiting | **Completed** | `render.fastDisplaySync` | `render.fastDisplaySync.verify` | `FastDisplaySync` park/spin-wait engine |
-| **Phase 5.5** | Early GPU Flush & Swap Optimization | **Completed** | `render.fastSwapBuffers`, `render.suppressThreadYield` | `render.fastSwapBuffers.verify` | `SwapOptimizer` early flush & fence pipeline |
-| **Phase 6.1** | Multi-Draw Indirect (`glMultiDrawArraysIndirect`) | **Completed (Arena & Command Packing)** | `render.multiDrawIndirect` | `render.multiDrawIndirect.verify` | ResidentMeshArena & MDI buffer packing |
-| **Phase 6.2** | Indirect Batch Layer Submission & State Flattening | **Completed** | `render.multiDrawIndirect` | `render.multiDrawIndirect.verify` | `WorldRendererPassesMixin` & `MultiDrawIndirect.renderLayer` |
-| **Phase 7.1** | Compute-Driven Frustum & Occlusion Culling | **Completed (Compute Shader Architecture)** | `render.modernPipeline` (no separate option) | None | `GpuComputeCulling` SSBO & compute dispatch |
-| **Phase 8.1** | GPU Translucent Geometry Sorting | **Completed (Distance & Index Pipeline)** | `render.modernPipeline` (no separate option) | None | `GpuTranslucentSort` depth sorting engine |
-| **Phase 9.1** | Low-Latency Frame Pacing & Dynamic CPU-GPU Queue Sync | **Completed (Timer Query Ring)** | `render.fastDisplaySync` (no separate option) | `render.fastDisplaySync.verify` | `DynamicFramePacing` GL_TIME_ELAPSED engine |
+| **Phase 5.4** | Precision Frame Pacing & Limiting | Default-off; release pacing gate failed | `render.fastDisplaySync` | `render.fastDisplaySync.verify` | `FastDisplaySync` park/spin-wait engine |
+| **Phase 5.5** | Early GPU Flush & Swap Optimization | Default-off; release pacing gate failed | `render.fastSwapBuffers`, `render.suppressThreadYield` | `render.fastSwapBuffers.verify` | `SwapOptimizer` early flush & fence pipeline |
+| **Phase 6.1** | Multi-Draw Indirect (`glMultiDrawArraysIndirect`) | Implemented/default-off; native command checks pass | `render.multiDrawIndirect` | `render.multiDrawIndirect.verify` | ResidentMeshArena & MDI buffer packing |
+| **Phase 6.2** | Indirect Batch Layer Submission & State Flattening | Implemented/default-off; functional checks only | `render.multiDrawIndirect` | `render.multiDrawIndirect.verify` | `WorldRendererPassesMixin` & `MultiDrawIndirect.renderLayer` |
+| **Phase 7.1** | Compute-Driven Frustum & Occlusion Culling | Helper implemented; **not integrated or qualified** | No active rendering path | None | `GpuComputeCulling` has no production callers |
+| **Phase 8.1** | GPU Translucent Geometry Sorting | CPU sorting helper only; **not integrated or qualified** | No active rendering path | Offline helper tests | GPU sorting pipeline remains planned |
+| **Phase 9.1** | Low-Latency Frame Pacing & Dynamic CPU-GPU Queue Sync | Implemented/default-off; no latency qualification | `render.fastDisplaySync` (no separate option) | `render.fastDisplaySync.verify` | `DynamicFramePacing` GL_TIME_ELAPSED engine |
 
 ---
 
 ## 3. Active Optimizations and Closed Investigations
 
-### Shipped Defaults (Optimizations 1 – 9)
+### Selected shipped optimizations (historical scene-specific figures)
+
+The figures below describe individual historical workloads, not aggregate Java 25
+release gains. Use the benchmark archives for their runtime, scene and limits;
+this list is not the complete current-default inventory.
 1. **`render.fastChunkVisibility`**: Allocation-free BFS visibility search with pooled records and cached section faces. Saves ~430 KB/frame.
 2. **`render.fastEntityChunkLookup`**: Direct cached world-chunk references in `renderEntities`, eliminating 1,400+ hash lookups per frame.
 3. **`render.throttleGlErrorChecks`**: Reduces `glGetError` checks from twice/frame to once/sec, saving 2–3% frame time on threaded drivers.
@@ -103,16 +93,16 @@ pie title Client-Thread Java CPU Time Breakdown (Dynamic Movement - 352 FPS Base
 8. **`render.fastParticleRemoval`**: Single-pass keyed `removeAll` by network ID (median tick-frame mean 16–24% lower).
 9. **`render.fastParticleVertices`**: Direct byte writes into particle vertex buffers, bypassing per-element lookups (median 20–33% frame time reduction).
 
-### Recently Completed Breakthroughs (October 2026)
+### Implemented subsystems and unintegrated helpers (October 2026)
 - **Phase 6: Multi-Draw Indirect Batch Submission Engine (`MultiDrawIndirect` & `ResidentMeshArena`)**:
   - Implemented 32 MiB shared resident VBO arena (`ResidentMeshArena`) with 28-byte block vertex stride alignment and coalescing deallocation.
   - Implemented `MultiDrawIndirect.renderLayer` which batches visible chunks by resident buffer into 16-byte `DrawArraysIndirectCommand` buffers and instanced origin streams.
-  - Fully integrated into `WorldRendererPassesMixin` and `ModernVertexBufferMixin`, replacing ~1,000 separate JNI driver draw calls per frame with 1-2 `GL43.glMultiDrawArraysIndirect` batch calls.
-- **Phase 7: Compute-Driven Frustum Culling (`GpuComputeCulling`)**:
+  - Integrated as a default-off experiment in `WorldRendererPassesMixin` and `ModernVertexBufferMixin`; batch count varies with visible layers and resident pages. Native command validation is not full rendering or performance qualification.
+- **Phase 7: Unintegrated compute-culling helper (`GpuComputeCulling`)**:
   - Implemented OpenGL 4.3 compute shader dispatch (`GL43.glDispatchCompute`) evaluating frustum plane discriminants directly on the GPU.
-  - Packs chunk bounding boxes into Shader Storage Buffer Objects (SSBOs) and writes compact visibility bitmasks with atomic operations.
+  - Packs chunk bounding boxes into Shader Storage Buffer Objects (SSBOs) and writes visibility bitmasks. No production caller dispatches it during rendering.
 - **Phase 8: Translucent Quad Depth Sorting (`GpuTranslucentSort`)**:
-  - Implemented zero-allocation parallel centroid depth sorting and element index buffer generation for translucent chunk geometry.
+  - A synchronized CPU centroid/index sorting helper exists. It has no production caller; GPU sorting and rendering integration remain planned.
 - **Phase 9: Dynamic Frame Pacing & Queue Synchronization (`DynamicFramePacing`)**:
   - Double-buffered asynchronous OpenGL timer queries (`GL33.GL_TIME_ELAPSED`) measuring GPU execution duration without stalling the CPU thread.
   - Dynamically estimates GPU queue depth and auto-calibrates `FastDisplaySync` tail wait margins to keep queue depth between 1.0 and 1.5 frames.
@@ -120,7 +110,7 @@ pie title Client-Thread Java CPU Time Breakdown (Dynamic Movement - 352 FPS Base
   - Replaced LWJGL's `Thread.yield()` limiter loop with high-precision `LockSupport.parkNanos` (>1.5 ms) and CPU pause `Thread.onSpinWait()` (<1.5 ms tail).
   - Implemented early 3D `GL11.glFlush()` at `renderWorld` return, overlapping GPU rasterization with CPU 2D GUI and HUD rendering.
   - Added OpenGL 3.2 fence sync (`GL32.glFenceSync`) pipelining and suppressed post-swap `Thread.yield()`, preventing Windows OS thread preemption spikes.
-  - Eliminated the 31.7 ms driver stall bottleneck, doubling framerates to **477 FPS static / 352 FPS dynamic**.
+  - Failed the archived release pacing check; these options remain default-off. No whole-frame speedup is established by moving wait time between profiler sections.
 - **Phase 4.4 SIMD Direct Discriminant Vector Frustum (`VectorFrustum.isChunkVisible`)**:
   - Precomputes 4-lane SIMD plane discriminant constants (`planeK0`, `planeK1`) absorbing camera translation offsets and corner bounds.
   - Evaluates chunk box visibility directly via Java 25 Vector API registers (`DoubleVector.broadcast` and FMA/mult-add), eliminating memory array writes, bounding-box allocations, and store-to-load forwarding penalties.

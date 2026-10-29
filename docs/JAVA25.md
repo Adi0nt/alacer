@@ -107,8 +107,11 @@ are skipped; use new labels/a new archive for an independent later series.
   visual inspection. Neither proves framebuffer identity for every view or arbitrary other mods.
 - The tested platform is Windows 11 x64 with NVIDIA RTX 3060 Ti. Other OS/native bundles,
   multiplayer servers, external production installers and third-party mod combinations need
-  their own live checks. The remapped release jar is built and inspected; live scenario
-  validation uses Loom's development client.
+  their own live checks. Most live scenarios use Loom's development client. The
+  [October 29 follow-up](benchmarks/2026-10-29-remaining-features/README.md) also
+  completed a remapped-JAR smoke in an isolated local Loader installation. It used
+  the matching Calamus Gen 2 mappings and `-Dfabric.fixPackageAccess=true`; this
+  manually assembled setup does not validate an external Ornithe installer profile.
 - Loom reports existing Gradle deprecations on run tasks; Gradle 10 is not claimed compatible.
   OneDrive also triggers Loom's existing workspace/performance warning. No driver or global
   Java installation settings are changed by this migration.

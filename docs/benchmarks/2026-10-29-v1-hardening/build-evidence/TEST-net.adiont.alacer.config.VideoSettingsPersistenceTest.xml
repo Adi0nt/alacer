@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="net.adiont.alacer.config.VideoSettingsPersistenceTest" tests="16" skipped="0" failures="0" errors="0" timestamp="2026-10-29T21:53:45.277Z" hostname="CODYSPC" time="0.178">
+  <properties/>
+  <testcase name="failedSaveRetainsFileAndLiveStateAndRejectsNonMenuKeys()" classname="net.adiont.alacer.config.VideoSettingsPersistenceTest" time="0.014"/>
+  <testcase name="benchmarkNeverWritesUserPreferences()" classname="net.adiont.alacer.config.VideoSettingsPersistenceTest" time="0.009"/>
+  <testcase name="detailQualityFileValuesAreClampedAndLaunchOverridesAreNotSaved()" classname="net.adiont.alacer.config.VideoSettingsPersistenceTest" time="0.01"/>
+  <testcase name="startupSelectedOptionIsSavedButOnlyChangesLiveStateAfterRelaunch()" classname="net.adiont.alacer.config.VideoSettingsPersistenceTest" time="0.016"/>
+  <testcase name="explicitEditsPersistWithoutLeakingLaunchOverridesOrUnrelatedRuntimeToggles()" classname="net.adiont.alacer.config.VideoSettingsPersistenceTest" time="0.017"/>
+  <testcase name="detailQualityPreferencesPersistApplyLiveAndRejectInvalidValues()" classname="net.adiont.alacer.config.VideoSettingsPersistenceTest" time="0.015"/>
+  <testcase name="fileMergeRetainsUnknownValuesAndMalformedFileIsNotOverwritten()" classname="net.adiont.alacer.config.VideoSettingsPersistenceTest" time="0.009"/>
+  <testcase name="everyQualityMenuDefaultMatchesTheConfigDefaultAndIsExported()" classname="net.adiont.alacer.config.VideoSettingsPersistenceTest" time="0.006"/>
+  <testcase name="benchmarkUsesVanillaDefaultsForExpandedSettings()" classname="net.adiont.alacer.config.VideoSettingsPersistenceTest" time="0.006"/>
+  <testcase name="chunkThreadsAreSavedForTheNextLaunchOnly()" classname="net.adiont.alacer.config.VideoSettingsPersistenceTest" time="0.016"/>
+  <testcase name="atmosphereControlsSaveApplyLiveAndReloadWithoutChangingOtherOptions()" classname="net.adiont.alacer.config.VideoSettingsPersistenceTest" time="0.012"/>
+  <testcase name="benchmarkUsesVanillaQualityDefaultsRegardlessOfSavedPreferences()" classname="net.adiont.alacer.config.VideoSettingsPersistenceTest" time="0.005"/>
+  <testcase name="expandedSettingsRejectInvalidMenuValuesAndClampOrSnapFileValues()" classname="net.adiont.alacer.config.VideoSettingsPersistenceTest" time="0.013"/>
+  <testcase name="benchmarkIgnoresSavedAtmosphereAndRetainsTheFile()" classname="net.adiont.alacer.config.VideoSettingsPersistenceTest" time="0.006"/>
+  <testcase name="lightingPreferencesPersistAndKeepVanillaDefaults()" classname="net.adiont.alacer.config.VideoSettingsPersistenceTest" time="0.01"/>
+  <testcase name="expandedSettingsPersistApplyLiveAndReloadWithVanillaDefaults()" classname="net.adiont.alacer.config.VideoSettingsPersistenceTest" time="0.01"/>
+  <system-out><![CDATA[[14:53:45] [Test worker/INFO]: Benchmark config: build defaults plus explicit JVM overrides; ignoring C:\Users\CodyJ\AppData\Local\Temp\junit-14486831433555364468\alacer.properties (no writes)
+[14:53:45] [Test worker/INFO]: Benchmark config: build defaults plus explicit JVM overrides; ignoring C:\Users\CodyJ\AppData\Local\Temp\junit-3462397969679419536\alacer.properties (no writes)
+[14:53:45] [Test worker/INFO]: Benchmark config: build defaults plus explicit JVM overrides; ignoring C:\Users\CodyJ\AppData\Local\Temp\junit-870967127723337003\alacer.properties (no writes)
+[14:53:45] [Test worker/INFO]: Benchmark config: build defaults plus explicit JVM overrides; ignoring C:\Users\CodyJ\AppData\Local\Temp\junit-4493367063932843672\atmosphere.properties (no writes)
+]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>
