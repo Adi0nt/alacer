@@ -1,0 +1,599 @@
+{
+  "label": "q-verify-cameraHysteresis",
+  "command": [
+    "cmd.exe",
+    "/d",
+    "/c",
+    "gradlew.bat",
+    "runClient",
+    "-Pwindow=1920x1080",
+    "-Pxmx=2G",
+    "-Palacer.benchmark=true",
+    "-Palacer.benchmark.label=q-verify-cameraHysteresis",
+    "-Palacer.render.cameraHysteresis.verify=true"
+  ],
+  "started_utc": "2026-10-29T00:38:05.329789+00:00",
+  "protocol_sha256": "48f9a63a23fac82c17f42ff058daf6397ff666fe386ad988d08316c1c179725b",
+  "source": "941405bf0a2afbb18785f8dd36d1d285dc37c633",
+  "hardware": {
+    "platform": "windows",
+    "os": "Windows-11-10.0.26300-SP0",
+    "cpu_model": "12th Gen Intel(R) Core(TM) i7-12700F",
+    "logical_processors": 20
+  },
+  "topology": {
+    "status": "ok",
+    "value": {
+      "logical_processors": 20,
+      "cores": 12,
+      "efficiency_class": {
+        "0": 1,
+        "1": 1,
+        "2": 1,
+        "3": 1,
+        "4": 1,
+        "5": 1,
+        "6": 1,
+        "7": 1,
+        "8": 1,
+        "9": 1,
+        "10": 1,
+        "11": 1,
+        "12": 1,
+        "13": 1,
+        "14": 1,
+        "15": 1,
+        "16": 0,
+        "17": 0,
+        "18": 0,
+        "19": 0
+      },
+      "smt": {
+        "0": true,
+        "1": true,
+        "2": true,
+        "3": true,
+        "4": true,
+        "5": true,
+        "6": true,
+        "7": true,
+        "8": true,
+        "9": true,
+        "10": true,
+        "11": true,
+        "12": true,
+        "13": true,
+        "14": true,
+        "15": true,
+        "16": false,
+        "17": false,
+        "18": false,
+        "19": false
+      },
+      "classes": [
+        0,
+        1
+      ],
+      "hybrid": true,
+      "multi_group": false,
+      "performance_processors": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15
+      ],
+      "efficiency_processors": [
+        16,
+        17,
+        18,
+        19
+      ]
+    },
+    "source": "windows:GetLogicalProcessorInformationEx(RelationProcessorCore)"
+  },
+  "jar_sha256": "98e06d881a4535770820bec12d9882ff0b2bfe6809966a40eb348225bb733eab",
+  "status": "failed",
+  "log": "run\\alacer\\benchmarks\\qualification-telemetry\\q-verify-cameraHysteresis.log",
+  "props": [
+    "alacer.render.cameraHysteresis.verify=true"
+  ],
+  "gpu": {
+    "status": "ok",
+    "value": [
+      {
+        "name": "NVIDIA GeForce RTX 3060 Ti",
+        "driver_version": "616.92",
+        "pci.bus_id": "00000000:01:00.0",
+        "clocks.max.gr": "2100",
+        "clocks.max.mem": "7001",
+        "power.limit": "200.00"
+      }
+    ],
+    "source": "nvidia-smi --query-gpu"
+  },
+  "quiet_wait_s": 11.003747200000362,
+  "launch_epoch": 1793234296.556949,
+  "client": {
+    "pid": 6868,
+    "executable": "C:\\Program Files\\Eclipse Adoptium\\jdk-25.0.4.101-hotspot\\bin\\java.exe",
+    "command_line": "\"C:\\Program Files\\Eclipse Adoptium\\jdk-25.0.4.101-hotspot\\bin\\java.exe\" -Dalacer.benchmark=true -Dalacer.benchmark.label=q-verify-cameraHysteresis -Dalacer.render.cameraHysteresis.verify=true -Dfabric.dli.config=C:\\Users\\CodyJ\\OneDrive\\Documents\\GitLab\\adiont\\aevum\\alacer\\.gradle\\loom-cache\\launch.cfg -Dfabric.dli.env=client -Dfabric.dli.main=net.fabricmc.loader.impl.launch.knot.KnotClient -Dfabric.gameVersion=1.8.9 --enable-native-access=ALL-UNNAMED --add-modules=jdk.incubator.vector @C:\\Users\\CodyJ\\OneDrive\\Documents\\GitLab\\adiont\\aevum\\alacer\\build\\loom-cache\\argFiles\\runClient -XX:StackShadowPages=32 -Xmx2G -Dfile.encoding=UTF-8 -Duser.country=US -Duser.language=en -Duser.variant net.fabricmc.devlaunchinjector.Main --width 1920 --height 1080",
+    "affinity": {
+      "status": "ok",
+      "value": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19
+      ],
+      "source": "windows:GetProcessAffinityMask"
+    },
+    "priority": {
+      "status": "ok",
+      "value": "normal",
+      "source": "windows:GetPriorityClass"
+    }
+  },
+  "exit_code": 1,
+  "exit_epoch": 1793234307.5747108,
+  "monitor_errors": [],
+  "environment_monitor": {
+    "samples": 23,
+    "expected_samples": null,
+    "coverage": null,
+    "availability": {
+      "cpu": {
+        "samples": 23,
+        "ok": 22,
+        "counts": {
+          "unavailable": 1,
+          "ok": 22
+        },
+        "reasons": [
+          "first sample (no interval yet)"
+        ],
+        "fraction_ok": 0.9565217391304348
+      },
+      "frequency": {
+        "samples": 23,
+        "ok": 23,
+        "counts": {
+          "ok": 23
+        },
+        "reasons": [],
+        "fraction_ok": 1.0
+      },
+      "foreground": {
+        "samples": 23,
+        "ok": 23,
+        "counts": {
+          "ok": 23
+        },
+        "reasons": [],
+        "fraction_ok": 1.0
+      },
+      "power_plan": {
+        "samples": 23,
+        "ok": 23,
+        "counts": {
+          "ok": 23
+        },
+        "reasons": [],
+        "fraction_ok": 1.0
+      },
+      "memory": {
+        "samples": 23,
+        "ok": 23,
+        "counts": {
+          "ok": 23
+        },
+        "reasons": [],
+        "fraction_ok": 1.0
+      },
+      "client_affinity": {
+        "samples": 23,
+        "ok": 10,
+        "counts": {
+          "missing": 13,
+          "ok": 10
+        },
+        "reasons": [],
+        "fraction_ok": 0.43478260869565216
+      },
+      "gpu": {
+        "samples": 22,
+        "ok": 22
+      }
+    },
+    "busy_pct_mean": 25.91573590097754,
+    "client_cores_mean": 2.8006714203098353,
+    "harness_cores_mean": 0.14959482612903513,
+    "background_cores_mean": 1.4082995297900593,
+    "background_cores_max": 3.141433466753505,
+    "background_rolling_max": 2.219792681304104,
+    "background_step": 1.622489408910996,
+    "unattributed_cores_mean": 2.351804326227011,
+    "unreadable_processes_max": 166,
+    "top_background_core_seconds": {
+      "ChatGPT.exe": 10.124500000000001,
+      "Spotify.exe": 4.969099999999999,
+      "MSPCManagerCore.exe": 1.9704000000000002,
+      "zen.exe": 1.4537999999999995,
+      "codex-computer-use.exe": 1.2665,
+      "FxSound.exe": 1.1863000000000001,
+      "iCUE.exe": 0.6720999999999999,
+      "nvcontainer.exe": 0.6414
+    },
+    "frequency_mean_mhz": 3435.346550782542,
+    "frequency_p_mean_mhz": 3512.5063203362674,
+    "frequency_e_mean_mhz": 3126.707472567639,
+    "frequency_min_mhz": 1649.164182021616,
+    "foreground_client_fraction": 0.0,
+    "foreground_other_exes": [
+      "ChatGPT.exe"
+    ],
+    "power_plans": [
+      {
+        "guid": "6926823e-1958-4e8c-a849-b485e20e7181",
+        "name": "Ultimate Performance"
+      }
+    ],
+    "client_affinities": [
+      [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19
+      ]
+    ],
+    "memory_available_mb_min": 10458.70703125,
+    "gpu_util_mean": 19.0,
+    "gpu_clock_mean_mhz": 1665.0,
+    "gpu_clock_min_mhz": 1665.0,
+    "gpu_pstates": [
+      "P0"
+    ],
+    "monitor_self_cpu_ms_mean": 26.494565217391305,
+    "monitor_self_cpu_ms_max": 218.75,
+    "monitor_self_cores": 0.026494565217391304
+  },
+  "marks": [
+    {
+      "t": 1793234296.5564134,
+      "event": "quiet-window-passed",
+      "seconds": 11.003747200000362
+    },
+    {
+      "t": 1793234296.5573711,
+      "event": "launch",
+      "label": "q-verify-cameraHysteresis"
+    },
+    {
+      "t": 1793234307.5747182,
+      "event": "exit",
+      "code": 1
+    }
+  ],
+  "environment_series": [
+    {
+      "t": 1793234285.553,
+      "busy_pct": null,
+      "client_cores": null,
+      "background_cores": null,
+      "harness_cores": null,
+      "freq_mean_mhz": 1649.2,
+      "freq_p_mean_mhz": 1862.6,
+      "freq_e_mean_mhz": 795.5,
+      "fg_client": false,
+      "self_cpu_ms": 218.75
+    },
+    {
+      "t": 1793234286.553,
+      "busy_pct": 20.6349,
+      "client_cores": null,
+      "background_cores": 1.2963,
+      "harness_cores": 0.2187,
+      "freq_mean_mhz": 3764.5,
+      "freq_p_mean_mhz": 3892.9,
+      "freq_e_mean_mhz": 3251.0,
+      "fg_client": false,
+      "self_cpu_ms": 15.625
+    },
+    {
+      "t": 1793234287.561,
+      "busy_pct": 19.8912,
+      "client_cores": null,
+      "background_cores": 1.2241,
+      "harness_cores": 0.0465,
+      "freq_mean_mhz": 3425.8,
+      "freq_p_mean_mhz": 3461.6,
+      "freq_e_mean_mhz": 3282.3,
+      "fg_client": false,
+      "self_cpu_ms": 15.625
+    },
+    {
+      "t": 1793234288.557,
+      "busy_pct": 10.7199,
+      "client_cores": null,
+      "background_cores": 0.5493,
+      "harness_cores": 0.0157,
+      "freq_mean_mhz": 3216.7,
+      "freq_p_mean_mhz": 3199.9,
+      "freq_e_mean_mhz": 3283.8,
+      "fg_client": false,
+      "self_cpu_ms": 15.625
+    },
+    {
+      "t": 1793234289.563,
+      "busy_pct": 17.8488,
+      "client_cores": null,
+      "background_cores": 1.77,
+      "harness_cores": 0.0155,
+      "freq_mean_mhz": 3677.4,
+      "freq_p_mean_mhz": 3776.9,
+      "freq_e_mean_mhz": 3279.7,
+      "fg_client": false,
+      "self_cpu_ms": 15.625
+    },
+    {
+      "t": 1793234290.556,
+      "busy_pct": 13.1579,
+      "client_cores": null,
+      "background_cores": 1.1171,
+      "harness_cores": 0.0157,
+      "freq_mean_mhz": 3343.5,
+      "freq_p_mean_mhz": 3355.0,
+      "freq_e_mean_mhz": 3297.7,
+      "fg_client": false,
+      "self_cpu_ms": 15.625
+    },
+    {
+      "t": 1793234291.564,
+      "busy_pct": 11.6206,
+      "client_cores": null,
+      "background_cores": 1.0852,
+      "harness_cores": 0.031,
+      "freq_mean_mhz": 3337.4,
+      "freq_p_mean_mhz": 3341.0,
+      "freq_e_mean_mhz": 3323.0,
+      "fg_client": false,
+      "self_cpu_ms": 15.625
+    },
+    {
+      "t": 1793234292.555,
+      "busy_pct": 13.2549,
+      "client_cores": null,
+      "background_cores": 0.8835,
+      "harness_cores": 0.0,
+      "freq_mean_mhz": 3387.7,
+      "freq_p_mean_mhz": 3411.8,
+      "freq_e_mean_mhz": 3291.2,
+      "fg_client": false,
+      "self_cpu_ms": 15.625
+    },
+    {
+      "t": 1793234293.564,
+      "busy_pct": 9.7674,
+      "client_cores": null,
+      "background_cores": 0.2788,
+      "harness_cores": 0.031,
+      "freq_mean_mhz": 2977.3,
+      "freq_p_mean_mhz": 2889.7,
+      "freq_e_mean_mhz": 3327.7,
+      "fg_client": false,
+      "self_cpu_ms": 15.625
+    },
+    {
+      "t": 1793234294.557,
+      "busy_pct": 9.8039,
+      "client_cores": null,
+      "background_cores": 0.4561,
+      "harness_cores": 0.0157,
+      "freq_mean_mhz": 3113.7,
+      "freq_p_mean_mhz": 3062.6,
+      "freq_e_mean_mhz": 3318.1,
+      "fg_client": false,
+      "self_cpu_ms": 15.625
+    },
+    {
+      "t": 1793234295.564,
+      "busy_pct": 13.463,
+      "client_cores": null,
+      "background_cores": 1.1484,
+      "harness_cores": 0.0466,
+      "freq_mean_mhz": 3241.4,
+      "freq_p_mean_mhz": 3227.5,
+      "freq_e_mean_mhz": 3296.7,
+      "fg_client": false,
+      "self_cpu_ms": 15.625
+    },
+    {
+      "t": 1793234296.555,
+      "busy_pct": 7.338,
+      "client_cores": null,
+      "background_cores": 0.3469,
+      "harness_cores": 0.0158,
+      "freq_mean_mhz": 3452.4,
+      "freq_p_mean_mhz": 3506.5,
+      "freq_e_mean_mhz": 3236.0,
+      "fg_client": false,
+      "self_cpu_ms": 15.625
+    },
+    {
+      "t": 1793234297.567,
+      "busy_pct": 21.1214,
+      "client_cores": null,
+      "background_cores": 0.7563,
+      "harness_cores": 1.775,
+      "freq_mean_mhz": 3630.0,
+      "freq_p_mean_mhz": 3724.9,
+      "freq_e_mean_mhz": 3250.7,
+      "fg_client": false,
+      "self_cpu_ms": 31.25
+    },
+    {
+      "t": 1793234298.567,
+      "busy_pct": 48.79,
+      "client_cores": 1.8903,
+      "background_cores": 2.9213,
+      "harness_cores": 0.453,
+      "freq_mean_mhz": 3794.5,
+      "freq_p_mean_mhz": 3945.6,
+      "freq_e_mean_mhz": 3189.9,
+      "fg_client": false,
+      "self_cpu_ms": 31.25
+    },
+    {
+      "t": 1793234299.566,
+      "busy_pct": 38.3594,
+      "client_cores": 3.3962,
+      "background_cores": 1.7059,
+      "harness_cores": 0.0939,
+      "freq_mean_mhz": 3711.5,
+      "freq_p_mean_mhz": 3854.1,
+      "freq_e_mean_mhz": 3141.2,
+      "fg_client": false,
+      "self_cpu_ms": 31.25
+    },
+    {
+      "t": 1793234300.559,
+      "busy_pct": 40.6793,
+      "client_cores": 4.1828,
+      "background_cores": 1.6825,
+      "harness_cores": 0.0943,
+      "freq_mean_mhz": 3731.9,
+      "freq_p_mean_mhz": 3886.7,
+      "freq_e_mean_mhz": 3112.5,
+      "fg_client": false,
+      "self_cpu_ms": 15.625
+    },
+    {
+      "t": 1793234301.557,
+      "busy_pct": 43.9906,
+      "client_cores": 2.7402,
+      "background_cores": 1.832,
+      "harness_cores": 0.0157,
+      "freq_mean_mhz": 3745.6,
+      "freq_p_mean_mhz": 3883.3,
+      "freq_e_mean_mhz": 3194.5,
+      "fg_client": false,
+      "self_cpu_ms": 15.625
+    },
+    {
+      "t": 1793234302.555,
+      "busy_pct": 30.625,
+      "client_cores": 3.8043,
+      "background_cores": 0.8298,
+      "harness_cores": 0.0157,
+      "freq_mean_mhz": 3532.1,
+      "freq_p_mean_mhz": 3609.0,
+      "freq_e_mean_mhz": 3224.3,
+      "fg_client": false,
+      "self_cpu_ms": 15.625
+    },
+    {
+      "t": 1793234303.567,
+      "busy_pct": 34.4211,
+      "client_cores": 3.8615,
+      "background_cores": 1.1584,
+      "harness_cores": 0.0463,
+      "freq_mean_mhz": 3619.1,
+      "freq_p_mean_mhz": 3717.7,
+      "freq_e_mean_mhz": 3224.5,
+      "fg_client": false,
+      "self_cpu_ms": 15.625
+    },
+    {
+      "t": 1793234304.564,
+      "busy_pct": 38.9283,
+      "client_cores": 0.9401,
+      "background_cores": 2.6166,
+      "harness_cores": 0.0783,
+      "freq_mean_mhz": 3683.3,
+      "freq_p_mean_mhz": 3803.4,
+      "freq_e_mean_mhz": 3203.0,
+      "fg_client": false,
+      "self_cpu_ms": 15.625
+    },
+    {
+      "t": 1793234305.562,
+      "busy_pct": 35.4134,
+      "client_cores": 2.473,
+      "background_cores": 1.9408,
+      "harness_cores": 0.0939,
+      "freq_mean_mhz": 3668.9,
+      "freq_p_mean_mhz": 3800.7,
+      "freq_e_mean_mhz": 3141.5,
+      "fg_client": false,
+      "self_cpu_ms": 15.625
+    },
+    {
+      "t": 1793234306.559,
+      "busy_pct": 57.5545,
+      "client_cores": 4.7184,
+      "background_cores": 2.2416,
+      "harness_cores": 0.0314,
+      "freq_mean_mhz": 3599.4,
+      "freq_p_mean_mhz": 3728.3,
+      "freq_e_mean_mhz": 3084.1,
+      "fg_client": false,
+      "self_cpu_ms": 15.625
+    },
+    {
+      "t": 1793234307.554,
+      "busy_pct": 32.7626,
+      "client_cores": 0.0,
+      "background_cores": 3.1414,
+      "harness_cores": 0.1414,
+      "freq_mean_mhz": 3709.7,
+      "freq_p_mean_mhz": 3845.7,
+      "freq_e_mean_mhz": 3165.4,
+      "fg_client": false,
+      "self_cpu_ms": 15.625
+    }
+  ],
+  "summary_missing": true
+}

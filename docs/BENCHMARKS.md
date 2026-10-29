@@ -1957,3 +1957,14 @@ BAAB). `fastDisplaySync` at a 120 FPS cap cut frame-time p99 by 12-13% and its s
 by 68-96%, but raised pan client CPU per frame by 3.5% and 12.8%. `fastSwapBuffers` and
 `suppressThreadYield` changed sign with segment order. All three fail their predeclared gates and
 ship off in 1.0.0. See [the archive](benchmarks/2026-10-28-release-pacing/README.md).
+
+## 2026-10-29 - 1.0 default qualification (stopped on functional failure)
+
+Java 25 clean build passed 352 JUnit tests; Python tooling passed 119 tests with 2 skipped.
+Manual title/world/F7/F8/F9/Video Settings smoke and one plain benchmark completed. The first
+camera-hysteresis verifier crashed in WorldRendererMixin fastDirtyAdd: a broad Set.add redirect
+casts a Direction to RenderChunk. The campaign stopped without retries or A/B performance
+launches. Correctness counts and all performance gates remain unavailable; no defaults changed.
+The two model-transform options skip the same wrapped zero translations. See the
+[qualification archive](benchmarks/2026-10-29-defaults-qualification/README.md) for the frozen
+protocol, commands, crash, summaries, limitations and recommendations.

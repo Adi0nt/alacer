@@ -1,0 +1,201 @@
+{
+  "status": "stopped_on_functional_failure",
+  "baseline": "941405bf0a2afbb18785f8dd36d1d285dc37c633",
+  "branch": "codex/1.0-qualification",
+  "mode": "Standard",
+  "protocol_sha256": "48f9a63a23fac82c17f42ff058daf6397ff666fe386ad988d08316c1c179725b",
+  "stop_reason": "First verifier crashed during world entry; no retries or further launches",
+  "build": {
+    "junit": {
+      "tests": 352,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    "pytest": {
+      "passed": 119,
+      "skipped": 2,
+      "subtests_passed": 9,
+      "seconds": 129.51
+    },
+    "runtime": "Temurin 25.0.4.1+1-LTS",
+    "bytecode_major": 69,
+    "jar_sha256": "98e06d881a4535770820bec12d9882ff0b2bfe6809966a40eb348225bb733eab",
+    "packaged_licenses": [
+      "COPYING_alacer",
+      "COPYING.LESSER_alacer"
+    ]
+  },
+  "smoke": {
+    "manual": {
+      "title": true,
+      "world": true,
+      "f7": true,
+      "f8": true,
+      "f9": true,
+      "video_settings": true,
+      "export": "run/alacer/profiles/profile-20261028-173356.json",
+      "exit_code": 0
+    },
+    "benchmark": {
+      "label": "q-smoke",
+      "exit_code": 0,
+      "phases": [
+        "static",
+        "pan",
+        "fly"
+      ]
+    },
+    "errors": [
+      "Log4j Queue CLASS_NOT_FOUND / missing ServerGuiConsole appender (launcher stdout)",
+      "Twitch initialization failed",
+      "Missing RealmsNotificationsScreen class"
+    ],
+    "mixin_apply_errors": 0,
+    "gl_errors": 0,
+    "artifact_limit": "runClient uses development classes/resources, not the remapped release jar"
+  },
+  "verification": {
+    "cameraHysteresis": {
+      "status": "crashed_before_summary",
+      "comparisons": null,
+      "mismatches": null,
+      "recommendation": "needs Extended campaign (correctness repair required first)",
+      "performance_launches": [],
+      "gates": "not_measured",
+      "emitted_difference_lines": 0,
+      "reason": "Direction cast to RenderChunk in WorldRendererMixin.alacer$fastDirtyAdd"
+    },
+    "fastWorkerAo": {
+      "status": "not_run_campaign_stopped",
+      "comparisons": null,
+      "mismatches": null,
+      "recommendation": "needs Extended campaign",
+      "performance_launches": [],
+      "gates": "not_measured"
+    },
+    "fastTerrainPipeline": {
+      "status": "not_run_campaign_stopped",
+      "comparisons": null,
+      "mismatches": null,
+      "recommendation": "needs Extended campaign",
+      "performance_launches": [],
+      "gates": "not_measured"
+    },
+    "vectorFrustum": {
+      "status": "not_run_campaign_stopped",
+      "comparisons": null,
+      "mismatches": null,
+      "recommendation": "needs Extended campaign",
+      "performance_launches": [],
+      "gates": "not_measured"
+    },
+    "flatOcclusion": {
+      "status": "not_run_campaign_stopped",
+      "comparisons": null,
+      "mismatches": null,
+      "recommendation": "needs Extended campaign",
+      "performance_launches": [],
+      "gates": "not_measured"
+    },
+    "fastMipmaps": {
+      "status": "not_run_campaign_stopped",
+      "comparisons": null,
+      "mismatches": null,
+      "recommendation": "needs Extended campaign",
+      "performance_launches": [],
+      "gates": "not_measured"
+    },
+    "fastModelTransforms": {
+      "status": "not_run_campaign_stopped",
+      "comparisons": null,
+      "mismatches": null,
+      "recommendation": "needs Extended campaign",
+      "performance_launches": [],
+      "gates": "not_measured"
+    }
+  },
+  "performance_launch_count": 0,
+  "performance_gates": [],
+  "improvement_at_least_3_percent": null,
+  "launches": {
+    "manual": {
+      "status": "completed",
+      "exit_code": 0,
+      "command": [
+        "cmd.exe",
+        "/d",
+        "/c",
+        "gradlew.bat",
+        "runClient",
+        "-Pwindow=1920x1080",
+        "-Pxmx=2G"
+      ],
+      "run": null,
+      "quiet_wait_s": null,
+      "summary_missing": null
+    },
+    "q-smoke": {
+      "status": "completed",
+      "exit_code": 0,
+      "command": [
+        "cmd.exe",
+        "/d",
+        "/c",
+        "gradlew.bat",
+        "runClient",
+        "-Pwindow=1920x1080",
+        "-Pxmx=2G",
+        "-Palacer.benchmark=true",
+        "-Palacer.benchmark.label=q-smoke"
+      ],
+      "run": "run\\alacer\\benchmarks\\20261028-173744-q-smoke-vis_on-ecl_on-ent0",
+      "quiet_wait_s": 119.24279949999982,
+      "summary_missing": null
+    },
+    "q-verify-cameraHysteresis": {
+      "status": "failed",
+      "exit_code": 1,
+      "command": [
+        "cmd.exe",
+        "/d",
+        "/c",
+        "gradlew.bat",
+        "runClient",
+        "-Pwindow=1920x1080",
+        "-Pxmx=2G",
+        "-Palacer.benchmark=true",
+        "-Palacer.benchmark.label=q-verify-cameraHysteresis",
+        "-Palacer.render.cameraHysteresis.verify=true"
+      ],
+      "run": null,
+      "quiet_wait_s": 11.003747200000362,
+      "summary_missing": true
+    }
+  },
+  "overlap": {
+    "same_calls": true,
+    "hook": "ModelPartMixin.alacer$translate -> ZeroTranslates.shouldTranslate",
+    "methods": [
+      "render",
+      "renderForceTransform",
+      "transform"
+    ],
+    "skipped": "GlStateManager.translatef with x == y == z == 0, including signed zero; underlying glTranslatef",
+    "nonzero_translations_preserved": true,
+    "matrix_pushes_pops_preserved": true
+  },
+  "preserved_state": {
+    "run/config/alacer.properties": "999c4206009b31ca7ade199df956664cb7407ae9dd14af4fbf3bbc98e25021e7",
+    "run/options.txt": "73341059d4ed7e4bf3d8826f6aa7dc6deb822db6139f0462ba62e5425e48487c",
+    "run/saves/alacer-benchmark/level.dat": "4b957e0bfb8509640c79e83b76e839c103104aa3ad2243b70b0d848a22cdaa36"
+  },
+  "limitations": [
+    "No completed verifier and no A/B performance evidence",
+    "No worker latency measurements or mipmap startup/reload measurements",
+    "No F3+T resource reload",
+    "Final remapped release JAR not loaded by runClient",
+    "Standard cannot support release decisions or small-improvement claims",
+    "Terrain warmup list unchanged because campaign stopped before performance preparation"
+  ]
+}
