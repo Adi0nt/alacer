@@ -26,6 +26,11 @@ rc2.GUARD['rc3-mods-verify'] = rc2.GUARD['rc3b-mods-verify'] = ['-Dalacer.render
 MOD_IDS = ['alacer', 'lomka', 'legacy-skin-layers', 'ksyxis', 'asynclogger', 'osl-config']
 # Amendment 1: rc3b drops Legacy Skin Layers (undeclared Kotlin runtime) and osl-config.
 DROPPED = {'LegacySkinLayers-1.0.1.jar', OSL_CONFIG.name}
+# Amendment 2: rc3c runs Alacer with only Skin Layers, osl-config and Fabric Language Kotlin.
+FLK = 'fabric-language-kotlin-1.14.2+kotlin.2.4.21.jar'
+EXPECTED[FLK] = 'fbdbf5286ab9d65fedb49e6e01c15e338ae303eb7b9d8c7423d0a9bcfe526ef9'
+SKIN_SET = {'LegacySkinLayers-1.0.1.jar', OSL_CONFIG.name, FLK}
+for _l, _v in (('rc3c-skin-default', []), ('rc3c-skin-verify', rc2.GUARD['rc3-mods-verify'])): rc2.GUARD[_l] = _v
 _instance = rc2.instance
 
 
@@ -34,6 +39,8 @@ def instance(label, alacer=True):
     mods = result[2] / 'mods'
     for path in list(MODS.glob('*/*.jar')) + [OSL_CONFIG]:
         if label.startswith('rc3b') and path.name in DROPPED: continue
+        if label.startswith('rc3c') and path.name not in SKIN_SET: continue
+        if not label.startswith('rc3c') and path.name == FLK: continue
         if path.name in EXPECTED and hashlib.sha256(path.read_bytes()).hexdigest() != EXPECTED[path.name]:
             raise RuntimeError('Third-party mod changed: ' + path.name)
         shutil.copy2(path, mods / path.name)
@@ -51,6 +58,7 @@ def check(label):
     listed = loading.group(1) if loading else ''
     record['mods_dir'] = sorted(p.name for p in (Path(record['game_dir']) / 'mods').iterdir())
     ids = [m for m in MOD_IDS if not (label.startswith('rc3b') and m in ('legacy-skin-layers', 'osl-config'))]
+    if label.startswith('rc3c'): ids = ['alacer', 'legacy-skin-layers', 'osl-config', 'fabric-language-kotlin']
     record['mods_loaded'] = {m: bool(re.search(r'-\s+' + re.escape(m) + r'\s', listed)) for m in ids}
     record['foreign_modified'] = re.findall(r'Modern rendering fallback: \S+ is modified by \S+', text)
     record['mixin_warnings'] = re.findall(r'^.*(?:Mixin|mixin).*(?:conflict|failed|Error|error|could not|Cannot).*$', text, re.M)[:20]
@@ -59,7 +67,8 @@ def check(label):
     failures = list(record.get('gate_failures', []))
     if not all(record['mods_loaded'].values()): failures.append('mods not all loaded')
     if record['mixin_warnings']: failures.append('mixin warnings')
-    if label in ('rc3-mods-verify', 'rc3b-mods-verify'):
+    if 'Could not execute entrypoint' in text: failures.append('entrypoint failure')
+    if label in ('rc3-mods-verify', 'rc3b-mods-verify', 'rc3c-skin-verify'):
         lines = re.findall(r'(Ambient tick verification final: [^\]<\r\n]*|Entity culling verification final: [^\]<\r\n]*|Entity renderer cache final: [^\]<\r\n]*|Entity lighting queries final: [^\]<\r\n]*|Entity shadow queries final: [^\]<\r\n]*|Ray trace verification final: [^\]<\r\n]*|Model zero-translation verification final: [^\]<\r\n]*|Model list batch final: [^\]<\r\n]*)', text)
         record['verifier_lines'] = lines
         for line in lines:

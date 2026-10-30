@@ -73,8 +73,9 @@ Status after the 2026-10-29 release checks (branch `codex/v1-release-checks`):
 
 - `docs/benchmarks/2026-10-29-mod-compatibility/README.md`: Lomka, Ksyxis and Async
   Logger pass with Alacer defaults and with 8 verifiers (0 mismatches). Legacy Skin
-  Layers 1.0.1 crashes with or without Alacer (undeclared Kotlin runtime), so no
-  third-party render-hook overlap was tested.
+  Layers 1.0.1 crashes without a Kotlin runtime (undeclared; also without Alacer); with
+  Fabric Language Kotlin 1.14.2 it passes both clients, including Alacer's opt-in
+  ModelPart paths beside its ModelPart hook. Visual player skin layers not drawn.
 
 Remaining release gates, in priority order:
 1. Ornithe installer/profile metadata is covered; still not covered: an official
@@ -87,9 +88,8 @@ Remaining release gates, in priority order:
 3. Small follow-ups: correct the stale `render.modernGl.verify` description (no
    terrain VAOs remain); consider keeping per-option comments when the Video
    Settings Apply rewrites `config/alacer.properties`.
-4. Mod compatibility: three mods pass (see above). Optional: a working render-hook
-   mod (Skin Layers plus an approved Kotlin runtime, or another Gen 2 render mod) to
-   exercise ModelPart overlap with Alacer's opt-in paths.
+4. Mod compatibility: four mods pass (see above). Optional: third-person/visual
+   check of player skin layers with Alacer, and broader mod combinations.
 5. Prepare/run Extended performance qualification only under a separately frozen
    protocol using the existing aa_pilot/monitor/calibration infrastructure.
    Native functional success or a microbenchmark cannot approve whole-client

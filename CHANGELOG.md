@@ -83,10 +83,10 @@ config file only for investigation.
   and twelve scheduled calls to the resource-reload entrypoint. The
   [release checks](docs/benchmarks/2026-10-29-release-checks/README.md) then launched an
   official Ornithe 0.16.0 installer-generated profile directly (offline), and a
-  [small mod check](docs/benchmarks/2026-10-29-mod-compatibility/README.md) ran Lomka, Ksyxis and
-  Async Logger alongside Alacer with zero verifier mismatches. The official launcher or Prism
-  frontends, account sign-in, wider mod combinations (including render-hook mods) and physical
-  F3+T delivery remain unverified.
+  [small mod check](docs/benchmarks/2026-10-29-mod-compatibility/README.md) ran Lomka, Ksyxis,
+  Async Logger and Legacy Skin Layers (the latter needs a Kotlin runtime such as Fabric Language
+  Kotlin) alongside Alacer with zero verifier mismatches. The official launcher or Prism
+  frontends, account sign-in, wider mod combinations and physical F3+T delivery remain unverified.
 - GPU compute culling and translucent sorting are unintegrated helpers with no production
   callers. The sorting helper runs on the CPU; these are not active opt-in GPU features.
 - External launchers must pass `--enable-native-access=ALL-UNNAMED --add-modules=jdk.incubator.vector`.
