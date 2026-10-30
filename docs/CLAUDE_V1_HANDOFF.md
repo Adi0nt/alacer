@@ -71,6 +71,11 @@ Status after the 2026-10-29 release checks (branch `codex/v1-release-checks`):
   Singleplayer world A→B, Video Settings Cancel/Apply, resource-pack
   enable/disable and Quit Game passed through the real UI.
 
+- `docs/benchmarks/2026-10-29-mod-compatibility/README.md`: Lomka, Ksyxis and Async
+  Logger pass with Alacer defaults and with 8 verifiers (0 mismatches). Legacy Skin
+  Layers 1.0.1 crashes with or without Alacer (undeclared Kotlin runtime), so no
+  third-party render-hook overlap was tested.
+
 Remaining release gates, in priority order:
 1. Ornithe installer/profile metadata is covered; still not covered: an official
    launcher or Prism frontend launch and Microsoft authentication (needs the
@@ -82,11 +87,9 @@ Remaining release gates, in priority order:
 3. Small follow-ups: correct the stale `render.modernGl.verify` description (no
    terrain VAOs remain); consider keeping per-option comments when the Video
    Settings Apply rewrites `config/alacer.properties`.
-4. Test a small representative set of actually compatible Ornithe Gen 2 mods,
-   including a render-hook interaction/fallback if available. Verify version,
-   mappings and Java compatibility first. Do not use unrelated 1.7.10/Forge mods
-   or claim compatibility from their filenames. If no suitable combination is
-   available, document the gap rather than fabricate a pass.
+4. Mod compatibility: three mods pass (see above). Optional: a working render-hook
+   mod (Skin Layers plus an approved Kotlin runtime, or another Gen 2 render mod) to
+   exercise ModelPart overlap with Alacer's opt-in paths.
 5. Prepare/run Extended performance qualification only under a separately frozen
    protocol using the existing aa_pilot/monitor/calibration infrastructure.
    Native functional success or a microbenchmark cannot approve whole-client
