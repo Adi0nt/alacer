@@ -1,0 +1,267 @@
+{
+ "asynclogger": {
+  "fabric.mod.json": {
+   "id": "asynclogger",
+   "version": "2.2.3+1.8.9-ornithe",
+   "environment": null,
+   "depends": {
+    "minecraft": ">=1.0 <=1.14.4",
+    "fabricloader": ">=0.16.0"
+   },
+   "recommends": null,
+   "breaks": null,
+   "conflicts": null,
+   "mixins": null,
+   "entrypoints": {
+    "preLaunch": [
+     "me.decce.asynclogger.service.fabric.FabricPreLaunchEntrypoint"
+    ],
+    "main": [
+     "me.decce.asynclogger.fabric.FabricEntrypoint"
+    ]
+   },
+   "accessWidener": null,
+   "jars": null,
+   "custom": null
+  },
+  "class_major_versions": {
+   "61": 2,
+   "51": 82,
+   "52": 288
+  },
+  "intermediary_refs": 0,
+  "intermediary_missing_in_gen2_game": [],
+  "other_net_minecraft_refs_missing": [],
+  "mixin_configs": [
+   {
+    "config": "asynclogger.mixins.json",
+    "package": "me.decce.asynclogger.mixins",
+    "mixins": null,
+    "client": [
+     "ClientMainMixin"
+    ],
+    "server": [
+     "ServerMainMixin"
+    ],
+    "refmap": null,
+    "plugin": null,
+    "required": true
+   }
+  ],
+  "nested_jars": []
+ },
+ "ksyxis": {
+  "fabric.mod.json": {
+   "id": "ksyxis",
+   "version": "1.4.6",
+   "environment": "*",
+   "depends": null,
+   "recommends": null,
+   "breaks": null,
+   "conflicts": null,
+   "mixins": [
+    "ksyxis.mixins.json"
+   ],
+   "entrypoints": {
+    "main": [
+     "ru.vidtu.ksyxis.platform.KFabric"
+    ]
+   },
+   "accessWidener": null,
+   "jars": null,
+   "custom": {
+    "modmenu": {
+     "links": {
+      "modmenu.modrinth": "https://modrinth.com/mod/ksyxis",
+      "modmenu.curseforge": "https://curseforge.com/minecraft/mc-mods/ksyxis",
+      "modmenu.github_releases": "https://github.com/VidTu/Ksyxis/releases",
+      "modmenu.discord": "https://discord.gg/Q6saSVSuYQ"
+     }
+    },
+    "catalogue": {
+     "icon": {
+      "image": "ksyxis.png",
+      "item": "porkchop"
+     },
+     "banner": "ksyxis.png",
+     "background": "ksyxis_background.png"
+    }
+   }
+  },
+  "class_major_versions": {
+   "52": 13
+  },
+  "intermediary_refs": 3,
+  "intermediary_missing_in_gen2_game": [
+   "net/minecraft/unmapped/C_3674802",
+   "net/minecraft/unmapped/C_8054043",
+   "net/minecraft/unmapped/C_9126287"
+  ],
+  "other_net_minecraft_refs_missing": [
+   "net/minecraft/class_1923",
+   "net/minecraft/class_2338",
+   "net/minecraft/class_2535",
+   "net/minecraft/class_32$class_5143",
+   "net/minecraft/class_3222",
+   "net/minecraft/class_3283",
+   "net/minecraft/class_3949",
+   "net/minecraft/class_4070",
+   "net/minecraft/class_6904",
+   "net/minecraft/class_8792",
+   "net/minecraft/core/BlockPos",
+   "net/minecraft/network/ClientConnection",
+   "net/minecraft/network/Connection",
+   "net/minecraft/resource/ResourcePackManager",
+   "net/minecraft/server/SaveLoader",
+   "net/minecraft/server/WorldGenerationProgressListener",
+   "net/minecraft/server/WorldStem",
+   "net/minecraft/server/level/ServerPlayer",
+   "net/minecraft/server/level/progress/ChunkProgressListener",
+   "net/minecraft/server/network/CommonListenerCookie"
+  ],
+  "mixin_configs": [
+   {
+    "config": "ksyxis.mixins.json",
+    "package": "ru.vidtu.ksyxis.mixin",
+    "mixins": [
+     "EntityMixin",
+     "LevelMixin",
+     "MinecraftServerMixin",
+     "PrepareSpawnTaskPreparingMixin",
+     "PrepareSpawnTaskReadyMixin",
+     "ServerLevelMixin"
+    ],
+    "client": [
+     "MinecraftMixin"
+    ],
+    "server": null,
+    "refmap": null,
+    "plugin": "ru.vidtu.ksyxis.platform.KPlugin",
+    "required": null
+   }
+  ],
+  "nested_jars": []
+ },
+ "legacyskinlayers": {
+  "fabric.mod.json": {
+   "id": "legacy-skin-layers",
+   "version": "1.0.1",
+   "environment": "client",
+   "depends": {
+    "minecraft": "1.8.9",
+    "fabricloader": ">=0.18.0",
+    "osl-config": ">=0.6.0",
+    "osl-entrypoints": ">=0.6.0"
+   },
+   "recommends": null,
+   "breaks": null,
+   "conflicts": null,
+   "mixins": [
+    "legacy-skin-layers.mixins.json"
+   ],
+   "entrypoints": {
+    "client-init": [
+     "org.polyfrost.skinlayers.SkinLayersEntrypoint"
+    ]
+   },
+   "accessWidener": null,
+   "jars": null,
+   "custom": null
+  },
+  "class_major_versions": {
+   "69": 45
+  },
+  "intermediary_refs": 29,
+  "intermediary_missing_in_gen2_game": [],
+  "other_net_minecraft_refs_missing": [],
+  "mixin_configs": [
+   {
+    "config": "legacy-skin-layers.mixins.json",
+    "package": "org.polyfrost.skinlayers.mixin",
+    "mixins": null,
+    "client": [
+     "BlockEntityItemStackRenderHelperMixin",
+     "ModelPartMixin",
+     "PlayerEntityModelAccessor",
+     "PlayerEntityRendererMixin",
+     "PlayerSkinTextureMixin",
+     "SkullBlockEntityRendererMixin",
+     "SkullOverlayEntityModelAccessor"
+    ],
+    "server": null,
+    "refmap": null,
+    "plugin": null,
+    "required": true
+   }
+  ],
+  "nested_jars": []
+ },
+ "lomka": {
+  "fabric.mod.json": {
+   "id": "lomka",
+   "version": "0.7.0",
+   "environment": "*",
+   "depends": {
+    "fabricloader": ">=0.14.0",
+    "minecraft": "1.8.9",
+    "osl-entrypoints": ">=0.4.0"
+   },
+   "recommends": null,
+   "breaks": null,
+   "conflicts": null,
+   "mixins": [
+    "lomka.mixins.json"
+   ],
+   "entrypoints": {
+    "init": [
+     "lomka.Lomka"
+    ]
+   },
+   "accessWidener": null,
+   "jars": null,
+   "custom": null
+  },
+  "class_major_versions": {
+   "52": 14
+  },
+  "intermediary_refs": 19,
+  "intermediary_missing_in_gen2_game": [],
+  "other_net_minecraft_refs_missing": [
+   "net/minecraft/client/MixinMinecraft",
+   "net/minecraft/client/render/pipeline/MixinRenderTarget",
+   "net/minecraft/client/resource/manager/MixinFallbackResourceManager",
+   "net/minecraft/nbt/MixinNbtIntArray",
+   "net/minecraft/network/MixinCompressionDecoder",
+   "net/minecraft/network/MixinCompressionEncoder",
+   "net/minecraft/util/math/MixinBox",
+   "net/minecraft/util/math/MixinDirection",
+   "net/minecraft/util/math/MixinMathHelper",
+   "net/minecraft/util/math/MixinVec3i"
+  ],
+  "mixin_configs": [
+   {
+    "config": "lomka.mixins.json",
+    "package": "lomka.starl.mixins",
+    "mixins": [
+     "net.minecraft.nbt.MixinNbtIntArray",
+     "net.minecraft.network.MixinCompressionDecoder",
+     "net.minecraft.network.MixinCompressionEncoder",
+     "net.minecraft.util.math.MixinBox",
+     "net.minecraft.util.math.MixinDirection",
+     "net.minecraft.util.math.MixinMathHelper",
+     "net.minecraft.util.math.MixinVec3i"
+    ],
+    "client": [
+     "net.minecraft.client.MixinMinecraft",
+     "net.minecraft.client.render.pipeline.MixinRenderTarget",
+     "net.minecraft.client.resource.manager.MixinFallbackResourceManager"
+    ],
+    "server": [],
+    "refmap": "lomka-refmap.json",
+    "plugin": "lomka.starl.config.LomkaMixinPlugin",
+    "required": true
+   }
+  ],
+  "nested_jars": []
+ }
+}
