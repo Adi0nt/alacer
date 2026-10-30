@@ -1,0 +1,46 @@
+Traceback (most recent call last):
+  File "C:\Users\CodyJ\OneDrive\Documents\GitLab\adiont\aevum\alacer\docs\benchmarks\2026-10-29-release-checks\profile.py", line 231, in <module>
+    if sys.argv[1] == 'prepare': prepare()
+                                 ~~~~~~~^^
+  File "C:\Users\CodyJ\OneDrive\Documents\GitLab\adiont\aevum\alacer\docs\benchmarks\2026-10-29-release-checks\profile.py", line 136, in prepare
+    list(pool.map(asset, objects.values()))
+    ~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Python313\Lib\concurrent\futures\_base.py", line 619, in result_iterator
+    yield _result_or_cancel(fs.pop())
+          ~~~~~~~~~~~~~~~~~^^^^^^^^^^
+  File "C:\Python313\Lib\concurrent\futures\_base.py", line 317, in _result_or_cancel
+    return fut.result(timeout)
+           ~~~~~~~~~~^^^^^^^^^
+  File "C:\Python313\Lib\concurrent\futures\_base.py", line 449, in result
+    return self.__get_result()
+           ~~~~~~~~~~~~~~~~~^^
+  File "C:\Python313\Lib\concurrent\futures\_base.py", line 401, in __get_result
+    raise self._exception
+  File "C:\Python313\Lib\concurrent\futures\thread.py", line 59, in run
+    result = self.fn(*self.args, **self.kwargs)
+  File "C:\Users\CodyJ\OneDrive\Documents\GitLab\adiont\aevum\alacer\docs\benchmarks\2026-10-29-release-checks\profile.py", line 133, in asset
+    fetch(assets / 'objects' / rel, 'https://resources.download.minecraft.net/' + rel,
+    ~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+          {'sha1': digest}, [GRADLE / 'fabric-loom/assets/objects' / rel, MINECRAFT / 'assets/objects' / rel])
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\CodyJ\OneDrive\Documents\GitLab\adiont\aevum\alacer\docs\benchmarks\2026-10-29-release-checks\profile.py", line 51, in fetch
+    if valid(path): return
+       ~~~~~^^^^^^
+  File "C:\Users\CodyJ\OneDrive\Documents\GitLab\adiont\aevum\alacer\docs\benchmarks\2026-10-29-release-checks\profile.py", line 48, in valid
+    return p.is_file() and all(sha(p, alg) == value.zfill(hashlib.new(alg).digest_size * 2)
+                           ~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                              for alg, value in hashes.items() if alg in ('sha1', 'sha256'))
+                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\CodyJ\OneDrive\Documents\GitLab\adiont\aevum\alacer\docs\benchmarks\2026-10-29-release-checks\profile.py", line 48, in <genexpr>
+    return p.is_file() and all(sha(p, alg) == value.zfill(hashlib.new(alg).digest_size * 2)
+                               ~~~^^^^^^^^
+  File "C:\Users\CodyJ\OneDrive\Documents\GitLab\adiont\aevum\alacer\docs\benchmarks\2026-10-29-release-checks\profile.py", line 29, in sha
+    return hashlib.new(algorithm, Path(path).read_bytes()).hexdigest()
+                                  ~~~~~~~~~~~~~~~~~~~~~^^
+  File "C:\Python313\Lib\pathlib\_abc.py", line 625, in read_bytes
+    with self.open(mode='rb') as f:
+         ~~~~~~~~~^^^^^^^^^^^
+  File "C:\Python313\Lib\pathlib\_local.py", line 537, in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+PermissionError: [Errno 13] Permission denied: 'C:\\Users\\CodyJ\\OneDrive\\Documents\\GitLab\\adiont\\aevum\\alacer\\build\\v1-release-checks\\assets\\objects\\bd\\bdf48ef6b5d0d23bbb02e17d04865216179f510a'

@@ -1,0 +1,1 @@
+Release checks on codex/v1-release-checks are finished for this pass. Campaign 1 (c79ff99) passed installer-profile smoke, 8-minute soak and loopback multiplayer, and found a production compatibility-guard defect. Commit 6f60f08 fixes it; campaign 2 (../2026-10-29-release-checks-2/README.md) retested natively and covered the UI lifecycle steps. No clients are running.

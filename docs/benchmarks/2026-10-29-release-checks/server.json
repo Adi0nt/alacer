@@ -1,0 +1,58 @@
+{
+  "args": [
+    "C:\\Program Files\\Eclipse Adoptium\\jdk-25.0.4.101-hotspot\\bin\\java.exe",
+    "-Xms256M",
+    "-Xmx1G",
+    "-jar",
+    "C:\\Users\\CodyJ\\OneDrive\\Documents\\GitLab\\adiont\\aevum\\alacer\\build\\v1-release-checks\\loopback-server\\server.jar",
+    "nogui"
+  ],
+  "server_jar_sha256": "c18e4245073aaff580eb7359902f0251436568b1647a9e443a924cdb73fa8312",
+  "started_utc": "2026-10-29T22:18:13.556977+00:00",
+  "commands": [
+    {
+      "command": "list",
+      "utc": "2026-10-29T22:22:58.776640+00:00"
+    },
+    {
+      "command": "gamemode 3 ProfileTest",
+      "utc": "2026-10-29T22:22:58.776661+00:00"
+    },
+    {
+      "command": "tp ProfileTest 512 80 512",
+      "utc": "2026-10-29T22:22:58.776669+00:00"
+    },
+    {
+      "command": "setblock 512 80 518 minecraft:glowstone",
+      "utc": "2026-10-29T22:22:58.776675+00:00"
+    },
+    {
+      "command": "time set 18000",
+      "utc": "2026-10-29T22:22:58.776679+00:00"
+    },
+    {
+      "command": "tp ProfileTest -190 80 280",
+      "utc": "2026-10-29T22:23:38.805059+00:00"
+    },
+    {
+      "command": "setblock -190 80 286 minecraft:glowstone",
+      "utc": "2026-10-29T22:23:38.805080+00:00"
+    },
+    {
+      "command": "time set 6000",
+      "utc": "2026-10-29T22:23:38.805086+00:00"
+    },
+    {
+      "command": "save-all",
+      "utc": "2026-10-29T22:27:46.983962+00:00"
+    },
+    {
+      "command": "stop",
+      "utc": "2026-10-29T22:27:46.983978+00:00"
+    }
+  ],
+  "pid": 40528,
+  "exit_code": 0,
+  "duration_s": 574.4269442999994,
+  "ended_utc": "2026-10-29T22:27:47.984559+00:00"
+}

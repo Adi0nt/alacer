@@ -50,6 +50,12 @@ config file only for investigation.
 
 ### Fixes in release preparation
 
+- The startup compatibility guard named vanilla classes with development-mapping strings,
+  which do not exist in a normal (intermediary) installation. Every production install
+  therefore silently disabled the default-on random display tick optimization and forced the
+  opt-in chunk-neighbour and modern-GL paths to fall back. The guard now uses remapped class
+  references; an installer-profile retest shows the optimization active with zero verifier
+  mismatches. See the [release-check evidence](docs/benchmarks/2026-10-29-release-checks-2/README.md).
 - Resident terrain VBOs now bind their arena page and draw from their actual vertex offset
   when the shader/MDI path falls back to fixed-function rendering. Previously, enabling MDI
   with forced modern-GL fallback drew from an empty individual buffer and crashed in native
@@ -74,8 +80,11 @@ config file only for investigation.
   `render.fastMipmaps` stay on with exact verifiers but inconclusive performance results.
 - The [muted native follow-up](docs/benchmarks/2026-10-29-remaining-features/README.md)
   exercised the actual remapped JAR in an isolated, manually assembled Loader installation
-  and twelve scheduled calls to the resource-reload entrypoint. An external installer profile
-  and physical F3+T delivery remain unverified.
+  and twelve scheduled calls to the resource-reload entrypoint. The
+  [release checks](docs/benchmarks/2026-10-29-release-checks/README.md) then launched an
+  official Ornithe 0.16.0 installer-generated profile directly (offline). The official launcher
+  or Prism frontends, account sign-in, third-party mod combinations and physical F3+T delivery
+  remain unverified.
 - GPU compute culling and translucent sorting are unintegrated helpers with no production
   callers. The sorting helper runs on the CPU; these are not active opt-in GPU features.
 - External launchers must pass `--enable-native-access=ALL-UNNAMED --add-modules=jdk.incubator.vector`.

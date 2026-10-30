@@ -1,0 +1,95 @@
+[15:18:15] [Server thread/INFO]: Starting minecraft server version 1.8.9
+[15:18:15] [Server thread/INFO]: Loading properties
+[15:18:15] [Server thread/INFO]: Default game type: SPECTATOR
+[15:18:15] [Server thread/INFO]: Generating keypair
+[15:18:15] [Server thread/INFO]: Starting Minecraft server on 127.0.0.1:25566
+[15:18:15] [Server thread/INFO]: Using default channel type
+Oct 29, 2026 3:18:15 PM io.netty.util.internal.PlatformDependent <clinit>
+INFO: Your platform does not provide complete low-level API for accessing direct buffers reliably. Unless explicitly requested, heap buffer will always be preferred to avoid potential system unstability.
+[15:18:15] [Server thread/WARN]: **** SERVER IS RUNNING IN OFFLINE/INSECURE MODE!
+[15:18:15] [Server thread/WARN]: The server will make no attempt to authenticate usernames. Beware.
+[15:18:15] [Server thread/WARN]: While this makes the game possible to play without internet access, it also opens up the ability for hackers to connect with any username they choose.
+[15:18:15] [Server thread/WARN]: To change this, set "online-mode" to "true" in the server.properties file.
+[15:18:15] [Server thread/WARN]: Failed to load user banlist:
+java.io.FileNotFoundException: banned-players.json (The system cannot find the file specified)
+	at java.base/java.io.FileInputStream.open0(Native Method) ~[?:?]
+	at java.base/java.io.FileInputStream.open(FileInputStream.java:185) ~[?:?]
+	at java.base/java.io.FileInputStream.<init>(FileInputStream.java:139) ~[?:?]
+	at com.google.common.io.Files.newReader(Files.java:86) ~[server.jar:?]
+	at mb.g(SourceFile:124) ~[server.jar:?]
+	at kn.z(SourceFile:99) [server.jar:?]
+	at kn.<init>(SourceFile:25) [server.jar:?]
+	at ko.i(SourceFile:172) [server.jar:?]
+	at net.minecraft.server.MinecraftServer.run(SourceFile:421) [server.jar:?]
+	at java.base/java.lang.Thread.run(Thread.java:1474) [?:?]
+[15:18:15] [Server thread/WARN]: Failed to load ip banlist:
+java.io.FileNotFoundException: banned-ips.json (The system cannot find the file specified)
+	at java.base/java.io.FileInputStream.open0(Native Method) ~[?:?]
+	at java.base/java.io.FileInputStream.open(FileInputStream.java:185) ~[?:?]
+	at java.base/java.io.FileInputStream.<init>(FileInputStream.java:139) ~[?:?]
+	at com.google.common.io.Files.newReader(Files.java:86) ~[server.jar:?]
+	at mb.g(SourceFile:124) ~[server.jar:?]
+	at kn.y(SourceFile:91) [server.jar:?]
+	at kn.<init>(SourceFile:27) [server.jar:?]
+	at ko.i(SourceFile:172) [server.jar:?]
+	at net.minecraft.server.MinecraftServer.run(SourceFile:421) [server.jar:?]
+	at java.base/java.lang.Thread.run(Thread.java:1474) [?:?]
+[15:18:15] [Server thread/WARN]: Failed to load operators list:
+java.io.FileNotFoundException: ops.json (The system cannot find the file specified)
+	at java.base/java.io.FileInputStream.open0(Native Method) ~[?:?]
+	at java.base/java.io.FileInputStream.open(FileInputStream.java:185) ~[?:?]
+	at java.base/java.io.FileInputStream.<init>(FileInputStream.java:139) ~[?:?]
+	at com.google.common.io.Files.newReader(Files.java:86) ~[server.jar:?]
+	at mb.g(SourceFile:124) ~[server.jar:?]
+	at kn.A(SourceFile:107) [server.jar:?]
+	at kn.<init>(SourceFile:29) [server.jar:?]
+	at ko.i(SourceFile:172) [server.jar:?]
+	at net.minecraft.server.MinecraftServer.run(SourceFile:421) [server.jar:?]
+	at java.base/java.lang.Thread.run(Thread.java:1474) [?:?]
+[15:18:15] [Server thread/WARN]: Failed to load white-list:
+java.io.FileNotFoundException: whitelist.json (The system cannot find the file specified)
+	at java.base/java.io.FileInputStream.open0(Native Method) ~[?:?]
+	at java.base/java.io.FileInputStream.open(FileInputStream.java:185) ~[?:?]
+	at java.base/java.io.FileInputStream.<init>(FileInputStream.java:139) ~[?:?]
+	at com.google.common.io.Files.newReader(Files.java:86) ~[server.jar:?]
+	at mb.g(SourceFile:124) ~[server.jar:?]
+	at kn.C(SourceFile:123) [server.jar:?]
+	at kn.<init>(SourceFile:30) [server.jar:?]
+	at ko.i(SourceFile:172) [server.jar:?]
+	at net.minecraft.server.MinecraftServer.run(SourceFile:421) [server.jar:?]
+	at java.base/java.lang.Thread.run(Thread.java:1474) [?:?]
+[15:18:15] [Server thread/INFO]: Preparing level "world"
+[15:18:15] [Server thread/INFO]: Preparing start region for level 0
+[15:18:16] [Server thread/INFO]: Preparing spawn area: 25%
+[15:18:17] [Server thread/INFO]: Preparing spawn area: 56%
+[15:18:18] [Server thread/INFO]: Done (3.123s)! For help, type "help" or "?"
+[15:22:46] [Server thread/INFO]: ProfileTest[/127.0.0.1:59784] logged in with entity id 1880 at (-204.5, 67.0, 269.5)
+[15:22:46] [Server thread/INFO]: ProfileTest joined the game
+[15:22:58] [Server thread/INFO]: There are 1/2 players online:
+[15:22:58] [Server thread/INFO]: ProfileTest
+[15:22:58] [Server thread/INFO]: Set ProfileTest's game mode to Spectator Mode
+[15:22:58] [Server thread/INFO]: Teleported ProfileTest to 512.5, 80.0, 512.5
+[15:22:58] [Server thread/INFO]: Cannot place block outside of the world
+[15:22:58] [Server thread/INFO]: Set the time to 18000
+[15:23:38] [Server thread/INFO]: Teleported ProfileTest to -189.5, 80.0, 280.5
+[15:23:38] [Server thread/INFO]: Block placed
+[15:23:38] [Server thread/INFO]: Set the time to 6000
+[15:26:29] [Server thread/INFO]: ProfileTest lost connection: TextComponent{text='Disconnected', siblings=[], style=Style{hasParent=false, color=null, bold=null, italic=null, underlined=null, obfuscated=null, clickEvent=null, hoverEvent=null, insertion=null}}
+[15:26:29] [Server thread/INFO]: ProfileTest left the game
+[15:26:51] [Server thread/INFO]: ProfileTest[/127.0.0.1:59047] logged in with entity id 2620 at (-189.5, 80.0, 280.5)
+[15:26:51] [Server thread/INFO]: ProfileTest joined the game
+[15:27:45] [Server thread/INFO]: ProfileTest lost connection: TextComponent{text='Disconnected', siblings=[], style=Style{hasParent=false, color=null, bold=null, italic=null, underlined=null, obfuscated=null, clickEvent=null, hoverEvent=null, insertion=null}}
+[15:27:45] [Server thread/INFO]: ProfileTest left the game
+[15:27:47] [Server thread/INFO]: Saving...
+[15:27:47] [Server thread/INFO]: Saved the world
+[15:27:47] [Server thread/INFO]: Stopping the server
+[15:27:47] [Server thread/INFO]: Stopping server
+[15:27:47] [Server thread/INFO]: Saving players
+[15:27:47] [Server thread/INFO]: Saving worlds
+[15:27:47] [Server thread/INFO]: Saving chunks for level 'world'/Overworld
+[15:27:47] [Server thread/INFO]: Saving chunks for level 'world'/Nether
+[15:27:47] [Server thread/INFO]: Saving chunks for level 'world'/The End
+[15:27:47] [Server Shutdown Thread/INFO]: Stopping server
+[15:27:47] [Server Shutdown Thread/INFO]: Saving players
+[15:27:47] [Server Shutdown Thread/INFO]: Saving worlds
+[15:27:47] [Server Shutdown Thread/INFO]: Saving chunks for level 'world'/Overworld

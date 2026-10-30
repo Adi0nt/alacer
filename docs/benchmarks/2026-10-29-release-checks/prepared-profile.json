@@ -1,0 +1,490 @@
+{
+  "chain": [
+    "C:\\Users\\CodyJ\\OneDrive\\Documents\\GitLab\\adiont\\aevum\\alacer\\build\\v1-release-checks\\installer-instance\\versions\\1.8.9-gen2\\1.8.9-gen2.json",
+    "C:\\Users\\CodyJ\\OneDrive\\Documents\\GitLab\\adiont\\aevum\\alacer\\build\\v1-release-checks\\installer-instance\\versions\\fabric-loader-0.20.0-1.8.9-ornithe-gen2\\fabric-loader-0.20.0-1.8.9-ornithe-gen2.json"
+  ],
+  "profile_hashes": {
+    "versions\\1.8.9-gen2\\1.8.9-gen2.json": "8a70674e58a9d4a7ea29b16323dff99153856fe2706a7f83db5d36521df62fc9",
+    "versions\\fabric-loader-0.20.0-1.8.9-ornithe-gen2\\fabric-loader-0.20.0-1.8.9-ornithe-gen2.json": "0c6d680d8ef7fab7459fd46e0cfd17990cb9138dc4bdf92bb95a322edb8a57eb"
+  },
+  "libraries": [
+    {
+      "name": "com.mojang:netty:1.8.8",
+      "url": "https://libraries.minecraft.net/com/mojang/netty/1.8.8/netty-1.8.8.jar",
+      "sha256": "cae3de169e7695ef30079349c5ea81790bd10c04c4037196fd4fdc07b6d43934",
+      "declared_hashes": {
+        "sha1": "0a796914d1c8a55b4da9f4a8856dd9623375d8bb"
+      }
+    },
+    {
+      "name": "oshi-project:oshi-core:1.1",
+      "url": "https://libraries.minecraft.net/oshi-project/oshi-core/1.1/oshi-core-1.1.jar",
+      "sha256": "27901e5d4d60d3502571d5e6358fc89e3fcf874138b69d495d139bcc3e169404",
+      "declared_hashes": {
+        "sha1": "9ddf7b048a8d701be231c0f4f95fd986198fd2d8"
+      }
+    },
+    {
+      "name": "net.java.dev.jna:jna:3.4.0",
+      "url": "https://libraries.minecraft.net/net/java/dev/jna/jna/3.4.0/jna-3.4.0.jar",
+      "sha256": "3bff6a1489b8e54cf130344bc5e8744db331045ad2fc736612576e1d80eb1f48",
+      "declared_hashes": {
+        "sha1": "803ff252fedbd395baffd43b37341dc4a150a554"
+      }
+    },
+    {
+      "name": "net.java.dev.jna:platform:3.4.0",
+      "url": "https://libraries.minecraft.net/net/java/dev/jna/platform/3.4.0/platform-3.4.0.jar",
+      "sha256": "ea89d5090c8303ba4e9a0056e6d8a20429f3e021411e950bfd9eba3b6e6cf15c",
+      "declared_hashes": {
+        "sha1": "e3f70017be8100d3d6923f50b3d2ee17714e9c13"
+      }
+    },
+    {
+      "name": "com.ibm.icu:icu4j-core-mojang:51.2",
+      "url": "https://libraries.minecraft.net/com/ibm/icu/icu4j-core-mojang/51.2/icu4j-core-mojang-51.2.jar",
+      "sha256": "147592c5eb8e11fc8394125954f877acf25918bae13aa210c2825aefc3030ed8",
+      "declared_hashes": {
+        "sha1": "63d216a9311cca6be337c1e458e587f99d382b84"
+      }
+    },
+    {
+      "name": "net.sf.jopt-simple:jopt-simple:5.0.4",
+      "url": "https://libraries.minecraft.net/net/sf/jopt-simple/jopt-simple/5.0.4/jopt-simple-5.0.4.jar",
+      "sha256": "df26cc58f235f477db07f753ba5a3ab243ebe5789d9f89ecf68dd62ea9a66c28",
+      "declared_hashes": {
+        "sha1": "4fdac2fbe92dfad86aa6e9301736f6b4342a3f5c"
+      }
+    },
+    {
+      "name": "com.paulscode:codecjorbis:20101023",
+      "url": "https://libraries.minecraft.net/com/paulscode/codecjorbis/20101023/codecjorbis-20101023.jar",
+      "sha256": "6c4b4e50e608763564afa1bde2d25ece9dd715e7c9129540faa1faded4896506",
+      "declared_hashes": {
+        "sha1": "c73b5636faf089d9f00e8732a829577de25237ee"
+      }
+    },
+    {
+      "name": "com.paulscode:codecwav:20101023",
+      "url": "https://libraries.minecraft.net/com/paulscode/codecwav/20101023/codecwav-20101023.jar",
+      "sha256": "bb7d17b340afe6abdfbfdaa03683bce4aef39a64887dbab0636eaff3cf2d59ba",
+      "declared_hashes": {
+        "sha1": "12f031cfe88fef5c1dd36c563c0a3a69bd7261da"
+      }
+    },
+    {
+      "name": "com.paulscode:libraryjavasound:20101123",
+      "url": "https://libraries.minecraft.net/com/paulscode/libraryjavasound/20101123/libraryjavasound-20101123.jar",
+      "sha256": "333bbefeff5eb1722dc9b8d2e26c38bc69c1efa07d0ca870480f29d8858aa336",
+      "declared_hashes": {
+        "sha1": "5c5e304366f75f9eaa2e8cca546a1fb6109348b3"
+      }
+    },
+    {
+      "name": "com.paulscode:librarylwjglopenal:20100824",
+      "url": "https://libraries.minecraft.net/com/paulscode/librarylwjglopenal/20100824/librarylwjglopenal-20100824.jar",
+      "sha256": "107d11509f6af59b8c2ba23df828bc5d3c4e067b58f3d858c7deb90ca5308f84",
+      "declared_hashes": {
+        "sha1": "73e80d0794c39665aec3f62eee88ca91676674ef"
+      }
+    },
+    {
+      "name": "com.paulscode:soundsystem:20120107",
+      "url": "https://libraries.minecraft.net/com/paulscode/soundsystem/20120107/soundsystem-20120107.jar",
+      "sha256": "2882d64550240dd0c026724da664d9f97ef205c91d6a85273d10790d88608f34",
+      "declared_hashes": {
+        "sha1": "419c05fe9be71f792b2d76cfc9b67f1ed0fec7f6"
+      }
+    },
+    {
+      "name": "io.netty:netty-all:4.0.23.Final",
+      "url": "https://libraries.minecraft.net/io/netty/netty-all/4.0.23.Final/netty-all-4.0.23.Final.jar",
+      "sha256": "50510e9c9874b539b98ef931fe7eeeb002f6b5b1976ea37669b9493426294561",
+      "declared_hashes": {
+        "sha1": "0294104aaf1781d6a56a07d561e792c5d0c95f45"
+      }
+    },
+    {
+      "name": "com.google.guava:guava:17.0",
+      "url": "https://libraries.minecraft.net/com/google/guava/guava/17.0/guava-17.0.jar",
+      "sha256": "8c36a80ea613d0b6b8040a17cf837c5bbe3677bc1b06a058a6c174fdb787ebbc",
+      "declared_hashes": {
+        "sha1": "9c6ef172e8de35fd8d4d8783e4821e57cdef7445"
+      }
+    },
+    {
+      "name": "org.apache.commons:commons-lang3:3.3.2",
+      "url": "https://libraries.minecraft.net/org/apache/commons/commons-lang3/3.3.2/commons-lang3-3.3.2.jar",
+      "sha256": "6b81d10754dadf184d386011486e6509c2cc0c3d33565ced4fb4402b9413d47d",
+      "declared_hashes": {
+        "sha1": "90a3822c38ec8c996e84c16a3477ef632cbc87a3"
+      }
+    },
+    {
+      "name": "commons-io:commons-io:2.4",
+      "url": "https://libraries.minecraft.net/commons-io/commons-io/2.4/commons-io-2.4.jar",
+      "sha256": "cc6a41dc3eaacc9e440a6bd0d2890b20d36b4ee408fe2d67122f328bb6e01581",
+      "declared_hashes": {
+        "sha1": "b1b6ea3b7e4aa4f492509a4952029cd8e48019ad"
+      }
+    },
+    {
+      "name": "commons-codec:commons-codec:1.9",
+      "url": "https://libraries.minecraft.net/commons-codec/commons-codec/1.9/commons-codec-1.9.jar",
+      "sha256": "ad19d2601c3abf0b946b5c3a4113e226a8c1e3305e395b90013b78dd94a723ce",
+      "declared_hashes": {
+        "sha1": "9ce04e34240f674bc72680f8b843b1457383161a"
+      }
+    },
+    {
+      "name": "net.java.jinput:jinput:2.0.5",
+      "url": "https://libraries.minecraft.net/net/java/jinput/jinput/2.0.5/jinput-2.0.5.jar",
+      "sha256": "79b5a4f5829e1a49a415711f7fb8eb5b9ad22defa72929fda2da96ec30d3f018",
+      "declared_hashes": {
+        "sha1": "39c7796b469a600f72380316f6b1f11db6c2c7c4"
+      }
+    },
+    {
+      "name": "net.java.jutils:jutils:1.0.0",
+      "url": "https://libraries.minecraft.net/net/java/jutils/jutils/1.0.0/jutils-1.0.0.jar",
+      "sha256": "c3334ff39cf0ab3b54925619101054c90098b7c733b1e7834c7b75e4c41e84a5",
+      "declared_hashes": {
+        "sha1": "e12fe1fda814bd348c1579329c86943d2cd3c6a6"
+      }
+    },
+    {
+      "name": "com.google.code.gson:gson:2.10",
+      "url": "https://libraries.minecraft.net/com/google/code/gson/gson/2.10/gson-2.10.jar",
+      "sha256": "0cdd163ce3598a20fc04eee71b140b24f6f2a3b35f0a499dbbdd9852e83fbfaf",
+      "declared_hashes": {
+        "sha1": "dd9b193aef96e973d5a11ab13cd17430c2e4306b"
+      }
+    },
+    {
+      "name": "com.mojang:authlib:1.5.21",
+      "url": "https://libraries.minecraft.net/com/mojang/authlib/1.5.21/authlib-1.5.21.jar",
+      "sha256": "ce7a9c86ebebf30b89929026f4a0a3c58ce0f4d47937d6dc086ae4fd0c77544a",
+      "declared_hashes": {
+        "sha1": "aefba0d5b53fbcb70860bc8046ab95d5854c07a5"
+      }
+    },
+    {
+      "name": "org.apache.commons:commons-compress:1.8.1",
+      "url": "https://libraries.minecraft.net/org/apache/commons/commons-compress/1.8.1/commons-compress-1.8.1.jar",
+      "sha256": "5fca136503f86ecc6cb61fbd17b137d59e56b45c7a5494e6b8fd3cabd4697fbd",
+      "declared_hashes": {
+        "sha1": "a698750c16740fd5b3871425f4cb3bbaa87f529d"
+      }
+    },
+    {
+      "name": "org.apache.httpcomponents:httpclient:4.3.3",
+      "url": "https://libraries.minecraft.net/org/apache/httpcomponents/httpclient/4.3.3/httpclient-4.3.3.jar",
+      "sha256": "9844cc9b5440d65a88d28bcba9d771374d2dfdab898848cda164611091633013",
+      "declared_hashes": {
+        "sha1": "18f4247ff4572a074444572cee34647c43e7c9c7"
+      }
+    },
+    {
+      "name": "commons-logging:commons-logging:1.1.3",
+      "url": "https://libraries.minecraft.net/commons-logging/commons-logging/1.1.3/commons-logging-1.1.3.jar",
+      "sha256": "70903f6fc82e9908c8da9f20443f61d90f0870a312642991fe8462a0b9391784",
+      "declared_hashes": {
+        "sha1": "f6f66e966c70a83ffbdb6f17a0919eaf7c8aca7f"
+      }
+    },
+    {
+      "name": "org.apache.httpcomponents:httpcore:4.3.2",
+      "url": "https://libraries.minecraft.net/org/apache/httpcomponents/httpcore/4.3.2/httpcore-4.3.2.jar",
+      "sha256": "abd02320e2356f89d054dae4cf02306bef20a9cf7865b3ac94ec7552b4f1528b",
+      "declared_hashes": {
+        "sha1": "31fbbff1ddbf98f3aa7377c94d33b0447c646b6e"
+      }
+    },
+    {
+      "name": "org.apache.logging.log4j:log4j-api:2.19.0",
+      "url": "https://libraries.minecraft.net/org/apache/logging/log4j/log4j-api/2.19.0/log4j-api-2.19.0.jar",
+      "sha256": "5ccb24ad9f92e768d0bc456d3061a737951262df803e004d2cad096b75a88d60",
+      "declared_hashes": {
+        "sha1": "ea1b37f38c327596b216542bc636cfdc0b8036fa"
+      }
+    },
+    {
+      "name": "org.apache.logging.log4j:log4j-core:2.19.0",
+      "url": "https://libraries.minecraft.net/org/apache/logging/log4j/log4j-core/2.19.0/log4j-core-2.19.0.jar",
+      "sha256": "b4a1796fab7bfc36df015c1b4052459147997e8d215a7199d71d05f9e747e4f4",
+      "declared_hashes": {
+        "sha1": "3b6eeb4de4c49c0fe38a4ee27188ff5fee44d0bb"
+      }
+    },
+    {
+      "name": "org.lwjgl.lwjgl:lwjgl:2.9.4+legacyfabric.15",
+      "url": "https://maven.legacyfabric.net/org/lwjgl/lwjgl/lwjgl/2.9.4+legacyfabric.15/lwjgl-2.9.4+legacyfabric.15.jar",
+      "sha256": "c532aa6ea03fa88b5fa0ba9f69854f33d3569a068f9d9d6c79b0d784b8830c0c",
+      "declared_hashes": {
+        "sha1": "4aa4a428a0af94c82d4cb700708733a9d448c8d7"
+      }
+    },
+    {
+      "name": "org.lwjgl.lwjgl:lwjgl_util:2.9.4+legacyfabric.15",
+      "url": "https://maven.legacyfabric.net/org/lwjgl/lwjgl/lwjgl_util/2.9.4+legacyfabric.15/lwjgl_util-2.9.4+legacyfabric.15.jar",
+      "sha256": "f7406ce17fb3427aba2b822c4c13df78e875ef83b784861b45b8be3f529c3e1b",
+      "declared_hashes": {
+        "sha1": "9fb7110ce0567de6134365d4b42d1652f215b801"
+      }
+    },
+    {
+      "name": "org.lwjgl.lwjgl:lwjgl-platform:2.9.4+legacyfabric.15:natives-windows",
+      "url": "https://maven.legacyfabric.net/org/lwjgl/lwjgl/lwjgl-platform/2.9.4+legacyfabric.15/lwjgl-platform-2.9.4+legacyfabric.15-natives-windows.jar",
+      "sha256": "6f14a576dd46acc687f11d3aad91beba763b199e210e24b8b5d5c36ef4b04c03"
+    },
+    {
+      "name": "net.java.jinput:jinput-platform:2.0.5:natives-windows",
+      "url": "https://libraries.minecraft.net/net/java/jinput/jinput-platform/2.0.5/jinput-platform-2.0.5-natives-windows.jar",
+      "sha256": "24afbd5e1fab17da57d16a4d3f19d53f36155ef46a9976484201a4bb9722287f"
+    },
+    {
+      "name": "tv.twitch:twitch:6.5",
+      "url": "https://libraries.minecraft.net/tv/twitch/twitch/6.5/twitch-6.5.jar",
+      "sha256": "3b90f9f7ad968b9588482e3a09b6e7d0d81c6cf7c214c5cecd8120e3ee509ae9",
+      "declared_hashes": {
+        "sha1": "320a2dfd18513a5f41b4e75729df684488cbd925"
+      }
+    },
+    {
+      "name": "tv.twitch:twitch-platform:6.5:natives-windows-64",
+      "url": "https://libraries.minecraft.net/tv/twitch/twitch-platform/6.5/twitch-platform-6.5-natives-windows-64.jar",
+      "sha256": "75337e7362e489a6f8c9712aeced9e131e82a3ce851cafbd4d03fda284cc7116"
+    },
+    {
+      "name": "tv.twitch:twitch-external-platform:4.5:natives-windows-64",
+      "url": "https://libraries.minecraft.net/tv/twitch/twitch-external-platform/4.5/twitch-external-platform-4.5-natives-windows-64.jar",
+      "sha256": "6428eb438f53afc563d58c7f2a563ca9fcaae80db3520af744de5e5db1c9df6a"
+    },
+    {
+      "name": "org.ow2.asm:asm:9.11",
+      "url": "https://maven.fabricmc.net/org/ow2/asm/asm/9.11/asm-9.11.jar",
+      "sha256": "5fe3b469b8646e5bc53a897840952d63b712d4923d2a7a26aebc585f1fec7676",
+      "declared_hashes": {
+        "sha1": "2a2c870691d2220eb93492c88fdcd3711ab0fadb",
+        "sha256": "5fe3b469b8646e5bc53a897840952d63b712d4923d2a7a26aebc585f1fec7676"
+      }
+    },
+    {
+      "name": "org.ow2.asm:asm-analysis:9.11",
+      "url": "https://maven.fabricmc.net/org/ow2/asm/asm-analysis/9.11/asm-analysis-9.11.jar",
+      "sha256": "a1421c20978ca0a330f241b17923a751a23fb1c9423fda1aba7591bb086b01d8",
+      "declared_hashes": {
+        "sha1": "f35f7706e93e0de19c256b3e7e7f43e792a8d571",
+        "sha256": "a1421c20978ca0a330f241b17923a751a23fb1c9423fda1aba7591bb086b01d8"
+      }
+    },
+    {
+      "name": "org.ow2.asm:asm-commons:9.11",
+      "url": "https://maven.fabricmc.net/org/ow2/asm/asm-commons/9.11/asm-commons-9.11.jar",
+      "sha256": "fcff37e6a0227a9f5ee81a7c07f51249307fa15889b56a359ae6f773c164c22b",
+      "declared_hashes": {
+        "sha1": "07ddfa7d6cee28f627af0bd246ef046e24e1b02a",
+        "sha256": "fcff37e6a0227a9f5ee81a7c07f51249307fa15889b56a359ae6f773c164c22b"
+      }
+    },
+    {
+      "name": "org.ow2.asm:asm-tree:9.11",
+      "url": "https://maven.fabricmc.net/org/ow2/asm/asm-tree/9.11/asm-tree-9.11.jar",
+      "sha256": "da8ad24d0bf7efb0674a906f59a7d441692b641718371f3bce6762b191a169fd",
+      "declared_hashes": {
+        "sha1": "2e0298e7c0986f94e161de26d108c78d20547935",
+        "sha256": "da8ad24d0bf7efb0674a906f59a7d441692b641718371f3bce6762b191a169fd"
+      }
+    },
+    {
+      "name": "org.ow2.asm:asm-util:9.11",
+      "url": "https://maven.fabricmc.net/org/ow2/asm/asm-util/9.11/asm-util-9.11.jar",
+      "sha256": "d5a23a677f31b8a7d2419895906e1fcbd9ac995beffb20944c8610c1bc377609",
+      "declared_hashes": {
+        "sha1": "1d4e8839681014f2530b85a1969eb5b0d8af3dd7",
+        "sha256": "d5a23a677f31b8a7d2419895906e1fcbd9ac995beffb20944c8610c1bc377609"
+      }
+    },
+    {
+      "name": "net.fabricmc:sponge-mixin:0.17.5+mixin.0.8.7",
+      "url": "https://maven.fabricmc.net/net/fabricmc/sponge-mixin/0.17.5+mixin.0.8.7/sponge-mixin-0.17.5+mixin.0.8.7.jar",
+      "sha256": "03f0065023bfc3045d71bfb99872451d9ad5a0800a5a0dac34ab8c7d5c134f5d",
+      "declared_hashes": {
+        "sha1": "0cef8519a91129d0c21fa03bb9378f0e8ca810e5",
+        "sha256": "03f0065023bfc3045d71bfb99872451d9ad5a0800a5a0dac34ab8c7d5c134f5d"
+      }
+    },
+    {
+      "name": "net.ornithemc:calamus-intermediary-gen2:1.8.9",
+      "url": "https://maven.ornithemc.net/releases/net/ornithemc/calamus-intermediary-gen2/1.8.9/calamus-intermediary-gen2-1.8.9.jar",
+      "sha256": "470806c5774277215528e8c0597212498f335907b7678d76b7f6f22a8e007bab",
+      "declared_hashes": {
+        "sha256": "470806c5774277215528e8c0597212498f335907b7678d76b7f6f22a8e007bab"
+      }
+    },
+    {
+      "name": "net.fabricmc:fabric-loader:0.20.0",
+      "url": "https://maven.fabricmc.net/net/fabricmc/fabric-loader/0.20.0/fabric-loader-0.20.0.jar",
+      "sha256": "911ad609f6faf309401fae4f5c8a20e665c11b475d66befc41dd35ea6f41e15e",
+      "declared_hashes": {
+        "sha256": "911ad609f6faf309401fae4f5c8a20e665c11b475d66befc41dd35ea6f41e15e"
+      }
+    },
+    {
+      "name": "org.slf4j:slf4j-api:2.0.17",
+      "url": "https://libraries.minecraft.net/org/slf4j/slf4j-api/2.0.17/slf4j-api-2.0.17.jar",
+      "sha256": "7b751d952061954d5abfed7181c1f645d336091b679891591d63329c622eb832",
+      "declared_hashes": {
+        "sha1": "d9e58ac9c7779ba3bf8142aff6c830617a7fe60f"
+      }
+    },
+    {
+      "name": "org.apache.logging.log4j:log4j-slf4j2-impl:2.19.0",
+      "url": "https://libraries.minecraft.net/org/apache/logging/log4j/log4j-slf4j2-impl/2.19.0/log4j-slf4j2-impl-2.19.0.jar",
+      "sha256": "825605eacb2d5605b105c53d4108c18125e0f82f62960d0be583278b9c524f3c",
+      "declared_hashes": {
+        "sha1": "5c04bfdd63ce9dceb2e284b81e96b6a70010ee10"
+      }
+    },
+    {
+      "name": "it.unimi.dsi:fastutil:8.5.9",
+      "url": "https://libraries.minecraft.net/it/unimi/dsi/fastutil/8.5.9/fastutil-8.5.9.jar",
+      "sha256": "9578bf2a1700cf20d21746a2ee89e57ba1abbd37fa9feda68ff5e9a28473a7f9",
+      "declared_hashes": {
+        "sha1": "bb7ea75ecdb216654237830b3a96d87ad91f8cc5"
+      }
+    },
+    {
+      "name": "net.ornithemc:log4j-patch:1.0.0",
+      "url": "https://maven.ornithemc.net/releases/net/ornithemc/log4j-patch/1.0.0/log4j-patch-1.0.0.jar",
+      "sha256": "9e973eaa9cf85705ba6a9481ae763df81c4dc83c73c8764e12779df0eb679573",
+      "declared_hashes": {
+        "sha256": "9e973eaa9cf85705ba6a9481ae763df81c4dc83c73c8764e12779df0eb679573"
+      }
+    },
+    {
+      "name": "com.mojang:brigadier:1.3.11",
+      "url": "https://libraries.minecraft.net/com/mojang/brigadier/1.3.11/brigadier-1.3.11.jar",
+      "sha256": "9d09cf4819de83dfcd38bcb212d5f2227131791cef3abbfca3321d6fb2b9a64d",
+      "declared_hashes": {
+        "sha1": "3373d1e7bf00c8b99bed1ea4efb8c47344e4a887"
+      }
+    }
+  ],
+  "classpath": [
+    "C:\\Users\\CodyJ\\OneDrive\\Documents\\GitLab\\adiont\\aevum\\alacer\\build\\v1-release-checks\\installer-instance\\libraries\\com\\mojang\\netty\\1.8.8\\netty-1.8.8.jar",
+    "C:\\Users\\CodyJ\\OneDrive\\Documents\\GitLab\\adiont\\aevum\\alacer\\build\\v1-release-checks\\installer-instance\\libraries\\oshi-project\\oshi-core\\1.1\\oshi-core-1.1.jar",
+    "C:\\Users\\CodyJ\\OneDrive\\Documents\\GitLab\\adiont\\aevum\\alacer\\build\\v1-release-checks\\installer-instance\\libraries\\net\\java\\dev\\jna\\jna\\3.4.0\\jna-3.4.0.jar",
+    "C:\\Users\\CodyJ\\OneDrive\\Documents\\GitLab\\adiont\\aevum\\alacer\\build\\v1-release-checks\\installer-instance\\libraries\\net\\java\\dev\\jna\\platform\\3.4.0\\platform-3.4.0.jar",
+    "C:\\Users\\CodyJ\\OneDrive\\Documents\\GitLab\\adiont\\aevum\\alacer\\build\\v1-release-checks\\installer-instance\\libraries\\com\\ibm\\icu\\icu4j-core-mojang\\51.2\\icu4j-core-mojang-51.2.jar",
+    "C:\\Users\\CodyJ\\OneDrive\\Documents\\GitLab\\adiont\\aevum\\alacer\\build\\v1-release-checks\\installer-instance\\libraries\\net\\sf\\jopt-simple\\jopt-simple\\5.0.4\\jopt-simple-5.0.4.jar",
+    "C:\\Users\\CodyJ\\OneDrive\\Documents\\GitLab\\adiont\\aevum\\alacer\\build\\v1-release-checks\\installer-instance\\libraries\\com\\paulscode\\codecjorbis\\20101023\\codecjorbis-20101023.jar",
+    "C:\\Users\\CodyJ\\OneDrive\\Documents\\GitLab\\adiont\\aevum\\alacer\\build\\v1-release-checks\\installer-instance\\libraries\\com\\paulscode\\codecwav\\20101023\\codecwav-20101023.jar",
+    "C:\\Users\\CodyJ\\OneDrive\\Documents\\GitLab\\adiont\\aevum\\alacer\\build\\v1-release-checks\\installer-instance\\libraries\\com\\paulscode\\libraryjavasound\\20101123\\libraryjavasound-20101123.jar",
+    "C:\\Users\\CodyJ\\OneDrive\\Documents\\GitLab\\adiont\\aevum\\alacer\\build\\v1-release-checks\\installer-instance\\libraries\\com\\paulscode\\librarylwjglopenal\\20100824\\librarylwjglopenal-20100824.jar",
+    "C:\\Users\\CodyJ\\OneDrive\\Documents\\GitLab\\adiont\\aevum\\alacer\\build\\v1-release-checks\\installer-instance\\libraries\\com\\paulscode\\soundsystem\\20120107\\soundsystem-20120107.jar",
+    "C:\\Users\\CodyJ\\OneDrive\\Documents\\GitLab\\adiont\\aevum\\alacer\\build\\v1-release-checks\\installer-instance\\libraries\\io\\netty\\netty-all\\4.0.23.Final\\netty-all-4.0.23.Final.jar",
+    "C:\\Users\\CodyJ\\OneDrive\\Documents\\GitLab\\adiont\\aevum\\alacer\\build\\v1-release-checks\\installer-instance\\libraries\\com\\google\\guava\\guava\\17.0\\guava-17.0.jar",
+    "C:\\Users\\CodyJ\\OneDrive\\Documents\\GitLab\\adiont\\aevum\\alacer\\build\\v1-release-checks\\installer-instance\\libraries\\org\\apache\\commons\\commons-lang3\\3.3.2\\commons-lang3-3.3.2.jar",
+    "C:\\Users\\CodyJ\\OneDrive\\Documents\\GitLab\\adiont\\aevum\\alacer\\build\\v1-release-checks\\installer-instance\\libraries\\commons-io\\commons-io\\2.4\\commons-io-2.4.jar",
+    "C:\\Users\\CodyJ\\OneDrive\\Documents\\GitLab\\adiont\\aevum\\alacer\\build\\v1-release-checks\\installer-instance\\libraries\\commons-codec\\commons-codec\\1.9\\commons-codec-1.9.jar",
+    "C:\\Users\\CodyJ\\OneDrive\\Documents\\GitLab\\adiont\\aevum\\alacer\\build\\v1-release-checks\\installer-instance\\libraries\\net\\java\\jinput\\jinput\\2.0.5\\jinput-2.0.5.jar",
+    "C:\\Users\\CodyJ\\OneDrive\\Documents\\GitLab\\adiont\\aevum\\alacer\\build\\v1-release-checks\\installer-instance\\libraries\\net\\java\\jutils\\jutils\\1.0.0\\jutils-1.0.0.jar",
+    "C:\\Users\\CodyJ\\OneDrive\\Documents\\GitLab\\adiont\\aevum\\alacer\\build\\v1-release-checks\\installer-instance\\libraries\\com\\google\\code\\gson\\gson\\2.10\\gson-2.10.jar",
+    "C:\\Users\\CodyJ\\OneDrive\\Documents\\GitLab\\adiont\\aevum\\alacer\\build\\v1-release-checks\\installer-instance\\libraries\\com\\mojang\\authlib\\1.5.21\\authlib-1.5.21.jar",
+    "C:\\Users\\CodyJ\\OneDrive\\Documents\\GitLab\\adiont\\aevum\\alacer\\build\\v1-release-checks\\installer-instance\\libraries\\org\\apache\\commons\\commons-compress\\1.8.1\\commons-compress-1.8.1.jar",
+    "C:\\Users\\CodyJ\\OneDrive\\Documents\\GitLab\\adiont\\aevum\\alacer\\build\\v1-release-checks\\installer-instance\\libraries\\org\\apache\\httpcomponents\\httpclient\\4.3.3\\httpclient-4.3.3.jar",
+    "C:\\Users\\CodyJ\\OneDrive\\Documents\\GitLab\\adiont\\aevum\\alacer\\build\\v1-release-checks\\installer-instance\\libraries\\commons-logging\\commons-logging\\1.1.3\\commons-logging-1.1.3.jar",
+    "C:\\Users\\CodyJ\\OneDrive\\Documents\\GitLab\\adiont\\aevum\\alacer\\build\\v1-release-checks\\installer-instance\\libraries\\org\\apache\\httpcomponents\\httpcore\\4.3.2\\httpcore-4.3.2.jar",
+    "C:\\Users\\CodyJ\\OneDrive\\Documents\\GitLab\\adiont\\aevum\\alacer\\build\\v1-release-checks\\installer-instance\\libraries\\org\\apache\\logging\\log4j\\log4j-api\\2.19.0\\log4j-api-2.19.0.jar",
+    "C:\\Users\\CodyJ\\OneDrive\\Documents\\GitLab\\adiont\\aevum\\alacer\\build\\v1-release-checks\\installer-instance\\libraries\\org\\apache\\logging\\log4j\\log4j-core\\2.19.0\\log4j-core-2.19.0.jar",
+    "C:\\Users\\CodyJ\\OneDrive\\Documents\\GitLab\\adiont\\aevum\\alacer\\build\\v1-release-checks\\installer-instance\\libraries\\org\\lwjgl\\lwjgl\\lwjgl\\2.9.4+legacyfabric.15\\lwjgl-2.9.4+legacyfabric.15.jar",
+    "C:\\Users\\CodyJ\\OneDrive\\Documents\\GitLab\\adiont\\aevum\\alacer\\build\\v1-release-checks\\installer-instance\\libraries\\org\\lwjgl\\lwjgl\\lwjgl_util\\2.9.4+legacyfabric.15\\lwjgl_util-2.9.4+legacyfabric.15.jar",
+    "C:\\Users\\CodyJ\\OneDrive\\Documents\\GitLab\\adiont\\aevum\\alacer\\build\\v1-release-checks\\installer-instance\\libraries\\tv\\twitch\\twitch\\6.5\\twitch-6.5.jar",
+    "C:\\Users\\CodyJ\\OneDrive\\Documents\\GitLab\\adiont\\aevum\\alacer\\build\\v1-release-checks\\installer-instance\\libraries\\org\\ow2\\asm\\asm\\9.11\\asm-9.11.jar",
+    "C:\\Users\\CodyJ\\OneDrive\\Documents\\GitLab\\adiont\\aevum\\alacer\\build\\v1-release-checks\\installer-instance\\libraries\\org\\ow2\\asm\\asm-analysis\\9.11\\asm-analysis-9.11.jar",
+    "C:\\Users\\CodyJ\\OneDrive\\Documents\\GitLab\\adiont\\aevum\\alacer\\build\\v1-release-checks\\installer-instance\\libraries\\org\\ow2\\asm\\asm-commons\\9.11\\asm-commons-9.11.jar",
+    "C:\\Users\\CodyJ\\OneDrive\\Documents\\GitLab\\adiont\\aevum\\alacer\\build\\v1-release-checks\\installer-instance\\libraries\\org\\ow2\\asm\\asm-tree\\9.11\\asm-tree-9.11.jar",
+    "C:\\Users\\CodyJ\\OneDrive\\Documents\\GitLab\\adiont\\aevum\\alacer\\build\\v1-release-checks\\installer-instance\\libraries\\org\\ow2\\asm\\asm-util\\9.11\\asm-util-9.11.jar",
+    "C:\\Users\\CodyJ\\OneDrive\\Documents\\GitLab\\adiont\\aevum\\alacer\\build\\v1-release-checks\\installer-instance\\libraries\\net\\fabricmc\\sponge-mixin\\0.17.5+mixin.0.8.7\\sponge-mixin-0.17.5+mixin.0.8.7.jar",
+    "C:\\Users\\CodyJ\\OneDrive\\Documents\\GitLab\\adiont\\aevum\\alacer\\build\\v1-release-checks\\installer-instance\\libraries\\net\\ornithemc\\calamus-intermediary-gen2\\1.8.9\\calamus-intermediary-gen2-1.8.9.jar",
+    "C:\\Users\\CodyJ\\OneDrive\\Documents\\GitLab\\adiont\\aevum\\alacer\\build\\v1-release-checks\\installer-instance\\libraries\\net\\fabricmc\\fabric-loader\\0.20.0\\fabric-loader-0.20.0.jar",
+    "C:\\Users\\CodyJ\\OneDrive\\Documents\\GitLab\\adiont\\aevum\\alacer\\build\\v1-release-checks\\installer-instance\\libraries\\org\\slf4j\\slf4j-api\\2.0.17\\slf4j-api-2.0.17.jar",
+    "C:\\Users\\CodyJ\\OneDrive\\Documents\\GitLab\\adiont\\aevum\\alacer\\build\\v1-release-checks\\installer-instance\\libraries\\org\\apache\\logging\\log4j\\log4j-slf4j2-impl\\2.19.0\\log4j-slf4j2-impl-2.19.0.jar",
+    "C:\\Users\\CodyJ\\OneDrive\\Documents\\GitLab\\adiont\\aevum\\alacer\\build\\v1-release-checks\\installer-instance\\libraries\\it\\unimi\\dsi\\fastutil\\8.5.9\\fastutil-8.5.9.jar",
+    "C:\\Users\\CodyJ\\OneDrive\\Documents\\GitLab\\adiont\\aevum\\alacer\\build\\v1-release-checks\\installer-instance\\libraries\\net\\ornithemc\\log4j-patch\\1.0.0\\log4j-patch-1.0.0.jar",
+    "C:\\Users\\CodyJ\\OneDrive\\Documents\\GitLab\\adiont\\aevum\\alacer\\build\\v1-release-checks\\installer-instance\\libraries\\com\\mojang\\brigadier\\1.3.11\\brigadier-1.3.11.jar",
+    "C:\\Users\\CodyJ\\OneDrive\\Documents\\GitLab\\adiont\\aevum\\alacer\\build\\v1-release-checks\\installer-instance\\versions\\1.8.9-gen2\\1.8.9-gen2.jar"
+  ],
+  "jvm": [
+    {
+      "rules": [
+        {
+          "action": "allow",
+          "os": {
+            "name": "windows"
+          }
+        }
+      ],
+      "value": "-XX:HeapDumpPath=MojangTricksIntelDriversForPerformance_javaw.exe_minecraft.exe.heapdump"
+    },
+    {
+      "rules": [
+        {
+          "action": "allow",
+          "os": {
+            "name": "windows",
+            "version": "^10\\."
+          }
+        }
+      ],
+      "value": [
+        "-Dos.name=Windows 10",
+        "-Dos.version=10.0"
+      ]
+    },
+    {
+      "rules": [
+        {
+          "action": "allow",
+          "os": {
+            "arch": "x86"
+          }
+        }
+      ],
+      "value": "-Xss1M"
+    },
+    "-Djava.library.path=${natives_directory}",
+    "-Dminecraft.launcher.brand=${launcher_name}",
+    "-Dminecraft.launcher.version=${launcher_version}",
+    "-cp",
+    "${classpath}",
+    "-Dfabric.fixPackageAccess=true",
+    "-Dfabric.gameVersion=1.8.9"
+  ],
+  "game": [
+    "--username",
+    "${auth_player_name}",
+    "--version",
+    "${version_name}",
+    "--gameDir",
+    "${game_directory}",
+    "--assetsDir",
+    "${assets_root}",
+    "--assetIndex",
+    "${assets_index_name}",
+    "--uuid",
+    "${auth_uuid}",
+    "--accessToken",
+    "${auth_access_token}",
+    "--userProperties",
+    "${user_properties}",
+    "--userType",
+    "${user_type}"
+  ],
+  "main_class": "net.fabricmc.loader.impl.launch.knot.KnotClient",
+  "native": "C:\\Users\\CodyJ\\OneDrive\\Documents\\GitLab\\adiont\\aevum\\alacer\\build\\v1-release-checks\\natives",
+  "assets": "C:\\Users\\CodyJ\\OneDrive\\Documents\\GitLab\\adiont\\aevum\\alacer\\build\\v1-release-checks\\assets",
+  "asset_index": "1.8",
+  "logging_argument": "-Dlog4j.configurationFile=C:\\Users\\CodyJ\\OneDrive\\Documents\\GitLab\\adiont\\aevum\\alacer\\build\\v1-release-checks\\client-1.12.xml"
+}
